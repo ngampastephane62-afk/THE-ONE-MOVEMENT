@@ -24,6 +24,19 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /health:
+    get:
+      operationId: getHealth
+      tags: [health]
+      summary: Detailed health check
+      description: Returns server health status and database connectivity
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DetailedHealthStatus"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +46,14 @@ components:
           type: string
       required:
         - status
+    DetailedHealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+        database:
+          type: string
+      required:
+        - status
+        - database
 

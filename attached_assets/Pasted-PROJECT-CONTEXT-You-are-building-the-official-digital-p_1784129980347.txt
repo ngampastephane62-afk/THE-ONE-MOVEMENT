@@ -1,0 +1,84 @@
+PROJECT CONTEXT
+
+You are building the official digital platform of THE ONE MOVEMENT INTERNATIONAL — a permanent global ecosystem connecting people, cultures, businesses, institutions and opportunities across culture, business, investment, diplomacy, innovation, education, tourism, media and humanitarian impact. It is NOT an event website and NOT primarily a fashion website; The One Fashion Week International is only one program within the wider ecosystem. Slogan: "ONE WORLD. ONE PURPOSE. ONE MOVEMENT."
+
+Development is strictly modular and stage-based. This is STAGE 0 — PROJECT FOUNDATION. Later stages will add the design system, public pages, authentication, member profiles, dashboards, opportunities, programs, AI features and administration. Your job today is ONLY the skeleton.
+
+CURRENT TASK
+
+Create the complete project foundation: architecture, folder structure, routing with placeholder pages, a minimal neutral layout shell, database structure, and a project status document. Nothing more.
+
+SCOPE
+
+1. Full-stack TypeScript application: React + Vite frontend with Tailwind CSS and shadcn/ui available; Express backend.
+2. Folder structure exactly as follows (do not restructure later; future work adds within it):
+   /client/src/components — reusable UI building blocks
+   /client/src/pages — one folder per page
+   /client/src/styles — design tokens (placeholder values for now)
+   /client/src/lib — shared helpers
+   /server/routes — API endpoints
+   /server/middleware — security checks (empty placeholders for now)
+   /server/services — external integrations (empty placeholders for now)
+   /shared/schema — Drizzle database schema
+   /docs — project documentation
+3. Client-side routing with these placeholder pages, each showing only the page name as a heading and one sentence "Content coming soon": Home, Our Vision, Ecosystem, Community, Programs, Opportunities, Impact, Media, Partners, Join the Movement, Sign In, and a NotFound page.
+4. A minimal, neutral layout shell: simple top navigation listing those pages, simple footer with "© The One Movement International" and placeholder links for Privacy Policy and Terms. Deliberately plain styling — the premium design system arrives in Stage 1. Do NOT attempt visual design now.
+5. Set up the built-in PostgreSQL database with Drizzle ORM and create these tables in /shared/schema (structure only; no seed data except profile_categories):
+   - users: id, email, role (member/admin), status (pending/verified/suspended), created_at, updated_at
+   - profiles: id, user_id, full_name, country, city, profession, organization_name, bio, languages (array), links (json), looking_for (text), offering (text), privacy_settings (json), is_verified (boolean, default false), created_at, updated_at
+   - organizations: id, name, type, country, description, responsible_user_id, status, created_at, updated_at
+   - profile_categories: id, name, group_name — seed with these groups and values: Creative & Cultural (Designer, Model, Photographer, Videographer, Makeup Artist, Hair Stylist, Musician, Artist, Dancer, Filmmaker, Influencer); Business & Innovation (Entrepreneur, Startup, Company, Investor, Innovator, Technology Company); Institutions (Embassy, Government, International Organization, University, NGO); Community & Impact (Volunteer, Student, Humanitarian Organization); Strategic Support (Sponsor, Partner, Media Organization)
+   - programs: id, name, tagline, description, city, country, start_date, end_date, status, created_at, updated_at
+   - events: id, program_id, title, description, date, venue, status, created_at, updated_at
+   - opportunities: id, title, category, country, city, description, requirements, deadline, status, created_at, updated_at
+   - applications: id, opportunity_id, user_id, note, status, created_at, updated_at
+   - partners: id, name, category, country, description, logo_url, authorization_on_file (boolean, default false), status, created_at, updated_at
+   - media_items: id, title, category, type, body, media_url, status, published_at, created_at, updated_at
+   - impact_stories: id, title, country, summary, body, status, created_at, updated_at
+   - notifications: id, user_id, title, body, is_read, created_at
+   - audit_log: id, actor_user_id, action, target_type, target_id, details (json), created_at
+   - ai_usage_log: id, feature, tokens_used, cost_estimate, created_at
+   IMPORTANT: no donation, payment, ticket-price or fundraising fields anywhere. This is a legal requirement.
+6. One health-check API endpoint at /api/health returning status ok and database connectivity confirmation.
+7. Create /docs/PROJECT-STATUS.md containing sections: APPROVED, COMPLETED, IN PROGRESS, FUTURE, RISKS, CHECKPOINTS. Fill COMPLETED with what you build today.
+8. Basic error handling and a simple loading state convention documented as a comment pattern in one example component.
+
+DESIGN REQUIREMENTS
+
+Neutral and minimal only. System font, black/white/grey, standard spacing. No animations, no imagery, no branding attempts. The visual identity is defined in Stage 1 and must not be anticipated now.
+
+FUNCTIONAL REQUIREMENTS
+
+App starts without errors. Every placeholder page is reachable via the navigation. Health endpoint responds. Database tables exist and profile_categories is seeded.
+
+AI REQUIREMENTS
+
+None in this stage. Do not add AI features, AI dependencies or AI keys.
+
+TECHNICAL REQUIREMENTS
+
+TypeScript throughout. Drizzle ORM for all database access. No authentication in this stage. Keep dependencies to the minimum required for the stack described. Environment variables/secrets: none required this stage beyond what the platform provides automatically for the database.
+
+SECURITY REQUIREMENTS
+
+Never hard-code credentials. Server must not expose database errors in raw form to the client. Add a placeholder middleware file for future rate limiting with a comment explaining its future purpose.
+
+RESPONSIVE REQUIREMENTS
+
+The layout shell (navigation and footer) must not break on mobile widths. Nothing more is required visually.
+
+PERFORMANCE REQUIREMENTS
+
+No large libraries, no image assets, no fonts beyond system fonts, no background jobs.
+
+PRESERVATION RULES
+
+Do not build authentication. Do not design pages. Do not add features beyond this scope. Do not install dependencies unrelated to the stack above. Do not deploy or publish. Do not create donation or payment structures of any kind.
+
+TESTING REQUIREMENTS
+
+Run the app. Verify: every route loads, navigation works, /api/health returns ok, database connection works, no browser console errors, no server errors.
+
+COMPLETION REPORT
+
+When finished, report: 1) what was created; 2) which files exist and their purpose in one line each; 3) dependencies added; 4) database tables created and confirmation profile_categories is seeded; 5) any environment variables in use; 6) what you tested and what passed; 7) anything incomplete; 8) any errors or warnings; 9) any action required from the owner; 10) recommended checkpoint name: "Foundation Approved".
