@@ -169,7 +169,7 @@ logical-property variants (`start`/`end`) used where applicable.
 
 ## IN PROGRESS
 
-- Nothing. Stage 1 (including Palette V2) is complete.
+- Nothing. Stage 1 (including Palette V2) and the /vision page are complete.
 
 ## FUTURE
 
@@ -192,8 +192,39 @@ logical-property variants (`start`/`end`) used where applicable.
 - Schema continues to exclude all donation/payment/ticket/fundraising fields —
   this constraint must be preserved in all future stages.
 
+### /vision Page
+
+Nine sections completed using existing V2 components only. No new dependencies.
+
+| Section | Surface | Motif |
+|---------|---------|-------|
+| 1. Vision Hero | HeroSurface (lagoon radiant) + MediaArea | GoldThread |
+| 2. The Mission | ivory-100 | SectionHeading thread |
+| 3. Born in Bukavu | ivory-50, asymmetric | GoldThread |
+| 4. From Event to Movement | lagoon-900 | pull-quote display-md gold-400 |
+| 5. The 365-Day Model | ivory-100 | SectionHeading thread |
+| 6. The Pillars | lagoon-900, 3×3 grid | — |
+| 7. The Distinction | ivory-100 | SectionHeading thread |
+| 8. The Global Ambition | lagoon-900, asymmetric | — |
+| 9. Closing Invitation | HeroSurface | GoldThread |
+
+Local components in the vision page file (no modifications to shared components):
+- `MediaArea` — wraps PhotoSlot, overlays elegant dev label caption at bottom
+- `PillarTile` — nine pillars grid tile with hover colour transition
+- `StepCard` — numbered card with step label and description
+
+All copy is verbatim from spec. No dates, cities, diplomatic endorsements, or future events as confirmed history appear on the page.
+
+### Homepage Factual Corrections (Part A)
+- Stat band (Section 7): "Fashion Week Editions" changed from 6 → **5**
+- Fashion Week program card `extra` line: changed from "Six editions…" → **"Five editions. Born in the DRC. Recognized internationally."**
+
+### Known Factual Inconsistency (not fixed — per preservation rules)
+- The homepage hero section contains a second StatBlock also showing `value="6" label="Fashion Week Editions"`. Per preservation rules ("if you notice any factual inconsistency elsewhere on the homepage, DO NOT fix it — list it in the completion report"), this was not changed. Owner action required: change this value to "5" in the next permitted homepage edit pass.
+
 ## CHECKPOINTS
 
 - Stage 0: "Foundation Approved"
 - Stage 1: "Design System V1 Approved"
-- Stage 1 Revision: **"Lagoon Gold V2 Approved"** ← recommended next checkpoint
+- Stage 1 Revision: "Lagoon Gold V2 Approved"
+- Stage 2 Vision: **"Vision Page Approved"** ← recommended next checkpoint

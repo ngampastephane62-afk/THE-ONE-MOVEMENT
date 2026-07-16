@@ -1,0 +1,86 @@
+PROJECT CONTEXT
+
+THE ONE MOVEMENT INTERNATIONAL — a permanent global ecosystem connecting culture, business, investment, diplomacy, innovation, education, tourism, media and humanitarian impact. It grew from The One Fashion Week, born in Bukavu, Democratic Republic of Congo, with five completed editions (Bukavu 2019, 2021, 2022; Goma 2024; Kinshasa 2025); the 5th edition in Kinshasa was supported by the UN mission MONUSCO under the theme "Peace and Unity". The Movement is the evolution: not an event — a permanent 365-day global community. Design System V2 "Lagoon & Gold" is approved (lagoon/gold/ivory/coral tokens, Cinzel display UPPERCASE ONLY + IBM Plex Sans/Arabic, HeroSurface, GoldThread, SectionHeading, StatBlock, PhotoSlot, PhotoMosaic, GeometricAccent).
+
+THIS TASK: build the real /vision page, replacing its placeholder, using ONLY existing V2 components — plus two small factual string corrections on the homepage. Nothing else.
+
+NON-NEGOTIABLE CONTENT RULES
+Use the copy below VERBATIM. Do not invent, extend or improve wording. Do not add dates, locations, edition counts, attendance numbers, partnerships, media names, government or diplomatic endorsements, impact statistics, or any future event presented as confirmed. The Dubai edition must not appear anywhere as completed history. No donation or fundraising language.
+
+PART A — HOMEPAGE FACTUAL CORRECTIONS (two strings only)
+1. In the homepage stat band, change "6 — FASHION WEEK EDITIONS" to "5" with label "FASHION WEEK EDITIONS".
+2. On THE ONE FASHION WEEK INTERNATIONAL program card, set the line to exactly: "Five editions. Born in the DRC. Recognized internationally."
+Touch nothing else on the homepage.
+
+PART B — /VISION PAGE, NINE SECTIONS IN THIS ORDER
+
+1. VISION HERO — HeroSurface (lagoon radiant) with a reserved cinematic media area behind/beside per the hero pattern (PhotoSlot fallback, dev label "HERO MEDIA — CINEMATIC CULTURES MONTAGE"):
+Eyebrow: "OUR VISION"
+Display-XL: "CONNECTING HUMANITY. CREATING OPPORTUNITY. BUILDING PEACE."
+Supporting line: "The One Movement International exists to connect people, cultures, businesses and institutions into one global community — where collaboration creates opportunity, and opportunity creates positive impact."
+
+2. THE MISSION — ivory surface:
+Eyebrow: "THE MISSION"
+H2: "A PERMANENT ECOSYSTEM FOR A CONNECTED WORLD"
+Paragraph: "Our mission is to build and sustain a global ecosystem where creatives, entrepreneurs, investors, institutions, governments and changemakers meet, collaborate and grow — every day of the year. We connect talent to opportunity, culture to commerce, and vision to action, across borders and across sectors."
+
+3. BORN IN BUKAVU — asymmetric, PhotoSlot (dev label "ORIGIN STORY IMAGE — BUKAVU"):
+Eyebrow: "WHERE IT BEGAN"
+H2: "BORN IN BUKAVU. FORGED BY HOPE."
+Paragraph 1: "The One Movement began as The One Fashion Week in Bukavu, in the east of the Democratic Republic of Congo — a region that has lived through decades of conflict. In a place where the world saw crisis, a community of designers, models, artists and organizers chose to build a stage for something else: dignity, creativity and peace."
+Paragraph 2: "Edition after edition — in Bukavu, in Goma, in Kinshasa — the runway carried one message to audiences living the reality of war: we are one people. The fifth edition in Kinshasa, held under the theme Peace and Unity, was supported by the United Nations mission MONUSCO. Fashion had become more than fashion. It had become a voice."
+GoldThread divider.
+
+4. FROM EVENT TO MOVEMENT — lagoon-900 band, PhotoSlot (dev label "CULTURE AND PEACE IMAGE"):
+Eyebrow: "THE TURNING POINT"
+H2: "AN EVENT ENDS. A MOVEMENT DOES NOT."
+Paragraph: "What began as days on a calendar revealed a truth larger than any single event: the connections created — between creatives and investors, institutions and communities, cultures and markets — deserved to live 365 days a year. The One Movement International was born to carry that truth to the world."
+Pull-quote (display-md, gold-400): "ONE PEOPLE. ONE SINGLE HUMAN RACE."
+Line under pull-quote: "This is the belief at the center of everything we build: that every human being — of every origin, body, ability and story — deserves a place on the world's stage."
+
+5. THE 365-DAY MODEL — ivory surface, three-step layout using existing cards:
+Eyebrow: "HOW IT WORKS"
+H2: "A COMMUNITY THAT NEVER CLOSES"
+Intro line: "Our official programs are moments of connection. The Movement is the permanent network behind them."
+Three cards: "JOIN — Become part of a global community of creatives, entrepreneurs, institutions and changemakers." · "CONNECT — Meet the people, organizations and opportunities that match your goals — across sectors and across borders." · "CREATE IMPACT — Turn connection into collaboration: projects, partnerships, opportunities and contributions that improve lives."
+
+6. THE PILLARS — grid of 9 tiles (existing tile/card pattern):
+Eyebrow: "WHAT WE CONNECT"
+H2: "NINE PILLARS. ONE ECOSYSTEM."
+Tiles verbatim: Culture — "Fashion, music, dance, film and art as universal languages." · Business — "Enterprise and entrepreneurship across continents." · Investment — "Capital meeting talent and opportunity." · Diplomacy — "Dialogue between nations, institutions and peoples." · Innovation — "Technology and ideas that change what is possible." · Education — "Knowledge, universities and the next generation." · Tourism — "Cultures discovering each other." · Media — "Stories and voices that inform the world." · Humanitarian Impact — "Connection with a conscience."
+
+7. THE DISTINCTION — ivory surface, statement block with GeometricAccent divider above:
+Eyebrow: "AN IMPORTANT DISTINCTION"
+H2: "THE MOVEMENT AND THE FASHION WEEK"
+Paragraph: "The One Movement International is not a fashion week. The One Fashion Week International is one of our official programs — a powerful expression of the Movement's values, alongside programs dedicated to diplomacy, leadership, investment, recognition and culture. The Movement is the ecosystem. The programs are its heartbeat."
+
+8. THE GLOBAL AMBITION — lagoon-900 band, PhotoSlot (dev label "GLOBAL COMMUNITY IMAGE"):
+Eyebrow: "WHERE WE ARE GOING"
+H2: "A PERMANENT HOME FOR GLOBAL CONNECTION"
+Paragraph: "Our ambition is to build the world's most connected cross-sector community — a trusted digital and physical home where a designer in Kinshasa, an investor in Dubai, a university in Paris and an NGO in São Paulo can find each other and build together. We measure success in opportunities created, collaborations launched and lives improved."
+
+9. CLOSING INVITATION — HeroSurface:
+Display-LG: "THE MOVEMENT IS OPEN. THE WORLD IS INVITED."
+Primary button: "JOIN THE MOVEMENT" → /join ; secondary outline: "EXPLORE THE ECOSYSTEM" → /ecosystem
+Bilingual signature: "WE ARE ONE — نحن واحد" (Arabic correctly shaped, lang="ar" dir="rtl").
+
+PLACEHOLDER RULES
+All image areas use PhotoSlot/PhotoMosaic with the lagoon-800 premium fallback + subtle GeometricAccent. The dev labels above appear ONLY inside the placeholder surface as small, elegant, uppercase caption text (clearly a reserved space, never a broken image or grey developer box). Fixed aspect ratios so future photos drop in without layout redesign. Do not source, generate, download or hotlink any image.
+
+DESIGN REQUIREMENTS
+V2 tokens only; Cinzel display UPPERCASE only; maximum one signature motif per section; asymmetric composition in sections 3 and 8; generous section rhythm; WCAG AA with visible gold focus rings; alt text or aria-hidden on decorative SVG.
+
+FUNCTIONAL — all links route correctly; entrance animations subtle; prefers-reduced-motion disables them.
+AI REQUIREMENTS — none. No AI APIs.
+TECHNICAL — no new dependencies; no database changes; no server changes; no secrets.
+RESPONSIVE — flawless at 390px, 768px, 1280px; pillars grid reflows 1-col mobile / 2–3 tablet / 3 desktop.
+PERFORMANCE — CSS-only effects; lazy placeholders; no images added.
+
+PRESERVATION RULES
+Touch ONLY: the vision page folder, the two homepage strings in Part A, and docs/PROJECT-STATUS.md. Do not modify any other page, component defaults, tokens, routes, database or API. Do not redesign the homepage. If while editing the two homepage strings you notice any factual inconsistency elsewhere on the homepage, DO NOT fix it — list it in the completion report.
+
+TESTING REQUIREMENTS
+Run app; verify all nine sections and both homepage corrections; three widths; Arabic shaping; reduced motion; keyboard focus visibility; zero console errors; confirm all other pages unchanged.
+
+COMPLETION REPORT — report ALL 16 items:
+1 What was created · 2 What was changed · 3 Pages and components completed · 4 Files modified · 5 Dependencies added · 6 Database changes · 7 Environment variables required · 8 Tests completed · 9 What passed · 10 What remains incomplete · 11 Errors and warnings · 12 Owner actions required · 13 Mobile verification · 14 Accessibility verification · 15 Console and server-log status · 16 Recommended checkpoint name: "Vision Page Approved"

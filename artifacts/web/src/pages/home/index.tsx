@@ -61,7 +61,7 @@ const PROGRAMS: {
   {
     name: 'THE ONE FASHION WEEK INTERNATIONAL',
     tagline: 'Fashion as a force for peace and cultural exchange.',
-    extra: 'Six editions. Born in the DRC. Recognized internationally.',
+    extra: 'Five editions. Born in the DRC. Recognized internationally.',
     photo: 'photo-07.jpg',
   },
   {
@@ -486,7 +486,7 @@ export default function Home() {
       >
         <div className="mx-auto max-w-7xl px-6">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            <StatBlock value="6"  label="Fashion Week Editions" surface="dark" />
+            <StatBlock value="5"  label="Fashion Week Editions" surface="dark" />
             <StatBlock value="15" label="Sectors Connected"     surface="dark" />
             <StatBlock value="6"  label="Official Programs"     surface="dark" />
             <StatBlock value="1"  label="Global Movement"       surface="dark" />
