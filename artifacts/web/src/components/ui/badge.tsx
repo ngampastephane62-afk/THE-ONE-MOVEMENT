@@ -3,24 +3,37 @@ import { cn } from '@/lib/utils';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 const badgeVariants = cva(
-  // @replit
-  // Whitespace-nowrap: Badges should never wrap.
-  'whitespace-nowrap inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2' +
-    ' hover-elevate ',
+  [
+    'whitespace-nowrap inline-flex items-center gap-1',
+    'rounded-[var(--radius)] border px-2.5 py-0.5 text-xs font-semibold',
+    'transition-colors duration-150',
+    'focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1',
+    'hover-elevate',
+  ].join(' '),
   {
     variants: {
       variant: {
+        // Default: gold surface (primary accent)
         default:
-          // @replit shadow-xs instead of shadow, no hover because we use hover-elevate
           'border-transparent bg-primary text-primary-foreground shadow-xs',
+        // Gold: bright gold-400 on ink — for dark surfaces
+        gold:
+          'border-transparent bg-gold-400 text-ink-900 shadow-xs',
+        // Verified: gold-500 border + gold text — prestige indicator
+        verified:
+          'border-gold-500 bg-gold-500/10 text-gold-600 font-semibold',
+        // Secondary: muted fill
         secondary:
-          // @replit no hover because we use hover-elevate
           'border-transparent bg-secondary text-secondary-foreground',
+        // Destructive: crimson
         destructive:
-          // @replit shadow-xs instead of shadow, no hover because we use hover-elevate
           'border-transparent bg-destructive text-destructive-foreground shadow-xs',
-        // @replit shadow-xs" - use badge outline variable
-        outline: 'text-foreground border [border-color:var(--badge-outline)]',
+        // Outline: minimal, ink-on-ivory
+        outline:
+          'text-foreground border [border-color:var(--badge-outline)]',
+        // Crimson: for tags, data accents — use sparingly
+        crimson:
+          'border-transparent bg-crimson-700 text-ivory-50 shadow-xs',
       },
     },
     defaultVariants: {

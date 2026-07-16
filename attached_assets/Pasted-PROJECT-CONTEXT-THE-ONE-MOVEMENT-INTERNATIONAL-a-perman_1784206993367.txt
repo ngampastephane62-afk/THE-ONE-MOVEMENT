@@ -1,0 +1,74 @@
+PROJECT CONTEXT
+
+THE ONE MOVEMENT INTERNATIONAL — a permanent global ecosystem connecting culture, business, investment, diplomacy, innovation, education, tourism, media and humanitarian impact. Not an event website; The One Fashion Week International is one program within it. Slogan: "ONE WORLD. ONE PURPOSE. ONE MOVEMENT." Bilingual signature: "WE ARE ONE / نحن واحد".
+
+Stage 0 (foundation, routing, placeholder pages, database) is complete and must not be disturbed. THIS STAGE: THE DESIGN SYSTEM. No real pages are built in this stage.
+
+CURRENT TASK
+
+Create the complete visual design system as reusable tokens and components, plus a single internal gallery page at route /design-system displaying every token and component for review.
+
+DESIGN DIRECTION — "GLOBAL GOLD"
+
+This must feel like a landmark institution with creative fire — think of the confidence of a world-class museum combined with the warmth of a cultural festival. Premium, cinematic, alive. It must NOT look like a template, a corporate SaaS site, or a generic event page.
+
+COLOR SYSTEM (define as tokens, 3–4 steps each):
+- Ink: deep near-black warm bronze family (base around #16100A–#1A120B) — primary dark surfaces.
+- Gold: rich warm gold (core around #C9A24B) with a BRIGHT living highlight step (around #F0CE83) used for glowing accents on dark surfaces — this bright step is what keeps dark screens vibrant instead of muddy.
+- Ivory: warm light family (around #F7F1E5) for reading surfaces.
+- Sand: muted desert mid-tone for secondary surfaces and subtle fills.
+- One deep accent for contrast moments: a profound warm crimson-earth tone (around #7A2E2E family) usable ONLY in small doses (tags, data accents) so the system is not monochrome.
+- Reserved token "program-fashionweek" teal (#3E8FA3 family) — defined but NOT used in any default component.
+Document accessible pairings: body text always ink-on-ivory or ivory-on-ink; gold text only at large sizes or in its darkened step.
+
+TYPOGRAPHY — THE MAIN CHARACTER:
+- Display face: geometric, architectural, slightly art-deco confidence. Evaluate Marcellus, Cinzel, and Josefin Sans; pick ONE and justify. Display sizes must be OVERSIZED and confident: define a "display-xl" of roughly clamp(3.5rem, 8vw, 7rem) with tight line-height for hero statements, down through display-lg and display-md. Generous letter-spacing on uppercase display text.
+- Body: IBM Plex Sans + IBM Plex Sans Arabic (preferred) or Noto Sans + Noto Sans Arabic. Full Arabic support required; RTL must not break (avoid hard-coded left/right that would fail under dir="rtl"; no translations needed now).
+- Scale: display-xl/lg/md, h1–h4, body-lg, body, small, caption, and an "eyebrow" style (small, uppercase, letterspaced, gold) used above headings.
+
+SIGNATURE MOTIFS (the ownable elements — used with restraint, max one per screen region):
+1. GOLD THREAD: a thin gold line component that can run horizontally OR vertically, with an optional small node/dot — this is the brand's "connection" symbol and will later animate through the ecosystem page. Build it as a component with a subtle shimmer-on-scroll-into-view animation (CSS only, disabled under reduced motion).
+2. RADIANT SURFACE: a dark hero container with a soft radial gold glow rising from bottom or behind content (pure CSS gradients, layered, subtle noise-free) — cinematic, never busy.
+3. GEOMETRIC ACCENT: one optional decorative border-pattern strip component inspired by woven geometric patterns, rendered as elegant thin-line SVG (not literal ethnic print), off by default.
+4. DUOTONE IMAGE TREATMENT: define a CSS utility that renders images in an ink+gold duotone with a hover/reveal to full color — no images added now, but the utility ships ready for Stage 2.
+
+COMPOSITION RULES (bake into gallery examples):
+- Asymmetry is default: section examples must show off-center layouts (e.g., heading left-aligned at large scale with content offset), NOT everything centered.
+- Scale contrast: pair one enormous element with small quiet ones.
+- Space is luxury: generous vertical rhythm tokens (section spacing steps).
+
+BANNED CLICHÉS (do not produce): purple/blue gradients, glassmorphism/frosted cards, neon glows, identical rounded corners on everything (define at least two radius personalities: sharp 0–2px for institutional elements, soft for interactive), thin grey hairline borders everywhere, centered-everything layouts, drop shadows as the main depth device (prefer color/surface shifts).
+
+SCOPE
+
+1. Replace artifacts/web/src/styles/tokens.ts with full tokens: colors + documented pairings, type scale, spacing (including section-rhythm steps), radii (two personalities), shadows (minimal), motion (two entrance animations: fade-up, fade-in; standard hover transitions; durations/easings).
+2. Extend Tailwind theme from these tokens.
+3. Build/skin components in artifacts/web/src/components/ui (shadcn/ui as base where present): Button (primary gold on ink, secondary outline, ghost, destructive; sizes; loading/disabled), Input+Label+error, Textarea, Select, Checkbox, Badge (incl. gold "Verified" variant), Card (ivory default, dark cinematic variant, program variant with GOLD THREAD detail), NavigationBar (restyle existing: ink bar, gold active state, refined mobile menu), Footer (ink, organized columns, bilingual "WE ARE ONE / نحن واحد" rendered correctly), Modal/Dialog, Tabs, Alert (info/success/warning/error), Skeleton, EmptyState, SectionHeading (eyebrow + heading + optional gold thread), HeroSurface (radiant surface container), StatBlock (huge display number + label), GoldThread, GeometricAccent, duotone image utility.
+4. Motion: implement the two entrance animations and shimmer; all disabled under prefers-reduced-motion.
+5. Route /design-system: palette with contrast annotations, full type scale with English AND one Arabic sample per style, every component in every state, spacing visualization, motion demo, plus ONE composed sample section ("hero demo") combining HeroSurface + display-xl headline "ONE WORLD. ONE PURPOSE. ONE MOVEMENT." + eyebrow + buttons + gold thread — so we can judge the system working together.
+6. Apply new nav/footer styling WITHOUT changing placeholder page content.
+7. Update docs/PROJECT-STATUS.md (fonts chosen, token values, components list).
+
+DESIGN REQUIREMENTS
+WCAG AA contrast on all default pairings (4.5:1 body, 3:1 large) — annotate checked pairs on the gallery page. Gold focus ring on all interactive elements, keyboard navigable.
+
+FUNCTIONAL REQUIREMENTS
+All placeholder pages still render and navigate. Gallery works at mobile/tablet/desktop.
+
+AI REQUIREMENTS — none this stage.
+
+TECHNICAL REQUIREMENTS
+TypeScript. No new heavy dependencies. Google Fonts with display=swap, subset where possible. No photography/stock images. Radial glows and duotone via CSS only.
+
+SECURITY — no server changes; do not touch secrets.
+
+PERFORMANCE — fonts must not block first paint; no animation libraries; CSS-only effects.
+
+PRESERVATION RULES
+Do not modify placeholder page content, routes, database, API. Do not build real pages. Do not use the teal token in defaults. Do not restructure folders.
+
+TESTING REQUIREMENTS
+Run app; gallery verified at three widths; placeholder pages unaffected; Arabic sample renders in Arabic-capable font; reduced-motion disables animations; zero console errors.
+
+COMPLETION REPORT
+Report: files created/changed; display font chosen and why; final token hex values; components + states; contrast pairs verified; hero demo built; tests passed; anything incomplete; errors/warnings; owner action needed; recommended checkpoint name: "Design System V1 Approved".

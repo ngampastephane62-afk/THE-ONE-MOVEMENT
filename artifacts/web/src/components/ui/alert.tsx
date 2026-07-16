@@ -3,13 +3,30 @@ import { cn } from '@/lib/utils';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 const alertVariants = cva(
-  'relative w-full rounded-lg border px-4 py-3 text-sm [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground [&>svg~*]:pl-7',
+  [
+    'relative w-full rounded-sharp border-s-2 px-4 py-3.5 text-sm',
+    '[&>svg+div]:translate-y-[-2px]',
+    '[&>svg]:absolute [&>svg]:start-4 [&>svg]:top-3.5',
+    '[&>svg~*]:ps-7',
+  ].join(' '),
   {
     variants: {
       variant: {
-        default: 'bg-background text-foreground',
+        // Default / info: sand surface, sand border
+        default:
+          'bg-sand-100/50 border-sand-300 text-foreground [&>svg]:text-muted-foreground',
+        // Info: ivory with gold accent
+        info:
+          'bg-gold-400/8 border-gold-500 text-foreground [&>svg]:text-gold-600',
+        // Success: muted green-ish (we stay within our palette using ivory+gold as positive)
+        success:
+          'bg-ivory-50 border-gold-500 text-foreground [&>svg]:text-gold-600',
+        // Warning: warm sand with gold border
+        warning:
+          'bg-ivory-100 border-gold-500 text-foreground [&>svg]:text-gold-500',
+        // Error / destructive: crimson
         destructive:
-          'border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive',
+          'bg-crimson-700/8 border-crimson-700 text-destructive [&>svg]:text-destructive',
       },
     },
     defaultVariants: {
@@ -37,7 +54,7 @@ const AlertTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h5
     ref={ref}
-    className={cn('mb-1 font-medium leading-none tracking-tight', className)}
+    className={cn('mb-1 font-semibold leading-none tracking-tight', className)}
     {...props}
   />
 ));
@@ -49,7 +66,7 @@ const AlertDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn('text-sm [&_p]:leading-relaxed', className)}
+    className={cn('text-sm leading-relaxed [&_p]:leading-relaxed', className)}
     {...props}
   />
 ));

@@ -16,6 +16,7 @@ import JoinTheMovement from '@/pages/join';
 import SignIn from '@/pages/sign-in';
 import PrivacyPolicy from '@/pages/privacy-policy';
 import Terms from '@/pages/terms';
+import DesignSystem from '@/pages/design-system';
 import NotFound from '@/pages/not-found';
 
 const queryClient = new QueryClient();
@@ -36,6 +37,7 @@ function Router() {
       <Route path="/sign-in" component={SignIn} />
       <Route path="/privacy-policy" component={PrivacyPolicy} />
       <Route path="/terms" component={Terms} />
+      <Route path="/design-system" component={DesignSystem} />
       <Route component={NotFound} />
     </Switch>
   );
