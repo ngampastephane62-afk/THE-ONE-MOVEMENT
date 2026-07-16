@@ -5,8 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   TAILWIND THEME — GLOBAL GOLD design system
-   Token families: Ink · Gold · Ivory · Sand · Crimson · Reserved (teal)
+   TAILWIND THEME — LAGOON & GOLD design system (Palette V2)
+   Token families: Lagoon · Gold · Ivory · Sand · Coral · Ink · Crimson
    ───────────────────────────────────────────────────────────────────────────── */
 @theme inline {
   /* ── Shadcn/Radix semantic mapping ──────────────────────────────────────── */
@@ -61,38 +61,52 @@
   --color-sidebar-accent-border: var(--sidebar-accent-border);
   --color-sidebar-ring:          hsl(var(--sidebar-ring));
 
-  /* ── Brand palette utilities (bg-ink-900, text-gold-400, etc.) ─────────── */
-  /* Ink family — deep warm near-black bronze */
+  /* ── Brand palette utilities ─────────────────────────────────────────────
+     bg-lagoon-900, text-gold-400, bg-coral-500, etc.                       */
+
+  /* Ink family — deep warm near-black bronze (retained for body text) */
   --color-ink-950: hsl(30 42% 4%);
   --color-ink-900: hsl(30 37% 7%);    /* #16100A */
   --color-ink-800: hsl(29 35% 8%);    /* #1A120B */
   --color-ink-700: hsl(29 40% 12%);
   --color-ink-600: hsl(29 30% 18%);
 
-  /* Gold family — rich warm gold */
-  --color-gold-400: hsl(43 80% 73%);  /* #F0CE83 — bright living highlight */
-  --color-gold-500: hsl(39 52% 54%);  /* #C9A24B — core gold */
+  /* Lagoon family — deep teal, PRIMARY DARK SURFACES (V2) */
+  --color-lagoon-900: hsl(187 67% 12%);  /* #0A2E33 — nav, footer, hero base */
+  --color-lagoon-800: hsl(188 66% 16%);  /* #0E3D44 — secondary dark surface  */
+  --color-lagoon-700: hsl(189 70% 21%);
+  --color-lagoon-600: hsl(189 78% 24%);  /* #0D5F6E — AA body text on ivory   */
+  --color-lagoon-500: hsl(189 74% 32%);  /* #157A8C — rich teal accent         */
+  --color-lagoon-400: hsl(189 62% 45%);  /* #2BA3B8 — electric bright teal    */
+
+  /* Gold family — rich warm gold (SECOND SIGNATURE, retained) */
+  --color-gold-400: hsl(43 80% 73%);   /* #F0CE83 — bright highlight on dark  */
+  --color-gold-500: hsl(39 52% 54%);   /* #C9A24B — core gold                 */
   --color-gold-600: hsl(37 55% 40%);
   --color-gold-700: hsl(37 62% 29%);
 
-  /* Ivory family — warm light reading surfaces */
-  --color-ivory-50:  hsl(40 71% 98%); /* #FDFAF5 */
-  --color-ivory-100: hsl(38 57% 94%); /* #F7F1E5 */
-  --color-ivory-200: hsl(38 44% 87%); /* #EDE3CD */
-  --color-ivory-300: hsl(38 37% 79%); /* #DDD0B4 */
+  /* Ivory family — warm light reading surfaces (unchanged) */
+  --color-ivory-50:  hsl(40 71% 98%);  /* #FDFAF5 */
+  --color-ivory-100: hsl(38 57% 94%);  /* #F7F1E5 */
+  --color-ivory-200: hsl(38 44% 87%);  /* #EDE3CD */
+  --color-ivory-300: hsl(38 37% 79%);  /* #DDD0B4 */
 
-  /* Sand family — muted desert mid-tone */
+  /* Sand family — muted desert mid-tone (unchanged) */
   --color-sand-100: hsl(36 34% 85%);
   --color-sand-200: hsl(36 26% 74%);
   --color-sand-300: hsl(34 21% 63%);
   --color-sand-400: hsl(33 16% 53%);
 
-  /* Crimson — deep accent, minimal use only (tags, data accents) */
-  --color-crimson-700: hsl(0 45% 32%); /* #7A2E2E */
+  /* Coral — warm amber-coral. SMALL-DOSE accent only. Never large areas. */
+  --color-coral-500: hsl(19 72% 60%);   /* #E27D4F */
+  --color-coral-600: hsl(19 65% 48%);   /* accessible if needed */
+
+  /* Crimson — error states, rare destructive accents */
+  --color-crimson-700: hsl(0 45% 32%);  /* #7A2E2E */
   --color-crimson-800: hsl(0 49% 24%);
 
-  /* Reserved program token — NOT used in default components */
-  --color-program-fashionweek: hsl(191 45% 44%); /* #3E8FA3 teal */
+  /* Reserved program token — now harmonized to lagoon-500 */
+  --color-program-fashionweek: hsl(189 74% 32%);  /* #157A8C lagoon-500 */
 
   /* ── Font families ──────────────────────────────────────────────────────── */
   --font-display: 'Cinzel', Georgia, serif;
@@ -102,8 +116,6 @@
   --font-arabic:  'IBM Plex Sans Arabic', 'IBM Plex Sans', system-ui, sans-serif;
 
   /* ── Radius personalities ───────────────────────────────────────────────── */
-  /* sharp (0–2px): institutional elements — cards, sections, structural lines */
-  /* soft  (~6px):  interactive elements   — buttons, inputs, badges          */
   --radius-none:  0px;
   --radius-sharp: 2px;
   --radius-sm:    calc(var(--radius) - 4px);
@@ -154,7 +166,6 @@
   --muted:              36 34% 85%;  /* sand-100 */
   --muted-foreground:   33 16% 53%;  /* sand-400 */
 
-  /* Bright gold for accent highlights */
   --accent:             43 80% 73%;  /* gold-400 bright */
   --accent-foreground:  30 37% 7%;
 
@@ -171,19 +182,18 @@
   --sidebar-accent-foreground: 30 37% 7%;
   --sidebar-ring:            39 52% 54%;
 
-  --chart-1: 39 52% 54%;   /* gold-500 */
-  --chart-2: 43 80% 73%;   /* gold-400 */
-  --chart-3: 0 45% 32%;    /* crimson-700 */
-  --chart-4: 34 21% 63%;   /* sand-300 */
-  --chart-5: 37 55% 40%;   /* gold-600 */
+  --chart-1: 39 52% 54%;
+  --chart-2: 43 80% 73%;
+  --chart-3: 0 45% 32%;
+  --chart-4: 34 21% 63%;
+  --chart-5: 37 55% 40%;
 
   /* Fonts */
   --app-font-sans:  'IBM Plex Sans', system-ui, -apple-system, sans-serif;
   --app-font-serif: 'Cinzel', Georgia, serif;
   --app-font-mono:  'IBM Plex Mono', Menlo, monospace;
 
-  /* Radius: soft personality for interactive, sharp added separately */
-  --radius: 0.375rem; /* 6px — soft/interactive */
+  --radius: 0.375rem;
 
   /* Section rhythm spacing */
   --section-sm:  3rem;
@@ -191,7 +201,6 @@
   --section-lg:  8rem;
   --section-xl:  12rem;
 
-  /* Minimal shadows — prefer surface shifts over drop shadows */
   --shadow-2xs: 0 1px 2px rgba(26, 18, 11, 0.05);
   --shadow-xs:  0 1px 3px rgba(26, 18, 11, 0.08);
   --shadow-sm:  0 2px 6px rgba(26, 18, 11, 0.08), 0 1px 2px rgba(26, 18, 11, 0.04);
@@ -204,7 +213,6 @@
   --tracking-normal: 0em;
   --spacing: 0.25rem;
 
-  /* Auto-computed borders */
   --sidebar-primary-border: hsl(var(--sidebar-primary));
   --sidebar-primary-border: hsl(from hsl(var(--sidebar-primary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
   --sidebar-accent-border: hsl(var(--sidebar-accent));
@@ -222,7 +230,7 @@
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   DARK MODE — Ink surfaces, Ivory text, Gold highlights
+   DARK MODE — Lagoon surfaces, Ivory text, Gold highlights
    ───────────────────────────────────────────────────────────────────────────── */
 .dark {
   --button-outline: rgba(247, 241, 229, 0.12);
@@ -232,59 +240,59 @@
   --elevate-1: rgba(247, 241, 229, 0.04);
   --elevate-2: rgba(247, 241, 229, 0.09);
 
-  --background:         29 35% 8%;   /* ink-800 #1A120B */
+  --background:         187 67% 12%; /* lagoon-900 */
   --foreground:         38 57% 94%;  /* ivory-100 */
 
-  --border:             29 30% 16%;
-  --input:              29 28% 20%;
+  --border:             188 40% 22%;
+  --input:              188 38% 26%;
   --ring:               43 80% 73%;  /* bright gold focus on dark */
 
-  --card:               30 37% 7%;   /* ink-900 */
+  --card:               188 66% 16%; /* lagoon-800 */
   --card-foreground:    38 57% 94%;
-  --card-border:        29 28% 16%;
+  --card-border:        188 40% 22%;
 
-  --popover:            30 37% 7%;
+  --popover:            188 66% 16%;
   --popover-foreground: 38 57% 94%;
-  --popover-border:     29 28% 18%;
+  --popover-border:     188 40% 24%;
 
   --primary:            39 52% 54%;  /* gold-500 */
   --primary-foreground: 30 37% 7%;
 
-  --secondary:          29 30% 13%;
+  --secondary:          188 50% 19%;
   --secondary-foreground: 38 57% 94%;
 
-  --muted:              29 30% 11%;
+  --muted:              188 50% 16%;
   --muted-foreground:   36 20% 55%;
 
-  --accent:             43 80% 73%;  /* bright gold — the living highlight */
+  --accent:             43 80% 73%;
   --accent-foreground:  30 37% 7%;
 
-  --destructive:        0 45% 38%;   /* slightly lighter crimson for dark */
+  --destructive:        0 45% 38%;
   --destructive-foreground: 40 71% 98%;
 
-  --sidebar:                 29 35% 8%;
+  --sidebar:                 187 67% 12%;
   --sidebar-foreground:      38 57% 94%;
-  --sidebar-border:          29 30% 16%;
+  --sidebar-border:          188 40% 22%;
   --sidebar-primary:         39 52% 54%;
   --sidebar-primary-foreground: 30 37% 7%;
-  --sidebar-accent:          29 30% 13%;
+  --sidebar-accent:          188 50% 19%;
   --sidebar-accent-foreground: 38 57% 94%;
   --sidebar-ring:            43 80% 73%;
 
   --chart-1: 39 52% 54%;
   --chart-2: 43 80% 73%;
-  --chart-3: 0 45% 42%;
+  --chart-3: 189 74% 32%;
   --chart-4: 34 21% 53%;
   --chart-5: 37 62% 35%;
 
-  --shadow-2xs: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-xs:  0 1px 3px rgba(0, 0, 0, 0.35);
-  --shadow-sm:  0 2px 6px rgba(0, 0, 0, 0.35), 0 1px 2px rgba(0, 0, 0, 0.2);
-  --shadow:     0 4px 12px rgba(0, 0, 0, 0.40), 0 1px 3px rgba(0, 0, 0, 0.2);
-  --shadow-md:  0 6px 20px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.22);
-  --shadow-lg:  0 12px 32px rgba(0, 0, 0, 0.50), 0 4px 8px rgba(0, 0, 0, 0.22);
-  --shadow-xl:  0 20px 48px rgba(0, 0, 0, 0.55), 0 6px 12px rgba(0, 0, 0, 0.25);
-  --shadow-2xl: 0 32px 64px rgba(0, 0, 0, 0.60);
+  --shadow-2xs: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-xs:  0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-sm:  0 2px 6px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow:     0 4px 12px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.2);
+  --shadow-md:  0 6px 20px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.22);
+  --shadow-lg:  0 12px 32px rgba(0, 0, 0, 0.55), 0 4px 8px rgba(0, 0, 0, 0.22);
+  --shadow-xl:  0 20px 48px rgba(0, 0, 0, 0.6), 0 6px 12px rgba(0, 0, 0, 0.25);
+  --shadow-2xl: 0 32px 64px rgba(0, 0, 0, 0.65);
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -321,7 +329,6 @@
   }
 
   html {
-    /* Preserve RTL capability — never hard-code left/right in base styles */
     text-size-adjust: 100%;
   }
 
@@ -330,14 +337,13 @@
     font-feature-settings: "kern" 1, "liga" 1;
   }
 
-  /* Arabic text — apply this to spans/elements containing Arabic */
+  /* Arabic text — apply to spans/elements containing Arabic */
   [lang="ar"],
   .font-arabic {
     font-family: var(--font-arabic);
     direction: rtl;
   }
 
-  /* Display (Cinzel) headings */
   .font-display {
     font-family: var(--font-display);
     font-feature-settings: "kern" 1;
@@ -361,7 +367,6 @@
   .pb-section-lg { padding-bottom: var(--section-lg); }
 
   /* ── Typography scale ───────────────────────────────────────────────────── */
-  /* Display — Cinzel, oversized, tight leading, generous uppercase tracking  */
   .text-display-xl {
     font-family: var(--font-display);
     font-size: clamp(3.5rem, 8vw, 7rem);
@@ -383,9 +388,8 @@
     letter-spacing: 0.03em;
     font-weight: 600;
   }
-  /* Eyebrow — small, uppercase, letterspaced, gold */
   .text-eyebrow {
-    font-size: 0.6875rem;        /* 11px */
+    font-size: 0.6875rem;
     line-height: 1.4;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -404,7 +408,6 @@
     animation: var(--animate-shimmer);
   }
 
-  /* Disable all entrance animations under reduced-motion preference */
   @media (prefers-reduced-motion: reduce) {
     .animate-fade-up,
     .animate-fade-in,
@@ -413,11 +416,11 @@
     }
   }
 
-  /* ── Duotone image treatment: ink+gold (hover reveals full color) ────────
-     Apply to <img> or to a container wrapping an <img>.
-     "No images added now, but the utility ships ready for Stage 2."        */
+  /* ── Duotone image treatment: lagoon-tinted (hover reveals full color) ───
+     Updated V2: hue-rotate shifted from warm ink to cool teal/lagoon.
+     Apply to <img> or a container wrapping an <img>.                       */
   .img-duotone {
-    filter: sepia(80%) saturate(140%) hue-rotate(352deg) brightness(0.82) contrast(1.08);
+    filter: sepia(80%) saturate(120%) hue-rotate(155deg) brightness(0.75) contrast(1.1);
     transition: filter 0.5s ease;
   }
   .img-duotone:hover {
@@ -429,13 +432,13 @@
     }
   }
 
-  /* ── Radiant hero glow surface (used in HeroSurface component) ──────────── */
+  /* ── Radiant hero glow surface — LAGOON BASE with gold glow ────────────── */
   .radiant-surface {
     background:
       radial-gradient(ellipse 90% 55% at 50% 110%, hsl(39 52% 54% / 0.22) 0%, transparent 70%),
       radial-gradient(ellipse 60% 40% at 30% 100%, hsl(43 80% 73% / 0.10) 0%, transparent 60%),
-      hsl(var(--ink-900, 30 37% 7%));
-    background-color: hsl(30 37% 7%);
+      hsl(187 67% 12%);
+    background-color: hsl(187 67% 12%);
   }
 
   /* ── Focused interactive: gold ring ────────────────────────────────────── */
@@ -447,7 +450,7 @@
   /* ── Sharp radius (institutional) ──────────────────────────────────────── */
   .rounded-sharp { border-radius: var(--radius-sharp); }
 
-  /* ── Existing elevate system (preserved) ────────────────────────────────── */
+  /* ── Existing elevate system ─────────────────────────────────────────────  */
   input[type='search']::-webkit-search-cancel-button {
     @apply hidden;
   }

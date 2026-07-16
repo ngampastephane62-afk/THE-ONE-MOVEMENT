@@ -32,16 +32,17 @@ export default function HeroSurface({
   glowOrigin = 'bottom-center',
   minHeight = '70vh',
 }: HeroSurfaceProps) {
+  // Lagoon-900 base with warm gold radial glow — the teal-meets-gold sunrise atmosphere
   const glowGradients =
     glowOrigin === 'behind'
       ? `
-        radial-gradient(ellipse 80% 60% at 40% 55%, hsl(39 52% 54% / 0.18) 0%, transparent 65%),
+        radial-gradient(ellipse 80% 60% at 40% 55%, hsl(39 52% 54% / 0.20) 0%, transparent 65%),
         radial-gradient(ellipse 50% 40% at 60% 50%, hsl(43 80% 73% / 0.08) 0%, transparent 55%)
       `
       : `
-        radial-gradient(ellipse 100% 50% at 50% 115%, hsl(39 52% 54% / 0.25) 0%, transparent 65%),
-        radial-gradient(ellipse 70% 35% at 25% 110%, hsl(43 80% 73% / 0.10) 0%, transparent 55%),
-        radial-gradient(ellipse 50% 25% at 75% 100%, hsl(39 52% 54% / 0.08) 0%, transparent 50%)
+        radial-gradient(ellipse 100% 50% at 50% 115%, hsl(39 52% 54% / 0.28) 0%, transparent 65%),
+        radial-gradient(ellipse 70% 35% at 25% 110%, hsl(43 80% 73% / 0.12) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 25% at 75% 100%, hsl(39 52% 54% / 0.10) 0%, transparent 50%)
       `;
 
   return (
@@ -53,20 +54,20 @@ export default function HeroSurface({
       )}
       style={{
         minHeight,
-        backgroundColor: 'hsl(30 37% 7%)',
+        backgroundColor: 'hsl(187 67% 12%)',
         background: `
           ${glowGradients},
-          hsl(30 37% 7%)
+          hsl(187 67% 12%)
         `,
       }}
     >
-      {/* Very subtle ink-to-transparent vignette at top to avoid hard edge */}
+      {/* Lagoon-to-transparent vignette at top */}
       <span
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 h-24"
         style={{
           background:
-            'linear-gradient(to bottom, hsl(29 35% 8% / 0.6) 0%, transparent 100%)',
+            'linear-gradient(to bottom, hsl(187 67% 12% / 0.7) 0%, transparent 100%)',
         }}
       />
       <div className="relative z-10">{children}</div>

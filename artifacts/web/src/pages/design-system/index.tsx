@@ -16,6 +16,8 @@ import HeroSurface from '@/components/HeroSurface';
 import GeometricAccent from '@/components/GeometricAccent';
 import SectionHeading from '@/components/SectionHeading';
 import StatBlock from '@/components/StatBlock';
+import PhotoSlot from '@/components/PhotoSlot';
+import PhotoMosaic from '@/components/PhotoMosaic';
 
 /* ── Helpers ────────────────────────────────────────────────────────────────── */
 
@@ -80,14 +82,14 @@ export default function DesignSystem() {
   return (
     <div className="bg-ivory-50 min-h-screen">
       {/* Page header */}
-      <div className="bg-ink-900 py-section-md px-6">
+      <div className="py-section-md px-6" style={{ backgroundColor: 'hsl(187 67% 12%)' }}>
         <div className="mx-auto max-w-6xl">
           <p className="text-eyebrow text-gold-400 mb-4">Internal Reference</p>
           <h1
             className="text-display-lg text-ivory-100"
             style={{ fontFamily: 'var(--font-display)' }}
           >
-            GLOBAL GOLD
+            LAGOON & GOLD
             <br />
             Design System
           </h1>
@@ -122,13 +124,26 @@ export default function DesignSystem() {
       <div className="mx-auto max-w-6xl px-6">
         {/* ── 1. COLOR PALETTE ─────────────────────────────────────────── */}
         <GallerySection id="palette" title="Color Palette">
+          {/* Lagoon family */}
+          <div className="mb-10">
+            <Label>LAGOON — primary dark surfaces (V2)</Label>
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
+              <Swatch hex="#0A2E33" label="lagoon-900" note="Nav, footer, hero base" />
+              <Swatch hex="#0E3D44" label="lagoon-800" note="Secondary dark surface" />
+              <Swatch hex="#114E58" label="lagoon-700" />
+              <Swatch hex="#0D5F6E" label="lagoon-600" note="AA body text on ivory ≈ 8.8:1 ✓" />
+              <Swatch hex="#157A8C" label="lagoon-500" note="Rich teal accent" />
+              <Swatch hex="#2BA3B8" label="lagoon-400" note="Electric bright — display only" />
+            </div>
+          </div>
+
           {/* Ink family */}
           <div className="mb-10">
-            <Label>INK — primary dark surfaces</Label>
+            <Label>INK — body text on light surfaces (retained)</Label>
             <div className="grid grid-cols-5 gap-3">
               <Swatch hex="#090603" label="ink-950" />
               <Swatch hex="#16100A" label="ink-900" note="Body text on ivory ≥ 12:1 ✓" />
-              <Swatch hex="#1A120B" label="ink-800" note="Dark hero bg" />
+              <Swatch hex="#1A120B" label="ink-800" />
               <Swatch hex="#221508" label="ink-700" />
               <Swatch hex="#2C1E0D" label="ink-600" />
             </div>
@@ -175,19 +190,28 @@ export default function DesignSystem() {
             </div>
           </div>
 
+          {/* Coral */}
+          <div className="mb-10">
+            <Label>CORAL — warm amber-coral. SMALL-DOSE only (tags, stat accents). Never large areas.</Label>
+            <div className="grid grid-cols-2 gap-3 max-w-sm">
+              <Swatch hex="#E27D4F" label="coral-500" note="Tags, energy highlights. ~2.4:1 on ivory — display only." />
+              <Swatch hex="#C45E30" label="coral-600" note="Darker — use for accessible text if needed." />
+            </div>
+          </div>
+
           {/* Crimson + Reserved */}
           <div className="mb-10 grid grid-cols-1 gap-8 sm:grid-cols-2">
             <div>
-              <Label>CRIMSON — deep accent, MINIMAL USE (tags, errors)</Label>
+              <Label>CRIMSON — error states, MINIMAL USE</Label>
               <div className="grid grid-cols-2 gap-3">
                 <Swatch hex="#7A2E2E" label="crimson-700" note="Error states, rare accent tags" />
                 <Swatch hex="#5E2020" label="crimson-800" />
               </div>
             </div>
             <div>
-              <Label>RESERVED — program-fashionweek (teal). Not used in defaults.</Label>
+              <Label>RESERVED — program-fashionweek. Harmonized to lagoon-500 (V2).</Label>
               <div className="grid grid-cols-1 gap-3">
-                <Swatch hex="#3E8FA3" label="program-fashionweek" note="Reserved. Zero use in base components." />
+                <Swatch hex="#157A8C" label="program-fashionweek" note="Now matches lagoon-500. Zero use in base components." />
               </div>
             </div>
           </div>
@@ -206,14 +230,20 @@ export default function DesignSystem() {
               </thead>
               <tbody className="divide-y divide-sand-100">
                 {[
-                  ['ink-900 on ivory-100', '≥ 12:1', '✓ PASS', '✓ PASS', 'Primary body text — always safe'],
-                  ['ivory-100 on ink-900', '≥ 12:1', '✓ PASS', '✓ PASS', 'Body on dark surfaces'],
-                  ['ink-900 on gold-500', '≈ 4.8:1', '✓ PASS', '✓ PASS', 'Button labels on gold buttons'],
-                  ['gold-400 on ink-900', '≈ 8.5:1', '✓ PASS', '✓ PASS', 'Bright gold highlight on dark'],
+                  ['ink-900 on ivory-100',     '≥ 12:1',  '✓ PASS', '✓ PASS', 'Primary body text — always safe'],
+                  ['ivory-100 on lagoon-900',  '≥ 14:1',  '✓ PASS', '✓ PASS', 'Body on dark hero / nav / footer'],
+                  ['ivory-100 on lagoon-800',  '≥ 12:1',  '✓ PASS', '✓ PASS', 'Body on secondary dark surfaces'],
+                  ['ivory-100 on ink-900',     '≥ 12:1',  '✓ PASS', '✓ PASS', 'Body on ink (retained)'],
+                  ['ink-900 on gold-500',      '≈ 4.8:1', '✓ PASS', '✓ PASS', 'Button labels on gold buttons'],
+                  ['gold-400 on lagoon-900',   '≈ 8.5:1', '✓ PASS', '✓ PASS', 'Bright gold on teal dark'],
+                  ['lagoon-600 on ivory-100',  '≈ 8.8:1', '✓ PASS', '✓ PASS', 'AA teal body text on light bg'],
+                  ['lagoon-500 on ivory-100',  '≈ 6.6:1', '✓ PASS', '✓ PASS', 'Teal display text on light'],
                   ['crimson-700 on ivory-100', '≈ 5.1:1', '✓ PASS', '✓ PASS', 'Error text on light bg'],
-                  ['gold-600 on ivory-100', '≈ 4.6:1', '✓ PASS', '✓ PASS', 'Eyebrow gold on light bg'],
-                  ['gold-500 on ivory-100', '≈ 2.8:1', '✗ FAIL', '✓ PASS', 'Large text / display only. Never body.'],
-                  ['gold-400 on ivory-100', '< 2:1', '✗ FAIL', '✗ FAIL', 'BANNED — never pair on light surface'],
+                  ['gold-600 on ivory-100',    '≈ 4.6:1', '✓ PASS', '✓ PASS', 'Eyebrow gold on light bg'],
+                  ['lagoon-400 on ivory-100',  '≈ 4.1:1', '✗ FAIL', '✓ PASS', 'Large text only. Never body.'],
+                  ['gold-500 on ivory-100',    '≈ 2.8:1', '✗ FAIL', '✓ PASS', 'Display / eyebrow only. Never body.'],
+                  ['coral-500 on ivory-100',   '≈ 2.4:1', '✗ FAIL', '✗ FAIL', 'Tags only. Never text.'],
+                  ['gold-400 on ivory-100',    '< 2:1',   '✗ FAIL', '✗ FAIL', 'BANNED — never on light surface'],
                 ].map(([pair, ratio, body, large, notes]) => (
                   <tr
                     key={pair}
@@ -575,10 +605,23 @@ export default function DesignSystem() {
 
           {/* GeometricAccent */}
           <div className="mb-12">
-            <Label>GeometricAccent — SVG geometric border strip</Label>
-            <GeometricAccent height={28} />
-            <p className="text-xs text-sand-400 mt-2">
-              Thin-line SVG pattern inspired by woven geometric traditions. Use max once per section boundary.
+            <Label>GeometricAccent — two variants (V2 promotion: now an active brand element)</Label>
+            <div className="space-y-3">
+              <div>
+                <p className="text-xs text-sand-400 mb-1">gold-on-lagoon — for lagoon dark surfaces</p>
+                <div style={{ backgroundColor: 'hsl(187 67% 12%)' }}>
+                  <GeometricAccent variant="gold-on-lagoon" height={28} />
+                </div>
+              </div>
+              <div>
+                <p className="text-xs text-sand-400 mb-1">lagoon-on-ivory — for light ivory surfaces</p>
+                <div style={{ backgroundColor: 'hsl(38 57% 94%)' }}>
+                  <GeometricAccent variant="lagoon-on-ivory" height={28} />
+                </div>
+              </div>
+            </div>
+            <p className="text-xs text-sand-400 mt-3">
+              Use as section dividers. Maximum one per section boundary.
             </p>
           </div>
 
@@ -630,20 +673,56 @@ export default function DesignSystem() {
 
           {/* Duotone utility */}
           <div className="mb-12">
-            <Label>Duotone image treatment — .img-duotone (hover reveals full color)</Label>
+            <Label>Duotone — .img-duotone (lagoon-tinted V2, hover reveals full color)</Label>
             <div className="flex gap-4 items-center">
               <div
-                className="img-duotone rounded-sharp overflow-hidden bg-sand-200"
+                className="img-duotone rounded-sharp overflow-hidden"
                 style={{ width: 160, height: 100 }}
               >
-                <div className="w-full h-full bg-gradient-to-br from-sand-300 to-sand-400 flex items-center justify-center">
-                  <span className="text-xs text-sand-100">Image placeholder</span>
+                <div
+                  className="w-full h-full flex items-center justify-center"
+                  style={{ backgroundColor: 'hsl(189 62% 45%)' }}
+                >
+                  <span className="text-xs text-ivory-100">Hover to reveal</span>
                 </div>
               </div>
               <p className="text-sm text-sand-400 max-w-xs">
-                Apply <code className="font-mono text-xs bg-sand-100 px-1 py-0.5 rounded">img-duotone</code> to any <code className="font-mono text-xs bg-sand-100 px-1 py-0.5 rounded">&lt;img&gt;</code> or wrapper. Hover above to reveal full color.
+                V2: lagoon-tinted via <code className="font-mono text-xs bg-sand-100 px-1 py-0.5 rounded">hue-rotate(155deg)</code>. Apply to any img or wrapper. Hover to reveal full color.
               </p>
             </div>
+          </div>
+
+          {/* PhotoSlot */}
+          <div className="mb-12">
+            <Label>PhotoSlot — graceful image fallback (brand-photos/ folder)</Label>
+            <div className="grid grid-cols-3 gap-4">
+              <div>
+                <p className="text-xs text-sand-400 mb-2">With duotone (file missing → lagoon fallback)</p>
+                <PhotoSlot filename="photo-missing.jpg" alt="" className="w-full aspect-square" duotone />
+              </div>
+              <div>
+                <p className="text-xs text-sand-400 mb-2">Sharp variant (default)</p>
+                <PhotoSlot filename="photo-missing-2.jpg" alt="" className="w-full aspect-[4/3]" variant="sharp" />
+              </div>
+              <div>
+                <p className="text-xs text-sand-400 mb-2">Rounded variant</p>
+                <PhotoSlot filename="photo-missing-3.jpg" alt="" className="w-full aspect-[4/3]" variant="rounded" />
+              </div>
+            </div>
+            <p className="text-xs text-sand-400 mt-3">
+              Missing files always render an elegant lagoon-800 surface with geometric accent — the page never looks broken.
+            </p>
+          </div>
+
+          {/* PhotoMosaic */}
+          <div className="mb-12">
+            <Label>PhotoMosaic — asymmetric editorial grid (all fallbacks shown)</Label>
+            <div className="max-w-xl">
+              <PhotoMosaic filenames={['photo-a.jpg', 'photo-b.jpg', 'photo-c.jpg', 'photo-d.jpg', 'photo-e.jpg']} />
+            </div>
+            <p className="text-xs text-sand-400 mt-3">
+              One large feature + secondary column of squares. Each missing file renders a lagoon fallback.
+            </p>
           </div>
         </GallerySection>
 
@@ -838,13 +917,13 @@ export default function DesignSystem() {
         </HeroSurface>
 
         {/* Geometric accent at boundary */}
-        <div style={{ backgroundColor: 'hsl(30 37% 7%)' }}>
-          <GeometricAccent height={24} color="hsl(39 52% 54% / 0.5)" />
+        <div style={{ backgroundColor: 'hsl(187 67% 12%)' }}>
+          <GeometricAccent variant="gold-on-lagoon" height={24} />
         </div>
 
         <div className="max-w-6xl mx-auto px-6 py-8">
           <p className="text-xs text-sand-400">
-            End of Design System Gallery · Stage 1 Complete · Recommended checkpoint: "Design System V1 Approved"
+            End of Design System Gallery · Palette V2 "Lagoon & Gold" Complete · Recommended checkpoint: "Lagoon Gold V2 Approved"
           </p>
         </div>
       </section>

@@ -1,0 +1,63 @@
+PROJECT CONTEXT
+
+THE ONE MOVEMENT INTERNATIONAL — a permanent global ecosystem connecting culture, business, investment, diplomacy, innovation, education, tourism, media and humanitarian impact. It grew from THE ONE FASHION WEEK, a fashion-for-peace event born in the Democratic Republic of Congo (editions in Bukavu, Goma and Kinshasa) whose 5th edition was publicly supported by the UN mission MONUSCO under the theme "Peace and Unity". The Movement is the evolution: no longer an event — a permanent global community. Slogan: "ONE WORLD. ONE PURPOSE. ONE MOVEMENT." Bilingual signature: "WE ARE ONE — نحن واحد".
+
+The existing design system (ink/gold, Cinzel + IBM Plex Sans/Arabic, HeroSurface, GoldThread, SectionHeading, StatBlock, cards, buttons) and the built homepage are APPROVED IN STRUCTURE but the COLOR WORLD is being revised by owner decision. THIS TASK: recolor the design system to the new "LAGOON & GOLD" palette, integrate owner photography, and restyle the homepage with new sections. Structure and components are reused, not rebuilt.
+
+CURRENT TASK (one bundled revision)
+
+A) Recolor tokens to Palette V2. B) Add a photography pipeline. C) Update the homepage with the origin-story section and photographic vibrancy. Nothing else changes.
+
+A — PALETTE V2 "LAGOON & GOLD" (replace color tokens; keep all other tokens)
+
+- lagoon-900 deep teal-ink (around #0A2E33) and lagoon-800 (around #0E3D44): primary dark surfaces (replaces ink as hero/nav/footer background)
+- lagoon-500 rich teal (around #157A8C) and lagoon-400 electric bright teal (around #2BA3B8): the living accent family — hovers, active states, links on light surfaces (lagoon-600 for AA text uses)
+- gold-500 (#C9A24B) and gold-400 bright (#F0CE83): KEPT — the second signature; gold glows on lagoon surfaces
+- ivory-100 (#F7F1E5): reading surfaces — KEPT
+- coral-500 warm amber-coral (around #E27D4F): small-dose energy accent (tags, highlights, stat numbers occasionally) — never large areas
+- ink-900 (#16100A): retained as a neutral for text on light surfaces
+- Update the reserved "program-fashionweek" token to the brand teal lagoon-500 (it is now harmonized with the master palette)
+Accessibility is unchanged law: body text only ink-on-ivory or ivory-on-lagoon-900/800; lagoon-400 and gold-400 are display/accent-only on light backgrounds; annotate the updated contrast table on /design-system.
+Radiant hero surfaces become: lagoon-900 base with a warm gold radial glow — the teal-meets-gold sunrise is the brand's signature atmosphere.
+GeometricAccent component: promote from off-by-default to an active brand element — refine it as a thin-line geometric strip available in gold-on-lagoon and lagoon-on-ivory variants; allowed as section dividers; still maximum one motif per section.
+
+B — PHOTOGRAPHY PIPELINE
+
+- Create folder artifacts/web/public/brand-photos (add a .gitkeep).
+- Build a small PhotoSlot component: renders an image from /brand-photos by filename with object-fit cover, a lagoon duotone-to-full-color hover treatment (CSS), rounded or sharp variant, and lazy loading. If the image file is missing, it renders an elegant fallback surface (lagoon-800 with subtle geometric accent) so the page never looks broken.
+- Build a PhotoMosaic component: an asymmetric editorial grid (one large + several small) that automatically uses whatever images exist in a provided filename list, skipping missing ones.
+- Update the duotone utility to lagoon-tinted.
+- Do NOT download, generate, or hotlink any images. Only reference local files by name: expect filenames photo-01.jpg through photo-25.jpg and use them in the components below; missing files fall back gracefully.
+
+C — HOMEPAGE V2 (edit existing homepage; keep current section order and copy EXCEPT the changes below; all display headings remain UPPERCASE Cinzel)
+
+1. HERO: recolored to lagoon radiant surface. Behind the headline, if photo-01.jpg exists, show it full-bleed with a deep lagoon duotone overlay at low opacity so text contrast is preserved; fallback = pure radiant surface. Copy unchanged.
+2. NEW SECTION inserted after WHAT WE ARE — "OUR STORY" (ivory surface, asymmetric, with PhotoMosaic using photo-02..photo-06):
+   Eyebrow: "FROM CONGO TO THE WORLD"
+   H2: "BORN IN CRISIS. BUILT FOR PEACE."
+   Paragraph 1: "The One Movement began as The One Fashion Week in Bukavu, Democratic Republic of Congo — a fashion event created in a region living through one of the world's longest conflicts. Edition after edition, in Bukavu, Goma and Kinshasa, it gave a stage to designers, models and artists carrying one message: peace, unity and the celebration of every human being."
+   Paragraph 2: "Its fifth edition in Kinshasa, held under the theme Peace and Unity, was supported by the United Nations mission MONUSCO. What began as a runway became a voice. And that voice grew into something larger than any event — a global movement connecting culture, business, diplomacy and humanitarian action, 365 days a year."
+   Pull-quote element (display-md, gold): "ONE PEOPLE. ONE SINGLE HUMAN RACE."
+3. ECOSYSTEM section: recolored to lagoon-900 band; tiles hover in lagoon-400 with gold text; content unchanged.
+4. WHO CAN JOIN: unchanged copy; program cards' top line becomes gold-on-ivory with lagoon hover.
+5. OFFICIAL PROGRAMS: recolored lagoon band. On THE ONE FASHION WEEK INTERNATIONAL card only, add small line under the tagline: "Six editions. Born in the DRC. Recognized internationally." Add PhotoSlot thumbnails (photo-07..photo-12) as card backgrounds with duotone overlay where files exist.
+6. STAT BAND: recolored; numbers in gold-400 on lagoon-900; replace the four stats with: "6" — FASHION WEEK EDITIONS · "15" — SECTORS CONNECTED · "6" — OFFICIAL PROGRAMS · "1" — GLOBAL MOVEMENT. No other numbers.
+7. IMPACT: unchanged copy; add PhotoSlot (photo-13) beside text. STRICT: still no donation language anywhere.
+8. FINAL INVITATION: lagoon radiant surface with gold glow; copy unchanged.
+No dates, cities, venues, media-organization names, or partner logos anywhere on the homepage.
+
+ALSO UPDATE: NavigationBar and Footer to lagoon-900 with gold active states; /design-system gallery to display the new palette, updated contrast table, PhotoSlot/PhotoMosaic (with fallbacks visible), and the recolored hero demo; docs/PROJECT-STATUS.md with Palette V2 values and this revision.
+
+DESIGN REQUIREMENTS
+Vibrant but disciplined: teal and gold create the energy; coral only in small doses; maximum one signature motif per section; asymmetric compositions preserved; WCAG AA enforced with annotated pairs; visible gold focus rings kept.
+
+AI REQUIREMENTS — none. TECHNICAL — no new dependencies; CSS-only effects; lazy-load images; no layout shift from missing images. SECURITY — no server changes, no secrets.
+
+PRESERVATION RULES
+Do not change page structure/copy except as specified. Do not touch other placeholder pages, database, API, routes (beyond nothing), or fonts. Do not download or generate images. Do not add media names or partner logos.
+
+TESTING REQUIREMENTS
+Run app; homepage at 390/768/1280px; verify graceful fallbacks with empty brand-photos folder; verify with at least one test scenario where images are missing; Arabic signature shaping intact; reduced-motion respected; zero console errors; placeholder pages unaffected.
+
+COMPLETION REPORT
+Report: files changed; final V2 hex values; sections updated; photo pipeline behavior (with and without files); contrast pairs verified; tests passed; anything incomplete; errors/warnings; owner action required; recommended checkpoint name: "Lagoon Gold V2 Approved".

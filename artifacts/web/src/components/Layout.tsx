@@ -25,18 +25,18 @@ export default function Layout({ children }: LayoutProps) {
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       {/* ── Navigation Bar ─────────────────────────────────────────────────── */}
       <header
-        style={{ backgroundColor: 'hsl(30 37% 7%)' }}
+        style={{ backgroundColor: 'hsl(187 67% 12%)' }}
         className="sticky top-0 z-50 border-b"
         role="banner"
       >
         <div
           className="mx-auto flex max-w-7xl items-center justify-between px-6 py-0"
-          style={{ borderColor: 'hsl(29 28% 14%)' }}
+          style={{ borderColor: 'hsl(188 46% 20%)' }}
         >
           {/* Wordmark */}
           <Link
             href="/"
-            className="shrink-0 py-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-900 rounded-sharp"
+            className="shrink-0 py-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2 focus-visible:ring-offset-lagoon-900 rounded-sharp"
             aria-label="The One Movement International — Home"
           >
             <span
@@ -125,8 +125,8 @@ export default function Layout({ children }: LayoutProps) {
             aria-label="Mobile navigation"
             className="lg:hidden border-t"
             style={{
-              backgroundColor: 'hsl(29 35% 8%)',
-              borderColor: 'hsl(29 28% 14%)',
+              backgroundColor: 'hsl(188 66% 16%)',
+              borderColor: 'hsl(188 46% 20%)',
             }}
           >
             <div className="mx-auto max-w-7xl px-6 py-3 flex flex-col gap-0">
@@ -161,7 +161,7 @@ export default function Layout({ children }: LayoutProps) {
 
       {/* ── Footer ─────────────────────────────────────────────────────────── */}
       <footer
-        style={{ backgroundColor: 'hsl(30 37% 7%)' }}
+        style={{ backgroundColor: 'hsl(187 67% 12%)' }}
         className="border-t"
         role="contentinfo"
       >
@@ -291,7 +291,7 @@ export default function Layout({ children }: LayoutProps) {
           {/* Bottom bar: copyright + bilingual signature */}
           <div
             className="mt-10 pt-8 border-t flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-            style={{ borderColor: 'hsl(29 28% 14%)' }}
+            style={{ borderColor: 'hsl(188 46% 20%)' }}
           >
             <p className="text-xs" style={{ color: 'hsl(36 20% 45%)' }}>
               &copy; {new Date().getFullYear()} The One Movement International. All rights reserved.

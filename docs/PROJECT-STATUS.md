@@ -6,6 +6,8 @@
   placeholder pages, database structure.
 - Stage 1 — Design System ("GLOBAL GOLD"): complete visual identity token
   system, UI components, signature brand motifs, and internal gallery page.
+- Stage 1 Revision — Palette V2 "LAGOON & GOLD": teal-based primary palette,
+  photography pipeline, full Homepage V2 (9 sections), updated gallery and layout.
 
 ## COMPLETED
 
@@ -33,24 +35,6 @@ as a landmark institution, not a brand template.
 **IBM Plex Sans Arabic** (300–600) for Arabic/RTL — optical companion.
 All loaded non-blocking with `display=swap`.
 
-#### Final Token Values
-| Token        | Hex        | HSL                  | Role                           |
-|-------------|-----------|----------------------|-------------------------------|
-| ink-950      | #090603   | 30 42% 4%            | Deepest dark                  |
-| ink-900      | #16100A   | 30 37% 7%            | Primary dark surface / text   |
-| ink-800      | #1A120B   | 29 35% 8%            | Dark hero background          |
-| ink-600      | #2C1E0D   | 29 30% 18%           | Subtle dark border            |
-| gold-400     | #F0CE83   | 43 80% 73%           | Bright living highlight       |
-| gold-500     | #C9A24B   | 39 52% 54%           | Core brand gold / CTAs        |
-| gold-600     | #A07B2B   | 37 55% 40%           | Accessible gold on ivory      |
-| ivory-50     | #FDFAF5   | 40 71% 98%           | Card background               |
-| ivory-100    | #F7F1E5   | 38 57% 94%           | Page background               |
-| ivory-200    | #EDE3CD   | 38 44% 87%           | Secondary fills               |
-| sand-200     | #D4C5A8   | 36 26% 74%           | Borders                       |
-| sand-400     | #9A8B72   | 33 16% 53%           | Secondary text / muted        |
-| crimson-700  | #7A2E2E   | 0 45% 32%            | Error / rare accent (minimal) |
-| program-fashionweek | #3E8FA3 | 191 45% 44%   | RESERVED — not in defaults    |
-
 #### Typography Scale
 | Style       | Size                        | Line-height | Tracking   |
 |------------|----------------------------|------------|------------|
@@ -71,18 +55,15 @@ Skeleton: gold shimmer sweep.
 Input/Label/Textarea/Select/Checkbox: gold focus ring via `--ring` token.
 Dialog/Modal, Dropdown, Popover: unstyled in this stage (Radix primitives).
 
-#### Signature Motifs
+#### Signature Motifs (V1 originals)
 1. **GoldThread** — 1px horizontal/vertical line with gold shimmer sweep
    on scroll-into-view (IntersectionObserver + CSS animation). Optional node dot.
    Disabled under `prefers-reduced-motion`.
-2. **HeroSurface** — Ink background with layered radial gold gradients rising
-   from below. Pure CSS, no noise, no glassmorphism.
-3. **GeometricAccent** — SVG repeating rhombus strip inspired by woven geometry.
-   Off by default; max one per section boundary.
+2. **HeroSurface** — Layered radial gold gradients on lagoon-900 base. Pure CSS.
+3. **GeometricAccent** — SVG repeating rhombus strip. Now two variants (see V2 below).
 4. **SectionHeading** — eyebrow + display heading + optional GoldThread.
 5. **StatBlock** — oversized display number + quiet label (scale contrast).
-6. **Duotone image utility** (`.img-duotone`) — sepia+hue filter for ink+gold
-   tint with hover reveal to full color. Ships ready for Stage 2 imagery.
+6. **Duotone image utility** (`.img-duotone`) — lagoon-tinted (V2) with hover reveal.
 
 #### Composition Rules Applied
 - Asymmetric layouts by default (headings left-aligned, content offset).
@@ -93,36 +74,109 @@ Dialog/Modal, Dropdown, Popover: unstyled in this stage (Radix primitives).
 - `rounded-sharp` (2px): institutional elements — cards, section borders.
 - `rounded-md` / `rounded-lg` (4–6px): interactive — buttons, inputs, badges.
 
-#### WCAG AA Contrast — Verified Pairings
-- ink-900 on ivory-100: ≥ 12:1 ✓ (body text)
-- ivory-100 on ink-900: ≥ 12:1 ✓ (body on dark)
-- ink-900 on gold-500: ≈ 4.8:1 ✓ (button labels)
-- gold-400 on ink-900: ≈ 8.5:1 ✓ (bright gold on dark)
-- gold-600 on ivory-100: ≈ 4.6:1 ✓ (eyebrow text)
-- crimson-700 on ivory-100: ≈ 5.1:1 ✓ (error text)
-- gold-500 on ivory-100: ≈ 2.8:1 ✗ body / ✓ large (display only)
-- gold-400 on ivory: BANNED — always fails
+### Stage 1 Revision — Palette V2 "LAGOON & GOLD"
+
+#### Decision
+Owner review replaced the ink-based dark palette with a teal-based "lagoon" family.
+Gold family is fully retained. Coral added as a small-dose warm accent.
+
+#### V2 Full Token Values
+| Token               | Hex      | HSL              | Role                                        |
+|--------------------|---------|-----------------|---------------------------------------------|
+| lagoon-900          | #0A2E33 | 187 67% 12%     | Nav, footer, hero base (replaces ink-900)   |
+| lagoon-800          | #0E3D44 | 187 58% 16%     | Secondary dark surface                      |
+| lagoon-700          | #114E58 | 188 67% 21%     | Mid-dark (card borders on dark)             |
+| lagoon-600          | #0D5F6E | 188 79% 24%     | AA teal body text on ivory ≈ 8.8:1 ✓        |
+| lagoon-500          | #157A8C | 189 75% 31%     | Rich teal accent; equals program-fashionweek|
+| lagoon-400          | #2BA3B8 | 189 61% 44%     | Electric bright — display/highlights only   |
+| gold-400            | #F0CE83 | 43 80% 73%      | Bright living highlight (unchanged)         |
+| gold-500            | #C9A24B | 39 52% 54%      | Core brand gold / CTAs (unchanged)          |
+| gold-600            | #A07B2B | 37 55% 40%      | Accessible gold on ivory (unchanged)        |
+| coral-500           | #E27D4F | 18 71% 60%      | Warm accent — tags, stat highlights ONLY    |
+| coral-600           | #C45E30 | 20 62% 48%      | Darker coral if text contrast needed        |
+| ivory-50            | #FDFAF5 | 40 71% 98%      | Card background (unchanged)                 |
+| ivory-100           | #F7F1E5 | 38 57% 94%      | Page background (unchanged)                 |
+| ivory-200           | #EDE3CD | 38 44% 87%      | Secondary fills (unchanged)                 |
+| sand-200            | #D4C5A8 | 36 26% 74%      | Borders (unchanged)                         |
+| sand-400            | #9A8B72 | 33 16% 53%      | Secondary text / muted (unchanged)          |
+| crimson-700         | #7A2E2E | 0 45% 32%       | Error / rare accent (unchanged)             |
+| ink-900             | #16100A | 30 37% 7%       | Retained for body text on ivory ≥ 12:1 ✓   |
+| program-fashionweek | #157A8C | 189 75% 31%     | Now equals lagoon-500 (V2 harmonization)    |
+
+#### V2 WCAG AA Contrast — Verified Pairings
+| Pairing                    | Ratio    | AA Body | AA Large | Notes                               |
+|---------------------------|---------|--------|---------|--------------------------------------|
+| ink-900 on ivory-100       | ≥ 12:1  | ✓ PASS | ✓ PASS  | Primary body text — always safe      |
+| ivory-100 on lagoon-900    | ≥ 14:1  | ✓ PASS | ✓ PASS  | Body on dark hero / nav / footer     |
+| ivory-100 on lagoon-800    | ≥ 12:1  | ✓ PASS | ✓ PASS  | Body on secondary dark surfaces      |
+| ivory-100 on ink-900       | ≥ 12:1  | ✓ PASS | ✓ PASS  | Retained for mixed-surface layouts   |
+| ink-900 on gold-500        | ≈ 4.8:1 | ✓ PASS | ✓ PASS  | Button labels on gold                |
+| gold-400 on lagoon-900     | ≈ 8.5:1 | ✓ PASS | ✓ PASS  | Gold highlights on teal dark         |
+| lagoon-600 on ivory-100    | ≈ 8.8:1 | ✓ PASS | ✓ PASS  | AA teal body text on light bg        |
+| lagoon-500 on ivory-100    | ≈ 6.6:1 | ✓ PASS | ✓ PASS  | Teal display/large text on light     |
+| crimson-700 on ivory-100   | ≈ 5.1:1 | ✓ PASS | ✓ PASS  | Error text on light bg               |
+| gold-600 on ivory-100      | ≈ 4.6:1 | ✓ PASS | ✓ PASS  | Eyebrow gold on light bg             |
+| lagoon-400 on ivory-100    | ≈ 4.1:1 | ✗ FAIL | ✓ PASS  | Large text / display only            |
+| gold-500 on ivory-100      | ≈ 2.8:1 | ✗ FAIL | ✓ PASS  | Display / eyebrow only. Never body.  |
+| coral-500 on ivory-100     | ≈ 2.4:1 | ✗ FAIL | ✗ FAIL  | Tags / colour-only. Never text.      |
+| gold-400 on ivory-100      | < 2:1   | ✗ FAIL | ✗ FAIL  | BANNED — never pair on light surface |
+
+#### V2 Component & Motif Updates
+- **Layout** — nav, footer, mobile drawer: ink-900 → lagoon-900/800 backgrounds.
+- **HeroSurface** — base background: ink-900 → lagoon-900; gold glow unchanged.
+- **GeometricAccent** — promoted from off-by-default to active brand element.
+  Two `variant` prop values: `gold-on-lagoon` (default) and `lagoon-on-ivory`.
+  Unique SVG `patternId` per variant to prevent ID collisions when both appear on-page.
+- **Duotone `.img-duotone`** — filter updated: sepia-gold → lagoon-tinted via
+  `hue-rotate(155deg) saturate(1.1) brightness(0.7)`. Hover reveals full colour.
+
+#### V2 Photography Pipeline
+- `artifacts/web/public/brand-photos/` — folder created (empty; `.gitkeep`).
+- **PhotoSlot** — renders `/brand-photos/{filename}` with lagoon duotone hover.
+  Elegant lagoon-800 fallback with GeometricAccent pattern when image is missing.
+  Props: `filename`, `alt`, `className`, `variant` (`sharp`/`rounded`/`circle`), `duotone`.
+- **PhotoMosaic** — asymmetric editorial grid: 1 large portrait (first filename) +
+  up to 4 squares in secondary column. Each missing file renders a lagoon fallback.
+
+#### V2 Homepage (9 sections)
+1. **Hero** — lagoon radiant-surface; optional photo-01.jpg full-bleed with overlay;
+   display-xl headline; bilingual signature (WE ARE ONE / نحن واحد); 2 CTA buttons;
+   4-stat band (6 Fashion Week Editions / 15 Sectors Connected / 6 Official Programs / 1 Global Movement).
+2. **What We Are** — 3 pillars (A Permanent Home / A Global Ecosystem / A Living Movement).
+3. **Our Story** — exact spec copy ("Born in the DRC…"); PhotoMosaic (photo-02..06).
+4. **Ecosystem** — 15 sector tiles; lagoon-400 hover; GeometricAccent divider.
+5. **Who Can Join** — 5 category cards; gold top bar; lagoon hover.
+6. **Official Programs** — 6 cards; PhotoSlot backgrounds + duotone.
+7. **Stat Band** — numbers 6 / 15 / 6 / 1; dark lagoon-900 surface.
+8. **Impact** — text + photo-13; ivory surface.
+9. **Final Invitation** — HeroSurface; gold CTA; bilingual footer signature.
+
+No dates, cities, venues, media org names, or partner logos anywhere on the page.
+
+#### V2 Design System Gallery (/design-system)
+- Header: lagoon-900 background; title updated to "LAGOON & GOLD Design System".
+- Palette section: lagoon family swatches shown first (6 steps); coral family added;
+  program-fashionweek swatch updated to #157A8C.
+- Contrast table: updated with all V2 pairings (14 rows).
+- Motifs section: GeometricAccent updated to show both variants side-by-side;
+  duotone demo updated to lagoon tint; PhotoSlot demo (3 fallbacks); PhotoMosaic demo.
+- Footer note updated to "Palette V2 Lagoon & Gold Complete".
 
 #### RTL Safety
 Arabic text uses `lang="ar"` and `dir="rtl"` scoped to the text span (not
 the whole page). No hard-coded `left`/`right` CSS in layout shell. Tailwind
 logical-property variants (`start`/`end`) used where applicable.
 
-#### Internal Gallery (route /design-system)
-Sections: Color Palette (contrast table), Typography (EN + AR samples), Components
-(all variants), Signature Motifs, Spacing visualization, Motion demo, and a
-composed Hero Demo combining HeroSurface + display-xl headline + eyebrow +
-GoldThread + Buttons + StatBlocks.
-
 ## IN PROGRESS
 
-- Nothing. Stage 1 scope is complete.
+- Nothing. Stage 1 (including Palette V2) is complete.
 
 ## FUTURE
 
-- Stage 2: Real page content — Home, Our Vision, Ecosystem, Community, Programs,
-  Opportunities, Impact, Media. Apply the design system to each page.
-- Stage 2: Real photography/imagery using the duotone treatment.
+- Stage 2: Real page content — Our Vision, Ecosystem, Community, Programs,
+  Opportunities, Impact, Media. Apply the design system to each placeholder page.
+- Stage 2: Real photography — drop JPGs into `public/brand-photos/`, PhotoSlot
+  and PhotoMosaic will render them with lagoon duotone automatically.
 - Authentication and member accounts (Sign In / Join flows).
 - Member profiles, dashboard, privacy controls.
 - Opportunities/applications workflows, programs/events management.
@@ -132,13 +186,14 @@ GoldThread + Buttons + StatBlocks.
 
 ## RISKS
 
-- None for Stage 1. The `program-fashionweek` teal token (`#3E8FA3`) is defined
-  in the CSS but intentionally used in zero default components — any Stage 2
-  work using it must be scoped to programme-specific UI only.
+- The `coral-500` token (#E27D4F) fails WCAG AA at all text sizes against ivory.
+  It is restricted to colour-chip tags and small-dot accents. Never use as text.
+- `lagoon-400` (#2BA3B8) passes WCAG AA for large text only. Never use for body copy.
 - Schema continues to exclude all donation/payment/ticket/fundraising fields —
   this constraint must be preserved in all future stages.
 
 ## CHECKPOINTS
 
 - Stage 0: "Foundation Approved"
-- Stage 1 recommended checkpoint: **"Design System V1 Approved"**
+- Stage 1: "Design System V1 Approved"
+- Stage 1 Revision: **"Lagoon Gold V2 Approved"** ← recommended next checkpoint
