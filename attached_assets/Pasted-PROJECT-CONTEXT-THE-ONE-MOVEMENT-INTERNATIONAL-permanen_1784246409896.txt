@@ -1,0 +1,64 @@
+PROJECT CONTEXT
+
+THE ONE MOVEMENT INTERNATIONAL — permanent global ecosystem connecting culture, business, investment, diplomacy, innovation, education, tourism, media and humanitarian impact. Grew from The One Fashion Week, born in Bukavu, DRC — five completed editions (Bukavu, Goma, Kinshasa); the 5th, in Kinshasa, was supported by the UN mission MONUSCO under the theme "Peace and Unity". Design System V2 "Lagoon & Gold" approved (lagoon/gold/ivory/coral tokens; Cinzel display UPPERCASE ONLY; IBM Plex Sans/Arabic; HeroSurface, GoldThread, SectionHeading, StatBlock, PhotoSlot, GeometricAccent). Homepage and /vision are built and must not be modified.
+
+THIS TASK: build the real /programs overview page, replacing its placeholder. Nothing else.
+
+NON-NEGOTIABLE CONTENT RULES
+Use the copy below VERBATIM. Do not invent or add: dates, cities, venues, schedules, speakers, ticket information, attendance numbers, partners, media names, endorsements, or any future event presented as confirmed. No donation or fundraising language. Program cards do NOT link to detail pages (those do not exist yet) — cards are non-clickable this stage, with no dead links.
+
+/PROGRAMS PAGE — FIVE SECTIONS IN THIS ORDER
+
+1. PROGRAMS HERO — HeroSurface (lagoon radiant):
+Eyebrow: "OFFICIAL PROGRAMS"
+Display-XL: "THE HEARTBEAT OF THE MOVEMENT"
+Supporting line: "Our programs are where the global community meets in person — moments of culture, business, diplomacy and celebration that power a network alive 365 days a year."
+
+2. HOW PROGRAMS WORK — ivory surface, short statement:
+Eyebrow: "MOMENTS OF CONNECTION"
+H2: "EVERY PROGRAM FEEDS THE ECOSYSTEM"
+Paragraph: "Each official program brings together members of the Movement — creatives, entrepreneurs, investors, institutions and changemakers — around a shared purpose. The connections made on stage, in forums and behind the scenes continue inside the Movement long after each edition ends."
+
+3. THE PROGRAMS — grid of six program cards (dark cinematic card variant, gold top line, PhotoSlot background area with duotone-ready fallback; dev labels inside placeholders as small uppercase captions). Each card: program name (caps), tagline, description paragraph. VERBATIM:
+
+THE ONE DIPLOMATIC GALA — "Culture. Diplomacy. Art. Peace."
+"An evening bringing together diplomats, institutions, artists and cultural leaders — celebrating dialogue between nations and honoring those who build bridges between peoples." (dev label: "DIPLOMATIC GALA IMAGE")
+
+THE ONE SUMMIT — "Leadership. Innovation. Business."
+"A gathering of leaders, entrepreneurs, investors and innovators — exploring the ideas, industries and partnerships shaping a more connected world." (dev label: "SUMMIT AND BUSINESS IMAGE")
+
+THE ONE FASHION WEEK INTERNATIONAL — "Fashion. Design. Runway. Culture."
+"The program where the Movement began. Five editions across the Democratic Republic of Congo — in Bukavu, Goma and Kinshasa — carried a message of peace, unity and radical inclusion, with the fifth edition supported by the United Nations mission MONUSCO. A fashion week where every body, every origin and every story belongs on the runway." (dev label: "FASHION WEEK IMAGE")
+
+THE ONE AWARDS — "Recognition. Excellence. Impact."
+"Honoring members, organizations and initiatives whose work embodies the Movement's values — creativity, courage, collaboration and positive impact." (dev label: "AWARDS IMAGE")
+
+THE ONE FASHION NIGHT — "Entertainment. Music. Fashion. Culture."
+"A celebration where fashion meets music, dance and art — an open, vibrant expression of the cultures that make the Movement one." (dev label: "FASHION NIGHT IMAGE")
+
+THE ONE INVESTMENT FORUM — "Investment. Startups. Business Matching."
+"Connecting investors with founders, projects and opportunities from across the Movement's global community — where capital meets creativity and conviction." (dev label: "INVESTMENT FORUM IMAGE")
+
+Below the grid, one line in body text: "Editions, dates and locations are announced officially through the Movement's channels."
+
+4. STAT BAND — lagoon-900 strip, existing StatBlock: "6" — OFFICIAL PROGRAMS · "5" — FASHION WEEK EDITIONS · "15" — SECTORS CONNECTED · "1" — GLOBAL MOVEMENT. No other numbers.
+
+5. CLOSING INVITATION — HeroSurface:
+Display-LG: "BE THERE WHEN THE WORLD COMES TOGETHER."
+Line: "Join the Movement to receive official program announcements and opportunities to participate."
+Primary button: "JOIN THE MOVEMENT" → /join
+Bilingual signature: "WE ARE ONE — نحن واحد" (lang="ar" dir="rtl").
+
+DESIGN REQUIREMENTS
+V2 tokens only; UPPERCASE Cinzel; max one motif per section; card grid reflows 1-col mobile / 2 tablet / 3 desktop; placeholders premium with fixed aspect ratios, never broken-looking; WCAG AA; gold focus rings.
+
+AI REQUIREMENTS — none. TECHNICAL — no new dependencies, no database or server changes, no secrets. RESPONSIVE — flawless at 390/768/1280px. PERFORMANCE — CSS-only effects, lazy placeholders, no images added.
+
+PRESERVATION RULES
+Touch ONLY the programs page folder and docs/PROJECT-STATUS.md. Do not modify homepage, vision, components, tokens, routes, database or API. If you notice factual inconsistencies elsewhere, list them in the report — do not fix them.
+
+TESTING REQUIREMENTS
+Run app; all five sections verified; no dead links; three widths; Arabic shaping; reduced motion; keyboard focus; zero console errors; all other pages unchanged.
+
+COMPLETION REPORT — ALL 16 items:
+1 What was created · 2 What was changed · 3 Pages and components completed · 4 Files modified · 5 Dependencies added · 6 Database changes · 7 Environment variables required · 8 Tests completed · 9 What passed · 10 What remains incomplete · 11 Errors and warnings · 12 Owner actions required · 13 Mobile verification · 14 Accessibility verification · 15 Console and server-log status · 16 Recommended checkpoint name: "Programs Overview Approved"

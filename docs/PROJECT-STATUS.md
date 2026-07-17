@@ -169,7 +169,7 @@ logical-property variants (`start`/`end`) used where applicable.
 
 ## IN PROGRESS
 
-- Nothing. Stage 1 (including Palette V2) and the /vision page are complete.
+- Nothing. Stage 1, /vision page, and /programs overview page are complete.
 
 ## FUTURE
 
@@ -222,9 +222,26 @@ All copy is verbatim from spec. No dates, cities, diplomatic endorsements, or fu
 ### Known Factual Inconsistency (not fixed — per preservation rules)
 - The homepage hero section contains a second StatBlock also showing `value="6" label="Fashion Week Editions"`. Per preservation rules ("if you notice any factual inconsistency elsewhere on the homepage, DO NOT fix it — list it in the completion report"), this was not changed. Owner action required: change this value to "5" in the next permitted homepage edit pass.
 
+### /programs Overview Page
+
+Five sections built using existing V2 components only. No new dependencies.
+
+| Section | Surface | Motif |
+|---------|---------|-------|
+| 1. Programs Hero | HeroSurface (lagoon radiant, bottom-center) | GoldThread, centered |
+| 2. How Programs Work | ivory-100, two-column | SectionHeading thread |
+| 3. The Programs | lagoon-900, 3×2 card grid | gold-on-lagoon GeometricAccent transition |
+| 4. Stat Band | lagoon-900 strip | 4 StatBlocks (6/5/15/1) |
+| 5. Closing Invitation | HeroSurface | GoldThread, bilingual signature |
+
+Program cards: dark cinematic, 2px gold top border, 4:3 PhotoSlot area, dev label overlay, program name/tagline/description, non-clickable (cursor-default, no links). Grid: 1-col mobile / 2-col tablet / 3-col desktop. All six program card dev labels match spec verbatim. Footer line under grid: "Editions, dates and locations are announced officially through the Movement's channels."
+
+Photo slots reserved: `programs-diplomatic-gala.jpg`, `programs-summit.jpg`, `programs-fashion-week.jpg`, `programs-awards.jpg`, `programs-fashion-night.jpg`, `programs-investment-forum.jpg`.
+
 ## CHECKPOINTS
 
 - Stage 0: "Foundation Approved"
 - Stage 1: "Design System V1 Approved"
 - Stage 1 Revision: "Lagoon Gold V2 Approved"
-- Stage 2 Vision: **"Vision Page Approved"** ← recommended next checkpoint
+- Stage 2 Vision: "Vision Page Approved"
+- Stage 2 Programs: **"Programs Overview Approved"** ← recommended next checkpoint
