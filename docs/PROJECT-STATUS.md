@@ -169,7 +169,7 @@ logical-property variants (`start`/`end`) used where applicable.
 
 ## IN PROGRESS
 
-- Nothing. Stage 1, /vision page, and /programs overview page are complete.
+- Nothing. Stage 1, /vision, /programs overview, and the Program Detail system are complete.
 
 ## FUTURE
 
@@ -244,4 +244,30 @@ Photo slots reserved: `programs-diplomatic-gala.jpg`, `programs-summit.jpg`, `pr
 - Stage 1: "Design System V1 Approved"
 - Stage 1 Revision: "Lagoon Gold V2 Approved"
 - Stage 2 Vision: "Vision Page Approved"
-- Stage 2 Programs: **"Programs Overview Approved"** ← recommended next checkpoint
+- Stage 2 Programs: "Programs Overview Approved" ✓ (owner approved)
+
+### Program Detail Page System
+
+One reusable detail template driven by one typed local data source. Six routes active, all served by a single component.
+
+**New files:**
+- `artifacts/web/src/lib/programs-data.ts` — typed `Program[]` with all six programs; scheduling fields (date/city/country/venue/editionNumber) fully omitted; `getProgramBySlug()` helper.
+- `artifacts/web/src/pages/programs/detail.tsx` — 12-section reusable template; 6 local sub-components (StatusBadge, MediaSlotWithLabel, ProgramMediaGrid, ExperienceCard, ProgramInfoPanel, StatusNotice, RelatedProgramCard).
+
+**Modified files:**
+- `artifacts/web/src/App.tsx` — added `<Route path="/programs/:slug" component={ProgramDetail} />`.
+- `artifacts/web/src/pages/programs/index.tsx` — added `slug` field to each program entry; ProgramCard is now a fully keyboard-accessible Link with gold focus ring.
+
+**Template sections:** Hero (HeroSurface + split layout + status badge when present) → Purpose → Overview → Key Themes (lagoon, gold tag badges) → Who It Is For (ivory, 2-col list) → The Experience (ivory, ExperienceCard grid) → Connection to the Movement (lagoon) → Program Information (ProgramInfoPanel: historyNote if any + neutral scheduling notice) → Media (ProgramMediaGrid mosaic with dev labels) → Participation (ivory + JOIN button + StatusNotice) → Related Programs (lagoon, RelatedProgramCard links) → Closing (HeroSurface).
+
+**Special rules enforced:** Fashion Week page shows five editions as completed history; sixth edition presented as future/planned; no scheduling data rendered for any program; POSTPONED badge appears on Fashion Week hero only.
+
+**Factual owner confirmations recorded:**
+- Five Fashion Week editions are completed history (Bukavu ×2, Goma, Kinshasa ×2).
+- Sixth edition: postponed, planned for November — future content only. Must not appear in statistics, completed history, or with specific date/venue/city.
+- Photography: postponed to dedicated content-integration module — no owner action required at this stage.
+
+**Known remaining homepage inconsistency (preservation rule applied):**
+- Hero StatBlock (Section 1, line 198): still `value="6" label="Fashion Week Editions"`. Per preservation rules this was not changed. Correction must be batched into the next permitted homepage edit pass.
+
+- Stage 2 Program Detail: **"Program Detail System Approved"** ← recommended next checkpoint

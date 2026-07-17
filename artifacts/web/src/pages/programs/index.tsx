@@ -8,9 +8,10 @@ import GeometricAccent from '@/components/GeometricAccent';
 import PhotoSlot from '@/components/PhotoSlot';
 import StatBlock from '@/components/StatBlock';
 
-/* ── Program data (verbatim from spec) ──────────────────────────────────── */
+/* ── Program cards data ─────────────────────────────────────────────────── */
 
 const PROGRAMS: {
+  slug: string;
   name: string;
   tagline: string;
   desc: string;
@@ -18,6 +19,7 @@ const PROGRAMS: {
   label: string;
 }[] = [
   {
+    slug: 'diplomatic-gala',
     name: 'THE ONE DIPLOMATIC GALA',
     tagline: 'Culture. Diplomacy. Art. Peace.',
     desc: 'An evening bringing together diplomats, institutions, artists and cultural leaders — celebrating dialogue between nations and honoring those who build bridges between peoples.',
@@ -25,6 +27,7 @@ const PROGRAMS: {
     label: 'DIPLOMATIC GALA IMAGE',
   },
   {
+    slug: 'summit',
     name: 'THE ONE SUMMIT',
     tagline: 'Leadership. Innovation. Business.',
     desc: 'A gathering of leaders, entrepreneurs, investors and innovators — exploring the ideas, industries and partnerships shaping a more connected world.',
@@ -32,6 +35,7 @@ const PROGRAMS: {
     label: 'SUMMIT AND BUSINESS IMAGE',
   },
   {
+    slug: 'fashion-week',
     name: 'THE ONE FASHION WEEK INTERNATIONAL',
     tagline: 'Fashion. Design. Runway. Culture.',
     desc: 'The program where the Movement began. Five editions across the Democratic Republic of Congo — in Bukavu, Goma and Kinshasa — carried a message of peace, unity and radical inclusion, with the fifth edition supported by the United Nations mission MONUSCO. A fashion week where every body, every origin and every story belongs on the runway.',
@@ -39,6 +43,7 @@ const PROGRAMS: {
     label: 'FASHION WEEK IMAGE',
   },
   {
+    slug: 'awards',
     name: 'THE ONE AWARDS',
     tagline: 'Recognition. Excellence. Impact.',
     desc: "Honoring members, organizations and initiatives whose work embodies the Movement's values — creativity, courage, collaboration and positive impact.",
@@ -46,6 +51,7 @@ const PROGRAMS: {
     label: 'AWARDS IMAGE',
   },
   {
+    slug: 'fashion-night',
     name: 'THE ONE FASHION NIGHT',
     tagline: 'Entertainment. Music. Fashion. Culture.',
     desc: 'A celebration where fashion meets music, dance and art — an open, vibrant expression of the cultures that make the Movement one.',
@@ -53,6 +59,7 @@ const PROGRAMS: {
     label: 'FASHION NIGHT IMAGE',
   },
   {
+    slug: 'investment-forum',
     name: 'THE ONE INVESTMENT FORUM',
     tagline: 'Investment. Startups. Business Matching.',
     desc: "Connecting investors with founders, projects and opportunities from across the Movement's global community — where capital meets creativity and conviction.",
@@ -136,7 +143,7 @@ export default function Programs() {
       </div>
 
       {/* ─────────────────────────────────────────────────────────────────────
-          3. THE PROGRAMS — dark cinematic card grid
+          3. THE PROGRAMS — dark cinematic card grid (cards are now links)
           ───────────────────────────────────────────────────────────────────── */}
       <section
         className="py-section-lg"
@@ -245,20 +252,22 @@ export default function Programs() {
   );
 }
 
-/* ── Local sub-components ─────────────────────────────────────────────────── */
+/* ── Local sub-component ──────────────────────────────────────────────────── */
 
 /**
- * ProgramCard — dark cinematic card with gold top line, PhotoSlot
- * background area and verbatim program copy.
- * Non-clickable (cursor-default, no link) — detail pages do not exist yet.
+ * ProgramCard — dark cinematic card, now a fully clickable accessible link
+ * to /programs/:slug. Keyboard navigable with visible gold focus ring.
+ * All card content unchanged from the approved overview design.
  */
 function ProgramCard({
+  slug,
   name,
   tagline,
   desc,
   photo,
   label,
 }: {
+  slug: string;
   name: string;
   tagline: string;
   desc: string;
@@ -268,85 +277,101 @@ function ProgramCard({
   const [hovered, setHovered] = useState(false);
 
   return (
-    <article
-      className="flex flex-col h-full cursor-default"
+    <Link
+      href={`/programs/${slug}`}
+      aria-label={name}
+      className="block h-full focus:outline-none"
       style={{
-        borderTop: '2px solid hsl(39 52% 54%)',
-        backgroundColor: hovered ? 'hsl(188 66% 16%)' : 'hsl(187 67% 12%)',
-        transition: 'background-color 200ms ease',
+        // Gold focus ring via box-shadow (works across all browsers without Tailwind ring utilities)
+        boxShadow: 'none',
+      }}
+      onFocus={(e) => {
+        e.currentTarget.style.boxShadow = '0 0 0 2px hsl(39 52% 54%), 0 0 0 4px hsl(187 67% 12%)';
+      }}
+      onBlur={(e) => {
+        e.currentTarget.style.boxShadow = 'none';
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {/* Photo area with dev label overlay */}
-      <div className="relative overflow-hidden">
-        <PhotoSlot
-          filename={photo}
-          alt=""
-          className="w-full aspect-[4/3]"
-          duotone
-        />
-        {/* Dev label — tiny, elegant, disappears behind real photos */}
-        <div
-          aria-hidden="true"
-          className="absolute bottom-0 inset-x-0 flex justify-center pb-3 pointer-events-none"
-        >
-          <span
+      <article
+        className="flex flex-col h-full cursor-pointer"
+        style={{
+          borderTop: '2px solid hsl(39 52% 54%)',
+          backgroundColor: hovered ? 'hsl(188 66% 16%)' : 'hsl(187 67% 12%)',
+          transition: 'background-color 200ms ease',
+        }}
+      >
+        {/* Photo area with dev label overlay */}
+        <div className="relative overflow-hidden">
+          <PhotoSlot
+            filename={photo}
+            alt=""
+            className="w-full aspect-[4/3]"
+            duotone
+          />
+          {/* Dev label — tiny, elegant, disappears behind real photos */}
+          <div
+            aria-hidden="true"
+            className="absolute bottom-0 inset-x-0 flex justify-center pb-3 pointer-events-none"
+          >
+            <span
+              style={{
+                fontSize: '0.5rem',
+                letterSpacing: '0.18em',
+                fontFamily: 'var(--font-display)',
+                textTransform: 'uppercase',
+                color: 'hsl(43 80% 73%)',
+                opacity: 0.55,
+              }}
+            >
+              {label}
+            </span>
+          </div>
+        </div>
+
+        {/* Text body */}
+        <div className="px-6 pt-6 pb-8 flex flex-col gap-3 flex-1">
+          {/* Program name — Cinzel, ivory, prominent */}
+          <h3
             style={{
-              fontSize: '0.5rem',
-              letterSpacing: '0.18em',
               fontFamily: 'var(--font-display)',
+              fontSize: '0.78rem',
+              letterSpacing: '0.12em',
+              lineHeight: 1.4,
               textTransform: 'uppercase',
-              color: 'hsl(43 80% 73%)',
-              opacity: 0.55,
+              color: hovered ? 'hsl(43 80% 73%)' : 'hsl(38 57% 94%)',
+              transition: 'color 200ms ease',
             }}
           >
-            {label}
-          </span>
+            {name}
+          </h3>
+
+          {/* Tagline — gold eyebrow style */}
+          <p
+            style={{
+              fontSize: '0.6rem',
+              letterSpacing: '0.16em',
+              textTransform: 'uppercase',
+              fontWeight: 600,
+              color: 'hsl(39 52% 54%)',
+            }}
+          >
+            {tagline}
+          </p>
+
+          {/* Description — body text */}
+          <p
+            className="text-sm leading-relaxed mt-1"
+            style={{
+              color: hovered ? 'hsl(38 57% 94%)' : 'hsl(189 30% 72%)',
+              transition: 'color 200ms ease',
+            }}
+          >
+            {desc}
+          </p>
         </div>
-      </div>
-
-      {/* Text body */}
-      <div className="px-6 pt-6 pb-8 flex flex-col gap-3 flex-1">
-        {/* Program name — Cinzel, ivory, prominent */}
-        <h3
-          style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: '0.78rem',
-            letterSpacing: '0.12em',
-            lineHeight: 1.4,
-            textTransform: 'uppercase',
-            color: hovered ? 'hsl(43 80% 73%)' : 'hsl(38 57% 94%)',
-            transition: 'color 200ms ease',
-          }}
-        >
-          {name}
-        </h3>
-
-        {/* Tagline — gold eyebrow style */}
-        <p
-          style={{
-            fontSize: '0.6rem',
-            letterSpacing: '0.16em',
-            textTransform: 'uppercase',
-            fontWeight: 600,
-            color: 'hsl(39 52% 54%)',
-          }}
-        >
-          {tagline}
-        </p>
-
-        {/* Description — body text */}
-        <p
-          className="text-sm leading-relaxed mt-1"
-          style={{
-            color: hovered ? 'hsl(38 57% 94%)' : 'hsl(189 30% 72%)',
-            transition: 'color 200ms ease',
-          }}
-        >
-          {desc}
-        </p>
-      </div>
-    </article>
+      </article>
+    </Link>
   );
 }

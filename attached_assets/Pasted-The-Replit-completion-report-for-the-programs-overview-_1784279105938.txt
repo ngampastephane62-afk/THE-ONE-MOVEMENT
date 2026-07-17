@@ -1,0 +1,530 @@
+The Replit completion report for the /programs overview page has been received and reviewed.
+
+The report now follows the required 16-point completion format, and the implementation appears properly scoped, technically clean and consistent with the approved Phase 1 strategy.
+
+Please update the project log with the decisions and instructions below.
+
+1. PROGRAMS OVERVIEW PAGE — APPROVAL
+
+The /programs overview page is approved based on the completion report.
+
+The following elements are approved:
+
+* Five-section Programs page structure
+* Programs Hero
+* “How Programs Work” section
+* Six-program card grid
+* Movement statistics band
+* Closing invitation
+* Reuse of the approved Lagoon & Gold V2 design system
+* Responsive implementation at 390px, 768px and 1280px
+* Accessibility implementation
+* Reduced-motion support
+* Arabic direction and language handling
+* No unnecessary dependencies
+* No database changes
+* No environment-variable changes
+* No unrelated file modifications
+* Zero TypeScript errors
+* Zero browser-console errors
+* Non-clickable cards while detail pages do not yet exist
+
+The approved checkpoint name is:
+
+Programs Overview Approved
+
+Please record this checkpoint in PROJECT-STATUS.md and in the main project decision log.
+
+2. OFFICIAL FASHION WEEK HISTORY — OWNER CONFIRMATION
+
+I officially confirm the following factual history as the project owner:
+
+* Five Fashion Week editions have already taken place.
+* The sixth edition has not yet taken place.
+* The sixth edition was postponed to November.
+* The sixth edition must not be counted as completed history until it actually takes place.
+
+Therefore, the following public statements are approved:
+
+Statistics
+
+5 — FASHION WEEK EDITIONS
+
+Fashion Week card
+
+Five editions. Born in the DRC. Recognized internationally.
+
+Please add this owner confirmation to the factual-verification register.
+
+The count of five is no longer pending verification.
+
+3. SIXTH EDITION CONTENT RULE
+
+The sixth edition may only be described as:
+
+* upcoming;
+* planned;
+* postponed;
+* scheduled for November, when the year and exact date are officially confirmed.
+
+It must not appear under:
+
+* completed editions;
+* historical achievements;
+* completed-event statistics;
+* past-event galleries;
+* attendance records;
+* impact records;
+* historical media coverage;
+* completed program timelines.
+
+Do not publish a specific November date, venue, city, speakers, sponsors, partners or registration link unless I officially provide and approve that information.
+
+Until then, the safest public wording is:
+
+The sixth edition is planned for November. Further official information will be announced.
+
+However, do not add this statement to the public website yet unless it is necessary for the relevant program-detail page.
+
+4. PHOTOGRAPHY STATUS
+
+Do not treat photo uploads as an owner action at this stage.
+
+Final photography remains postponed until the dedicated content and image-integration module.
+
+Do not repeatedly request image uploads after each page.
+
+Continue using:
+
+* premium PhotoSlot placeholders;
+* fixed image ratios;
+* lagoon-toned fallback surfaces;
+* internal descriptive labels;
+* layouts that are ready to receive official photographs later.
+
+Do not use Agent credits to:
+
+* search for temporary photographs;
+* generate placeholder images;
+* download stock photographs;
+* integrate temporary external imagery;
+* repeatedly adjust individual photo slots.
+
+The owner action for photography should be recorded as:
+
+No action required at this stage. Final photographs will be supplied during the dedicated content-integration module.
+
+5. PROGRAM CARDS AND FUTURE LINKS
+
+The six Program cards are currently correctly non-clickable because the individual Program Detail routes do not yet exist.
+
+Do not add links that lead to placeholder pages, empty routes or 404 pages.
+
+Once the Program Detail Page system is built and the routes exist, the cards should become accessible links to:
+
+* /programs/diplomatic-gala
+* /programs/summit
+* /programs/fashion-week
+* /programs/awards
+* /programs/fashion-night
+* /programs/investment-forum
+
+The later link activation must include:
+
+* keyboard accessibility;
+* visible focus states;
+* meaningful accessible labels;
+* preserved card hover behavior;
+* no nested interactive controls;
+* no dead routes.
+
+Do not activate these links in a separate task. Include the activation in the Program Detail Page implementation.
+
+6. HOMEPAGE CONSISTENCY
+
+The official completed-edition count is now confirmed as five.
+
+The homepage must eventually display:
+
+5 — FASHION WEEK EDITIONS
+
+The homepage Fashion Week card may display:
+
+Five editions. Born in the DRC. Recognized internationally.
+
+However, do not perform a separate Replit Agent task only for these two text corrections.
+
+Batch these corrections into the next compatible implementation prompt.
+
+The homepage status remains:
+
+Lagoon Gold V2 Design System Approved — Homepage Alignment Pending
+
+Do not mark the homepage as finally approved yet.
+
+The following homepage items remain pending:
+
+* complete visual-alignment review;
+* spacing refinements;
+* mobile full-scroll owner approval;
+* confirmation that all required Our Story content renders correctly;
+* scan for forbidden or unverified public claims.
+
+Do not redesign the homepage.
+
+7. CURRENT PHASE 1 STATUS
+
+Please record the current project status as follows.
+
+Completed or approved
+
+* Strategic foundation
+* Phase 1 scope
+* Lagoon & Gold V2 design system
+* Technical and database foundation
+* Homepage structure and content direction
+* Our Vision page
+* Programs Overview page
+* Five completed Fashion Week editions factually confirmed
+
+Approved but still pending final refinement
+
+* Homepage alignment and spacing
+* Homepage final mobile review
+* Homepage final checkpoint
+
+Not yet completed
+
+* Reusable Program Detail Page system
+* Ecosystem page
+* Join the Movement
+* Community directory structure
+* Opportunities hub
+* Humanitarian Impact page
+* Media Center
+* Partners page
+* Authentication foundation
+* Member profiles
+* Dashboard
+* Administration system
+* AI foundation
+* Final content and image integration
+* Full QA and deployment preparation
+
+8. NEXT MODULE — REUSABLE PROGRAM DETAIL PAGE SYSTEM
+
+The next module is the reusable Program Detail Page system.
+
+Do not create six completely separate page architectures.
+
+Create one reusable, scalable template driven by structured program data.
+
+The system must support all six official programs:
+
+1. The One Diplomatic Gala
+2. The One Summit
+3. The One Fashion Week International
+4. The One Awards
+5. The One Fashion Night
+6. The One Investment Forum
+
+The objective is to create one strong program-detail experience that can display unique content for each program while preserving visual and technical consistency.
+
+9. PROPOSED PROGRAM DETAIL PAGE STRUCTURE
+
+The reusable template should support the following sections.
+
+Section 1 — Program Hero
+
+Include:
+
+* program category eyebrow;
+* official program title;
+* concise purpose statement;
+* premium cinematic media placeholder;
+* program status where relevant;
+* optional register-interest CTA only when a real destination or working form exists.
+
+Do not show a dead CTA.
+
+Section 2 — Program Purpose
+
+Explain:
+
+* why the program exists;
+* the problem or opportunity it addresses;
+* how it supports the Movement’s mission.
+
+Section 3 — Program Overview
+
+Provide a concise institutional explanation of:
+
+* what happens within the program;
+* its role within the ecosystem;
+* its international relevance.
+
+Section 4 — Key Themes
+
+Display the main program themes using reusable cards, tags or structured content blocks.
+
+Examples may include:
+
+* diplomacy;
+* peace;
+* culture;
+* investment;
+* entrepreneurship;
+* innovation;
+* recognition;
+* fashion;
+* creative industries;
+* international collaboration.
+
+Only include themes relevant to each program.
+
+Section 5 — Who It Is For
+
+Define the intended audiences.
+
+Possible categories include:
+
+* creatives;
+* designers;
+* artists;
+* entrepreneurs;
+* investors;
+* corporate leaders;
+* embassies;
+* governments;
+* NGOs;
+* universities;
+* media;
+* volunteers;
+* students;
+* community leaders.
+
+Do not claim participation from any organization that has not been verified.
+
+Section 6 — The Experience
+
+Describe the expected program format without inventing confirmed operational details.
+
+The structure should support future information such as:
+
+* panels;
+* exhibitions;
+* showcases;
+* networking;
+* presentations;
+* cultural performances;
+* recognition ceremonies;
+* roundtables;
+* investment discussions;
+* community activities.
+
+Do not state that any specific activity is confirmed for an upcoming edition unless officially approved.
+
+Section 7 — Connection to the Movement
+
+Explain how the program feeds the permanent 365-day ecosystem.
+
+It should reinforce that:
+
+* the Movement is the master ecosystem;
+* programs are moments of visibility and connection;
+* the community continues before and after each program;
+* Fashion Week is one program and not the whole platform.
+
+Section 8 — Edition or Program Information
+
+Create a flexible information area capable of displaying verified future data such as:
+
+* date;
+* city;
+* country;
+* venue;
+* edition number;
+* status;
+* registration state.
+
+When this information is unavailable, the section must show neutral wording such as:
+
+Official program details will be announced when confirmed.
+
+Do not show empty fields, fake dates, “TBD” repeated everywhere or invented details.
+
+Section 9 — Media and Gallery
+
+Include premium media placeholders.
+
+No final photographs are required now.
+
+The component must later support:
+
+* photographs;
+* videos;
+* previous-edition highlights;
+* approved media coverage.
+
+Do not display media names, logos or coverage claims without verification.
+
+Section 10 — Participation
+
+Create a flexible participation area that may later support:
+
+* register interest;
+* apply;
+* request information;
+* partnership inquiry;
+* sponsorship inquiry;
+* volunteer interest.
+
+For the current implementation, only display CTAs that connect to an existing working route or form.
+
+No ticketing or payment system should be built now.
+
+Section 11 — Related Programs
+
+Display other relevant official programs.
+
+Related cards should link only when their routes exist.
+
+Avoid circular or broken navigation.
+
+Section 12 — Verification or Status Notice
+
+Where factual or scheduling information is incomplete, provide a subtle and professional status notice.
+
+Examples:
+
+* “Further official details will be announced.”
+* “Applications are not currently open.”
+* “Registration information will be published after confirmation.”
+
+Do not make the page appear unfinished.
+
+10. CONTENT AND DATA ARCHITECTURE
+
+Before generating the Replit prompt, recommend the simplest structured data model for the six programs.
+
+The model should be reusable and ready for future CMS or database integration without requiring that integration now.
+
+Possible fields include:
+
+* slug
+* name
+* shortName
+* eyebrow
+* tagline
+* summary
+* purpose
+* overview
+* themes
+* audiences
+* experienceItems
+* movementConnection
+* status
+* editionNumber
+* date
+* city
+* country
+* venue
+* mediaSlots
+* primaryCTA
+* secondaryCTA
+* relatedProgramSlugs
+* verificationNotice
+* seoTitle
+* seoDescription
+
+Clearly separate:
+
+* confirmed content;
+* optional content;
+* future content;
+* unverified content that must not render.
+
+Do not add a database for this module unless the existing approved architecture already requires it and the change is justified.
+
+Prefer a typed local data configuration for the current stage if it is sufficient.
+
+11. FASHION WEEK PROGRAM PAGE — SPECIAL RULES
+
+The Fashion Week page may state:
+
+* five editions have been completed;
+* it was born in the Democratic Republic of Congo;
+* the sixth edition is planned for November, only if presented as future and without an unconfirmed exact date.
+
+Do not imply that the sixth edition already happened.
+
+Do not display Dubai as a completed edition unless I later confirm it took place.
+
+Do not invent:
+
+* venue;
+* exact date;
+* designers;
+* models;
+* sponsors;
+* media partners;
+* guest count;
+* attendance;
+* revenue;
+* government endorsement.
+
+The page must still clearly position The One Fashion Week International as only one official program within The One Movement International.
+
+12. TECHNICAL AND COST RULES
+
+The next Replit task must remain credit-efficient.
+
+It should:
+
+* reuse existing V2 components;
+* avoid unnecessary dependencies;
+* avoid database migrations;
+* avoid API integrations;
+* avoid AI integrations;
+* avoid new authentication work;
+* avoid ticketing;
+* avoid payments;
+* avoid CMS integration at this stage;
+* avoid building six visually separate systems;
+* avoid modifying unrelated pages;
+* avoid sourcing or generating images.
+
+Use one shared template and one typed program-data source.
+
+The card-link activation from /programs should be included in the same task after all six detail routes work.
+
+13. NEXT RESPONSE REQUIRED FROM CLAUDE
+
+Do not produce the Replit implementation prompt yet.
+
+First provide the complete planning brief containing:
+
+1. Confirmation that the Programs Overview page and checkpoint were logged as approved
+2. Confirmation that five completed Fashion Week editions are now owner-verified
+3. Confirmation that the sixth edition is postponed to November and remains future content
+4. Confirmation that photography remains postponed
+5. Proposed reusable Program Detail Page architecture
+6. Recommended routing approach
+7. Recommended typed data model
+8. Confirmed content available for each of the six programs
+9. Content that remains unconfirmed or should use neutral placeholders
+10. Existing components that will be reused
+11. Any genuinely necessary new reusable components
+12. Exact files expected to be created or modified
+13. Exact scope of the next Replit task
+14. Credit classification
+15. Risks and safeguards
+16. Acceptance criteria
+17. Testing requirements
+18. Completion-report requirements
+19. Checkpoint strategy
+20. Any homepage corrections that can safely ride along without expanding the task significantly
+
+After that planning brief is reviewed, prepare one complete economy-mode Replit prompt for the reusable Program Detail Page system.
+
+Continue following the approved Phase 1 strategy, build order and credit-protection rules.

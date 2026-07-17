@@ -8,6 +8,7 @@ import OurVision from '@/pages/our-vision';
 import Ecosystem from '@/pages/ecosystem';
 import Community from '@/pages/community';
 import Programs from '@/pages/programs';
+import ProgramDetail from '@/pages/programs/detail';
 import Opportunities from '@/pages/opportunities';
 import Impact from '@/pages/impact';
 import Media from '@/pages/media';
@@ -29,6 +30,7 @@ function Router() {
       <Route path="/ecosystem" component={Ecosystem} />
       <Route path="/community" component={Community} />
       <Route path="/programs" component={Programs} />
+      <Route path="/programs/:slug" component={ProgramDetail} />
       <Route path="/opportunities" component={Opportunities} />
       <Route path="/impact" component={Impact} />
       <Route path="/media" component={Media} />
