@@ -1,0 +1,105 @@
+PROJECT CONTEXT
+
+THE ONE MOVEMENT INTERNATIONAL — permanent global ecosystem connecting fifteen sectors through culture, business, diplomacy, innovation, education, tourism, humanitarian action and investment. Grew from The One Fashion Week: five completed editions in the DRC; sixth edition postponed to November — future content only. Completed: /, /vision, /programs, six program detail routes, /ecosystem, and the Global Visual Coherence V3 pass. Design System "Lagoon & Gold" + V3 shared foundations (containers, type scale, hero variants, card standards, spacing scale, placeholder variants) are APPROVED AND FROZEN for this task.
+
+THIS TASK: build the real /join page (Stage 1: public participation gateway with genuine backend submission), replacing its placeholder. Stage 1 ONLY — this is an expression-of-interest flow, not account creation.
+
+MANDATORY STEP 0 — RESTORATION CHECKPOINT
+Create a restoration checkpoint named "Pre-Join Restore Point" before any change.
+
+MANDATORY STEP 1 — ENDPOINT CONTRACT VERIFICATION (before any code)
+Inspect the existing backend (artifacts/api-server) for an endpoint suitable for join expression-of-interest submissions (e.g. POST /api/join-interest or equivalent created by the backend workstream). Verify and record from the ACTUAL CODE: endpoint path; request payload shape; required/optional fields; response shape (success and error); validation behavior; duplicate-email behavior; rate-limiting; storage target. Do the same for an institutional-inquiry endpoint if one exists.
+- If a suitable verified endpoint EXISTS: proceed, wiring the form to the real contract exactly as found. State the full contract in the completion report.
+- If NO suitable endpoint exists or its behavior cannot be verified: STOP IMMEDIATELY. Make no frontend changes. Report the missing dependency precisely (what was searched, what exists, what is missing). DO NOT invent an endpoint, DO NOT create a backend endpoint yourself, DO NOT build a fake submission, local-only submission, fake success state, or silent fallback.
+- If a join endpoint exists but no institutional-inquiry endpoint exists: build the page with the join form live and the institutional inquiry section rendered WITHOUT a form — contact-invitation copy only (no fake form) — and report the partial dependency.
+
+NON-NEGOTIABLE CONTENT RULES
+All copy below VERBATIM. Do not invent benefits, partners, statistics, dates, pricing, or approval promises. Never imply the member platform is already live, that submission guarantees membership, or that an account is created. No payments, donations, ticketing, messaging, auth, dashboards, AI, uploads, email automation (unless a verified existing backend service already sends it — report if so).
+
+/JOIN PAGE — ELEVEN SECTIONS IN ORDER
+
+1. JOIN HERO — editorial-text-led hero variant (V3 framework):
+Eyebrow: "JOIN THE MOVEMENT"
+Display headline: "TAKE YOUR PLACE IN THE MOVEMENT."
+Supporting line: "Creatives, entrepreneurs, institutions and changemakers from every continent — one global community, open to those who build culture, opportunity and peace."
+Primary CTA: "EXPRESS YOUR INTEREST" (smooth-scrolls to the form) · Secondary outline: "EXPLORE THE ECOSYSTEM" → /ecosystem
+
+2. WHY JOIN — ivory:
+Eyebrow: "WHY IT MATTERS"
+H2: "CONNECTION IS THE OPPORTUNITY"
+Paragraph: "The Movement exists to put you in the room — with the people, organizations and possibilities that match what you build. Membership is the door to a community that works across sectors and across borders, every day of the year."
+Three compact cards: "A GLOBAL COMMUNITY — Members across sectors and continents, united by shared values." · "OFFICIAL PROGRAMS — Moments of visibility, collaboration and celebration throughout the year." · "REAL OPPORTUNITIES — Calls, collaborations and openings that turn connection into action."
+
+3. HOW MEMBERSHIP WORKS — ivory continues:
+Eyebrow: "HOW IT WORKS"
+H2: "AN HONEST FIRST STEP"
+Paragraph: "The Movement's member platform is being built in stages. Today, you can register your expression of interest — placing you among the founding community who will be first to complete their profiles when the platform opens."
+
+4. CHOOSE YOUR PATH — lagoon-900 band:
+Eyebrow: "YOUR PATH"
+H2: "FIVE PATHS. ONE MOVEMENT."
+Five PathCards (selectable, aria-pressed, keyboard operable): CREATIVE & CULTURAL — "Designers, artists, musicians, filmmakers, performers and the talents around them." · BUSINESS & INNOVATION — "Entrepreneurs, startups, companies, investors and technology builders." · INSTITUTIONS — "Embassies, governments, international organizations, universities and NGOs." · COMMUNITY & IMPACT — "Volunteers, students and humanitarian organizations." · STRATEGIC SUPPORT — "Sponsors, partners and media organizations."
+Selecting CREATIVE & CULTURAL, BUSINESS & INNOVATION or COMMUNITY & IMPACT reveals its Path Detail (section 5) and pre-selects the group in the form. Selecting INSTITUTIONS or STRATEGIC SUPPORT scrolls to section 8 (inquiry) — these groups never enter the standard form.
+
+5. PATH DETAILS — revealed panel per selected joinable path (ivory), driven by a local join-data.ts file:
+For each of the three joinable groups: group name (caps), one-line audience description (reuse wording above), category list (VERBATIM from the approved 28: Creative & Cultural → Designer, Model, Photographer, Videographer, Makeup Artist, Hair Stylist, Musician, Artist, Dancer, Filmmaker, Influencer · Business & Innovation → Entrepreneur, Startup, Company, Investor, Innovator, Technology Company · Community & Impact → Volunteer, Student, Humanitarian Organization), and line: "Select your category in the form below — it helps us understand your place in the ecosystem."
+
+6. WHAT HAPPENS AFTER YOU JOIN? — ivory, five-step flow (V3 flow pattern), VERBATIM:
+Eyebrow: "THE JOURNEY"
+H2: "WHAT HAPPENS AFTER YOU JOIN?"
+Steps: "1. Submit your expression of interest." · "2. Our team reviews your submission." · "3. Receive official updates from the Movement." · "4. Complete your member profile when the platform launches." · "5. Begin participating in programs, opportunities and the ecosystem."
+No approval promises, no guaranteed membership, no immediate-access implication — the steps present the intended journey, not a guaranteed outcome.
+
+7. EXPRESSION OF INTEREST FORM — ivory panel, standard container:
+Eyebrow: "EXPRESS YOUR INTEREST"
+H2: "REGISTER YOUR PLACE"
+Fields — REQUIRED: Full name (text) · Email (email) · Country (select or text per existing component availability) · I am joining as (toggle: Individual / Organization, aria-pressed, keyboard operable) · Audience group (the three joinable groups; pre-selected from PathCard if chosen) · Category (filtered by group; organization toggle additionally filters to organization-type categories where applicable) · Consent checkbox.
+REQUIRED WHEN ORGANIZATION: Organization name · Contact person's role.
+OPTIONAL: City · Sectors (ChipSelect from sectors-data.ts — single source of truth, no duplication or renaming; max 3; live counter "X of 3 selected"; chips are buttons with aria-pressed; 4th selection prevented with visible explanatory text) · Program interests (six SelectableProgramCards from programs-data.ts display names + taglines; multi-select; no cap) · Checkbox "Notify me when the Opportunities Hub opens." (separate from consent) · "What are you looking for?" (textarea, 300-character maximum with live counter).
+DO NOT COLLECT: date of birth, ID documents, residential address, religion, ethnicity, health information, payment information, passwords, phone number, portfolio or social links.
+CONSENT (required, unchecked by default, programmatically labeled, blocks submission with accessible message), VERBATIM: "I agree that The One Movement International may securely store the information I provide and contact me regarding my expression of interest, membership updates, official announcements and opportunities related to the Movement. I understand that I may request the deletion of my information at any time."
+Below consent: "We collect only what we need. You can request deletion of your information at any time." + link "Privacy Policy" → /legal/privacy.
+VALIDATION & SUBMISSION: inline validation on blur and submit; errors tied via aria-describedby; on failed submit render an accessible error summary at top of form and MOVE FOCUS to it; email-format validation; 3-sector cap enforced; consent required; submit disabled during request; duplicate rapid submissions prevented; backend errors shown in a clear error state; retry preserves all completed fields; success shown ONLY after a verified successful backend response per the real contract; no fake delay; no fake success. Handle the endpoint's duplicate-email behavior exactly as the verified contract defines, with a polite human message.
+
+SUCCESS STATE (replaces the form section, focus moved to its heading):
+Headline: "WELCOME TO THE BEGINNING."
+Line 1: "Your expression of interest has been received."
+Line 2: "Our team reviews every submission. You will receive official updates from the Movement as the member platform moves toward launch."
+Links: "EXPLORE THE ECOSYSTEM" → /ecosystem · "DISCOVER THE PROGRAMS" → /programs
+No account-created or approval claims.
+
+8. INSTITUTIONAL & STRATEGIC PARTNER INQUIRY — lagoon-900 band, formal tone:
+Eyebrow: "INSTITUTIONS & STRATEGIC PARTNERS"
+H2: "A DIFFERENT DOOR. THE SAME MOVEMENT."
+Paragraph: "Embassies, governments, international organizations, universities, NGOs, sponsors, partners and media organizations join the Movement through direct dialogue with our team."
+IF a verified institutional-inquiry endpoint exists: form with Organization name · Organization type (select: Embassy, Government, International Organization, University, NGO, Sponsor, Partner, Media Organization) · Country · Contact person · Role · Email · Message (500-char cap) · the same consent checkbox — wired to the real contract with identical validation/success standards (success message: "Your inquiry has been received. Our team will contact you directly.").
+IF NOT: no form — render the paragraph plus StatusNotice: "Institutional inquiries open through our official channels. Direct contact details will be published shortly." and report the dependency.
+
+9. PRIVACY REASSURANCE — ivory:
+Eyebrow: "YOUR INFORMATION"
+H2: "MINIMAL BY DESIGN"
+Paragraph: "We ask only for what the Movement needs to welcome you properly. Your information is stored securely, is never sold, and can be deleted at your request at any time."
+
+10. FAQ — ivory continues, accessible accordion (existing shadcn accordion; correct aria-expanded/controls), VERBATIM:
+Eyebrow: "QUESTIONS"
+H2: "BEFORE YOU JOIN"
+Q: "Who can join?" A: "The Movement welcomes creatives, entrepreneurs, students, volunteers, organizations and institutions who share its values of connection, opportunity and peace. Every approved category has a path — from designers and investors to universities and NGOs."
+Q: "Is membership free?" A: "Submitting an expression of interest does not require payment. Any future membership terms will be communicated clearly before account activation."
+Q: "Can organizations join?" A: "Yes. Companies, startups, NGOs and humanitarian organizations can register through the same form by selecting 'Organization'. Embassies, governments, international organizations, universities, sponsors, partners and media organizations join through the institutional inquiry pathway."
+Q: "Can I join from any country?" A: "Yes. The Movement is global by design — members are welcome from every country and every continent."
+Q: "When will member accounts launch?" A: "The member platform is being built in stages. Expressions of interest are open now; account creation and member profiles follow at launch. Registered members will be informed first through official announcements."
+
+11. CLOSING SIGNATURE — HeroSurface (cinematic-centered variant, sparing):
+Display: "THE MOVEMENT IS WAITING FOR YOU."
+Bilingual signature: "WE ARE ONE — نحن واحد" (lang="ar" dir="rtl").
+
+NEW COMPONENTS PERMITTED (only these, in the join page scope): PathCard, ChipSelect, SelectableProgramCard, InterestForm, InquiryForm (conditional), SuccessPanel. Everything else reuses existing shared components.
+
+VISUAL & PRESERVATION RULES
+Use V3 foundations AS-IS: do not modify global typography tokens, container tokens, header, footer, hero standards, card standards, or any shared component; do not reopen the coherence pass; no new dependencies; no database schema changes unless the verified backend contract explicitly requires an already-approved change (report if so); do not change existing routes, program slugs, the 15-sector taxonomy, the six-programs count, or the five-completed-editions fact; do not modify unrelated pages. Max one signature motif per section. WCAG AA; visible focus states; touch targets ≥44px; fieldset/legend for grouped choices; no color-only state communication; live-region announcements for validation and success; reduced-motion compatibility.
+
+TESTING REQUIREMENTS
+Full keyboard completion of both pathways (or the built pathway if inquiry is content-only); screen-reader-oriented checks (labels, aria-pressed, error summary focus, success focus); validation matrix (every required field, email format, sector cap, consent gate, organization conditional fields); real submission verified against the live endpoint including duplicate-email and error paths; retry preserves fields; full-page verification at 390, 430, 768, 1280 AND 1440px with no horizontal overflow; chips usable on touch; FAQ accordion accessible; reduced motion; Arabic shaping; link audit (only /ecosystem, /programs, /legal/privacy, in-page anchors); TypeScript clean; console and server logs clean; confirmation all other routes unchanged; update docs/PROJECT-STATUS.md.
+
+COMPLETION REPORT — the standard 16 items PLUS:
+exact endpoint contract used · exact request payload · exact backend success response relied upon · duplicate-submission behavior observed · all created/modified files · confirmation shared visual foundations were NOT modified · confirmation sector and program data came from existing data files · validation matrix results · accessibility verification detail · all responsive widths tested · success-state verification · failure-state verification · confirmation of zero fake submissions · confirmation no Stage 2 features were added · Recommended checkpoint name: "Join the Movement Stage 1 Approved"
