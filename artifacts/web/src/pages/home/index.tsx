@@ -195,7 +195,7 @@ export default function Home() {
               style={{ animationDelay: '0.3s' }}
             >
               <div className="grid grid-cols-2 gap-8">
-                <StatBlock value="6"  label="Fashion Week Editions" surface="dark" />
+                <StatBlock value="5"  label="Fashion Week Editions" surface="dark" />
                 <StatBlock value="15" label="Sectors Connected"     surface="dark" />
                 <StatBlock value="6"  label="Official Programs"     surface="dark" />
                 <StatBlock value="1"  label="Global Movement"       surface="dark" />

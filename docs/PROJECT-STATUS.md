@@ -270,4 +270,23 @@ One reusable detail template driven by one typed local data source. Six routes a
 **Known remaining homepage inconsistency (preservation rule applied):**
 - Hero StatBlock (Section 1, line 198): still `value="6" label="Fashion Week Editions"`. Per preservation rules this was not changed. Correction must be batched into the next permitted homepage edit pass.
 
-- Stage 2 Program Detail: **"Program Detail System Approved"** ← recommended next checkpoint
+- Stage 2 Program Detail: "Program Detail System Approved" ✓ (owner approved)
+
+### Ecosystem Page
+
+Signature interactive page replacing the placeholder. Driven by a single typed data file.
+
+**New files:**
+- `artifacts/web/src/lib/sectors-data.ts` — typed `Sector[15]` with all 15 verbatim entries; `getSectorBySlug()` helper; inline content rules documented.
+- `artifacts/web/src/pages/ecosystem/index.tsx` — 10-section page. Local sub-components: `SectorPanelContent`, `SectorConstellation` (desktop ≥1024px SVG constellation), `SectorAccordion` (mobile/tablet shadcn Accordion), `EcosystemNotice`.
+
+**Modified files:**
+- `artifacts/web/src/pages/home/index.tsx` — Part C correction: hero StatBlock `value="6" label="Fashion Week Editions"` corrected to `value="5"`. (Stat band at line 489 was already "5" from a prior session; only line 198 needed correcting.)
+
+**Constellation design:** SVG viewBox 580×490, center (290, 245). Inner ring r=108, 7 sectors (fashion → investment). Outer ring r=188, 8 sectors (tourism → humanitarian-action), offset 22.5° to interleave. Nodes: `<g role="button" aria-label aria-pressed tabIndex={0}>` — invisible hitbox r=20, visual circle r=9/12 (active), SVG label text positioned radially outward. Two ring polygon connections (adjacent nodes) + 15 radial spokes. Active spoke: `lineShimmer` CSS keyframe (suppressed by prefers-reduced-motion). No new npm dependencies.
+
+**Links in ecosystem page:** `/programs` (Section 7 ghost button) and `/join` (Section 9 CTA) only — no sector slug links, no dead links.
+
+**Sector page chips:** all 15 sector panels show "SECTOR PAGE COMING SOON" non-link chip — no routes created.
+
+- Stage 3 Ecosystem: **"Ecosystem Page Approved"** ← recommended next checkpoint

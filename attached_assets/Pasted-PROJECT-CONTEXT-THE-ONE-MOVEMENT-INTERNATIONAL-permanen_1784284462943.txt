@@ -1,0 +1,97 @@
+PROJECT CONTEXT
+
+THE ONE MOVEMENT INTERNATIONAL — permanent global ecosystem connecting culture, business, investment, diplomacy, innovation, education, tourism, media and humanitarian impact. Grew from The One Fashion Week, born in Bukavu, DRC — five completed editions; the sixth is postponed to November (future content only). Design System V2 "Lagoon & Gold" approved (lagoon/gold/ivory/coral tokens; Cinzel display UPPERCASE ONLY; IBM Plex Sans/Arabic; HeroSurface, GoldThread, SectionHeading, StatBlock, PhotoSlot, GeometricAccent, StatusNotice, Card, Badge, Button, shadcn accordion). Homepage, /vision, /programs and six program detail routes are built and must not be modified except where stated.
+
+THIS TASK: build the real /ecosystem page (signature interactive page), replacing its placeholder, driven by one typed sector data file — plus one verification-only homepage report item. Nothing else.
+
+NON-NEGOTIABLE CONTENT RULES
+All copy below VERBATIM. Do not invent sectors, statistics, member counts, organizations, partners, achievements, or completed collaborations. Cross-sector examples are POSSIBILITIES, never past accomplishments. No donation/fundraising language. Links may target ONLY /programs and /join. Sector detail pages do not exist yet: sector panels show a non-link chip "SECTOR PAGE COMING SOON" — no dead links.
+
+STRICT TECHNICAL BANS
+No canvas, no WebGL, no 3D, no drag interactions, no new dependencies, no animation libraries. No critical content revealed on hover only — all reveals work by click/tap and keyboard. HTML/CSS/SVG only for the constellation.
+
+PART A — DATA
+Create artifacts/web/src/lib/sectors-data.ts exporting typed Sector[15]: slug, name, descriptor, contributes, whoBelongs: string[], relatedPrograms: string[] (program display names only). VERBATIM entries:
+
+1 fashion · Fashion · "Design, craft and identity on the world stage" · "Creativity, craftsmanship and cultural expression that give the Movement its most visible stage." · Designers, Models, Stylists, Artisans, Creative professionals · The One Fashion Week International, The One Fashion Night
+2 music · Music · "Sound that crosses every border" · "Performance and sound that unite audiences beyond language." · Musicians, Performers, Producers, Cultural organizations · The One Fashion Night, The One Diplomatic Gala
+3 dance · Dance · "Movement as a universal language" · "Expression through movement that carries culture from stage to stage." · Dancers, Choreographers, Performance companies · The One Fashion Night, The One Fashion Week International
+4 film · Film · "Stories that travel the world" · "Stories and documentation that carry the Movement's message across the world." · Filmmakers, Videographers, Producers, Studios · The One Awards, The One Summit
+5 art · Art · "Creation without frontiers" · "Visual creation that turns shared values into shared experience." · Artists, Curators, Galleries, Cultural institutions · The One Diplomatic Gala, The One Awards
+6 business · Business · "Enterprise connecting continents" · "Enterprise and entrepreneurship that convert connection into opportunity and jobs." · Entrepreneurs, Companies, Startups, Business leaders · The One Summit, The One Investment Forum
+7 investment · Investment · "Capital meeting opportunity" · "Capital that helps talent and ideas grow across borders." · Investors, Funds, Business angels, Institutions · The One Investment Forum, The One Summit
+8 tourism · Tourism · "Cultures discovering each other" · "Travel and hospitality that turn cultural curiosity into real exchange." · Tourism boards, Hospitality companies, Travel professionals · The One Summit, The One Fashion Night
+9 diplomacy · Diplomacy · "Dialogue between nations and peoples" · "Institutional bridges that open doors for culture, business and cooperation." · Embassies, Governments, International organizations, Diplomats · The One Diplomatic Gala, The One Summit
+10 innovation · Innovation · "Ideas that change what is possible" · "New ideas and models that expand what the ecosystem can do." · Innovators, Researchers, Startups, Universities · The One Summit, The One Investment Forum
+11 technology · Technology · "Tools for a connected humanity" · "Digital tools and platforms that keep a global community connected every day." · Technology companies, Developers, Digital creators · The One Summit, The One Investment Forum
+12 ngos · NGOs · "Organized compassion in action" · "Organized civil society bringing structure, experience and reach to shared causes." · NGOs, Foundations, Civil society organizations · The One Diplomatic Gala, The One Awards
+13 media · Media · "Voices that inform the world" · "Storytelling and coverage that carry the Movement's voice to the world." · Media organizations, Journalists, Content creators, Influencers · The One Awards, The One Fashion Week International
+14 education · Education · "Knowledge shared across borders" · "Learning and research that prepare the next generation of global builders." · Universities, Schools, Students, Educators · The One Summit, The One Awards
+15 humanitarian-action · Humanitarian Action · "Impact where it matters most" · "Purpose at the center: turning connection into contribution and lives improved." · Humanitarian organizations, Volunteers, Impact leaders · The One Awards, The One Diplomatic Gala
+
+PART B — /ECOSYSTEM PAGE, TEN SECTIONS IN ORDER
+
+1. ECOSYSTEM HERO — HeroSurface (lagoon radiant), restrained motion:
+Eyebrow: "THE ECOSYSTEM"
+Display-XL: "FIFTEEN SECTORS. ONE CONNECTED GLOBAL ECOSYSTEM."
+Supporting line: "The One Movement International is a permanent environment where sectors that rarely meet — culture, business, diplomacy, innovation and impact — work as one connected community, 365 days a year."
+Abstract network placeholder area: PhotoSlot fallback with dev caption "ECOSYSTEM VISUAL — GLOBAL NETWORK".
+
+2. WHAT THE ECOSYSTEM MEANS — ivory, asymmetric:
+Eyebrow: "ONE ENVIRONMENT, NOT A LIST OF INDUSTRIES"
+H2: "WHERE EACH SECTOR MAKES THE OTHERS STRONGER"
+Paragraph: "The Movement is not a collection of unrelated industries. It is a permanent environment where culture creates visibility, business creates opportunity, diplomacy builds bridges, innovation creates solutions, education develops capability and humanitarian action gives it all purpose. Connection is the product."
+Small clarifying line: "On our Vision page, these forces are described as pillars. Here, you can explore the fifteen sectors where the community lives and works."
+
+3. INTERACTIVE SECTOR EXPLORER — lagoon-900 band. Desktop (≥1024px): SectorConstellation component — central Movement mark ("THE ONE" in Cinzel with gold node) surrounded by 15 sector nodes on two concentric rings, connected by thin gold SVG lines. Each node is a real <button> with accessible name (sector name). Click/Enter/Space opens SectorPanel beside the constellation showing: sector name (caps), descriptor, "WHAT IT CONTRIBUTES" + contributes text, "WHO BELONGS HERE" + whoBelongs list, "RELATED PROGRAMS" + program names as gold Badges (non-link), and a subtle non-link chip "SECTOR PAGE COMING SOON". Active node highlighted gold with its connection line shimmering (CSS only); all motion disabled under prefers-reduced-motion (constellation stays fully functional, static). Below 1024px this section renders SectorAccordion instead: accessible accordion of all 15 sectors with identical panel content from the same data. Section eyebrow: "EXPLORE THE ECOSYSTEM" · H2: "SELECT A SECTOR TO SEE HOW IT CONNECTS".
+
+4. SECTOR GRID FALLBACK — ivory: eyebrow "THE FIFTEEN SECTORS" · H2 "EVERY SECTOR AT A GLANCE". Semantic list-based grid (1-col mobile / 2 tablet / 3 desktop) of all 15: name, descriptor, one line "For:" + first three whoBelongs entries. Pure content, no JS-dependent reveal, no animation required.
+
+5. HOW CONNECTIONS HAPPEN — ivory continues, five-step horizontal flow (stacks vertically on mobile) using existing card/GoldThread patterns:
+Eyebrow: "FROM MEMBER TO IMPACT"
+Steps verbatim: "JOIN — Become a member of the global community." · "BUILD A PROFILE — Present who you are and what you seek." · "DISCOVER — Find people and opportunities across sectors." · "PARTICIPATE — Take part in official programs and initiatives." · "CREATE IMPACT — Turn connection into collaboration and contribution."
+
+6. CROSS-SECTOR EXAMPLES — lagoon-900 band:
+Eyebrow: "WHAT CONNECTION CAN LOOK LIKE"
+H2: "POSSIBILITIES, NOT PROMISES"
+Intro line: "Examples of the connections the ecosystem is built to make possible:"
+Six compact dark cards verbatim: "An entrepreneur meets an investor through an opportunity." · "An embassy supports a cultural exchange." · "A university connects students to a global program." · "An NGO meets a corporate impact partner." · "A filmmaker documents a humanitarian initiative." · "A designer connects with media and international buyers."
+
+7. PROGRAMS AS THE HEARTBEAT — ivory:
+Eyebrow: "MOMENTS OF CONNECTION"
+H2: "PROGRAMS ARE THE HEARTBEAT. THE COMMUNITY IS THE PULSE."
+Paragraph: "Six official programs create moments of visibility, collaboration and celebration. Between editions, the community keeps working — because the Movement never closes."
+Ghost button: "EXPLORE THE PROGRAMS" → /programs
+
+8. OPPORTUNITIES LAYER — ivory continues with GeometricAccent divider above:
+Eyebrow: "FROM CONNECTION TO ACTION"
+H2: "OPPORTUNITIES TURN MEETINGS INTO MOVEMENT"
+Paragraph: "Calls, collaborations, applications, showcases and partnership openings — the Opportunities Hub is where the ecosystem's connections become concrete projects."
+StatusNotice: "The Opportunities Hub opens with the Movement's member platform."
+
+9. JOIN BY SECTOR — lagoon-900:
+Eyebrow: "YOUR PLACE IN THE ECOSYSTEM"
+H2: "EVERY SECTOR HAS A DOOR. ALL OF THEM LEAD IN."
+Line: "Whether you create, build, invest, teach, govern or serve — there is a place in the Movement for you."
+Primary button: "JOIN THE MOVEMENT" → /join
+
+10. CLOSING INVITATION — HeroSurface:
+Display-LG: "ONE WORLD. ONE PURPOSE. ONE MOVEMENT."
+Bilingual signature: "WE ARE ONE — نحن واحد" (lang="ar" dir="rtl").
+
+PART C — HOMEPAGE STATBLOCK VERIFICATION (report only)
+Inspect every StatBlock on the homepage AND the /design-system hero demo. In the completion report, list each as a number+label pair. Make NO change unless a block labeled as Fashion Week editions displays "6" — only then correct that single value to "5". "6 — OFFICIAL PROGRAMS" is correct and must not be changed.
+
+DESIGN REQUIREMENTS
+V2 tokens only; UPPERCASE Cinzel; max one signature motif per section; constellation elegant and restrained (thin lines, small nodes, generous space — not a busy diagram); WCAG AA; visible gold focus rings on every node and interactive element; aria-expanded/aria-controls on accordion; decorative SVG aria-hidden.
+
+AI REQUIREMENTS — none. TECHNICAL — no new dependencies; no database/server changes; no secrets; typed local data only. RESPONSIVE — flawless at 390/768/1280px; constellation only ≥1024px; accordion below. PERFORMANCE — CSS-only effects; lazy placeholders; page stays light.
+
+PRESERVATION RULES
+Touch ONLY: sectors-data.ts (new), ecosystem page folder + SectorConstellation/SectorPanel/SectorAccordion components (new), App.tsx only if route metadata requires, docs/PROJECT-STATUS.md (record checkpoints "Program Detail System Approved" and this stage), and the single conditional homepage correction from Part C. Nothing else. List, don't fix, any other inconsistencies noticed.
+
+TESTING REQUIREMENTS
+Keyboard-only traversal: every constellation node reachable, operable, panel content readable; accordion fully operable; screen-reader names on all 15 nodes; three widths; reduced-motion leaves explorer functional and static; grid fallback readable without JS effects; link audit (only /programs and /join); Arabic shaping in closing; TypeScript clean; zero console errors; all other pages unchanged.
+
+COMPLETION REPORT — ALL 16 items:
+1 What was created · 2 What was changed · 3 Pages and components completed · 4 Files modified · 5 Dependencies added · 6 Database changes · 7 Environment variables required · 8 Tests completed · 9 What passed · 10 What remains incomplete · 11 Errors and warnings (include the full homepage + design-system StatBlock number/label pair report here) · 12 Owner actions required · 13 Mobile verification · 14 Accessibility verification · 15 Console and server-log status · 16 Recommended checkpoint name: "Ecosystem Page Approved"

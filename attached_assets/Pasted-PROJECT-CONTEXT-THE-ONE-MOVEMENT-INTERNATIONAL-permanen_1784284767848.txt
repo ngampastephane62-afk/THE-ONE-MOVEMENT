@@ -1,0 +1,71 @@
+PROJECT CONTEXT
+
+THE ONE MOVEMENT INTERNATIONAL — permanent global ecosystem (culture, business, investment, diplomacy, innovation, education, tourism, media, humanitarian impact). Grew from The One Fashion Week: five completed editions in the DRC; sixth edition postponed to November — future content only. Design System V2 "Lagoon & Gold" is APPROVED and stays: lagoon/gold/ivory/coral palette, Cinzel display, IBM Plex Sans/Arabic, existing component library. Completed routes: /, /vision, /programs, /programs/diplomatic-gala, /programs/summit, /programs/fashion-week, /programs/awards, /programs/fashion-night, /programs/investment-forum, plus internal /design-system.
+
+THIS TASK: a GLOBAL LAYOUT AND VISUAL COHERENCE PASS across shared foundations and the completed pages above. This is refinement and standardization — NOT a redesign, NOT a rebrand, NOT new pages, NOT new functionality. The owner has reviewed full-page captures and requires the site to feel like ONE professionally art-directed institutional platform instead of individually assembled sections.
+
+MANDATORY FIRST STEP
+Create a restoration checkpoint named "Pre-Coherence Restore Point" BEFORE any code change.
+
+REQUIRED WORKFLOW
+Before coding: audit all named routes at 390px, 430px, 768px, 1280px; separate shared-token issues from page-specific issues; list exact files expected to change; confirm zero new dependencies needed.
+During coding: shared foundations FIRST (tokens, containers, Layout, hero framework, cards, placeholders, footer); page-level fixes ONLY where shared corrections are insufficient; after EVERY shared-component change, re-verify every route that uses it; no speculative additions; before changing any shared component, check all its current usages.
+After coding: TypeScript check; inspect every route; full-page screenshots at all four widths; console/server logs; keyboard navigation; reduced motion; horizontal-overflow check; compare alignment points across pages; update docs/PROJECT-STATUS.md; produce the expanded completion report.
+
+1 — GLOBAL GRID AND CONTAINER SYSTEM
+Define one shared container system as tokens/utilities and apply it to every page and to header/footer:
+- max content width ~1200–1280px (pick one value, use everywhere)
+- wide container (grids/cinematic), standard container (normal content), narrow reading container (~55–75ch for paragraphs)
+- side padding: mobile ~20–24px, tablet ~32–48px, desktop ~48–72px (single consistent set)
+Audit every existing section: headings, paragraphs, card grids, media placeholders, stats and footer columns must align to the same grid. Remove arbitrary one-off margins that force alignment locally.
+
+2 — TYPOGRAPHY REFINEMENT (global tokens, not per-page hacks)
+Cinzel stays the signature display face but is used SELECTIVELY: page titles, major section titles, selected statements, program names. Sans-serif carries navigation, paragraphs, metadata, card descriptions, buttons, labels, footer.
+- Reduce oversized hero display sizes: display-xl should cap noticeably lower than current (e.g. clamp(2.75rem, 5vw, 4.5rem) — tune to the codebase, the goal is strong-not-overwhelming)
+- Reduce extreme display-to-body contrast; raise too-small body/metadata/footer sizes (footer links min ~0.875rem)
+- Improve display line-height; set max-width on hero headlines; prevent awkward single-word wrapping (text-wrap: balance where supported, and deliberate max-widths)
+- Keep eyebrows legible; avoid uppercase on long body strings; maintain WCAG AA
+The /vision hero headline must no longer wrap awkwardly; the homepage title stays strong without dwarfing everything.
+
+3 — HERO STANDARDIZATION
+Build a shared hero framework with exactly three variants and refit all existing heroes to them:
+- institutional-split (text + media area)
+- editorial-text-led (asymmetric text-dominant)
+- cinematic-centered (used sparingly)
+Standardize: header-to-hero spacing, min/max hero heights (on a 1280×800 laptop the visitor sees the primary message AND the start of the next section), headline and supporting-copy widths, CTA spacing, media proportions, stat positioning, motif usage, mobile stacking. Map each existing page hero to a variant and refit; do not leave any bespoke hero structure.
+
+4 — HEADER AND NAVIGATION
+Same global container as pages. Increase header height and breathing room; enlarge nav type to comfortably readable; unmistakable active state; JOIN THE MOVEMENT visually separated as the primary CTA; refined mobile menu (comfortable tap targets, clean layout). If links cannot fit comfortably, implement one controlled grouping (e.g. an "About" group for Vision/Impact or similar) and DOCUMENT it in the report — do not shrink text to fit, do not remove routes silently. Keep keyboard navigation, visible focus, and sticky behavior only if elegant.
+
+5 — VERTICAL RHYTHM
+Document a shared spacing scale (hero / standard / compact / feature sections; card gaps; heading-to-copy; copy-to-CTA; section-to-section) as tokens. Audit all pages: fix too-empty and too-compressed sections, abrupt dark/light transitions, detached headings, inconsistent card gaps. Dark/ivory alternation must read as deliberate narrative rhythm.
+
+6 — MOBILE ART DIRECTION (390, 430, 768 as compositions, not collapses)
+Consistent 20–24px padding; reduced hero scale; controlled line breaks; shortened empty areas; enlarged small labels/footer text; intentional stacking of split layouts; correct mobile media ratios; uncramped buttons; clear card spacing; simplified motifs; no horizontal overflow anywhere; easy navigation. Evaluate full-page mobile screenshots as compositions.
+
+7 — MEDIA PLACEHOLDER VARIANTS
+Photography remains postponed; do not source or generate images. Extend the existing PhotoSlot system with a small set of intentional variants: portrait-editorial, landscape-cinematic, asymmetric-story, gallery-tile, institutional-feature — all Lagoon & Gold, fixed ratios, restrained treatment (vary surface tone/accent placement, not decoration volume), internal dev labels, intentional when empty, drop-in ready for future images. Apply variants across existing pages so repeated identical lagoon rectangles are eliminated.
+
+8 — CARD SYSTEM REFINEMENT
+Standardize across Programs cards, Program Detail cards, and all content cards: internal padding, heading position, metadata, description length handling, image ratio, border treatment, hover state, focus state, minimum height, grid alignment. Hierarchy and spacing over borders and decoration. Preserve all accessible links and routes.
+
+9 — DECORATIVE MOTIF CONTROL
+Enforce: max ONE primary motif per section; transition borders only at meaningful section changes; GoldThread only where it strengthens hierarchy; patterns support content, never fill space. Remove redundant motifs on existing pages. The Lagoon & Gold identity itself is untouchable.
+
+10 — CONTENT-DENSITY AUDIT (report, don't rewrite)
+Do not rewrite approved factual content. Identify and record in PROJECT-STATUS.md: oversized visual areas with thin content, meaningless repetition, weak hierarchy, unclear journeys. Permitted presentational adjustments only: splitting long paragraphs, subheadings derived from existing copy, better list presentation, de-duplicating identical repeated wording. NO new statistics, programs, partners, dates, impact results or institutional claims.
+
+11 — FOOTER REFINEMENT
+Align to global container; enlarge headings and links to legible sizes; improve column spacing and mobile stacking; refine bilingual signature presentation (Arabic shaping preserved, lang="ar" dir="rtl"); clean legal/copyright row; maintain contrast and focus states; no new or broken routes.
+
+12 — FACTUAL CONSISTENCY CHECK
+Locate the homepage StatBlock reported as displaying "6". Inspect its LABEL first. If it denotes the six official programs → retain 6. If it denotes completed Fashion Week editions → change to 5. Report the number+label pair for every StatBlock on / and in the /design-system hero demo. Confirmed facts: five completed editions; sixth postponed to November; sixth is not history.
+
+PRESERVATION RULES
+Do NOT: redesign the brand; replace the palette; remove approved content; remove working routes; break program cards/detail routes; change program slugs; modify database schemas; add dependencies unless absolutely unavoidable (justify in report if so); add animation libraries, 3D, WebGL, canvas; add photography; add unverified content; build the Ecosystem page; perform unrelated refactoring; alter business functionality. Prefer shared token/component changes over repeated page-specific overrides.
+
+ACCEPTANCE CRITERIA
+One visible horizontal grid across all completed pages · aligned header/heroes/sections/footer · hero headings strong but not oversized, intentional wrapping at all widths · related-but-not-identical heroes · readable uncrowded navigation · comfortable body copy · legible footer · intentionally composed mobile pages · aligned consistent cards · deliberate placeholder variants · restrained motifs · zero content or route loss · zero invented claims · zero dead links · TypeScript clean · console clean · zero horizontal overflow · all six program detail routes working · unknown slugs still redirect.
+
+COMPLETION REPORT — ALL 26 items:
+1 What was audited · 2 What was created · 3 What was changed · 4 Shared components modified · 5 Pages modified · 6 Files modified · 7 Dependencies added · 8 Database changes · 9 Environment-variable changes · 10 Typography changes · 11 Grid and container changes · 12 Header and navigation changes · 13 Hero changes · 14 Mobile-specific changes · 15 Placeholder changes · 16 Footer changes · 17 Factual corrections (include full StatBlock number+label report) · 18 Tests completed · 19 What passed · 20 What remains incomplete · 21 Errors and warnings · 22 Owner actions required · 23 Console and server-log status · 24 Before-and-after screenshot summary · 25 Risks or regressions checked · 26 Recommended checkpoint name: "Global Visual Coherence V3 Approved"
