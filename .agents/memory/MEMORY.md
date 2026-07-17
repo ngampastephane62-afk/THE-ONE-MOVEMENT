@@ -1,2 +1,3 @@
 - [External spec folder structure vs monorepo conventions](external-spec-folder-mapping.md) — map a user's prescribed /client/server/shared layout onto existing artifacts/lib conventions instead of restructuring the workspace.
 - [Join Stage 1 Backend](join-backend.md) — trust proxy, enum-as-text convention, lib/shared tsconfig, in-memory rate limiter, upsert transaction pattern.
+- [Join Page Frontend](join-frontend.md) — @workspace/shared in web, PathCard→form wiring, API URL pattern, form error handling, SuccessPanel focus management.

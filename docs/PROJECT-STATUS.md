@@ -394,5 +394,5 @@ None.
 
 ### Incomplete Items / Owner Actions Required
 - Photography integration remains deferred (no brand-photos added — by design; PhotoSlot fallbacks are intentional and elegant)
-- Remaining placeholder pages (Community, Opportunities, Impact, Media, Partners, Join, Sign In, Privacy Policy, Terms) are still stubs — outside scope of this pass
+- Remaining placeholder pages (Community, Opportunities, Impact, Media, Partners, Sign In, Privacy Policy, Terms) are still stubs — outside scope of this pass
 - The `/design-system` demo StatBlocks use fictional values (190+, 12, 1M+, ∞) — these are intentional as design reference values; owner may update when real data is available

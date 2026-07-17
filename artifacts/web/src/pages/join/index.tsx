@@ -1,5 +1,573 @@
-import PagePlaceholder from "@/components/PagePlaceholder";
+import { useState, useRef } from 'react';
+import { Link } from 'wouter';
+import HeroSurface from '@/components/HeroSurface';
+import GoldThread from '@/components/GoldThread';
+import SectionHeading from '@/components/SectionHeading';
+import GeometricAccent from '@/components/GeometricAccent';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import PathCard from './PathCard';
+import InterestForm from './InterestForm';
+import InquiryForm from './InquiryForm';
+import {
+  PATH_DEFINITIONS,
+  JOURNEY_STEPS,
+  FAQ_ITEMS,
+  getCategoriesForGroup,
+  type PathDefinition,
+} from './join-data';
+
+/* ── Helpers ──────────────────────────────────────────────────────────────── */
+
+function scrollTo(el: HTMLElement | null) {
+  if (!el) return;
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ── Page ─────────────────────────────────────────────────────────────────── */
 
 export default function JoinTheMovement() {
-  return <PagePlaceholder title="Join the Movement" />;
+  const [activePath, setActivePath] = useState<string | null>(null);
+
+  const formSectionRef = useRef<HTMLElement>(null);
+  const inquirySectionRef = useRef<HTMLElement>(null);
+  const heroCtaRef = useRef<HTMLAnchorElement>(null);
+
+  function handlePathSelect(path: PathDefinition) {
+    const newId = activePath === path.id ? null : path.id;
+    setActivePath(newId);
+
+    if (!newId) return;
+
+    // Delay scroll to let render settle
+    setTimeout(() => {
+      if (path.scrollsToInquiry) {
+        scrollTo(inquirySectionRef.current);
+      } else {
+        scrollTo(formSectionRef.current);
+      }
+    }, 80);
+  }
+
+  // Derived: which audienceGroup to pre-select in the form
+  const activeGroup: string =
+    PATH_DEFINITIONS.find((p) => p.id === activePath)?.audienceGroup ?? '';
+
+  // Derived: show path detail panel when a joinable path is active
+  const activeDef = PATH_DEFINITIONS.find((p) => p.id === activePath);
+  const showPathDetail = !!activeDef && !activeDef.scrollsToInquiry;
+
+  return (
+    <div>
+      {/* ─────────────────────────────────────────────────────────────────
+          1. JOIN HERO — radiant lagoon surface
+          ───────────────────────────────────────────────────────────────── */}
+      <HeroSurface minHeight="85vh">
+        <div className="mx-auto w-full max-w-7xl px-6 py-section-lg">
+          <div className="max-w-2xl">
+            <p className="text-eyebrow text-gold-400 mb-5">JOIN THE MOVEMENT</p>
+
+            <h1
+              className="text-display-xl text-ivory-100 animate-fade-up"
+              style={{ fontFamily: 'var(--font-display)', textWrap: 'balance' } as React.CSSProperties}
+            >
+              ONE WORLD.{' '}
+              <span style={{ color: 'hsl(43 80% 73%)' }}>ONE PURPOSE.</span>
+              <br />
+              ONE MOVEMENT.
+            </h1>
+
+            <GoldThread className="mt-8" length="240px" node />
+
+            <p
+              className="mt-6 text-ivory-200 text-lg leading-relaxed animate-fade-in"
+              style={{ animationDelay: '0.15s' }}
+            >
+              A permanent 365-day global community for creatives, entrepreneurs,
+              institutions and changemakers — connected across every sector,
+              every culture and every continent.
+            </p>
+
+            <p
+              className="mt-3 text-ivory-300/70 text-base"
+              style={{ fontFamily: 'var(--font-display)' }}
+              lang="ar"
+            >
+              نحن واحد
+            </p>
+
+            <div
+              className="mt-10 flex flex-col sm:flex-row gap-4 animate-fade-in"
+              style={{ animationDelay: '0.25s' }}
+            >
+              <a
+                ref={heroCtaRef}
+                href="#interest-form"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollTo(formSectionRef.current);
+                }}
+                className={[
+                  'inline-flex items-center justify-center',
+                  'rounded-sm px-8 py-4 text-sm font-semibold tracking-wide',
+                  'bg-gold-500 text-ink-900 border border-gold-600',
+                  'hover:bg-gold-400 transition-colors duration-150',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-300 focus-visible:ring-offset-2',
+                ].join(' ')}
+              >
+                EXPRESS YOUR INTEREST
+              </a>
+              <Link
+                href="/ecosystem"
+                className={[
+                  'inline-flex items-center justify-center',
+                  'rounded-sm px-8 py-4 text-sm font-semibold tracking-wide',
+                  'border border-ivory-100/30 text-ivory-100',
+                  'hover:border-ivory-100/60 transition-colors duration-150',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ivory-100/50 focus-visible:ring-offset-2',
+                ].join(' ')}
+              >
+                EXPLORE THE ECOSYSTEM
+              </Link>
+            </div>
+          </div>
+        </div>
+      </HeroSurface>
+
+      {/* Transition: lagoon → ivory */}
+      <div style={{ backgroundColor: 'hsl(38 57% 94%)' }}>
+        <GeometricAccent variant="lagoon-on-ivory" height={20} />
+      </div>
+
+      {/* ─────────────────────────────────────────────────────────────────
+          2. WHY JOIN
+          ───────────────────────────────────────────────────────────────── */}
+      <section className="bg-ivory-100 py-section-lg">
+        <div className="mx-auto max-w-7xl px-6">
+          <SectionHeading
+            eyebrow="WHY JOIN"
+            heading="A GLOBAL ECOSYSTEM. EVERY DAY."
+            size="lg"
+            surface="light"
+            thread
+          />
+
+          <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                label: 'CONNECTION',
+                body: 'Meet creatives, entrepreneurs, investors and institutions across borders — a community that works, collaborates and grows together every day of the year.',
+              },
+              {
+                label: 'OPPORTUNITY',
+                body: 'Access programs, collaborations and openings across 15 sectors and 6 official programs — from fashion and music to investment, diplomacy and humanitarian action.',
+              },
+              {
+                label: 'PURPOSE',
+                body: 'A community built around a shared conviction: that connection between cultures, talents and ideas creates opportunity, and opportunity creates positive impact.',
+              },
+            ].map(({ label, body }) => (
+              <div
+                key={label}
+                className="flex flex-col border-t-2 border-gold-500 pt-6"
+              >
+                <span
+                  className="text-eyebrow text-ink-900 mb-3"
+                  style={{ fontFamily: 'var(--font-display)' }}
+                >
+                  {label}
+                </span>
+                <p className="text-ink-700 leading-relaxed text-sm">{body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────────
+          3. HOW MEMBERSHIP WORKS
+          ───────────────────────────────────────────────────────────────── */}
+      <section
+        className="py-section-lg"
+        style={{ backgroundColor: 'hsl(187 30% 96%)' }}
+      >
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            <div className="lg:col-span-4">
+              <SectionHeading
+                eyebrow="HOW IT WORKS"
+                heading="MEMBERSHIP IN THE MOVEMENT"
+                size="md"
+                surface="light"
+                thread
+              />
+            </div>
+            <div className="lg:col-span-7 lg:col-start-6">
+              <ul className="space-y-5">
+                {[
+                  'A permanent 365-day ecosystem — not a one-time event or a conference. Membership means ongoing access, connection and participation.',
+                  'Join by submitting your expression of interest. Our team reviews every submission to ensure the quality and integrity of the community.',
+                  'Receive official updates as the member platform moves toward launch. Registered members are informed first.',
+                  'Connect with a global community across 15 sectors and 6 official programs — across every continent.',
+                  'Participate in programs, collaborations, opportunities and the wider ecosystem as a recognized member of the Movement.',
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-4">
+                    <span
+                      className="shrink-0 w-6 h-6 rounded-full border border-gold-500 flex items-center justify-center text-xs text-gold-600 font-semibold mt-0.5"
+                      aria-hidden="true"
+                    >
+                      {i + 1}
+                    </span>
+                    <p className="text-ink-700 leading-relaxed text-sm">{item}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Transition: ivory → lagoon */}
+      <GeometricAccent variant="gold-on-lagoon" height={20} />
+
+      {/* ─────────────────────────────────────────────────────────────────
+          4. CHOOSE YOUR PATH — dark lagoon surface
+          ───────────────────────────────────────────────────────────────── */}
+      <section
+        className="py-section-lg"
+        style={{ backgroundColor: 'hsl(187 67% 12%)' }}
+      >
+        <div className="mx-auto max-w-7xl px-6">
+          <SectionHeading
+            eyebrow="CHOOSE YOUR PATH"
+            heading="WHERE DO YOU BELONG?"
+            subheading="Select the path that best describes you. Joinable paths open the expression of interest form. Institutions and strategic partners follow the inquiry pathway below."
+            size="lg"
+            surface="dark"
+            thread
+          />
+
+          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+            {PATH_DEFINITIONS.map((path) => (
+              <PathCard
+                key={path.id}
+                path={path}
+                isSelected={activePath === path.id}
+                onSelect={handlePathSelect}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Transition: lagoon → ivory */}
+      <div style={{ backgroundColor: 'hsl(38 57% 94%)' }}>
+        <GeometricAccent variant="lagoon-on-ivory" height={20} />
+      </div>
+
+      {/* ─────────────────────────────────────────────────────────────────
+          5. PATH DETAILS — conditional, shown when joinable path active
+          ───────────────────────────────────────────────────────────────── */}
+      {showPathDetail && activeDef && (
+        <section className="bg-ivory-100 py-section-lg border-b border-sand-200">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+              <div className="lg:col-span-4">
+                <p className="text-eyebrow text-gold-600 mb-3">{activeDef.label}</p>
+                <p className="text-ink-700 leading-relaxed">{activeDef.desc}</p>
+                <p className="mt-5 text-sm text-sand-400">
+                  Select your category in the form below — it helps us understand your place in the ecosystem.
+                </p>
+              </div>
+              <div className="lg:col-span-7 lg:col-start-6">
+                <p className="text-xs font-semibold text-ink-500 uppercase tracking-widest mb-4">
+                  Categories in this path
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {activeDef.audienceGroup &&
+                    getCategoriesForGroup(activeDef.audienceGroup).map(({ slug, label }) => (
+                      <span
+                        key={slug}
+                        className="inline-flex items-center px-4 py-2 rounded-full border border-sand-300 text-ink-700 text-xs"
+                      >
+                        {label}
+                      </span>
+                    ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ─────────────────────────────────────────────────────────────────
+          6. WHAT HAPPENS AFTER YOU JOIN
+          ───────────────────────────────────────────────────────────────── */}
+      <section className="bg-ivory-100 py-section-lg">
+        <div className="mx-auto max-w-7xl px-6">
+          <SectionHeading
+            eyebrow="THE JOURNEY"
+            heading="WHAT HAPPENS AFTER YOU JOIN"
+            size="md"
+            surface="light"
+            thread
+          />
+
+          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+            {JOURNEY_STEPS.map((step, i) => (
+              <div key={i} className="flex flex-col items-start">
+                {/* Step number + thread */}
+                <div className="flex items-center gap-3 mb-4">
+                  <span
+                    className="shrink-0 w-8 h-8 rounded-full border-2 border-gold-500 flex items-center justify-center text-sm font-bold text-gold-600"
+                    aria-hidden="true"
+                  >
+                    {i + 1}
+                  </span>
+                  {i < JOURNEY_STEPS.length - 1 && (
+                    <GoldThread
+                      length="100%"
+                      className="hidden lg:flex flex-1"
+                      aria-hidden
+                    />
+                  )}
+                </div>
+                <p className="text-ink-700 text-sm leading-relaxed">{step}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────────
+          7. EXPRESSION OF INTEREST FORM
+          ───────────────────────────────────────────────────────────────── */}
+      <section
+        id="interest-form"
+        ref={formSectionRef}
+        className="py-section-lg"
+        style={{ backgroundColor: 'hsl(38 57% 97%)' }}
+        aria-label="Expression of interest"
+      >
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            {/* Left: heading */}
+            <div className="lg:col-span-4">
+              <SectionHeading
+                eyebrow="EXPRESS YOUR INTEREST"
+                heading="REGISTER YOUR PLACE"
+                size="md"
+                surface="light"
+                thread
+              />
+              <p className="mt-4 text-ink-700 text-sm leading-relaxed">
+                Submit your expression of interest. Our team reviews every
+                submission. No account has been created — you are registering
+                your place for the next stage.
+              </p>
+              <p className="mt-4 text-sand-400 text-xs leading-relaxed">
+                Required fields are marked with{' '}
+                <span className="text-red-600 font-semibold" aria-hidden="true">*</span>.
+              </p>
+            </div>
+
+            {/* Right: form */}
+            <div className="lg:col-span-7 lg:col-start-6">
+              <div className="bg-white rounded-sm border border-sand-200 p-8 shadow-xs">
+                <InterestForm preselectedGroup={activeGroup} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Transition: ivory → lagoon */}
+      <GeometricAccent variant="gold-on-lagoon" height={20} />
+
+      {/* ─────────────────────────────────────────────────────────────────
+          8. INSTITUTIONAL INQUIRY — dark lagoon surface
+          ───────────────────────────────────────────────────────────────── */}
+      <section
+        id="institutional-inquiry"
+        ref={inquirySectionRef}
+        className="py-section-lg"
+        style={{ backgroundColor: 'hsl(187 67% 12%)' }}
+        aria-label="Institutional inquiry"
+      >
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            {/* Left */}
+            <div className="lg:col-span-4">
+              <SectionHeading
+                eyebrow="INSTITUTIONAL PATHWAY"
+                heading="INSTITUTIONAL INQUIRY"
+                size="md"
+                surface="dark"
+                thread
+              />
+              <p className="mt-4 text-ivory-200 text-sm leading-relaxed">
+                Embassies, governments, international organizations,
+                universities, NGOs, sponsors, partners and media organizations
+                engage through this pathway. Provide your organization's
+                information and our team will contact you directly.
+              </p>
+              <div className="mt-8 space-y-4">
+                {[
+                  'Embassy or diplomatic mission',
+                  'Government or ministry',
+                  'International organization',
+                  'University or academic institution',
+                  'NGO or civil society organization',
+                  'Sponsor or corporate partner',
+                  'Media organization',
+                ].map((type) => (
+                  <div key={type} className="flex items-center gap-3">
+                    <span
+                      aria-hidden="true"
+                      className="w-1 h-1 rounded-full bg-gold-500 shrink-0"
+                    />
+                    <span className="text-ivory-200 text-sm">{type}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right: form */}
+            <div className="lg:col-span-7 lg:col-start-6">
+              <div
+                className="rounded-sm border p-8"
+                style={{
+                  borderColor: 'hsl(187 45% 30%)',
+                  backgroundColor: 'hsl(187 55% 15%)',
+                }}
+              >
+                <InquiryForm />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Transition: lagoon → ivory */}
+      <div style={{ backgroundColor: 'hsl(38 57% 94%)' }}>
+        <GeometricAccent variant="lagoon-on-ivory" height={20} />
+      </div>
+
+      {/* ─────────────────────────────────────────────────────────────────
+          9. PRIVACY REASSURANCE
+          ───────────────────────────────────────────────────────────────── */}
+      <section className="bg-ivory-100 py-16">
+        <div className="mx-auto max-w-3xl px-6 text-center">
+          <p className="text-eyebrow text-gold-600 mb-4">YOUR INFORMATION IS SAFE</p>
+          <p className="text-ink-700 leading-relaxed">
+            We collect only the information needed to review your expression of interest
+            and keep you informed about the Movement. We do not share your personal data
+            with third parties for marketing purposes, and you may request the deletion
+            of your information at any time.
+          </p>
+          <p className="mt-4 text-sand-400 text-sm">
+            Read our{' '}
+            <a href="/legal/privacy" className="underline hover:text-ink-600 transition-colors">
+              Privacy Policy
+            </a>
+            .
+          </p>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────────
+          10. FAQ
+          ───────────────────────────────────────────────────────────────── */}
+      <section className="bg-ivory-100 py-section-lg border-t border-sand-200">
+        <div className="mx-auto max-w-3xl px-6">
+          <SectionHeading
+            eyebrow="FREQUENTLY ASKED"
+            heading="QUESTIONS"
+            size="md"
+            surface="light"
+            thread
+          />
+
+          <Accordion type="single" collapsible className="mt-10 w-full">
+            {FAQ_ITEMS.map((item, i) => (
+              <AccordionItem
+                key={i}
+                value={`faq-${i}`}
+                className="border-b border-sand-200"
+              >
+                <AccordionTrigger
+                  className="text-left text-sm font-semibold text-ink-900 py-5 hover:no-underline hover:text-lagoon-600 transition-colors"
+                >
+                  {item.q}
+                </AccordionTrigger>
+                <AccordionContent className="text-sm text-ink-700 leading-relaxed pb-5">
+                  {item.a}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+      </section>
+
+      {/* Transition: ivory → lagoon */}
+      <GeometricAccent variant="gold-on-lagoon" height={20} />
+
+      {/* ─────────────────────────────────────────────────────────────────
+          11. CLOSING SIGNATURE — cinematic lagoon surface
+          ───────────────────────────────────────────────────────────────── */}
+      <HeroSurface glowOrigin="behind" minHeight="50vh">
+        <div className="mx-auto w-full max-w-7xl px-6 py-section-lg text-center">
+          <p className="text-eyebrow text-gold-400 mb-6">THE ONE MOVEMENT INTERNATIONAL</p>
+
+          <h2
+            className="text-display-xl text-ivory-100"
+            style={{ fontFamily: 'var(--font-display)' }}
+          >
+            ONE WORLD.{' '}
+            <span style={{ color: 'hsl(43 80% 73%)' }}>ONE PURPOSE.</span>
+            <br />
+            ONE MOVEMENT.
+          </h2>
+
+          <GoldThread className="mt-8 mx-auto" length="200px" node />
+
+          <p
+            className="mt-6 text-ivory-300/80 text-xl tracking-wider"
+            style={{ fontFamily: 'var(--font-display)' }}
+          >
+            WE ARE ONE
+          </p>
+          <p
+            className="mt-2 text-ivory-300/60 text-lg"
+            lang="ar"
+          >
+            نحن واحد
+          </p>
+
+          <div className="mt-10">
+            <a
+              href="#interest-form"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollTo(formSectionRef.current);
+              }}
+              className={[
+                'inline-flex items-center justify-center',
+                'rounded-sm px-10 py-4 text-sm font-semibold tracking-wide',
+                'bg-gold-500 text-ink-900 border border-gold-600',
+                'hover:bg-gold-400 transition-colors duration-150',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-300 focus-visible:ring-offset-2',
+              ].join(' ')}
+            >
+              JOIN THE MOVEMENT
+            </a>
+          </div>
+        </div>
+      </HeroSurface>
+    </div>
+  );
 }

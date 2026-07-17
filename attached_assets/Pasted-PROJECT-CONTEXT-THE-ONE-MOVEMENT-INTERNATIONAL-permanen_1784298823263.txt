@@ -1,0 +1,69 @@
+PROJECT CONTEXT
+
+THE ONE MOVEMENT INTERNATIONAL — permanent global ecosystem. Verified facts: born as The One Fashion Week in Bukavu, DRC; five completed editions (Bukavu, Goma, Kinshasa); 5th edition supported by UN mission MONUSCO under theme "Peace and Unity"; sixth edition postponed to November (future-only; no date/city/venue); 6 official programs; 15 sectors. Design system "Lagoon & Gold" + Global Visual Coherence V3 foundations are FROZEN. Routes /, /vision, /programs (+6 details), /ecosystem live. A parallel Agent is building /join — DO NOT touch artifacts/web/src/pages/join or any Join file, backend, database, or lib/shared.
+
+THIS TASK: reorient the HOMEPAGE narrative (artifacts/web/src/pages/home only). This is a narrative evolution, NOT a redesign: reuse existing sections and components; three new sections compose from existing primitives; target ZERO new components (justify in report if truly unavoidable).
+
+STEP 0 — RESTORATION CHECKPOINT: create "Pre-Homepage-Reorientation Restore Point".
+
+NON-NEGOTIABLE CONTENT RULES
+All copy VERBATIM. BANNED: member counts, country counts, partner names/logos, media names, testimonials, superlatives ("world's largest/first"), any November date/city/venue, donation language, any claim not listed here. Verified numbers only: 5 editions, 6 programs, 15 sectors, 3 cities, 1 movement.
+
+NEW HOMEPAGE ORDER (nine sections):
+
+1. HERO — enhance existing hero IN PLACE (same variant/structure/media-slot; the media slot remains video-ready placeholder):
+Eyebrow unchanged: "A GLOBAL CONNECTION ECOSYSTEM"
+Headline: "ONE HUMANITY. ONE MOVEMENT. ONE FUTURE." (final word "FUTURE." in gold-400)
+Supporting line: "A global ecosystem connecting creatives, entrepreneurs, institutions and changemakers — turning connection into opportunity, and opportunity into impact."
+Primary "JOIN THE MOVEMENT" → /join · Secondary outline "DISCOVER OUR PROGRAMS" → /programs
+Bilingual signature retained.
+
+2. WHAT IS THE ONE MOVEMENT? — NEW (ivory, compact):
+Eyebrow: "WHAT THIS IS"
+H2: "A MOVEMENT YOU JOIN. AN ECOSYSTEM THAT WORKS."
+Definition paragraph: "The One Movement International is a permanent global ecosystem — born from a fashion movement for peace in the Democratic Republic of Congo — connecting people, organizations and institutions across fifteen sectors to create collaboration, opportunity and positive impact, 365 days a year."
+Contrast strip (four short statements, existing card/list pattern): "Not a fashion week — The One Fashion Week International is one of our official programs." · "Not a single event — a permanent community, alive every day of the year." · "Not only an organization — an ecosystem you become part of." · "Not promises — connection that becomes action."
+
+3. WHY WE EXIST — REUSE the existing Our Story section (FROM CONGO TO THE WORLD / "BORN IN CRISIS. BUILT FOR PEACE." / both approved paragraphs incl. MONUSCO / gold pull-quote "ONE PEOPLE. ONE SINGLE HUMAN RACE."), moved to this position. Copy unchanged. Presentational polish only within V3 rules.
+
+4. ECOSYSTEM PREVIEW — ENHANCE existing sector grid into a preview band:
+Eyebrow: "FIFTEEN SECTORS. ONE NETWORK."
+H2: "WHERE WORLDS CONNECT"
+Show FIVE featured sector tiles (Fashion, Business, Diplomacy, Investment, Humanitarian Action) with their existing approved descriptors, plus one integrated tile "AND TEN MORE SECTORS — Music, Dance, Film, Art, Tourism, Innovation, Technology, NGOs, Media, Education". Mobile: 2 featured + the all-sectors tile.
+CTA ghost button: "EXPLORE THE FULL ECOSYSTEM" → /ecosystem. (Full 15-tile grid is removed from the homepage; it lives on /ecosystem.)
+
+5. OFFICIAL PROGRAMS — REUSE existing six-card section. Add intro line above grid: "Six official programs. One of them started it all. The One Fashion Week International is one official program of The One Movement International." Verify all six DISCOVER links point to the live detail routes. Fashion Week card line unchanged: "Five editions. Born in the DRC. Recognized internationally."
+
+6. WHY JOIN — NEW (ivory), replaces the old "Who Can Join" five-group section on the homepage (that content already lives on /join and /vision — do not delete it from those pages; simply remove the homepage instance):
+Eyebrow: "WHY JOIN"
+H2: "GROW. CONNECT. CREATE. IMPACT."
+Four cards verbatim: "GROW — Access a community built to develop your craft, your venture and your voice." · "CONNECT — Meet people and organizations you would never otherwise reach — across sectors and continents." · "CREATE — Turn connections into collaborations, projects and programs." · "IMPACT — Be part of work that improves lives — from cultural visibility to humanitarian action."
+Primary button: "JOIN THE MOVEMENT" → /join
+
+7. GLOBAL IMPACT — NEW (lagoon-900), honest verified proof only; absorbs the old stat band (which is removed as a separate section):
+Eyebrow: "PROOF, NOT PROMISES"
+H2: "WHAT IS ALREADY REAL"
+Documented timeline composition (existing StatBlock/card patterns; vertical on mobile): "2019 — The One Fashion Week is born in Bukavu, Democratic Republic of Congo." · "2019–2022 — Three editions in Bukavu carry a message of peace through fashion." · "2024 — Goma hosts the fourth edition." · "2025 — Kinshasa hosts the fifth edition, supported by the United Nations mission MONUSCO under the theme Peace and Unity." · "TODAY — The movement becomes The One Movement International: fifteen sectors, six official programs, one permanent global ecosystem."
+Stat row: "5" FASHION WEEK EDITIONS · "6" OFFICIAL PROGRAMS · "15" SECTORS CONNECTED · "1" GLOBAL MOVEMENT
+Closing line: "Our impact reporting grows with the Movement — and is always verified."
+Code comments mark future slots for verified metrics, stories, and authorized partner logos. Render nothing in them.
+
+8. PARTNERSHIP PATHWAY — NEW short band (lagoon-900 continues or ivory per rhythm; Agent chooses within V3 rhythm rules):
+Eyebrow: "FOR INSTITUTIONS & PARTNERS"
+H2: "PARTNERSHIP BEGINS WITH A CONVERSATION."
+Lines: "Embassies, governments, international organizations, universities, NGOs, sponsors and media join the Movement through direct dialogue." · "Partnership is built on verification and trust — every collaboration begins with a conversation."
+Outline button: "BECOME A PARTNER" → /join#institutional (anchor to the Join page's institutional section; if the /join build is not yet merged when you finish, link to /join and note it in the report — never a dead anchor).
+
+9. CLOSING — REUSE existing final invitation section; headline may become "THE MOVEMENT IS OPEN. THE WORLD IS INVITED." (already approved wording); primary "JOIN THE MOVEMENT" → /join; bilingual signature retained.
+
+RETIRED FROM HOMEPAGE (content preserved elsewhere, verify and report): "What We Are" section (its substance lives in section 2 + fully on /vision — confirm /vision unchanged) · "Who Can Join" five-group section (lives on /join and /vision) · standalone stat band (merged into section 7) · standalone Impact/"Connection with a conscience" section (its role is absorbed by section 7; the /impact page module will carry the full content later — report its removed copy in the completion report for the register).
+
+DESIGN/A11Y REQUIREMENTS
+V3 foundations, header, footer, tokens, shared components UNTOUCHED. Max one motif per section. Exactly one h1 (hero); sequential heading cascade re-audited after reorder; focus order matches visual order; distinguishable accessible names on all CTAs; timeline and contrast strip exposed as structured lists to assistive tech; WCAG AA; reduced motion respected; no new dependencies; no images/video added — hero media slot stays placeholder, video-ready.
+
+FILE BOUNDARIES (hard): touch ONLY artifacts/web/src/pages/home/**. DO NOT touch pages/join, pages/vision, pages/ecosystem, pages/programs, shared components, tokens, header, footer, App.tsx, backend, database, lib/shared. docs/PROJECT-STATUS.md: update ONLY if no other Agent task is running; otherwise include the full update text in the report for later application.
+
+TESTING
+Full scroll at 390/430/768/1280/1440 as compositions, no horizontal overflow; heading/focus-order audit; link audit (all targets live: /join, /programs, /ecosystem, six program details from cards); verify /vision, /join, /ecosystem, /programs unchanged by diff; banned-claims scan of the rendered homepage; Arabic signature shaping; reduced motion; TypeScript clean; zero console errors.
+
+COMPLETION REPORT — standard 16 items PLUS: section disposition table (reused/enhanced/new/retired as implemented) · retired-copy inventory (exact removed text, where it still lives) · confirmation Join files and shared foundations untouched (diff) · banned-claims scan result · heading/focus audit result · homepage payload note (no material growth). Recommended checkpoint: "Homepage Narrative V2 Approved"
