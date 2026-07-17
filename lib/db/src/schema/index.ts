@@ -12,3 +12,5 @@ export * from "./impactStories";
 export * from "./notifications";
 export * from "./auditLog";
 export * from "./aiUsageLog";
+export * from "./joinInterests";
+export * from "./institutionalInquiries";

@@ -11,6 +11,17 @@ import { logger } from "./lib/logger";
 
 const app: Express = express();
 
+/**
+ * Trust proxy — Replit runs all traffic through a reverse proxy that sets
+ * X-Forwarded-For. Setting trust proxy = 1 tells Express to resolve req.ip
+ * from the first entry in X-Forwarded-For (the real client IP) rather than
+ * the proxy's loopback address. This is required for per-client IP rate
+ * limiting to work correctly. Without it, all requests share the same "IP"
+ * key and rate limiting is effectively disabled for everyone or triggers
+ * incorrectly for the first few requests.
+ */
+app.set("trust proxy", 1);
+
 app.use(
   pinoHttp({
     logger,
