@@ -290,3 +290,109 @@ Signature interactive page replacing the placeholder. Driven by a single typed d
 **Sector page chips:** all 15 sector panels show "SECTOR PAGE COMING SOON" non-link chip — no routes created.
 
 - Stage 3 Ecosystem: **"Ecosystem Page Approved"** ← recommended next checkpoint
+
+---
+
+## Global Visual Coherence Pass — Completion Report
+
+**Date completed:** 2026-07-17  
+**Recommended checkpoint:** "Global Visual Coherence V3 Approved"
+
+### Scope
+Refinement and standardization across all completed pages of the site: `/`, `/our-vision`, `/programs`, six program detail routes (`/programs/:slug`), and `/design-system`. No new pages, no redesign, no new dependencies added.
+
+### StatBlock Audit — Full Number+Label Report
+
+**Homepage (`/`):**
+| Page location | Value | Label | Verdict |
+|---|---|---|---|
+| Hero (Section 1) | 5 | Fashion Week Editions | ✓ Correct |
+| Hero (Section 1) | 15 | Sectors Connected | ✓ Correct |
+| Hero (Section 1) | 6 | Official Programs | ✓ Correct — six programs exist |
+| Hero (Section 1) | 1 | Global Movement | ✓ Correct |
+| Stat Band (Section 7) | 5 | Fashion Week Editions | ✓ Correct |
+| Stat Band (Section 7) | 15 | Sectors Connected | ✓ Correct |
+| Stat Band (Section 7) | 6 | Official Programs | ✓ Correct |
+| Stat Band (Section 7) | 1 | Global Movement | ✓ Correct |
+
+**Programs page (`/programs`) stat band:**
+| Value | Label | Verdict |
+|---|---|---|
+| 6 | Official Programs | ✓ Correct |
+| 5 | Fashion Week Editions | ✓ Correct |
+| 15 | Sectors Connected | ✓ Correct |
+| 1 | Global Movement | ✓ Correct |
+
+**Design System hero demo (`/design-system`):**
+| Value | Label | Note |
+|---|---|---|
+| 190+ | Countries | Design system demo values — not factual claims |
+| 12 | Programs | Design system demo values — not factual claims |
+| 1M+ | Members | Design system demo values — not factual claims |
+| ∞ | Purpose | Design system demo values — not factual claims |
+| 190+ | Countries Represented | StatBlock component demo |
+| 12 | Ecosystem Programs | StatBlock component demo |
+| 1M+ | Community Members | StatBlock component demo |
+
+All demo StatBlocks on `/design-system` are clearly labeled as design reference values — they do not represent factual organizational claims.
+
+**Confirmed facts:**
+- Five Fashion Week editions are completed history (Bukavu ×2, Goma, Kinshasa ×2).
+- Sixth edition: postponed, planned for November — not shown in any statistic.
+- Six official programs exist (Diplomatic Gala, Summit, Fashion Week, Awards, Fashion Night, Investment Forum) — "6" is factually correct everywhere it appears.
+
+### Changes Made
+
+**`artifacts/web/src/index.css`**
+- `text-display-xl`: reduced from `clamp(3.5rem, 8vw, 7rem)` to `clamp(2.75rem, 6vw, 5rem)` — strong but no longer overwhelming at 1280px
+- `text-display-lg`: reduced from `clamp(2.5rem, 5vw, 4.5rem)` to `clamp(2rem, 4.5vw, 3.75rem)` — maintains scale hierarchy
+- `text-display-md`: reduced from `clamp(1.75rem, 3.5vw, 2.75rem)` to `clamp(1.5rem, 3vw, 2.25rem)` — proportional
+- Line-heights adjusted across all display sizes for improved readability
+
+**`artifacts/web/src/styles/tokens.ts`**
+- Type scale values updated to match CSS changes above
+
+**`artifacts/web/src/components/Layout.tsx`**
+- Header: desktop nav now shows 6 core links only (Our Vision, Ecosystem, Programs, Impact, Media, Partners) — readable and uncrowded
+- Header: `JOIN THE MOVEMENT` separated as a visually distinct gold CTA button on the right
+- Header: Community, Opportunities visible in mobile menu and footer (no routes removed, no content hidden from users)
+- Header: Sign In moved to footer only (accessible, not crowding the header)
+- Header: Active state gold underline preserved and working
+- Mobile menu: all nav items + JOIN CTA; borders use consistent lagoon border color
+- Footer: column headings enlarged (text-eyebrow → more readable); link text upgraded to `text-sm` (0.875rem) throughout
+- Footer: bilingual signature repositioned to column 4 for better visual balance
+- Footer: Arabic text kept with `lang="ar"` `dir="rtl"` `font-arabic` — correct shaping preserved
+- Footer: legal row simplified to copyright + tagline only; clutter removed
+- Footer: gold thread separator preserved at top
+
+**`artifacts/web/src/pages/home/index.tsx`**
+- Fixed two broken links: `/join-the-movement` → `/join` (hero CTA and final invitation section)
+
+**`artifacts/web/src/pages/our-vision/index.tsx`**
+- Hero headline reduced from 5 hard-coded `<br/>` lines to 3 thematic lines: "CONNECTING HUMANITY. / CREATING OPPORTUNITY. / BUILDING PEACE."
+- Added `text-wrap: balance` for intentional wrapping across breakpoints
+
+### Container System
+All completed pages use `max-w-7xl px-6` consistently. The `/design-system` page uses `max-w-6xl px-6` which is appropriate for an internal reference gallery. No arbitrary one-off alignment margins introduced.
+
+### Horizontal Overflow
+No horizontal overflow detected. All pages use `overflow-hidden` at appropriate containers.
+
+### Link Verification
+- All six program detail routes confirmed working: `/programs/diplomatic-gala`, `/programs/summit`, `/programs/fashion-week`, `/programs/awards`, `/programs/fashion-night`, `/programs/investment-forum`
+- Unknown slugs redirect to `/programs` via `useEffect` guard
+- All CTAs link to `/join` (corrected from broken `/join-the-movement`)
+
+### TypeScript Status
+TypeScript check passes clean — zero errors.
+
+### New Dependencies
+None.
+
+### DB / Environment Changes
+None.
+
+### Incomplete Items / Owner Actions Required
+- Photography integration remains deferred (no brand-photos added — by design; PhotoSlot fallbacks are intentional and elegant)
+- Remaining placeholder pages (Community, Opportunities, Impact, Media, Partners, Join, Sign In, Privacy Policy, Terms) are still stubs — outside scope of this pass
+- The `/design-system` demo StatBlocks use fictional values (190+, 12, 1M+, ∞) — these are intentional as design reference values; owner may update when real data is available

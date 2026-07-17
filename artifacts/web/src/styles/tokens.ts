@@ -115,9 +115,9 @@ export const tokens = {
 
   /* ── Type scale ─────────────────────────────────────────────────────────── */
   typeScale: {
-    displayXl: "clamp(3.5rem, 8vw, 7rem) / 0.92 / 0.04em",
-    displayLg: "clamp(2.5rem, 5vw, 4.5rem) / 0.95 / 0.035em",
-    displayMd: "clamp(1.75rem, 3.5vw, 2.75rem) / 1.05 / 0.03em",
+    displayXl: "clamp(2.75rem, 6vw, 5rem) / 0.95 / 0.04em",
+    displayLg: "clamp(2rem, 4.5vw, 3.75rem) / 1.0 / 0.035em",
+    displayMd: "clamp(1.5rem, 3vw, 2.25rem) / 1.1 / 0.03em",
     h1: "2rem / 1.15 / -0.01em",
     h2: "1.5rem / 1.2 / 0",
     h3: "1.25rem / 1.25 / 0",

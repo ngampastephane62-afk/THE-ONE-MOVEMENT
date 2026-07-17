@@ -176,7 +176,7 @@ export default function Home() {
                 className="mt-8 flex flex-wrap gap-4 animate-fade-in"
                 style={{ animationDelay: '0.25s' }}
               >
-                <Link href="/join-the-movement">
+                <Link href="/join">
                   <Button size="lg" variant="default">
                     Join the Movement
                   </Button>
@@ -573,7 +573,7 @@ export default function Home() {
             the world has never seen.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
-            <Link href="/join-the-movement">
+            <Link href="/join">
               <Button size="xl" variant="default">
                 Join the Movement
               </Button>

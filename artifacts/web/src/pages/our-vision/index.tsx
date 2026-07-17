@@ -53,15 +53,12 @@ export default function OurVision() {
               <p className="text-eyebrow text-gold-400 mb-5">OUR VISION</p>
               <h1
                 className="text-display-xl text-ivory-100 animate-fade-up"
-                style={{ fontFamily: 'var(--font-display)' }}
+                style={{ fontFamily: 'var(--font-display)', textWrap: 'balance' } as React.CSSProperties}
               >
-                CONNECTING
-                <br />
+                CONNECTING{' '}
                 <span style={{ color: 'hsl(43 80% 73%)' }}>HUMANITY.</span>
                 <br />
-                CREATING
-                <br />
-                OPPORTUNITY.
+                CREATING OPPORTUNITY.
                 <br />
                 BUILDING PEACE.
               </h1>
