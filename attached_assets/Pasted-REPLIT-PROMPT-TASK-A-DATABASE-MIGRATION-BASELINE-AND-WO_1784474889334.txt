@@ -1,0 +1,89 @@
+REPLIT PROMPT — TASK A: DATABASE MIGRATION BASELINE AND WORKFLOW REMEDIATION (Economy mode)
+
+PROJECT CONTEXT
+THE ONE MOVEMENT INTERNATIONAL — Tropik Agence FZE LLC. Current Drizzle setup uses drizzle-kit push --force to apply schema changes directly to the live database, bypassing migration files. This has left no auditable schema history — unacceptable given the platform stores personal data under UAE PDPL and (for EU/UK visitors) GDPR. Stage 1.1 checkpoint (Join Stage 1.1 Interest Architecture Complete) stands: the primary_sector_slug column was additive and nullable, all data preserved, tests passed.
+
+This task establishes a documented migration-based workflow WITHOUT changing any application feature, table, column, index, or row. Zero functional change. Zero data disturbance.
+
+MANDATORY STEP 0 — restoration checkpoint "Pre-Migration-Baseline Restore Point".
+
+MANDATORY STEP 1 — CURRENT-STATE INSPECTION (before any change)
+Read and report exactly:
+- lib/db/package.json scripts (all of them)
+- lib/db/drizzle.config.ts (or wherever the Drizzle config lives) — dialect, schema path, out path, credentials env vars
+- lib/db/src/schema/index.ts and every schema file it re-exports (list them)
+- Presence or absence of lib/db/drizzle/ or lib/db/migrations/ directory
+- Presence or absence of a __drizzle_migrations table (or dialect-equivalent journal table) in the live database — run a metadata query, do not assume
+- Live database dialect and version (query the server)
+- Full live schema of every existing table via information_schema (columns, types, defaults, nullability, constraints, indexes)
+Save this inspection output verbatim in the completion report.
+
+MANDATORY STEP 2 — PRE-CHANGE DATA SNAPSHOT
+For each existing user-data table (at minimum: join_interests, institutional_inquiries, and any other tables that hold submissions/records), capture and report: row count · primary-key range · a sample of the most recent 3 rows (with PII fields masked to first character + length, e.g. "audit-****@example.com [22]"). Explicitly confirm the presence of legacy submissionId 11 (email t1@… test row from Stage 1.1 tests is acceptable evidence too). This snapshot is the before-image for the workflow verification in Step 6.
+
+STEP 3 — GENERATE THE BASELINE MIGRATION
+Configure Drizzle Kit to emit migration files to lib/db/drizzle/ (or the standard location per current Drizzle Kit conventions — verify against the installed version, do not assume). Ensure drizzle.config.ts contains an "out" path pointing to that directory.
+
+Run drizzle-kit generate to produce a baseline migration that represents the current schema state exactly, including primary_sector_slug on join_interests. The generated SQL must describe the current schema; commit it as the baseline. Report the filename and full SQL of the generated file. Under no circumstances hand-edit the SQL to force behavior — if the generator produces destructive statements (DROP TABLE, DROP COLUMN, TRUNCATE, RENAME on existing tables) the task STOPS: report the finding, do not apply, do not force.
+
+STEP 4 — RECONCILE THE JOURNAL WITH THE LIVE DATABASE (non-destructive)
+The critical safety step. The live database already contains all tables — running "migrate" naively would attempt to recreate them and fail or corrupt. The correct behavior: mark the baseline migration as ALREADY APPLIED in the __drizzle_migrations journal without executing its SQL, so future migrations proceed cleanly from this baseline.
+
+Implementation options (choose based on the installed Drizzle Kit version — report which):
+(a) If Drizzle Kit exposes a supported "baseline" or "mark applied" command in this version, use it.
+(b) Otherwise, run a small, documented, one-time SQL statement that inserts the baseline record into __drizzle_migrations (creating the journal table via Drizzle's own initialization if it does not exist) using the exact hash/name conventions Drizzle Kit expects. This SQL must be reviewable and reproducible; include it verbatim in the report.
+
+DO NOT drop, recreate, or alter any existing table or column. DO NOT run drizzle-kit migrate against a database that would treat the baseline as a fresh install. If the reconciliation cannot be performed safely in this Drizzle Kit version, STOP and report — do not force.
+
+STEP 5 — WORKFLOW SCRIPTS
+In lib/db/package.json, establish the standard scripts (adjust names to match existing conventions if similar scripts exist — do not create parallel duplicates):
+- db:generate — drizzle-kit generate
+- db:migrate — drizzle-kit migrate (safe forward-only apply)
+- db:status — drizzle-kit status (if supported by this version; otherwise a small script that queries __drizzle_migrations and prints applied migrations)
+- db:studio — drizzle-kit studio (if already present; do not add if not)
+
+DEPRECATE push:
+- Remove any script alias that invokes "drizzle-kit push --force"
+- If drizzle-kit push must remain for local prototyping, gate it behind a script named db:push:local-only-DANGEROUS with a bash-echo warning prefix that prints a red-flag notice explaining it must never be used against shared or production databases
+- Update any developer README/CONTRIBUTING inside lib/db/ (or the project root README if the DB workflow lives there) to document the new commands and the prohibition
+
+STEP 6 — VERIFY THE WORKFLOW ON THE LIVE DATABASE (non-destructive proof)
+Perform this exact sequence and report each result:
+(a) Confirm __drizzle_migrations table exists and contains the baseline entry.
+(b) Run drizzle-kit generate again with no schema changes → expect "no changes" output. Report verbatim.
+(c) Re-run the pre-change data snapshot from Step 2 → row counts, PK ranges, and sample rows must match exactly. Any difference is a failure — restore from checkpoint and report.
+(d) Query the full live schema via information_schema and diff against Step 1's inspection → must match exactly.
+
+STEP 7 — REGRESSION TESTING
+Restart the API server. Run the Stage 1.1 test matrix against the running server (subject to the existing rate limiter — run sequentially within its window):
+- Valid individual submission (primary + additional) → 201
+- Duplicate email upsert → 200 updated, same submissionId, primary preserved
+- 6 sectorSlugs rejected → 400
+- primarySector duplicated in sectorSlugs → 400
+- Institutional inquiry valid → 201
+- Institutional inquiry invalid organizationType → 400
+- Health routes → 200
+- TypeScript clean across workspace
+
+Report each result. Any failure means the remediation touched runtime behavior — restore and report.
+
+AGENT RULE (add to project documentation and to .agents/memory/ if that convention exists)
+"No production or shared-database schema change may be performed using drizzle-kit push --force. All schema changes must be made via drizzle-kit generate → review → drizzle-kit migrate. This applies to every future Agent task."
+
+PRESERVATION RULES
+Do not add or modify any application feature. Do not touch any route, page, component, endpoint, taxonomy, join-data, seed data. Do not create News or Partner tables. Do not add new tables of any kind. Do not modify any existing column, index, constraint, or default. Do not touch shared/. Do not touch artifacts/api-server/src except as strictly required if a script needs a small adjustment (report it). If any Drizzle Kit command produces destructive output at any point, STOP and report — do not force, do not apply.
+
+FILE BOUNDARIES (expected)
+lib/db/drizzle.config.ts (verify/adjust "out" path) · lib/db/package.json (scripts) · lib/db/drizzle/*.sql (new baseline migration file) · lib/db/drizzle/meta/* (Drizzle journal, if the version writes one there) · lib/db/README.md or CONTRIBUTING (developer docs) · docs/PROJECT-STATUS.md (checkpoint) · project agent-rules doc if present. Nothing else.
+
+COMPLETION REPORT — standard 16 items PLUS:
+- Step 1 inspection verbatim
+- Step 2 pre-change snapshot
+- Step 3 baseline migration filename and full SQL
+- Step 4 reconciliation approach chosen and any SQL executed, verbatim
+- Step 5 scripts before/after
+- Step 6 post-change snapshot + diff (must be empty) + "no changes" generator output
+- Step 7 test-matrix results
+- Explicit statement: zero application behavior changed, zero data disturbed
+- Confirmation the agent rule has been recorded
+- Recommended checkpoint: "Database Migration Workflow Baselined and Approved"

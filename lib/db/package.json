@@ -8,8 +8,10 @@
     "./schema": "./src/schema/index.ts"
   },
   "scripts": {
-    "push": "drizzle-kit push --config ./drizzle.config.ts",
-    "push-force": "drizzle-kit push --force --config ./drizzle.config.ts"
+    "db:generate": "drizzle-kit generate --config ./drizzle.config.ts",
+    "db:migrate": "drizzle-kit migrate --config ./drizzle.config.ts",
+    "db:status": "node -e \"import('./node_modules/pg/lib/index.js').then(async ({Pool})=>{const p=new Pool({connectionString:process.env.DATABASE_URL});const r=await p.query('SELECT id,hash,created_at FROM drizzle.__drizzle_migrations ORDER BY created_at');console.log('Applied migrations:');r.rows.forEach(row=>console.log(' id:'+row.id+' hash:'+row.hash.slice(0,16)+'... at:'+row.created_at));p.end()}).catch(e=>{console.error(e.message);process.exit(1)})\"",
+    "db:push:local-only-DANGEROUS": "echo '\\033[0;31m⚠ WARNING: push bypasses migration files and must NEVER be used against shared or production databases. For development only.\\033[0m' && drizzle-kit push --config ./drizzle.config.ts"
   },
   "dependencies": {
     "drizzle-orm": "catalog:",

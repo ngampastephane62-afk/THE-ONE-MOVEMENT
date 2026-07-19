@@ -511,3 +511,189 @@ Clean — zero errors across `@workspace/api-server` and `@workspace/web`.
 
 ### Current checkpoint
 **Join Stage 1.1 Interest Architecture Complete**
+
+---
+
+## Task A — Database Migration Baseline and Workflow Remediation
+
+**Checkpoint:** Database Migration Workflow Baselined and Approved
+
+### Objective
+Establish a documented, auditable migration-based workflow without changing any application feature, table, column, index, or row. Zero functional change. Zero data disturbance.
+
+### Step 1 — Pre-change inspection (verbatim)
+
+**lib/db/package.json scripts (before):**
+```json
+"push": "drizzle-kit push --config ./drizzle.config.ts",
+"push-force": "drizzle-kit push --force --config ./drizzle.config.ts"
+```
+
+**drizzle.config.ts (before):** dialect=postgresql, schema=`__dirname/src/schema/index.ts`, no `out` path.
+
+**drizzle-kit version:** 0.31.10 · **drizzle-orm version:** 0.45.2 · **PostgreSQL:** 16.10 on x86_64-pc-linux-gnu
+
+**Schema files (16 tables re-exported from lib/db/src/schema/index.ts):**
+users, profiles, organizations, profileCategories, programs, events, opportunities, applications, partners, mediaItems, impactStories, notifications, auditLog, aiUsageLog, joinInterests, institutionalInquiries
+
+**lib/db/drizzle/:** ABSENT · **lib/db/migrations/:** ABSENT
+
+**`__drizzle_migrations` table in live DB:** ABSENT (`to_regclass` returned null)
+
+**Live public tables (16):** ai_usage_log, applications, audit_log, events, impact_stories, institutional_inquiries, join_interests, media_items, notifications, opportunities, organizations, partners, profile_categories, profiles, programs, users
+
+**Indexes (19):** one unique index per `_pkey` per table, plus `join_interests_email_normalized_unique`, `institutional_inquiries_email_idx`, `users_email_unique`.
+
+### Step 2 — Pre-change data snapshot
+
+| Table | Row count | PK range |
+|---|---|---|
+| `join_interests` | 14 | 1–15 |
+| `institutional_inquiries` | 4 | 1–4 |
+
+**Legacy submissionId 11:** PRESENT ✓
+
+**join_interests (3 most recent):**
+```
+{"id":15,"email":"t***[14]","country":"France","joining_as":"individual","primary_sector_slug":null,"sector_slugs":["fashion","music","film","art","business"]}
+{"id":14,"email":"t***[14]","country":"France","joining_as":"individual","primary_sector_slug":"music","sector_slugs":null}
+{"id":13,"email":"t***[14]","country":"France","joining_as":"individual","primary_sector_slug":"diplomacy","sector_slugs":["music","film","art","business","investment"]}
+```
+
+**institutional_inquiries (3 most recent):**
+```
+{"id":4,"email":"t***[16]","country":"Germany","organization_type":"university"}
+{"id":3,"email":"a***[27]","country":"France","organization_type":"embassy"}
+{"id":2,"email":"a***[27]","country":"France","organization_type":"embassy"}
+```
+
+### Step 3 — Baseline migration generated
+
+**drizzle.config.ts change:** Added `out: "./drizzle"` (relative path — absolute `path.join(__dirname, ...)` caused a double-slash path bug on second `generate` run; relative path resolves correctly from the `lib/db` CWD).
+
+**Command:** `npx drizzle-kit generate --config ./drizzle.config.ts`
+
+**Output:** `[✓] Your SQL migration file ➜ /home/runner/workspace/lib/db/drizzle/0000_classy_blade.sql 🚀`
+
+**Safety inspection:** Generated SQL contains only `CREATE TABLE`, `ALTER TABLE ADD CONSTRAINT`, and `CREATE INDEX` statements — zero `DROP`, `TRUNCATE`, or `RENAME` on existing objects. Safe to baseline.
+
+**Migration filename:** `lib/db/drizzle/0000_classy_blade.sql`
+
+**Journal entry:** `{"idx":0,"version":"7","when":1784475018502,"tag":"0000_classy_blade","breakpoints":true}`
+
+### Step 4 — Journal reconciliation (non-destructive)
+
+**drizzle-kit 0.31.10 has no `baseline` command.** Used option (b): manual SQL insert.
+
+**Source of truth for table DDL and hash format:** `drizzle-orm@0.45.2/node_modules/drizzle-orm/pg-core/dialect.cjs`
+
+Key findings from source inspection:
+- Table lives in schema `drizzle` (not `public`): `drizzle.__drizzle_migrations`
+- Hash = `crypto.createHash("sha256").update(rawSqlFileContent).digest("hex")`
+- `created_at` = `folderMillis` (journal `when` value in milliseconds)
+- Migration is skipped when `lastDbMigration.created_at >= migration.folderMillis`
+
+**Baseline hash (SHA-256 of `0000_classy_blade.sql`):** `648544796ecb0669712350661291638562a2d6d1a2adc22bb244d58d4d5caa10`
+
+**SQL executed (verbatim, one-time):**
+```sql
+CREATE SCHEMA IF NOT EXISTS drizzle;
+CREATE TABLE IF NOT EXISTS drizzle.__drizzle_migrations (
+  id SERIAL PRIMARY KEY,
+  hash text NOT NULL,
+  created_at bigint
+);
+INSERT INTO drizzle.__drizzle_migrations (hash, created_at)
+VALUES ('648544796ecb0669712350661291638562a2d6d1a2adc22bb244d58d4d5caa10', 1784475018502);
+```
+
+**Result:** 1 row inserted, id=1.
+
+### Step 5 — Workflow scripts
+
+**lib/db/package.json scripts (after):**
+```json
+"db:generate": "drizzle-kit generate --config ./drizzle.config.ts",
+"db:migrate":  "drizzle-kit migrate  --config ./drizzle.config.ts",
+"db:status":   "node -e \"<queries drizzle.__drizzle_migrations and prints applied migrations>\"",
+"db:push:local-only-DANGEROUS": "echo '⚠ WARNING ...' && drizzle-kit push --config ./drizzle.config.ts"
+```
+
+**Removed:** `push`, `push-force` — both deleted.
+
+**Note:** `drizzle-kit status` does not exist in 0.31.10 (returns "Unknown command"). `db:status` is implemented as a small node inline script that directly queries `drizzle.__drizzle_migrations`.
+
+**Created:** `lib/db/README.md` — documents the generate → review → migrate workflow, the prohibition, all scripts, the column addition procedure, and the agent rule.
+
+### Step 6 — Workflow verification
+
+**(a) `drizzle.__drizzle_migrations` exists and contains baseline:**
+```json
+{"id":1,"hash":"648544796ecb0669712350661291638562a2d6d1a2adc22bb244d58d4d5caa10","created_at":"1784475018502"}
+```
+✓
+
+**(b) `drizzle-kit generate` with no schema changes (verbatim output):**
+```
+Reading config file '/home/runner/workspace/lib/db/drizzle.config.ts'
+16 tables
+[...table list...]
+No schema changes, nothing to migrate 😴
+```
+✓ — confirms meta journal is fully consistent with TypeScript schema.
+
+**(c) Post-change data snapshot vs. pre-change:**
+
+| Table | Before | After |
+|---|---|---|
+| join_interests count | 14 | 14 |
+| join_interests PK range | 1–15 | 1–15 |
+| institutional_inquiries count | 4 | 4 |
+| institutional_inquiries PK range | 1–4 | 1–4 |
+| Legacy id=11 | PRESENT | PRESENT |
+| 3 most recent rows | (same) | (identical) |
+
+✓ Zero data disturbed.
+
+**(d) Schema diff (information_schema):** Column count 153 before = 153 after. Index count 19 before = 19 after. No difference. ✓
+
+### Step 7 — Regression testing (Stage 1.1 matrix subset)
+
+| Test | Result |
+|---|---|
+| Valid submission (primary + additional) → 201 | ✓ submissionId=16 |
+| Duplicate email upsert → 200, same submissionId | ✓ submissionId=16 both times |
+| 6 sectorSlugs → 400 | ✓ VALIDATION_ERROR `fields.sectorSlugs` |
+| primarySector in sectorSlugs → 400 | ✓ VALIDATION_ERROR `fields.primarySector` |
+| Institutional inquiry valid → 201 | ✓ submissionId=5 |
+| Institutional inquiry bad organizationType → 400 | ✓ VALIDATION_ERROR `fields.organizationType` |
+| Health routes → 200 | ✓ `{"status":"ok","database":"connected"}` |
+| TypeScript clean across workspace | ✓ api-server + web both pass `tsc --noEmit` |
+
+### Agent rule (recorded)
+
+> **No production or shared-database schema change may be performed using `drizzle-kit push --force`. All schema changes must be made via `drizzle-kit generate` → review → `drizzle-kit migrate`. This applies to every future Agent task.**
+
+Recorded in: `lib/db/README.md`, `.agents/memory/MEMORY.md` → `db-migration-rule.md`.
+
+### Files changed
+
+| File | Change |
+|---|---|
+| `lib/db/drizzle.config.ts` | Added `out: "./drizzle"` |
+| `lib/db/package.json` | Replaced `push`/`push-force` with `db:generate`, `db:migrate`, `db:status`, `db:push:local-only-DANGEROUS` |
+| `lib/db/drizzle/0000_classy_blade.sql` | New — baseline migration (never executed; marked applied in journal table) |
+| `lib/db/drizzle/meta/_journal.json` | New — Drizzle meta journal |
+| `lib/db/drizzle/meta/0000_snapshot.json` | New — Drizzle snapshot |
+| `lib/db/README.md` | New — developer documentation and agent rule |
+| `docs/PROJECT-STATUS.md` | Updated with this checkpoint |
+| `.agents/memory/MEMORY.md` | Added db-migration-rule pointer |
+
+No application routes, pages, components, endpoints, taxonomy, shared libraries, or data were changed.
+
+### Explicit confirmation
+
+**Zero application behavior changed. Zero data disturbed.** The `drizzle` schema and `__drizzle_migrations` table are new objects added to the database; no existing table, column, index, constraint, row, or sequence was modified.
+
+### Recommended checkpoint
+**Database Migration Workflow Baselined and Approved**
