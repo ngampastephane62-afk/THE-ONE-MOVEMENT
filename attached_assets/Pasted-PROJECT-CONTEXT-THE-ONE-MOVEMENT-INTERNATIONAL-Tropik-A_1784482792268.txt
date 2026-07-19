@@ -1,0 +1,107 @@
+PROJECT CONTEXT
+THE ONE MOVEMENT INTERNATIONAL — Tropik Agence FZE LLC. Public pages complete: /, /our-vision, /ecosystem, /programs (+6 detail routes), /join, /partners (+reserved detail route), /news (+detail route). 404 designed, SEO/OG live, Join Stage 1.1 shipped, database migration workflow baselined, Partners Directory Shell and News Hub v0 in place. Design System "Lagoon & Gold" + Global Visual Coherence V3 are FROZEN.
+
+Standing rules (unchanged): NO drizzle-kit push --force · NO new database tables in this task · NO invented content · NO logos or outlet names without written display authorization.
+
+THIS TASK: build the /media page as TOMI's official institutional media hub — the credible landing surface for journalists, media partners, and institutional visitors seeking the Movement's identity, boilerplate, and press pathway. Explicitly NOT a coverage list, NOT a downloads center, NOT an "As Seen In" wall. The page ships HONESTLY: real institutional content, reserved slots for future press-kit and brand-assets tiers, zero inactive links, zero fake claims.
+
+STEP 0 — restoration checkpoint "Pre-Media-Page Restore Point".
+
+STEP 1 — VERIFY BEFORE CHANGING
+Read and report:
+- artifacts/web/src/pages/media/* (current placeholder)
+- artifacts/web/src/App.tsx (confirm /media already registered — do NOT touch route registration unless the route is missing, which would be a surprising audit result)
+- The Helmet pattern from Task 2B (react-helmet-async, already installed)
+- The SectionHeading heading-prop API (Partners Agent confirmed; News Agent used inline pattern for StatusNotice — either is acceptable)
+- Confirm drizzle-kit generate reports "no schema changes" before starting
+
+CONTENT POLICY (Option A — locked, non-negotiable)
+Absolutely NOT permitted on this page at launch:
+- Media outlet names (BBC, Canal+, Vogue, TV5 Monde, France 24, Africa24, DStv, Vox Africa, Licence News, or any other)
+- Outlet logos
+- "As Seen In" / "Featured In" / "Press Coverage" sections
+- Coverage timeline
+- Implied endorsements
+- References to publications not supported by documented authorization
+- Downloadable press kit PDF
+- Downloadable logos
+- Downloadable brand guidelines
+- Downloadable media assets, photos, videos
+- Active links to any of the above
+- Any statistic, reach figure, or audience number
+- Any invented quote, testimonial, or coverage claim
+
+Permitted content (verbatim below).
+
+/MEDIA PAGE — EIGHT SECTIONS IN ORDER (V3 rules; UPPERCASE Cinzel display; max one signature motif per section; SectionHeading with heading prop or inline pattern per existing conventions)
+
+1. HERO (HeroSurface lagoon radiant):
+Eyebrow: "MEDIA & PRESS"
+Display: "THE OFFICIAL MEDIA HUB."
+Supporting line: "Institutional information, brand overview and press pathways for journalists, media partners and institutional visitors covering The One Movement International."
+
+2. BRAND OVERVIEW (ivory, asymmetric):
+Eyebrow: "ABOUT THE MOVEMENT"
+H2: "WHO WE ARE."
+Paragraph 1: "The One Movement International is a permanent global ecosystem connecting people, organizations and institutions across culture, business, diplomacy, innovation, education, tourism, humanitarian action and investment. It operates 365 days a year and expresses its mission through six official programs."
+Paragraph 2: "The Movement grew from The One Fashion Week, a fashion movement for peace born in the Democratic Republic of Congo. Five editions have taken place — in Bukavu, Goma and Kinshasa. The fifth edition, in Kinshasa, was supported by the United Nations mission MONUSCO under the theme Peace and Unity."
+
+3. OFFICIAL BOILERPLATE (ivory continues, styled as a copy-ready press paragraph — visual distinction that signals to journalists "you may quote this verbatim"):
+Eyebrow: "OFFICIAL BOILERPLATE"
+H2: "FOR PRESS USE."
+Small line above the boilerplate: "The paragraph below is TOMI's official boilerplate. It may be quoted verbatim in press coverage."
+Boilerplate paragraph (VERBATIM, rendered inside a visually distinct panel — subtle lagoon-tinted surface or gold-bordered card, whichever aligns with V3):
+"The One Movement International is a permanent global ecosystem connecting people, organizations and institutions across fifteen sectors — from culture and creative industries to business, diplomacy, innovation and humanitarian action. Grown from a fashion movement for peace born in the Democratic Republic of Congo, the Movement expresses its mission through six official programs and a year-round community that turns connection into opportunity and opportunity into impact. The One Movement International is operated by Tropik Agence FZE LLC, registered in the Emirate of Ajman, United Arab Emirates."
+
+4. MISSION & POSITIONING (lagoon-900 band):
+Eyebrow: "OUR POSITIONING"
+H2: "A MOVEMENT, NOT AN EVENT."
+Paragraph: "The One Movement International is not a fashion week, an NGO, a single-event platform or a media organization. The One Fashion Week International is one of the Movement's six official programs. The Movement itself is the permanent ecosystem — the community, the network, and the framework of programs that give its members visibility, connection and opportunity throughout the year."
+
+5. MEDIA ENQUIRIES PATHWAY (ivory):
+Eyebrow: "MEDIA ENQUIRIES"
+H2: "BEGIN WITH A CONVERSATION."
+Paragraph: "Journalists, editors and media organizations seeking interviews, quotes, background information or press access to the Movement's programs are invited to reach out through the institutional inquiry pathway. Every media conversation begins there — direct, human and considered."
+Three request cards (compact, identical styling — reuse the existing card pattern; each card presents a request type + a one-line description; ALL THREE lead to the same institutional inquiry destination — no separate forms):
+- PRESS ENQUIRIES — "Interviews, statements and background information for journalists and editors."
+- INTERVIEW REQUESTS — "Requests to interview the Founder, program leads or Movement representatives."
+- PRESS COLLABORATION — "Editorial collaborations, joint features and shared storytelling with approved media partners."
+Below the cards, a single CTA button: "BEGIN THE CONVERSATION" → /join#institutional-inquiry (mirror the Partners and News CTA convention — confirmed anchor).
+NO separate media contact form. NO email address exposed. NO phone number. All routes through the existing institutional inquiry pathway.
+
+6. FUTURE MEDIA RESOURCES (lagoon-900 band):
+Eyebrow: "COMING SOON"
+H2: "MEDIA RESOURCES IN PREPARATION."
+Small line: "The following media resources are being prepared through our editorial and design process. They will be published here as they are approved for release."
+Four reserved cards presented as clearly designed placeholders — visually distinct from active cards so no visitor mistakes them for downloadable content. Each card renders: eyebrow "IN PREPARATION" · resource name (Cinzel) · one-line description · a subtle "AVAILABLE ON REQUEST" or "PREPARING" label that is EXPLICITLY NOT A LINK (rendered as a span or badge, not an anchor). NO href. NO download attribute. NO file path. Cursor: default (not pointer). Card is not focusable.
+
+Cards VERBATIM:
+- PRESS KIT — "A complete media kit with brand overview, boilerplate, biographies and approved assets, prepared for editorial use."
+- BRAND GUIDELINES — "The Movement's visual identity system — colors, typography, logo usage and voice — for authorized reproduction."
+- PHOTOGRAPHY & FILMING REQUESTS — "The pathway for coordinating photography and filming at the Movement's programs and initiatives."
+- MEDIA ACCREDITATION — "The application process for press access, credentials and coverage of the Movement's official programs."
+
+Below the four cards, one line: "In the meantime, all media resource requests can be made through the institutional inquiry pathway above."
+
+7. EDITORIAL STANDARDS (ivory, short — the credibility anchor, mirrors the News editorial policy pattern):
+Eyebrow: "OUR STANDARDS"
+H2: "HOW WE WORK WITH THE PRESS."
+Paragraph 1: "The One Movement International provides journalists and media partners with accurate, verifiable information about the Movement, its programs and its ecosystem. We do not make claims we cannot document, and we correct errors in our own communications when they occur."
+Paragraph 2: "We ask media partners to reflect the same standard: to attribute quotes accurately, to distinguish between the Movement and its individual programs, and to seek confirmation before publishing statistics, dates or claims about the Movement's work."
+
+8. CLOSING SIGNATURE:
+Bilingual: "WE ARE ONE — نحن واحد" (lang="ar" dir="rtl")
+
+HELMET (react-helmet-async, following the established pattern):
+- title: MEDIA & PRESS — THE ONE MOVEMENT INTERNATIONAL
+- description: Official media hub for The One Movement International — brand overview, boilerplate and press pathways for journalists and media partners.
+- canonical: /media (with FILLED AT DEPLOY WITH PRODUCTION DOMAIN comment)
+- og:title / og:description mirroring above
+
+PRESERVATION RULES
+Do NOT: create any database table, run any database migration, modify any schema file, touch lib/db, touch artifacts/api-server, add any endpoint, add authentication, add any form (media enquiries route through the existing /join institutional flow — no new form), add any download attribute or file path, create any placeholder file (no /press-kit.pdf, no /brand-guidelines.pdf, no reserved paths in public/), invent any statistic, coverage claim, outlet name, or endorsement, modify any other page (home, vision, ecosystem, programs, programs detail, join, partners, partners detail, news, news detail, 404), modify any shared component, modify design tokens, add dependencies (react-helmet-async already installed), add analytics.
+
+FILE BOUNDARIES (hard):
+- artifacts/web/src/pages/media/index.tsx (replace the placeholder)
+- artifacts/web/src/App.tsx (verify /media already registered; if surprisingly missing, register it — but the audit should confirm it exists)
+-

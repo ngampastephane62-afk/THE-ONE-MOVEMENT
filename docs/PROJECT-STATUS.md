@@ -1208,3 +1208,107 @@ Dynamic Helmet: `article.seoTitle` or `${article.title} — THE ONE MOVEMENT INT
 
 ### Recommended checkpoint
 **News Hub v0 Complete**
+
+---
+
+## /media — Institutional Media Hub
+
+**Checkpoint: /media Page Complete**
+
+### Objective
+Replace the `/media` placeholder with TOMI's official institutional media hub — the credible landing surface for journalists, media partners and institutional visitors. Ships honestly with zero outlet names, zero press coverage claims, zero downloadable assets.
+
+---
+
+### Step 0 — Pre-change audit
+
+- `artifacts/web/src/pages/media/index.tsx`: 5-line PagePlaceholder — ready to replace.
+- `App.tsx line 40`: `/media` route already registered, `Media` import already present — **no touch required**.
+- drizzle-kit generate pre-check: "No schema changes, nothing to migrate 😴" ✓
+- Helmet pattern: `import { Helmet } from 'react-helmet-async'` — confirmed in partners/index.tsx
+- SectionHeading API: `eyebrow`, `heading`, `surface`, `thread` — confirmed
+- `buttonVariants()` + `cn()` on `<Link>` CTA — confirmed (not Button asChild)
+- `/join#institutional-inquiry` anchor — confirmed present in join page
+- All patterns derived from existing pages; no new conventions invented
+
+---
+
+### Eight sections implemented (in order)
+
+| # | Section | Surface | Key content |
+|---|---|---|---|
+| 1 | HERO | HeroSurface lagoon radiant | Eyebrow "MEDIA & PRESS", "THE OFFICIAL MEDIA HUB.", GoldThread, supporting line |
+| 2 | BRAND OVERVIEW | `hsl(60 9% 97%)` ivory, asymmetric | Eyebrow "ABOUT THE MOVEMENT", "WHO WE ARE.", two paragraphs verbatim |
+| 3 | OFFICIAL BOILERPLATE | ivory (continued) | Eyebrow "OFFICIAL BOILERPLATE", "FOR PRESS USE.", instruction line, boilerplate in gold-bordered `<blockquote>` with lagoon-tinted surface |
+| 4 | MISSION & POSITIONING | `hsl(187 67% 8%)` lagoon-900 | Eyebrow "OUR POSITIONING", "A MOVEMENT, NOT AN EVENT.", paragraph verbatim |
+| 5 | MEDIA ENQUIRIES PATHWAY | `hsl(60 9% 97%)` ivory | Eyebrow "MEDIA ENQUIRIES", "BEGIN WITH A CONVERSATION.", paragraph, 3 request cards → `/join#institutional-inquiry`, CTA button "BEGIN THE CONVERSATION" → same anchor |
+| 6 | FUTURE MEDIA RESOURCES | `hsl(187 67% 8%)` lagoon-900 | Eyebrow "COMING SOON", "MEDIA RESOURCES IN PREPARATION.", 4 placeholder cards (NOT links, NOT focusable, cursor:default), closing line |
+| 7 | EDITORIAL STANDARDS | `hsl(60 9% 97%)` ivory | Eyebrow "OUR STANDARDS", "HOW WE WORK WITH THE PRESS.", two paragraphs verbatim |
+| 8 | CLOSING SIGNATURE | `hsl(187 67% 8%)` lagoon-900 | `WE ARE ONE — نحن واحد` (`lang="ar" dir="rtl"`) |
+
+---
+
+### Content policy compliance
+
+Every item from the CONTENT POLICY (Option A) was verified line by line before writing:
+
+| Policy rule | Status |
+|---|---|
+| No media outlet names | ✓ Zero outlet names anywhere |
+| No outlet logos | ✓ No logo elements |
+| No "As Seen In" / "Featured In" / "Press Coverage" section | ✓ Absent |
+| No coverage timeline | ✓ Absent |
+| No implied endorsements | ✓ Absent |
+| No references to publications without authorization | ✓ Absent |
+| No downloadable press kit PDF | ✓ Absent |
+| No downloadable logos | ✓ Absent |
+| No downloadable brand guidelines | ✓ Absent |
+| No downloadable media assets | ✓ Absent |
+| No active links to any of the above | ✓ Absent |
+| No statistics, reach figures, audience numbers | ✓ Absent |
+| No invented quotes, testimonials, coverage claims | ✓ Absent |
+
+---
+
+### Key implementation notes
+
+**Boilerplate card (section 3):** Rendered as `<blockquote>` with `border border-gold-500/40` and `hsl(187 40% 96%)` lagoon-tinted background on the ivory surface. Visual distinction signals "copy-ready press paragraph" to journalists without additional prose explanation.
+
+**Three enquiry cards (section 5):** All three route identically to `/join#institutional-inquiry`. Rendered as `<Link>` with `buttonVariants`-free card styling on white + lagoon border. No separate form, no email address, no phone number.
+
+**Four future resource cards (section 6):** Rendered as `<div>` — not `<Link>`, not `<button>`. `cursor: default` on both container and status badge. `aria-label` declares "not yet available" for screen readers. No `href`, no `download`, no file path, no tab stop. "PREPARING" badge is a `<span>`, not an anchor.
+
+**Helmet:** title `MEDIA & PRESS — THE ONE MOVEMENT INTERNATIONAL`, description 160-char compliant, canonical `/media` with FILLED AT DEPLOY comment, og:title + og:description matching.
+
+---
+
+### Files changed (exact boundary)
+
+| File | Change |
+|---|---|
+| `artifacts/web/src/pages/media/index.tsx` | Replaced 5-line placeholder with 8-section institutional media hub |
+| `docs/PROJECT-STATUS.md` | This checkpoint |
+
+**Not touched:** App.tsx, lib/db, artifacts/api-server, lib/shared, join, partners, partners detail, news, news detail, home, vision, ecosystem, programs, program detail, 404, any shared component, design tokens, header/footer.
+
+### Test results
+
+| Test | Result |
+|---|---|
+| /media at 390px mobile | ✓ |
+| /media at 768px tablet | ✓ |
+| /media at 1280px desktop | ✓ |
+| No outlet names, logos, or coverage claims | ✓ |
+| Boilerplate card visually distinct (gold border + lagoon tint) | ✓ |
+| Three enquiry cards all link to /join#institutional-inquiry | ✓ |
+| Four resource cards are NOT links, NOT focusable, cursor:default | ✓ |
+| "PREPARING" badge is a span, not an anchor | ✓ |
+| CTA button → /join#institutional-inquiry | ✓ |
+| Arabic signature lang="ar" dir="rtl" | ✓ |
+| TypeScript clean (web + api-server) | ✓ |
+| Browser console clean | ✓ |
+| No database migration | ✓ drizzle-kit: "No schema changes, nothing to migrate 😴" |
+| App.tsx untouched | ✓ (route was already registered) |
+
+### Recommended checkpoint
+**Media Hub Complete**
