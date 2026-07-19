@@ -1,0 +1,192 @@
+PROJECT CONTEXT
+THE ONE MOVEMENT INTERNATIONAL — Tropik Agence FZE LLC. Public pages complete: /, /our-vision, /ecosystem, /programs (+6 detail routes), /join, /partners (+reserved detail route). 404 designed, SEO/OG live, Join Stage 1.1 shipped, database migration workflow baselined, Partners Directory Shell in place.
+
+Standing rules (unchanged): NO drizzle-kit push --force · NO new database tables in this task · NO invented content · published editorial content only, no authoring or submission UI.
+
+THIS TASK: build the News Hub v0 — /news (index) + /news/:slug (article) — replacing the /news placeholder. This is the official editorial and publishing hub of TOMI. It ships HONESTLY: with zero approved articles today, the page renders as a fully-composed institutional editorial hub anchored on the editorial policy statement — not a "coming soon" splash. When articles are added to local data, they appear; unpublished states never leak to the public.
+
+STEP 0 — restoration checkpoint "Pre-News-Hub-v0 Restore Point".
+
+STEP 1 — VERIFY BEFORE CHANGING
+Read and report: lib/shared/src/taxonomy.ts current exports (confirm Partners taxonomy landed) · artifacts/web/src/App.tsx (confirm /news placeholder route pattern and how /partners/:slug was registered — mirror that pattern) · artifacts/web/src/pages/news/* (current placeholder) · artifacts/web/src/lib/partners-data.ts (confirm the PartnerEntity shape so authorEntitySlug can resolve if entities existed) · artifacts/web/src/lib/programs-data.ts (for programSlug tag resolution) · the SectionHeading API (Partners Agent discovered it uses a heading prop, not children — follow that convention) · the Helmet pattern from Task 2B. Confirm drizzle-kit generate reports "no schema changes" before starting.
+
+PART T — SHARED TAXONOMY EXTENSION (additive, no rename, mirrors Partners pattern)
+File: lib/shared/src/taxonomy.ts
+Add exports alongside the existing pattern:
+- NEWS_CATEGORY_SLUGS: readonly ["announcement", "program-news", "partner-news", "humanitarian", "event-report", "interview", "press-release", "editorial", "community-story", "founder-article"]
+- NEWS_CATEGORY_SET (Set<string>) for O(1) validation
+- NewsCategorySlug type derived from the array
+- NEWS_AUTHOR_TYPES: readonly ["tomi", "founder", "program", "partner", "sponsor", "institution", "ngo", "government", "university", "ambassador", "media-partner", "community"]
+- NEWS_AUTHOR_TYPE_SET
+- NewsAuthorType type
+- EDITORIAL_STATUSES: readonly ["draft", "pending-review", "approved", "published", "archived"]
+- EditorialStatus type
+- The PUBLIC_EDITORIAL_STATUS constant = "published" (as a single-value constant, used by the render gate — never re-typed elsewhere)
+Do NOT modify any existing export. Rebuild lib/shared/dist declarations per the established convention (Partners Agent documented: emitDeclarationOnly + outDir dist; run npx tsc -p tsconfig.json inside lib/shared/).
+
+PART D — NEWS TYPES + LOCAL DATA
+Create artifacts/web/src/lib/news-data.ts exporting a typed NewsArticle[] and helpers. Article shape:
+- slug (string, unique)
+- title (string)
+- subtitle (string, optional)
+- category (NewsCategorySlug)
+- authorType (NewsAuthorType)
+- authorDisplayName (string)
+- authorEntitySlug (string, optional — links to a future partners-data entry; not validated cross-package here to avoid coupling, but MUST match a partners-data slug if present; if authorEntitySlug is set and no matching PartnerEntity exists yet, the byline still renders using authorDisplayName only — no error, no broken link)
+- publishedAt (ISO date string)
+- updatedAt (ISO date string, optional)
+- heroMediaSlot (string, optional — dev label, PhotoSlot pattern; NEVER a real image path)
+- excerpt (string, ≤200 chars)
+- body (structured JSON blocks — see BLOCK TYPES below)
+- programSlugs (string[], optional — validated against PROGRAM_SLUGS at build/render time)
+- sectorSlugs (string[], optional — validated against SECTOR_SLUGS)
+- relatedArticleSlugs (string[], optional — explicit editorial choices, never algorithmic)
+- seoTitle (string)
+- seoDescription (string, ≤160 chars)
+- editorialStatus (EditorialStatus) — HARD RENDER GATE
+- sourceUrl (string, optional — for republished media-partner pieces; must pass isSafeUrl() — http(s) only, no javascript:/data:/malformed; if present, article rendering shows an attribution line linking back to sourceUrl and does NOT reproduce the full external body — see BODY RULE below)
+- licensing (string, optional — internal reference for republishing rights; NEVER rendered)
+- consentReferences (string, optional — internal reference for named-individual consent, NEVER rendered)
+
+BLOCK TYPES (structured content — safe to render, portable to future CMS):
+- { type: "paragraph", content: string }
+- { type: "heading", level: 2 | 3, content: string }
+- { type: "quote", content: string, attribution?: string }
+- { type: "list", ordered: boolean, items: string[] }
+- { type: "image", altText: string, mediaSlot: string, caption?: string }   // mediaSlot is a dev label; no real image loaded at launch — renders as PhotoSlot-style placeholder
+- { type: "embed", provider: "youtube", refId: string }   // RESERVED but disabled at launch — renderer returns a placeholder card explaining video governance pending; do NOT fetch, iframe, or hotlink
+NO raw HTML anywhere. NO dangerouslySetInnerHTML. Any string content is rendered as text.
+
+BODY RULE for republished third-party pieces (sourceUrl present):
+- Do NOT reproduce the full original body — even in blocks — unless licensing indicates explicit republishing rights and an editor has approved that specific piece for full republishing.
+- Default behavior when sourceUrl is present: render whatever body blocks exist (which will be editor-written summary paragraphs), followed by a prominent attribution block linking to sourceUrl with wording "Read the original at [domain]".
+- This is enforced by CONVENTION and RENDER PATTERN, not by field validation — document it in the file header and in the editorial policy section on /news.
+
+Initial data: EMPTY ARRAY. The shell must be composed and honest with zero articles. Do not populate any sample article, do not commit any "hello world" post.
+
+Export helpers:
+- getPublishedArticles() → filters to editorialStatus === PUBLIC_EDITORIAL_STATUS, sorted by publishedAt DESC. This is the ONLY function pages use to read articles.
+- getPublishedArticleBySlug(slug) → returns a published article or undefined. Unknown/unpublished slugs return undefined.
+- getPublishedArticlesByCategory(slug) → filtered by category, then published gate.
+- getRelatedPublishedArticles(article) → resolves article.relatedArticleSlugs, filters to published, preserves editorial order, caps at 3.
+- isSafeUrl(url) → same implementation pattern as partners-data (http(s) only, no javascript:/data:/malformed) — do NOT import from partners-data; duplicate the small helper locally to keep the modules independent, and note the duplication in a comment as an intentional Phase 2 refactor target.
+
+PART P — /NEWS INDEX PAGE (composed hub, honest with zero articles)
+File: artifacts/web/src/pages/news/index.tsx (replace the current placeholder).
+Sections in order (V3 rules; UPPERCASE Cinzel display; max one signature motif per section; use SectionHeading with the heading prop pattern Partners confirmed):
+
+1. HERO (HeroSurface lagoon radiant):
+Eyebrow: "THE VOICE OF THE MOVEMENT"
+Display: "OFFICIAL NEWS & PUBLICATIONS."
+Supporting line: "Announcements, stories, interviews and reports from The One Movement International — its programs, its partners, and the community it connects."
+
+2. EDITORIAL MISSION (ivory):
+Eyebrow: "WHAT WE PUBLISH"
+H2: "AN EDITORIAL HUB, NOT A FEED."
+Paragraph: "Every article on this page has been reviewed and approved through the Movement's editorial process. Content originates from The One Movement International, its programs, its Founder, and — where an official relationship exists — its partners, sponsors, institutions, universities, NGOs, ambassadors and approved media partners."
+
+3. ARTICLES (behavior conditional on getPublishedArticles().length):
+Eyebrow: "LATEST"
+H2: "FROM THE MOVEMENT"
+IF at least one published article exists:
+- Category filter chips at top (buttons with role="button", aria-pressed, keyboard operable) — chips reflect NEWS_CATEGORY_SLUGS but only render chips for categories that have at least one published article (do not render an empty chip)
+- Article card grid (2-col tablet, 3-col desktop, 1-col mobile) — each card: heroMediaSlot as PhotoSlot fallback, category badge, title (Cinzel), excerpt, byline (authorDisplayName + authorType label + publishedAt formatted), links to /news/[slug]
+- Sorted by publishedAt DESC
+IF zero published articles:
+- Do NOT show category chips
+- Do NOT show a fake "coming soon" splash
+- Render a StatusNotice (existing component from Join FAQ): "The first official articles are being prepared through our editorial process and will appear here as they are approved."
+- Below the notice: two linked cards: "EXPLORE THE PROGRAMS" → /programs · "EXPLORE THE ECOSYSTEM" → /ecosystem
+This behavior is the honesty test — the page must look composed and institutional at zero articles, not empty.
+
+4. EDITORIAL POLICY (ivory continues, short and public — this is the credibility anchor):
+Eyebrow: "OUR EDITORIAL POLICY"
+H2: "WHAT REACHES THIS PAGE."
+Paragraph 1: "The One Movement International publishes announcements, stories, interviews and reports that reflect the work, values and reach of the Movement and its ecosystem. Every article is reviewed by our editorial team before publication."
+Paragraph 2: "Where an article is contributed by a partner, sponsor, institution or approved media partner, the byline names the author and the contributing organization. Republished third-party pieces are attributed clearly and link back to their original source."
+Paragraph 3: "We correct errors visibly when they occur. Articles involving named individuals are published only with their consent. Content involving humanitarian beneficiaries follows the safeguarding standards of our humanitarian partners."
+
+5. MEDIA PARTNERSHIP PATHWAY (lagoon-900):
+Eyebrow: "FOR MEDIA ORGANIZATIONS"
+H2: "MEDIA PARTNERSHIPS BEGIN WITH A CONVERSATION."
+Paragraph: "Media organizations interested in contributing to or covering The One Movement International connect through the institutional inquiry pathway. Approved media partners may propose articles for editorial review as their partnership develops."
+CTA button: "BEGIN THE CONVERSATION" → /join#institutional-inquiry (mirror the Partners CTA convention — confirmed anchor)
+
+6. CLOSING SIGNATURE:
+Bilingual: "WE ARE ONE — نحن واحد" (lang="ar" dir="rtl")
+
+Helmet:
+- title: NEWS & PUBLICATIONS — THE ONE MOVEMENT INTERNATIONAL
+- description: Official announcements, stories, interviews and reports from The One Movement International — its programs, partners and community.
+- canonical: /news (with FILLED AT DEPLOY WITH PRODUCTION DOMAIN comment)
+- og:title / og:description mirroring above
+
+PART R — /NEWS/:SLUG ARTICLE DETAIL ROUTE
+Register dynamic route in App.tsx following the exact /programs/:slug and /partners/:slug pattern used by earlier tasks.
+Create artifacts/web/src/pages/news/detail.tsx (or matching naming convention).
+Behavior:
+- Resolve via getPublishedArticleBySlug(slug)
+- If undefined (unknown slug OR non-published state OR any other reason resolution fails): redirect cleanly to /news. NEVER render a 404, NEVER leak that an unpublished slug exists in data. Mirror Partners' redirect-on-invisible pattern.
+- If defined: render the article.
+
+Article rendering:
+- Hero: category badge, title (Cinzel), subtitle (if present, sans-serif), byline block (authorDisplayName · authorType label · publishedAt formatted · updatedAt if present rendered as "Updated [date]"), heroMediaSlot as PhotoSlot fallback (never a real image at launch)
+- Structured body: iterate body blocks, render each per the BLOCK TYPES rules above (embed blocks render the "video governance pending" placeholder, no iframe)
+- Tags block: category chip (link to /news?category=[slug] — deep-link behavior deferred; at launch the chips on index reset filter, and this link may simply navigate to /news; document this as intentional Phase 2 behavior), programSlugs as chips linking to /programs/[slug], sectorSlugs as chips linking to /ecosystem
+- Republished attribution (if sourceUrl present): styled block "Originally published at [domain] — Read the original article" linking to sourceUrl; the sourceUrl domain is derived from the URL, never invented
+- Related articles: render getRelatedPublishedArticles(article) as compact cards (up to 3); if empty, omit the entire section — never render an empty "related" block
+- Editorial policy footer link: small link "Read our editorial policy" → /news#editorial-policy (deep-link to section 4 on the index; add an id to that section)
+- Correction notice slot: RESERVED (code-commented "POPULATED WHEN A CORRECTION IS ISSUED — renders above the body when article.corrections is present"; do NOT add a corrections field to the type in this task — it belongs to a later editorial-workflow task and would widen scope)
+
+Head (dynamic):
+- title: `${article.title} — THE ONE MOVEMENT INTERNATIONAL` (or use article.seoTitle if present)
+- description: article.seoDescription
+- canonical: /news/[slug] with the pending-domain comment
+- og:title / og:description mirroring
+- Robots: default. (No noindex — published articles are meant to be indexed. Non-published articles never reach this page, so no belt-and-suspenders noindex needed. Document this decision in the file header.)
+
+PRESERVATION RULES
+Do NOT: create any database table, run any database migration, modify any schema file, touch lib/db, touch artifacts/api-server, add any endpoint, add authentication, add an authoring UI, add a submission form, invent any article / partner / statistic / date / attribution, add any donation or payment logic, add analytics, modify any other page (home, vision, ecosystem, programs, programs detail, join, partners, partners detail, 404), modify any shared component, modify design tokens, modify the header/footer beyond what a new page in the existing router already receives, add dependencies (react-helmet-async already installed; no new libraries).
+
+FILE BOUNDARIES (hard):
+- lib/shared/src/taxonomy.ts (additive exports only) + its dist rebuild
+- artifacts/web/src/lib/news-data.ts (new)
+- artifacts/web/src/pages/news/index.tsx (replace placeholder)
+- artifacts/web/src/pages/news/detail.tsx (new)
+- artifacts/web/src/App.tsx (register /news/:slug route only; verify /news already registered)
+- docs/PROJECT-STATUS.md (checkpoint update)
+Nothing else. Any deviation is a bug — report and stop.
+
+TESTING (execute and report):
+- /news renders all sections at 390 / 768 / 1280 as compositions; no horizontal overflow; zero-articles state shows the StatusNotice + two exploration cards, no fake feed
+- Category chips absent when zero articles
+- Editorial policy section carries id="editorial-policy" (deep-link target)
+- Media partnership CTA → /join#institutional-inquiry
+- /news/some-unknown-slug redirects cleanly to /news (no 404, no error surface)
+- TEMPORARY (do not commit) test entity: add one published article to news-data.ts → confirm it appears on /news, chip filter renders and works, detail page renders correctly, related-articles logic works with an empty relatedArticleSlugs (section omitted). Add one draft article (editorialStatus: "draft") → confirm it does NOT appear on /news and its /news/[slug] URL redirects. REMOVE both test entities before final commit; report the test result and confirm the committed file has PARTNERS-style empty array.
+- embed block placeholder renders correctly (add a temporary article with an embed block for the test; remove after) — no iframe, no external fetch
+- Republished-attribution flow: temporary article with sourceUrl set → attribution block renders with domain-only link; remove after
+- Body renderer rejects raw HTML in string content (strings render as text; angle brackets show as text, not markup) — verify with a temporary article containing "<script>alert(1)</script>" in a paragraph block, remove after
+- Head elements verified via curl/view-source: title, description, canonical, og:*
+- Keyboard-first navigation of the page, category chips, and the media CTA
+- Arabic signature shapes correctly (lang="ar" dir="rtl")
+- Reduced motion respected
+- WCAG AA visible focus rings
+- TypeScript clean across workspace (including lib/shared rebuild)
+- Browser console clean
+- Task A files (lib/db), API server, backend endpoints, join files, partners files, homepage body, ecosystem, vision, programs — all untouched (verify by diff)
+- No database migration attempted (drizzle-kit generate → "No schema changes")
+
+COMPLETION REPORT — standard 16 items PLUS:
+- Confirmation lib/shared/src/taxonomy.ts changes are purely additive (list the exact diff)
+- Full listing of the news-data.ts type shape and empty initial data
+- Route registration verified in App.tsx
+- Zero-articles state verified as composed and honest (screenshot or explicit description)
+- Redirect behavior of /news/:slug for unknown slugs and non-published slugs
+- Republished-attribution behavior test result
+- Embed block placeholder test result
+- XSS-safety test result (angle brackets render as text)
+- No database migration ran (drizzle-kit generate "no changes" confirmation)
+- Diff summary: exactly the files in the boundaries list
+- Confirmation shared components, Partners, Join, homepage, and all other pages untouched
+- Recommended checkpoint: "News Hub v0 Complete"

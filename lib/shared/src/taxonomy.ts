@@ -135,6 +135,63 @@ export const PARTNER_CATEGORY_SLUGS = [
 export type PartnerCategorySlug = (typeof PARTNER_CATEGORY_SLUGS)[number];
 
 // ---------------------------------------------------------------------------
+// News category slugs
+// ---------------------------------------------------------------------------
+export const NEWS_CATEGORY_SLUGS = [
+  "announcement",
+  "program-news",
+  "partner-news",
+  "humanitarian",
+  "event-report",
+  "interview",
+  "press-release",
+  "editorial",
+  "community-story",
+  "founder-article",
+] as const;
+
+export type NewsCategorySlug = (typeof NEWS_CATEGORY_SLUGS)[number];
+
+// ---------------------------------------------------------------------------
+// News author types
+// ---------------------------------------------------------------------------
+export const NEWS_AUTHOR_TYPES = [
+  "tomi",
+  "founder",
+  "program",
+  "partner",
+  "sponsor",
+  "institution",
+  "ngo",
+  "government",
+  "university",
+  "ambassador",
+  "media-partner",
+  "community",
+] as const;
+
+export type NewsAuthorType = (typeof NEWS_AUTHOR_TYPES)[number];
+
+// ---------------------------------------------------------------------------
+// Editorial statuses
+// ---------------------------------------------------------------------------
+export const EDITORIAL_STATUSES = [
+  "draft",
+  "pending-review",
+  "approved",
+  "published",
+  "archived",
+] as const;
+
+export type EditorialStatus = (typeof EDITORIAL_STATUSES)[number];
+
+/**
+ * The single editorial status that gates public rendering.
+ * Used by getPublishedArticles() — never re-typed elsewhere.
+ */
+export const PUBLIC_EDITORIAL_STATUS = "published" as const;
+
+// ---------------------------------------------------------------------------
 // Helper sets for O(1) validation
 // ---------------------------------------------------------------------------
 export const SECTOR_SLUG_SET: ReadonlySet<string> = new Set(SECTOR_SLUGS);
@@ -143,3 +200,6 @@ export const JOINABLE_GROUP_SET: ReadonlySet<string> = new Set(JOINABLE_GROUPS);
 export const ORGANIZATION_TYPE_SET: ReadonlySet<string> = new Set(ORGANIZATION_TYPES);
 export const JOINING_AS_SET: ReadonlySet<string> = new Set(JOINING_AS_VALUES);
 export const PARTNER_CATEGORY_SET: ReadonlySet<string> = new Set(PARTNER_CATEGORY_SLUGS);
+export const NEWS_CATEGORY_SET: ReadonlySet<string> = new Set(NEWS_CATEGORY_SLUGS);
+export const NEWS_AUTHOR_TYPE_SET: ReadonlySet<string> = new Set(NEWS_AUTHOR_TYPES);
+export const EDITORIAL_STATUS_SET: ReadonlySet<string> = new Set(EDITORIAL_STATUSES);

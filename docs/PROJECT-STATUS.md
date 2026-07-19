@@ -1025,3 +1025,186 @@ Test entity removed. `PARTNERS[]` is empty in committed code.
 
 ### Recommended checkpoint
 **Partners Directory Shell Complete**
+
+---
+
+## News Hub v0
+
+**Checkpoint: News Hub v0 Complete**
+
+### Objective
+Build the /news index + /news/:slug article route — the official editorial and publishing hub of TOMI. Ships honestly with zero articles (StatusNotice + exploration cards). When articles land they appear; unpublished states never leak.
+
+---
+
+### Step 1 — Audit (pre-change state)
+
+- `lib/shared/src/taxonomy.ts`: PARTNER_CATEGORY_SLUGS landed correctly. No news exports yet.
+- `App.tsx`: No `/news` or `/news/:slug` route. No News imports.
+- `/news` page: directory entirely absent (no placeholder file).
+- drizzle-kit generate pre-check: "No schema changes, nothing to migrate 😴" ✓
+- `id="institutional-inquiry"` anchor: confirmed present in join page (deep-link valid) ✓
+- `react-helmet-async`: installed ✓
+- `StatusNotice`: local function in programs/detail.tsx (not a shared component) — mirrored pattern inline.
+
+---
+
+### Part T — Shared Taxonomy Extension (additive diff)
+
+**File:** `lib/shared/src/taxonomy.ts`
+
+Added (verbatim, all additive):
+```typescript
+export const NEWS_CATEGORY_SLUGS = [
+  "announcement", "program-news", "partner-news", "humanitarian",
+  "event-report", "interview", "press-release", "editorial",
+  "community-story", "founder-article",
+] as const;
+export type NewsCategorySlug = (typeof NEWS_CATEGORY_SLUGS)[number];
+
+export const NEWS_AUTHOR_TYPES = [
+  "tomi", "founder", "program", "partner", "sponsor", "institution",
+  "ngo", "government", "university", "ambassador", "media-partner", "community",
+] as const;
+export type NewsAuthorType = (typeof NEWS_AUTHOR_TYPES)[number];
+
+export const EDITORIAL_STATUSES = [
+  "draft", "pending-review", "approved", "published", "archived",
+] as const;
+export type EditorialStatus = (typeof EDITORIAL_STATUSES)[number];
+
+export const PUBLIC_EDITORIAL_STATUS = "published" as const;
+
+export const NEWS_CATEGORY_SET: ReadonlySet<string> = new Set(NEWS_CATEGORY_SLUGS);
+export const NEWS_AUTHOR_TYPE_SET: ReadonlySet<string> = new Set(NEWS_AUTHOR_TYPES);
+export const EDITORIAL_STATUS_SET: ReadonlySet<string> = new Set(EDITORIAL_STATUSES);
+```
+
+Nothing else modified. All existing exports untouched.
+
+**Build:** `npx tsc -p tsconfig.json` inside `lib/shared/` → `dist/taxonomy.d.ts` updated. Required because web package references lib/shared compiled declarations via TypeScript project references.
+
+---
+
+### Part D — News Types + Local Data
+
+**File:** `artifacts/web/src/lib/news-data.ts` (new)
+
+Full `NewsArticle` interface with all spec-mandated fields including the 6 block types (`ParagraphBlock`, `HeadingBlock`, `QuoteBlock`, `ListBlock`, `ImageBlock`, `EmbedBlock`). Key enforcement points coded in JSDoc:
+
+- `editorialStatus` — HARD RENDER GATE, only `PUBLIC_EDITORIAL_STATUS` ("published") passes
+- `heroMediaSlot` — NEVER a real image path; PhotoSlot elegant fallback is intentional behaviour
+- `sourceUrl` — must pass `isSafeUrl()`; triggers republished attribution block in renderer
+- `licensing` / `consentReferences` — marked NEVER RENDERED PUBLICLY
+- `videoSlots` (embed blocks) — DISABLED at launch, renderer shows governance placeholder
+- `isSafeUrl()` — intentionally duplicated from partners-data.ts; Phase 2 refactor target (extract to shared lib/utils)
+
+Exported helpers:
+- `getPublishedArticles()` — filters `editorialStatus === "published"`, sorted publishedAt DESC
+- `getPublishedArticleBySlug(slug)` — returns published article or undefined (no leakage)
+- `getPublishedArticlesByCategory(category)` — category + published filter
+- `getRelatedPublishedArticles(article)` — resolves relatedArticleSlugs, capped at 3
+- `validateNewsArticle(article)` — dev-time cross-reference validation
+- `isSafeUrl(url)` — safe URL checker
+
+**Initial data: empty array `NEWS_ARTICLES = []`. Zero sample, placeholder, or invented articles.**
+
+Body rule for republished pieces documented in file header (enforced by render convention, not field validation).
+
+---
+
+### Part P — /news Index Page (six sections)
+
+**File:** `artifacts/web/src/pages/news/index.tsx` (new)
+
+| # | Section | Background | Key content |
+|---|---|---|---|
+| 1 | HERO | HeroSurface lagoon radiant | Eyebrow, "OFFICIAL NEWS & PUBLICATIONS.", GoldThread, supporting line |
+| 2 | EDITORIAL MISSION | `hsl(60 9% 97%)` ivory | SectionHeading + body copy |
+| 3 | ARTICLES | `hsl(187 67% 8%)` lagoon-900 | Conditional: zero-state OR chip filter + card grid |
+| 4 | EDITORIAL POLICY | `hsl(60 9% 97%)` ivory | `id="editorial-policy"` deep-link target; 3 paragraphs verbatim |
+| 5 | MEDIA PARTNERSHIP PATHWAY | `hsl(187 67% 8%)` lagoon-900 | CTA → `/join#institutional-inquiry` |
+| 6 | CLOSING SIGNATURE | `hsl(187 67% 8%)` lagoon-900 | `WE ARE ONE — نحن واحد` (`lang="ar" dir="rtl"`) |
+
+**Zero-articles state (honesty test):** When `getPublishedArticles().length === 0`:
+- StatusNotice: "The first official articles are being prepared through our editorial process and will appear here as they are approved."
+- Two linked exploration cards: "THE PROGRAMS" → /programs · "THE ECOSYSTEM" → /ecosystem
+- No chips, no fake feed, no "coming soon" splash.
+
+**Published articles state:** Category filter chips (only for categories with ≥1 published article, keyboard operable, `aria-pressed`), article card grid (1-col mobile / 2-col tablet / 3-col desktop), sorted publishedAt DESC.
+
+Helmet: title · description · canonical `/news` · og:title · og:description — all per spec with `FILLED AT DEPLOY WITH PRODUCTION DOMAIN` comment.
+
+---
+
+### Part R — /news/:slug Article Detail Route
+
+`App.tsx`: Added `News` import, `NewsDetail` import, `<Route path="/news">`, `<Route path="/news/:slug">` following the exact `/programs/:slug` and `/partners/:slug` pattern.
+
+**File:** `artifacts/web/src/pages/news/detail.tsx` (new)
+
+Redirect behavior: `getPublishedArticleBySlug()` returns undefined for unknown, draft, archived, or any non-published slug; `useEffect` redirects to `/news` with `replace: true`. No 404, no error surface, no leakage.
+
+Block renderer covers all 6 types:
+- `paragraph` → `<p>` — plain text, no dangerouslySetInnerHTML
+- `heading` → `<h2>` or `<h3>` — Cinzel UPPERCASE
+- `quote` → `<blockquote>` with gold left border
+- `list` → `<ul>` or `<ol>` — gold bullet dots for unordered
+- `image` → PhotoSlot (elegant fallback at launch, caption below)
+- `embed` → "video governance pending" placeholder card — NO iframe, NO external fetch
+
+Additional sections:
+- Correction notice slot: RESERVED (code-commented)
+- Tags block: category chip (→ /news; Phase 2: ?category=[slug] deep-link), program chips (→ /programs/[slug]), sector chips (→ /ecosystem)
+- Republished attribution block: "Originally published at [domain] — Read the original article" (domain derived from URL, never invented)
+- Related articles: up to 3 compact cards; entire section omitted when empty
+- Editorial policy footer link: → /news#editorial-policy
+
+Dynamic Helmet: `article.seoTitle` or `${article.title} — THE ONE MOVEMENT INTERNATIONAL`, `article.seoDescription`, canonical `/news/${article.slug}`.
+
+---
+
+### Testing results (all PASSED — test entities removed before commit)
+
+| Test | Result |
+|---|---|
+| /news at 390px mobile | ✓ No overflow |
+| /news at 768px tablet | ✓ |
+| /news at 1280px desktop | ✓ |
+| Zero-articles state: StatusNotice + 2 exploration cards | ✓ Confirmed with empty array |
+| Category chips absent when zero articles | ✓ |
+| `id="editorial-policy"` present on section 4 | ✓ |
+| Media partnership CTA → /join#institutional-inquiry | ✓ Anchor confirmed |
+| /news/some-unknown-slug → redirects to /news | ✓ |
+| Published article appears on /news (test entity) | ✓ Card grid rendered, chip present |
+| Draft article (editorialStatus: "draft") → NOT shown on /news | ✓ |
+| Draft article /news/[slug] → redirects to /news | ✓ |
+| Detail page: all block types render correctly | ✓ paragraph, heading, quote, list, image fallback, embed placeholder |
+| Embed block: no iframe, no external fetch | ✓ Governance placeholder card shown |
+| Republished attribution: sourceUrl present → attribution block with domain | ✓ |
+| XSS safety: `<script>alert(1)</script>` in paragraph renders as text | ✓ React default text rendering, no dangerouslySetInnerHTML |
+| Related articles section omitted when relatedArticleSlugs is empty | ✓ |
+| Head tags verified (title, description, canonical, og:*) | ✓ |
+| Arabic `نحن واحد` with lang="ar" dir="rtl" | ✓ |
+| TypeScript clean (web + api-server) | ✓ tsc --noEmit passes |
+| Browser console clean | ✓ No errors |
+| No database migration | ✓ drizzle-kit generate: "No schema changes, nothing to migrate 😴" |
+| lib/db, api-server, join, partners, home, ecosystem, vision, programs untouched | ✓ |
+| Shared components untouched | ✓ |
+
+### Files changed (exact boundary)
+
+| File | Change |
+|---|---|
+| `lib/shared/src/taxonomy.ts` | Added NEWS_CATEGORY_SLUGS, NewsAuthorType, EDITORIAL_STATUSES, PUBLIC_EDITORIAL_STATUS + sets/types |
+| `lib/shared/dist/taxonomy.d.ts` | Rebuilt (tsc -p tsconfig.json) |
+| `artifacts/web/src/lib/news-data.ts` | New — NewsArticle type + block types + empty registry + helpers |
+| `artifacts/web/src/pages/news/index.tsx` | New — 6-section editorial hub |
+| `artifacts/web/src/pages/news/detail.tsx` | New — article renderer + redirect-on-unknown |
+| `artifacts/web/src/App.tsx` | Added News + NewsDetail imports + /news and /news/:slug routes |
+| `docs/PROJECT-STATUS.md` | This checkpoint |
+
+**Not touched:** lib/db, artifacts/api-server, join page, partners pages, home, ecosystem, vision, programs, 404, any shared component, design tokens, header/footer.
+
+### Recommended checkpoint
+**News Hub v0 Complete**
