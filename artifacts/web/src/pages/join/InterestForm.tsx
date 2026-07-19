@@ -647,7 +647,7 @@ export default function InterestForm({ preselectedGroup }: InterestFormProps) {
 
           <p className="mt-4 text-xs text-sand-400 leading-relaxed">
             We collect only what we need. You can request deletion of your information at any time.{' '}
-            <a href="/legal/privacy" className="underline hover:text-ink-600 transition-colors">
+            <a href="/privacy-policy" className="underline hover:text-ink-600 transition-colors">
               Privacy Policy
             </a>
           </p>

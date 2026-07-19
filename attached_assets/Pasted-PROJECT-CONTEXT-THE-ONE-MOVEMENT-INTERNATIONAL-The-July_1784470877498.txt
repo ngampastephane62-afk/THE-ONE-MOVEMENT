@@ -1,0 +1,27 @@
+PROJECT CONTEXT
+THE ONE MOVEMENT INTERNATIONAL. The July 19 repository audit identified three surgical UX corrections on the completed /join page. Backend is verified working (live 201 confirmed) — DO NOT touch backend, database, schema, taxonomy, shared components, App.tsx, or any page outside the join directory.
+
+STEP 0 — restoration checkpoint "Pre-Join-UX-Fix Restore Point".
+
+CORRECTION 1 — SuccessPanel "Return Home" CTA
+File: artifacts/web/src/pages/join/SuccessPanel.tsx
+Add a third action to the CTA row: ghost-variant button/link "RETURN HOME" → "/". Keep the existing two CTAs unchanged.
+
+CORRECTION 2 — Fix dead privacy links (3 occurrences)
+artifacts/web/src/pages/join/InterestForm.tsx (~line 650): href="/legal/privacy" → "/privacy-policy"
+artifacts/web/src/pages/join/InquiryForm.tsx (~line 452): same change
+artifacts/web/src/pages/join/index.tsx (~line 474): same change
+Verify no other /legal/privacy references exist anywhere in artifacts/web (search and report).
+
+CORRECTION 3 — SuccessPanel visual surface + scroll behavior
+File: artifacts/web/src/pages/join/SuccessPanel.tsx
+Give the success state a designed surface: a lagoon-tinted treatment consistent with Lagoon & Gold (e.g. subtle ivory-to-lagoon-tint panel with gold accent line/GoldThread, generous padding) so it reads as a composed success moment, never an empty white box. Maintain WCAG AA contrast. On mount: keep the existing heading focus AND add headingRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }) — respect prefers-reduced-motion (instant scroll, no smooth behavior, when set).
+Apply the same visual-surface standard to the institutional inquiry success message if it currently renders as an undesigned block (style only — no copy changes, no new CTAs there).
+
+RULES: copy changes NONE except adding "RETURN HOME"; no new dependencies; no other files; max one motif in the panel; TypeScript clean.
+
+TESTING (execute and report): submit valid individual form → panel renders styled, heading focused, viewport scrolled to it, three CTAs work (/, /ecosystem, /programs) · duplicate email → "updated" wording renders in the same styled panel · all three privacy links navigate to /privacy-policy (no 404) · institutional success renders styled · reduced-motion: no smooth scroll · 390/768/1280 checks · zero console errors · diff confirms only the four join files changed.
+
+Also update docs/PROJECT-STATUS.md: record the homepage narrative merge (commit 71f5b82), this correction task, and current checkpoint "Join Stage 1 Functionally Complete — UX Corrections Required" → on completion recommend "Join Stage 1 Complete".
+
+COMPLETION REPORT — standard 16 items + diff summary. Recommended checkpoint: "Join Stage 1 Complete".

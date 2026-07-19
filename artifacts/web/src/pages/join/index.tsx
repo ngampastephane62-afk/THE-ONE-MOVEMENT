@@ -471,7 +471,7 @@ export default function JoinTheMovement() {
           </p>
           <p className="mt-4 text-sand-400 text-sm">
             Read our{' '}
-            <a href="/legal/privacy" className="underline hover:text-ink-600 transition-colors">
+            <a href="/privacy-policy" className="underline hover:text-ink-600 transition-colors">
               Privacy Policy
             </a>
             .

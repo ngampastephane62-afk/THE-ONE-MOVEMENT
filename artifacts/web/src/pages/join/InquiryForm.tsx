@@ -203,18 +203,22 @@ export default function InquiryForm() {
   if (status === 'success') {
     return (
       <div
-        className="text-center py-10"
+        className="text-center flex flex-col items-center gap-5 rounded-sm -mx-8 -my-8 px-8 py-14 overflow-hidden"
+        style={{
+          background: 'linear-gradient(160deg, hsl(187 55% 14%) 0%, hsl(187 50% 18%) 100%)',
+          borderTop: '3px solid hsl(43 80% 60%)',
+        }}
         aria-live="polite"
         aria-atomic="true"
       >
-        <p className="text-gold-400 text-eyebrow mb-4">INQUIRY RECEIVED</p>
+        <p className="text-gold-400 text-eyebrow">INQUIRY RECEIVED</p>
         <h3
-          className="text-display-md font-display text-ivory-100 mb-4"
+          className="text-display-md font-display text-ivory-100"
           style={{ fontFamily: 'var(--font-display)' }}
         >
           YOUR INQUIRY HAS BEEN RECEIVED.
         </h3>
-        <p className="text-ivory-200 leading-relaxed max-w-md mx-auto">
+        <p className="text-ivory-200 leading-relaxed max-w-md">
           Our team will contact you directly.
         </p>
       </div>
@@ -449,7 +453,7 @@ export default function InquiryForm() {
 
           <p className="mt-4 text-xs text-ivory-400/70 leading-relaxed">
             We collect only what we need. You can request deletion of your information at any time.{' '}
-            <a href="/legal/privacy" className="underline hover:text-ivory-200 transition-colors">
+            <a href="/privacy-policy" className="underline hover:text-ivory-200 transition-colors">
               Privacy Policy
             </a>
           </p>

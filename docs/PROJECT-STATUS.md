@@ -396,3 +396,58 @@ None.
 - Photography integration remains deferred (no brand-photos added — by design; PhotoSlot fallbacks are intentional and elegant)
 - Remaining placeholder pages (Community, Opportunities, Impact, Media, Partners, Sign In, Privacy Policy, Terms) are still stubs — outside scope of this pass
 - The `/design-system` demo StatBlocks use fictional values (190+, 12, 1M+, ∞) — these are intentional as design reference values; owner may update when real data is available
+
+---
+
+## Stage 2 — Homepage Narrative Reorientation V2
+
+**Merged:** commit `71f5b8275782cd1f148db4553a466ee1bc38aaae`
+
+Homepage (`/`) reoriented to a narrative-first structure: hero headline "ONE HUMANITY. ONE MOVEMENT. ONE FUTURE.", origin story ("Born in Crisis. Built for Peace."), ecosystem preview band, global impact timeline. Full Lagoon & Gold design system applied throughout.
+
+No shared components modified. All CTA links confirmed working (`/join`, `/ecosystem`).
+
+---
+
+## Join Stage 1 — UX Corrections
+
+**Checkpoint:** Join Stage 1 Complete
+
+**Corrections applied (July 19, 2026):**
+
+### Correction 1 — SuccessPanel "Return Home" CTA
+`artifacts/web/src/pages/join/SuccessPanel.tsx`
+- Added third CTA: ghost-variant `RETURN HOME → /` button alongside the existing Explore Ecosystem and Discover Programs actions.
+
+### Correction 2 — Dead privacy link fix (3 occurrences)
+All three occurrences of `/legal/privacy` (a 404 path) corrected to `/privacy-policy` (the registered route):
+- `artifacts/web/src/pages/join/InterestForm.tsx`
+- `artifacts/web/src/pages/join/InquiryForm.tsx`
+- `artifacts/web/src/pages/join/index.tsx`
+
+No other `/legal/privacy` references exist anywhere in `artifacts/web/src` (confirmed by search).
+
+### Correction 3 — SuccessPanel visual surface + scroll behaviour
+`artifacts/web/src/pages/join/SuccessPanel.tsx`
+- Replaced plain white/transparent rendering with a designed lagoon-tinted gradient surface (`hsl(187 30% 96%) → hsl(38 40% 97%)`) and gold top accent border (`3px solid hsl(43 80% 60%)`).
+- Reduced motifs from two GoldThreads to one (spec: max one motif).
+- Added viewport scroll on mount via `scrollIntoView` respecting `prefers-reduced-motion` (`auto` when reduced, `smooth` otherwise).
+- Heading focus retained (WCAG 2.1 SC 3.3.4).
+- Secondary text color updated to `text-ink-600` (better hierarchy).
+
+`artifacts/web/src/pages/join/InquiryForm.tsx` (institutional inquiry success state)
+- Applied equivalent designed surface: dark lagoon gradient (`hsl(187 55% 14%) → hsl(187 50% 18%)`) with gold top accent border — consistent with the institutional section's lagoon-dark palette.
+- Generous padding (`py-14`), flexbox centred layout — no copy changes, no new CTAs.
+
+### TypeScript / Build
+Clean — zero errors before and after corrections.
+
+### Diff scope
+Exactly 4 files changed within `artifacts/web/src/pages/join/`. No other files touched.
+`+34 / -16` lines net.
+
+### Current checkpoint
+**Join Stage 1 Complete**
+
+### Next recommended task
+**Join Stage 1.1 — Sector Selection Expansion (Model E):** one primary sector field + up to 5 additional sectors (6 total). Additive, backward-compatible. Requires DB migration, API update, and frontend update. See July 19 audit report for exact file list and contract specification.
