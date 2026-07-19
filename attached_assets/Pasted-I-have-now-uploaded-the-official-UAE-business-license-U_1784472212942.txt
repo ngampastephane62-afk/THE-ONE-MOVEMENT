@@ -1,0 +1,136 @@
+I have now uploaded the official UAE business license.
+
+Use this document as the authoritative source for the legal entity information.
+
+Do not invent or assume anything beyond what is contained in the license.
+
+==================================================
+OBJECTIVE
+==================================================
+
+Revise both legal documents:
+
+1. Privacy Policy
+2. Terms of Use
+
+using the verified information from the business license.
+
+These documents should become Version 2 drafts and be much closer to publication.
+
+==================================================
+SOURCE OF TRUTH
+==================================================
+
+Use the uploaded business license to populate every field that can now be verified.
+
+Replace placeholders only where the license provides evidence.
+
+Do not replace placeholders that still require Founder confirmation.
+
+==================================================
+VERIFY AND USE
+==================================================
+
+Extract and use where appropriate:
+
+- Legal company name
+- Legal structure
+- Registration / License number
+- Registered business address
+- Country
+- Emirate
+- License authority
+- Company status
+
+Only use information exactly as supported by the uploaded document.
+
+==================================================
+LEGAL POSITIONING
+==================================================
+
+Until instructed otherwise, assume the website is operated by this licensed company.
+
+Use wording similar to:
+
+"The One Movement International ("TOMI") is operated by [legal company name], a legally registered company in the United Arab Emirates."
+
+Do not claim TOMI itself is a separate incorporated legal entity unless the documents prove it.
+
+==================================================
+DO NOT INVENT
+==================================================
+
+Do not invent:
+
+- privacy email
+- legal email
+- DPO
+- production hosting provider
+- analytics provider
+- payment provider
+- governing courts
+- trademarks
+- production infrastructure
+- international offices
+- certifications
+
+Leave those as clearly marked:
+
+"Founder confirmation required before publication."
+
+==================================================
+DOCUMENT QUALITY
+==================================================
+
+Keep the documents:
+
+- UAE PDPL aware
+- GDPR aware where applicable
+- honest to the current platform
+- aligned with the current Join functionality
+- legally conservative
+- professional
+- publication-ready after remaining confirmations
+
+==================================================
+ADDITIONAL TASK
+==================================================
+
+After updating the documents, create a section titled:
+
+FINAL PUBLICATION CHECKLIST
+
+Divide it into:
+
+A. VERIFIED FROM BUSINESS LICENSE
+(list everything now confirmed)
+
+B. STILL REQUIRED FROM FOUNDER
+(list only remaining missing items)
+
+C. RECOMMENDED BEFORE WEBSITE LAUNCH
+(for example:
+- dedicated privacy email
+- legal contact email
+- production hosting confirmation
+- governing law confirmation
+- lawyer review
+- cookie review if analytics are later enabled)
+
+==================================================
+OUTPUT
+==================================================
+
+Return:
+
+1. Privacy Policy Version 2
+2. Terms of Use Version 2
+3. Final Publication Checklist
+
+Do not generate implementation prompts.
+
+Do not modify website code.
+
+Do not change any functionality.
+
+Only update the legal documents using the verified business license while keeping unsupported information clearly identified for final confirmation.
