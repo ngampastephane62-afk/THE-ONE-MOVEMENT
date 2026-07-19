@@ -1,0 +1,253 @@
+PROJECT AUDIT AND JOIN UX DIAGNOSTIC — READ-ONLY FIRST
+
+You have direct access to the actual repository, so perform the evidence-based code audit that the external product architect cannot perform from Claude.ai.
+
+Do not begin modifying code during the audit.
+
+First inspect the repository and produce a factual report based only on the current implementation.
+
+==================================================
+CURRENT CONTEXT
+==================================================
+
+The most recently reported milestone was Join Stage 1 frontend and backend completion.
+
+However, two user-facing concerns have been observed:
+
+1. The Join expression-of-interest form limits sector selection to three.
+2. After submission, the interface appears white, empty, or visually broken instead of presenting a clear success experience.
+
+The homepage narrative reorientation may also be running in another Agent.
+
+You must inspect the actual repository state and identify active file-collision risks before recommending changes.
+
+==================================================
+PART 1 — REPOSITORY STATE AUDIT
+==================================================
+
+Inspect and report the actual state of:
+
+- App routing
+- Main navigation
+- Mobile navigation
+- Footer
+- Homepage
+- Vision page
+- Programs overview
+- All six Program detail pages
+- Ecosystem page
+- Join page
+- Join frontend components
+- Join backend routes
+- Join database schema
+- Shared taxonomy
+- Impact page
+- Partners page
+- Media page
+- Privacy page
+- Terms page
+- Cookie policy or cookie notice
+- FAQ
+- 404/not-found route
+- SEO metadata
+- Project status documents
+- Agent memory documents
+- Any events, resources, opportunities, community, governance or dashboard work
+- Current modified files and uncommitted diffs
+
+Classify every page or module as:
+
+- COMPLETE AND VERIFIED
+- COMPLETE BUT NEEDS REVIEW
+- IN PROGRESS
+- PLACEHOLDER
+- ROUTE EXISTS BUT PAGE IS INCOMPLETE
+- PLANNED BUT NOT STARTED
+- FUTURE PHASE
+- BLOCKED BY CONTENT
+- BLOCKED BY LEGAL DECISION
+
+Do not mark a page complete merely because its route exists.
+
+==================================================
+PART 2 — JOIN SECTOR-SELECTION AUDIT
+==================================================
+
+Trace the full sector-selection implementation through:
+
+- frontend component
+- frontend local validation
+- shared taxonomy
+- API validation
+- request contract
+- database column
+- tests
+- documentation
+
+Confirm exactly where the maximum of three is enforced.
+
+Then compare these product models:
+
+A. Increase the existing maximum only.
+B. Allow unlimited selection.
+C. Add one primary sector and separate secondary interests.
+D. Raise the maximum to six.
+E. Use one primary sector plus up to six total or secondary sectors.
+F. Separate professional activity from areas of interest.
+
+Recommend the best Stage 1.1 solution based on:
+
+- usability
+- data quality
+- backward compatibility
+- implementation complexity
+- future opportunity matching
+- database impact
+- frontend clarity
+
+Preferred direction to evaluate:
+
+- one primary sector
+- up to six additional or total interests
+- additive and backward-compatible contract
+- existing submissions remain valid
+- no taxonomy rewrite
+
+Do not implement yet.
+
+Specify exact files and contract changes that would be required.
+
+==================================================
+PART 3 — WHITE-PAGE SUBMISSION DIAGNOSTIC
+==================================================
+
+Reproduce both forms in the running application:
+
+A. Expression of Interest
+B. Institutional Inquiry
+
+Use valid test data and inspect:
+
+- browser console
+- network request
+- API response
+- frontend state
+- conditional rendering
+- SuccessPanel rendering
+- focus management
+- scrolling
+- section height
+- backgrounds
+- route changes
+- React errors
+- mobile and desktop behaviour
+
+Determine the exact cause of the white or empty state.
+
+Capture screenshots before submission and after submission.
+
+Confirm whether the backend successfully saves the record.
+
+The correct success experience should visibly provide:
+
+- submission received or updated confirmation
+- an accessible success heading
+- what happens next
+- no unsupported response-time promise
+- Explore Programs CTA
+- Explore Ecosystem CTA
+- Return Home CTA
+- clear visual surface consistent with Lagoon & Gold
+- no empty white viewport
+- correct focus and scroll behaviour
+
+For institutional inquiry, evaluate whether a “Submit another inquiry” action is appropriate.
+
+For personal Join interest, avoid encouraging duplicate submissions unless it is clearly framed as updating the existing expression of interest.
+
+==================================================
+PART 4 — HOMEPAGE AGENT COLLISION CHECK
+==================================================
+
+Check the current repository diff and determine whether another Agent is modifying:
+
+- homepage files
+- App.tsx
+- shared components
+- navigation
+- project-status documentation
+
+List files currently unsafe to touch.
+
+The Join correction task should avoid homepage-owned files unless absolutely necessary.
+
+==================================================
+PART 5 — TRUE CHECKPOINT
+==================================================
+
+Based on evidence, recommend one official checkpoint:
+
+A. Join Stage 1 Complete
+B. Join Stage 1 Functionally Complete — UX Corrections Required
+C. Join Stage 1 Incomplete
+D. Another precise checkpoint
+
+Explain the evidence supporting the decision.
+
+==================================================
+PART 6 — PUBLIC WEBSITE STRUCTURE STATUS
+==================================================
+
+Based on the repository, identify what remains before reaching:
+
+PUBLIC WEBSITE STRUCTURE COMPLETE — READY FOR CONTENT AND VISUAL INTEGRATION
+
+Separate remaining work into:
+
+1. Required launch structure
+2. Optional pre-launch structure
+3. Content and asset work
+4. Visual polish and motion
+5. Phase 2 ecosystem modules
+6. Phase 3 member platform modules
+
+For each remaining structural task give:
+
+- purpose
+- likely files
+- dependencies
+- collision risk
+- whether parallel work is safe
+- task size
+- acceptance checkpoint
+
+==================================================
+OUTPUT FORMAT
+==================================================
+
+Return one report titled:
+
+THE ONE MOVEMENT INTERNATIONAL
+REPOSITORY STATE AUDIT AND JOIN UX DIAGNOSTIC
+
+Include:
+
+1. Executive summary
+2. Actual repository state table
+3. Route inventory
+4. Join sector-selection findings
+5. Recommended selection model
+6. White-page root cause
+7. Backend persistence confirmation
+8. Exact Join correction scope
+9. Homepage collision map
+10. Remaining public-site structure
+11. Parallel execution recommendations
+12. Official current checkpoint
+13. Recommended next task
+14. Exact files the next task may modify
+15. Test cases required after correction
+
+Do not modify code yet.
+
+Stop after the evidence-based report and wait for approval.
