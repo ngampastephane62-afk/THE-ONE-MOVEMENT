@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import { useState, useRef } from 'react';
 import { Link } from 'wouter';
 import HeroSurface from '@/components/HeroSurface';
@@ -63,6 +64,15 @@ export default function JoinTheMovement() {
 
   return (
     <div>
+      <Helmet>
+        <title>JOIN THE MOVEMENT — THE ONE MOVEMENT INTERNATIONAL</title>
+        <meta name="description" content="Take your place in a global community that connects, collaborates and creates — every day of the year." />
+        <meta property="og:title" content="JOIN THE MOVEMENT — THE ONE MOVEMENT INTERNATIONAL" />
+        <meta property="og:description" content="Take your place in a global community that connects, collaborates and creates — every day of the year." />
+        {/* FILLED AT DEPLOY WITH PRODUCTION DOMAIN */}
+        <link rel="canonical" href="/join" />
+      </Helmet>
+
       {/* ─────────────────────────────────────────────────────────────────
           1. JOIN HERO — radiant lagoon surface
           ───────────────────────────────────────────────────────────────── */}

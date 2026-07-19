@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
@@ -73,6 +74,15 @@ const PROGRAMS: {
 export default function Programs() {
   return (
     <div>
+      <Helmet>
+        <title>OFFICIAL PROGRAMS — THE ONE MOVEMENT INTERNATIONAL</title>
+        <meta name="description" content="Six official programs — from cultural galas to investment forums — the heartbeat of a global movement alive 365 days a year." />
+        <meta property="og:title" content="OFFICIAL PROGRAMS — THE ONE MOVEMENT INTERNATIONAL" />
+        <meta property="og:description" content="Six official programs — from cultural galas to investment forums — the heartbeat of a global movement alive 365 days a year." />
+        {/* FILLED AT DEPLOY WITH PRODUCTION DOMAIN */}
+        <link rel="canonical" href="/programs" />
+      </Helmet>
+
       {/* ─────────────────────────────────────────────────────────────────────
           1. PROGRAMS HERO — HeroSurface (lagoon radiant)
           ───────────────────────────────────────────────────────────────────── */}

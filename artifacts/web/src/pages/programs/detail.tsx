@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import { useEffect } from 'react';
 import { Link, useParams, useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
@@ -24,6 +25,15 @@ export default function ProgramDetail() {
 
   return (
     <div>
+      <Helmet>
+        <title>{`${program.name} — THE ONE MOVEMENT INTERNATIONAL`}</title>
+        <meta name="description" content={program.seoDescription} />
+        <meta property="og:title" content={`${program.name} — THE ONE MOVEMENT INTERNATIONAL`} />
+        <meta property="og:description" content={program.seoDescription} />
+        {/* FILLED AT DEPLOY WITH PRODUCTION DOMAIN */}
+        <link rel="canonical" href={`/programs/${program.slug}`} />
+      </Helmet>
+
       {/* ───────────────────────────────────────────────────────────────────────
           1. PROGRAM HERO — HeroSurface (lagoon radiant), split layout
           ─────────────────────────────────────────────────────────────────────── */}

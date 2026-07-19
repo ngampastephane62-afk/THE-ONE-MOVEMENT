@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
@@ -75,6 +76,15 @@ export default function Home() {
 
   return (
     <div>
+      <Helmet>
+        <title>THE ONE MOVEMENT INTERNATIONAL — ONE HUMANITY. ONE MOVEMENT. ONE FUTURE.</title>
+        <meta name="description" content="A global ecosystem connecting creatives, entrepreneurs, institutions and changemakers — turning connection into opportunity, and opportunity into impact." />
+        <meta property="og:title" content="THE ONE MOVEMENT INTERNATIONAL — ONE HUMANITY. ONE MOVEMENT. ONE FUTURE." />
+        <meta property="og:description" content="A global ecosystem connecting creatives, entrepreneurs, institutions and changemakers — turning connection into opportunity, and opportunity into impact." />
+        {/* FILLED AT DEPLOY WITH PRODUCTION DOMAIN */}
+        <link rel="canonical" href="/" />
+      </Helmet>
+
       {/* ─────────────────────────────────────────────────────────────────────
           1. HERO — lagoon radiant surface; media slot is video-ready placeholder.
           Headline: ONE HUMANITY. ONE MOVEMENT. ONE FUTURE. ("FUTURE." in gold-400)

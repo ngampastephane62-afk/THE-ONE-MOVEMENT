@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
@@ -41,6 +42,15 @@ const STEPS: { label: string; desc: string }[] = [
 export default function OurVision() {
   return (
     <div>
+      <Helmet>
+        <title>OUR VISION — THE ONE MOVEMENT INTERNATIONAL</title>
+        <meta name="description" content="Born in the Democratic Republic of Congo, growing into a permanent global ecosystem. Our vision, our mission and our pillars of connection, opportunity and impact." />
+        <meta property="og:title" content="OUR VISION — THE ONE MOVEMENT INTERNATIONAL" />
+        <meta property="og:description" content="Born in the Democratic Republic of Congo, growing into a permanent global ecosystem. Our vision, our mission and our pillars of connection, opportunity and impact." />
+        {/* FILLED AT DEPLOY WITH PRODUCTION DOMAIN */}
+        <link rel="canonical" href="/our-vision" />
+      </Helmet>
+
       {/* ───────────────────────────────────────────────────────────────────────
           1. VISION HERO — HeroSurface (lagoon radiant), split layout
           ─────────────────────────────────────────────────────────────────────── */}

@@ -697,3 +697,153 @@ No application routes, pages, components, endpoints, taxonomy, shared libraries,
 
 ### Recommended checkpoint
 **Database Migration Workflow Baselined and Approved**
+
+---
+
+## Task 2B — 404 Experience + Technical SEO / OG Metadata
+
+**Checkpoint: 404 and Technical SEO Complete**
+
+### Objective
+Two coordinated additions: (1) a designed 404 experience in the Lagoon & Gold system; (2) technical SEO and Open Graph metadata across completed public pages plus root index.html. Zero functional change to any completed page body, form, backend, database, or shared component.
+
+---
+
+### Step 0 — Audit (pre-change state)
+
+**artifacts/web/index.html (before):**
+- `<title>` The One Movement International *(short, no tagline)*
+- `<meta name="description">` ONE WORLD. ONE PURPOSE. ONE MOVEMENT. A permanent global ecosystem…
+- `og:title/og:description` present but generic
+- `twitter:card/title/description` present but generic
+- Missing: `theme-color`, `og:type`, `og:site_name`, `og:url`, `og:image`, `twitter:image`, `canonical`, full OG/Twitter suite
+
+**pages/not-found/index.tsx (before):**
+```tsx
+// 12 lines — unstyled <div> with plain text "Page Not Found"
+// No HeroSurface, no design, no CTAs, no Lagoon & Gold system
+```
+
+**Head management:** No library. `react-helmet-async` was NOT installed.
+
+---
+
+### Part A — 404 Experience
+
+**File:** `artifacts/web/src/pages/not-found/index.tsx`
+
+Complete rewrite. No new components; no new dependencies beyond `react-helmet-async` (justified by Part C). No route changes; catch-all `*` in App.tsx unchanged.
+
+**Design:**
+- `HeroSurface` (lagoon-dark, `glowOrigin="bottom-center"`, `minHeight="100dvh"`) — full-height immersive
+- Gold eyebrow: `404 — PAGE NOT FOUND`
+- Cinzel display headline: `THIS PATH DOES NOT EXIST — YET.`
+- GoldThread motif (centered, 180px, with node) — one only
+- Supporting copy (verbatim from spec)
+- Two CTAs using `buttonVariants` + `cn` styled on `<Link>` components (avoiding the `Button asChild` + Radix Slot v1.2 multi-children bug)
+- Bilingual signature: `WE ARE ONE — ` + `<span lang="ar" dir="rtl">نحن واحد</span>`
+- Helmet block: `404 — Page Not Found — THE ONE MOVEMENT INTERNATIONAL` + `robots: noindex, nofollow`
+- WCAG AA, keyboard-first; GoldThread IntersectionObserver respects `prefers-reduced-motion`
+
+**Note — Button asChild + Radix Slot v1.2 incompatibility:**
+`@radix-ui/react-slot@1.2.x` introduced strict single-child validation. The `Button` component renders `{loading && <spinner>}` + `{children}` when `asChild=true`, producing two children and throwing a Slot error. Fixed by using `buttonVariants({ size, variant })` directly on styled `<Link>` elements, which is the canonical Radix pattern for this case.
+
+---
+
+### Part B — Root HTML Metadata
+
+**File:** `artifacts/web/index.html`
+
+Head updated (body unchanged, scripts unchanged). Full tag inventory:
+
+| Tag | Value |
+|---|---|
+| `<meta charset>` | UTF-8 *(unchanged)* |
+| `<meta viewport>` | width=device-width, initial-scale=1.0, maximum-scale=1 *(unchanged)* |
+| `<title>` | THE ONE MOVEMENT INTERNATIONAL — ONE HUMANITY. ONE MOVEMENT. ONE FUTURE. |
+| `<meta name="description">` | A global ecosystem connecting creatives, entrepreneurs, institutions and changemakers — turning connection into opportunity, and opportunity into impact. |
+| `<meta name="theme-color">` | #0A2E33 |
+| `<meta name="robots">` | index, follow |
+| `og:type` | website |
+| `og:site_name` | The One Movement International |
+| `og:title` | THE ONE MOVEMENT INTERNATIONAL — ONE HUMANITY. ONE MOVEMENT. ONE FUTURE. |
+| `og:description` | (same as description) |
+| `og:url` | `""` — *FILLED AT DEPLOY WITH PRODUCTION DOMAIN* |
+| `og:image` | `/og-image.jpg` — *IMAGE ASSET PENDING CONTENT-INTEGRATION MODULE — reserve path only, do not fabricate a file* |
+| `twitter:card` | summary_large_image |
+| `twitter:title` | (same as og:title) |
+| `twitter:description` | (same as og:description) |
+| `twitter:image` | `/og-image.jpg` *(same reserved path)* |
+| `<link rel="canonical">` | `""` — *FILLED AT DEPLOY WITH PRODUCTION DOMAIN* |
+
+**/og-image.jpg NOT created.** Path reserved only.
+
+---
+
+### Part C — Per-Page Head Elements
+
+**Dependency added:** `react-helmet-async` — installed via `pnpm --filter @workspace/web add react-helmet-async`. Version resolved from registry at install time (catalog entry was not pre-defined).
+
+**Integration:** `HelmetProvider` wrapped around `QueryClientProvider` in `artifacts/web/src/App.tsx`. `Helmet` imported in each page file (import only, no body changes).
+
+**Exact per-page titles and descriptions (verbatim from spec):**
+
+| Page | Title | Description |
+|---|---|---|
+| `/` (home) | THE ONE MOVEMENT INTERNATIONAL — ONE HUMANITY. ONE MOVEMENT. ONE FUTURE. | A global ecosystem connecting creatives, entrepreneurs, institutions and changemakers — turning connection into opportunity, and opportunity into impact. |
+| `/our-vision` | OUR VISION — THE ONE MOVEMENT INTERNATIONAL | Born in the Democratic Republic of Congo, growing into a permanent global ecosystem. Our vision, our mission and our pillars of connection, opportunity and impact. |
+| `/ecosystem` | THE ECOSYSTEM — FIFTEEN SECTORS, ONE MOVEMENT | Fifteen sectors connected in one permanent global ecosystem — where culture, business, diplomacy, innovation and humanitarian action work as one. |
+| `/programs` | OFFICIAL PROGRAMS — THE ONE MOVEMENT INTERNATIONAL | Six official programs — from cultural galas to investment forums — the heartbeat of a global movement alive 365 days a year. |
+| `/programs/:slug` | `${program.name} — THE ONE MOVEMENT INTERNATIONAL` | `program.seoDescription` (dynamic from programs-data.ts) |
+| `/join` | JOIN THE MOVEMENT — THE ONE MOVEMENT INTERNATIONAL | Take your place in a global community that connects, collaborates and creates — every day of the year. |
+
+**Canonicals:** Each page has `<link rel="canonical" href="[route]">` with comment `FILLED AT DEPLOY WITH PRODUCTION DOMAIN`. Home uses `href="/"`.
+
+**Placeholder pages** (/impact, /partners, /media, /community, /opportunities, /sign-in, /privacy-policy, /terms): no per-page overrides added per spec.
+
+---
+
+### Files changed
+
+| File | Change |
+|---|---|
+| `artifacts/web/src/pages/not-found/index.tsx` | Complete rewrite — designed 404 experience |
+| `artifacts/web/index.html` | Head updated with full OG/Twitter/canonical suite |
+| `artifacts/web/src/App.tsx` | Added `HelmetProvider` import + wrapper (non-route change) |
+| `artifacts/web/src/pages/home/index.tsx` | Added `Helmet` import + head block (first child of return div) |
+| `artifacts/web/src/pages/our-vision/index.tsx` | Added `Helmet` import + head block |
+| `artifacts/web/src/pages/ecosystem/index.tsx` | Added `Helmet` import + head block |
+| `artifacts/web/src/pages/programs/index.tsx` | Added `Helmet` import + head block |
+| `artifacts/web/src/pages/programs/detail.tsx` | Added `Helmet` import + dynamic head block |
+| `artifacts/web/src/pages/join/index.tsx` | Added `Helmet` import + head block (head only — body/form unchanged) |
+| `artifacts/web/package.json` | Added `react-helmet-async` dependency |
+| `pnpm-lock.yaml` | Updated lock file |
+| `docs/PROJECT-STATUS.md` | This checkpoint |
+
+**Untouched:** `lib/db/`, `lib/shared/`, `artifacts/api-server/`, all shared components, all page bodies, App.tsx routes, Join form/body logic.
+
+---
+
+### Testing results
+
+| Test | Result |
+|---|---|
+| Unknown route → styled 404 renders | ✓ Lagoon-dark, gold eyebrow, Cinzel headline, GoldThread, two CTAs |
+| 404 at 390px mobile | ✓ Full-width CTAs, no overflow, signature visible |
+| 404 at 1280px desktop | ✓ Side-by-side CTAs, proportional headline |
+| Arabic signature `نحن واحد` with `lang="ar" dir="rtl"` | ✓ Renders correctly, RTL direction |
+| Root index.html — all OG/Twitter tags present | ✓ Verified via curl |
+| Root index.html — title/description correct (verbatim) | ✓ |
+| Per-page title/description in Helmet | ✓ Added to all 6 pages |
+| OG image marked as pending | ✓ Comment: `IMAGE ASSET PENDING CONTENT-INTEGRATION MODULE` |
+| Canonical URL marked as pending domain | ✓ Comment: `FILLED AT DEPLOY WITH PRODUCTION DOMAIN` |
+| TypeScript clean | ✓ `tsc --noEmit` passes |
+| Browser console clean | ✓ No errors after canonical fix |
+| Task A files untouched | ✓ No changes to lib/db, lib/shared, api-server |
+| Homepage body untouched | ✓ Only Helmet import + head block added |
+| Join body untouched | ✓ Only Helmet import + head block added |
+| Shared components untouched | ✓ No component modifications |
+| Dependency added | ✓ `react-helmet-async` |
+
+### Recommended checkpoint
+**404 and Technical SEO Complete**

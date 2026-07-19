@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
@@ -529,6 +530,15 @@ function EcosystemNotice({ children }: { children: string }) {
 export default function Ecosystem() {
   return (
     <div>
+      <Helmet>
+        <title>THE ECOSYSTEM — FIFTEEN SECTORS, ONE MOVEMENT</title>
+        <meta name="description" content="Fifteen sectors connected in one permanent global ecosystem — where culture, business, diplomacy, innovation and humanitarian action work as one." />
+        <meta property="og:title" content="THE ECOSYSTEM — FIFTEEN SECTORS, ONE MOVEMENT" />
+        <meta property="og:description" content="Fifteen sectors connected in one permanent global ecosystem — where culture, business, diplomacy, innovation and humanitarian action work as one." />
+        {/* FILLED AT DEPLOY WITH PRODUCTION DOMAIN */}
+        <link rel="canonical" href="/ecosystem" />
+      </Helmet>
+
       {/* ─────────────────────────────────────────────────────────────────────
           1. ECOSYSTEM HERO — HeroSurface, lagoon radiant, split layout
           ───────────────────────────────────────────────────────────────────── */}

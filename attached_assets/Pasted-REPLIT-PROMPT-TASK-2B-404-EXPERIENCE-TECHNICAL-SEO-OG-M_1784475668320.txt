@@ -1,0 +1,80 @@
+REPLIT PROMPT — TASK 2B: 404 EXPERIENCE + TECHNICAL SEO / OG METADATA (Economy mode, parallel-safe)
+
+PROJECT CONTEXT
+THE ONE MOVEMENT INTERNATIONAL. Public pages complete: /, /our-vision, /ecosystem, /programs, /programs/:slug (six), /join. Placeholder pages exist for /impact, /partners, /media, /community, /opportunities, /sign-in, /privacy-policy, /terms. Design System "Lagoon & Gold" + Global Visual Coherence V3 are FROZEN. A parallel Agent is running Task A on the database toolchain — DO NOT touch lib/db, lib/shared, artifacts/api-server, or any database file. DO NOT modify body content of any completed page — this task only edits head/meta elements. DO NOT touch join form/body/component logic (Stage 1.1 owns Join behavior).
+
+THIS TASK: two coordinated additions — (1) a designed 404 experience in the Lagoon & Gold system; (2) technical SEO and Open Graph metadata across the completed public pages plus root index.html.
+
+STEP 0 — restoration checkpoint "Pre-404-SEO Restore Point".
+
+STEP 1 — AUDIT (before changes)
+Read artifacts/web/index.html to confirm current title/meta/og/twitter tags. Read artifacts/web/src/pages/not-found/* (or the current NotFound file) to confirm current unstyled implementation. Report what exists.
+
+PART A — 404 EXPERIENCE
+File: artifacts/web/src/pages/not-found/index.tsx (or the existing NotFound file — do not rename, do not add a new route; App.tsx catch-all "*" already routes here).
+Replace the unstyled fallback with a designed page using existing V3 components only (HeroSurface or a lightweight equivalent, SectionHeading, Button, existing container/spacing):
+- Lagoon-dark background, gold accent
+- Small eyebrow: "404 — PAGE NOT FOUND"
+- Display headline (Cinzel UPPERCASE): "THIS PATH DOES NOT EXIST — YET."
+- Supporting line: "The page you are looking for could not be found. It may have moved, or it may not exist yet as the Movement grows."
+- Two CTAs: primary "RETURN HOME" → "/" · secondary outline "EXPLORE THE MOVEMENT" → "/our-vision"
+- Bilingual signature: "WE ARE ONE — نحن واحد" (lang="ar" dir="rtl")
+- WCAG AA, visible focus, keyboard-first
+- No new components; no new dependencies; motif restrained (max one)
+
+PART B — ROOT HTML METADATA
+File: artifacts/web/index.html (root document head only — do NOT touch body, do NOT touch scripts)
+Ensure the head contains, in this order and using site-appropriate values:
+- <meta charset="utf-8"> and <meta name="viewport" ...> (verify present; leave existing)
+- <title>THE ONE MOVEMENT INTERNATIONAL — ONE HUMANITY. ONE MOVEMENT. ONE FUTURE.</title>
+- <meta name="description" content="A global ecosystem connecting creatives, entrepreneurs, institutions and changemakers — turning connection into opportunity, and opportunity into impact.">
+- <meta name="theme-color" content="#0A2E33">
+- Open Graph: og:type=website, og:site_name=The One Movement International, og:title (same as page title above as default), og:description (same as description above), og:url content="" with a code comment 'FILLED AT DEPLOY WITH PRODUCTION DOMAIN', og:image content="/og-image.jpg" with a code comment 'IMAGE ASSET PENDING CONTENT-INTEGRATION MODULE — reserve path only, do not fabricate a file'
+- Twitter: twitter:card=summary_large_image, twitter:title, twitter:description, twitter:image (same reserved path)
+- <link rel="canonical" href=""> with a code comment matching the og:url note
+Do NOT create /og-image.jpg — the file is reserved for the future content-integration module; the meta tags simply point to the future path.
+
+PART C — PER-PAGE HEAD ELEMENTS
+Add per-page title and description overrides for the completed public pages. Use whichever head-management approach already exists in the codebase (if react-helmet-async or a similar library is already installed, use it; otherwise use react-helmet-async — this is the one dependency justified for this task; if adding it, install a stable version and report it). Do NOT add multiple libraries.
+
+For each page below, set page-specific <title>, <meta name="description">, <meta property="og:title">, <meta property="og:description">, and <link rel="canonical"> (canonical uses the route path with an empty base — code comment same as PART B). Descriptions ≤160 chars.
+
+- pages/home/index.tsx (head only, no body changes):
+  title: THE ONE MOVEMENT INTERNATIONAL — ONE HUMANITY. ONE MOVEMENT. ONE FUTURE.
+  description: A global ecosystem connecting creatives, entrepreneurs, institutions and changemakers — turning connection into opportunity, and opportunity into impact.
+
+- pages/our-vision/index.tsx:
+  title: OUR VISION — THE ONE MOVEMENT INTERNATIONAL
+  description: Born in the Democratic Republic of Congo, growing into a permanent global ecosystem. Our vision, our mission and our pillars of connection, opportunity and impact.
+
+- pages/ecosystem/index.tsx:
+  title: THE ECOSYSTEM — FIFTEEN SECTORS, ONE MOVEMENT
+  description: Fifteen sectors connected in one permanent global ecosystem — where culture, business, diplomacy, innovation and humanitarian action work as one.
+
+- pages/programs/index.tsx:
+  title: OFFICIAL PROGRAMS — THE ONE MOVEMENT INTERNATIONAL
+  description: Six official programs — from cultural galas to investment forums — the heartbeat of a global movement alive 365 days a year.
+
+- pages/programs/detail.tsx (or the detail template):
+  Dynamic head from programs-data: title = `${program.name} — THE ONE MOVEMENT INTERNATIONAL`, description = program.seoDescription. Canonical = `/programs/${program.slug}` with the same code comment as above.
+
+- pages/join/index.tsx (head elements ONLY; NO changes to body, form, or any Join file — Stage 1.1 owns the Join file):
+  title: JOIN THE MOVEMENT — THE ONE MOVEMENT INTERNATIONAL
+  description: Take your place in a global community that connects, collaborates and creates — every day of the year.
+
+For placeholder pages (/impact, /partners, /media, /community, /opportunities, /sign-in, /privacy-policy, /terms), DO NOT add per-page overrides in this task; the root defaults remain in place until each page is built.
+
+FILE BOUNDARIES (hard — Task 2B lane): pages/not-found/*, artifacts/web/index.html, and the head elements only of the six completed public pages listed above. DO NOT modify any page body, any component, any style token, App.tsx routes, any join file body, backend, database, taxonomy, lib/shared, or lib/db (Task A lane).
+
+TESTING:
+- Visit an unknown route → styled 404 renders; CTAs work (/ and /our-vision); Arabic signature shapes correctly; keyboard-first navigation; reduced motion respected
+- View-source on each completed page → correct <title>, meta description, og:title, og:description, canonical present
+- Twitter/OG tags present on root index.html
+- Full-page checks at 390/768/1280; no horizontal overflow
+- TypeScript clean; console clean; server clean
+- Diff: only permitted files touched; join file changes limited to head elements (report the exact edit)
+- Report if react-helmet-async (or similar) was newly added, including version
+
+COMPLETION REPORT — standard 16 items PLUS: dependency added (yes/no + version if yes) · per-page titles/descriptions used (verbatim) · confirmation OG image and canonical URL are marked as pending final domain / content-integration · confirmation Task A files and homepage body and Join body untouched · confirmation shared components untouched. Recommended checkpoint: "404 and Technical SEO Complete".
+
+Also update docs/PROJECT-STATUS.md accordingly.
