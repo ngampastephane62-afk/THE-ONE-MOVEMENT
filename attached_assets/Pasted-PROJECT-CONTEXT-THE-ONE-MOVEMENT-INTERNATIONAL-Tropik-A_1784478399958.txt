@@ -1,0 +1,168 @@
+PROJECT CONTEXT
+THE ONE MOVEMENT INTERNATIONAL — Tropik Agence FZE LLC. Public pages complete: /, /our-vision, /ecosystem, /programs (+6 detail routes), /join. 404 designed, technical SEO/OG live, Join Stage 1.1 shipped, database migration workflow baselined. Design System "Lagoon & Gold" + Global Visual Coherence V3 are FROZEN.
+
+Standing rule from Stage 0 (unchanged): partner and media logos require signed display authorization on file before any public appearance. This task builds the public directory shell WITHOUT displaying any entity — the shell exists to be honest today and drop-in-ready as authorizations arrive.
+
+Standing rule from remediation (unchanged): NO drizzle-kit push --force. This task adds NO database tables — no schema work at all.
+
+THIS TASK: build the /partners page (launch shell) + reserve the /partners/:slug detail route + extend the shared taxonomy with the partnership category enum. Nothing else.
+
+STEP 0 — restoration checkpoint "Pre-Partners-Shell Restore Point".
+
+STEP 1 — VERIFY BEFORE CHANGING
+Read and report: lib/shared/src/taxonomy.ts (current exports) · artifacts/web/src/App.tsx (current route pattern for dynamic slugs — e.g. how /programs/:slug is registered) · artifacts/web/src/pages/partners/* (current placeholder). Confirm the head-management pattern (react-helmet-async from Task 2B) so this task can use it.
+
+PART T — SHARED TAXONOMY EXTENSION (additive, no rename)
+File: lib/shared/src/taxonomy.ts
+Add exports (place them alongside SECTOR_SLUGS / PROGRAM_SLUGS pattern; derived types with SECTOR_SLUG_SET pattern):
+- PARTNER_CATEGORY_SLUGS: readonly ["sponsors", "partners", "institutions", "companies", "ngos", "universities", "governments", "ambassadors", "strategic-supporters"]
+- PARTNER_CATEGORY_SET (Set<string>) for O(1) validation, matching the existing SET pattern
+- PartnerCategorySlug type derived from the array
+Do NOT modify SECTOR_SLUGS, PROGRAM_SLUGS, JOINABLE_GROUPS, CATEGORIES_BY_GROUP, ORGANIZATION_TYPES, or CONSENT_VERSION. Additive only. If the shared package uses build output (dist), run its build so consumers see the new exports (Task A confirmed the lib/db build pattern; follow the same convention for lib/shared).
+
+PART D — PARTNER TYPES + LOCAL DATA
+Create artifacts/web/src/lib/partners-data.ts exporting a typed PartnerEntity[] and helpers.
+Type shape (all fields future-shaped; only render fields when present):
+- slug (string)
+- name (string)
+- category (PartnerCategorySlug)
+- country (string)
+- role (string, optional — one-line description)
+- authorizationOnFile (boolean — HARD RENDER GATE)
+- authorizationReference (string, optional — internal reference, NEVER rendered publicly, code-commented as such)
+- logoSlot (string, optional — dev label for the future logo; PhotoSlot pattern)
+- bannerSlot (string, optional)
+- description (string, optional)
+- services (string[], optional)
+- products (string[], optional)
+- website (string, optional — must pass the same safe URL validation used server-side for institutional inquiries: http(s) only, no javascript:/data:/malformed)
+- programSlugs (string[], optional — validated against PROGRAM_SLUGS)
+- sectorSlugs (string[], optional — validated against SECTOR_SLUGS)
+- articleSlugs (string[], optional — reserved for News integration; empty at launch)
+- collaborations (string[], optional)
+- gallerySlots (string[], optional)
+- videoSlots (string[], optional — reserved; do not render at launch, requires future video governance)
+- eventSlugs (string[], optional — reserved for Events module)
+- status ("active" | "historical" | "archived")
+- seoTitle (string)
+- seoDescription (string, ≤160 chars)
+- contactType ("institutional-inquiry-only" | "direct-contact-authorized")
+- contactEmail (string, optional — rendered ONLY when contactType === "direct-contact-authorized")
+
+Initial data: EMPTY ARRAY. The shell must work honestly with zero entities. Do not populate any sample or placeholder entity.
+
+Export a helper getVisiblePartners() that filters to authorizationOnFile === true AND status === "active" — this helper is the ONLY function the page uses to read entities, enforcing the render gate at the code level.
+
+Export a helper getPartnerBySlug(slug) that returns a visible partner or undefined. Unknown/invisible slugs return undefined.
+
+PART P — /PARTNERS PAGE (launch shell)
+File: artifacts/web/src/pages/partners/index.tsx (replace the current placeholder).
+Six sections in order, using existing V3 components only. Every heading rule and motif rule inherited from V3 (max one signature motif per section; UPPERCASE Cinzel display).
+
+1. HERO (HeroSurface lagoon radiant, restrained):
+Eyebrow: "OUR PARTNERS & ALLIES"
+Display: "WHO WE STAND WITH."
+Supporting line: "The One Movement International grows through the institutions, organizations and individuals who choose to build with us."
+
+2. WHAT PARTNERSHIP MEANS (ivory, asymmetric):
+Eyebrow: "PARTNERSHIP IN THE MOVEMENT"
+H2: "MORE THAN A LOGO. A COMMITMENT TO CONNECTION."
+Paragraph: "Partnership within The One Movement International is a working relationship — not a promotional badge. Our partners contribute expertise, reach, resources or presence to a permanent global ecosystem where culture, business, diplomacy and impact meet."
+
+3. THE CATEGORIES (lagoon-900 band):
+Eyebrow: "OUR ECOSYSTEM PARTNERS"
+H2: "NINE PATHS INTO THE MOVEMENT."
+Render nine category sections in the order of PARTNER_CATEGORY_SLUGS. Each category renders:
+- Category name in Cinzel UPPERCASE (Sponsors, Partners, Institutions, Companies, NGOs, Universities, Governments, Ambassadors, Strategic Supporters)
+- Category description (verbatim, below)
+- If getVisiblePartners() contains entities in this category: render a card grid of authorized entities (name, country, role, logo IF logo file exists — otherwise PhotoSlot fallback, NEVER a broken image, NEVER a placeholder logo). Cards link to /partners/[slug].
+- If empty: NO placeholder cards, NO logo silhouettes. Just the description reading as a standalone institutional statement.
+Category descriptions (verbatim):
+- SPONSORS: "Organizations investing in the Movement's programs, initiatives and reach."
+- PARTNERS: "Strategic collaborators building programs, opportunities and impact alongside us."
+- INSTITUTIONS: "Established organizations aligning with the Movement's mission through recognized cooperation."
+- COMPANIES: "Businesses joining the ecosystem to connect, collaborate and grow."
+- NGOs: "Civil-society organizations working with the Movement on humanitarian and community outcomes."
+- UNIVERSITIES: "Academic institutions engaging with the Movement through research, students and cultural exchange."
+- GOVERNMENTS: "Public bodies and diplomatic missions working alongside the Movement."
+- AMBASSADORS: "Individuals officially representing the Movement's values in their region or field."
+- STRATEGIC SUPPORTERS: "Media, cultural and community organizations amplifying the Movement's voice."
+
+4. AUTHORIZATION STATEMENT (ivory, short):
+Eyebrow: "OUR DISPLAY POLICY"
+H2: "EVERY NAME HERE IS INTENTIONAL."
+Paragraph: "Every organization and individual listed on this page has provided written authorization to appear here. We do not display logos, names or endorsements without documented consent."
+
+5. INSTITUTIONAL PATHWAY (lagoon-900):
+Eyebrow: "BECOME A PARTNER"
+H2: "PARTNERSHIP BEGINS WITH A CONVERSATION."
+Paragraph: "Embassies, governments, international organizations, universities, NGOs, sponsors, partners and media organizations join the Movement through direct dialogue with our team. Every collaboration begins with a conversation — never a form filled in isolation."
+CTA button: "BEGIN THE CONVERSATION" → /join#institutional (deep-link to the existing institutional inquiry section on the Join page — verify the anchor id exists on /join; if it does not, use /join and note this in the report as a follow-up item — DO NOT modify /join in this task).
+NO SECOND FORM. NO new inquiry endpoint. NO donation language.
+
+6. CLOSING SIGNATURE:
+Bilingual: "WE ARE ONE — نحن واحد" (lang="ar" dir="rtl")
+
+Head (via react-helmet-async, following Task 2B pattern):
+- title: OUR PARTNERS — THE ONE MOVEMENT INTERNATIONAL
+- description: The institutions, organizations and individuals building The One Movement International — a global ecosystem of partnership, purpose and impact.
+- canonical: /partners (with the same "FILLED AT DEPLOY WITH PRODUCTION DOMAIN" code comment convention)
+- og:title / og:description mirroring above
+
+PART R — RESERVED /PARTNERS/:SLUG ROUTE
+Add a dynamic route in artifacts/web/src/App.tsx following the exact pattern used by /programs/:slug (do not invent a different router idiom).
+Create artifacts/web/src/pages/partners/detail.tsx (or the file naming convention matching the programs detail page).
+Behavior at launch:
+- Resolve slug via getPartnerBySlug()
+- If undefined (unknown slug OR entity not authorized OR not active): redirect cleanly to /partners (mirror the /programs/:slug unknown-slug redirect pattern — do not render a 404, do not render an empty page, do not leak that a name exists in data but is unauthorized)
+- If defined (a visible entity — none will exist at launch since data is empty): render a minimal detail page using the entity fields. Only render fields that are present. This is the FUTURE surface; at launch no entity resolves, so this code path is unreachable but present, typed and tested. Do NOT elaborate design beyond the minimum needed to satisfy the type and render conditionally.
+Minimal detail sections (all conditional on presence):
+- Hero: name (Cinzel UPPERCASE), category badge, country, role (if role)
+- About: description (if description)
+- Services / Products: bullet lists (if arrays non-empty)
+- Website: link (if website — validated safe URL only)
+- Related programs: chips linking to /programs/[slug] (if programSlugs, resolved via existing programs-data)
+- Related sectors: chips linking to /ecosystem (if sectorSlugs)
+- Related articles: reserved slot rendering nothing at launch — code-commented "POPULATED WHEN NEWS HUB v0 LANDS (articleSlugs)"
+- Contact: institutional inquiry link → /join#institutional (or /join fallback per Part P), OR direct contact email link — ONLY when contactType === "direct-contact-authorized"
+Head: dynamic title `${entity.name} — THE ONE MOVEMENT INTERNATIONAL`, description entity.seoDescription, canonical /partners/[slug] with the same pending-domain comment.
+
+PRESERVATION RULES
+Do NOT: create any database table, run any database migration, modify any schema file, touch lib/db, touch artifacts/api-server, add any endpoint, add authentication, add a partner submission form, invent any entity name / logo / country / statistic, add any donation or payment logic, add analytics, modify any other page (home, vision, ecosystem, programs, programs detail, join, 404), modify any shared component, modify design tokens, modify the header/footer beyond what a new page in the existing router already receives, add dependencies (react-helmet-async is already installed).
+
+FILE BOUNDARIES (hard):
+- lib/shared/src/taxonomy.ts (additive exports only) — and its build output if the workspace convention builds it
+- artifacts/web/src/lib/partners-data.ts (new)
+- artifacts/web/src/pages/partners/index.tsx (replace placeholder)
+- artifacts/web/src/pages/partners/detail.tsx (new)
+- artifacts/web/src/App.tsx (register /partners/:slug route only; verify /partners already registered)
+- docs/PROJECT-STATUS.md (checkpoint update)
+Nothing else. Any deviation is a bug — report and stop.
+
+TESTING (execute and report):
+- /partners renders all six sections at 390 / 768 / 1280 as compositions; no horizontal overflow
+- Nine category sections each render with description; NO category shows a placeholder card, NO logo silhouette, NO fake entity
+- Institutional pathway CTA resolves (either the anchor exists on /join or the fallback to /join is documented)
+- /partners/some-unknown-slug redirects cleanly to /partners (no 404, no error surface)
+- Type check: setting a test entity in code (temporarily, DO NOT COMMIT) with authorizationOnFile: false → does NOT appear on /partners → its /partners/[slug] URL redirects. Remove the test entity before committing. Report the test result but do not leave test data in the file.
+- Head elements verified via curl/view-source: title, description, canonical, og:*
+- react-helmet-async pattern consistent with Task 2B pages
+- Keyboard-first navigation of the page and the institutional CTA
+- Arabic signature shapes correctly (lang="ar" dir="rtl")
+- Reduced motion respected
+- WCAG AA visible focus rings
+- TypeScript clean across workspace
+- Browser console clean
+- Task A files (lib/db), API server, backend endpoints, join files, homepage body, ecosystem, vision, programs — all untouched (verify by diff)
+- No database migration attempted (verify by drizzle-kit generate reporting "no schema changes")
+
+COMPLETION REPORT — standard 16 items PLUS:
+- Confirmation lib/shared/src/taxonomy.ts changes are purely additive (list the exact diff)
+- Full listing of the partners-data.ts type shape and empty initial data
+- Route registration verified in App.tsx
+- Category rendering behavior verified with empty data (all categories show description only)
+- Redirect behavior of /partners/:slug for unknown slugs
+- No database migration ran (drizzle-kit generate "no changes" confirmation)
+- Diff summary: exactly the files in the boundaries list
+- Confirmation shared components, Join, homepage, and all other pages untouched
+- Recommended checkpoint: "Partners Directory Shell Complete"

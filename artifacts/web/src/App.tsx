@@ -14,6 +14,7 @@ import Opportunities from '@/pages/opportunities';
 import Impact from '@/pages/impact';
 import Media from '@/pages/media';
 import Partners from '@/pages/partners';
+import PartnerDetail from '@/pages/partners/detail';
 import JoinTheMovement from '@/pages/join';
 import SignIn from '@/pages/sign-in';
 import PrivacyPolicy from '@/pages/privacy-policy';
@@ -36,6 +37,7 @@ function Router() {
       <Route path="/impact" component={Impact} />
       <Route path="/media" component={Media} />
       <Route path="/partners" component={Partners} />
+      <Route path="/partners/:slug" component={PartnerDetail} />
       <Route path="/join" component={JoinTheMovement} />
       <Route path="/sign-in" component={SignIn} />
       <Route path="/privacy-policy" component={PrivacyPolicy} />

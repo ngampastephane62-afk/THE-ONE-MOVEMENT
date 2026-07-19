@@ -847,3 +847,181 @@ Head updated (body unchanged, scripts unchanged). Full tag inventory:
 
 ### Recommended checkpoint
 **404 and Technical SEO Complete**
+
+---
+
+## Partners Directory Shell
+
+**Checkpoint: Partners Directory Shell Complete**
+
+### Objective
+Build the `/partners` public directory shell + reserve the `/partners/:slug` detail route + extend shared taxonomy with the partnership category enum. No database changes. No entities invented or displayed. Shell is honest at launch and drop-in-ready as authorizations arrive.
+
+---
+
+### Step 1 — Audit (pre-change state)
+
+- `lib/shared/src/taxonomy.ts`: No PARTNER_CATEGORY_SLUGS, no PartnerCategorySlug, no PARTNER_CATEGORY_SET.
+- `artifacts/web/src/App.tsx`: `/partners` route registered, no `/partners/:slug`.
+- `artifacts/web/src/pages/partners/index.tsx`: 5-line placeholder using `PagePlaceholder`.
+- `artifacts/web/src/lib/partners-data.ts`: ABSENT.
+- `artifacts/web/src/pages/partners/detail.tsx`: ABSENT.
+- `id="institutional-inquiry"` anchor: **PRESENT** at join/index.tsx line 405. Deep-link `/join#institutional-inquiry` confirmed valid.
+- `react-helmet-async`: already installed from Task 2B.
+
+---
+
+### Part T — Shared Taxonomy Extension (additive diff)
+
+**File:** `lib/shared/src/taxonomy.ts`
+
+Added (verbatim):
+```typescript
+export const PARTNER_CATEGORY_SLUGS = [
+  "sponsors", "partners", "institutions", "companies", "ngos",
+  "universities", "governments", "ambassadors", "strategic-supporters",
+] as const;
+
+export type PartnerCategorySlug = (typeof PARTNER_CATEGORY_SLUGS)[number];
+export const PARTNER_CATEGORY_SET: ReadonlySet<string> = new Set(PARTNER_CATEGORY_SLUGS);
+```
+
+Nothing else modified. SECTOR_SLUGS, PROGRAM_SLUGS, JOINABLE_GROUPS, CATEGORIES_BY_GROUP, ORGANIZATION_TYPES, CONSENT_VERSION all unchanged.
+
+**Build:** `npx tsc -p tsconfig.json` run inside `lib/shared/` after the change. `dist/taxonomy.d.ts` updated with new exports. Required because `artifacts/web` TypeScript project references lib/shared compiled declarations (`emitDeclarationOnly: true, outDir: "dist"`).
+
+---
+
+### Part D — Partner Types + Local Data
+
+**File:** `artifacts/web/src/lib/partners-data.ts` (new)
+
+Full type `PartnerEntity` with all spec-mandated fields. Key enforcement points coded into the file:
+- `authorizationOnFile: boolean` — HARD RENDER GATE documented in JSDoc
+- `authorizationReference` — marked in JSDoc as NEVER rendered publicly
+- `videoSlots` — marked as DO NOT RENDER at launch
+- `articleSlugs` / `eventSlugs` — marked as reserved, empty at launch
+- `contactEmail` — rendered ONLY when `contactType === "direct-contact-authorized"`
+- `isSafeUrl()` — validates website URLs (http(s) only, no javascript:/data:/malformed)
+
+Exported helpers:
+- `getVisiblePartners()` — filters `authorizationOnFile === true AND status === "active"`
+- `getPartnerBySlug(slug)` — returns visible entity or undefined (unknown/unauthorized both return undefined — no information leakage)
+- `getVisiblePartnersByCategory(category)` — filters visible partners by category
+- `validatePartnerEntity(entity)` — dev-time cross-reference validation
+- `isSafeUrl(url)` — safe URL checker
+
+**Initial data: empty array. No placeholder or sample entity.**
+
+---
+
+### Part P — /partners Page
+
+**File:** `artifacts/web/src/pages/partners/index.tsx` (replaced placeholder)
+
+Six sections in order:
+
+| # | Section | Background | Key content |
+|---|---|---|---|
+| 1 | HERO | HeroSurface lagoon radiant | Eyebrow, "WHO WE STAND WITH.", GoldThread, supporting line |
+| 2 | WHAT PARTNERSHIP MEANS | `hsl(60 9% 97%)` ivory | SectionHeading with thread, partnership body copy |
+| 3 | THE CATEGORIES | `hsl(187 67% 8%)` lagoon-900 | 9 category groups, description-only when empty |
+| 4 | AUTHORIZATION STATEMENT | `hsl(60 9% 97%)` ivory | Display policy copy |
+| 5 | INSTITUTIONAL PATHWAY | `hsl(187 67% 8%)` lagoon-900 | CTA → `/join#institutional-inquiry` |
+| 6 | CLOSING SIGNATURE | `hsl(187 67% 8%)` lagoon-900 | `WE ARE ONE — نحن واحد` (`lang="ar" dir="rtl"`) |
+
+Category sections: each of the nine PARTNER_CATEGORY_SLUGS rendered with verbatim description. When `getVisiblePartnersByCategory()` returns empty (all cases at launch): no card, no silhouette, no placeholder entity — description stands alone.
+
+Head via react-helmet-async:
+- title: OUR PARTNERS — THE ONE MOVEMENT INTERNATIONAL
+- description: The institutions, organizations and individuals building The One Movement International — a global ecosystem of partnership, purpose and impact.
+- canonical: /partners (with `FILLED AT DEPLOY WITH PRODUCTION DOMAIN` comment)
+- og:title / og:description matching
+
+**Note on SectionHeading:** The component accepts `heading`, `eyebrow`, `surface`, `thread` props — not `children` or `as`. All usages corrected to prop API.
+
+**Note on Button asChild:** Used `buttonVariants` + `cn` styled on `<Link>` for the CTA (same pattern established in Task 2B to avoid Radix Slot v1.2 multi-children error).
+
+---
+
+### Part R — Reserved /partners/:slug Route
+
+**App.tsx:** Added import for `PartnerDetail` and `<Route path="/partners/:slug" component={PartnerDetail} />` following the exact `/programs/:slug` pattern.
+
+**File:** `artifacts/web/src/pages/partners/detail.tsx` (new)
+
+Redirect behavior: `getPartnerBySlug()` returns undefined for unknown, unauthorized, or non-active slugs; `useEffect` redirects to `/partners` with `replace: true`. No 404, no empty surface, no leakage.
+
+Conditional sections (all on field presence):
+- Hero: name (Cinzel UPPERCASE), category badge, country, role
+- About: description
+- Services: bullet list
+- Products: bullet list
+- Website: external link (safe URL only)
+- Related programs: chips → `/programs/[slug]`
+- Related sectors: chips → `/ecosystem`
+- Article slugs: reserved slot, commented out (`POPULATED WHEN NEWS HUB v0 LANDS`)
+- Contact: `institutional-inquiry-only` → `/join#institutional-inquiry`; `direct-contact-authorized` + email → mailto link
+
+Dynamic head: `${entity.name} — THE ONE MOVEMENT INTERNATIONAL`, `entity.seoDescription`, canonical `/partners/${entity.slug}`.
+
+---
+
+### Authorization render gate test (PASSED — entity removed before commit)
+
+Temporarily added entity with `authorizationOnFile: false, status: "active"`:
+- `/partners` → entity did NOT appear. Sponsor category showed description only. ✓
+- `/partners/test-unauthorized` → redirected cleanly to `/partners`. ✓
+
+Test entity removed. `PARTNERS[]` is empty in committed code.
+
+---
+
+### No database migration
+
+`drizzle-kit generate` output after all changes: **"No schema changes, nothing to migrate 😴"** ✓ Zero schema files touched. Zero lib/db files touched.
+
+---
+
+### Files changed (exact boundary)
+
+| File | Change |
+|---|---|
+| `lib/shared/src/taxonomy.ts` | Added PARTNER_CATEGORY_SLUGS, PartnerCategorySlug, PARTNER_CATEGORY_SET (additive only) |
+| `lib/shared/dist/taxonomy.d.ts` | Rebuilt (tsc -p tsconfig.json) — new declarations available to consumers |
+| `artifacts/web/src/lib/partners-data.ts` | New — PartnerEntity type, empty registry, helpers |
+| `artifacts/web/src/pages/partners/index.tsx` | Replaced placeholder — 6-section shell page |
+| `artifacts/web/src/pages/partners/detail.tsx` | New — reserved detail route with redirect-on-unknown |
+| `artifacts/web/src/App.tsx` | Added PartnerDetail import + `/partners/:slug` Route |
+| `docs/PROJECT-STATUS.md` | This checkpoint |
+
+**Not touched:** lib/db, artifacts/api-server, join page, home page, ecosystem, vision, programs, 404, any shared component, design tokens, header/footer.
+
+---
+
+### Testing results
+
+| Test | Result |
+|---|---|
+| /partners renders at 390px mobile | ✓ No overflow, all sections flow |
+| /partners renders at 768px tablet | ✓ Clean layout |
+| /partners renders at 1280px desktop | ✓ Hero, sections correct |
+| 9 category sections render with description | ✓ All 9 present, description-only (no cards) |
+| NO placeholder card, NO logo silhouette | ✓ Empty state = description only |
+| Institutional CTA → /join#institutional-inquiry | ✓ Anchor `id="institutional-inquiry"` confirmed at join line 405 |
+| /partners/some-unknown-slug redirects to /partners | ✓ (SPA redirect via useLocation + replace:true) |
+| Authorization gate: authorizationOnFile=false entity → NOT shown | ✓ Tested and removed |
+| Authorization gate: /partners/[unauthorized-slug] → redirects | ✓ Tested and removed |
+| head title / description / canonical / og:* correct | ✓ Helmet tags set |
+| react-helmet-async pattern consistent with Task 2B | ✓ Same import pattern |
+| Arabic `نحن واحد` with lang="ar" dir="rtl" | ✓ |
+| TypeScript clean across workspace | ✓ tsc --noEmit passes |
+| Browser console clean | ✓ No errors |
+| No database migration | ✓ drizzle-kit generate: "No schema changes, nothing to migrate" |
+| Task A files (lib/db) untouched | ✓ |
+| API server untouched | ✓ |
+| Join, home, ecosystem, vision, programs untouched | ✓ |
+| Shared components untouched | ✓ |
+
+### Recommended checkpoint
+**Partners Directory Shell Complete**
