@@ -20,6 +20,7 @@ export const joinInterestsTable = pgTable("join_interests", {
   organizationName: text("organization_name"),
   contactRole: text("contact_role"),
   sectorSlugs: text("sector_slugs").array(),
+  primarySectorSlug: text("primary_sector_slug"), // nullable — legacy rows stay NULL
   programSlugs: text("program_slugs").array(),
   notifyOpportunities: boolean("notify_opportunities").notNull().default(false),
   lookingFor: text("looking_for"),

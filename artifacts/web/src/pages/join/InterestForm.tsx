@@ -25,6 +25,7 @@ interface FormState {
   lookingFor: string;
   notifyOpportunities: boolean;
   consentAccepted: boolean;
+  primarySector: string;   // '' = unset (key omitted from payload); non-empty = selected
   sectorSlugs: string[];
   programSlugs: string[];
 }
@@ -34,7 +35,7 @@ const INITIAL: FormState = {
   joiningAs: '', audienceGroup: '', category: '',
   organizationName: '', contactRole: '', lookingFor: '',
   notifyOpportunities: false, consentAccepted: false,
-  sectorSlugs: [], programSlugs: [],
+  primarySector: '', sectorSlugs: [], programSlugs: [],
 };
 
 const MAX_LEN = {
@@ -151,6 +152,7 @@ export default function InterestForm({ preselectedGroup }: InterestFormProps) {
   const [successStatus, setSuccessStatus] = useState<'received' | 'updated'>('received');
 
   const errorSummaryRef = useRef<HTMLDivElement>(null);
+  const radioGroupRef = useRef<HTMLDivElement>(null);
 
   // Pre-select audience group when PathCard changes
   useEffect(() => {
@@ -162,7 +164,6 @@ export default function InterestForm({ preselectedGroup }: InterestFormProps) {
 
   function setField<K extends keyof FormState>(key: K, value: FormState[K]) {
     setFields((prev) => ({ ...prev, [key]: value }));
-    // Clear error for this field on change
     if (errors[key]) setErrors((prev) => ({ ...prev, [key]: '' }));
   }
 
@@ -181,6 +182,47 @@ export default function InterestForm({ preselectedGroup }: InterestFormProps) {
     setErrors((prev) => ({ ...prev, joiningAs: '', organizationName: '', contactRole: '' }));
   }
 
+  /**
+   * Toggle a primary sector selection.
+   * - If slug is already primary → clears it (sets to '').
+   * - If slug is new → sets it AND silently removes it from sectorSlugs
+   *   (client-side guard that mirrors the server's duplicate-rejection rule).
+   */
+  function setPrimarySector(slug: string) {
+    const isToggleOff = fields.primarySector === slug;
+    const newPrimary = isToggleOff ? '' : slug;
+    setFields((prev) => ({
+      ...prev,
+      primarySector: newPrimary,
+      sectorSlugs: isToggleOff
+        ? prev.sectorSlugs
+        : prev.sectorSlugs.filter((s) => s !== slug),
+    }));
+    if (errors.primarySector) setErrors((prev) => ({ ...prev, primarySector: '' }));
+  }
+
+  /**
+   * Keyboard navigation for the primary sector radiogroup (roving tabindex).
+   * Arrow keys move DOM focus; Enter/Space toggles selection on the focused item.
+   */
+  function handlePrimaryRadioKeyDown(e: React.KeyboardEvent, idx: number) {
+    const total = SECTORS.length;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      const nextIdx = (idx + 1) % total;
+      const radios = radioGroupRef.current?.querySelectorAll<HTMLButtonElement>('[role="radio"]');
+      radios?.[nextIdx]?.focus();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      const prevIdx = (idx - 1 + total) % total;
+      const radios = radioGroupRef.current?.querySelectorAll<HTMLButtonElement>('[role="radio"]');
+      radios?.[prevIdx]?.focus();
+    } else if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      setPrimarySector(SECTORS[idx].slug);
+    }
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setApiMessage('');
@@ -188,7 +230,6 @@ export default function InterestForm({ preselectedGroup }: InterestFormProps) {
     const newErrors = validate(fields);
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      // Focus error summary for screen readers
       requestAnimationFrame(() => errorSummaryRef.current?.focus());
       return;
     }
@@ -211,6 +252,8 @@ export default function InterestForm({ preselectedGroup }: InterestFormProps) {
         payload.organizationName = fields.organizationName.trim();
         payload.contactRole = fields.contactRole.trim();
       }
+      // primarySector: only include key when non-empty (empty = omit = server keeps existing value)
+      if (fields.primarySector) payload.primarySector = fields.primarySector;
       if (fields.sectorSlugs.length > 0) payload.sectorSlugs = fields.sectorSlugs;
       if (fields.programSlugs.length > 0) payload.programSlugs = fields.programSlugs;
       if (fields.lookingFor.trim()) payload.lookingFor = fields.lookingFor.trim();
@@ -237,7 +280,6 @@ export default function InterestForm({ preselectedGroup }: InterestFormProps) {
         return;
       }
 
-      // Handle field-level validation errors from backend
       if (json.error?.fields && Object.keys(json.error.fields).length > 0) {
         setErrors(json.error.fields);
         setStatus('error');
@@ -245,7 +287,6 @@ export default function InterestForm({ preselectedGroup }: InterestFormProps) {
         return;
       }
 
-      // Handle rate limit / generic server errors
       setApiMessage(
         json.error?.message ?? 'An unexpected error occurred. Please try again.',
       );
@@ -265,7 +306,16 @@ export default function InterestForm({ preselectedGroup }: InterestFormProps) {
   const categoryOptions = fields.audienceGroup
     ? getCategoriesForGroup(fields.audienceGroup)
     : [];
-  const sectorOptions = SECTORS.map((s) => ({ slug: s.slug, label: s.name }));
+
+  // Exclude the primary sector from the additional-sectors ChipSelect options
+  const sectorOptions = SECTORS
+    .filter((s) => s.slug !== fields.primarySector)
+    .map((s) => ({ slug: s.slug, label: s.name }));
+
+  // Roving tabindex: the selected radio (or first if none) is in the tab sequence
+  const primaryRadioIdx = SECTORS.findIndex((s) => s.slug === fields.primarySector);
+  const activeRadioIdx = primaryRadioIdx >= 0 ? primaryRadioIdx : 0;
+
   const hasErrors = Object.values(errors).some(Boolean);
   const isSubmitting = status === 'submitting';
 
@@ -534,18 +584,108 @@ export default function InterestForm({ preselectedGroup }: InterestFormProps) {
           </fieldset>
         )}
 
-        {/* ── Sector interests ─────────────────────────────────────── */}
+        {/* ── Sector Interests ─────────────────────────────────────── */}
         <fieldset>
           <legend className="text-xs font-semibold text-ink-500 uppercase tracking-widest mb-4 pb-2 border-b border-sand-200 w-full">
-            Sector Interests <span className="text-ink-400 font-normal normal-case">(optional — up to 3)</span>
+            Sector Interests <span className="text-ink-400 font-normal normal-case">(optional)</span>
           </legend>
-          <ChipSelect
-            id="sector-chips"
-            options={sectorOptions}
-            selected={fields.sectorSlugs}
-            max={3}
-            onChange={(next) => setField('sectorSlugs', next)}
-          />
+
+          {/* PRIMARY SECTOR — single-select radiogroup (identity, not filter) */}
+          <div className="mb-7">
+            <div className="flex items-start justify-between mb-2 gap-4">
+              <div>
+                <p className="text-xs font-semibold text-ink-700 uppercase tracking-wide">
+                  Primary Sector
+                </p>
+                <p className="text-xs text-ink-400 mt-0.5">
+                  Optional — Select the sector that best defines you
+                </p>
+              </div>
+              {fields.primarySector && (
+                <button
+                  type="button"
+                  onClick={() => setPrimarySector(fields.primarySector)}
+                  className={[
+                    'shrink-0 text-xs text-ink-400 underline hover:text-ink-600 transition-colors mt-0.5',
+                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lagoon-400 rounded-sm',
+                  ].join(' ')}
+                  aria-label="Clear primary sector selection"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
+
+            <div
+              ref={radioGroupRef}
+              role="radiogroup"
+              aria-label="Primary sector — select one that best defines you"
+              aria-describedby={errors.primarySector ? 'primarySector-error' : undefined}
+              className="flex flex-wrap gap-2"
+            >
+              {SECTORS.map((sector, idx) => {
+                const isSelected = fields.primarySector === sector.slug;
+                return (
+                  <button
+                    key={sector.slug}
+                    type="button"
+                    role="radio"
+                    aria-checked={isSelected}
+                    tabIndex={idx === activeRadioIdx ? 0 : -1}
+                    onKeyDown={(e) => handlePrimaryRadioKeyDown(e, idx)}
+                    onClick={() => setPrimarySector(sector.slug)}
+                    className={[
+                      'min-h-[44px] px-4 py-2 rounded-sm text-xs font-semibold tracking-wide transition-all duration-150',
+                      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-1',
+                      isSelected
+                        ? 'border border-gold-500 bg-gold-500/10 text-gold-900'
+                        : 'border border-sand-300 text-ink-600 hover:border-gold-400 hover:text-ink-800',
+                    ].join(' ')}
+                  >
+                    {sector.name}
+                  </button>
+                );
+              })}
+            </div>
+
+            {errors.primarySector && (
+              <p
+                id="primarySector-error"
+                role="alert"
+                aria-live="polite"
+                className="mt-1.5 text-xs text-red-700"
+              >
+                {errors.primarySector}
+              </p>
+            )}
+          </div>
+
+          {/* ADDITIONAL SECTORS — multi-select chips (up to 5, minus primary) */}
+          <div>
+            <p className="text-xs font-semibold text-ink-700 uppercase tracking-wide mb-0.5">
+              Additional Sectors of Interest
+            </p>
+            <p className="text-xs text-ink-400 mb-3">
+              Optional — Up to 5 additional
+            </p>
+            <ChipSelect
+              id="sector-chips"
+              options={sectorOptions}
+              selected={fields.sectorSlugs}
+              max={5}
+              onChange={(next) => setField('sectorSlugs', next)}
+            />
+            {errors.sectorSlugs && (
+              <p
+                id="sectorSlugs-error"
+                role="alert"
+                aria-live="polite"
+                className="mt-1.5 text-xs text-red-700"
+              >
+                {errors.sectorSlugs}
+              </p>
+            )}
+          </div>
         </fieldset>
 
         {/* ── Program interests ─────────────────────────────────────── */}

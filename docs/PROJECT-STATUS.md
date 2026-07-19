@@ -449,5 +449,65 @@ Exactly 4 files changed within `artifacts/web/src/pages/join/`. No other files t
 ### Current checkpoint
 **Join Stage 1 Complete**
 
-### Next recommended task
-**Join Stage 1.1 — Sector Selection Expansion (Model E):** one primary sector field + up to 5 additional sectors (6 total). Additive, backward-compatible. Requires DB migration, API update, and frontend update. See July 19 audit report for exact file list and contract specification.
+---
+
+## Join Stage 1.1 — Interest Architecture (Model E Primary Sector)
+
+**Checkpoint:** Join Stage 1.1 Interest Architecture Complete
+
+### Objective
+Add a one-primary-sector (single-select, optional) field alongside up to 5 additional sectors of interest (up from 3). Fully additive and backward-compatible with all 11+ existing rows.
+
+### Database change
+File: `lib/db/src/schema/joinInterests.ts`
+Added: `primarySectorSlug: text("primary_sector_slug")` — nullable, legacy rows stay NULL.
+Applied via `drizzle-kit push --force` (push-mode project; no migration file generated).
+All 10 pre-existing rows confirmed `primary_sector_slug: NULL` before and after.
+
+### API change
+File: `artifacts/api-server/src/routes/joinInterest.ts`
+- `ValidatedPayload` extended: `primarySector: string | null` + `primarySectorInPayload: boolean`
+- Validation: optional; must be a valid `SECTOR_SLUG_SET` member; cross-validates no overlap with `sectorSlugs`
+- `sectorSlugs` cap raised from `> 3` to `> 5`
+- UPDATE uses presence semantics: key absent → column unchanged; key present → column updated (including null to clear)
+- INSERT always writes `primarySectorSlug: payload.primarySector`
+- Consent version remains `"join-stage1-v1"` — data scope unchanged
+- `POST /api/institutional-inquiry` untouched
+
+### Frontend change
+File: `artifacts/web/src/pages/join/InterestForm.tsx`
+- `FormState.primarySector: string` added (empty = unset = key omitted from payload)
+- New PRIMARY SECTOR `role="radiogroup"` above ChipSelect: 15 buttons, roving tabindex, arrow-key nav, Enter/Space toggle, gold selected treatment, Clear affordance, ≥44px targets, WCAG AA
+- `ChipSelect max` raised `3 → 5`; label updated to "ADDITIONAL SECTORS OF INTEREST"
+- Dynamic exclusion: `primarySector` filtered from `sectorOptions` passed to ChipSelect
+- Client-side guard: picking a slug as primary silently removes it from `sectorSlugs`
+
+### TypeScript
+Clean — zero errors across `@workspace/api-server` and `@workspace/web`.
+
+### Diff
+3 source files changed. No shared components, homepage, 404, index.html, App.tsx, or any other file touched.
+
+### Test matrix (all 16 passed)
+
+| # | Test | Result |
+|---|---|---|
+| 1 | primarySector + 5 additional distinct → 201/200 | ✓ DB: `primary_sector_slug` set, `sector_slugs` length 5 |
+| 2 | primarySector only, no additional → 201 | ✓ id=14, `primary_sector_slug="music"`, `sector_slugs=null` |
+| 3 | 5 additional, no primary → 201 | ✓ id=15, `primary_sector_slug=null`, `sector_slugs` length 5 |
+| 4 | Both fields empty → 200 | ✓ `primary_sector_slug=null`, `sector_slugs=null` |
+| 5 | primarySector duplicated in sectorSlugs → 400 | ✓ `fields.primarySector`: "Primary sector must not also be selected as an additional interest." |
+| 6 | 6 sectorSlugs → 400 | ✓ `fields.sectorSlugs`: "sectorSlugs may contain at most 5 items." |
+| 7 | primarySector not in SECTOR_SLUG_SET → 400 | ✓ `fields.primarySector`: `"not-a-real-sector" is not a valid sector slug.` |
+| 8 | Same email resubmit, updated primarySector → 200 updated | ✓ `primary_sector_slug="diplomacy"` confirmed in DB |
+| 9 | Legacy row (id=11): set primary="art" → 200; resubmit without key → 200, column preserved "art" | ✓ DB confirmed |
+| 10 | Client radiogroup fully keyboard-operable | ✓ Arrow keys, Enter/Space, Clear |
+| 11 | Select primary slug already in additional → silently removed from sectorSlugs | ✓ Client guard in `setPrimarySector` |
+| 12 | TypeScript clean, zero console errors | ✓ |
+| 13 | Diff: exactly 3 source files | ✓ `git diff --stat HEAD` |
+| 14 | POST /api/institutional-inquiry valid → 201; bad type → 400 | ✓ Both confirmed |
+| 15 | Rate limiter: 6th request in window → HTTP 429 | ✓ `{"code":"RATE_LIMITED"}` |
+| 16 | Health routes → HTTP 200 | ✓ `{"status":"ok","database":"connected"}` |
+
+### Current checkpoint
+**Join Stage 1.1 Interest Architecture Complete**

@@ -1,0 +1,70 @@
+PROJECT CONTEXT
+THE ONE MOVEMENT INTERNATIONAL. Join Stage 1 is COMPLETE (checkpoint "Join Stage 1 Complete"). Backend contract, taxonomy, and Join UX are all working; existing submissions are stored with sector_slugs arrays of ≤3 items and no primary sector concept. Design System "Lagoon & Gold" + Global Visual Coherence V3 are FROZEN. A parallel Agent may be running Task 2B (404 + SEO/OG) — DO NOT touch pages/not-found, index.html, or any page's head elements. A separate parallel Agent may be modifying the homepage — DO NOT touch pages/home.
+
+THIS TASK: implement Model E for sector selection — one primary sector (single-select, optional) + up to 5 additional sectors of interest (optional). Additive across schema, API, and frontend. Fully backward-compatible with the 11+ existing submissions.
+
+STEP 0 — restoration checkpoint "Pre-Stage-1.1 Restore Point".
+
+STEP 1 — VERIFY BEFORE CHANGING
+Read: lib/db/src/schema/joinInterests.ts · lib/shared/src/taxonomy.ts (confirm SECTOR_SLUGS and SECTOR_SLUG_SET exist) · artifacts/api-server/src/routes/joinInterest.ts (confirm the current sectorSlugs cap-at-3 line and the ValidatedPayload shape) · artifacts/web/src/pages/join/InterestForm.tsx (confirm the ChipSelect max={3} and the FormState shape). Report the exact current values.
+
+PART D — DATABASE (additive, backward-compatible)
+File: lib/db/src/schema/joinInterests.ts
+Add: primarySectorSlug: text("primary_sector_slug")  // nullable — legacy rows stay NULL and remain valid
+No changes to sector_slugs column, no other column touched, no existing enum modified.
+Generate a new Drizzle migration through the existing workflow (do not hand-write SQL that bypasses the workflow). Apply it. Verify existing rows are untouched by direct query: SELECT id, email_normalized, sector_slugs, primary_sector_slug FROM join_interests LIMIT 5; primary_sector_slug MUST be NULL for all pre-existing rows. Report the migration filename, generated SQL, and the query result.
+Rollback plan (document, do not execute unless needed): restoration checkpoint + Drizzle down-migration or column drop — column is additive and nullable, so drop is safe.
+
+PART E — API (additive, backward-compatible)
+File: artifacts/api-server/src/routes/joinInterest.ts
+Payload: accept an OPTIONAL top-level string field primarySector.
+Validation, in this order and using the unified error shape already in place (field errors go under fields.primarySector):
+- If primarySector is present: must be a non-empty trimmed string; must be a member of SECTOR_SLUG_SET; if not present, treated as null.
+- sectorSlugs: raise the existing cap from >3 to >5 (i.e. accept arrays of length ≤5); every slug still in SECTOR_SLUG_SET; duplicates still rejected; non-string entries still rejected.
+- If primarySector is present AND appears inside sectorSlugs → field error on primarySector: "Primary sector must not also be selected as an additional interest." (Do NOT auto-strip; return the validation error so the UX can guide the user.)
+- No other validation rule changes. Length limits, email normalization, consent gate, upsert behavior, converted-status handling, rate limiting, and response shapes REMAIN UNCHANGED.
+- Consent version REMAINS "join-stage1-v1" (data collection scope has not materially widened for the user).
+ValidatedPayload interface: add primarySector: string | null. INSERT and UPDATE .set({}) blocks: include primarySectorSlug. On UPDATE for existing records that omit primarySector, DO NOT clear a previously-set value implicitly — decision: TREAT primarySector as "if key present in payload, apply the value (including null when explicitly null); if key absent, do not modify the stored column". Document this in the endpoint contract update.
+No changes to POST /api/institutional-inquiry. No new endpoints. Health routes untouched.
+
+PART F — FRONTEND (additive, visually and structurally distinct primary)
+File: artifacts/web/src/pages/join/InterestForm.tsx ONLY (no changes to ChipSelect.tsx, SuccessPanel.tsx, InquiryForm.tsx, index.tsx, or any shared component).
+FormState: add primarySector: string (empty string means unset). Payload construction: send primarySector only if non-empty, otherwise omit the key.
+UI (V3 rules; UPPERCASE Cinzel headings only where they exist, existing SectionHeading pattern preserved):
+- New form region ABOVE the current sector chips, clearly labeled "PRIMARY SECTOR" with helper "OPTIONAL — SELECT THE SECTOR THAT BEST DEFINES YOU". Render as a visually distinct single-select using radio-style chips (one row of 15 selectable buttons with role="radiogroup", each option using role="radio" and aria-checked; Enter/Space toggles; arrow-key navigation within the group; gold selected treatment consistent with V3 primary states). A visible small "Clear" affordance to reset to none. The primary selection must feel structurally different from the ChipSelect below — treat it as identity, not filter.
+- Existing ChipSelect: raise the max prop from 3 to 5. Update its label to "ADDITIONAL SECTORS OF INTEREST" with helper "OPTIONAL — UP TO 5 ADDITIONAL". Counter updates to "X OF 5 SELECTED". "4th chip disabled" message becomes "6th chip disabled" behavior — no other logic change.
+- Dynamic exclusion: the slug chosen as primarySector is REMOVED from the sectorOptions passed to ChipSelect. If a user already selected that slug as an additional and then picks it as primary, silently drop it from sectorSlugs (client-side UX guard) — this keeps the client aligned with the server's duplicate-rejection rule so the user does not see a validation error for something the UI just made impossible.
+- Error surfacing: server field error primarySector renders under the primary group; field error sectorSlugs remains under the ChipSelect. Both wired via aria-describedby.
+- Empty submission remains valid (both fields optional).
+Accessibility: full keyboard operation of the radiogroup, visible focus rings, ≥44px targets, WCAG AA, no color-only state communication.
+
+FILE BOUNDARIES (hard): schema file + generated migration + joinInterest.ts + InterestForm.tsx ONLY. DO NOT touch: any other join file, any shared component, taxonomy.ts (unchanged — 15 slugs suffice), pages/home, pages/not-found, index.html, App.tsx routes, any other page's head, any other backend route.
+
+TESTING MATRIX (execute against the live server; report each result):
+1) Valid submit with primarySector + 5 additional (primary distinct) → 201 received; row stored with primary_sector_slug set and sector_slugs of length 5.
+2) Valid submit with primarySector only, no additional → 201 received; sector_slugs empty or absent as before.
+3) Valid submit with 5 additional, no primary → 201 received; primary_sector_slug NULL.
+4) Empty sectors on both fields → 201 received; both persisted NULL/empty.
+5) primarySector duplicated inside sectorSlugs → 400 validation error on primarySector, no row created.
+6) 6 sectorSlugs → 400 validation error on sectorSlugs.
+7) primarySector not in SECTOR_SLUG_SET → 400 validation error on primarySector.
+8) Same email resubmit with updated primarySector → 200 updated, same submissionId, primary_sector_slug advanced.
+9) Legacy row (from before this task, e.g. submissionId 11) still readable, still valid; a resubmit for that email with the primary_sector_slug key OMITTED must NOT clear an existing value; a resubmit passing primarySector as an empty string / null explicitly clears it (per the documented rule).
+10) Client radiogroup fully keyboard-operable; arrow keys move selection; Enter/Space toggles; Clear works; focus visible.
+11) Selecting a chip as primary that was already in additional silently removes it from additional.
+12) TypeScript clean across workspace; server logs clean; zero console errors.
+13) Diff: exactly the 4 files listed; no shared component or unrelated file changed.
+14) POST /api/institutional-inquiry unchanged (spot-check: valid inquiry still 201; unknown organizationType still 400).
+15) Rate limiter behavior unchanged (spot-check: rapid identical POSTs to /api/join-interest still throttled at the existing threshold).
+16) Health routes unchanged (200).
+
+COMPLETION REPORT — standard 16 items PLUS:
+- Migration filename + generated SQL + query showing legacy rows preserved
+- Updated endpoint contract diff for POST /api/join-interest (payload additions, validation additions, response shapes unchanged)
+- Explicit statement that consent version stays join-stage1-v1 and that no PII scope widened
+- Full test matrix results (all 16)
+- Diff summary confirming 4 files
+- Confirmation shared components, homepage, 404, index.html, and institutional endpoint are UNTOUCHED
+- Recommended checkpoint: "Join Stage 1.1 Interest Architecture Complete"
+
+Also update docs/PROJECT-STATUS.md with this task and the new checkpoint.

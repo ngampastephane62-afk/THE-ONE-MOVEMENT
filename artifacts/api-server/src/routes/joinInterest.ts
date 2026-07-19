@@ -11,10 +11,18 @@
  *
  * A unique index on email_normalized is the final guarantor against duplicate
  * rows even if concurrent requests bypass the transaction check.
+ *
+ * --- primarySector contract (Stage 1.1 addition) ---
+ * The field is OPTIONAL and treated with "presence semantics":
+ *   - Key absent from payload  → stored column NOT modified on UPDATE; NULL on INSERT
+ *   - Key present as null/""   → stored column set to NULL (explicit clear)
+ *   - Key present as slug      → stored column set to that slug
+ * This allows callers to resubmit without touching a previously-set primary sector.
+ * Consent version remains "join-stage1-v1" — data collection scope has not materially widened.
  */
 
 import { Router, type IRouter, type Request, type Response } from "express";
-import { eq, and, gte, sql } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { db } from "@workspace/db";
 import { joinInterestsTable } from "@workspace/db/schema";
 import {
@@ -65,6 +73,8 @@ interface ValidatedPayload {
   organizationName: string | null;
   contactRole: string | null;
   sectorSlugs: string[] | null;
+  primarySector: string | null;       // resolved value; null if absent or explicitly cleared
+  primarySectorInPayload: boolean;    // true when the key was present in the request body
   programSlugs: string[] | null;
   notifyOpportunities: boolean;
   lookingFor: string | null;
@@ -183,7 +193,33 @@ function validateJoinInterest(body: unknown): ValidationResult {
     }
   }
 
-  // 8. sectorSlugs: optional array, max 3, no duplicates, each must be valid slug
+  // 8. primarySector: optional, presence-semantic
+  //    Key absent → null + primarySectorInPayload=false
+  //    Key present as null/"" → null + primarySectorInPayload=true (explicit clear)
+  //    Key present as slug → validated slug + primarySectorInPayload=true
+  let primarySector: string | null = null;
+  const primarySectorInPayload = "primarySector" in raw;
+  if (primarySectorInPayload) {
+    const val = raw["primarySector"];
+    if (val !== null && val !== undefined && val !== "") {
+      if (typeof val !== "string") {
+        fields["primarySector"] = "primarySector must be a string.";
+      } else {
+        const trimmed = val.trim();
+        if (trimmed.length > 0) {
+          if (!SECTOR_SLUG_SET.has(trimmed)) {
+            fields["primarySector"] = `"${trimmed}" is not a valid sector slug.`;
+          } else {
+            primarySector = trimmed;
+          }
+        }
+        // empty string after trim → primarySector stays null (explicit clear)
+      }
+    }
+    // null/undefined/empty → primarySector stays null (explicit clear)
+  }
+
+  // 9. sectorSlugs: optional array, max 5, no duplicates, each must be valid slug
   let sectorSlugs: string[] | null = null;
   if (raw["sectorSlugs"] !== undefined && raw["sectorSlugs"] !== null) {
     if (!Array.isArray(raw["sectorSlugs"])) {
@@ -196,8 +232,8 @@ function validateJoinInterest(body: unknown): ValidationResult {
         fields["sectorSlugs"] = "sectorSlugs must contain only strings.";
       } else {
         const slugArr = arr as string[];
-        if (slugArr.length > 3) {
-          fields["sectorSlugs"] = "sectorSlugs may contain at most 3 items.";
+        if (slugArr.length > 5) {
+          fields["sectorSlugs"] = "sectorSlugs may contain at most 5 items.";
         } else {
           const unique = new Set(slugArr);
           if (unique.size !== slugArr.length) {
@@ -216,7 +252,20 @@ function validateJoinInterest(body: unknown): ValidationResult {
     }
   }
 
-  // 9. programSlugs: optional array, no duplicates, each must be valid slug
+  // 10. Cross-validation: primarySector must not appear in sectorSlugs
+  if (
+    primarySector !== null &&
+    sectorSlugs !== null &&
+    !fields["primarySector"] &&
+    !fields["sectorSlugs"]
+  ) {
+    if (sectorSlugs.includes(primarySector)) {
+      fields["primarySector"] =
+        "Primary sector must not also be selected as an additional interest.";
+    }
+  }
+
+  // 11. programSlugs: optional array, no duplicates, each must be valid slug
   let programSlugs: string[] | null = null;
   if (raw["programSlugs"] !== undefined && raw["programSlugs"] !== null) {
     if (!Array.isArray(raw["programSlugs"])) {
@@ -245,7 +294,7 @@ function validateJoinInterest(body: unknown): ValidationResult {
     }
   }
 
-  // 10. Organization conditional fields
+  // 12. Organization conditional fields
   let organizationName: string | null = null;
   let contactRole: string | null = null;
   if (joiningAsRaw === "organization") {
@@ -307,6 +356,8 @@ function validateJoinInterest(body: unknown): ValidationResult {
       organizationName,
       contactRole,
       sectorSlugs,
+      primarySector,
+      primarySectorInPayload,
       programSlugs,
       notifyOpportunities,
       lookingFor,
@@ -345,6 +396,7 @@ router.post(
 
         if (existing.length === 0) {
           // INSERT — new submission
+          // primarySectorSlug: use resolved value (null when key absent or explicitly cleared)
           const [inserted] = await tx
             .insert(joinInterestsTable)
             .values({
@@ -358,6 +410,7 @@ router.post(
               organizationName: payload.organizationName,
               contactRole: payload.contactRole,
               sectorSlugs: payload.sectorSlugs ?? undefined,
+              primarySectorSlug: payload.primarySector,
               programSlugs: payload.programSlugs ?? undefined,
               notifyOpportunities: payload.notifyOpportunities,
               lookingFor: payload.lookingFor,
@@ -379,25 +432,33 @@ router.post(
         }
 
         // Pending or reviewed: UPDATE (status unchanged)
+        // primarySectorSlug: only included in the SET when the key was present in the
+        // request payload (presence semantics — absent key = do not overwrite).
+        const baseUpdateSet = {
+          fullName: payload.fullName,
+          country: payload.country,
+          city: payload.city,
+          joiningAs: payload.joiningAs,
+          audienceGroup: payload.audienceGroup,
+          category: payload.category,
+          organizationName: payload.organizationName,
+          contactRole: payload.contactRole,
+          sectorSlugs: payload.sectorSlugs ?? undefined,
+          programSlugs: payload.programSlugs ?? undefined,
+          notifyOpportunities: payload.notifyOpportunities,
+          lookingFor: payload.lookingFor,
+          consentAccepted: payload.consentAccepted,
+          consentTextVersion: CONSENT_VERSION,
+          updatedAt: new Date(),
+        };
+
+        const updateSet = payload.primarySectorInPayload
+          ? { ...baseUpdateSet, primarySectorSlug: payload.primarySector }
+          : baseUpdateSet;
+
         const [updated] = await tx
           .update(joinInterestsTable)
-          .set({
-            fullName: payload.fullName,
-            country: payload.country,
-            city: payload.city,
-            joiningAs: payload.joiningAs,
-            audienceGroup: payload.audienceGroup,
-            category: payload.category,
-            organizationName: payload.organizationName,
-            contactRole: payload.contactRole,
-            sectorSlugs: payload.sectorSlugs ?? undefined,
-            programSlugs: payload.programSlugs ?? undefined,
-            notifyOpportunities: payload.notifyOpportunities,
-            lookingFor: payload.lookingFor,
-            consentAccepted: payload.consentAccepted,
-            consentTextVersion: CONSENT_VERSION,
-            updatedAt: new Date(),
-          })
+          .set(updateSet)
           .where(
             eq(joinInterestsTable.emailNormalized, payload.emailNormalized),
           )
