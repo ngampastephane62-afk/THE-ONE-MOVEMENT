@@ -5,6 +5,7 @@ import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
 import SectionHeading from '@/components/SectionHeading';
 import PhotoSlot from '@/components/PhotoSlot';
+import StatusNotice from '@/components/StatusNotice';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import {
@@ -54,20 +55,6 @@ const CATEGORY_LABELS: Record<string, string> = {
   'community-story': 'Community Story',
   'founder-article': 'Founder Article',
 };
-
-/* ── StatusNotice (inline, mirrors programs/detail pattern) ─────────────────── */
-
-function StatusNotice({ message }: { message: string }) {
-  return (
-    <div
-      className="rounded-sm border border-gold-500/20 px-6 py-5 text-sm text-ivory-300 leading-relaxed"
-      style={{ backgroundColor: 'hsl(187 67% 10%)' }}
-      role="status"
-    >
-      {message}
-    </div>
-  );
-}
 
 /* ── Page ────────────────────────────────────────────────────────────────────── */
 
@@ -183,6 +170,7 @@ export default function News() {
               /* ── Zero-articles state: composed and honest ─────────────────── */
               <div className="max-w-xl">
                 <StatusNotice
+                  variant="editorial"
                   message="The first official articles are being prepared through our editorial process and will appear here as they are approved."
                 />
                 <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">

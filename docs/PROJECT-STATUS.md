@@ -1312,3 +1312,221 @@ Every item from the CONTENT POLICY (Option A) was verified line by line before w
 
 ### Recommended checkpoint
 **Media Hub Complete**
+
+---
+
+## Phase 1 QA Sweep — All 10 Items
+
+**Checkpoint: Public Website Structure Complete — Ready for Content and Visual Integration**
+
+---
+
+### ITEM 1 — Radix Slot v1.2 Audit
+
+**Audited:** All `asChild` usages across `artifacts/web/src/`.
+
+| File | Line | Occurrence | Action |
+|---|---|---|---|
+| `button.tsx` | 69 | `const Comp = asChild ? Slot : 'button'` — component definition | No action — correct pattern |
+| `breadcrumb.tsx` | 44–47 | `asChild` on BreadcrumbLink (UI primitive) | No action — single child guaranteed by primitive contract |
+| `button-group.tsx` | 41–46 | `asChild` on wrapper div (UI primitive) | No action |
+| `item.tsx` | 57–61 | `asChild` on item wrapper (UI primitive) | No action |
+| `select.tsx` | 27 | `<SelectPrimitive.Icon asChild>` (Radix internal) | No action |
+| `sidebar.tsx` | multiple | `asChild` in sidebar primitives | No action — no loading prop path |
+| `SuccessPanel.tsx` | 68, 71, 74 | `<Button asChild size="lg">`, `<Button asChild variant="outline">`, `<Button asChild variant="ghost">` — **LATENT BUG** | **FIXED** |
+
+**Bug detail:** `button.tsx` always renders `{loading && <spinner>}` + `{children}` = two JSX positions. When `loading=false`, `{false}` + `<Link>` = two children passed to Radix Slot v1.2, which requires a single root child. Runtime crash if Slot's `React.Children.only()` runs.
+
+**Fix:** `artifacts/web/src/pages/join/SuccessPanel.tsx` — all 3 instances converted to `buttonVariants({ ... }) + <Link>` pattern, eliminating Slot entirely. Matches the fix applied to the 404 page in Task 2B.
+
+---
+
+### ITEM 2 — StatusNotice Promotion
+
+**Audited:** All files for `StatusNotice` (grep + join/partners manual check).
+
+**Found:** Two inline local definitions:
+1. `programs/detail.tsx` — `{ notice: string }` prop, light sand surface, gold dot, `inline-flex`
+2. `news/index.tsx` — `{ message: string }` prop, dark lagoon-900 surface, `role="status"`, block
+
+**Not found in:** `join/` or `partners/` (the task description anticipated these but they do not exist as named patterns in those files — their notice-like elements are error states with different visual contracts).
+
+**Action:**
+- Created `artifacts/web/src/components/StatusNotice.tsx` — shared component with `variant="institutional"|"editorial"` prop
+  - `institutional` (default): light sand surface, gold dot, inline-flex — pixel-identical to programs origin
+  - `editorial`: dark lagoon-900 surface, `role="status"`, block — pixel-identical to news origin
+- Updated `programs/detail.tsx`: added import, changed `notice=` → `message=`, removed local function definition
+- Updated `news/index.tsx`: added import, added `variant="editorial"`, removed local function definition
+
+**Visual change:** None — both variants pixel-identical to their inline origins (confirmed via screenshots).
+
+---
+
+### ITEM 3 — Full-Site Link Audit
+
+| Route / Link | Source | Resolves to | Status |
+|---|---|---|---|
+| `/` | home links | home | ✓ |
+| `/our-vision` | nav, home | our-vision | ✓ |
+| `/ecosystem` | nav, home, join, success panel, ecosystem | ecosystem | ✓ |
+| `/programs` | nav, home, success panel, news | programs | ✓ |
+| `/programs/diplomatic-gala` | home, programs | detail | ✓ |
+| `/programs/one-fashion-week` | home, programs | detail | ✓ |
+| `/programs/one-awards` | home, programs | detail | ✓ |
+| `/programs/one-academy` | home, programs | detail | ✓ |
+| `/programs/one-invest` | home, programs | detail | ✓ |
+| `/programs/one-community` | home, programs | detail | ✓ |
+| `/join` | nav, home, programs, our-vision, ecosystem | join | ✓ |
+| `/join#interest-form` | join hero CTA | scroll to form | ✓ (id at join/index.tsx:360) |
+| `/join#institutional-inquiry` | media, partners, news, join | scroll to section | ✓ (id at join/index.tsx:405) |
+| `/media` | nav | media | ✓ |
+| `/news` | detail back-link, join | news | ✓ |
+| `/news#editorial-policy` | news detail | scroll to section | ✓ (id at news/index.tsx:345) |
+| `/partners` | nav | partners | ✓ |
+| `/privacy-policy` | join forms (3 occurrences) | privacy placeholder | ✓ |
+| `/impact` | nav | PagePlaceholder | ✓ (renders cleanly) |
+| `/community` | — | PagePlaceholder | ✓ |
+| `/opportunities` | — | PagePlaceholder | ✓ |
+| `/sign-in` | — | PagePlaceholder | ✓ |
+| `/terms` | — | PagePlaceholder | ✓ |
+| `*` (catch-all) | any unknown path | 404 / not-found | ✓ |
+
+**`/legal/privacy` remnants:** None found. **Dead routes:** None found.
+
+---
+
+### ITEM 4 — Banned-Claims Scan
+
+Scanned rendered source of all public pages.
+
+| Claim type | Pages scanned | Violations |
+|---|---|---|
+| Invented statistics (member counts, country counts, audience/reach) | All | **NONE** |
+| Unauthorized outlet names (BBC, Canal+, Vogue, etc.) | All | **NONE** |
+| Unauthorized partner names/logos | All | **NONE** |
+| Fabricated testimonials | All | **NONE** |
+| Donation/fundraising language | All | **NONE** |
+| "World's largest/first" superlatives | All | **NONE** |
+| Unconfirmed November edition date/city/venue | All | **NONE** |
+
+Permitted numbers confirmed present only:
+- **5** editions (home, our-vision, programs, media)
+- **6** programs (home stat block, join, media boilerplate)
+- **15** sectors (home stat block, join, ecosystem, media boilerplate)
+- **1** global movement (home stat block)
+- **3** cities — Bukavu, Goma, Kinshasa (home, our-vision, programs, media) ✓
+
+**CLEAN — no violations found.**
+
+---
+
+### ITEM 5 — Cross-Viewport Compositions
+
+Screenshots captured at 390 · 430 · 768 · 1280 · 1440px:
+
+| Page | 390 | 430 | 768 | 1280 | 1440 |
+|---|---|---|---|---|---|
+| `/` (home) | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `/our-vision` | ✓ | — | — | ✓ | — |
+| `/ecosystem` | ✓ | — | — | ✓ | — |
+| `/programs` | ✓ | — | — | ✓ | — |
+| `/programs/diplomatic-gala` | ✓ | — | — | ✓ | — |
+| `/join` | ✓ | — | — | ✓ | — |
+| `/media` | ✓ | — | ✓ | ✓ | — |
+| `/news` | ✓ | — | — | ✓ | — |
+| `/partners` | ✓ | — | — | — | — |
+| `/not-found (404)` | — | — | — | ✓ | — |
+
+Note: Full 5-width grid for every page is an ongoing visual verification task for the owner. All tested viewports passed: no horizontal overflow, heroes composed correctly, mobile layouts intentional.
+
+**Layout issues found:** None. **Overflow:** None.
+
+---
+
+### ITEM 6 — Accessibility Pass
+
+| Check | Result |
+|---|---|
+| Exactly one h1 per page | ✓ — confirmed for all 11 public routes |
+| Heading cascade (no skipped levels) | ✓ — h1 → h2 → h3 on inspected pages |
+| `prefers-reduced-motion` | ✓ — GoldThread, SuccessPanel scroll, index.css `@media (prefers-reduced-motion: reduce)` |
+| Arabic signatures `lang="ar" dir="rtl"` | ✓ — home, join, news, media, partners, programs all confirmed |
+| `aria-pressed` on toggles | ✓ — news category chips at news/index.tsx:233,249 |
+| `aria-hidden` on decorative elements | ✓ — GeometricAccent, gold dot spans all use `aria-hidden="true"` |
+| `role="status"` on StatusNotice editorial variant | ✓ — preserved in shared component |
+| Focus rings — buttons | ✓ — `focus-visible:ring-2` in button.tsx |
+| Focus rings — card links | ✓ — `focus-visible:outline focus-visible:outline-2` in partners, media cards |
+| Focus rings — form inputs | ✓ — `focus:ring-2 focus:ring-gold-400` on InterestForm/InquiryForm inputs |
+| `aria-live="polite"` on form success | ✓ — SuccessPanel has `aria-live="polite" aria-atomic="true"` |
+| `aria-busy` on loading button | ✓ — button.tsx sets `aria-busy={loading || undefined}` |
+
+**No issues found requiring fixes.**
+
+---
+
+### ITEM 7 — Console & Server Logs
+
+**Post-fix dev console:** HMR debug messages only (`[vite] connected`, `[vite] hot updated`). No React errors, no React warnings, no unhandled rejections.
+
+**Note on intermediate error:** During the StatusNotice refactor, a transient `SyntaxError: Identifier 'StatusNotice' has already been declared` appeared in the Babel cartographer plugin (not the browser) while the import existed simultaneously with the old local function between two sequential edits. This resolved completely after the local function was removed. Final state is clean.
+
+**API server:** Running cleanly on port 8080. Only `/` returning expected 404 (no page handler at root — correct behavior).
+
+**CLEAN.**
+
+---
+
+### ITEM 8 — TypeScript & Build
+
+| Step | Result |
+|---|---|
+| `pnpm --filter @workspace/web typecheck` | ✓ CLEAN |
+| `pnpm --filter @workspace/api-server typecheck` | ✓ CLEAN |
+| `npx tsc -p tsconfig.json --noEmit` (lib/shared) | ✓ CLEAN |
+| `vite build` (PORT=3000 BASE_PATH=/web) | ✓ Built in 3.42s |
+
+**Build note:** A `(!) Some chunks are larger than 500 kB` advisory appears — pre-existing, not introduced by this task, not an error (build succeeds). Code-splitting is a future optimization item.
+
+---
+
+### ITEM 9 — Database Integrity
+
+| Check | Result |
+|---|---|
+| `drizzle-kit generate` | "No schema changes, nothing to migrate 😴" ✓ |
+| No `push --force` used | ✓ Confirmed |
+| Migration journal intact | ✓ |
+| No schema changes in this task | ✓ |
+
+---
+
+### ITEM 10 — Homepage V2 Verification
+
+Screenshots captured at 390px, 430px, 768px, 1280px, 1440px. Confirmed:
+
+- ✅ Hero: "ONE HUMANITY. ONE MOVEMENT. ONE FUTURE." with "A GLOBAL CONNECTION ECOSYSTEM" eyebrow
+- ✅ GoldThread motif in hero
+- ✅ CTAs: "JOIN THE MOVEMENT" (primary gold) + "DISCOVER OUR PROGRAMS" (secondary outline)
+- ✅ Closing bilingual signature in hero: "WE ARE ONE — نحن واحد"
+- ✅ No banned claims visible in hero or visible sections
+- ✅ No horizontal overflow at any width
+- ✅ The nine-section structure, origin story, ecosystem preview, and honest impact timeline (5 editions, 6 programs, 15 sectors, 1 movement) are present in the page (stat block at section 7 confirmed in source)
+
+**⚑ FLAGGED FOR OWNER VISUAL REVIEW:** The homepage V2 full-page scroll (all 9 sections at all 5 widths) has not been owner-approved. The agent has verified technical correctness and banned-claims compliance but does not self-approve the visual composition. Please review `/` in the preview at each width and confirm sign-off.
+
+---
+
+### Files changed (exact boundary)
+
+| File | Change |
+|---|---|
+| `artifacts/web/src/components/StatusNotice.tsx` | **New** — shared StatusNotice with `institutional` and `editorial` variants |
+| `artifacts/web/src/pages/join/SuccessPanel.tsx` | Fixed 3× `<Button asChild>` → `buttonVariants + <Link>` (Radix Slot v1.2 bug) |
+| `artifacts/web/src/pages/programs/detail.tsx` | Added `StatusNotice` import, removed local function, changed `notice=` → `message=` |
+| `artifacts/web/src/pages/news/index.tsx` | Added `StatusNotice` import, removed local function, added `variant="editorial"` to call site |
+| `docs/PROJECT-STATUS.md` | This checkpoint |
+
+**Not touched:** lib/db, api-server, lib/shared, taxonomy, any other page, design tokens, header/footer, App.tsx, any route.
+
+### Recommended checkpoint
+**Public Website Structure Complete — Ready for Content and Visual Integration**

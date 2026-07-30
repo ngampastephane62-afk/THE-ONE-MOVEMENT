@@ -8,6 +8,7 @@ import GoldThread from '@/components/GoldThread';
 import SectionHeading from '@/components/SectionHeading';
 import GeometricAccent from '@/components/GeometricAccent';
 import PhotoSlot from '@/components/PhotoSlot';
+import StatusNotice from '@/components/StatusNotice';
 import { PROGRAMS, getProgramBySlug, type Program, type ProgramStatus } from '@/lib/programs-data';
 
 /* ── Page ─────────────────────────────────────────────────────────────────── */
@@ -384,7 +385,7 @@ export default function ProgramDetail() {
           </Link>
           {program.verificationNotice && (
             <div className="mt-10">
-              <StatusNotice notice={program.verificationNotice} />
+              <StatusNotice message={program.verificationNotice} />
             </div>
           )}
         </div>
@@ -638,40 +639,7 @@ function ProgramInfoPanel({ historyNote }: { historyNote?: string }) {
   );
 }
 
-/**
- * StatusNotice — subtle institutional notice in the Participation section.
- * Renders verificationNotice from program data.
- */
-function StatusNotice({ notice }: { notice: string }) {
-  return (
-    <div
-      className="inline-flex items-center gap-3 px-5 py-3 rounded-sharp mx-auto"
-      style={{
-        border: '1px solid hsl(36 26% 80%)',
-        backgroundColor: 'hsl(40 71% 98%)',
-      }}
-    >
-      {/* Subtle gold dot */}
-      <span
-        aria-hidden="true"
-        style={{
-          display: 'inline-block',
-          width: '5px',
-          height: '5px',
-          borderRadius: '50%',
-          backgroundColor: 'hsl(39 52% 54%)',
-          flexShrink: 0,
-        }}
-      />
-      <p
-        className="text-xs leading-relaxed"
-        style={{ color: 'hsl(189 30% 45%)', letterSpacing: '0.03em' }}
-      >
-        {notice}
-      </p>
-    </div>
-  );
-}
+// StatusNotice promoted to shared component: @/components/StatusNotice
 
 /**
  * RelatedProgramCard — compact clickable card linking to another program's detail page.

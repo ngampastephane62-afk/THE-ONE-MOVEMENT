@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'wouter';
-import { Button } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import GoldThread from '@/components/GoldThread';
 
 interface SuccessPanelProps {
@@ -15,6 +16,13 @@ interface SuccessPanelProps {
  * Viewport scrolls to the heading, respecting prefers-reduced-motion.
  * Background: light lagoon-tinted surface with gold top accent — never a
  * plain white box.
+ *
+ * SLOT FIX: Converted <Button asChild> to buttonVariants + <Link> pattern.
+ * Radix Slot v1.2 requires a single React child; Button always renders
+ * {loading && <spinner>} + {children} which produces two JSX positions
+ * (even when loading=false, the expression is `false` + children). Using
+ * buttonVariants directly on the <Link> element eliminates the Slot and
+ * ensures a single root element with the correct styles.
  */
 export default function SuccessPanel({ submissionStatus }: SuccessPanelProps) {
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -65,15 +73,33 @@ export default function SuccessPanel({ submissionStatus }: SuccessPanelProps) {
       </p>
 
       <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center pt-2">
-        <Button asChild size="lg">
-          <Link href="/ecosystem">EXPLORE THE ECOSYSTEM</Link>
-        </Button>
-        <Button asChild variant="outline" size="lg">
-          <Link href="/programs">DISCOVER THE PROGRAMS</Link>
-        </Button>
-        <Button asChild variant="ghost" size="lg">
-          <Link href="/">RETURN HOME</Link>
-        </Button>
+        <Link
+          href="/ecosystem"
+          className={cn(
+            buttonVariants({ size: 'lg' }),
+            'focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-400 focus-visible:outline-offset-2',
+          )}
+        >
+          EXPLORE THE ECOSYSTEM
+        </Link>
+        <Link
+          href="/programs"
+          className={cn(
+            buttonVariants({ variant: 'outline', size: 'lg' }),
+            'focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-400 focus-visible:outline-offset-2',
+          )}
+        >
+          DISCOVER THE PROGRAMS
+        </Link>
+        <Link
+          href="/"
+          className={cn(
+            buttonVariants({ variant: 'ghost', size: 'lg' }),
+            'focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-400 focus-visible:outline-offset-2',
+          )}
+        >
+          RETURN HOME
+        </Link>
       </div>
     </div>
   );

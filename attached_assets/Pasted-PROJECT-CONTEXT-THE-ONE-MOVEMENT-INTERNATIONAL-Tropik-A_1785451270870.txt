@@ -1,0 +1,46 @@
+PROJECT CONTEXT
+THE ONE MOVEMENT INTERNATIONAL — Tropik Agence FZE LLC. All public pages are built: /, /our-vision, /ecosystem, /programs (+6 detail), /join, /partners (+detail), /news (+detail), /media, /404. Placeholder-only (intentionally, not in scope to build): /impact, /community, /opportunities, /sign-in, /privacy-policy, /terms. Design System "Lagoon & Gold" + Global Visual Coherence V3 are FROZEN. This is the final Phase 1 structural task before the launch-structure checkpoint.
+
+Standing rules: NO drizzle-kit push --force · NO new database tables · NO invented content · NO new features. This is an AUDIT-AND-FIX sweep — only correct defects found; do not add scope.
+
+STEP 0 — restoration checkpoint "Pre-QA-Sweep Restore Point".
+
+This task carries a batch of specific audit items collected across the build. Work through all of them, fix what is broken, report what is clean.
+
+ITEM 1 — RADIX SLOT v1.2 AUDIT (latent bug)
+Task 2B found that <Button asChild> renders both {loading && <spinner>} and {children} into Radix Slot v1.2, which requires a single child — a runtime crash. It was fixed only on the 404 page. Now audit EVERY usage of <Button asChild> across artifacts/web/src. For each: if the button can render multiple children (loading spinner + children), convert to the buttonVariants + native element pattern (the fix used on 404). If it renders a single child safely, leave it. Report every occurrence found and the action taken.
+
+ITEM 2 — STATUSNOTICE PROMOTION (consistency)
+StatusNotice is currently an inline/local pattern duplicated across programs/detail.tsx, join (FAQ), partners, and news. Promote it to a single shared component (artifacts/web/src/components/StatusNotice.tsx or the established shared-components location) matching the existing shared-component conventions. Refactor the four call sites to import it. PIXEL-IDENTICAL output — this is a refactor, not a restyle. If any call site uses a variant of the pattern, support it via props, do not change appearance. Report the diff and confirm no visual change via screenshots.
+
+ITEM 3 — FULL-SITE LINK AUDIT
+Crawl every public page. Verify: no dead routes; no /legal/privacy remnants anywhere (should be /privacy-policy); all deep-link anchors resolve (#institutional-inquiry on /join, #editorial-policy on /news); all program card links resolve to real detail routes; all cross-page CTAs (Join, Programs, Ecosystem, Partners institutional, News media pathway, Media institutional) resolve. Report every link checked and any broken one fixed. Placeholder routes (/impact, /community, /opportunities, /sign-in, /privacy-policy, /terms) are EXPECTED to render placeholders — confirm they render cleanly (not errors), do not build them.
+
+ITEM 4 — BANNED-CLAIMS SCAN (site-wide)
+Scan the rendered DOM of every public page for: invented statistics (member counts, country counts, audience/reach figures, funds, jobs), unauthorized outlet names, unauthorized partner names/logos, fabricated testimonials, donation/fundraising language, any "world's largest/first" superlative, any unconfirmed November edition date/city/venue. The only permitted numbers site-wide: 5 editions, 6 programs, 15 sectors, 3 cities (Bukavu/Goma/Kinshasa), 1 movement. Report the scan and flag ANY violation found (fix trivial ones like a stray number; report anything requiring content decisions).
+
+ITEM 5 — CROSS-VIEWPORT COMPOSITIONS
+Full-page screenshots of every public page at 390, 430, 768, 1280, 1440px. Verify: no horizontal overflow anywhere; heroes composed not oversized; cards aligned; mobile reads as intentional composition (V3 standard). Report any layout break found and fixed. Do NOT redesign — only fix genuine breaks (overflow, overlap, unreadable text).
+
+ITEM 6 — ACCESSIBILITY PASS
+Every public page: exactly one h1; sequential heading cascade (no skipped levels); visible focus rings on all interactive elements; keyboard-only traversal of every page and every interactive control (nav, chips, cards, forms, CTAs, accordions); aria-pressed/aria-expanded correctness on toggles and accordions; reduced-motion disables animations; Arabic signatures carry lang="ar" dir="rtl"; images/decorative SVG aria-hidden or alt as appropriate; WCAG AA contrast on all text. Report findings and fixes.
+
+ITEM 7 — CONSOLE & SERVER LOGS
+Traverse full user journeys across all pages. Zero console errors, zero React warnings, zero unhandled server errors. Report any found and fixed (e.g., empty-href canonical warnings, key warnings, hydration warnings).
+
+ITEM 8 — TYPECHECK & BUILD
+TypeScript clean across the entire workspace (web, api-server, lib/db, lib/shared). Production build (vite build) completes without errors. Report results.
+
+ITEM 9 — DATABASE INTEGRITY
+Confirm drizzle-kit generate reports "no schema changes" (no drift). Confirm the migration baseline and journal are intact. Confirm no push-force was used. NO schema changes in this task. Report.
+
+ITEM 10 — HOMEPAGE V2 VERIFICATION
+The homepage narrative reorientation (V2) was merged but never formally visually verified. Screenshot the full homepage at all five widths. Confirm the nine-section order, the "ONE HUMANITY. ONE MOVEMENT. ONE FUTURE." hero, the origin story, ecosystem preview, honest impact timeline (5 editions), and that no banned claims appear. Report for owner sign-off (do not self-approve — flag it for owner visual review).
+
+PRESERVATION RULES
+Fix defects only. Do NOT: redesign anything, add features, add pages, build placeholder pages, add dependencies, change copy (except removing a genuine banned-claim violation, which must be reported for owner confirmation, not silently reworded), create database tables, run migrations, modify the design system, modify backend behavior. Every fix must be minimal and reported.
+
+FILE BOUNDARIES
+Fixes may touch: the specific files containing found defects (report each), a new artifacts/web/src/components/StatusNotice.tsx (Item 2), the four StatusNotice call sites (Item 2), docs/PROJECT-STATUS.md. Do NOT touch lib/db schema, api-server routes, or taxonomy. If a fix would require touching backend/schema, STOP and report instead.
+
+COMPLETION REPORT — standard 16 items PLUS, for EACH of the 10 items: what was audited, what was found, what was fixed (with file + change), what remains (flagged for owner). PLUS: full list of Slot v1.2 occurrences and actions · StatusNotice before/after screenshots proving no visual change · complete link-audit table · banned-claims scan result per page · screenshot confirmation at 5 widths · a11y findings · console/build/typecheck/drizzle results · Homepage V2 flagged for owner sign-off. Recommended checkpoint: "Public Website Structure Complete — Ready for Content and Visual Integration".
