@@ -1,0 +1,71 @@
+PROJECT CONTEXT
+THE ONE MOVEMENT INTERNATIONAL — Tropik Agence FZE LLC. Phase 1 (public website) is complete and checkpointed: /, /our-vision, /ecosystem, /programs (+6), /join, /partners (+detail), /news (+detail), /media, /404, legal placeholders. Stack: React/Vite + Express + Drizzle + Postgres monorepo; shared taxonomy at lib/shared; migration workflow BASELINED (drizzle-kit generate → review → migrate; NO push --force EVER). The users table already exists in lib/db/src/schema. Join Stage 1 backend (join-interest, institutional-inquiry) is live and must remain untouched.
+
+THIS TASK: build the CUSTOM AUTHENTICATION CORE — enterprise-grade, portable, provider-agnostic. This is the security foundation of the entire platform. Register, login, logout, and server-side sessions. NO email verification, NO password reset (that is Module 2.2), NO profiles, NO OAuth, NO frontend beyond minimal functional forms. Infrastructure readiness only — do not seed users.
+
+MANDATORY STEP 0 — restoration checkpoint "Pre-Auth-Core Restore Point".
+
+MANDATORY STEP 1 — INSPECTION (before any change)
+Read and report: the existing users table schema (all columns) · lib/db migration workflow and journal state (confirm drizzle-kit generate says "no changes" before starting) · the existing Express app structure (app.ts, routes registration, existing rate-limit middleware) · how Secrets/env vars are accessed · the existing session/cookie handling if any · package.json dependencies (what crypto/hashing/session libs, if any, are already present). Report all findings.
+
+ARCHITECTURE PRINCIPLES (enterprise-grade, portability-first — enforce all)
+- Identity is decoupled from credentials: the users table holds identity; a SEPARATE credentials concept holds the password hash. This is what lets SSO/OAuth/enterprise providers attach later as ADDITIONAL identity sources without touching identity or sessions.
+- Sessions are opaque, server-side, revocable. NO JWT carrying authorization. A session references a user; capabilities are looked up per-request server-side (capability system arrives in Module 2.3 — for now a session simply authenticates identity).
+- Password hashing: argon2id (preferred; if argon2 unavailable in this environment, use bcrypt with cost ≥ 12 and document the choice). NEVER store or log plaintext or hashes anywhere but the credentials store.
+- All auth secrets from Replit Secrets. Nothing in code.
+
+PART D — SCHEMA (additive; new tables only; do NOT alter existing users columns unless a strictly additive nullable column is required, and if so report it)
+Create via Drizzle + a generated migration (NOT push):
+- user_credentials: id · user_id (FK users, unique — one credential row per user for password auth) · password_hash (text, never null for password users) · hash_algorithm (text — e.g. "argon2id") · password_updated_at · created_at · updated_at. (Separate table = future SSO users can exist with NO credential row.)
+- sessions: id (opaque random, sufficiently long, unique — this is the session token stored in the cookie; store a HASH of the token, not the raw token, so a DB leak doesn't expose live sessions) · user_id (FK users) · created_at · expires_at · last_seen_at · revoked_at (nullable) · user_agent (text, optional) · ip_created (text, for security audit only). 
+- auth_events (security audit log — append-only): id · user_id (nullable — failed logins may have no valid user) · event_type (enum: register | login_success | login_failure | logout | session_revoked) · created_at · ip · user_agent. Do NOT log emails or tokens here — user_id + event only.
+Generate the migration, review the SQL (must be pure additive CREATE TABLE / constraints / indexes — zero destructive statements; if destructive, STOP and report), apply via migrate. Report filename + full SQL. Add a unique index on sessions token-hash and on user_credentials.user_id.
+
+PART E — EMAIL/IDENTITY NORMALIZATION
+Reuse the platform convention: emails normalized to lowercase + trimmed for lookup. Registration checks the existing users table by normalized email. (The join_interests table is SEPARATE and must NOT be conflated with users — a join expression-of-interest is not an account.)
+
+PART A — AUTH SERVICE + ENDPOINTS (Express, under /api/auth)
+Build an auth service module (testable, framework-light) and these endpoints. All use the unified error envelope established in Join ({success:false,error:{code,message,fields?}}). All rate-limited (extend the existing limiter; per-endpoint buckets; conservative limits — e.g. register 5/hour/IP, login 10/10min/IP with backoff on repeated failure).
+
+- POST /api/auth/register — body: email, password, (optional) displayName. Validate: email format + normalized; password strength (min 12 chars, enforce a documented policy — length + not-obviously-weak; do NOT impose silly composition rules that harm security, follow modern guidance). If email already has a user → return a NON-ENUMERATING response (do not reveal whether an account exists; return a generic success-shaped "if this email can be registered, proceed" OR a neutral conflict — document the chosen non-enumeration strategy). On success: create users row (unverified state — add an is_verified boolean default false to users IF not present, additive nullable/defaulted, report it), create user_credentials row with argon2id hash, create a session, set an HttpOnly Secure SameSite cookie, write auth_events(register + login_success). Do NOT send any email (Module 2.2). Return the safe user representation (id, email, displayName, isVerified) — never the hash.
+- POST /api/auth/login — body: email, password. Constant-time-ish failure (same response time/shape whether user missing or password wrong — mitigate user enumeration and timing). On success: create session, set cookie, auth_events(login_success). On failure: auth_events(login_failure), generic error. Apply progressive rate limiting / lockout policy (document it).
+- POST /api/auth/logout — requires session; revoke current session (set revoked_at), clear cookie, auth_events(logout).
+- GET /api/auth/me — requires valid session; returns the safe current-user representation, or 401 if no/invalid/expired/revoked session. This is the endpoint the frontend uses to know who is logged in.
+
+SESSION MIDDLEWARE
+Build Express middleware that: reads the session cookie, hashes it, looks up a non-revoked non-expired session, loads the user, attaches req.user (safe shape) + req.session. Updates last_seen_at (throttled). Rejects cleanly (401, unified error) when absent/invalid. This middleware is the seam the whole authenticated API will use. Sessions expire (documented duration, e.g. 30 days sliding or absolute — choose and document); expired/revoked sessions are treated as logged-out.
+
+COOKIE SECURITY
+HttpOnly, Secure, SameSite=Lax (or Strict where it doesn't break flows — document), path=/, appropriate max-age matching session expiry. The cookie contains only the opaque token; all state is server-side.
+
+PART F — MINIMAL FRONTEND (functional, not designed — Lagoon & Gold but minimal; full auth UX is a later task)
+- /sign-in page (replace placeholder): email + password login form → POST /api/auth/login → on success redirect to / (dashboard arrives Module 2.6). Uses existing form components; accessible; error states via unified envelope; NO new design system work.
+- /register page (new route): register form → POST /api/auth/register → success redirects to / with a "verify your email soon" note (email flow is 2.2; for now just a static note, no email sent).
+- A minimal auth context/hook (useAuth) calling GET /api/auth/me so the app knows login state; header shows Sign In / Sign Out based on state. Sign Out calls /api/auth/logout.
+- Do NOT gate any existing page behind auth yet. Do NOT build profiles/dashboard. This is plumbing.
+
+SECRETS
+Add to Replit Secrets (document required keys in the report; do NOT hardcode): SESSION_SECRET (for any token hashing/signing), and confirm DATABASE_URL exists. NO Resend key this task (2.2).
+
+PRESERVATION RULES
+Do NOT: use push --force · alter existing users columns except strictly additive defaulted/nullable (is_verified) reported explicitly · touch join_interests / institutional_inquiries / their routes · touch any Phase 1 public page except /sign-in (replace placeholder) and adding /register + header auth state · modify the design system · modify taxonomy · touch lib/db beyond the new tables + migration · add heavy dependencies beyond a vetted argon2 (or bcrypt) lib and, if needed, a small session-cookie helper — justify each · log any password, hash, token, or email body anywhere.
+
+FILE BOUNDARIES (expected)
+lib/db/src/schema/* (new: userCredentials, sessions, authEvents; possibly additive is_verified on users) · lib/db/drizzle/* (migration) · artifacts/api-server/src/routes/auth.* (new) · artifacts/api-server/src/services/auth.* + session middleware (new) · artifacts/api-server/src/app.ts (register routes + middleware) · artifacts/api-server/src/middlewares/rateLimit.* (extend) · artifacts/web/src/pages/sign-in/* · artifacts/web/src/pages/register/* (new) · artifacts/web/src/App.tsx (register /register route) · a useAuth hook + header auth state · docs/PROJECT-STATUS.md. Nothing else.
+
+TESTING (execute against the running server; report each)
+- Register new user → 201, session cookie set, users + user_credentials + session rows created, password stored as argon2id hash (verify hash format, verify NOT plaintext), auth_events has register+login_success
+- Register duplicate email → non-enumerating response (document + verify no info leak, no second user row)
+- Login correct password → 200, cookie set, session row, login_success event
+- Login wrong password → generic failure, login_failure event, no session
+- Login nonexistent email → SAME shape/time as wrong password (enumeration + timing check)
+- GET /api/auth/me with valid cookie → safe user; without cookie → 401; with revoked/expired session → 401
+- Logout → session revoked_at set, cookie cleared, subsequent /me → 401
+- Rate limiting triggers on repeated register/login (verify 429, then recovery)
+- Password/hash/token NEVER appears in server logs (grep logs)
+- Cookie flags correct (HttpOnly, Secure, SameSite)
+- /sign-in and /register render, submit, handle errors, redirect; header reflects auth state; keyboard accessible
+- TypeScript clean across workspace; build clean; drizzle-kit generate "no changes" after migration applied; console clean
+- join_interests / institutional_inquiries endpoints still work (spot check); all Phase 1 pages untouched (diff)
+
+COMPLETION REPORT — standard 16 items PLUS: full schema SQL + migration filename · hashing algorithm chosen + why · session model (storage, expiry, revocation, cookie flags) · non-enumeration strategy documented · rate-limit/lockout policy · required Secrets keys · security test results (hash format, enumeration, timing, log-cleanliness, cookie flags) · confirmation identity/credentials are decoupled for future SSO · confirmation NO push-force, NO existing-table destructive change, join tables untouched, Phase 1 pages untouched · Recommended checkpoint: "Auth Core Complete".
