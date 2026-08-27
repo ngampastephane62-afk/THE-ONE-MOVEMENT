@@ -33,6 +33,9 @@ function scrollTo(el: HTMLElement | null) {
 
 export default function JoinTheMovement() {
   const [activePath, setActivePath] = useState<string | null>(null);
+  const privacyRequest =
+    typeof window !== 'undefined' &&
+    new URLSearchParams(window.location.search).get('request') === 'privacy';
 
   const formSectionRef = useRef<HTMLElement>(null);
   const inquirySectionRef = useRef<HTMLElement>(null);
@@ -413,19 +416,31 @@ export default function JoinTheMovement() {
             {/* Left */}
             <div className="lg:col-span-4">
               <SectionHeading
-                eyebrow="INSTITUTIONAL PATHWAY"
-                heading="INSTITUTIONAL INQUIRY"
+                eyebrow={privacyRequest ? 'PRIVACY & DATA RIGHTS' : 'INSTITUTIONAL PATHWAY'}
+                heading={privacyRequest ? 'PRIVACY REQUEST' : 'INSTITUTIONAL INQUIRY'}
                 size="md"
                 surface="dark"
                 thread
               />
+              {privacyRequest && (
+                <div
+                  className="mt-5 border-s-2 border-gold-500 bg-lagoon-800/40 px-4 py-4"
+                  role="note"
+                >
+                  <p className="text-eyebrow text-gold-400">PRIVACY REQUEST PATHWAY</p>
+                  <p className="mt-2 text-sm leading-relaxed text-ivory-200">
+                    Use this existing inquiry form to request access, correction,
+                    deletion or withdrawal of consent for information submitted
+                    through the website.
+                  </p>
+                </div>
+              )}
               <p className="mt-4 text-ivory-200 text-sm leading-relaxed">
-                Embassies, governments, international organizations,
-                universities, NGOs, sponsors, partners and media organizations
-                engage through this pathway. Provide your organization's
-                information and our team will contact you directly.
+                {privacyRequest
+                  ? 'Provide enough information for the operator to locate and review your request. The form remains the existing institutional inquiry pathway and does not create a new request type.'
+                  : "Embassies, governments, international organizations, universities, NGOs, sponsors, partners and media organizations engage through this pathway. Provide your organization's information and our team will contact you directly."}
               </p>
-              <div className="mt-8 space-y-4">
+              {!privacyRequest && <div className="mt-8 space-y-4">
                 {[
                   'Embassy or diplomatic mission',
                   'Government or ministry',
@@ -443,7 +458,7 @@ export default function JoinTheMovement() {
                     <span className="text-ivory-200 text-sm">{type}</span>
                   </div>
                 ))}
-              </div>
+              </div>}
             </div>
 
             {/* Right: form */}
@@ -455,7 +470,7 @@ export default function JoinTheMovement() {
                   backgroundColor: 'hsl(187 55% 15%)',
                 }}
               >
-                <InquiryForm />
+                <InquiryForm privacyRequest={privacyRequest} />
               </div>
             </div>
           </div>

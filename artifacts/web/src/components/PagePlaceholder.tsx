@@ -1,3 +1,5 @@
+import { Helmet } from 'react-helmet-async';
+
 interface PagePlaceholderProps {
   title: string;
 }
@@ -9,9 +11,15 @@ interface PagePlaceholderProps {
  */
 export default function PagePlaceholder({ title }: PagePlaceholderProps) {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-16">
-      <h1 className="text-2xl font-semibold text-neutral-900">{title}</h1>
-      <p className="mt-3 text-neutral-600">Content coming soon.</p>
-    </div>
+    <>
+      <Helmet>
+        <title>{title} — THE ONE MOVEMENT INTERNATIONAL</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+      <div className="mx-auto max-w-3xl px-6 py-16">
+        <h1 className="text-2xl font-semibold text-neutral-900">{title}</h1>
+        <p className="mt-3 text-neutral-600">Content coming soon.</p>
+      </div>
+    </>
   );
 }

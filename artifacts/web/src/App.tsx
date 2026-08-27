@@ -1,8 +1,8 @@
-import { HelmetProvider } from 'react-helmet-async';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { Route, Switch, Router as WouterRouter } from 'wouter';
+import { Route, Switch, Router as WouterRouter, useLocation } from 'wouter';
 import Layout from '@/components/Layout';
 import Home from '@/pages/home';
 import OurVision from '@/pages/our-vision';
@@ -25,6 +25,23 @@ import DesignSystem from '@/pages/design-system';
 import NotFound from '@/pages/not-found';
 
 const queryClient = new QueryClient();
+const PUBLIC_ORIGIN = 'https://digital-asset-vault-ngampastephane6.replit.app';
+
+function SiteMetadata() {
+  const [location] = useLocation();
+  const pathname = location.split(/[?#]/, 1)[0] || '/';
+  const pageUrl = new URL(pathname, PUBLIC_ORIGIN).toString();
+  const socialImageUrl = new URL('/og-image.svg', PUBLIC_ORIGIN).toString();
+
+  return (
+    <Helmet>
+      <link rel="canonical" href={pageUrl} />
+      <meta property="og:url" content={pageUrl} />
+      <meta property="og:image" content={socialImageUrl} />
+      <meta name="twitter:image" content={socialImageUrl} />
+    </Helmet>
+  );
+}
 
 function Router() {
   return (
@@ -61,6 +78,7 @@ function App() {
             <Layout>
               <Router />
             </Layout>
+            <SiteMetadata />
           </WouterRouter>
           <Toaster />
         </TooltipProvider>

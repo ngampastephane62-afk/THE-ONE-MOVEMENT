@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -80,7 +81,12 @@ export default function DesignSystem() {
   const [loading, setLoading] = useState(false);
 
   return (
-    <div className="bg-ivory-50 min-h-screen">
+    <>
+      <Helmet>
+        <title>Internal Design System — THE ONE MOVEMENT INTERNATIONAL</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+      <div className="bg-ivory-50 min-h-screen">
       {/* Page header */}
       <div className="py-section-md px-6" style={{ backgroundColor: 'hsl(187 67% 12%)' }}>
         <div className="mx-auto max-w-6xl">
@@ -927,6 +933,7 @@ export default function DesignSystem() {
           </p>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

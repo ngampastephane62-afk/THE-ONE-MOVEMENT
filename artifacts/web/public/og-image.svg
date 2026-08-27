@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">The One Movement International</title>
+  <desc id="desc">One World. One Purpose. One Movement.</desc>
+  <rect width="1200" height="630" fill="#0A2E33"/>
+  <path d="M84 482H1116" stroke="#C9A24B" stroke-width="2"/>
+  <circle cx="600" cy="482" r="7" fill="#F0CE83"/>
+  <path d="M592 482h-76M608 482h76" stroke="#F0CE83" stroke-width="2"/>
+  <text x="600" y="224" fill="#F0CE83" font-family="Arial, sans-serif" font-size="22" letter-spacing="7" text-anchor="middle">THE ONE MOVEMENT INTERNATIONAL</text>
+  <text x="600" y="330" fill="#F7F1E5" font-family="Georgia, serif" font-size="62" text-anchor="middle">ONE WORLD.</text>
+  <text x="600" y="408" fill="#F0CE83" font-family="Georgia, serif" font-size="62" text-anchor="middle">ONE PURPOSE.</text>
+</svg>

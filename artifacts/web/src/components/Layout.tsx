@@ -7,7 +7,7 @@ import { navItems } from '@/lib/navigation';
  * JOIN THE MOVEMENT is rendered as a separated CTA button.
  * Sign In, Home, Community, Opportunities visible in mobile menu + footer.
  */
-const HEADER_NAV_SLUGS = ['/our-vision', '/ecosystem', '/programs', '/impact', '/media', '/partners'];
+const HEADER_NAV_SLUGS = ['/our-vision', '/ecosystem', '/programs', '/media', '/partners'];
 
 interface LayoutProps {
   children: ReactNode;
@@ -249,7 +249,6 @@ export default function Layout({ children }: LayoutProps) {
                   ['Our Vision', '/our-vision'],
                   ['Ecosystem', '/ecosystem'],
                   ['Programs', '/programs'],
-                  ['Impact', '/impact'],
                   ['Media', '/media'],
                 ].map(([label, href]) => (
                   <li key={label}>
@@ -281,11 +280,8 @@ export default function Layout({ children }: LayoutProps) {
               </p>
               <ul className="flex flex-col gap-3">
                 {[
-                  ['Community', '/community'],
-                  ['Opportunities', '/opportunities'],
                   ['Partners', '/partners'],
                   ['Join the Movement', '/join'],
-                  ['Sign In', '/sign-in'],
                 ].map(([label, href]) => (
                   <li key={label}>
                     <Link

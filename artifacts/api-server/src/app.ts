@@ -11,6 +11,8 @@ import { logger } from "./lib/logger";
 
 const app: Express = express();
 
+app.disable("x-powered-by");
+
 /**
  * Trust proxy — Replit runs all traffic through a reverse proxy that sets
  * X-Forwarded-For. Setting trust proxy = 1 tells Express to resolve req.ip
@@ -21,6 +23,18 @@ const app: Express = express();
  * incorrectly for the first few requests.
  */
 app.set("trust proxy", 1);
+
+app.use((_req: Request, res: Response, next: NextFunction) => {
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-Frame-Options", "SAMEORIGIN");
+  res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  res.setHeader(
+    "Permissions-Policy",
+    "camera=(), geolocation=(), microphone=(), payment=(), usb=()",
+  );
+  res.setHeader("Cross-Origin-Resource-Policy", "same-origin");
+  next();
+});
 
 app.use(
   pinoHttp({
@@ -41,9 +55,42 @@ app.use(
     },
   }),
 );
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+/**
+ * Same-origin requests work without CORS. Cross-origin browser requests are
+ * opt-in through CORS_ORIGINS, a comma-separated allowlist supplied by the
+ * deployment environment. No unverified public origin is allowed by default.
+ */
+const configuredCorsOrigins = new Set(
+  (process.env["CORS_ORIGINS"] ?? "")
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean),
+);
+
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin) {
+        callback(null, false);
+        return;
+      }
+
+      if (configuredCorsOrigins.has(origin)) {
+        callback(null, true);
+        return;
+      }
+
+      // Same-origin browser requests do not need CORS headers. Allowing them
+      // through keeps the API usable behind the platform's path proxy.
+      callback(null, false);
+    },
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type"],
+    optionsSuccessStatus: 204,
+  }),
+);
+app.use(express.json({ limit: "32kb" }));
+app.use(express.urlencoded({ extended: false, limit: "16kb" }));
 
 app.use("/api", router);
 
@@ -52,6 +99,15 @@ app.use(
   (err: unknown, req: Request, res: Response, _next: NextFunction): void => {
     req.log.error({ err }, "Unhandled request error");
     if (res.headersSent) {
+      return;
+    }
+    if (
+      typeof err === "object" &&
+      err !== null &&
+      "status" in err &&
+      (err as { status?: unknown }).status === 413
+    ) {
+      res.status(413).json({ error: "Request body too large" });
       return;
     }
     res.status(500).json({ error: "Internal server error" });

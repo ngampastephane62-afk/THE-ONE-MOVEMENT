@@ -1,2 +1,8 @@
 User-agent: *
 Allow: /
+Disallow: /community
+Disallow: /opportunities
+Disallow: /impact
+Disallow: /sign-in
+Disallow: /design-system
+Sitemap: https://digital-asset-vault-ngampastephane6.replit.app/sitemap.xml

@@ -126,7 +126,7 @@ function Field({
 
 /* ── Component ────────────────────────────────────────────────────────────── */
 
-export default function InquiryForm() {
+export default function InquiryForm({ privacyRequest = false }: { privacyRequest?: boolean }) {
   const [fields, setFields] = useState<InquiryState>(INITIAL);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -230,6 +230,20 @@ export default function InquiryForm() {
 
   return (
     <form onSubmit={handleSubmit} noValidate aria-label="Institutional inquiry form">
+      {privacyRequest && (
+        <div
+          className="mb-8 border-s-2 border-gold-500 bg-lagoon-800/50 px-4 py-4"
+          role="note"
+          aria-label="Privacy and data-rights request"
+        >
+          <p className="text-eyebrow text-gold-400">PRIVACY & DATA-RIGHTS REQUEST</p>
+          <p className="mt-2 text-sm leading-relaxed text-ivory-200">
+            Clearly state whether you are requesting access, correction,
+            deletion or withdrawal of consent in the message below.
+          </p>
+        </div>
+      )}
+
       {/* Error summary */}
       {hasErrors && (
         <div
@@ -401,7 +415,7 @@ export default function InquiryForm() {
         {/* Message */}
         <Field
           id="inq-message"
-          label={`Message (${fields.message.length} / ${MAX_LEN.message})`}
+          label={`${privacyRequest ? 'Privacy / data-rights request details' : 'Message'} (${fields.message.length} / ${MAX_LEN.message})`}
           error={errors.message}
           required
         >
@@ -419,7 +433,11 @@ export default function InquiryForm() {
               'resize-none',
               errors.message ? inputError : inputNormal,
             ].join(' ')}
-            placeholder="Tell us about your organization and how you would like to engage with the Movement."
+            placeholder={
+              privacyRequest
+                ? 'Tell us whether you are requesting access, correction, deletion or withdrawal of consent, and include any useful details.'
+                : 'Tell us about your organization and how you would like to engage with the Movement.'
+            }
           />
         </Field>
 
@@ -452,7 +470,9 @@ export default function InquiryForm() {
           )}
 
           <p className="mt-4 text-xs text-ivory-400/70 leading-relaxed">
-            We collect only what we need. You can request deletion of your information at any time.{' '}
+            We collect only what we need. You can request access, correction,
+            deletion or withdrawal of consent through the Privacy Requests
+            pathway.{' '}
             <a href="/privacy-policy" className="underline hover:text-ivory-200 transition-colors">
               Privacy Policy
             </a>
