@@ -69,9 +69,9 @@ export default function JoinTheMovement() {
     <div>
       <Helmet>
         <title>JOIN THE MOVEMENT — THE ONE MOVEMENT INTERNATIONAL</title>
-        <meta name="description" content="Take your place in a global community that connects, collaborates and creates — every day of the year." />
+        <meta name="description" content="Submit an expression of interest in The One Movement International and receive relevant updates as programs and future platform plans are confirmed." />
         <meta property="og:title" content="JOIN THE MOVEMENT — THE ONE MOVEMENT INTERNATIONAL" />
-        <meta property="og:description" content="Take your place in a global community that connects, collaborates and creates — every day of the year." />
+        <meta property="og:description" content="Submit an expression of interest in The One Movement International and receive relevant updates as programs and future platform plans are confirmed." />
         {/* FILLED AT DEPLOY WITH PRODUCTION DOMAIN */}
         <link rel="canonical" href="/join" />
       </Helmet>
@@ -100,9 +100,9 @@ export default function JoinTheMovement() {
               className="mt-6 text-ivory-200 text-lg leading-relaxed animate-fade-in"
               style={{ animationDelay: '0.15s' }}
             >
-              A permanent 365-day global community for creatives, entrepreneurs,
-              institutions and changemakers — connected across every sector,
-              every culture and every continent.
+              A growing global movement for creatives, entrepreneurs, institutions
+              and changemakers. Submit an expression of interest to follow its
+              programs and future platform direction.
             </p>
 
             <p
@@ -163,7 +163,7 @@ export default function JoinTheMovement() {
         <div className="mx-auto max-w-7xl px-6">
           <SectionHeading
             eyebrow="WHY JOIN"
-            heading="A GLOBAL ECOSYSTEM. EVERY DAY."
+            heading="A PLACE TO BEGIN."
             size="lg"
             surface="light"
             thread
@@ -173,15 +173,15 @@ export default function JoinTheMovement() {
             {[
               {
                 label: 'CONNECTION',
-                body: 'Meet creatives, entrepreneurs, investors and institutions across borders — a community that works, collaborates and grows together every day of the year.',
+                 body: 'Explore the people, programs and ideas the Movement aims to bring together. Direct member-to-member connection is a future platform feature.',
               },
               {
                 label: 'OPPORTUNITY',
-                body: 'Access programs, collaborations and openings across 15 sectors and 6 official programs — from fashion and music to investment, diplomacy and humanitarian action.',
+                 body: 'Hear about programs, collaborations and openings as they are confirmed across fifteen sectors and six official programs.',
               },
               {
                 label: 'PURPOSE',
-                body: 'A community built around a shared conviction: that connection between cultures, talents and ideas creates opportunity, and opportunity creates positive impact.',
+                 body: 'A shared ambition to create more room for exchange between cultures, talents, institutions and ideas.',
               },
             ].map(({ label, body }) => (
               <div
@@ -202,7 +202,7 @@ export default function JoinTheMovement() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────────
-          3. HOW MEMBERSHIP WORKS
+          3. HOW PARTICIPATION DEVELOPS
           ───────────────────────────────────────────────────────────────── */}
       <section
         className="py-section-lg"
@@ -213,7 +213,7 @@ export default function JoinTheMovement() {
             <div className="lg:col-span-4">
               <SectionHeading
                 eyebrow="HOW IT WORKS"
-                heading="MEMBERSHIP IN THE MOVEMENT"
+                 heading="WHAT HAPPENS NEXT"
                 size="md"
                 surface="light"
                 thread
@@ -222,11 +222,11 @@ export default function JoinTheMovement() {
             <div className="lg:col-span-7 lg:col-start-6">
               <ul className="space-y-5">
                 {[
-                  'A permanent 365-day ecosystem — not a one-time event or a conference. Membership means ongoing access, connection and participation.',
-                  'Join by submitting your expression of interest. Our team reviews every submission to ensure the quality and integrity of the community.',
-                  'Receive official updates as the member platform moves toward launch. Registered members are informed first.',
-                  'Connect with a global community across 15 sectors and 6 official programs — across every continent.',
-                  'Participate in programs, collaborations, opportunities and the wider ecosystem as a recognized member of the Movement.',
+                  'The current public experience consists of this website, confirmed programs and direct enquiry pathways.',
+                  'Submitting an expression of interest does not create an account, membership or guaranteed place.',
+                  'The team may contact you with relevant official updates as plans are confirmed.',
+                  'A future member platform may support profiles and connection across sectors; it is not available yet.',
+                  'Program participation and future platform access will be governed by the terms announced for each opportunity.',
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-4">
                     <span
@@ -372,15 +372,15 @@ export default function JoinTheMovement() {
             <div className="lg:col-span-4">
               <SectionHeading
                 eyebrow="EXPRESS YOUR INTEREST"
-                heading="REGISTER YOUR PLACE"
+                heading="SUBMIT YOUR EXPRESSION OF INTEREST"
                 size="md"
                 surface="light"
                 thread
               />
               <p className="mt-4 text-ink-700 text-sm leading-relaxed">
-                Submit your expression of interest. Our team reviews every
-                submission. No account has been created — you are registering
-                your place for the next stage.
+                Tell us about your interests and how you would like to engage.
+                This form does not create an account, membership or confirmed
+                place. The team may contact you about relevant future developments.
               </p>
               <p className="mt-4 text-sand-400 text-xs leading-relaxed">
                 Required fields are marked with{' '}
@@ -487,12 +487,12 @@ export default function JoinTheMovement() {
           ───────────────────────────────────────────────────────────────── */}
       <section className="bg-ivory-100 py-16">
         <div className="mx-auto max-w-3xl px-6 text-center">
-          <p className="text-eyebrow text-gold-600 mb-4">YOUR INFORMATION IS SAFE</p>
+          <p className="text-eyebrow text-gold-600 mb-4">HOW WE HANDLE YOUR INFORMATION</p>
           <p className="text-ink-700 leading-relaxed">
-            We collect only the information needed to review your expression of interest
-            and keep you informed about the Movement. We do not share your personal data
-            with third parties for marketing purposes, and you may request the deletion
-            of your information at any time.
+            We collect information to review your expression of interest and provide
+            relevant updates. We use safeguards appropriate to the current service and
+            do not share personal data with third parties for their own marketing. You
+            may request access, correction, deletion or withdrawal of consent.
           </p>
           <p className="mt-4 text-sand-400 text-sm">
             Read our{' '}

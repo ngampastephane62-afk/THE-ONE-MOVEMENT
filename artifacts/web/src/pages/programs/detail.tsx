@@ -56,7 +56,7 @@ export default function ProgramDetail() {
               )}
 
               <h1
-                className="text-display-xl text-ivory-100 animate-fade-up"
+                className="text-[clamp(2.25rem,9vw,5rem)] leading-[0.95] tracking-[-0.02em] text-ivory-100 animate-fade-up"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
                 {program.name}
@@ -366,7 +366,7 @@ export default function ProgramDetail() {
         <div className="mx-auto max-w-4xl px-6 text-center">
           <SectionHeading
             eyebrow="TAKE PART"
-            heading="JOIN THE MOVEMENT FIRST"
+            heading="BEGIN WITH AN EXPRESSION OF INTEREST"
             thread
             size="lg"
             surface="light"
@@ -374,9 +374,9 @@ export default function ProgramDetail() {
             className="mb-8"
           />
           <p className="text-ink-800 leading-relaxed text-lg mb-10 max-w-2xl mx-auto">
-            Program participation — applications, invitations and partnership conversations —
-            begins inside the Movement. Members receive official announcements and
-            opportunities as they open.
+            Applications, invitations and partnership conversations vary by program.
+            Submit an expression of interest to receive relevant official updates.
+            Submission does not create an account, membership or confirmed place.
           </p>
           <Link href="/join">
             <Button size="xl" variant="default">

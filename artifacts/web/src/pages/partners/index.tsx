@@ -55,7 +55,7 @@ const CATEGORY_META: Record<
   ambassadors: {
     label: 'Ambassadors',
     description:
-      "Individuals officially representing the Movement's values in their region or field.",
+      "Individuals associated with the Movement's values in their region or field; any representative status requires confirmation.",
   },
   'strategic-supporters': {
     label: 'Strategic Supporters',
@@ -127,8 +127,8 @@ export default function Partners() {
             <p className="mt-8 text-lagoon-800 text-lg leading-relaxed">
               Partnership within The One Movement International is a working
               relationship — not a promotional badge. Our partners contribute
-              expertise, reach, resources or presence to a permanent global
-              ecosystem where culture, business, diplomacy and impact meet.
+              expertise, reach, resources or presence to the Movement&apos;s
+              developing ecosystem across culture, business, diplomacy and impact.
             </p>
           </div>
         </div>

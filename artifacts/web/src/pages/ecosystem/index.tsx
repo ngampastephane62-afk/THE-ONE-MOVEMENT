@@ -532,9 +532,9 @@ export default function Ecosystem() {
     <div>
       <Helmet>
         <title>THE ECOSYSTEM — FIFTEEN SECTORS, ONE MOVEMENT</title>
-        <meta name="description" content="Fifteen sectors connected in one permanent global ecosystem — where culture, business, diplomacy, innovation and humanitarian action work as one." />
+        <meta name="description" content="Fifteen sectors shaping a developing global ecosystem across culture, business, diplomacy, innovation and humanitarian action." />
         <meta property="og:title" content="THE ECOSYSTEM — FIFTEEN SECTORS, ONE MOVEMENT" />
-        <meta property="og:description" content="Fifteen sectors connected in one permanent global ecosystem — where culture, business, diplomacy, innovation and humanitarian action work as one." />
+        <meta property="og:description" content="Fifteen sectors shaping a developing global ecosystem across culture, business, diplomacy, innovation and humanitarian action." />
         {/* FILLED AT DEPLOY WITH PRODUCTION DOMAIN */}
         <link rel="canonical" href="/ecosystem" />
       </Helmet>
@@ -565,10 +565,9 @@ export default function Ecosystem() {
                 className="mt-6 text-ivory-200 text-lg leading-relaxed max-w-xl animate-fade-in"
                 style={{ animationDelay: '0.15s' }}
               >
-                The One Movement International is a permanent environment where
-                sectors that rarely meet — culture, business, diplomacy,
-                innovation and impact — work as one connected community, 365
-                days a year.
+                 The One Movement International brings fifteen sectors into one
+                 developing framework. Public programs and enquiries are available
+                 today; the connected digital workspace is future direction.
               </p>
             </div>
 
@@ -618,12 +617,10 @@ export default function Ecosystem() {
 
             <div className="lg:col-span-6 lg:col-start-7 flex flex-col gap-5">
               <p className="text-ink-900 leading-relaxed">
-                The Movement is not a collection of unrelated industries. It is
-                a permanent environment where culture creates visibility,
-                business creates opportunity, diplomacy builds bridges,
-                innovation creates solutions, education develops capability and
-                humanitarian action gives it all purpose. Connection is the
-                product.
+                The Movement is not a collection of unrelated industries. Its
+                developing model brings culture, business, diplomacy, innovation,
+                education and humanitarian action into the same conversation.
+                Current programs provide the practical starting point.
               </p>
               <p className="text-sm text-sand-400 leading-relaxed border-l-2 pl-4"
                 style={{ borderColor: 'hsl(39 52% 54% / 0.4)' }}
@@ -735,8 +732,8 @@ export default function Ecosystem() {
             className="mb-12"
           />
           <SectionHeading
-            eyebrow="FROM MEMBER TO IMPACT"
-            heading="HOW THE ECOSYSTEM MOVES"
+            eyebrow="FROM INTEREST TO PARTICIPATION"
+            heading="HOW TO BEGIN"
             surface="light"
             align="center"
             className="mb-12"
@@ -744,14 +741,14 @@ export default function Ecosystem() {
 
           <ol
             className="grid grid-cols-1 sm:grid-cols-5 gap-6"
-            aria-label="Steps from member to impact"
+            aria-label="Steps from interest to participation"
           >
             {[
-              { step: '01', label: 'JOIN', body: 'Become a member of the global community.' },
-              { step: '02', label: 'BUILD A PROFILE', body: 'Present who you are and what you seek.' },
-              { step: '03', label: 'DISCOVER', body: 'Find people and opportunities across sectors.' },
-              { step: '04', label: 'PARTICIPATE', body: 'Take part in official programs and initiatives.' },
-              { step: '05', label: 'CREATE IMPACT', body: 'Turn connection into collaboration and contribution.' },
+              { step: '01', label: 'EXPRESS INTEREST', body: 'Tell us who you are and what brings you here.' },
+              { step: '02', label: 'SHARE YOUR DIRECTION', body: 'Describe your work, interests and what you are looking for.' },
+              { step: '03', label: 'FOLLOW THE PROGRAMS', body: 'Explore current information and receive confirmed updates.' },
+              { step: '04', label: 'RESPOND', body: 'Take part when a relevant opportunity or program is announced.' },
+              { step: '05', label: 'CONTRIBUTE', body: 'Bring your experience to work that fits the Movement’s purpose.' },
             ].map(({ step, label, body }) => (
               <li
                 key={step}
@@ -850,7 +847,7 @@ export default function Ecosystem() {
             <div className="lg:col-span-6">
               <SectionHeading
                 eyebrow="MOMENTS OF CONNECTION"
-                heading="PROGRAMS ARE THE HEARTBEAT. THE COMMUNITY IS THE PULSE."
+                heading="PROGRAMS ARE ACTIVE. THE PLATFORM IS FUTURE."
                 thread
                 surface="light"
               />
@@ -858,9 +855,9 @@ export default function Ecosystem() {
 
             <div className="lg:col-span-5 lg:col-start-8 flex flex-col gap-6">
               <p className="text-ink-900 leading-relaxed">
-                Six official programs create moments of visibility,
-                collaboration and celebration. Between editions, the community
-                keeps working — because the Movement never closes.
+                Six official programs define the Movement&apos;s public work. The
+                planned social network, collaboration workspace, AI Copilot and
+                ASK TOMI are future platform direction and are not available yet.
               </p>
               <div>
                 <Link href="/programs">
@@ -891,12 +888,13 @@ export default function Ecosystem() {
             </div>
             <div className="lg:col-span-6 lg:col-start-7 flex flex-col gap-6">
               <p className="text-ink-900 leading-relaxed">
-                Calls, collaborations, applications, showcases and partnership
-                openings — the Opportunities Hub is where the ecosystem's
-                connections become concrete projects.
+                 The planned Opportunities Hub is intended to bring future calls,
+                 collaborations, applications, showcases and partnership openings
+                 into one place.
               </p>
               <EcosystemNotice>
-                The Opportunities Hub opens with the Movement's member platform.
+                The Opportunities Hub and member platform are not currently available.
+                Details will be published only after launch plans are confirmed.
               </EcosystemNotice>
             </div>
           </div>

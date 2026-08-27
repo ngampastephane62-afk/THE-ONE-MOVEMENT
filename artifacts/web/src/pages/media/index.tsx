@@ -126,18 +126,18 @@ export default function MediaHub() {
               thread
             />
             <p className="mt-8 text-lagoon-800 text-lg leading-relaxed">
-              The One Movement International is a permanent global ecosystem
-              connecting people, organizations and institutions across culture,
-              business, diplomacy, innovation, education, tourism, humanitarian
-              action and investment. It operates 365 days a year and expresses
-              its mission through six official programs.
+               The One Movement International is a global movement developing an
+               ecosystem across culture, business, diplomacy, innovation,
+               education, tourism, humanitarian action and investment. Its
+               current public work is presented through six official programs.
             </p>
             <p className="mt-6 text-lagoon-800 text-lg leading-relaxed">
               The Movement grew from The One Fashion Week, a fashion movement
               for peace born in the Democratic Republic of Congo. Five editions
               have taken place — in Bukavu, Goma and Kinshasa. The fifth
-              edition, in Kinshasa, was supported by the United Nations mission
-              MONUSCO under the theme Peace and Unity.
+               edition, in Kinshasa, was held under the theme Peace and Unity.
+               Any formal institutional-support attribution remains subject to
+               Founder confirmation.
             </p>
           </div>
         </div>
@@ -154,30 +154,28 @@ export default function MediaHub() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="max-w-3xl">
             <SectionHeading
-              eyebrow="OFFICIAL BOILERPLATE"
-              heading="FOR PRESS USE."
+              eyebrow="CURRENT PUBLIC DESCRIPTION"
+              heading="A FACTUAL STARTING POINT."
               surface="light"
               thread
             />
             <p className="mt-8 text-lagoon-700 text-sm uppercase tracking-widest">
-              The paragraph below is TOMI&apos;s official boilerplate. It may be
-              quoted verbatim in press coverage.
+              This is the current public description of the Movement. Operator
+              and institutional-support details should be confirmed before formal use.
             </p>
             {/* Visually distinct press-use panel — gold border, subtle lagoon tint */}
             <blockquote
               className="mt-4 rounded-sm border border-gold-500/40 px-8 py-7 text-lagoon-900 text-lg leading-relaxed not-italic"
               style={{ backgroundColor: 'hsl(187 40% 96%)' }}
             >
-              The One Movement International is a permanent global ecosystem
-              connecting people, organizations and institutions across fifteen
-              sectors — from culture and creative industries to business,
-              diplomacy, innovation and humanitarian action. Grown from a
-              fashion movement for peace born in the Democratic Republic of
-              Congo, the Movement expresses its mission through six official
-              programs and a year-round community that turns connection into
-              opportunity and opportunity into impact. The One Movement
-              International is operated by Tropik Agence FZE LLC, registered in
-              the Emirate of Ajman, United Arab Emirates.
+               The One Movement International is a global movement developing an
+               ecosystem across fifteen sectors, from culture and creative
+               industries to business, diplomacy, innovation and humanitarian
+               action. It grew from a fashion initiative for peace in the
+               Democratic Republic of Congo and presents six official programs.
+               Current project records identify Tropik Agence FZE LLC in Ajman,
+               United Arab Emirates, as the operator; formal use should follow
+               Founder and legal confirmation.
             </blockquote>
           </div>
         </div>
@@ -202,9 +200,10 @@ export default function MediaHub() {
               The One Movement International is not a fashion week, an NGO, a
               single-event platform or a media organization. The One Fashion Week
               International is one of the Movement&apos;s six official programs. The
-              Movement itself is the permanent ecosystem — the community, the
-              network, and the framework of programs that give its members
-              visibility, connection and opportunity throughout the year.
+               The Movement&apos;s ecosystem is developing through its programs and
+               partnerships. The planned member network, collaboration workspace,
+               AI Copilot and ASK TOMI are future platform direction, not services
+               currently offered through this website.
             </p>
           </div>
         </div>

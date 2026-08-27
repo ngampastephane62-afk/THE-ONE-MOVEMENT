@@ -18,7 +18,10 @@ export default function PagePlaceholder({ title }: PagePlaceholderProps) {
       </Helmet>
       <div className="mx-auto max-w-3xl px-6 py-16">
         <h1 className="text-2xl font-semibold text-neutral-900">{title}</h1>
-        <p className="mt-3 text-neutral-600">Content coming soon.</p>
+        <p className="mt-3 text-neutral-600">
+          This is a planned future platform area and is not currently available.
+          Confirmed updates will be published through the public website.
+        </p>
       </div>
     </>
   );

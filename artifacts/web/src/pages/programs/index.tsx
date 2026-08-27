@@ -39,7 +39,7 @@ const PROGRAMS: {
     slug: 'fashion-week',
     name: 'THE ONE FASHION WEEK INTERNATIONAL',
     tagline: 'Fashion. Design. Runway. Culture.',
-    desc: 'The program where the Movement began. Five editions across the Democratic Republic of Congo — in Bukavu, Goma and Kinshasa — carried a message of peace, unity and radical inclusion, with the fifth edition supported by the United Nations mission MONUSCO. A fashion week where every body, every origin and every story belongs on the runway.',
+    desc: 'The program where the Movement began. Five editions across the Democratic Republic of Congo — in Bukavu, Goma and Kinshasa — carried a message of peace, unity and radical inclusion. Any formal institutional-support attribution for the fifth edition remains subject to Founder confirmation.',
     photo: 'programs-fashion-week.jpg',
     label: 'FASHION WEEK IMAGE',
   },
@@ -47,7 +47,7 @@ const PROGRAMS: {
     slug: 'awards',
     name: 'THE ONE AWARDS',
     tagline: 'Recognition. Excellence. Impact.',
-    desc: "Honoring members, organizations and initiatives whose work embodies the Movement's values — creativity, courage, collaboration and positive impact.",
+    desc: "A planned recognition program for people, organizations and initiatives whose work reflects creativity, courage, collaboration and positive impact.",
     photo: 'programs-awards.jpg',
     label: 'AWARDS IMAGE',
   },
@@ -76,9 +76,9 @@ export default function Programs() {
     <div>
       <Helmet>
         <title>OFFICIAL PROGRAMS — THE ONE MOVEMENT INTERNATIONAL</title>
-        <meta name="description" content="Six official programs — from cultural galas to investment forums — the heartbeat of a global movement alive 365 days a year." />
+        <meta name="description" content="Six official programs spanning culture, diplomacy, leadership, recognition, fashion and investment." />
         <meta property="og:title" content="OFFICIAL PROGRAMS — THE ONE MOVEMENT INTERNATIONAL" />
-        <meta property="og:description" content="Six official programs — from cultural galas to investment forums — the heartbeat of a global movement alive 365 days a year." />
+        <meta property="og:description" content="Six official programs spanning culture, diplomacy, leadership, recognition, fashion and investment." />
         {/* FILLED AT DEPLOY WITH PRODUCTION DOMAIN */}
         <link rel="canonical" href="/programs" />
       </Helmet>
@@ -104,9 +104,9 @@ export default function Programs() {
             className="mt-8 text-ivory-200 text-lg leading-relaxed max-w-2xl mx-auto animate-fade-in"
             style={{ animationDelay: '0.15s' }}
           >
-            Our programs are where the global community meets in person — moments
-            of culture, business, diplomacy and celebration that power a network
-            alive 365 days a year.
+             The six official programs set out the Movement&apos;s direction across
+             culture, business, diplomacy and celebration. Dates, applications and
+             participation details are published only when confirmed.
           </p>
         </div>
       </HeroSurface>
@@ -133,11 +133,10 @@ export default function Programs() {
             </div>
             <div className="lg:col-span-6 lg:col-start-7 flex items-center">
               <p className="text-ink-800 leading-relaxed text-lg">
-                Each official program brings together members of the Movement —
-                creatives, entrepreneurs, investors, institutions and
-                changemakers — around a shared purpose. The connections made on
-                stage, in forums and behind the scenes continue inside the
-                Movement long after each edition ends.
+                Each official program is designed to bring creatives, entrepreneurs,
+                investors, institutions and changemakers together around a shared
+                purpose. Confirmed participation details are published on the relevant
+                program page as they become available.
               </p>
             </div>
           </div>

@@ -68,8 +68,8 @@ export default function SuccessPanel({ submissionStatus }: SuccessPanelProps) {
       <p className="text-ink-800 text-lg leading-relaxed max-w-lg">{statusLine}</p>
 
       <p className="text-ink-600 text-sm leading-relaxed max-w-lg">
-        Our team reviews every submission. You will receive official updates from
-        the Movement as the member platform moves toward launch.
+        Our team reviews every submission. You may receive relevant official
+        updates as programs and future platform plans are confirmed.
       </p>
 
       <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center pt-2">

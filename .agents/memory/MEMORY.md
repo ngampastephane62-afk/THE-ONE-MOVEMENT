@@ -2,3 +2,4 @@
 - [Join Stage 1 Backend](join-backend.md) — trust proxy, enum-as-text convention, lib/shared tsconfig, in-memory rate limiter, upsert transaction pattern.
 - [Join Page Frontend](join-frontend.md) — @workspace/shared in web, PathCard→form wiring, API URL pattern, form error handling, SuccessPanel focus management.
 - [DB Migration Rule and Workflow](db-migration-rule.md) — generate→review→migrate mandatory; push --force prohibited; drizzle-kit 0.31.10 quirks (no status cmd, relative out path required).
+- [Public live-versus-future boundary](public-product-truth.md) — current site/programs/enquiries are live; AI, social, member platform and commerce remain future until functional.

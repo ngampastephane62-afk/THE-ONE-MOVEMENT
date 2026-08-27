@@ -40,7 +40,7 @@ const PROGRAMS: {
     slug: 'fashion-week',
     name: 'THE ONE FASHION WEEK INTERNATIONAL',
     tagline: 'Fashion as a force for peace and cultural exchange.',
-    extra: 'Five editions. Born in the DRC. Recognized internationally.',
+    extra: 'Five completed editions. Born in the DRC. The sixth is planned for November and currently postponed.',
   },
   {
     slug: 'summit',
@@ -78,9 +78,9 @@ export default function Home() {
     <div>
       <Helmet>
         <title>THE ONE MOVEMENT INTERNATIONAL — ONE HUMANITY. ONE MOVEMENT. ONE FUTURE.</title>
-        <meta name="description" content="A global ecosystem connecting creatives, entrepreneurs, institutions and changemakers — turning connection into opportunity, and opportunity into impact." />
+        <meta name="description" content="A global movement bringing creatives, entrepreneurs, institutions and changemakers together through programs, dialogue and a developing collaboration ecosystem." />
         <meta property="og:title" content="THE ONE MOVEMENT INTERNATIONAL — ONE HUMANITY. ONE MOVEMENT. ONE FUTURE." />
-        <meta property="og:description" content="A global ecosystem connecting creatives, entrepreneurs, institutions and changemakers — turning connection into opportunity, and opportunity into impact." />
+        <meta property="og:description" content="A global movement bringing creatives, entrepreneurs, institutions and changemakers together through programs, dialogue and a developing collaboration ecosystem." />
         {/* FILLED AT DEPLOY WITH PRODUCTION DOMAIN */}
         <link rel="canonical" href="/" />
       </Helmet>
@@ -159,8 +159,9 @@ export default function Home() {
                 className="mt-6 text-ivory-200 text-lg leading-relaxed max-w-xl animate-fade-in"
                 style={{ animationDelay: '0.15s' }}
               >
-                A global ecosystem connecting creatives, entrepreneurs, institutions and
-                changemakers — turning connection into opportunity, and opportunity into impact.
+                A global movement bringing creatives, entrepreneurs, institutions and
+                changemakers together through programs, dialogue and a developing
+                collaboration ecosystem.
               </p>
               <div
                 className="mt-8 flex flex-wrap gap-4 animate-fade-in"
@@ -223,7 +224,7 @@ export default function Home() {
             <div className="lg:col-span-5">
               <SectionHeading
                 eyebrow="WHAT THIS IS"
-                heading="A MOVEMENT YOU JOIN. AN ECOSYSTEM THAT WORKS."
+                heading="A MOVEMENT TO JOIN. A VISION TO BUILD."
                 thread
                 size="lg"
                 surface="light"
@@ -233,10 +234,10 @@ export default function Home() {
             {/* Definition + contrast strip */}
             <div className="lg:col-span-6 lg:col-start-7 flex flex-col gap-8">
               <p className="text-ink-800 leading-relaxed">
-                The One Movement International is a permanent global ecosystem — born from a
-                fashion movement for peace in the Democratic Republic of Congo — connecting
-                people, organizations and institutions across fifteen sectors to create
-                collaboration, opportunity and positive impact, 365 days a year.
+                The One Movement International is a global movement born from a fashion
+                initiative for peace in the Democratic Republic of Congo. It brings people,
+                organizations and institutions together around fifteen sectors and six
+                official programs, with a wider collaboration platform planned for the future.
               </p>
 
               {/* Contrast strip — four statements, exposed as a list */}
@@ -252,15 +253,15 @@ export default function Home() {
                   },
                   {
                     not: 'Not a single event',
-                    is: 'A permanent community, alive every day of the year.',
+                    is: 'A year-round direction expressed through programs and future digital tools.',
                   },
                   {
                     not: 'Not only an organization',
-                    is: 'An ecosystem you become part of.',
+                    is: 'A developing ecosystem you can follow and help shape.',
                   },
                   {
                     not: 'Not promises',
-                    is: 'Connection that becomes action.',
+                    is: 'Work that begins with real conversations and confirmed programs.',
                   },
                 ].map(({ not, is }) => (
                   <li
@@ -327,11 +328,10 @@ export default function Home() {
                   being.
                 </p>
                 <p>
-                  Its fifth edition in Kinshasa, held under the theme Peace and Unity,
-                  was supported by the United Nations mission MONUSCO. What began as a
-                  runway became a voice. And that voice grew into something larger than
-                  any event — a global movement connecting culture, business, diplomacy
-                  and humanitarian action, 365 days a year.
+                  Its fifth edition in Kinshasa was held under the theme Peace and Unity.
+                  Any formal description of institutional support for that edition remains
+                  subject to Founder confirmation. What began as a runway became a wider
+                  movement connecting culture, business, diplomacy and humanitarian action.
                 </p>
               </div>
 
@@ -484,8 +484,8 @@ export default function Home() {
       >
         <div className="mx-auto max-w-7xl px-6">
           <SectionHeading
-            eyebrow="WHY JOIN"
-            heading="GROW. CONNECT. CREATE. IMPACT."
+            eyebrow="WHY REACH OUT"
+            heading="START WITH A CONVERSATION."
             thread
             size="lg"
             surface="dark"
@@ -496,19 +496,19 @@ export default function Home() {
             {[
               {
                 word: 'GROW',
-                desc: 'Access a community built to develop your craft, your venture and your voice.',
+                desc: 'Tell us about your craft, venture or work and what you hope to develop.',
               },
               {
                 word: 'CONNECT',
-                desc: 'Meet people and organizations you would never otherwise reach — across sectors and continents.',
+                desc: 'Hear about relevant programs, conversations and future opportunities as they are confirmed.',
               },
               {
                 word: 'CREATE',
-                desc: 'Turn connections into collaborations, projects and programs.',
+                desc: 'Bring an idea, perspective or possible collaboration to the Movement.',
               },
               {
                 word: 'IMPACT',
-                desc: 'Be part of work that improves lives — from cultural visibility to humanitarian action.',
+                desc: 'Explore where your contribution may fit as programs and partnerships develop.',
               },
             ].map(({ word, desc }) => (
               <WhyJoinCard key={word} word={word} desc={desc} />
@@ -568,11 +568,11 @@ export default function Home() {
               },
               {
                 period: '2025',
-                text: 'Kinshasa hosts the fifth edition, supported by the United Nations mission MONUSCO under the theme Peace and Unity.',
+                text: 'Kinshasa hosts the fifth edition under the theme Peace and Unity. Any institutional-support attribution remains subject to Founder confirmation.',
               },
               {
                 period: 'TODAY',
-                text: 'The movement becomes The One Movement International: fifteen sectors, six official programs, one permanent global ecosystem.',
+                text: 'The One Movement International brings together fifteen sectors and six official programs, with a broader digital collaboration platform planned for the future.',
               },
             ].map(({ period, text }) => (
               <li

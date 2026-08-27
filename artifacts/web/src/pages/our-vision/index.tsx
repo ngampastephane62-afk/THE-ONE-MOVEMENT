@@ -24,16 +24,16 @@ const PILLARS: { name: string; desc: string }[] = [
 
 const STEPS: { label: string; desc: string }[] = [
   {
-    label: 'JOIN',
-    desc: 'Become part of a global community of creatives, entrepreneurs, institutions and changemakers.',
+    label: 'EXPRESS INTEREST',
+    desc: 'Tell us who you are, what you do and what brings you to the Movement.',
   },
   {
-    label: 'CONNECT',
-    desc: 'Meet the people, organizations and opportunities that match your goals — across sectors and across borders.',
+    label: 'FOLLOW THE WORK',
+    desc: 'Receive official updates about confirmed programs and future platform developments.',
   },
   {
-    label: 'CREATE IMPACT',
-    desc: 'Turn connection into collaboration: projects, partnerships, opportunities and contributions that improve lives.',
+    label: 'TAKE PART',
+    desc: 'Respond when a relevant program, partnership or participation opportunity is confirmed.',
   },
 ];
 
@@ -44,9 +44,9 @@ export default function OurVision() {
     <div>
       <Helmet>
         <title>OUR VISION — THE ONE MOVEMENT INTERNATIONAL</title>
-        <meta name="description" content="Born in the Democratic Republic of Congo, growing into a permanent global ecosystem. Our vision, our mission and our pillars of connection, opportunity and impact." />
+        <meta name="description" content="Born in the Democratic Republic of Congo and developing a global collaboration ecosystem. Our vision, mission and pillars of connection, opportunity and peace." />
         <meta property="og:title" content="OUR VISION — THE ONE MOVEMENT INTERNATIONAL" />
-        <meta property="og:description" content="Born in the Democratic Republic of Congo, growing into a permanent global ecosystem. Our vision, our mission and our pillars of connection, opportunity and impact." />
+        <meta property="og:description" content="Born in the Democratic Republic of Congo and developing a global collaboration ecosystem. Our vision, mission and pillars of connection, opportunity and peace." />
         {/* FILLED AT DEPLOY WITH PRODUCTION DOMAIN */}
         <link rel="canonical" href="/our-vision" />
       </Helmet>
@@ -77,9 +77,9 @@ export default function OurVision() {
                 className="mt-6 text-ivory-200 text-lg leading-relaxed max-w-lg animate-fade-in"
                 style={{ animationDelay: '0.15s' }}
               >
-                The One Movement International exists to connect people, cultures,
-                businesses and institutions into one global community — where
-                collaboration creates opportunity, and opportunity creates positive impact.
+                The One Movement International brings people, cultures, businesses and
+                institutions together through programs and dialogue. Its longer-term
+                vision is a trusted global collaboration ecosystem.
               </p>
             </div>
 
@@ -112,7 +112,7 @@ export default function OurVision() {
             <div className="lg:col-span-5">
               <SectionHeading
                 eyebrow="THE MISSION"
-                heading="A PERMANENT ECOSYSTEM FOR A CONNECTED WORLD"
+                heading="BUILDING TOWARD A CONNECTED GLOBAL ECOSYSTEM"
                 thread
                 size="lg"
                 surface="light"
@@ -120,11 +120,10 @@ export default function OurVision() {
             </div>
             <div className="lg:col-span-6 lg:col-start-7 flex items-center">
               <p className="text-ink-800 leading-relaxed text-lg">
-                Our mission is to build and sustain a global ecosystem where creatives,
-                entrepreneurs, investors, institutions, governments and changemakers meet,
-                collaborate and grow — every day of the year. We connect talent to
-                opportunity, culture to commerce, and vision to action, across borders
-                and across sectors.
+                Our mission is to bring creatives, entrepreneurs, investors, institutions,
+                governments and changemakers into meaningful contact across borders and
+                sectors. Today that work begins through public programs and direct
+                enquiries; broader digital collaboration tools remain part of the future.
               </p>
             </div>
           </div>
@@ -176,9 +175,10 @@ export default function OurVision() {
                 <p>
                   Edition after edition — in Bukavu, in Goma, in Kinshasa — the runway
                   carried one message to audiences living the reality of war: we are one
-                  people. The fifth edition in Kinshasa, held under the theme Peace and
-                  Unity, was supported by the United Nations mission MONUSCO. Fashion had
-                  become more than fashion. It had become a voice.
+                  people. The fifth edition in Kinshasa was held under the theme Peace and
+                  Unity. Any formal description of institutional support for that edition
+                  remains subject to Founder confirmation. Fashion had become more than
+                  fashion. It had become a voice.
                 </p>
               </div>
 
@@ -213,10 +213,9 @@ export default function OurVision() {
               </h2>
               <p className="text-ivory-200 leading-relaxed text-lg mb-10">
                 What began as days on a calendar revealed a truth larger than any single
-                event: the connections created — between creatives and investors,
-                institutions and communities, cultures and markets — deserved to live 365
-                days a year. The One Movement International was born to carry that truth
-                to the world.
+                event: the conversations created between creatives, institutions,
+                communities and markets deserved to continue beyond the runway. The One
+                Movement International was formed to develop that wider direction.
               </p>
 
               {/* Pull-quote */}
@@ -269,14 +268,15 @@ export default function OurVision() {
         <div className="mx-auto max-w-7xl px-6">
           <SectionHeading
             eyebrow="HOW IT WORKS"
-            heading="A COMMUNITY THAT NEVER CLOSES"
+            heading="FROM PROGRAMS TO A FUTURE PLATFORM"
             thread
             size="lg"
             surface="light"
           />
           <p className="mt-6 text-ink-800 leading-relaxed text-lg max-w-2xl">
-            Our official programs are moments of connection. The Movement is the
-            permanent network behind them.
+            Official programs create real moments of connection today. A future member
+            platform, social network and digital collaboration workspace are planned
+            directions, not services currently available on this website.
           </p>
           <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6">
             {STEPS.map(({ label, desc }, i) => (
@@ -365,18 +365,17 @@ export default function OurVision() {
                 className="text-display-lg text-ivory-100 mb-8"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
-                A PERMANENT HOME
+                A TRUSTED HOME
                 <br />
                 FOR GLOBAL
                 <br />
                 CONNECTION
               </h2>
               <p className="text-ivory-200 leading-relaxed text-lg">
-                Our ambition is to build the world's most connected cross-sector
-                community — a trusted digital and physical home where a designer in
-                Kinshasa, an investor in Dubai, a university in Paris and an NGO in
-                São Paulo can find each other and build together. We measure success
-                in opportunities created, collaborations launched and lives improved.
+                Our ambition is to build a trusted cross-sector community and a digital
+                and physical home where people and institutions can find one another and
+                work together. That platform is future direction. Current participation
+                happens through the programs and enquiry pathways described on this site.
               </p>
             </div>
 

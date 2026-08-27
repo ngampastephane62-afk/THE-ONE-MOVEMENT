@@ -232,7 +232,8 @@ export default function Layout({ children }: LayoutProps) {
                 The One Movement International
               </p>
               <p className="text-sm leading-relaxed" style={{ color: 'hsl(36 20% 55%)' }}>
-                A permanent global ecosystem connecting culture, business, diplomacy, education, tourism, media and humanitarian impact.
+                A global movement developing connections across culture, business,
+                diplomacy, education, tourism, media and humanitarian action.
               </p>
             </div>
 

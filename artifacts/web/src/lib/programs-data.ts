@@ -258,10 +258,10 @@ export const PROGRAMS: Program[] = [
       'Creative community gatherings',
     ],
     movementConnection:
-      "Fashion Week is where the Movement's story began — and it remains one program among six. The designers, models and creatives it brings together join a permanent global community that works, connects and creates 365 days a year.",
+      "Fashion Week is where the Movement's story began, and it remains one program among six. Its five completed editions provide the historical foundation for the Movement's wider future direction.",
     // historyNote: verified completed history only. The sixth edition must NOT appear here.
     historyNote:
-      'Five editions have been completed in the Democratic Republic of Congo — in Bukavu, Goma and Kinshasa. The fifth edition, held in Kinshasa under the theme Peace and Unity, was supported by the United Nations mission MONUSCO. The sixth edition is planned for November. Further official information will be announced.',
+      'Five editions have been completed in the Democratic Republic of Congo — in Bukavu, Goma and Kinshasa. The fifth edition was held in Kinshasa under the theme Peace and Unity. Any formal institutional-support attribution remains subject to Founder confirmation. The sixth edition is planned for November and is currently postponed. Further official information will be announced.',
     mediaSlots: [
       'FASHION WEEK IMAGE — RUNWAY',
       'DESIGNER SHOWCASE IMAGE',

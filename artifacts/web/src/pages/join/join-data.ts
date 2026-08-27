@@ -133,8 +133,8 @@ export const JOURNEY_STEPS: string[] = [
   'Submit your expression of interest.',
   'Our team reviews your submission.',
   'Receive official updates from the Movement.',
-  'Complete your member profile when the platform launches.',
-  'Begin participating in programs, opportunities and the ecosystem.',
+  'Review any future participation terms before deciding whether to continue.',
+  'Take part only when a relevant program or opportunity is confirmed.',
 ];
 
 // ---------------------------------------------------------------------------
@@ -142,7 +142,7 @@ export const JOURNEY_STEPS: string[] = [
 // ---------------------------------------------------------------------------
 
 export const CONSENT_TEXT =
-  'I agree that The One Movement International may securely store the information I provide and contact me regarding my expression of interest, membership updates, official announcements and opportunities related to the Movement. I understand that I may request the deletion of my information at any time.';
+  'I agree that The One Movement International may store and protect the information I provide using safeguards appropriate to the current service, and contact me regarding my expression of interest, future platform updates, official announcements and relevant opportunities. I understand that I may request access, correction, deletion or withdrawal of consent.';
 
 // ---------------------------------------------------------------------------
 // FAQ — verbatim from spec
@@ -156,23 +156,23 @@ export interface FaqItem {
 export const FAQ_ITEMS: FaqItem[] = [
   {
     q: 'Who can join?',
-    a: 'The Movement welcomes creatives, entrepreneurs, students, volunteers, organizations and institutions who share its values of connection, opportunity and peace. Every approved category has a path — from designers and investors to universities and NGOs.',
+    a: 'The Movement welcomes expressions of interest from creatives, entrepreneurs, students, volunteers, organizations and institutions that share its values of connection, opportunity and peace.',
   },
   {
     q: 'Is membership free?',
-    a: 'Submitting an expression of interest does not require payment. Any future membership terms will be communicated clearly before account activation.',
+    a: 'Submitting an expression of interest does not require payment. No account or membership is created. Any future membership terms will be communicated before someone chooses whether to continue.',
   },
   {
     q: 'Can organizations join?',
-    a: "Yes. Companies, startups, NGOs and humanitarian organizations can register through the same form by selecting 'Organization'. Embassies, governments, international organizations, universities, sponsors, partners and media organizations join through the institutional inquiry pathway.",
+    a: "Yes. Companies, startups, NGOs and humanitarian organizations can submit an expression of interest by selecting 'Organization'. Embassies, governments, international organizations, universities, sponsors, partners and media organizations can use the institutional inquiry pathway.",
   },
   {
     q: 'Can I join from any country?',
-    a: 'Yes. The Movement is global by design — members are welcome from every country and every continent.',
+    a: 'Expressions of interest may be submitted from many locations. Participation remains subject to applicable requirements and the terms of any confirmed program.',
   },
   {
     q: 'When will member accounts launch?',
-    a: 'The member platform is being built in stages. Expressions of interest are open now; account creation and member profiles follow at launch. Registered members will be informed first through official announcements.',
+    a: 'No account launch date has been confirmed. The member platform, profiles and social features are future direction. People who submit an expression of interest may receive official updates as plans are confirmed.',
   },
 ];
 
