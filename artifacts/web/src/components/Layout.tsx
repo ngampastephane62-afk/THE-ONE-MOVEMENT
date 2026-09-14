@@ -38,15 +38,15 @@ export default function Layout({ children }: LayoutProps) {
         className="sticky top-0 z-50 border-b"
         role="banner"
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6">
           {/* Wordmark */}
           <Link
             href="/"
-            className="shrink-0 py-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2 rounded-sharp"
+            className="min-w-0 shrink py-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2 rounded-sharp"
             aria-label="The One Movement International — Home"
           >
             <span
-              className="text-sm font-semibold uppercase"
+              className="block truncate text-xs font-semibold uppercase sm:text-sm"
               style={{
                 fontFamily: 'var(--font-display)',
                 color: 'hsl(38 57% 94%)',
@@ -150,13 +150,13 @@ export default function Layout({ children }: LayoutProps) {
           <nav
             id="mobile-nav"
             aria-label="Mobile navigation"
-            className="lg:hidden border-t"
+            className="max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-t shadow-lg lg:hidden"
             style={{
               backgroundColor: 'hsl(188 66% 16%)',
               borderColor: 'hsl(188 46% 20%)',
             }}
           >
-            <div className="mx-auto max-w-7xl px-6 py-3 flex flex-col">
+            <div className="mx-auto flex max-w-7xl flex-col px-4 py-4 sm:px-6">
               {navItems.filter((item) => item.path !== '/join').map((item) => {
                 const isActive = location === item.path;
                 return (
@@ -164,8 +164,8 @@ export default function Layout({ children }: LayoutProps) {
                     key={item.path}
                     href={item.path}
                     className={[
-                      'flex items-center px-0 py-3.5',
-                      'text-sm font-medium tracking-wide border-b',
+                      'flex items-center px-2 py-4',
+                      'text-base font-medium tracking-wide border-b',
                       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400',
                       'transition-colors duration-150',
                       isActive
@@ -180,10 +180,10 @@ export default function Layout({ children }: LayoutProps) {
                 );
               })}
               {/* Mobile JOIN CTA */}
-              <div className="pt-4 pb-2">
+              <div className="pt-6 pb-4">
                 <Link
                   href="/join"
-                  className="flex items-center justify-center px-5 py-3 text-sm font-semibold uppercase rounded-sharp focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400"
+                  className="flex items-center justify-center px-5 py-4 text-sm font-semibold uppercase rounded-sharp focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400"
                   style={{
                     backgroundColor: 'hsl(39 52% 54%)',
                     color: 'hsl(30 37% 7%)',
@@ -245,7 +245,7 @@ export default function Layout({ children }: LayoutProps) {
               >
                 Explore
               </p>
-              <ul className="flex flex-col gap-3">
+              <ul className="flex flex-col gap-4 sm:gap-3">
                 {[
                   ['Our Vision', '/our-vision'],
                   ['Ecosystem', '/ecosystem'],
@@ -255,7 +255,7 @@ export default function Layout({ children }: LayoutProps) {
                   <li key={label}>
                     <Link
                       href={href}
-                      className="text-sm leading-snug transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 rounded-sharp"
+                      className="text-sm leading-snug py-1 block transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 rounded-sharp"
                       style={{ color: 'hsl(36 20% 55%)' }}
                       onMouseEnter={(e) =>
                         ((e.target as HTMLElement).style.color = 'hsl(38 57% 94%)')
@@ -279,7 +279,7 @@ export default function Layout({ children }: LayoutProps) {
               >
                 Connect
               </p>
-              <ul className="flex flex-col gap-3">
+              <ul className="flex flex-col gap-4 sm:gap-3">
                 {[
                   ['Partners', '/partners'],
                   ['Join the Movement', '/join'],
@@ -287,7 +287,7 @@ export default function Layout({ children }: LayoutProps) {
                   <li key={label}>
                     <Link
                       href={href}
-                      className="text-sm leading-snug transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 rounded-sharp"
+                      className="text-sm leading-snug py-1 block transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 rounded-sharp"
                       style={{ color: 'hsl(36 20% 55%)' }}
                       onMouseEnter={(e) =>
                         ((e.target as HTMLElement).style.color = 'hsl(38 57% 94%)')
@@ -304,7 +304,7 @@ export default function Layout({ children }: LayoutProps) {
             </div>
 
             {/* Column 4 — Legal + Bilingual Signature */}
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-10 sm:gap-8">
               <div>
                 <p
                   className="text-eyebrow mb-5"
@@ -312,12 +312,12 @@ export default function Layout({ children }: LayoutProps) {
                 >
                   Legal
                 </p>
-                <ul className="flex flex-col gap-3">
+                <ul className="flex flex-col gap-4 sm:gap-3">
                   {[['Privacy Policy', '/privacy-policy'], ['Terms', '/terms']].map(([label, href]) => (
                     <li key={label}>
                       <Link
                         href={href}
-                        className="text-sm leading-snug transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 rounded-sharp"
+                        className="text-sm leading-snug py-1 block transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 rounded-sharp"
                         style={{ color: 'hsl(36 20% 55%)' }}
                         onMouseEnter={(e) =>
                           ((e.target as HTMLElement).style.color = 'hsl(38 57% 94%)')
