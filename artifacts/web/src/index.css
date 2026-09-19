@@ -320,6 +320,16 @@
   100% { background-position: -200% center; }
 }
 
+@keyframes connectionDrift {
+  0%, 100% { opacity: 0.22; transform: translate3d(0, 0, 0); }
+  50% { opacity: 0.55; transform: translate3d(0, -5px, 0); }
+}
+
+@keyframes signalIn {
+  from { opacity: 0.35; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* ─────────────────────────────────────────────────────────────────────────────
    BASE LAYER
    ───────────────────────────────────────────────────────────────────────────── */
@@ -418,6 +428,100 @@
     .animate-fade-up,
     .animate-fade-in,
     .animate-shimmer {
+      animation: none;
+    }
+  }
+
+  /* ── Premium atmospheric system ─────────────────────────────────────────── */
+  .tomi-aurora-surface {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 70% 65% at 86% 12%, hsl(39 52% 54% / 0.20), transparent 66%),
+      radial-gradient(ellipse 50% 52% at 8% 90%, hsl(189 74% 32% / 0.25), transparent 68%),
+      linear-gradient(145deg, hsl(187 67% 9%), hsl(188 66% 16%) 54%, hsl(187 67% 10%));
+  }
+
+  .tomi-surface-grid,
+  .tomi-network-field {
+    background-image:
+      linear-gradient(hsl(43 80% 73% / 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(43 80% 73% / 0.035) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+  }
+
+  .tomi-network-line {
+    position: absolute;
+    height: 1px;
+    transform-origin: left center;
+    background: linear-gradient(90deg, transparent, hsl(43 80% 73% / 0.5), transparent);
+    animation: connectionDrift 7s ease-in-out infinite;
+  }
+  .tomi-network-line-one { width: 44%; right: 3%; top: 31%; transform: rotate(-13deg); }
+  .tomi-network-line-two { width: 31%; right: 13%; top: 57%; transform: rotate(18deg); animation-delay: 1.2s; }
+  .tomi-network-line-three { width: 25%; right: 27%; top: 74%; transform: rotate(-24deg); animation-delay: 2.1s; }
+  .tomi-network-node,
+  .tomi-field-node {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border: 1px solid hsl(43 80% 73% / 0.8);
+    border-radius: 999px;
+    background: hsl(187 67% 12%);
+    box-shadow: 0 0 18px hsl(43 80% 73% / 0.4);
+  }
+  .tomi-network-node-one { right: 11%; top: 22%; }
+  .tomi-network-node-two { right: 31%; top: 49%; }
+  .tomi-network-node-three { right: 18%; top: 76%; }
+
+  .tomi-connection-field {
+    background:
+      radial-gradient(circle at 50% 50%, hsl(39 52% 54% / 0.16), transparent 28%),
+      linear-gradient(135deg, hsl(188 66% 16%), hsl(187 67% 10%));
+  }
+  .tomi-orbit {
+    position: absolute;
+    inset: 50%;
+    border: 1px solid hsl(43 80% 73% / 0.22);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .tomi-orbit-one { width: 82%; height: 62%; transform: translate(-50%, -50%) rotate(-7deg); }
+  .tomi-orbit-two { width: 60%; height: 84%; transform: translate(-50%, -50%) rotate(31deg); }
+  .tomi-orbit-three { width: 38%; height: 96%; transform: translate(-50%, -50%) rotate(-54deg); }
+  .tomi-field-node-one { left: 8%; top: 30%; }
+  .tomi-field-node-two { right: 12%; top: 24%; }
+  .tomi-field-node-three { left: 21%; bottom: 18%; }
+  .tomi-field-node-four { right: 25%; bottom: 12%; }
+
+  .tomi-intelligence-panel {
+    background:
+      linear-gradient(135deg, hsl(189 74% 32% / 0.14), transparent 42%),
+      hsl(187 67% 9% / 0.76);
+    box-shadow: 0 24px 70px hsl(187 67% 4% / 0.34);
+  }
+  .tomi-signal-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid hsl(189 78% 24% / 0.55);
+  }
+  .tomi-signal-list span {
+    border: 1px solid hsl(39 52% 54% / 0.35);
+    padding: 0.45rem 0.7rem;
+    color: hsl(38 44% 87%);
+    font-size: 0.6875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    animation: signalIn 700ms ease-out both;
+    animation-delay: var(--signal-delay);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tomi-network-line,
+    .tomi-signal-list span {
       animation: none;
     }
   }

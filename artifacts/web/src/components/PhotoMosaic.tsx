@@ -4,6 +4,13 @@ import PhotoSlot from './PhotoSlot';
 interface PhotoMosaicProps {
   /** Ordered list of filenames — missing files render as elegant fallbacks */
   filenames: string[];
+  /** Optional matching editorial briefs for missing Founder archive images */
+  briefs?: Array<{
+    subject: string;
+    purpose?: string;
+    desktopCrop?: string;
+    mobileCrop?: string;
+  }>;
   className?: string;
 }
 
@@ -23,6 +30,7 @@ interface PhotoMosaicProps {
  */
 export default function PhotoMosaic({
   filenames,
+  briefs = [],
   className,
 }: PhotoMosaicProps) {
   if (filenames.length === 0) return null;
@@ -33,7 +41,16 @@ export default function PhotoMosaic({
   if (secondarySlice.length === 0) {
     return (
       <div className={cn('w-full', className)}>
-        <PhotoSlot filename={primary} alt="" className="w-full aspect-[4/3]" />
+        <PhotoSlot
+          filename={primary}
+          alt=""
+          imageType={briefs[0]?.subject ?? 'Founder image required'}
+          purpose={briefs[0]?.purpose}
+          aspectRatio="4:3"
+          desktopCrop={briefs[0]?.desktopCrop}
+          mobileCrop={briefs[0]?.mobileCrop}
+          className="w-full aspect-[4/3]"
+        />
       </div>
     );
   }
@@ -47,6 +64,11 @@ export default function PhotoMosaic({
       <PhotoSlot
         filename={primary}
         alt=""
+        imageType={briefs[0]?.subject ?? 'Founder image required'}
+        purpose={briefs[0]?.purpose}
+        aspectRatio="2:3"
+        desktopCrop={briefs[0]?.desktopCrop}
+        mobileCrop={briefs[0]?.mobileCrop}
         className="w-full aspect-[2/3]"
       />
 
@@ -57,6 +79,11 @@ export default function PhotoMosaic({
             key={i}
             filename={filename}
             alt=""
+            imageType={briefs[i + 1]?.subject ?? 'Founder image required'}
+            purpose={briefs[i + 1]?.purpose}
+            aspectRatio="1:1"
+            desktopCrop={briefs[i + 1]?.desktopCrop}
+            mobileCrop={briefs[i + 1]?.mobileCrop}
             className="w-full aspect-square"
           />
         ))}

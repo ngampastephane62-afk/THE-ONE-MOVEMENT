@@ -34,8 +34,13 @@ export default function Layout({ children }: LayoutProps) {
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       {/* ── Navigation Bar ─────────────────────────────────────────────────── */}
       <header
-        style={{ backgroundColor: 'hsl(187 67% 12%)', borderColor: 'hsl(188 46% 20%)' }}
-        className="sticky top-0 z-50 border-b"
+        style={{
+          background:
+            'linear-gradient(90deg, hsl(187 67% 10% / 0.97), hsl(188 66% 16% / 0.95), hsl(187 67% 10% / 0.97))',
+          borderColor: 'hsl(39 52% 54% / 0.24)',
+          boxShadow: '0 8px 32px hsl(187 67% 4% / 0.18)',
+        }}
+        className="sticky top-0 z-50 border-b backdrop-blur-md"
         role="banner"
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6">
@@ -206,7 +211,11 @@ export default function Layout({ children }: LayoutProps) {
       <footer
         role="contentinfo"
         className="border-t"
-        style={{ backgroundColor: 'hsl(187 67% 12%)', borderColor: 'hsl(188 46% 20%)' }}
+        style={{
+          background:
+            'radial-gradient(ellipse 45% 80% at 85% 100%, hsl(39 52% 54% / 0.12), transparent 70%), hsl(187 67% 10%)',
+          borderColor: 'hsl(188 46% 20%)',
+        }}
       >
         {/* Gold thread separator */}
         <div

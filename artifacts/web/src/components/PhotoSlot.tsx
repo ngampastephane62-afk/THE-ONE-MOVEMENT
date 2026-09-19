@@ -20,6 +20,10 @@ interface PhotoSlotProps {
   imageType?: string;
   /** Editorial metadata: exact aspect ratio */
   aspectRatio?: string;
+  /** Editorial metadata: why this image belongs in the composition */
+  purpose?: string;
+  /** Editorial metadata: desktop crop guidance */
+  desktopCrop?: string;
   /** Editorial metadata: mobile crop guidance */
   mobileCrop?: string;
   /** CSS object-position used when an approved image is available */
@@ -49,6 +53,8 @@ export default function PhotoSlot({
   duotone = true,
   imageType,
   aspectRatio,
+  purpose,
+  desktopCrop,
   mobileCrop,
   objectPosition = 'center',
   priority = false,
@@ -97,10 +103,17 @@ export default function PhotoSlot({
           <span className="text-[10px] font-semibold tracking-[0.2em] uppercase" style={{ color: 'hsl(39 52% 54%)' }}>
             {imageType || 'Brand photography'}
           </span>
-          {(aspectRatio || mobileCrop) && (
-            <span className="text-[10px] font-mono uppercase tracking-widest opacity-60">
+          {purpose && (
+            <span className="max-w-xs text-xs leading-relaxed text-ivory-200/75">
+              {purpose}
+            </span>
+          )}
+          {(aspectRatio || desktopCrop || mobileCrop) && (
+            <span className="max-w-sm text-[10px] font-mono uppercase leading-relaxed tracking-widest opacity-60">
               {aspectRatio && `Aspect: ${aspectRatio}`}
-              {aspectRatio && mobileCrop && ` • `}
+              {aspectRatio && (desktopCrop || mobileCrop) && ` • `}
+              {desktopCrop && `Desktop: ${desktopCrop}`}
+              {desktopCrop && mobileCrop && ` • `}
               {mobileCrop && `Crop: ${mobileCrop}`}
             </span>
           )}

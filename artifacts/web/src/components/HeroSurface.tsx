@@ -48,7 +48,7 @@ export default function HeroSurface({
   return (
     <section
       className={cn(
-        'relative w-full overflow-hidden',
+        'tomi-aurora-surface relative w-full overflow-hidden',
         'flex flex-col justify-center',
         className,
       )}
@@ -70,6 +70,7 @@ export default function HeroSurface({
             'linear-gradient(to bottom, hsl(187 67% 12% / 0.7) 0%, transparent 100%)',
         }}
       />
+      <span className="tomi-surface-grid pointer-events-none absolute inset-0" aria-hidden="true" />
       <div className="relative z-10">{children}</div>
     </section>
   );

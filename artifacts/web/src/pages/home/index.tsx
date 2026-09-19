@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import { useState } from 'react';
+import { type CSSProperties, useState } from 'react';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
 import HeroSurface from '@/components/HeroSurface';
@@ -183,9 +183,9 @@ export default function Home() {
                     JOIN THE MOVEMENT
                   </Button>
                 </Link>
-                <Link href="/programs">
-                  <Button size="lg" variant="gold-outline" aria-label="Discover our programs">
-                    DISCOVER OUR PROGRAMS
+                <Link href="/ecosystem">
+                  <Button size="lg" variant="gold-outline" aria-label="Explore the ecosystem">
+                    EXPLORE THE ECOSYSTEM
                   </Button>
                 </Link>
               </div>
@@ -199,9 +199,11 @@ export default function Home() {
               <PhotoSlot
                 filename="photo-01.jpg"
                 alt="Founder archive image required: a global connection scene"
-                imageType="Global connection"
+                imageType="Founder image required · Global connection"
                 aspectRatio="4:5"
                 mobileCrop="Keep the central human connection visible"
+                desktopCrop="Place people in the lower-right third with space for the headline"
+                purpose="Establish TOMI as a human bridge between Africa, the UAE and the wider world."
                 objectPosition="center"
                 priority
                 className="w-full aspect-[4/5] max-w-sm lg:ms-auto"
@@ -254,9 +256,11 @@ export default function Home() {
               <PhotoSlot
                 filename="photo-07.jpg"
                 alt="Founder archive image required: people in conversation across cultures"
-                imageType="Human connection"
+                imageType="Founder image required · Human connection"
                 aspectRatio="5:4"
                 mobileCrop="Keep faces and hands within the centre third"
+                desktopCrop="Preserve the full conversation around the table"
+                purpose="Show real people exchanging ideas across cultures and institutions."
                 className="mt-10 w-full aspect-[5/4]"
                 variant="rounded"
                 duotone={false}
@@ -398,6 +402,26 @@ export default function Home() {
                   'photo-05.jpg',
                   'photo-06.jpg',
                 ]}
+                briefs={[
+                  {
+                    subject: 'Founder archive: Fashion Week runway',
+                    purpose: 'Show the movement’s origin through a strong human runway moment.',
+                    desktopCrop: 'Full figure with audience context',
+                    mobileCrop: 'Keep model and garment centred',
+                  },
+                  {
+                    subject: 'Founder archive: designer portrait',
+                    purpose: 'Give a creator a clear human presence.',
+                    desktopCrop: 'Portrait with working environment',
+                    mobileCrop: 'Face and hands',
+                  },
+                  {
+                    subject: 'Founder archive: audience',
+                    purpose: 'Show cultural exchange and public participation.',
+                    desktopCrop: 'Wide crowd context',
+                    mobileCrop: 'Central group',
+                  },
+                ]}
               />
             </div>
           </div>
@@ -499,6 +523,26 @@ export default function Home() {
             <div className="lg:col-span-7 min-h-[22rem]">
               <PhotoMosaic
                 filenames={['fashion-week-runway.jpg', 'fashion-week-designer.jpg', 'fashion-week-audience.jpg']}
+                briefs={[
+                  {
+                    subject: 'Founder image required: flagship runway',
+                    purpose: 'Lead with the visual proof of five completed Fashion Week editions.',
+                    desktopCrop: 'Runway, model and audience in one frame',
+                    mobileCrop: 'Full garment and face',
+                  },
+                  {
+                    subject: 'Founder image required: designer backstage',
+                    purpose: 'Show the craft and people behind the program.',
+                    desktopCrop: 'Designer at work',
+                    mobileCrop: 'Hands, fabric and face',
+                  },
+                  {
+                    subject: 'Founder image required: cultural audience',
+                    purpose: 'Show participation, exchange and atmosphere.',
+                    desktopCrop: 'Wide social context',
+                    mobileCrop: 'Central human moment',
+                  },
+                ]}
                 className="h-full"
               />
             </div>
@@ -566,7 +610,7 @@ export default function Home() {
                 </div>
                 <div className="tomi-signal-list" aria-label="Future recommendation examples">
                   {['People', 'Organizations', 'Opportunities', 'Events', 'Programs', 'Communities'].map((item, index) => (
-                    <span key={item} style={{ '--signal-delay': `${index * 80}ms` } as React.CSSProperties}>
+                    <span key={item} style={{ '--signal-delay': `${index * 80}ms` } as CSSProperties}>
                       {item}
                     </span>
                   ))}
