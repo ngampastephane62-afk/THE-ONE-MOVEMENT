@@ -9,6 +9,9 @@ import StatBlock from '@/components/StatBlock';
 import GeometricAccent from '@/components/GeometricAccent';
 import PhotoMosaic from '@/components/PhotoMosaic';
 import PhotoSlot from '@/components/PhotoSlot';
+import HomeExperience from './HomeExperience';
+
+export default HomeExperience;
 
 /* ── Data ──────────────────────────────────────────────────────────────────── */
 
@@ -72,7 +75,7 @@ const PROGRAMS: {
 
 /* ── Component ─────────────────────────────────────────────────────────────── */
 
-export default function Home() {
+function LegacyHome() {
   const [heroPhotoVisible, setHeroPhotoVisible] = useState(true);
 
   return (

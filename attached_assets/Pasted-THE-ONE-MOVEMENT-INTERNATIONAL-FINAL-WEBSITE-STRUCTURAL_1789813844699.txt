@@ -1,0 +1,574 @@
+THE ONE MOVEMENT INTERNATIONAL
+FINAL WEBSITE STRUCTURAL RESTRUCTURING
+ECO MODE: ON
+
+Continue working inside the EXISTING TOMI project.
+
+DO NOT create a new project.
+DO NOT rebuild the website from scratch.
+DO NOT start the Digital Operating System.
+DO NOT start full media integration yet.
+
+We are restructuring the existing PUBLIC WEBSITE before the final premium visual/media phase.
+
+==================================================
+ECO MODE — STRICT
+==================================================
+
+ECO MODE IS ON.
+
+UNDERSTAND ONCE → MODIFY → VERIFY → REPORT.
+
+Rules:
+- Preserve working routes, forms, components and architecture.
+- Inspect only files necessary for this restructuring.
+- Do not repeatedly scan the whole repository.
+- Reuse existing components.
+- Batch related changes.
+- Do not create unnecessary dependencies.
+- Do not refactor unrelated working code.
+- Do not spend time producing long explanations.
+- Do not generate alternative versions unless necessary.
+- Keep token/credit usage low.
+- Perform targeted checks during implementation.
+- Run the full build/QA once at the end.
+
+Proceed with implementation, not another proposal.
+
+==================================================
+CORE FOUNDER DIRECTION
+==================================================
+
+The public TOMI website must stop behaving like a long digital brochure/PDF.
+
+The new experience is:
+
+SEE → FEEL → UNDERSTAND → DISCOVER → JOIN
+
+The homepage is NOT supposed to explain everything.
+
+Its purpose is to:
+1. Introduce The One Movement.
+2. Make people feel the Movement.
+3. Show enough proof and ecosystem depth to create interest.
+4. Lead people toward JOIN THE MOVEMENT.
+5. Allow deeper information to live on dedicated pages.
+
+Core UX principle:
+
+REVEAL, DON'T DUMP.
+
+Content should progressively reveal as the visitor scrolls.
+
+==================================================
+1. HOMEPAGE — HERO RESTRUCTURE
+==================================================
+
+Keep:
+
+THE ONE MOVEMENT
+
+GLOBAL CONNECTION ECOSYSTEM
+
+Main headline:
+
+ONE HUMANITY.
+ONE MOVEMENT.
+ONE FUTURE.
+
+But restructure the hero into a cinematic reveal sequence.
+
+Initial viewport:
+- background media area
+- brand/context
+- main headline
+
+Animate the headline elegantly.
+
+As the visitor begins scrolling, reveal:
+
+“A global movement bringing creatives, entrepreneurs, institutions and changemakers together through programs, dialogue and development collaboration.”
+
+Then reveal the CTAs:
+
+JOIN THE MOVEMENT
+EXPLORE THE ECOSYSTEM
+
+Do not show everything at once.
+
+The hero must support a future:
+- cinematic background image
+OR
+- background video
+
+For now, build the STRUCTURE and media container correctly.
+
+Do not invent final media.
+
+==================================================
+2. GLOBAL CONNECTION MEDIA AREA
+==================================================
+
+The existing square/placeholder area currently associated with:
+
+FOUNDER IMAGE REQUIRED
+GLOBAL CONNECTION
+
+must be redesigned.
+
+This should NOT remain a simple square image placeholder.
+
+Turn it into a FEATURED MOVEMENT VIDEO component.
+
+Desktop:
+- cinematic landscape video presentation
+- approximately 16:9 where appropriate
+
+Mobile:
+- vertical Reel-style presentation
+- approximately 9:16 where appropriate
+
+The component must support:
+- poster image
+- video
+- play/pause
+- mute/unmute where appropriate
+- responsive cropping
+- accessible controls
+- future Founder-provided media
+
+Do NOT add a random video.
+
+Use a designed placeholder until Founder media is supplied.
+
+Label internally/appropriately:
+
+FOUNDER MOVEMENT VIDEO REQUIRED
+
+==================================================
+3. “WHAT IS THE ONE MOVEMENT?” SECTION
+==================================================
+
+Simplify this section substantially.
+
+Do NOT repeat the entire TOMI explanation.
+
+Use:
+- one strong heading
+- one concise explanation
+- visual storytelling
+- reveal animation
+- media positions
+
+Prepare this section for real TOMI archive imagery such as:
+- previous editions
+- people meeting
+- handshakes
+- international collaboration
+- culture
+- entrepreneurs
+- institutions
+- community
+- human moments
+
+For now create the STRUCTURAL media placements.
+
+Do not use random stock imagery.
+
+==================================================
+4. “A MOVEMENT TO JOIN. A VISION TO BUILD.”
+==================================================
+
+Transform this into scroll storytelling.
+
+Instead of showing all information immediately:
+
+SCROLL
+→ visual reveals
+→ short message reveals
+→ next visual reveals
+→ next message reveals
+
+Use concise content.
+
+Possible structural techniques:
+- staggered reveal
+- image/text alternation
+- sticky visual storytelling where lightweight
+- masked image reveal
+- subtle parallax
+
+Do NOT make it animation-heavy.
+
+==================================================
+5. HOMEPAGE CONTENT REDUCTION
+==================================================
+
+IMPORTANT FOUNDER DECISION:
+
+The homepage currently contains too much information.
+
+Reduce information density.
+
+Remove unnecessary repetition.
+
+Do NOT delete important information from the project if it belongs on another page.
+
+Move/retain detailed information on its relevant dedicated page.
+
+Homepage should provide:
+
+INTRODUCTION
+↓
+UNDERSTANDING
+↓
+VISUAL PROOF
+↓
+ECOSYSTEM PREVIEW
+↓
+PROGRAM PREVIEW
+↓
+MOVEMENT IN ACTION
+↓
+JOIN
+
+Not full explanations of every part of TOMI.
+
+==================================================
+6. ECOSYSTEM PREVIEW
+==================================================
+
+The homepage should only PREVIEW the ecosystem.
+
+Show the breadth of TOMI through areas such as:
+
+Business
+Culture
+Programs
+Opportunities
+Institutions
+Community
+Media
+AI future
+
+But avoid another generic grid of identical cards.
+
+Create a visual/interactive ecosystem preview.
+
+Keep descriptions extremely short.
+
+Primary destination:
+
+EXPLORE THE ECOSYSTEM
+
+The detailed explanation belongs on the Ecosystem page.
+
+==================================================
+7. PROGRAMS PREVIEW
+==================================================
+
+Homepage Programs section should become visual and concise.
+
+Each featured program should structurally support:
+
+IMAGE
+or
+VIDEO / REEL
++
+PROGRAM NAME
++
+VERY SHORT DESCRIPTION
++
+DISCOVER
+
+Do NOT put full program explanations on the homepage.
+
+Detailed information belongs on each program page.
+
+==================================================
+8. FASHION WEEK
+==================================================
+
+The One Fashion Week remains flagship historical proof.
+
+It should receive stronger visual presence than an ordinary program card.
+
+Prepare structural areas for:
+- runway imagery
+- backstage
+- designers
+- audience
+- cultures
+- partners
+- international participation
+- video/reel content
+
+FACT LOCK:
+
+5 completed editions.
+
+6th edition planned/postponed for November.
+
+Never state that six editions are completed.
+
+==================================================
+9. MOVEMENT IN ACTION
+==================================================
+
+Create/restructure a homepage storytelling section designed to eventually contain the Founder archive.
+
+This section should visually prove that TOMI exists beyond words.
+
+Prepare for:
+- events
+- collaborations
+- partnerships
+- Fashion Week
+- meetings
+- community
+- international participation
+- human moments
+- cultural moments
+- institutional moments
+
+Avoid a boring standard photo gallery.
+
+Design the structure for an editorial/cinematic media composition.
+
+==================================================
+10. FINAL JOIN SECTION
+==================================================
+
+The homepage should progressively converge toward:
+
+JOIN THE MOVEMENT
+
+Reduce distractions around this final conversion point.
+
+Possible message:
+
+YOUR PLACE IN THE MOVEMENT STARTS HERE.
+
+Primary CTA:
+
+JOIN THE MOVEMENT
+
+The public homepage introduces TOMI.
+
+The deeper ecosystem begins through participation and, later, the member platform.
+
+Do NOT imply that the full member platform already exists.
+
+==================================================
+11. ONE PAGE = ONE PURPOSE
+==================================================
+
+Apply this rule across the website.
+
+HOME
+Introduction + discovery + proof + Join.
+
+OUR VISION
+The TOMI vision only.
+Do not repeat the homepage.
+
+ECOSYSTEM
+Explain how the TOMI ecosystem connects its different worlds.
+
+PROGRAMS
+Explain and discover TOMI programs.
+
+PROGRAM DETAIL
+Tell the specific program story.
+
+NEWS
+Stories, updates and movement activity.
+
+PARTNERS
+Partnership and collaboration.
+
+MEDIA
+TOMI visual/media resources.
+
+JOIN
+Participation and expression-of-interest journey.
+
+PRIVACY / TERMS
+Legal information only.
+
+Remove obvious cross-page repetition while preserving important approved content.
+
+==================================================
+12. MEDIA ARCHITECTURE
+==================================================
+
+Before the next media phase, create reusable responsive media structures for:
+
+CINEMATIC BACKGROUND
+LANDSCAPE VIDEO
+VERTICAL REEL
+FULL-WIDTH IMAGE
+PORTRAIT IMAGE
+IMAGE MOSAIC
+PROGRAM MEDIA
+EVENT MEDIA
+FOUNDER ARCHIVE MEDIA
+
+Do not populate them with fake assets.
+
+Where media is missing, use intentional placeholders such as:
+
+FOUNDER MEDIA REQUIRED
+TYPE: Video
+DESKTOP: Landscape
+MOBILE: Reel
+PURPOSE: Explain The One Movement
+
+Keep placeholders elegant and integrated into the design.
+
+==================================================
+13. REVEAL SYSTEM
+==================================================
+
+Build a lightweight reusable reveal system.
+
+Desired behavior:
+
+As visitors scroll, content progressively appears.
+
+Use selectively:
+- fade + translate
+- text reveal
+- image mask reveal
+- staggered elements
+- subtle parallax
+- section transitions
+- controlled sticky storytelling
+
+The visitor should feel they are DISCOVERING the website.
+
+Do NOT:
+- scroll-jack
+- overanimate
+- make every sentence fly around
+- create excessive motion
+- damage mobile performance
+
+Respect prefers-reduced-motion.
+
+==================================================
+14. MOBILE BEHAVIOR
+==================================================
+
+Mobile must be intentionally structured.
+
+Especially:
+
+Desktop video → landscape
+Mobile video → Reel/vertical where appropriate
+
+Reconsider:
+- content order
+- hero height
+- headline size
+- media crops
+- reveal timing
+- CTA positioning
+- sticky behavior
+- spacing
+
+No simple lazy desktop stacking.
+
+==================================================
+15. IMPORTANT — DO NOT DO YET
+==================================================
+
+Do NOT start final Founder image integration yet.
+
+Do NOT start full content/media population yet.
+
+Do NOT build:
+
+authentication
+member profiles
+social feed
+messaging
+communities
+full ASK TOMI
+marketplace
+payments
+wallet
+KYC
+Founder Command Center
+advanced AI agents
+
+Those belong later.
+
+==================================================
+CURRENT DEVELOPMENT SEQUENCE
+==================================================
+
+01 — Vision & Strategy
+COMPLETE
+
+02 — Core Website Architecture
+COMPLETE
+
+03 — Final Structural Restructuring
+CURRENT — IMPLEMENT NOW
+
+04 — Premium UI/UX + Motion
+NEXT
+
+05 — Founder Images, Videos & Archive Integration
+NEXT
+
+06 — Content Refinement + Responsive QA + Performance
+PENDING
+
+07 — PUBLIC WEBSITE LAUNCH
+PENDING
+
+08+ — TOMI DIGITAL ECOSYSTEM / OPERATING SYSTEM
+POST-LAUNCH
+
+==================================================
+PHASE 3 DEFINITION OF DONE
+==================================================
+
+This restructuring is complete when:
+
+✓ Homepage contains less information.
+✓ Homepage has a clear narrative journey.
+✓ Content reveals progressively during scrolling.
+✓ Hero supports cinematic background media.
+✓ Global Connection area supports landscape video + mobile Reel.
+✓ “What Is The One Movement?” is simplified.
+✓ Homepage ecosystem is a preview, not a full explanation.
+✓ Programs are previews, not full program pages.
+✓ Fashion Week has flagship structural treatment.
+✓ Founder archive/media areas are prepared.
+✓ Final Join CTA has stronger focus.
+✓ Dedicated pages stop unnecessarily repeating homepage content.
+✓ Reusable image/video structures exist.
+✓ Mobile media behavior is properly structured.
+✓ Existing working functionality remains intact.
+✓ No future platform functionality is falsely presented as live.
+
+When finished, DO NOT automatically start Phase 4.
+
+Return only a concise report:
+
+PHASE 3 STATUS
+FILES/SECTIONS CHANGED
+HOMEPAGE RESTRUCTURED
+REVEAL SYSTEM
+VIDEO/REEL STRUCTURE
+PAGE REPETITION REDUCED
+MOBILE STRUCTURE
+BLOCKERS
+READY / NOT READY FOR PHASE 4
+
+ECO MODE REMAINS ON.
+
+Proceed with implementation now.

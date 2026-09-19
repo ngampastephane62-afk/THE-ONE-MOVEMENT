@@ -1,0 +1,326 @@
+import { Helmet } from 'react-helmet-async';
+import { Link } from 'wouter';
+import { Button } from '@/components/ui/button';
+import GeometricAccent from '@/components/GeometricAccent';
+import GoldThread from '@/components/GoldThread';
+import PhotoSlot from '@/components/PhotoSlot';
+import ResponsiveMedia from '@/components/ResponsiveMedia';
+import Reveal from '@/components/Reveal';
+import SectionHeading from '@/components/SectionHeading';
+
+const ECOSYSTEM_AREAS = [
+  'Business',
+  'Culture',
+  'Programs',
+  'Opportunities',
+  'Institutions',
+  'Community',
+  'Media',
+  'AI future',
+];
+
+const PROGRAMS = [
+  {
+    slug: 'summit',
+    name: 'The One Summit',
+    description: 'Leadership, ideas and business across continents.',
+    filename: 'program-summit.jpg',
+  },
+  {
+    slug: 'diplomatic-gala',
+    name: 'The One Diplomatic Gala',
+    description: 'Culture and dialogue in service of peace.',
+    filename: 'program-gala.jpg',
+  },
+  {
+    slug: 'awards',
+    name: 'The One Awards',
+    description: 'Recognition for courage and positive impact.',
+    filename: 'program-awards.jpg',
+  },
+];
+
+export default function HomeExperience() {
+  return (
+    <div>
+      <Helmet>
+        <title>THE ONE MOVEMENT INTERNATIONAL — ONE HUMANITY. ONE MOVEMENT. ONE FUTURE.</title>
+        <meta
+          name="description"
+          content="A global movement bringing creatives, entrepreneurs, institutions and changemakers together through programs, dialogue and development collaboration."
+        />
+        <meta property="og:title" content="THE ONE MOVEMENT INTERNATIONAL — ONE HUMANITY. ONE MOVEMENT. ONE FUTURE." />
+        <meta
+          property="og:description"
+          content="Discover a global movement connecting people, culture, business, institutions and opportunity."
+        />
+        <link rel="canonical" href="/" />
+      </Helmet>
+
+      {/* 01 — Introduction: headline first, explanation and actions revealed after it. */}
+      <section className="tomi-home-hero relative overflow-hidden bg-lagoon-900">
+        <div className="tomi-surface-grid pointer-events-none absolute inset-0" aria-hidden="true" />
+        <div className="tomi-hero-glow pointer-events-none absolute inset-0" aria-hidden="true" />
+
+        <div className="relative z-10 mx-auto flex min-h-[calc(100svh-4rem)] max-w-7xl items-center px-6 py-section-lg">
+          <div className="max-w-4xl">
+            <p className="text-eyebrow text-gold-400 animate-fade-in">GLOBAL CONNECTION ECOSYSTEM</p>
+            <h1 className="mt-5 text-display-xl text-ivory-100 animate-fade-up" style={{ fontFamily: 'var(--font-display)' }}>
+              ONE HUMANITY.
+              <br />
+              ONE MOVEMENT.
+              <br />
+              <span className="text-gold-400">ONE FUTURE.</span>
+            </h1>
+            <GoldThread className="mt-8" length="280px" node />
+            <p className="mt-10 text-xs uppercase tracking-[0.2em] text-ivory-300/60">
+              Scroll to discover
+            </p>
+          </div>
+        </div>
+
+        <div className="relative z-10 mx-auto max-w-7xl px-6 pb-section-lg">
+          <Reveal className="max-w-2xl">
+            <p className="text-xl leading-relaxed text-ivory-100 sm:text-2xl">
+              A global movement bringing creatives, entrepreneurs, institutions and
+              changemakers together through programs, dialogue and development collaboration.
+            </p>
+          </Reveal>
+          <Reveal delay={120} className="mt-8 flex flex-col gap-4 sm:flex-row">
+            <Link href="/join">
+              <Button size="lg">JOIN THE MOVEMENT</Button>
+            </Link>
+            <Link href="/ecosystem">
+              <Button size="lg" variant="gold-outline">EXPLORE THE ECOSYSTEM</Button>
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      <GeometricAccent variant="lagoon-on-ivory" height={18} />
+
+      {/* 02 — Understanding: one concise explanation plus future movement video. */}
+      <section className="bg-ivory-100 py-section-lg" aria-labelledby="what-heading">
+        <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-12 lg:items-center">
+          <Reveal className="lg:col-span-5">
+            <SectionHeading
+              eyebrow="WHAT IS THE ONE MOVEMENT?"
+              heading="A MOVEMENT TO JOIN. A VISION TO BUILD."
+              surface="light"
+              size="lg"
+              thread
+            />
+            <p className="mt-7 text-lg leading-relaxed text-ink-800">
+              Born from a fashion initiative for peace in the Democratic Republic of Congo,
+              TOMI connects people and institutions through real programs today while building
+              toward a wider global collaboration ecosystem.
+            </p>
+          </Reveal>
+          <Reveal delay={100} direction="right" className="lg:col-span-6 lg:col-start-7">
+            <ResponsiveMedia
+              kind="landscape-video"
+              label="FOUNDER MOVEMENT VIDEO REQUIRED"
+              purpose="Explain The One Movement through people, culture, meetings and international collaboration."
+              className="aspect-[9/16] sm:aspect-video"
+            />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 03 — Ecosystem preview: breadth without full explanation. */}
+      <section className="tomi-aurora-surface py-section-lg" aria-labelledby="ecosystem-preview-heading">
+        <div className="mx-auto max-w-7xl px-6">
+          <Reveal>
+            <SectionHeading
+              eyebrow="ONE MOVEMENT. MANY WORLDS."
+              heading="A CONNECTED ECOSYSTEM"
+              surface="dark"
+              size="lg"
+              thread
+            />
+          </Reveal>
+
+          <Reveal delay={90} className="tomi-ecosystem-preview mt-12">
+            <div className="tomi-ecosystem-core">
+              <span>TOMI</span>
+              <small>Connection</small>
+            </div>
+            <div className="tomi-ecosystem-orbit" aria-label="TOMI ecosystem areas">
+              {ECOSYSTEM_AREAS.map((area, index) => (
+                <span key={area} style={{ '--area-index': index } as React.CSSProperties}>
+                  {area}
+                </span>
+              ))}
+            </div>
+          </Reveal>
+
+          <Reveal delay={140} className="mt-10">
+            <Link href="/ecosystem">
+              <Button variant="gold-outline" size="lg">EXPLORE THE ECOSYSTEM</Button>
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 04 — Visual proof: Fashion Week receives flagship treatment. */}
+      <section className="bg-ivory-100 py-section-lg" aria-labelledby="fashion-proof-heading">
+        <div className="mx-auto max-w-7xl px-6">
+          <Reveal>
+            <SectionHeading
+              eyebrow="THE MOVEMENT IN ACTION"
+              heading="WHERE THE STORY BEGAN"
+              surface="light"
+              size="lg"
+              thread
+            />
+          </Reveal>
+
+          <div className="mt-12 grid overflow-hidden rounded-sharp border border-sand-200 bg-ivory-50 lg:grid-cols-12">
+            <Reveal direction="left" className="lg:col-span-7">
+              <ResponsiveMedia
+                kind="event-media"
+                label="FOUNDER FASHION WEEK VIDEO OR RUNWAY IMAGE REQUIRED"
+                purpose="Show runway, designers, audience, culture and the human energy of five completed editions."
+                className="aspect-[9/16] h-full sm:aspect-video lg:aspect-auto"
+              />
+            </Reveal>
+            <Reveal delay={100} direction="right" className="flex flex-col justify-center p-7 sm:p-10 lg:col-span-5">
+              <p className="text-eyebrow text-gold-600">FLAGSHIP HISTORICAL PROOF</p>
+              <h2 id="fashion-proof-heading" className="mt-4 text-display-md text-ink-900" style={{ fontFamily: 'var(--font-display)' }}>
+                THE ONE FASHION WEEK INTERNATIONAL
+              </h2>
+              <p className="mt-6 leading-relaxed text-ink-800">
+                Fashion carried a message of peace from Bukavu to Goma and Kinshasa.
+                Five editions are complete. The sixth is planned for November and currently postponed.
+              </p>
+              <Link href="/programs/fashion-week" className="mt-8">
+                <Button variant="gold-outline">DISCOVER THE STORY</Button>
+              </Link>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* 05 — Concise program previews. */}
+      <section className="bg-ivory-50 py-section-lg" aria-labelledby="program-preview-heading">
+        <div className="mx-auto max-w-7xl px-6">
+          <Reveal>
+            <div className="flex flex-col gap-7 sm:flex-row sm:items-end sm:justify-between">
+              <SectionHeading
+                eyebrow="PROGRAM PREVIEW"
+                heading="WAYS THE MOVEMENT COMES TO LIFE"
+                surface="light"
+                size="lg"
+                thread
+              />
+              <Link href="/programs">
+                <Button variant="gold-outline">VIEW ALL PROGRAMS</Button>
+              </Link>
+            </div>
+          </Reveal>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {PROGRAMS.map((program, index) => (
+              <Reveal key={program.slug} delay={index * 90}>
+                <article className="group overflow-hidden rounded-sharp border border-sand-200 bg-ivory-100">
+                  <PhotoSlot
+                    filename={program.filename}
+                    alt=""
+                    imageType={`Founder media required · ${program.name}`}
+                    purpose="Program image or short Reel."
+                    aspectRatio="4:3"
+                    mobileCrop="Keep the principal human subject visible"
+                    className="aspect-[4/3] w-full"
+                  />
+                  <div className="p-6">
+                    <h3 className="font-display text-lg text-ink-900">{program.name}</h3>
+                    <p className="mt-3 text-sm leading-relaxed text-ink-700">{program.description}</p>
+                    <Link href={`/programs/${program.slug}`} className="mt-5 inline-block text-xs font-semibold uppercase tracking-[0.16em] text-gold-600">
+                      Discover
+                    </Link>
+                  </div>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 06 — Founder archive composition, deliberately not a standard gallery. */}
+      <section className="bg-lagoon-900 py-section-lg" aria-labelledby="archive-heading">
+        <div className="mx-auto max-w-7xl px-6">
+          <Reveal>
+            <SectionHeading
+              eyebrow="MOVEMENT IN ACTION"
+              heading="REAL PEOPLE. REAL MOMENTS."
+              surface="dark"
+              size="lg"
+              thread
+            />
+          </Reveal>
+          <div className="mt-12 grid grid-cols-12 gap-3 sm:gap-5">
+            <Reveal direction="left" className="col-span-12 sm:col-span-7">
+              <PhotoSlot
+                filename="archive-event.jpg"
+                alt=""
+                imageType="Founder archive required · Event"
+                purpose="A defining TOMI event or collaboration moment."
+                aspectRatio="16:10"
+                className="aspect-[16/10] w-full"
+              />
+            </Reveal>
+            <Reveal delay={80} direction="right" className="col-span-7 sm:col-span-5">
+              <PhotoSlot
+                filename="archive-human.jpg"
+                alt=""
+                imageType="Founder archive required · Human moment"
+                purpose="People meeting, creating or working together."
+                aspectRatio="4:5"
+                className="aspect-[4/5] w-full"
+              />
+            </Reveal>
+            <Reveal delay={140} className="col-span-5 sm:col-span-4">
+              <PhotoSlot
+                filename="archive-culture.jpg"
+                alt=""
+                imageType="Founder archive required · Culture"
+                purpose="Culture, identity and international participation."
+                aspectRatio="1:1"
+                className="aspect-square w-full"
+              />
+            </Reveal>
+            <Reveal delay={180} className="col-span-12 sm:col-span-8">
+              <PhotoSlot
+                filename="archive-institution.jpg"
+                alt=""
+                imageType="Founder archive required · Collaboration"
+                purpose="A verified partnership, meeting or institutional moment."
+                aspectRatio="16:9"
+                className="aspect-video w-full"
+              />
+            </Reveal>
+          </div>
+          <p id="archive-heading" className="sr-only">Founder archive media structure</p>
+        </div>
+      </section>
+
+      {/* 07 — Single-purpose conversion ending. */}
+      <section className="tomi-final-join relative overflow-hidden py-section-xl text-center">
+        <div className="tomi-surface-grid pointer-events-none absolute inset-0" aria-hidden="true" />
+        <Reveal className="relative z-10 mx-auto max-w-4xl px-6">
+          <p className="text-eyebrow text-gold-400">THE NEXT CONNECTION</p>
+          <h2 className="mt-5 text-display-lg text-ivory-100" style={{ fontFamily: 'var(--font-display)' }}>
+            YOUR PLACE IN THE MOVEMENT STARTS HERE.
+          </h2>
+          <GoldThread className="mx-auto mt-8" length="240px" node />
+          <p className="mx-auto mt-7 max-w-xl leading-relaxed text-ivory-200">
+            The public website introduces TOMI. Participation begins with an expression of interest and a real conversation.
+          </p>
+          <Link href="/join" className="mt-9 inline-block">
+            <Button size="xl">JOIN THE MOVEMENT</Button>
+          </Link>
+        </Reveal>
+      </section>
+    </div>
+  );
+}
