@@ -8,6 +8,7 @@ import SectionHeading from '@/components/SectionHeading';
 import StatBlock from '@/components/StatBlock';
 import GeometricAccent from '@/components/GeometricAccent';
 import PhotoMosaic from '@/components/PhotoMosaic';
+import PhotoSlot from '@/components/PhotoSlot';
 
 /* ── Data ──────────────────────────────────────────────────────────────────── */
 
@@ -86,7 +87,7 @@ export default function Home() {
       </Helmet>
 
       {/* ─────────────────────────────────────────────────────────────────────
-          1. HERO — lagoon radiant surface; media slot is video-ready placeholder.
+          1. HERO — cinematic emerald/gold field; media slot is video-ready placeholder.
           Headline: ONE HUMANITY. ONE MOVEMENT. ONE FUTURE. ("FUTURE." in gold-400)
           Eyebrow unchanged: A GLOBAL CONNECTION ECOSYSTEM
           ───────────────────────────────────────────────────────────────────── */}
@@ -129,6 +130,16 @@ export default function Home() {
             `,
           }}
         />
+        {/* Quiet connection field: intelligence is represented by relationships,
+            not a robot or neon interface. */}
+        <div className="tomi-network-field absolute inset-0 z-[2]" aria-hidden="true">
+          <span className="tomi-network-line tomi-network-line-one" />
+          <span className="tomi-network-line tomi-network-line-two" />
+          <span className="tomi-network-line tomi-network-line-three" />
+          <span className="tomi-network-node tomi-network-node-one" />
+          <span className="tomi-network-node tomi-network-node-two" />
+          <span className="tomi-network-node tomi-network-node-three" />
+        </div>
 
         {/* Top vignette */}
         <div
@@ -180,11 +191,22 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right: bilingual signature */}
+            {/* Right: archive media slot + bilingual signature */}
             <div
-              className="lg:col-span-3 lg:col-start-10 flex flex-col gap-8 animate-fade-in"
+              className="lg:col-span-4 lg:col-start-9 flex flex-col gap-6 animate-fade-in"
               style={{ animationDelay: '0.3s' }}
             >
+              <PhotoSlot
+                filename="photo-01.jpg"
+                alt="Founder archive image required: a global connection scene"
+                imageType="Global connection"
+                aspectRatio="4:5"
+                mobileCrop="Keep the central human connection visible"
+                objectPosition="center"
+                priority
+                className="w-full aspect-[4/5] max-w-sm lg:ms-auto"
+                duotone
+              />
               <div
                 className="border-t pt-6"
                 style={{ borderColor: 'hsl(188 46% 24%)' }}
@@ -228,6 +250,16 @@ export default function Home() {
                 thread
                 size="lg"
                 surface="light"
+              />
+              <PhotoSlot
+                filename="photo-07.jpg"
+                alt="Founder archive image required: people in conversation across cultures"
+                imageType="Human connection"
+                aspectRatio="5:4"
+                mobileCrop="Keep faces and hands within the centre third"
+                className="mt-10 w-full aspect-[5/4]"
+                variant="rounded"
+                duotone={false}
               />
             </div>
 
@@ -397,9 +429,11 @@ export default function Home() {
             surface="dark"
           />
 
+          <ConnectionField />
+
           {/* Featured sector tiles grid */}
           <div
-            className="mt-12 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-6 gap-px"
+            className="mt-8 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-6 gap-px"
             role="list"
             aria-label="Featured sectors"
             style={{ backgroundColor: 'hsl(188 46% 22%)' }}
@@ -459,6 +493,33 @@ export default function Home() {
             International is one official program of The One Movement International.
           </p>
 
+          {/* Flagship proof point — Fashion Week is the origin story, not a
+              small card in a generic program grid. */}
+          <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch rounded-sharp overflow-hidden border border-sand-200 bg-ivory-50">
+            <div className="lg:col-span-7 min-h-[22rem]">
+              <PhotoMosaic
+                filenames={['fashion-week-runway.jpg', 'fashion-week-designer.jpg', 'fashion-week-audience.jpg']}
+                className="h-full"
+              />
+            </div>
+            <div className="lg:col-span-5 flex flex-col justify-center p-7 sm:p-10">
+              <p className="text-eyebrow text-gold-600 mb-4">FLAGSHIP PROGRAM</p>
+              <h3 className="text-display-md text-ink-900" style={{ fontFamily: 'var(--font-display)' }}>
+                THE ONE FASHION WEEK INTERNATIONAL
+              </h3>
+              <GoldThread className="mt-5 mb-6" length="180px" node />
+              <p className="text-ink-800 leading-relaxed">
+                Fashion crosses language, carries identity and creates room for people to meet.
+                Five editions are completed. The sixth is planned for November and is currently postponed.
+              </p>
+              <Link href="/programs/fashion-week" className="mt-7">
+                <Button variant="gold-outline" size="sm" aria-label="Explore The One Fashion Week International">
+                  EXPLORE FASHION WEEK
+                </Button>
+              </Link>
+            </div>
+          </div>
+
           <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {PROGRAMS.map(({ slug, name, tagline, extra }) => (
               <ProgramCard key={slug} slug={slug} name={name} tagline={tagline} extra={extra} />
@@ -473,7 +534,51 @@ export default function Home() {
       </div>
 
       {/* ─────────────────────────────────────────────────────────────────────
-          6. WHY JOIN — NEW, ivory (lagoon surface continues then breaks to ivory).
+          6. FUTURE INTELLIGENCE — visible future direction, never presented as
+          a live account or AI product.
+          ───────────────────────────────────────────────────────────────────── */}
+      <section aria-labelledby="future-intelligence-heading" className="tomi-aurora-surface py-section-lg">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div className="lg:col-span-5">
+              <p className="text-eyebrow text-gold-400 mb-4">DEVELOPING FUTURE DIRECTION</p>
+              <h2 id="future-intelligence-heading" className="text-display-lg text-ivory-100" style={{ fontFamily: 'var(--font-display)' }}>
+                INTELLIGENCE THAT HELPS PEOPLE MOVE.
+              </h2>
+              <GoldThread className="mt-6 mb-7" length="190px" node />
+              <p className="text-ivory-200 leading-relaxed">
+                The future TOMI platform is intended to help people find relevant people,
+                organizations, opportunities, events and next actions. That layer is being
+                developed; it is not a live AI service or member platform today.
+              </p>
+            </div>
+            <div className="lg:col-span-6 lg:col-start-7">
+              <div className="tomi-intelligence-panel rounded-sharp border border-lagoon-600/60 p-6 sm:p-8">
+                <div className="flex items-center justify-between gap-4 border-b border-lagoon-600/50 pb-5">
+                  <p className="text-eyebrow text-gold-400">A FUTURE TOMI PROMPT</p>
+                  <span className="rounded-full border border-gold-500/50 px-3 py-1 text-[10px] uppercase tracking-[0.16em] text-gold-400">
+                    In development
+                  </span>
+                </div>
+                <div className="grid gap-4 py-6 sm:grid-cols-2">
+                  <FuturePrompt label="WHAT DID YOU ACCOMPLISH TODAY?" />
+                  <FuturePrompt label="WHAT DO YOU WANT TO ACCOMPLISH TOMORROW?" />
+                </div>
+                <div className="tomi-signal-list" aria-label="Future recommendation examples">
+                  {['People', 'Organizations', 'Opportunities', 'Events', 'Programs', 'Communities'].map((item, index) => (
+                    <span key={item} style={{ '--signal-delay': `${index * 80}ms` } as React.CSSProperties}>
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────────────
+          7. WHY JOIN — NEW, ivory (lagoon surface continues then breaks to ivory).
           Replaces the old "Who Can Join" five-group section on the homepage.
           That content is preserved on /join and /vision — not deleted there.
           ───────────────────────────────────────────────────────────────────── */}
@@ -526,7 +631,7 @@ export default function Home() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────────────
-          7. GLOBAL IMPACT — NEW, lagoon-900 continues.
+          8. GLOBAL IMPACT — NEW, lagoon-900 continues.
           Absorbs the old standalone stat band (removed as a separate section).
           Timeline + verified stat row. Future slots commented out, not rendered.
           ───────────────────────────────────────────────────────────────────── */}
@@ -629,7 +734,7 @@ export default function Home() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────────────
-          8. PARTNERSHIP PATHWAY — NEW short band (lagoon-900 continues).
+          9. PARTNERSHIP PATHWAY — NEW short band (lagoon-900 continues).
           Outline CTA → /join  (anchor /join#institutional noted: not yet live;
           link falls back to /join per spec — never a dead anchor).
           ───────────────────────────────────────────────────────────────────── */}
@@ -683,7 +788,7 @@ export default function Home() {
       </div>
 
       {/* ─────────────────────────────────────────────────────────────────────
-          9. CLOSING — REUSE existing final invitation section.
+          10. CLOSING — REUSE existing final invitation section.
           Headline updated to approved wording: THE MOVEMENT IS OPEN. THE WORLD IS INVITED.
           Primary CTA → /join. Bilingual signature retained.
           ───────────────────────────────────────────────────────────────────── */}
@@ -875,6 +980,44 @@ function WhyJoinCard({ word, desc }: { word: string; desc: string }) {
         {word}
       </p>
       <p className="text-sm text-ivory-200 leading-relaxed">{desc}</p>
+    </div>
+  );
+}
+
+function ConnectionField() {
+  return (
+    <div className="tomi-connection-field mt-10 overflow-hidden rounded-sharp border border-lagoon-600/60 p-5 sm:p-8">
+      <div className="relative min-h-[15rem] sm:min-h-[18rem]">
+        <div className="absolute inset-0 opacity-80" aria-hidden="true">
+          <span className="tomi-orbit tomi-orbit-one" />
+          <span className="tomi-orbit tomi-orbit-two" />
+          <span className="tomi-orbit tomi-orbit-three" />
+          <span className="tomi-field-node tomi-field-node-one" />
+          <span className="tomi-field-node tomi-field-node-two" />
+          <span className="tomi-field-node tomi-field-node-three" />
+          <span className="tomi-field-node tomi-field-node-four" />
+        </div>
+        <div className="relative z-10 flex min-h-[15rem] flex-col items-center justify-center text-center sm:min-h-[18rem]">
+          <p className="text-eyebrow text-gold-400">THE CONNECTION LAYER</p>
+          <p className="mt-3 max-w-md text-display-md text-ivory-100" style={{ fontFamily: 'var(--font-display)' }}>
+            MANY WORLDS. ONE MOVEMENT.
+          </p>
+          <p className="mt-4 max-w-lg text-sm leading-relaxed text-ivory-300">
+            Business, culture, diplomacy, media, humanitarian action and opportunity
+            meet here as distinct parts of one developing ecosystem.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FuturePrompt({ label }: { label: string }) {
+  return (
+    <div className="rounded-sharp border border-lagoon-600/60 bg-lagoon-900/70 p-5">
+      <span className="mb-6 block h-1 w-10 bg-gold-500/80" aria-hidden="true" />
+      <p className="text-sm leading-relaxed text-ivory-100">{label}</p>
+      <p className="mt-4 text-xs uppercase tracking-[0.15em] text-lagoon-400">A future starting point</p>
     </div>
   );
 }

@@ -1,0 +1,626 @@
+THE ONE MOVEMENT INTERNATIONAL
+PHASE 3 — PREMIUM UI/UX DESIGN EXECUTION
+
+Continue developing the EXISTING The One Movement International website.
+
+DO NOT create a new project.
+DO NOT rebuild the architecture from scratch.
+DO NOT start the Digital Operating System yet.
+
+We are now officially entering:
+
+PHASE 3 — PREMIUM UI/UX DESIGN
+
+CURRENT REALITY
+
+The TOMI strategy, website architecture, pages, navigation, programs and core public-site foundation already exist.
+
+However, the website still visually feels too much like a local/static PDF or document.
+
+It does NOT yet communicate the scale, energy, international ambition or premium character of The One Movement International.
+
+This phase must solve that.
+
+I have attached a new visual reference image showing Dubai in a deep emerald-green and brilliant gold atmosphere.
+
+USE THIS IMAGE AS A PRIMARY VISUAL REFERENCE FOR:
+• color
+• brilliance
+• lighting
+• atmosphere
+• background treatment
+• depth
+• geometric patterns
+• premium composition
+
+Do NOT copy the image literally across every section.
+
+Extract its VISUAL DNA and build a complete TOMI design system from it.
+
+==================================================
+1. VISUAL NORTH STAR
+==================================================
+
+The website must feel:
+
+GLOBAL
+PREMIUM
+HUMAN
+CINEMATIC
+ALIVE
+INSTITUTIONAL
+CULTURALLY RICH
+TECHNOLOGICALLY ADVANCED
+TRUSTED
+AMBITIOUS
+
+TOMI must NOT look like:
+• a PDF
+• PowerPoint
+• NGO template
+• local event website
+• generic corporate website
+• generic green landing page
+• fashion-only website
+• Dubai real-estate website
+• AI startup template
+
+The One Movement is a GLOBAL ECOSYSTEM.
+
+==================================================
+2. COLOR & ATMOSPHERE
+==================================================
+
+Use the attached image as the benchmark.
+
+Primary visual language:
+
+• very deep emerald green
+• mineral green
+• near-black green
+• brilliant warm gold
+• metallic/champagne gold
+• sunset amber
+• warm ivory
+• cream
+• white
+• near-black
+
+The gold must feel luminous and premium.
+
+The green must feel deep, rich and sophisticated.
+
+Do NOT use flat generic green.
+
+Use atmospheric transitions between darkness, gold illumination, photography and editorial light sections.
+
+==================================================
+3. BACKGROUND SYSTEM
+==================================================
+
+This is extremely important.
+
+The Founder wants the website to use immersive backgrounds inspired by the supplied image.
+
+Develop a reusable TOMI background language using:
+
+• deep-green atmospheric scenes
+• subtle African/geometric patterns
+• global patterns
+• gold illumination
+• soft light gradients
+• cinematic photography
+• subtle texture
+• flowing gold connection lines
+• network/map motifs where relevant
+• controlled particles
+• elegant depth
+• occasional warm ivory editorial areas
+
+Different sections must have different compositions.
+
+DO NOT repeat the exact same green background everywhere.
+
+Alternate:
+
+CINEMATIC DARK
+→ PHOTOGRAPHY
+→ LIGHT EDITORIAL
+→ IMMERSIVE GOLD/GREEN
+→ HUMAN STORY
+→ DARK PREMIUM
+
+The page should feel like a visual journey.
+
+==================================================
+4. HOMEPAGE HERO
+==================================================
+
+Rebuild the HOMEPAGE HERO into a signature TOMI experience.
+
+Primary statement:
+
+ONE HUMANITY.
+ONE MOVEMENT.
+ONE FUTURE.
+
+Immediately explain what TOMI is:
+
+An AI-powered, trusted, all-in-one global collaboration ecosystem connecting people, business, culture, institutions and opportunities.
+
+IMPORTANT:
+The public website may describe the FUTURE platform vision, but do NOT falsely imply that ASK TOMI, the social network or advanced AI functionality is already live if it is not functional.
+
+Primary CTA:
+JOIN THE MOVEMENT
+
+Secondary CTA:
+EXPLORE THE ECOSYSTEM
+
+Use a cinematic full-width composition.
+
+The hero should visually communicate:
+
+AFRICA ↔ UAE ↔ WORLD
+
+but TOMI must NOT become visually identified only with Dubai.
+
+Dubai represents one important global bridge.
+
+TOMI represents the world.
+
+==================================================
+5. IMAGE-FIRST WEBSITE
+==================================================
+
+The Founder has repeatedly requested:
+
+THE WEBSITE MUST BE FULL OF IMAGES.
+
+Stop presenting major sections primarily as text blocks and cards.
+
+Build strong image-led compositions.
+
+Major storytelling sections should have:
+• photography
+• video-ready areas
+• editorial mosaics
+• full-width visual backgrounds
+• portraits
+• event imagery
+• human interaction
+• international meetings
+• culture
+• Fashion Week
+• partnerships
+• community
+• business
+• Africa/UAE/global moments
+
+Do NOT use random generic stock photography merely to fill space.
+
+Where Founder archive assets are missing, create beautiful structured placeholders showing:
+
+FOUNDER IMAGE REQUIRED
+Image subject
+Recommended orientation
+Aspect ratio
+Purpose
+Desktop crop
+Mobile crop
+
+These placeholders must integrate naturally into the design instead of looking broken.
+
+==================================================
+6. HOMEPAGE STORY
+==================================================
+
+Recompose the homepage approximately around this journey:
+
+01 — CINEMATIC HERO
+ONE HUMANITY. ONE MOVEMENT. ONE FUTURE.
+
+02 — WHAT IS THE ONE MOVEMENT?
+Explain TOMI simply and visually.
+
+03 — ALL IN ONE MOVEMENT
+Show the ecosystem:
+Business
+Culture
+AI
+Humanitarian
+Media
+Diplomacy
+Opportunities
+Events
+Institutions
+
+Do not make this a boring 9-card grid.
+
+Create an interactive/visual ecosystem composition.
+
+04 — FROM MOVEMENT TO ECOSYSTEM
+Explain the evolution from physical initiatives/events into a 365-day global ecosystem.
+
+05 — THE ONE FASHION WEEK
+This must become a MAJOR visual section.
+
+06 — PROGRAMS
+Present approved TOMI programs visually.
+
+07 — THE AI-POWERED FUTURE / ASK TOMI
+Show the future intelligence layer honestly.
+
+Include the signature interaction:
+
+WHAT DID YOU ACCOMPLISH TODAY?
+
+WHAT DO YOU WANT TO ACCOMPLISH TOMORROW?
+
+Show how TOMI will eventually recommend:
+people
+organizations
+opportunities
+events
+programs
+communities
+next actions
+
+Clearly position this as the developing/future digital ecosystem where necessary.
+
+08 — AFRICA ↔ UAE ↔ WORLD
+Show TOMI as a bridge for credible opportunities, businesses, partnerships and collaboration.
+
+09 — TRUST
+
+Use the principle:
+
+WE DON'T SELL PROMISES.
+WE BUILD VERIFIED CONNECTIONS.
+
+Do not claim government, financial, technical or investment verification that does not exist.
+
+10 — PARTNERS & COLLABORATION
+
+11 — NEWS / STORIES
+
+12 — JOIN THE MOVEMENT
+
+13 — FINAL HUMAN MOMENT
+End emotionally with people, culture, collaboration and global connection.
+
+==================================================
+7. THE ONE FASHION WEEK
+==================================================
+
+Fashion Week is historical proof of TOMI.
+
+DO NOT display it as a small generic program card.
+
+Give it flagship treatment.
+
+Design for:
+• runway photography
+• designers
+• audience
+• cultures
+• backstage
+• international participants
+• human stories
+• partner moments
+
+Communicate why fashion matters:
+
+It crosses language.
+It carries identity.
+It connects cultures.
+It creates business.
+It gives creatives visibility.
+It demonstrates unity physically.
+
+FACT LOCK:
+
+Exactly 5 completed editions.
+
+The 6th edition is planned/postponed for November.
+
+DO NOT claim six completed editions.
+
+==================================================
+8. ANIMATION
+==================================================
+
+The new website MUST feel alive.
+
+Introduce refined animation:
+
+• cinematic hero entrance
+• slow image reveals
+• subtle parallax
+• controlled text entrance
+• gold-line movement
+• network connection animation
+• image-mask reveals
+• premium hover depth
+• button micro-interactions
+• gentle background motion
+• smooth section transitions
+• controlled carousels where appropriate
+
+Animations should feel elegant and expensive.
+
+DO NOT use:
+• aggressive zooming
+• scroll-jacking
+• excessive floating elements
+• cheap glowing effects
+• neon AI graphics
+• gaming animation
+• distracting motion
+
+Respect reduced-motion accessibility preferences.
+
+==================================================
+9. AI VISUAL LANGUAGE
+==================================================
+
+DO NOT represent TOMI AI using:
+
+robots
+blue brains
+circuit-board clichés
+neon humanoids
+generic AI stock images
+
+Represent intelligence through:
+
+connections
+people
+relationships
+matching
+recommendations
+conversation
+network visualization
+data
+opportunities
+movement
+interface intelligence
+
+ASK TOMI should feel like intelligence embedded throughout the ecosystem.
+
+==================================================
+10. TYPOGRAPHY
+==================================================
+
+Use premium editorial typography.
+
+Selected major headlines:
+Elegant premium serif/display typography.
+
+Body, navigation and interface:
+Modern highly readable sans-serif.
+
+Use:
+• strong hierarchy
+• controlled headline sizes
+• generous whitespace
+• shorter paragraphs
+• editorial compositions
+
+Avoid enormous typography that destroys usability.
+
+==================================================
+11. OTHER PUBLIC PAGES
+==================================================
+
+Apply this visual transformation consistently across the existing:
+
+HOME
+OUR VISION / ABOUT
+ECOSYSTEM
+PROGRAMS
+PROGRAM DETAIL PAGES
+NEWS
+PARTNERS
+MEDIA
+JOIN
+PRIVACY
+TERMS
+
+Each important page should have its own visual identity while clearly belonging to TOMI.
+
+Do NOT simply duplicate the homepage layout across every page.
+
+==================================================
+12. MOBILE-FIRST
+==================================================
+
+This is mandatory.
+
+The Founder wants a world-class mobile website.
+
+Test and intentionally design:
+
+320
+360
+375
+390
+430
+768
+1024
+1440+
+
+Mobile must NOT simply be desktop sections stacked vertically.
+
+Design mobile-specific:
+
+hero composition
+image crop
+navigation
+typography
+spacing
+CTA placement
+media mosaics
+cards
+animations
+forms
+section ordering
+
+No horizontal overflow.
+
+No microscopic text.
+
+No enormous unusable hero.
+
+No badly cropped faces.
+
+==================================================
+13. COPY
+==================================================
+
+Rewrite visible copy where necessary so it sounds human.
+
+Avoid obvious ChatGPT writing.
+
+Reduce:
+• repetitive slogans
+• excessive hyphens/em-dashes
+• formulaic three-item sentences
+• “not just X but Y”
+• “more than a...”
+• vague corporate language
+• fake inspirational statements
+
+Use natural, confident, international language.
+
+==================================================
+14. TRUTH & SAFETY LOCK
+==================================================
+
+DO NOT invent:
+
+partners
+sponsors
+statistics
+members
+countries
+government support
+institutional relationships
+testimonials
+investment results
+verified opportunities
+transactions
+awards
+
+Do not present future platform capabilities as already operational.
+
+Do not turn TOMI into:
+• investment company
+• bank
+• escrow provider
+• mineral trader
+• commodity exchange
+• government verification authority
+
+==================================================
+15. DO NOT BUILD THE OPERATING SYSTEM YET
+==================================================
+
+THIS PHASE IS PREMIUM PUBLIC-WEBSITE DESIGN.
+
+Do NOT allow scope expansion into:
+
+full authentication
+member accounts
+social network
+messaging
+communities
+full ASK TOMI AI
+marketplace
+wallet
+payments
+KYC
+referral engine
+Founder AI Command Center
+
+Those belong AFTER the public website is completed and launched.
+
+==================================================
+16. PRESERVE EXISTING WORK
+==================================================
+
+Preserve all functioning architecture, routes, forms and useful components.
+
+Improve them visually rather than destroying stable work.
+
+Do not restart the website.
+
+==================================================
+17. PERFORMANCE & ACCESSIBILITY
+==================================================
+
+Despite the premium visuals:
+
+optimize images
+lazy-load where appropriate
+control animation cost
+maintain accessibility
+maintain readable contrast
+maintain keyboard navigation
+maintain mobile performance
+respect reduced motion
+avoid unnecessary heavy libraries
+
+==================================================
+DEFINITION OF DONE — PHASE 3
+==================================================
+
+Phase 3 is NOT complete merely because colors were changed.
+
+It is complete when:
+
+✓ TOMI no longer feels like a local/static PDF.
+
+✓ The attached emerald/gold reference has been translated into a coherent premium TOMI visual system.
+
+✓ The homepage feels cinematic and international.
+
+✓ Major sections use meaningful imagery.
+
+✓ Fashion Week receives flagship treatment.
+
+✓ The ecosystem is visually understandable.
+
+✓ Africa–UAE–World is clearly represented without making TOMI Dubai-only.
+
+✓ ASK TOMI's future vision is visually compelling but truthful.
+
+✓ Animation feels premium.
+
+✓ Mobile feels intentionally designed.
+
+✓ Existing functionality remains intact.
+
+✓ Missing Founder photography is explicitly documented.
+
+✓ No unverified claims have been introduced.
+
+At completion, provide a concise report:
+
+PHASE 3 COMPLETED
+WHAT WAS REDESIGNED
+MOBILE STATUS
+ANIMATION STATUS
+FOUNDER MEDIA REQUIRED
+CONTENT STILL REQUIRED
+ISSUES / BLOCKERS
+READY / NOT READY FOR PHASE 4
+
+PHASE 4 WILL BE:
+REAL CONTENT & MEDIA INTEGRATION.
+
+Proceed with the actual redesign now.
+
+Do not stop at planning.
+Do not give me another design proposal.
+Implement Phase 3 directly in the existing TOMI website.
