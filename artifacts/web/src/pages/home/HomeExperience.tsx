@@ -9,14 +9,19 @@ import Reveal from '@/components/Reveal';
 import SectionHeading from '@/components/SectionHeading';
 
 const ECOSYSTEM_AREAS = [
-  'Business',
-  'Culture',
-  'Programs',
-  'Opportunities',
-  'Institutions',
-  'Community',
-  'Media',
-  'AI future',
+  { label: 'Business', target: 'business' },
+  { label: 'Culture', target: 'art' },
+  { label: 'Fashion', target: 'fashion' },
+  { label: 'Music', target: 'music' },
+  { label: 'Film', target: 'film' },
+  { label: 'Art', target: 'art' },
+  { label: 'Dance', target: 'dance' },
+  { label: 'Programs', target: 'programs' },
+  { label: 'Institutions', target: 'diplomacy' },
+  { label: 'Opportunities', target: 'opportunities' },
+  { label: 'Media', target: 'media' },
+  { label: 'Community', target: 'ngos' },
+  { label: 'Technology / AI', target: 'technology' },
 ];
 
 const PROGRAMS = [
@@ -65,15 +70,13 @@ export default function HomeExperience() {
         <div className="relative z-10 mx-auto flex min-h-[calc(100svh-4rem)] max-w-7xl items-center px-6 py-section-lg">
           <div className="max-w-4xl">
             <p className="text-eyebrow text-gold-400 animate-fade-in">GLOBAL CONNECTION ECOSYSTEM</p>
-            <h1 className="mt-5 text-display-xl text-ivory-100 animate-fade-up" style={{ fontFamily: 'var(--font-display)' }}>
-              ONE HUMANITY.
-              <br />
-              ONE MOVEMENT.
-              <br />
-              <span className="text-gold-400">ONE FUTURE.</span>
+            <h1 className="mt-5 text-display-xl text-ivory-100" style={{ fontFamily: 'var(--font-display)' }}>
+              <span className="block animate-cinematic-1">ONE HUMANITY.</span>
+              <span className="block animate-cinematic-2">ONE MOVEMENT.</span>
+              <span className="block animate-cinematic-3 text-gold-400">ONE FUTURE.</span>
             </h1>
             <GoldThread className="mt-8" length="280px" node />
-            <p className="mt-10 text-xs uppercase tracking-[0.2em] text-ivory-300/60">
+            <p className="mt-10 text-xs uppercase tracking-[0.2em] text-ivory-300/60 animate-cinematic-3">
               Scroll to discover
             </p>
           </div>
@@ -116,12 +119,12 @@ export default function HomeExperience() {
               toward a wider global collaboration ecosystem.
             </p>
           </Reveal>
-          <Reveal delay={100} direction="right" className="lg:col-span-6 lg:col-start-7">
+          <Reveal delay={100} direction="right" className="lg:col-span-6 lg:col-start-7 flex justify-center lg:justify-end">
             <ResponsiveMedia
-              kind="landscape-video"
-              label="FOUNDER MOVEMENT VIDEO REQUIRED"
+              kind="vertical-reel"
+              label="FOUNDER MOVEMENT REEL REQUIRED"
               purpose="Explain The One Movement through people, culture, meetings and international collaboration."
-              className="aspect-[9/16] sm:aspect-video"
+              className="aspect-[9/16] w-full max-w-sm shadow-2xl"
             />
           </Reveal>
         </div>
@@ -140,16 +143,22 @@ export default function HomeExperience() {
             />
           </Reveal>
 
-          <Reveal delay={90} className="tomi-ecosystem-preview mt-12">
+          <Reveal delay={90} className="tomi-ecosystem-preview mt-12 relative">
+            {/* TEMPORARY GRAPHIC - TO BE REPLACED WITH CLICKABLE TOMI ECOSYSTEM */}
             <div className="tomi-ecosystem-core">
               <span>TOMI</span>
               <small>Connection</small>
             </div>
             <div className="tomi-ecosystem-orbit" aria-label="TOMI ecosystem areas">
               {ECOSYSTEM_AREAS.map((area, index) => (
-                <span key={area} style={{ '--area-index': index } as React.CSSProperties}>
-                  {area}
-                </span>
+                <Link
+                  key={area.label}
+                  href={`/ecosystem#${area.target}`}
+                  style={{ '--area-index': index } as React.CSSProperties}
+                  data-testid={`link-ecosystem-world-${area.target}-${index}`}
+                >
+                  {area.label}
+                </Link>
               ))}
             </div>
           </Reveal>
@@ -176,15 +185,15 @@ export default function HomeExperience() {
           </Reveal>
 
           <div className="mt-12 grid overflow-hidden rounded-sharp border border-sand-200 bg-ivory-50 lg:grid-cols-12">
-            <Reveal direction="left" className="lg:col-span-7">
+            <Reveal direction="left" className="lg:col-span-6 flex justify-center lg:justify-start">
               <ResponsiveMedia
-                kind="event-media"
-                label="FOUNDER FASHION WEEK VIDEO OR RUNWAY IMAGE REQUIRED"
+                kind="vertical-reel"
+                label="FOUNDER FASHION WEEK REEL REQUIRED"
                 purpose="Show runway, designers, audience, culture and the human energy of five completed editions."
-                className="aspect-[9/16] h-full sm:aspect-video lg:aspect-auto"
+                className="aspect-[9/16] h-full w-full max-w-sm shadow-xl"
               />
             </Reveal>
-            <Reveal delay={100} direction="right" className="flex flex-col justify-center p-7 sm:p-10 lg:col-span-5">
+            <Reveal delay={100} direction="right" className="flex flex-col justify-center p-7 sm:p-10 lg:col-span-6">
               <p className="text-eyebrow text-gold-600">FLAGSHIP HISTORICAL PROOF</p>
               <h2 id="fashion-proof-heading" className="mt-4 text-display-md text-ink-900" style={{ fontFamily: 'var(--font-display)' }}>
                 THE ONE FASHION WEEK INTERNATIONAL

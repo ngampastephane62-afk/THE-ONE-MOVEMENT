@@ -3,402 +3,189 @@ import { Link } from 'wouter';
 import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
 import SectionHeading from '@/components/SectionHeading';
-import { buttonVariants } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-
-/* ── Media enquiry request card type ─────────────────────────────────────── */
-
-interface EnquiryCard {
-  title: string;
-  description: string;
-}
-
-const ENQUIRY_CARDS: EnquiryCard[] = [
-  {
-    title: 'PRESS ENQUIRIES',
-    description:
-      'Interviews, statements and background information for journalists and editors.',
-  },
-  {
-    title: 'INTERVIEW REQUESTS',
-    description:
-      'Requests to interview the Founder, program leads or Movement representatives.',
-  },
-  {
-    title: 'PRESS COLLABORATION',
-    description:
-      'Editorial collaborations, joint features and shared storytelling with approved media partners.',
-  },
-];
-
-/* ── Future media resource card type (NOT links — intentional) ────────────── */
-
-interface ResourceCard {
-  name: string;
-  description: string;
-}
-
-const RESOURCE_CARDS: ResourceCard[] = [
-  {
-    name: 'PRESS KIT',
-    description:
-      'A complete media kit with brand overview, boilerplate, biographies and approved assets, prepared for editorial use.',
-  },
-  {
-    name: 'BRAND GUIDELINES',
-    description:
-      "The Movement's visual identity system — colors, typography, logo usage and voice — for authorized reproduction.",
-  },
-  {
-    name: 'PHOTOGRAPHY & FILMING REQUESTS',
-    description:
-      "The pathway for coordinating photography and filming at the Movement's programs and initiatives.",
-  },
-  {
-    name: 'MEDIA ACCREDITATION',
-    description:
-      "The application process for press access, credentials and coverage of the Movement's official programs.",
-  },
-];
-
-/* ── Page ─────────────────────────────────────────────────────────────────── */
+import { Button } from '@/components/ui/button';
+import PhotoSlot from '@/components/PhotoSlot';
+import ResponsiveMedia from '@/components/ResponsiveMedia';
+import Reveal from '@/components/Reveal';
+import { Download, Mail } from 'lucide-react';
 
 export default function MediaHub() {
   return (
-    <div>
+    <div className="bg-ivory-50 min-h-screen">
       <Helmet>
-        <title>MEDIA &amp; PRESS — THE ONE MOVEMENT INTERNATIONAL</title>
-        <meta
-          name="description"
-          content="Official media hub for The One Movement International — brand overview, boilerplate and press pathways for journalists and media partners."
-        />
-        <meta
-          property="og:title"
-          content="MEDIA &amp; PRESS — THE ONE MOVEMENT INTERNATIONAL"
-        />
-        <meta
-          property="og:description"
-          content="Official media hub for The One Movement International — brand overview, boilerplate and press pathways for journalists and media partners."
-        />
-        {/* FILLED AT DEPLOY WITH PRODUCTION DOMAIN */}
+        <title>MEDIA — THE ONE MOVEMENT INTERNATIONAL</title>
+        <meta name="description" content="Official media hub for The One Movement International — latest coverage, resources, and press pathways." />
         <link rel="canonical" href="/media" />
       </Helmet>
 
-      {/* ───────────────────────────────────────────────────────────────────────
-          1. HERO — HeroSurface lagoon radiant
-          ───────────────────────────────────────────────────────────────────── */}
-      <HeroSurface glowOrigin="bottom-center" minHeight="70vh">
+      {/* 1. MEDIA HERO */}
+      <HeroSurface glowOrigin="bottom-center" minHeight="60vh">
         <div className="mx-auto w-full max-w-7xl px-6 py-section-lg">
-          <p className="text-eyebrow text-gold-400 mb-6 animate-fade-in">
-            MEDIA &amp; PRESS
-          </p>
-          <h1
-            className="text-display-xl text-ivory-100 uppercase animate-fade-up"
-            style={{ fontFamily: 'var(--font-display)' }}
-          >
-            THE OFFICIAL MEDIA HUB.
-          </h1>
-          <GoldThread className="mt-8" length="200px" node />
-          <p
-            className="mt-6 text-ivory-200 text-lg leading-relaxed max-w-2xl animate-fade-in"
-            style={{ animationDelay: '0.15s' }}
-          >
-            Institutional information, brand overview and press pathways for
-            journalists, media partners and institutional visitors covering The
-            One Movement International.
-          </p>
+          <Reveal>
+            <p className="text-eyebrow text-gold-400 mb-6">MEDIA & PRESS</p>
+            <h1 className="text-display-xl text-ivory-100 uppercase" style={{ fontFamily: 'var(--font-display)' }}>
+              THE ONE MOVEMENT<br/>
+              <span className="text-gold-400">MEDIA</span>
+            </h1>
+            <GoldThread className="mt-8" length="200px" node />
+            <p className="mt-6 text-ivory-200 text-lg leading-relaxed max-w-2xl">
+              The latest media, coverage, resources and pathways for journalists and production partners.
+            </p>
+          </Reveal>
         </div>
       </HeroSurface>
 
-      {/* ───────────────────────────────────────────────────────────────────────
-          2. BRAND OVERVIEW — ivory, asymmetric
-          ───────────────────────────────────────────────────────────────────── */}
-      <section
-        className="w-full py-section-lg"
-        style={{ backgroundColor: 'hsl(60 9% 97%)' }}
-      >
+      {/* 2. LATEST / FEATURED MEDIA */}
+      <section className="py-section-lg bg-ivory-100 border-b border-sand-200">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="max-w-3xl">
-            <SectionHeading
-              eyebrow="ABOUT THE MOVEMENT"
-              heading="WHO WE ARE."
-              surface="light"
-              thread
-            />
-            <p className="mt-8 text-lagoon-800 text-lg leading-relaxed">
-               The One Movement International is a global movement developing an
-               ecosystem across culture, business, diplomacy, innovation,
-               education, tourism, humanitarian action and investment. Its
-               current public work is presented through six official programs.
-            </p>
-            <p className="mt-6 text-lagoon-800 text-lg leading-relaxed">
-              The Movement grew from The One Fashion Week, a fashion movement
-              for peace born in the Democratic Republic of Congo. Five editions
-              have taken place — in Bukavu, Goma and Kinshasa. The fifth
-               edition, in Kinshasa, was held under the theme Peace and Unity.
-               Any formal institutional-support attribution remains subject to
-               Founder confirmation.
-            </p>
-          </div>
-        </div>
-      </section>
+          <Reveal>
+            <SectionHeading eyebrow="FEATURED" heading="LATEST MEDIA" surface="light" thread />
+          </Reveal>
 
-      {/* ───────────────────────────────────────────────────────────────────────
-          3. OFFICIAL BOILERPLATE — ivory continues, visually distinct panel
-          The card signals "you may quote this verbatim" without additional prose.
-          ───────────────────────────────────────────────────────────────────── */}
-      <section
-        className="w-full pb-section-lg"
-        style={{ backgroundColor: 'hsl(60 9% 97%)' }}
-      >
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="max-w-3xl">
-            <SectionHeading
-              eyebrow="CURRENT PUBLIC DESCRIPTION"
-              heading="A FACTUAL STARTING POINT."
-              surface="light"
-              thread
-            />
-            <p className="mt-8 text-lagoon-700 text-sm uppercase tracking-widest">
-              This is the current public description of the Movement. Operator
-              and institutional-support details should be confirmed before formal use.
-            </p>
-            {/* Visually distinct press-use panel — gold border, subtle lagoon tint */}
-            <blockquote
-              className="mt-4 rounded-sm border border-gold-500/40 px-8 py-7 text-lagoon-900 text-lg leading-relaxed not-italic"
-              style={{ backgroundColor: 'hsl(187 40% 96%)' }}
-            >
-               The One Movement International is a global movement developing an
-               ecosystem across fifteen sectors, from culture and creative
-               industries to business, diplomacy, innovation and humanitarian
-               action. It grew from a fashion initiative for peace in the
-               Democratic Republic of Congo and presents six official programs.
-               Current project records identify Tropik Agence FZE LLC in Ajman,
-               United Arab Emirates, as the operator; formal use should follow
-               Founder and legal confirmation.
-            </blockquote>
-          </div>
-        </div>
-      </section>
+          <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <Reveal delay={100} className="relative group">
+              <PhotoSlot
+                filename="media-featured-1.jpg"
+                alt=""
+                imageType="Founder media required"
+                purpose="Major featured press image or video poster."
+                className="w-full aspect-[16/10] rounded-sm overflow-hidden shadow-md"
+              />
+              <div className="mt-4">
+                <span className="text-xs font-semibold text-gold-600 tracking-widest uppercase">Feature</span>
+                <h3 className="mt-2 text-xl font-display text-ink-900">Founder-selected feature reserved</h3>
+              </div>
+            </Reveal>
 
-      {/* ───────────────────────────────────────────────────────────────────────
-          4. MISSION & POSITIONING — lagoon-900 band
-          ───────────────────────────────────────────────────────────────────── */}
-      <section
-        className="w-full py-section-lg"
-        style={{ backgroundColor: 'hsl(187 67% 8%)' }}
-      >
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="max-w-3xl">
-            <SectionHeading
-              eyebrow="OUR POSITIONING"
-              heading="A MOVEMENT, NOT AN EVENT."
-              surface="dark"
-              thread
-            />
-            <p className="mt-8 text-ivory-300 text-lg leading-relaxed">
-              The One Movement International is not a fashion week, an NGO, a
-              single-event platform or a media organization. The One Fashion Week
-              International is one of the Movement&apos;s six official programs. The
-               The Movement&apos;s ecosystem is developing through its programs and
-               partnerships. The planned member network, collaboration workspace,
-               AI Copilot and ASK TOMI are future platform direction, not services
-               currently offered through this website.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ───────────────────────────────────────────────────────────────────────
-          5. MEDIA ENQUIRIES PATHWAY — ivory
-          All three cards route to the same institutional inquiry anchor.
-          No separate form. No email address. No phone number.
-          Anchor /join#institutional-inquiry confirmed present in join page.
-          ───────────────────────────────────────────────────────────────────── */}
-      <section
-        className="w-full py-section-lg"
-        style={{ backgroundColor: 'hsl(60 9% 97%)' }}
-      >
-        <div className="mx-auto max-w-7xl px-6">
-          <SectionHeading
-            eyebrow="MEDIA ENQUIRIES"
-            heading="BEGIN WITH A CONVERSATION."
-            surface="light"
-            thread
-          />
-          <p className="mt-8 text-lagoon-800 text-lg leading-relaxed max-w-2xl">
-            Journalists, editors and media organizations seeking interviews,
-            quotes, background information or press access to the Movement&apos;s
-            programs are invited to reach out through the institutional inquiry
-            pathway. Every media conversation begins there — direct, human and
-            considered.
-          </p>
-
-          {/* Three request cards — all lead to /join#institutional-inquiry */}
-          <ul
-            className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6"
-            aria-label="Media enquiry request types"
-          >
-            {ENQUIRY_CARDS.map((card) => (
-              <li key={card.title}>
-                <Link
-                  href="/join#institutional-inquiry"
-                  className={cn(
-                    'block h-full rounded-sm border border-lagoon-800/20 bg-white',
-                    'px-6 py-7 transition-colors',
-                    'hover:border-lagoon-800/40 hover:bg-lagoon-50',
-                    'focus-visible:outline focus-visible:outline-2 focus-visible:outline-lagoon-800 focus-visible:outline-offset-2',
-                  )}
-                >
-                  <p
-                    className="text-sm font-semibold text-lagoon-900 uppercase tracking-wider"
-                    style={{ fontFamily: 'var(--font-display)' }}
-                  >
-                    {card.title}
-                  </p>
-                  <p className="mt-3 text-sm text-lagoon-700 leading-relaxed">
-                    {card.description}
-                  </p>
-                </Link>
-              </li>
-            ))}
-          </ul>
-
-          {/* Single CTA — mirrors Partners and News CTA convention */}
-          <div className="mt-10">
-            <Link
-              href="/join#institutional-inquiry"
-              className={cn(
-                buttonVariants({ size: 'lg' }),
-                'focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-400 focus-visible:outline-offset-2',
-              )}
-            >
-              BEGIN THE CONVERSATION
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ───────────────────────────────────────────────────────────────────────
-          6. FUTURE MEDIA RESOURCES — lagoon-900 band
-          Four "IN PREPARATION" cards.
-          NOT links. NOT focusable. cursor: default. No href, no download, no file path.
-          ───────────────────────────────────────────────────────────────────── */}
-      <section
-        className="w-full py-section-lg"
-        style={{ backgroundColor: 'hsl(187 67% 8%)' }}
-      >
-        <div className="mx-auto max-w-7xl px-6">
-          <SectionHeading
-            eyebrow="COMING SOON"
-            heading="MEDIA RESOURCES IN PREPARATION."
-            surface="dark"
-            thread
-          />
-          <p className="mt-8 text-ivory-400 text-base leading-relaxed max-w-2xl">
-            The following media resources are being prepared through our
-            editorial and design process. They will be published here as they
-            are approved for release.
-          </p>
-
-          {/* Four reserved placeholder cards — deliberately non-interactive */}
-          <ul
-            className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-6"
-            aria-label="Media resources in preparation"
-          >
-            {RESOURCE_CARDS.map((card) => (
-              <li key={card.name}>
-                {/*
-                  Intentionally a <div> — not a <Link>, not a <button>.
-                  tabIndex omitted (default 0 for div is non-focusable already).
-                  cursor: default prevents pointer affordance.
-                  aria-label clarifies "not yet available" for screen readers.
-                */}
-                <div
-                  className="rounded-sm border border-ivory-100/10 px-6 py-7"
-                  style={{
-                    backgroundColor: 'hsl(187 67% 11%)',
-                    cursor: 'default',
-                  }}
-                  aria-label={`${card.name} — in preparation, not yet available`}
-                >
-                  <span className="text-xs text-gold-500/60 uppercase tracking-[0.2em]">
-                    IN PREPARATION
-                  </span>
-                  <p
-                    className="mt-3 text-base text-ivory-200 uppercase tracking-wide"
-                    style={{ fontFamily: 'var(--font-display)' }}
-                  >
-                    {card.name}
-                  </p>
-                  <p className="mt-3 text-sm text-ivory-400 leading-relaxed">
-                    {card.description}
-                  </p>
-                  {/* Status badge — span, not anchor, not button */}
-                  <span
-                    className="mt-5 inline-block text-xs text-ivory-500 uppercase tracking-[0.15em] border border-ivory-500/20 px-3 py-1 rounded-sm"
-                    style={{ cursor: 'default' }}
-                  >
-                    PREPARING
-                  </span>
+            <Reveal delay={200} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {[1, 2, 3, 4].map(i => (
+                <div key={i} className="flex flex-col gap-3">
+                  <PhotoSlot
+                    filename={`media-small-${i}.jpg`}
+                    alt=""
+                    imageType="Founder media"
+                    purpose="Supporting media items."
+                    className="w-full aspect-video rounded-sm overflow-hidden"
+                  />
+                  <div>
+                    <span className="text-[10px] font-semibold text-sand-500 tracking-wider uppercase">Media slot {i}</span>
+                    <h4 className="mt-1 text-sm font-semibold text-ink-800 leading-tight">Approved media pending</h4>
+                  </div>
                 </div>
-              </li>
-            ))}
-          </ul>
-
-          <p className="mt-10 text-ivory-400 text-sm leading-relaxed max-w-2xl">
-            In the meantime, all media resource requests can be made through the
-            institutional inquiry pathway above.
-          </p>
-        </div>
-      </section>
-
-      {/* ───────────────────────────────────────────────────────────────────────
-          7. EDITORIAL STANDARDS — ivory, short — credibility anchor
-          ───────────────────────────────────────────────────────────────────── */}
-      <section
-        className="w-full py-section-lg"
-        style={{ backgroundColor: 'hsl(60 9% 97%)' }}
-      >
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="max-w-3xl">
-            <SectionHeading
-              eyebrow="OUR STANDARDS"
-              heading="HOW WE WORK WITH THE PRESS."
-              surface="light"
-              thread
-            />
-            <p className="mt-8 text-lagoon-800 text-lg leading-relaxed">
-              The One Movement International provides journalists and media
-              partners with accurate, verifiable information about the Movement,
-              its programs and its ecosystem. We do not make claims we cannot
-              document, and we correct errors in our own communications when they
-              occur.
-            </p>
-            <p className="mt-6 text-lagoon-800 text-lg leading-relaxed">
-              We ask media partners to reflect the same standard: to attribute
-              quotes accurately, to distinguish between the Movement and its
-              individual programs, and to seek confirmation before publishing
-              statistics, dates or claims about the Movement&apos;s work.
-            </p>
+              ))}
+            </Reveal>
           </div>
         </div>
       </section>
 
-      {/* ───────────────────────────────────────────────────────────────────────
-          8. CLOSING SIGNATURE — bilingual
-          ───────────────────────────────────────────────────────────────────── */}
-      <section
-        className="w-full py-16 flex items-center justify-center"
-        style={{ backgroundColor: 'hsl(187 67% 8%)' }}
-        aria-label="Closing signature"
-      >
-        <p className="text-xs text-ivory-400 tracking-[0.3em] uppercase select-none">
-          WE ARE ONE —{' '}
-          <span lang="ar" dir="rtl" className="font-normal not-italic">
-            نحن واحد
-          </span>
-        </p>
+      {/* 3. VIDEO / REELS */}
+      <section className="py-section-lg bg-lagoon-900 text-ivory-100">
+        <div className="mx-auto max-w-7xl px-6">
+          <Reveal>
+            <SectionHeading eyebrow="WATCH" heading="VIDEO & REELS" surface="dark" thread />
+          </Reveal>
+
+          <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            {[1, 2, 3, 4].map((i) => (
+              <Reveal key={i} delay={i * 100}>
+                <ResponsiveMedia
+                  kind="vertical-reel"
+                  label={`Reel Slot ${i}`}
+                  purpose="Vertical video coverage from events, programs, or interviews."
+                  className="aspect-[9/16] w-full"
+                />
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 4. PRESS & COVERAGE */}
+      <section className="py-section-lg bg-ivory-50">
+        <div className="mx-auto max-w-7xl px-6">
+          <Reveal>
+            <SectionHeading eyebrow="COVERAGE" heading="IN THE PRESS" surface="light" thread />
+          </Reveal>
+          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Structural placeholders for verified media coverage */}
+            {[1, 2, 3].map(i => (
+              <Reveal key={i} delay={i * 100}>
+                <article className="h-full bg-white border border-sand-200 p-6 rounded-sm shadow-sm flex flex-col">
+                  <div className="h-8 w-24 bg-sand-200 rounded-sm mb-4 animate-pulse opacity-50" title="Verified logo placeholder" />
+                  <h4 className="text-lg font-display text-ink-900 mb-3">Approved coverage position {i}</h4>
+                  <p className="text-sm text-ink-700 leading-relaxed mb-6 flex-1">
+                    Coverage excerpt will be placed here once verified and approved by the Founder.
+                  </p>
+                  <span className="text-xs font-semibold text-gold-600 uppercase tracking-widest mt-auto">Awaiting verified record</span>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 5. MEDIA KIT */}
+      <section className="py-section-lg bg-ivory-100 border-t border-sand-200">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            <Reveal className="lg:col-span-5">
+              <SectionHeading eyebrow="RESOURCES" heading="MEDIA KIT" surface="light" thread />
+              <p className="mt-6 text-ink-700 leading-relaxed">
+                Downloadable assets, verified brand guidelines, and approved photography for editorial use.
+                Resources will become available as they are authorized for public distribution.
+              </p>
+            </Reveal>
+            <div className="lg:col-span-6 lg:col-start-7">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {[
+                  { name: 'Brand Assets & Logos', status: 'In Preparation' },
+                  { name: 'Movement Overview', status: 'In Preparation' },
+                  { name: 'Founder Biographies', status: 'In Preparation' },
+                  { name: 'Approved Photography', status: 'In Preparation' }
+                ].map((item, i) => (
+                  <Reveal key={i} delay={i * 50}>
+                    <div className="border border-sand-300 bg-white p-5 rounded-sm flex flex-col justify-between h-full shadow-sm hover:border-gold-500/50 transition-colors">
+                      <h5 className="font-semibold text-ink-900 text-sm">{item.name}</h5>
+                      <div className="mt-4 flex items-center justify-between">
+                        <span className="text-[10px] uppercase tracking-widest text-sand-500 font-semibold">{item.status}</span>
+                        <Download className="w-4 h-4 text-sand-400" />
+                      </div>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. MEDIA INQUIRY */}
+      <section className="py-section-lg bg-lagoon-900 text-ivory-100">
+        <div className="mx-auto max-w-7xl px-6 text-center">
+          <Reveal>
+            <SectionHeading eyebrow="GET IN TOUCH" heading="MEDIA INQUIRY" surface="dark" align="center" thread />
+            <p className="mt-6 text-ivory-200 max-w-2xl mx-auto leading-relaxed">
+              Journalists, media organizations, and production partners seeking interviews, coverage access, or detailed information are invited to submit an inquiry.
+            </p>
+            <Link href="/join#institutional-inquiry" className="mt-10 inline-block" data-testid="link-media-inquiry">
+              <Button size="xl" className="bg-gold-500 text-ink-900 hover:bg-gold-400">
+                <Mail className="mr-2 h-4 w-4" /> SUBMIT MEDIA INQUIRY
+              </Button>
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 7. TROPIK AGENCE CONNECTION */}
+      <section className="py-12 bg-ivory-50 border-t border-sand-200">
+        <div className="mx-auto max-w-7xl px-6 flex justify-center text-center">
+          <Reveal>
+            <p className="text-[10px] font-semibold text-ink-500 tracking-[0.25em] uppercase flex flex-col items-center gap-2">
+              <span className="text-sand-400">POWERED BY</span>
+              <span className="text-ink-800 text-xs">TROPIK AGENCE</span>
+            </p>
+          </Reveal>
+        </div>
       </section>
     </div>
   );

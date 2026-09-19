@@ -15,6 +15,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { SECTORS, getSectorBySlug, type Sector } from '@/lib/sectors-data';
+import Reveal from '@/components/Reveal';
 
 /* ── Constants ────────────────────────────────────────────────────────────── */
 
@@ -168,9 +169,9 @@ function SectorPanelContent({ sector }: { sector: Sector }) {
       </div>
 
       {/* Coming soon chip */}
-      <div>
+      <div className="pt-2">
         <span
-          className="inline-flex items-center gap-1.5 px-3 py-1 text-xs tracking-widest uppercase"
+          className="inline-flex items-center gap-1.5 px-3 py-1 text-[10px] tracking-widest uppercase"
           style={{
             borderRadius: '2px',
             border: '1px solid hsl(188 46% 30%)',
@@ -602,7 +603,7 @@ export default function Ecosystem() {
       {/* ─────────────────────────────────────────────────────────────────────
           2. WHAT THE ECOSYSTEM MEANS — ivory, asymmetric
           ───────────────────────────────────────────────────────────────────── */}
-      <section className="bg-ivory-100 py-section-lg">
+      <section id="programs" className="bg-ivory-100 py-section-lg">
         <div className="mx-auto max-w-7xl px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
 
@@ -695,6 +696,7 @@ export default function Ecosystem() {
             {SECTORS.map((sector) => (
               <li key={sector.slug}>
                 <article
+                  id={sector.slug}
                   className="h-full rounded-[2px] p-6 flex flex-col gap-3"
                   style={{
                     backgroundColor: 'hsl(38 57% 96%)',
@@ -724,20 +726,22 @@ export default function Ecosystem() {
       {/* ─────────────────────────────────────────────────────────────────────
           5. HOW CONNECTIONS HAPPEN — ivory continues, five steps
           ───────────────────────────────────────────────────────────────────── */}
-      <section className="bg-ivory-100 pb-section-lg">
+      <section id="opportunities" className="bg-ivory-100 pb-section-lg">
         <div className="mx-auto max-w-7xl px-6">
-          <div
-            aria-hidden="true"
-            style={{ borderTop: '1px solid hsl(39 52% 54% / 0.2)' }}
-            className="mb-12"
-          />
-          <SectionHeading
-            eyebrow="FROM INTEREST TO PARTICIPATION"
-            heading="HOW TO BEGIN"
-            surface="light"
-            align="center"
-            className="mb-12"
-          />
+          <Reveal>
+            <div
+              aria-hidden="true"
+              style={{ borderTop: '1px solid hsl(39 52% 54% / 0.2)' }}
+              className="mb-12"
+            />
+            <SectionHeading
+              eyebrow="FROM INTEREST TO PARTICIPATION"
+              heading="HOW TO BEGIN"
+              surface="light"
+              align="center"
+              className="mb-12"
+            />
+          </Reveal>
 
           <ol
             className="grid grid-cols-1 sm:grid-cols-5 gap-6"
@@ -747,32 +751,23 @@ export default function Ecosystem() {
               { step: '01', label: 'EXPRESS INTEREST', body: 'Tell us who you are and what brings you here.' },
               { step: '02', label: 'SHARE YOUR DIRECTION', body: 'Describe your work, interests and what you are looking for.' },
               { step: '03', label: 'FOLLOW THE PROGRAMS', body: 'Explore current information and receive confirmed updates.' },
-              { step: '04', label: 'RESPOND', body: 'Take part when a relevant opportunity or program is announced.' },
-              { step: '05', label: 'CONTRIBUTE', body: 'Bring your experience to work that fits the Movement’s purpose.' },
-            ].map(({ step, label, body }) => (
-              <li
-                key={step}
-                className="flex flex-col gap-3 rounded-[2px] p-5"
-                style={{
-                  backgroundColor: 'hsl(38 57% 96%)',
-                  border: '1px solid hsl(39 52% 54% / 0.15)',
-                }}
-              >
-                <span
-                  className="text-eyebrow text-gold-600"
-                  aria-hidden="true"
-                >
-                  {step}
-                </span>
-                <h3
-                  className="text-xs font-semibold tracking-widest text-ink-900 uppercase"
-                  style={{ fontFamily: 'var(--font-display)' }}
-                >
-                  {label}
-                </h3>
-                <p className="text-xs text-sand-400 leading-relaxed">
-                  {body}
-                </p>
+              { step: '04', label: 'RECEIVE CONFIRMED UPDATES', body: 'Future participation pathways will be communicated only after their terms are approved.' },
+              { step: '05', label: 'TAKE PART', body: 'Respond when a relevant program or partnership opportunity is confirmed.' },
+            ].map(({ step, label, body }, i) => (
+              <li key={step} className="flex flex-col gap-3">
+                <Reveal delay={i * 100}>
+                  <span
+                    className="text-display-md text-gold-500 mb-1 block"
+                    style={{ fontFamily: 'var(--font-display)', lineHeight: 1 }}
+                    aria-hidden="true"
+                  >
+                    {step}
+                  </span>
+                  <span className="text-xs font-semibold tracking-widest text-ink-900 uppercase">
+                    {label}
+                  </span>
+                  <p className="text-sm text-sand-500 leading-relaxed">{body}</p>
+                </Reveal>
               </li>
             ))}
           </ol>

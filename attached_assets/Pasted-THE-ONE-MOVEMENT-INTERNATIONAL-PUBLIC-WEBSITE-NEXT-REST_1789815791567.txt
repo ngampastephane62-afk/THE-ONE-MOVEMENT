@@ -1,0 +1,600 @@
+THE ONE MOVEMENT INTERNATIONAL
+PUBLIC WEBSITE — NEXT RESTRUCTURING PASS
+ECO MODE: ON
+
+Continue inside the EXISTING TOMI project.
+
+DO NOT restart the website.
+DO NOT undo the restructuring just completed.
+DO NOT start the complete member operating system.
+DO NOT populate the full Founder image archive yet.
+
+ECO MODE:
+UNDERSTAND ONCE → MODIFY → VERIFY → REPORT.
+Inspect only necessary files.
+Reuse existing components.
+Batch related changes.
+No unnecessary dependencies.
+No long planning output.
+Implement directly.
+
+==================================================
+A. HOMEPAGE — FINAL STRUCTURAL CORRECTIONS
+==================================================
+
+1. HERO ANIMATION
+
+The existing:
+
+ONE HUMANITY.
+ONE MOVEMENT.
+ONE FUTURE.
+
+must NOT appear as static text.
+
+Create a premium entrance/reveal sequence.
+
+Suggested behavior:
+
+ONE HUMANITY.
+→ reveals
+
+ONE MOVEMENT.
+→ reveals
+
+ONE FUTURE.
+→ reveals
+
+Then supporting content reveals progressively.
+
+The animation must feel cinematic, elegant and intentional.
+
+No aggressive effects.
+No cheap typewriter effect.
+No excessive movement.
+
+Respect prefers-reduced-motion.
+
+--------------------------------------------------
+2. FEATURED MOVEMENT VIDEO
+--------------------------------------------------
+
+CORRECTION:
+
+The Movement Video should primarily be designed as a REEL.
+
+Use a vertical 9:16 media experience.
+
+Desktop:
+Present the vertical Reel elegantly inside the page composition rather than stretching it into landscape.
+
+Mobile:
+Allow the Reel to become a strong native vertical/mobile experience.
+
+Support:
+poster
+video
+play/pause
+mute/unmute
+responsive sizing
+
+For now:
+FOUNDER MOVEMENT REEL REQUIRED
+
+Do NOT insert random video.
+
+--------------------------------------------------
+3. “MANY WORLDS. ONE CONNECTION.”
+--------------------------------------------------
+
+The current generated graphic is TEMPORARY.
+
+Prepare this area for a future custom TOMI ecosystem graphic.
+
+The final graphic should represent interconnected TOMI worlds such as:
+
+Business
+Culture
+Fashion
+Music
+Film
+Art
+Dance
+Programs
+Institutions
+Opportunities
+Media
+Community
+Technology / AI
+
+IMPORTANT:
+
+These should eventually become CLICKABLE entry points into their relevant ecosystem areas.
+
+For now:
+preserve the structure and interaction architecture.
+
+Mark the current graphic as replaceable.
+
+Do NOT spend resources creating the final artwork in this phase.
+
+==================================================
+B. REVEAL BEHAVIOR
+==================================================
+
+Continue the Founder principle:
+
+REVEAL, DON'T DUMP.
+
+Across storytelling pages, content should progressively reveal as users scroll.
+
+Use:
+text reveal
+media reveal
+image masks
+subtle stagger
+controlled transitions
+light parallax where useful
+
+Do not make every element animate.
+
+The experience should feel like discovering TOMI progressively.
+
+==================================================
+C. OUR VISION
+==================================================
+
+Our Vision must focus ONLY on the vision.
+
+Remove unnecessary repetition of homepage explanations.
+
+Keep it concise.
+
+Structure it around:
+
+VISION
+PURPOSE
+GLOBAL AMBITION
+HUMAN CONNECTION
+FUTURE DIRECTION
+
+Prepare several strong image/video positions.
+
+We have extensive Founder media to add in the next imagery phase.
+
+Do NOT populate random stock assets.
+
+==================================================
+D. MEDIA PAGE — MAJOR RESTRUCTURE
+==================================================
+
+The Media page needs a stronger dedicated identity.
+
+DO NOT add another “About The One Movement” section.
+
+Users already have About/Vision/Home.
+
+MEDIA should be MEDIA.
+
+Reduce text heavily.
+
+Create a premium media-focused structure around:
+
+1. MEDIA HERO
+
+THE ONE MOVEMENT — MEDIA
+
+Short introduction only.
+
+Visual-first.
+
+2. LATEST / FEATURED MEDIA
+
+Prepare for:
+videos
+interviews
+press
+event coverage
+reels
+photography
+stories
+
+3. VIDEO / REELS
+
+Strong visual media grid/carousel.
+
+Support vertical and landscape content.
+
+4. PRESS & COVERAGE
+
+Prepare structured positions for approved media coverage.
+
+Do NOT invent media relationships.
+
+5. MEDIA KIT
+
+Create a clear MEDIA KIT area.
+
+Prepare downloadable resources architecture for future:
+
+Brand assets
+Approved logos
+Movement overview
+Founder/leadership information where approved
+Program information
+Approved photography
+Press material
+Media contact
+
+Do not create fake files.
+
+6. MEDIA INQUIRY
+
+Create a clean CTA:
+
+MEDIA INQUIRY
+
+Allow journalists/media organizations/production partners to submit an inquiry using the existing form architecture where possible.
+
+Do NOT build authentication just for this.
+
+7. TROPIK AGENCE CONNECTION
+
+Tropik Agence is the commercial/creative/media engine supporting TOMI.
+
+Create a tasteful attribution/connection:
+
+POWERED BY TROPIK AGENCE
+
+or an equivalent approved presentation.
+
+Prepare it to link to the external Tropik Agence website once the correct URL is configured.
+
+TOMI must remain the primary brand.
+
+Do not transform the Media page into a Tropik sales page.
+
+--------------------------------------------------
+MEDIA PAGE COLOR FIX
+--------------------------------------------------
+
+There are currently contrast problems such as BLACK TEXT ON DARK/GREEN BACKGROUNDS.
+
+Fix them.
+
+On dark emerald backgrounds:
+use ivory / white / appropriate gold hierarchy.
+
+On light backgrounds:
+use near-black / deep emerald.
+
+Gold:
+use primarily for emphasis, rules, labels, highlights and premium details.
+
+Ensure WCAG-conscious readable contrast.
+
+Make media cards visually brilliant but clean.
+
+==================================================
+E. PARTNERS PAGE — MAJOR RESTRUCTURE
+==================================================
+
+Fix the existing color/contrast problems first.
+
+No black text sitting unreadably on deep green.
+
+Then restructure Partners as a visual partnership environment.
+
+Do NOT overload it with explanations.
+
+Use concise copy + logos + portraits + categories + CTA.
+
+Create STRUCTURAL placeholders/categories for:
+
+1. PREVIOUS SPONSORS
+
+Sponsors who have actually supported TOMI historically.
+
+Leave Founder-managed positions for verified sponsor logos.
+
+Do NOT invent sponsors.
+
+2. INSTITUTIONAL RELATIONSHIPS / SUPPORT
+
+Prepare a dedicated area for approved institutions.
+
+Potential Founder-provided records may include organizations such as:
+UN bodies
+embassies
+international cooperation organizations
+public institutions
+
+IMPORTANT:
+Do NOT currently present MONUSCO, UNICEF, UNESCO, Swiss Cooperation, French Embassy or any other named institution as an official TOMI partner/supporter unless the relationship and permitted wording are verified.
+
+Create placeholders for verified institutional records.
+
+3. CORPORATE PARTNERS
+
+Prepare categories/positions for verified companies from sectors such as:
+
+Technology
+Energy
+Media
+Finance
+Luxury
+Hospitality
+Real Estate
+Professional Services
+Other strategic industries
+
+Do not invent company relationships.
+
+4. NGOs & UNIVERSITIES
+
+Create dedicated areas for verified:
+NGOs
+universities
+academic organizations
+community organizations
+
+5. AMBASSADORS
+
+Prepare an Ambassador architecture supporting categories such as:
+
+Official Ambassadors
+Cultural Ambassadors
+Fashion Ambassadors
+Creator / Influencer Ambassadors
+Actor / Celebrity Ambassadors
+
+Each verified profile should eventually support:
+
+Portrait
+Name
+Role/category
+Short context
+Social link
+
+6. STRATEGIC SUPPORTERS
+
+Create a premium profile architecture for notable personalities who genuinely support TOMI.
+
+IMPORTANT:
+The Founder mentioned examples including major celebrities/public personalities.
+
+DO NOT publish Angelina Jolie, Akon, Naomi Campbell, Kevin Hart, Teyana Taylor, Rick Ross, DJ Khaled, Nobel Peace Prize recipients, or any other public figure as a TOMI supporter unless there is verified evidence and Founder approval for that exact claim.
+
+For now create the STRUCTURE ONLY.
+
+Later verified profiles may support direct links to their official social profiles.
+
+==================================================
+F. PARTNERSHIP / SPONSORSHIP JOURNEY
+==================================================
+
+Add a strong:
+
+BEGIN THE CONVERSATION
+
+CTA.
+
+For the PUBLIC WEBSITE, create a partnership-interest journey.
+
+Potential categories:
+
+PARTNERSHIP
+SPONSORSHIP
+INSTITUTIONAL COLLABORATION
+MEDIA COLLABORATION
+PROGRAM COLLABORATION
+
+Prepare the presentation architecture for future commercial packages.
+
+Founder-defined future package architecture currently includes concepts such as:
+
+Partner — Basic
+Partner — Premium
+
+and sponsorship tiers such as:
+
+Silver
+Gold
+Diamond
+Platinum
+
+IMPORTANT:
+
+Do NOT invent:
+prices
+benefits
+statistics
+audience numbers
+deliverables
+budgets
+ROI
+reach
+package claims
+
+These will be provided/approved later.
+
+Prepare the UI so real packages can be inserted later.
+
+Also prepare a future:
+
+DOWNLOAD PARTNERSHIP / SPONSORSHIP DECK
+
+area.
+
+Do not generate fake PDF data.
+
+==================================================
+G. ECOSYSTEM — STRUCTURE FOR INDUSTRY WORLDS
+==================================================
+
+Preserve the current Ecosystem page if its primary structure is working.
+
+Enhance the architecture so each ecosystem world can eventually open into its own participant universe.
+
+Examples:
+
+FASHION
+→ Designers
+→ Models
+→ Stylists
+→ Accessories
+→ Makeup Artists
+→ Hair Professionals
+→ Footwear / Craft
+→ other approved fashion professions
+
+MUSIC
+→ Artists
+→ Producers
+→ DJs
+→ Beatmakers
+→ other music professions
+
+DANCE
+→ Dancers
+→ Choreographers
+→ Performance Groups
+→ other dance professions
+
+FILM
+→ Filmmakers
+→ Videographers
+→ Producers
+→ Directors
+→ other film professions
+
+ART
+→ Artists
+→ Creatives
+→ relevant art disciplines
+
+BUSINESS / OTHER WORLDS
+→ build using the same expandable architecture where appropriate.
+
+Do NOT try to exhaustively build every profession now.
+
+Build a reusable taxonomy architecture.
+
+==================================================
+H. IMPORTANT — FUTURE MEMBER ECOSYSTEM
+==================================================
+
+The Founder has defined an important POST-LAUNCH product direction:
+
+When someone eventually joins TOMI, their selected sector/profession should influence their profile and ecosystem experience.
+
+Examples:
+
+Designer → Fashion ecosystem
+DJ → Music ecosystem
+Filmmaker → Film ecosystem
+Entrepreneur → Business ecosystem
+
+Members should eventually be able to discover and interact with relevant people inside those worlds.
+
+THIS IS NOW A PRODUCT REQUIREMENT.
+
+BUT:
+
+DO NOT BUILD THE COMPLETE MEMBER SYSTEM DURING THIS PUBLIC-WEBSITE PHASE.
+
+Only ensure the public website taxonomy and links can later connect cleanly to the member platform.
+
+==================================================
+I. MEMBERSHIP & MONETIZATION — FUTURE REQUIREMENT
+==================================================
+
+Founder has proposed:
+
+low-friction ecosystem entry
++
+monthly paid upgrades for deeper access, conversations and additional ecosystem functionality.
+
+Founder mentioned a possible symbolic initial entry payment such as AED 1 / USD 1.
+
+DO NOT implement or publicly advertise that amount yet.
+
+Currency, payment mechanics, membership terms, recurring billing, cancellation/refund rules and package entitlements require final business/legal approval before implementation.
+
+For now:
+
+Prepare architecture only.
+
+Do NOT build payments.
+Do NOT build subscriptions.
+Do NOT build wallet.
+Do NOT create fake pricing.
+
+==================================================
+J. NEXT PHASE — FOUNDER MEDIA INTEGRATION
+==================================================
+
+After this restructuring, the NEXT major phase will be:
+
+FOUNDER IMAGES + VIDEOS + ARCHIVE INTEGRATION.
+
+We have many real TOMI assets.
+
+Therefore every relevant page should now be READY to receive organized media.
+
+Prepare logical media slots/folders/categories around:
+
+HOME
+VISION
+ECOSYSTEM
+PROGRAMS
+FASHION WEEK
+MEDIA
+PARTNERS
+NEWS
+EVENTS / MOVEMENT IN ACTION
+PEOPLE / AMBASSADORS
+INSTITUTIONAL MOMENTS
+
+Do not fill these with random assets.
+
+==================================================
+FINAL CHECK
+==================================================
+
+Before finishing:
+
+✓ Hero headline animation implemented
+✓ Movement Video corrected to Reel-first 9:16
+✓ Many Worlds graphic prepared for future replacement/clickable ecosystem
+✓ Reveal system preserved
+✓ Vision simplified
+✓ Media page visually restructured
+✓ Media page contrast corrected
+✓ Tropik connection prepared
+✓ Media inquiry prepared
+✓ Partners page restructured
+✓ Partners contrast corrected
+✓ Sponsor/institution/company/NGO/university/ambassador/supporter structures prepared
+✓ No unverified partner or celebrity claim published
+✓ Partnership journey prepared
+✓ Package architecture prepared without invented pricing
+✓ Ecosystem taxonomy architecture prepared
+✓ Future member requirements documented but NOT built
+✓ Future membership/payment requirements documented but NOT built
+✓ Media slots ready for next phase
+✓ Existing functionality preserved
+✓ Mobile checked
+
+Do NOT automatically begin image population after this.
+
+Return a SHORT report only:
+
+COMPLETED
+MEDIA SLOTS READY
+PARTNERS STRUCTURE
+ECOSYSTEM STRUCTURE
+BLOCKERS
+READY / NOT READY FOR FOUNDER MEDIA PHASE
+
+ECO MODE REMAINS ON.
