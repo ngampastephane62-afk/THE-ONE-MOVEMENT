@@ -1,0 +1,793 @@
+THE ONE MOVEMENT INTERNATIONAL
+MASTER FOUNDER MEDIA INTEGRATION — ENTIRE PUBLIC WEBSITE
+
+ECO MODE ON.
+
+IMPORTANT:
+This is NOT a homepage-only task.
+This is NOT a redesign from scratch.
+This is NOT permission to generate AI imagery or use stock photography.
+
+I have attached the complete Founder Media Archive as a ZIP.
+
+The archive contains authentic founder-owned photographs, videos, Reels, event footage, Fashion Week material, meetings, institutional encounters, partners/sponsors/supporters material, humanitarian activities, programs, press/media assets, logos, people, cultural moments and other historical material relating to The One Movement International.
+
+Your task is to intelligently study, curate, optimize and integrate this authentic archive throughout the ENTIRE existing public website.
+
+============================================================
+CORE EXECUTION RULE
+============================================================
+
+UNDERSTAND ONCE → CURATE → MAP → OPTIMIZE → INTEGRATE → VERIFY → REPORT → STOP.
+
+Do not repeatedly rescan the repository or media archive.
+
+Do not spend credits generating alternatives.
+
+Do not redesign unrelated working functionality.
+
+Do not start another phase automatically.
+
+============================================================
+1. FIRST — STUDY THE ARCHIVE
+============================================================
+
+Extract the attached ZIP.
+
+Inspect the archive systematically.
+
+Understand what each usable photograph/video appears to represent based on:
+
+- folder location
+- filename
+- visible content
+- existing website context
+- existing TOMI program/history context
+
+Deduplicate repeated assets.
+
+Do NOT automatically use every file.
+
+CURATE.
+
+Choose the strongest authentic media for each website section.
+
+Prioritize:
+
+1. high-resolution original photography
+2. sharp professional event photography
+3. strong composition
+4. authentic human interaction
+5. visually important TOMI moments
+6. international/cross-cultural representation
+7. runway/event energy
+8. institutional/business encounters where context is sufficiently established
+9. humanitarian/community activity
+10. media/press material where appropriate
+
+DO NOT use visibly low-resolution, pixelated, blurry, badly compressed, duplicated or weak images when a stronger version exists.
+
+If the same photograph exists in several resolutions, use the highest-quality appropriate original.
+
+Do NOT upscale a poor-quality image merely to make it appear high-resolution.
+
+============================================================
+2. ABSOLUTELY NO AI OR RANDOM STOCK IMAGES
+============================================================
+
+For website photography:
+
+NO AI-generated people.
+NO AI-generated event photography.
+NO fake institutional photographs.
+NO generic stock photography.
+NO random Unsplash/Pexels replacements.
+
+The founder archive is the visual source of truth.
+
+Existing abstract graphical elements, patterns, gradients and TOMI design treatments may remain.
+
+But actual human/event/program/institutional imagery must come from the founder archive.
+
+============================================================
+3. THIS APPLIES TO THE WHOLE WEBSITE
+============================================================
+
+Audit ALL CURRENT PUBLIC ROUTES and all visible media placeholders.
+
+At minimum review and appropriately populate:
+
+HOME
+OUR VISION
+ECOSYSTEM
+PROGRAMS
+EVERY EXISTING PROGRAM DETAIL PAGE
+THE ONE FASHION WEEK
+MEDIA
+PARTNERS
+NEWS where authentic content currently supports it
+JOIN where media genuinely improves the page
+
+Also inspect shared sections/components where founder media is expected.
+
+Do NOT limit the work to Home.
+
+Any visible:
+
+“FOUNDER MEDIA REQUIRED”
+“MEDIA REQUIRED”
+empty media frame
+generic media placeholder
+temporary program image
+temporary archive image
+unassigned Reel/video
+placeholder logo area
+
+must be reviewed.
+
+Where an appropriate authentic founder asset exists, replace the placeholder.
+
+Do not leave a placeholder merely because the old expected filename does not exist.
+
+Map the actual archive asset to the component.
+
+============================================================
+4. HOMEPAGE
+============================================================
+
+Preserve the working H01 hero and H02 Movement Reel unless the archive contains a demonstrably better approved-quality source for the same intended role.
+
+Keep the homepage narrative:
+
+SEE → FEEL → UNDERSTAND → DISCOVER → JOIN.
+
+Populate the remaining homepage with authentic founder media.
+
+Especially:
+
+THE ONE FASHION WEEK
+
+Use strong runway/event imagery and an appropriate authentic Fashion Week video/Reel.
+
+Show:
+
+- runway
+- designers
+- models
+- audience
+- cultural diversity
+- backstage/event atmosphere
+- human energy
+
+FACT LOCK:
+Exactly FIVE editions have been completed.
+
+The sixth edition is planned/postponed for November.
+
+Do NOT invent a year unless confirmed by existing approved content.
+
+PROGRAMS
+
+Populate program previews with appropriate authentic archive material where available.
+
+For The One Summit, prioritize authentic Summit material such as the founder archive material associated with The One Summit in Goma/DRC where appropriate.
+
+Do not assign unrelated imagery simply to fill a card.
+
+MOVEMENT IN ACTION
+
+Create a premium editorial visual sequence from authentic archive material representing different dimensions of TOMI:
+
+- programs/events
+- culture/fashion
+- humanitarian/community action
+- international encounters
+- institutional/business encounters
+- people
+- media
+
+Avoid repetitive card grids.
+
+Use cinematic editorial composition.
+
+============================================================
+5. OUR VISION
+============================================================
+
+This page must feel HUMAN and GLOBAL.
+
+Use authentic archive photography to support:
+
+ONE HUMANITY.
+ONE MOVEMENT.
+ONE FUTURE.
+
+Choose imagery showing:
+
+- people
+- cultures
+- human connection
+- international encounters
+- community
+- TOMI activities
+- meaningful founder interactions
+
+Do not turn the page into another Fashion Week page.
+
+Do not turn it into a Dubai-only page.
+
+============================================================
+6. ECOSYSTEM
+============================================================
+
+Preserve/improve the interactive TOMI ecosystem visualization.
+
+Use authentic media selectively around the ecosystem to demonstrate that TOMI connects real worlds:
+
+Business
+Culture
+Fashion
+Music
+Film
+Art
+Dance
+Programs
+Institutions
+Opportunities
+Media
+Community
+Technology / AI
+
+Media should support the concept rather than overwhelm the interactive network.
+
+Technology/AI must be represented through CONNECTION, MATCHING and RELATIONSHIPS — not robots, neon brains or generic AI stock imagery.
+
+============================================================
+7. PROGRAMS
+============================================================
+
+Populate the Programs page and existing program detail pages with authentic archive material.
+
+Each program should visually feel different.
+
+Where archive evidence clearly corresponds to a program, use it.
+
+Where there is insufficient authentic media for a specific program, use a sophisticated branded treatment rather than assigning an unrelated photograph.
+
+Never fabricate program history.
+
+============================================================
+8. THE ONE FASHION WEEK
+============================================================
+
+This should become one of the strongest visual pages on the website.
+
+Use the highest-quality authentic Fashion Week material available.
+
+Curate a combination of:
+
+- strong hero
+- runway
+- models
+- designers
+- casting
+- audience
+- backstage
+- international/cultural representation
+- event atmosphere
+- video/Reel where appropriate
+
+Use editorial layouts, not a basic gallery dump.
+
+Use image crops intentionally.
+
+Do not stretch vertical photography into bad landscape crops.
+
+Do not crop important faces/subjects.
+
+FACT LOCK:
+
+FIVE COMPLETED EDITIONS.
+
+Sixth planned/postponed for November.
+
+============================================================
+9. PARTNERS / INSTITUTIONS / IMPORTANT ENCOUNTERS
+============================================================
+
+This section requires particular care.
+
+The archive includes:
+
+- logos
+- institutional material
+- founder photographs with important individuals
+- meetings
+- diplomatic/institutional encounters
+- sponsor/support material
+
+Use the dedicated partner/institution archive where appropriate.
+
+Also inspect founder photographs of meetings and greetings.
+
+These photographs can be visually valuable.
+
+HOWEVER:
+
+A photograph with a person or institution is NOT automatically proof of an official partnership.
+
+Do not falsely label every photographed person/institution as:
+
+“Official Partner”
+“Strategic Partner”
+“Sponsor”
+“Endorsed by”
+“Supported by”
+
+unless that relationship is established by approved existing content/archive classification.
+
+Where the archive documents an important meeting or encounter but partnership status is not sufficiently established, present it neutrally as something such as:
+
+Institutional Engagement
+Global Encounters
+Diplomatic & Institutional Dialogue
+Movement in Conversation
+Selected Engagements
+
+Use concise factual captions only when identity/context is sufficiently supported.
+
+Do not guess identities from faces.
+
+Use filenames/archive context when reliable.
+
+If identity/context is uncertain, the image may still be used editorially without making an unsupported identification claim.
+
+Dedicated verified/approved partner logos can appear within the appropriate partner category.
+
+Preserve categories such as:
+
+Previous Sponsors
+Institutions
+Companies / Corporate
+NGOs
+Universities
+Ambassadors
+Strategic Supporters
+
+only where the archive/existing approved website content supports classification.
+
+Keep:
+
+BEGIN THE CONVERSATION
+
+as the principal partnership CTA.
+
+============================================================
+10. MEDIA PAGE — MAJOR VISUAL UPGRADE
+============================================================
+
+The Media page must become genuinely media-first.
+
+Use:
+
+- real videos
+- Reels
+- event photography
+- press/media assets
+- TOMI archive
+- coverage material
+- media inquiry
+
+Create strong sections such as:
+
+FEATURED MEDIA
+
+VIDEOS & REELS
+
+FROM THE ARCHIVE
+
+INTERNATIONAL MEDIA REACH
+
+PRESS / COVERAGE
+
+MEDIA INQUIRY
+
+The archive contains:
+
+Tropic_Agency_International_Media_Coverage.pdf
+
+Treat this carefully.
+
+It documents Tropic Agency's international media network/capability.
+
+The website may communicate:
+
+353+ MEDIA OUTLETS
+18 CATEGORIES
+ARTICLE · PRESS RELEASE · CAMPAIGN
+
+It may present a curated selection of recognizable media names/categories contained in the document.
+
+DO NOT describe all of these outlets as TOMI partners.
+
+Use language such as:
+
+International Media Reach
+Global Media Network
+Media capabilities powered by Tropik Agence
+
+where appropriate.
+
+Do NOT create a giant wall of 353 logos.
+
+Keep it premium and curated.
+
+============================================================
+11. NEWS
+============================================================
+
+Do NOT fabricate news articles simply because photographs exist.
+
+Only populate existing news/story architecture when supported by actual approved content.
+
+Images can enrich existing real stories.
+
+No invented headlines, dates, awards, announcements or institutional claims.
+
+============================================================
+12. JOIN
+============================================================
+
+JOIN THE MOVEMENT remains an EXPRESSION OF INTEREST.
+
+It is NOT account creation.
+
+Do not implement authentication.
+
+Do not imply that submitting the form activates membership.
+
+Use authentic human/community media selectively if it strengthens the conversion experience without distracting from the form.
+
+============================================================
+13. IMAGE QUALITY + WEB OPTIMIZATION
+============================================================
+
+SOURCE QUALITY:
+
+Use high-resolution originals.
+
+Reject weak low-resolution copies where better originals exist.
+
+WEB DELIVERY:
+
+High-resolution source does NOT mean serving a 15–25 MB JPEG directly to mobile.
+
+Optimize responsibly for the web.
+
+Create high-quality web derivatives while preserving the original archive.
+
+Use modern web formats where appropriate.
+
+Generate responsive sizes where useful.
+
+Preserve enough visual quality for Retina/high-density displays.
+
+Use intentional aspect ratios.
+
+Use appropriate object positioning.
+
+Do not crop faces, principal subjects, logos or important contextual details.
+
+Lazy-load below-the-fold imagery.
+
+Do not lazy-load critical hero media incorrectly.
+
+Provide appropriate poster images for video.
+
+Do not autoplay multiple heavy videos simultaneously.
+
+Prioritize performance.
+
+The website must look premium without becoming unnecessarily heavy.
+
+============================================================
+14. VIDEO
+============================================================
+
+Study the video archive.
+
+Deduplicate repeated files.
+
+Use only the strongest relevant videos.
+
+Do NOT upload/use every large MOV just because it exists.
+
+Where appropriate, prepare web-compatible versions.
+
+Use poster frames.
+
+Use video intentionally on:
+
+- Movement story
+- Fashion Week
+- Media
+- selected program storytelling
+
+Avoid excessive autoplay.
+
+On mobile, respect vertical/Reel material.
+
+On desktop, present vertical Reels elegantly instead of stretching them.
+
+============================================================
+15. VISUAL DESIGN LOCK
+============================================================
+
+Preserve the TOMI visual DNA:
+
+DEEP EMERALD / MINERAL GREEN
+RICH DARK GREEN
+WARM METALLIC / CHAMPAGNE GOLD
+AMBER
+IVORY / WARM CREAM
+WHITE
+NEAR-BLACK GREEN
+
+Use:
+
+premium serif display typography
+modern readable sans-serif body
+fine gold rules
+subtle cultural geometry
+cinematic imagery
+international editorial composition
+large photographic moments
+strong whitespace
+clear hierarchy
+
+The result must NOT look like:
+
+generic NGO template
+generic corporate site
+Dubai real-estate site
+fashion-only organization
+AI startup template
+crypto website
+SaaS dashboard
+
+TOMI is:
+
+AN AI-POWERED, TRUSTED, ALL-IN-ONE GLOBAL COLLABORATION ECOSYSTEM.
+
+ONE HUMANITY. ONE MOVEMENT. ONE FUTURE.
+
+============================================================
+16. MOTION
+============================================================
+
+Use restrained premium motion:
+
+slow reveals
+image masks
+subtle parallax
+gold-line movement
+controlled text entrances
+micro-interactions
+controlled carousel motion where appropriate
+
+NO:
+
+aggressive spinning
+particle overload
+cheap glow effects
+scroll-jacking
+heavy animation everywhere
+
+Honor prefers-reduced-motion.
+
+============================================================
+17. RESPONSIVE QA
+============================================================
+
+This website must be excellent on MOBILE first.
+
+Check:
+
+320
+360
+375
+390
+430
+768
+1024
+1440+
+
+Do not simply shrink desktop layouts.
+
+For mobile:
+
+- intentional image crops
+- readable typography
+- proper content order
+- usable interactive ecosystem
+- correct video aspect ratios
+- accessible CTAs
+- no horizontal overflow
+- no clipped text
+- no giant empty media boxes
+- no placeholder text visible
+
+============================================================
+18. TRUTH / GOVERNANCE LOCK
+============================================================
+
+DO NOT INVENT:
+
+partners
+sponsors
+institutional endorsements
+government support
+awards
+member counts
+country counts
+testimonials
+transactions
+investment outcomes
+verification status
+financial returns
+legal outcomes
+
+Do not claim a live AI product if it is not implemented.
+
+AI can be described as TOMI's direction/future operating layer where appropriate.
+
+Do not imply a live member network if it does not yet exist.
+
+No fake verification.
+
+No investment guarantees.
+
+No fake institutional certification.
+
+============================================================
+19. OUT OF SCOPE
+============================================================
+
+DO NOT build:
+
+member operating system
+authentication
+social network
+feed
+messaging
+wallet
+payments
+KYC
+marketplace
+full ASK TOMI
+advanced AI backend
+investment execution
+
+This pass is:
+
+PUBLIC WEBSITE + AUTHENTIC FOUNDER MEDIA + PREMIUM VISUAL INTEGRATION.
+
+Nothing more.
+
+============================================================
+20. CREDIT CONTROL — ECO MODE
+============================================================
+
+CRITICAL.
+
+This archive is large.
+
+Do not repeatedly analyze all files.
+
+Perform ONE systematic inventory.
+
+Create ONE internal media mapping.
+
+Then implement from that mapping.
+
+Reuse existing components.
+
+Reuse existing routes.
+
+Reuse existing design tokens.
+
+Batch related modifications.
+
+Do not install unnecessary dependencies.
+
+Do not generate alternative versions for me to choose from.
+
+Do not repeatedly rebuild after every small change.
+
+Use targeted checks during implementation.
+
+Run ONE comprehensive final build/QA at the end.
+
+Fix actual errors only.
+
+Do not refactor unrelated working code.
+
+Do not start another phase.
+
+============================================================
+21. FINAL ACCEPTANCE CRITERIA
+============================================================
+
+Before reporting completion verify:
+
+1. No visible “FOUNDER MEDIA REQUIRED” placeholders remain where suitable archive media exists.
+
+2. Homepage is fully visually integrated.
+
+3. Our Vision uses authentic founder media.
+
+4. Ecosystem remains premium and interactive.
+
+5. Programs has authentic, contextually correct media.
+
+6. Fashion Week is visually rich and correctly states five completed editions.
+
+7. Media page contains real archive media and International Media Reach.
+
+8. Partners uses verified classifications carefully and important encounters are not falsely presented as partnerships.
+
+9. No AI-generated human/event images were introduced.
+
+10. No generic stock photography was introduced.
+
+11. High-resolution sources were selected where available.
+
+12. Web derivatives are optimized rather than serving unnecessarily huge originals.
+
+13. Mobile layouts have been visually checked.
+
+14. Existing forms/routes/functionality still work.
+
+15. No unsupported institutional/partner claims were created.
+
+16. No unrelated post-launch functionality was started.
+
+============================================================
+22. FINAL REPORT
+============================================================
+
+When finished, report ONLY:
+
+A. Media archive summary
+- files reviewed
+- duplicates/weak files excluded
+- images selected
+- videos selected
+
+B. Page-by-page integration
+- Home
+- Our Vision
+- Ecosystem
+- Programs
+- Fashion Week
+- Media
+- Partners
+- News
+- Join
+
+C. Optimization performed
+- image derivatives
+- video optimization
+- lazy loading/posters
+- responsive treatment
+
+D. Items intentionally NOT used and why
+
+E. Any claims/context requiring founder confirmation
+
+F. Final QA/build result
+
+Then STOP.
+
+Do not automatically publish the production website.
+Wait for founder visual approval first.

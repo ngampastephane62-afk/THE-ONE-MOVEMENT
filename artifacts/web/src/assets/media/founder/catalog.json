@@ -1,0 +1,551 @@
+{
+  "photos": {
+    "runway-white": {
+      "sourceIndex": 6,
+      "source": "00_FOUNDER_RAW_MEDIA_DROP/01_PHOTOS/IMG_6447.JPG",
+      "caption": "Runway portrait · Founder archive",
+      "alt": "Runway portrait",
+      "uses": [
+        "fashion",
+        "media"
+      ],
+      "filename": "founder/runway-white.webp",
+      "width": 1400,
+      "height": 2098,
+      "srcSet": "/brand-photos/founder/runway-white-800.webp 800w, /brand-photos/founder/runway-white.webp 1400w",
+      "versions": [
+        {
+          "filename": "founder/runway-white-800.webp",
+          "width": 800,
+          "height": 1199,
+          "bytes": 83374
+        },
+        {
+          "filename": "founder/runway-white.webp",
+          "width": 1400,
+          "height": 2098,
+          "bytes": 188376
+        }
+      ]
+    },
+    "runway-cultural": {
+      "sourceIndex": 7,
+      "source": "00_FOUNDER_RAW_MEDIA_DROP/01_PHOTOS/IMG_6437.JPG",
+      "caption": "Runway and cultural expression · Founder archive",
+      "alt": "Runway and cultural expression",
+      "uses": [
+        "fashion",
+        "media"
+      ],
+      "filename": "founder/runway-cultural.webp",
+      "width": 1400,
+      "height": 2098,
+      "srcSet": "/brand-photos/founder/runway-cultural-800.webp 800w, /brand-photos/founder/runway-cultural.webp 1400w",
+      "versions": [
+        {
+          "filename": "founder/runway-cultural-800.webp",
+          "width": 800,
+          "height": 1199,
+          "bytes": 128606
+        },
+        {
+          "filename": "founder/runway-cultural.webp",
+          "width": 1400,
+          "height": 2098,
+          "bytes": 315988
+        }
+      ]
+    },
+    "community-gathering": {
+      "sourceIndex": 73,
+      "source": "00_FOUNDER_RAW_MEDIA_DROP/01_PHOTOS/Donation(1).JPG",
+      "caption": "Community outreach · Founder archive",
+      "alt": "Community outreach",
+      "uses": [
+        "home",
+        "vision",
+        "join"
+      ],
+      "filename": "founder/community-gathering.webp",
+      "width": 1170,
+      "height": 780,
+      "srcSet": "/brand-photos/founder/community-gathering-800.webp 800w, /brand-photos/founder/community-gathering.webp 1170w",
+      "versions": [
+        {
+          "filename": "founder/community-gathering-800.webp",
+          "width": 800,
+          "height": 533,
+          "bytes": 113136
+        },
+        {
+          "filename": "founder/community-gathering.webp",
+          "width": 1170,
+          "height": 780,
+          "bytes": 195926
+        }
+      ]
+    },
+    "human-connection": {
+      "sourceIndex": 74,
+      "source": "00_FOUNDER_RAW_MEDIA_DROP/01_PHOTOS/Save the children .jpg",
+      "caption": "Human connection · Founder archive",
+      "alt": "Human connection",
+      "uses": [
+        "vision"
+      ],
+      "filename": "founder/human-connection.webp",
+      "width": 1170,
+      "height": 1755,
+      "srcSet": "/brand-photos/founder/human-connection-800.webp 800w, /brand-photos/founder/human-connection.webp 1170w",
+      "versions": [
+        {
+          "filename": "founder/human-connection-800.webp",
+          "width": 800,
+          "height": 1200,
+          "bytes": 90622
+        },
+        {
+          "filename": "founder/human-connection.webp",
+          "width": 1170,
+          "height": 1755,
+          "bytes": 186070
+        }
+      ]
+    },
+    "community-outreach": {
+      "sourceIndex": 75,
+      "source": "00_FOUNDER_RAW_MEDIA_DROP/01_PHOTOS/Donation TOFW.JPG",
+      "caption": "Community outreach · Founder archive",
+      "alt": "Community outreach",
+      "uses": [
+        "home",
+        "vision",
+        "media"
+      ],
+      "filename": "founder/community-outreach.webp",
+      "width": 1400,
+      "height": 1750,
+      "srcSet": "/brand-photos/founder/community-outreach-800.webp 800w, /brand-photos/founder/community-outreach.webp 1400w",
+      "versions": [
+        {
+          "filename": "founder/community-outreach-800.webp",
+          "width": 800,
+          "height": 1000,
+          "bytes": 120034
+        },
+        {
+          "filename": "founder/community-outreach.webp",
+          "width": 1400,
+          "height": 1750,
+          "bytes": 222674
+        }
+      ]
+    },
+    "conversation": {
+      "sourceIndex": 77,
+      "source": "00_FOUNDER_RAW_MEDIA_DROP/01_PHOTOS/Nobel prize Dr Denise Mukwege .jpg",
+      "caption": "A conversation from the Founder archive",
+      "alt": "A conversation from the Founder archive",
+      "uses": [
+        "vision",
+        "partners"
+      ],
+      "filename": "founder/conversation.webp",
+      "width": 1284,
+      "height": 1582,
+      "srcSet": "/brand-photos/founder/conversation-800.webp 800w, /brand-photos/founder/conversation.webp 1284w",
+      "versions": [
+        {
+          "filename": "founder/conversation-800.webp",
+          "width": 800,
+          "height": 986,
+          "bytes": 70014
+        },
+        {
+          "filename": "founder/conversation.webp",
+          "width": 1284,
+          "height": 1582,
+          "bytes": 123128
+        }
+      ]
+    },
+    "runway-edition-five": {
+      "sourceIndex": 81,
+      "source": "00_FOUNDER_RAW_MEDIA_DROP/01_PHOTOS/Runway THE ONE FASHION WEEK ED 5.JPG",
+      "caption": "Fashion Week runway · Founder archive",
+      "alt": "Fashion Week runway",
+      "uses": [
+        "fashion"
+      ],
+      "filename": "founder/runway-edition-five.webp",
+      "width": 1400,
+      "height": 2047,
+      "srcSet": "/brand-photos/founder/runway-edition-five-800.webp 800w, /brand-photos/founder/runway-edition-five.webp 1400w",
+      "versions": [
+        {
+          "filename": "founder/runway-edition-five-800.webp",
+          "width": 800,
+          "height": 1170,
+          "bytes": 71402
+        },
+        {
+          "filename": "founder/runway-edition-five.webp",
+          "width": 1400,
+          "height": 2047,
+          "bytes": 155934
+        }
+      ]
+    },
+    "summit-goma": {
+      "sourceIndex": 83,
+      "source": "00_FOUNDER_RAW_MEDIA_DROP/01_PHOTOS/The One summit Goma DRc.JPG",
+      "caption": "The One Summit · Goma, DRC",
+      "alt": "The One Summit · Goma, DRC",
+      "uses": [
+        "home",
+        "programs",
+        "summit"
+      ],
+      "filename": "founder/summit-goma.webp",
+      "width": 1400,
+      "height": 2100,
+      "srcSet": "/brand-photos/founder/summit-goma-800.webp 800w, /brand-photos/founder/summit-goma.webp 1400w",
+      "versions": [
+        {
+          "filename": "founder/summit-goma-800.webp",
+          "width": 800,
+          "height": 1200,
+          "bytes": 68914
+        },
+        {
+          "filename": "founder/summit-goma.webp",
+          "width": 1400,
+          "height": 2100,
+          "bytes": 145692
+        }
+      ]
+    },
+    "diplomatic-encounter": {
+      "sourceIndex": 84,
+      "source": "00_FOUNDER_RAW_MEDIA_DROP/01_PHOTOS/Ambassador of Drc UAE.JPG",
+      "caption": "Diplomatic encounter · Founder archive",
+      "alt": "Diplomatic encounter",
+      "uses": [
+        "partners"
+      ],
+      "filename": "founder/diplomatic-encounter.webp",
+      "width": 1400,
+      "height": 1542,
+      "srcSet": "/brand-photos/founder/diplomatic-encounter-800.webp 800w, /brand-photos/founder/diplomatic-encounter.webp 1400w",
+      "versions": [
+        {
+          "filename": "founder/diplomatic-encounter-800.webp",
+          "width": 800,
+          "height": 881,
+          "bytes": 87374
+        },
+        {
+          "filename": "founder/diplomatic-encounter.webp",
+          "width": 1400,
+          "height": 1542,
+          "bytes": 222076
+        }
+      ]
+    },
+    "global-encounter": {
+      "sourceIndex": 96,
+      "source": "00_FOUNDER_RAW_MEDIA_DROP/01_PHOTOS/Ambassador of Tanzania .heic",
+      "caption": "Global encounter · Founder archive",
+      "alt": "Global encounter",
+      "uses": [
+        "partners"
+      ],
+      "filename": "founder/global-encounter.webp",
+      "width": 1400,
+      "height": 1867,
+      "srcSet": "/brand-photos/founder/global-encounter-800.webp 800w, /brand-photos/founder/global-encounter.webp 1400w",
+      "versions": [
+        {
+          "filename": "founder/global-encounter-800.webp",
+          "width": 800,
+          "height": 1067,
+          "bytes": 152388
+        },
+        {
+          "filename": "founder/global-encounter.webp",
+          "width": 1400,
+          "height": 1867,
+          "bytes": 414768
+        }
+      ]
+    },
+    "institutional-dialogue": {
+      "sourceIndex": 104,
+      "source": "00_FOUNDER_RAW_MEDIA_DROP/01_PHOTOS/92af4209-2dab-4a5d-bcbe-c3b8e6d6443a.JPG",
+      "caption": "Institutional dialogue · Founder archive",
+      "alt": "Institutional dialogue",
+      "uses": [
+        "vision",
+        "ecosystem",
+        "partners"
+      ],
+      "filename": "founder/institutional-dialogue.webp",
+      "width": 2000,
+      "height": 1334,
+      "srcSet": "/brand-photos/founder/institutional-dialogue-800.webp 800w, /brand-photos/founder/institutional-dialogue.webp 2000w",
+      "versions": [
+        {
+          "filename": "founder/institutional-dialogue-800.webp",
+          "width": 800,
+          "height": 534,
+          "bytes": 61296
+        },
+        {
+          "filename": "founder/institutional-dialogue.webp",
+          "width": 2000,
+          "height": 1334,
+          "bytes": 246572
+        }
+      ]
+    },
+    "office-encounter": {
+      "sourceIndex": 106,
+      "source": "00_FOUNDER_RAW_MEDIA_DROP/01_PHOTOS/Private office of sheikh saeed bin ahmed almaktoum.JPG",
+      "caption": "Selected institutional encounter · Founder archive",
+      "alt": "Selected institutional encounter",
+      "uses": [
+        "partners"
+      ],
+      "filename": "founder/office-encounter.webp",
+      "width": 1400,
+      "height": 1867,
+      "srcSet": "/brand-photos/founder/office-encounter-800.webp 800w, /brand-photos/founder/office-encounter.webp 1400w",
+      "versions": [
+        {
+          "filename": "founder/office-encounter-800.webp",
+          "width": 800,
+          "height": 1067,
+          "bytes": 162170
+        },
+        {
+          "filename": "founder/office-encounter.webp",
+          "width": 1400,
+          "height": 1867,
+          "bytes": 418716
+        }
+      ]
+    },
+    "casting-group": {
+      "sourceIndex": 107,
+      "source": "00_FOUNDER_RAW_MEDIA_DROP/01_PHOTOS/Model CASTING DUBAÏ.JPG",
+      "caption": "Casting and creative community · Founder archive",
+      "alt": "Casting and creative community",
+      "uses": [
+        "home",
+        "vision",
+        "join",
+        "fashion"
+      ],
+      "filename": "founder/casting-group.webp",
+      "width": 2000,
+      "height": 1125,
+      "srcSet": "/brand-photos/founder/casting-group-800.webp 800w, /brand-photos/founder/casting-group.webp 2000w",
+      "versions": [
+        {
+          "filename": "founder/casting-group-800.webp",
+          "width": 800,
+          "height": 450,
+          "bytes": 85880
+        },
+        {
+          "filename": "founder/casting-group.webp",
+          "width": 2000,
+          "height": 1125,
+          "bytes": 398084
+        }
+      ]
+    },
+    "runway-wide": {
+      "sourceIndex": 108,
+      "source": "00_FOUNDER_RAW_MEDIA_DROP/01_PHOTOS/IMG_7503.JPG",
+      "caption": "Runway atmosphere · Founder archive",
+      "alt": "Runway atmosphere",
+      "uses": [
+        "home",
+        "fashion",
+        "media"
+      ],
+      "filename": "founder/runway-wide.webp",
+      "width": 2000,
+      "height": 1333,
+      "srcSet": "/brand-photos/founder/runway-wide-800.webp 800w, /brand-photos/founder/runway-wide.webp 2000w",
+      "versions": [
+        {
+          "filename": "founder/runway-wide-800.webp",
+          "width": 800,
+          "height": 533,
+          "bytes": 59808
+        },
+        {
+          "filename": "founder/runway-wide.webp",
+          "width": 2000,
+          "height": 1333,
+          "bytes": 242084
+        }
+      ]
+    },
+    "cultural-performance": {
+      "sourceIndex": 110,
+      "source": "00_FOUNDER_RAW_MEDIA_DROP/01_PHOTOS/IMG_8382.JPG",
+      "caption": "Cultural performance · Founder archive",
+      "alt": "Cultural performance",
+      "uses": [
+        "home",
+        "ecosystem",
+        "media"
+      ],
+      "filename": "founder/cultural-performance.webp",
+      "width": 2000,
+      "height": 1335,
+      "srcSet": "/brand-photos/founder/cultural-performance-800.webp 800w, /brand-photos/founder/cultural-performance.webp 2000w",
+      "versions": [
+        {
+          "filename": "founder/cultural-performance-800.webp",
+          "width": 800,
+          "height": 534,
+          "bytes": 57940
+        },
+        {
+          "filename": "founder/cultural-performance.webp",
+          "width": 2000,
+          "height": 1335,
+          "bytes": 226636
+        }
+      ]
+    },
+    "designer-portrait": {
+      "sourceIndex": 114,
+      "source": "00_FOUNDER_RAW_MEDIA_DROP/01_PHOTOS/Designer Nelly amini.JPG",
+      "caption": "Designer portrait · Founder archive",
+      "alt": "Designer portrait",
+      "uses": [
+        "fashion"
+      ],
+      "filename": "founder/designer-portrait.webp",
+      "width": 1400,
+      "height": 1750,
+      "srcSet": "/brand-photos/founder/designer-portrait-800.webp 800w, /brand-photos/founder/designer-portrait.webp 1400w",
+      "versions": [
+        {
+          "filename": "founder/designer-portrait-800.webp",
+          "width": 800,
+          "height": 1000,
+          "bytes": 134080
+        },
+        {
+          "filename": "founder/designer-portrait.webp",
+          "width": 1400,
+          "height": 1750,
+          "bytes": 421210
+        }
+      ]
+    },
+    "casting-portrait": {
+      "sourceIndex": 119,
+      "source": "00_FOUNDER_RAW_MEDIA_DROP/01_PHOTOS/Donation.JPG",
+      "caption": "Model casting · Founder archive",
+      "alt": "Model casting",
+      "uses": [
+        "fashion"
+      ],
+      "filename": "founder/casting-portrait.webp",
+      "width": 1400,
+      "height": 1750,
+      "srcSet": "/brand-photos/founder/casting-portrait-800.webp 800w, /brand-photos/founder/casting-portrait.webp 1400w",
+      "versions": [
+        {
+          "filename": "founder/casting-portrait-800.webp",
+          "width": 800,
+          "height": 1000,
+          "bytes": 71744
+        },
+        {
+          "filename": "founder/casting-portrait.webp",
+          "width": 1400,
+          "height": 1750,
+          "bytes": 171142
+        }
+      ]
+    },
+    "audience": {
+      "sourceIndex": 125,
+      "source": "00_FOUNDER_RAW_MEDIA_DROP/01_PHOTOS/IMG_8365.JPG",
+      "caption": "Audience and event atmosphere · Founder archive",
+      "alt": "Audience and event atmosphere",
+      "uses": [
+        "fashion",
+        "media"
+      ],
+      "filename": "founder/audience.webp",
+      "width": 2000,
+      "height": 1335,
+      "srcSet": "/brand-photos/founder/audience-800.webp 800w, /brand-photos/founder/audience.webp 2000w",
+      "versions": [
+        {
+          "filename": "founder/audience-800.webp",
+          "width": 800,
+          "height": 534,
+          "bytes": 88008
+        },
+        {
+          "filename": "founder/audience.webp",
+          "width": 2000,
+          "height": 1335,
+          "bytes": 331452
+        }
+      ]
+    }
+  },
+  "videos": {
+    "fashion-archive": {
+      "sourceIndex": 127,
+      "source": "00_FOUNDER_RAW_MEDIA_DROP/02_VIDEOS_REELS/AB2DBD13-7C15-4835-9B4C-8C13021DB05C.MOV",
+      "title": "Fashion Week · performance and runway",
+      "purpose": "Documentary performance and runway imagery from the Founder archive; no sixth-edition attribution.",
+      "duration": 47.1,
+      "videoSrc": "/founder-videos/fashion-archive.mp4",
+      "videoFallbackSrc": "/founder-videos/fashion-archive.webm",
+      "posterSrc": "/founder-videos/fashion-archive-poster.webp"
+    },
+    "community-outreach": {
+      "sourceIndex": 72,
+      "source": "00_FOUNDER_RAW_MEDIA_DROP/02_VIDEOS_REELS/Donation The One Movement .MP4",
+      "title": "Community outreach",
+      "purpose": "Founder archive community outreach; no unsupported claims about recipients.",
+      "duration": 37.172993,
+      "videoSrc": "/founder-videos/community-outreach.mp4",
+      "videoFallbackSrc": "/founder-videos/community-outreach.webm",
+      "posterSrc": "/founder-videos/community-outreach-poster.webp"
+    },
+    "founder-arabic": {
+      "sourceIndex": 126,
+      "source": "00_FOUNDER_RAW_MEDIA_DROP/02_VIDEOS_REELS/What is The One Movement Arabic.MP4",
+      "title": "Founder vision · Arabic",
+      "purpose": "Arabic introduction from the Founder archive. Wider AI/member-platform ambitions are future vision, not a service available today.",
+      "duration": 63.96,
+      "videoSrc": "/founder-videos/founder-arabic.mp4",
+      "videoFallbackSrc": "/founder-videos/founder-arabic.webm",
+      "posterSrc": "/founder-videos/founder-arabic-poster.webp"
+    },
+    "institutional-meeting": {
+      "sourceIndex": 129,
+      "source": "00_FOUNDER_RAW_MEDIA_DROP/02_VIDEOS_REELS/Meeting with The Private Office of Sheikh Hamdan Al Nahyan.MOV",
+      "title": "Institutional dialogue",
+      "purpose": "Meeting footage from the Founder archive; no official partnership or endorsement is implied.",
+      "duration": 49.933333,
+      "videoSrc": "/founder-videos/institutional-meeting.mp4",
+      "videoFallbackSrc": "/founder-videos/institutional-meeting.webm",
+      "posterSrc": "/founder-videos/institutional-meeting-poster.webp"
+    }
+  }
+}

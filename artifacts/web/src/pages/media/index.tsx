@@ -4,7 +4,7 @@ import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
 import SectionHeading from '@/components/SectionHeading';
 import { Button } from '@/components/ui/button';
-import PhotoSlot from '@/components/PhotoSlot';
+import ArchivePhoto, { archiveVideo } from '@/components/ArchivePhoto';
 import ResponsiveMedia from '@/components/ResponsiveMedia';
 import Reveal from '@/components/Reveal';
 import { Download, Mail } from 'lucide-react';
@@ -72,40 +72,24 @@ export default function MediaHub() {
       <section className="py-section-lg bg-ivory-100 border-b border-sand-200">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
-            <SectionHeading eyebrow="FEATURED" heading="LATEST MEDIA" surface="light" thread />
+            <SectionHeading eyebrow="FEATURED MEDIA" heading="FROM THE ARCHIVE" surface="light" thread />
           </Reveal>
 
-          <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <Reveal delay={100} className="relative group">
-              <PhotoSlot
-                filename="media-featured-1.jpg"
-                alt=""
-                imageType="Founder media required"
-                purpose="Major featured press image or video poster."
-                className="w-full aspect-[16/10] rounded-sm overflow-hidden shadow-md"
-              />
-              <div className="mt-4">
-                <span className="text-xs font-semibold text-gold-600 tracking-widest uppercase">Feature</span>
-                <h3 className="mt-2 text-xl font-display text-ink-900">Founder-selected feature reserved</h3>
-              </div>
+          <div className="mt-12 grid grid-cols-12 items-start gap-5 sm:gap-6">
+            <Reveal delay={100} className="col-span-12 lg:col-span-7">
+              <ArchivePhoto id="runway-wide" caption="Runway atmosphere · Founder archive" sizes="(min-width: 1024px) 58vw, 92vw" />
             </Reveal>
-
-            <Reveal delay={200} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {[1, 2, 3, 4].map(i => (
-                <div key={i} className="flex flex-col gap-3">
-                  <PhotoSlot
-                    filename={`media-small-${i}.jpg`}
-                    alt=""
-                    imageType="Founder media"
-                    purpose="Supporting media items."
-                    className="w-full aspect-video rounded-sm overflow-hidden"
-                  />
-                  <div>
-                    <span className="text-[10px] font-semibold text-sand-500 tracking-wider uppercase">Media slot {i}</span>
-                    <h4 className="mt-1 text-sm font-semibold text-ink-800 leading-tight">Approved media pending</h4>
-                  </div>
-                </div>
-              ))}
+            <Reveal delay={160} className="col-span-6 lg:col-span-5">
+              <ArchivePhoto id="runway-white" caption sizes="(min-width: 1024px) 40vw, 46vw" />
+            </Reveal>
+            <Reveal delay={200} className="col-span-6 lg:col-span-4">
+              <ArchivePhoto id="community-outreach" caption sizes="(min-width: 1024px) 32vw, 46vw" />
+            </Reveal>
+            <Reveal delay={240} className="col-span-12 sm:col-span-6 lg:col-span-4">
+              <ArchivePhoto id="cultural-performance" caption sizes="(min-width: 1024px) 32vw, 92vw" />
+            </Reveal>
+            <Reveal delay={280} className="col-span-12 sm:col-span-6 lg:col-span-4">
+              <ArchivePhoto id="audience" caption sizes="(min-width: 1024px) 32vw, 92vw" />
             </Reveal>
           </div>
         </div>
@@ -115,20 +99,34 @@ export default function MediaHub() {
       <section className="py-section-lg bg-lagoon-900 text-ivory-100">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
-            <SectionHeading eyebrow="WATCH" heading="VIDEO & REELS" surface="dark" thread />
+            <SectionHeading eyebrow="WATCH" heading="VIDEOS & REELS" surface="dark" thread />
           </Reveal>
 
-          <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-            {[1, 2, 3, 4].map((i) => (
-              <Reveal key={i} delay={i * 100}>
-                <ResponsiveMedia
-                  kind="vertical-reel"
-                  label={`Reel Slot ${i}`}
-                  purpose="Vertical video coverage from events, programs, or interviews."
-                  className="aspect-[9/16] w-full"
-                />
-              </Reveal>
-            ))}
+          <div className="mt-12 grid grid-cols-1 min-[520px]:grid-cols-2 lg:grid-cols-4 gap-6">
+            {(['fashion-archive', 'community-outreach', 'founder-arabic', 'institutional-meeting'] as const).map((id, i) => {
+              const v = archiveVideo(id);
+              return (
+                <Reveal key={id} delay={i * 100}>
+                  <figure className="mx-auto max-w-[17rem]">
+                    <ResponsiveMedia
+                      kind="vertical-reel"
+                      label={v.title}
+                      purpose={v.purpose}
+                      videoSrc={v.videoSrc}
+                      videoFallbackSrc={v.videoFallbackSrc}
+                      posterSrc={v.posterSrc}
+                      assetId={`MEDIA-REEL-${i + 1}`}
+                      autoPlay={false}
+                      className="aspect-[9/16] w-full"
+                    />
+                    <figcaption className="mt-3 text-xs leading-relaxed text-ivory-300">
+                      <span className="block font-semibold text-gold-400">{v.title}</span>
+                      {v.purpose}
+                    </figcaption>
+                  </figure>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -137,23 +135,15 @@ export default function MediaHub() {
       <section className="py-section-lg bg-ivory-50">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
-            <SectionHeading eyebrow="COVERAGE" heading="IN THE PRESS" surface="light" thread />
+            <SectionHeading eyebrow="COVERAGE" heading="PRESS / COVERAGE" surface="light" thread />
+            <div className="mt-10 max-w-2xl border border-sand-200 bg-white p-8 shadow-sm">
+              <div className="mb-4 h-px w-12 bg-gold-500" aria-hidden="true" />
+              <h4 className="text-lg font-display text-ink-900">Awaiting verified records</h4>
+              <p className="mt-3 text-sm leading-relaxed text-ink-700">
+                No published coverage is listed yet. Articles and press mentions will appear here only after they are verified and approved by the Founder.
+              </p>
+            </div>
           </Reveal>
-          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Structural placeholders for verified media coverage */}
-            {[1, 2, 3].map(i => (
-              <Reveal key={i} delay={i * 100}>
-                <article className="h-full bg-white border border-sand-200 p-6 rounded-sm shadow-sm flex flex-col">
-                  <div className="mb-4 h-px w-12 bg-gold-500" aria-hidden="true" />
-                  <h4 className="text-lg font-display text-ink-900 mb-3">Approved coverage position {i}</h4>
-                  <p className="text-sm text-ink-700 leading-relaxed mb-6 flex-1">
-                    Coverage excerpt will be placed here once verified and approved by the Founder.
-                  </p>
-                  <span className="text-xs font-semibold text-gold-600 uppercase tracking-widest mt-auto">Awaiting verified record</span>
-                </article>
-              </Reveal>
-            ))}
-          </div>
         </div>
       </section>
 

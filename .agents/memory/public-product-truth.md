@@ -13,6 +13,8 @@ International Media Reach may state **353+ media outlets, 18 categories, and Art
 
 **Why:** The Founder explicitly authorized these capability figures while prohibiting partner or endorsement claims inferred from media distribution or photography.
 
-**How to apply:** Keep media distribution capabilities separate from approved partner records and factual press coverage. Before retaining a missing-media fallback, inspect accessible Founder uploads for contextually appropriate footage or stills. Use Founder montage imagery as explicitly labelled illustration, not evidence of a particular program edition or institutional relationship. Keep graceful fallbacks only where suitable Founder media is genuinely inaccessible; do not search for stock or invent replacement media.
+**How to apply:** Keep media distribution capabilities separate from approved partner records and factual press coverage. Before retaining a missing-media fallback, inspect accessible Founder uploads for contextually appropriate footage or stills. Prefer matching original photographs over montage stills; classify by visual content and reliable context, not filename alone. Montage imagery is illustration, not evidence of a particular program edition or institutional relationship. Where a program has no matching historic media, use an honest branded program-vision treatment instead of borrowing another event or institutional encounter. Do not search for stock or invent replacement media.
 
 **Why:** The user explicitly authorized reusing accessible Founder uploads and instructed that a placeholder must not remain when contextually appropriate Founder media is already available.
+
+**Why:** The Founder archive mixes originals, screenshots, logos, promotional clips and misleading filenames. Neither a descriptive filename nor an encounter photograph establishes program history, a person's identity or a formal partnership.

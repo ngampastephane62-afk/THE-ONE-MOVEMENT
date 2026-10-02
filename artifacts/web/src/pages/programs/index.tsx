@@ -6,7 +6,8 @@ import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
 import SectionHeading from '@/components/SectionHeading';
 import GeometricAccent from '@/components/GeometricAccent';
-import PhotoSlot from '@/components/PhotoSlot';
+import ArchivePhoto from '@/components/ArchivePhoto';
+import ProgramVision from '@/components/ProgramVision';
 import StatBlock from '@/components/StatBlock';
 
 /* ── Program cards data ─────────────────────────────────────────────────── */
@@ -310,34 +311,14 @@ function ProgramCard({
           transition: 'background-color 200ms ease',
         }}
       >
-        {/* Photo area with dev label overlay */}
         <div className="relative overflow-hidden">
-          <PhotoSlot
-            filename={photo}
-            alt=""
-            className="w-full aspect-[4/3]"
-            imageType="Founder-selected program media"
-            purpose={label}
-            duotone
-          />
-          {/* Dev label — tiny, elegant, disappears behind real photos */}
-          <div
-            aria-hidden="true"
-            className="absolute bottom-0 inset-x-0 flex justify-center pb-3 pointer-events-none"
-          >
-            <span
-              style={{
-                fontSize: '0.5rem',
-                letterSpacing: '0.18em',
-                fontFamily: 'var(--font-display)',
-                textTransform: 'uppercase',
-                color: 'hsl(43 80% 73%)',
-                opacity: 0.55,
-              }}
-            >
-              {label}
-            </span>
-          </div>
+          {slug === 'summit' ? (
+            <ArchivePhoto id="summit-goma" frameClassName="w-full aspect-[4/3]" objectPosition="center 30%" sizes="(min-width: 1024px) 30vw, 92vw" />
+          ) : slug === 'fashion-week' ? (
+            <ArchivePhoto id="runway-edition-five" frameClassName="w-full aspect-[4/3]" objectPosition="center 25%" sizes="(min-width: 1024px) 30vw, 92vw" />
+          ) : (
+            <ProgramVision name={name} tagline={tagline} className="w-full aspect-[4/3]" />
+          )}
         </div>
 
         {/* Text body */}

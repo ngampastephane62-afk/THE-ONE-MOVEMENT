@@ -5,6 +5,9 @@ import GoldThread from '@/components/GoldThread';
 import SectionHeading from '@/components/SectionHeading';
 import { Button } from '@/components/ui/button';
 import Reveal from '@/components/Reveal';
+import ArchivePhoto from '@/components/ArchivePhoto';
+import ResponsiveMedia from '@/components/ResponsiveMedia';
+import { archiveVideo } from '@/components/ArchivePhoto';
 import { Download, Handshake } from 'lucide-react';
 
 export default function Partners() {
@@ -48,6 +51,42 @@ export default function Partners() {
                 this page stays honest and shows none.
               </p>
             </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* INSTITUTIONAL ENGAGEMENT — encounters, not partner records */}
+      <section className="py-section-lg bg-ivory-50 border-t border-sand-200" aria-labelledby="engagement-heading">
+        <div className="mx-auto max-w-7xl px-6">
+          <Reveal>
+            <SectionHeading eyebrow="GLOBAL ENCOUNTERS" heading="DIPLOMATIC & INSTITUTIONAL DIALOGUE" surface="light" size="lg" thread />
+            <p id="engagement-heading" className="mt-6 max-w-2xl leading-relaxed text-ink-800">
+              Selected moments of conversation from the Founder archive. These are encounters, not partner records:
+              a photograph does not establish a partnership, sponsorship or endorsement, and no one is identified here.
+            </p>
+          </Reveal>
+          <div className="mt-12 grid grid-cols-12 items-start gap-4 sm:gap-6">
+            <Reveal className="col-span-12 sm:col-span-7"><ArchivePhoto id="institutional-dialogue" caption sizes="(min-width: 640px) 58vw, 92vw" /></Reveal>
+            <Reveal delay={80} className="col-span-6 sm:col-span-5"><ArchivePhoto id="diplomatic-encounter" caption sizes="(min-width: 640px) 40vw, 46vw" /></Reveal>
+            <Reveal delay={120} className="col-span-6 sm:col-span-4"><ArchivePhoto id="global-encounter" caption sizes="(min-width: 640px) 32vw, 46vw" /></Reveal>
+            <Reveal delay={160} className="col-span-6 sm:col-span-4"><ArchivePhoto id="office-encounter" caption sizes="(min-width: 640px) 32vw, 46vw" /></Reveal>
+            <Reveal delay={200} className="col-span-6 sm:col-span-4"><ArchivePhoto id="conversation" caption sizes="(min-width: 640px) 32vw, 46vw" /></Reveal>
+          </div>
+          <Reveal className="mt-12 flex flex-col items-center sm:flex-row sm:items-center sm:gap-10">
+            <ResponsiveMedia
+              kind="vertical-reel"
+              label={archiveVideo('institutional-meeting').title}
+              purpose={archiveVideo('institutional-meeting').purpose}
+              videoSrc={archiveVideo('institutional-meeting').videoSrc}
+              videoFallbackSrc={archiveVideo('institutional-meeting').videoFallbackSrc}
+              posterSrc={archiveVideo('institutional-meeting').posterSrc}
+              assetId="PARTNERS-MEETING"
+              autoPlay={false}
+              className="aspect-[9/16] w-full max-w-xs"
+            />
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-ink-700 sm:mt-0">
+              Institutional dialogue · meeting footage from the Founder archive. No official partnership or endorsement is implied.
+            </p>
           </Reveal>
         </div>
       </section>

@@ -5,6 +5,7 @@ import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
 import SectionHeading from '@/components/SectionHeading';
 import PhotoSlot from '@/components/PhotoSlot';
+import ArchivePhoto from '@/components/ArchivePhoto';
 import StatusNotice from '@/components/StatusNotice';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -165,6 +166,11 @@ export default function News() {
             thread
           />
 
+          {publishedArticles.length === 0 && (
+            <div className="mt-12 max-w-sm">
+              <ArchivePhoto id="cultural-performance" caption="Cultural performance · Founder archive" captionClassName="text-ivory-300" sizes="(min-width: 640px) 24rem, 92vw" />
+            </div>
+          )}
           <div className="mt-12">
             {publishedArticles.length === 0 ? (
               /* ── Zero-articles state: composed and honest ─────────────────── */

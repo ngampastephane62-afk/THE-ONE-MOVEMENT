@@ -5,7 +5,7 @@ import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
 import SectionHeading from '@/components/SectionHeading';
 import GeometricAccent from '@/components/GeometricAccent';
-import PhotoSlot from '@/components/PhotoSlot';
+import ArchivePhoto, { archiveVideo } from '@/components/ArchivePhoto';
 import ResponsiveMedia from '@/components/ResponsiveMedia';
 import Reveal from '@/components/Reveal';
 
@@ -41,12 +41,7 @@ export default function OurVision() {
             </div>
             <div className="lg:col-span-5 lg:col-start-8">
               <Reveal direction="left" delay={200}>
-                <ResponsiveMedia
-                  kind="portrait-image"
-                  label="HERO MEDIA — CINEMATIC CULTURES MONTAGE"
-                  purpose="Establish the global, cinematic scope of the movement."
-                  className="tomi-vision-frame w-full aspect-[3/4]"
-                />
+                <ArchivePhoto id="human-connection" priority className="tomi-vision-frame mx-auto max-w-sm lg:max-w-none" sizes="(min-width: 1024px) 40vw, 92vw" captionClassName="text-ivory-300" caption />
               </Reveal>
             </div>
           </div>
@@ -89,13 +84,7 @@ export default function OurVision() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <Reveal direction="right" className="lg:col-span-5 order-2 lg:order-1">
-              <PhotoSlot
-                filename="vision-human-connection.jpg"
-                alt=""
-                imageType="Founder media required"
-                purpose="A genuine moment of human connection or creative expression."
-                className="tomi-vision-frame w-full aspect-square sm:aspect-[4/5] shadow-xl"
-              />
+              <ArchivePhoto id="community-outreach" caption sizes="(min-width: 1024px) 40vw, 92vw" className="tomi-vision-frame mx-auto max-w-md shadow-xl" />
             </Reveal>
             <Reveal direction="left" className="lg:col-span-6 lg:col-start-7 order-1 lg:order-2">
               <p className="text-eyebrow text-gold-600 mb-4">HUMAN CONNECTION</p>
@@ -113,6 +102,51 @@ export default function OurVision() {
               <GoldThread className="mt-10" length="200px" node />
             </Reveal>
           </div>
+        </div>
+      </section>
+
+      {/* ONE HUMANITY — people, community, dialogue */}
+      <section className="bg-ivory-50 py-section-lg border-t border-sand-200" aria-labelledby="vision-people-heading">
+        <div className="mx-auto max-w-7xl px-6">
+          <Reveal>
+            <SectionHeading eyebrow="ONE HUMANITY" heading="PEOPLE BEFORE PLATFORMS." surface="light" size="lg" thread />
+            <p id="vision-people-heading" className="sr-only">People, community and dialogue</p>
+          </Reveal>
+          <div className="mt-12 grid grid-cols-12 items-start gap-4 sm:gap-6">
+            <Reveal className="col-span-12 sm:col-span-7"><ArchivePhoto id="community-gathering" caption sizes="(min-width: 640px) 58vw, 92vw" /></Reveal>
+            <Reveal delay={80} className="col-span-12 sm:col-span-5"><ArchivePhoto id="institutional-dialogue" caption sizes="(min-width: 640px) 40vw, 92vw" /></Reveal>
+            <Reveal delay={120} className="col-span-12 sm:col-span-5 sm:col-start-2"><ArchivePhoto id="casting-group" caption sizes="(min-width: 640px) 40vw, 92vw" /></Reveal>
+            <Reveal delay={160} className="col-span-8 col-start-3 sm:col-span-4 sm:col-start-8"><ArchivePhoto id="conversation" caption sizes="(min-width: 640px) 32vw, 70vw" /></Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* FOUNDER INTRODUCTION */}
+      <section className="py-section-lg" style={{ backgroundColor: 'hsl(187 67% 12%)' }}>
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-12">
+          <Reveal className="lg:col-span-6">
+            <p className="text-eyebrow text-gold-400">FOUNDER INTRODUCTION · ARABIC</p>
+            <p className="mt-5 text-lg leading-relaxed text-ivory-200">
+              The Founder introduces The One Movement in Arabic. The wider AI-supported collaboration platform described
+              is a future direction. It is not a live member or AI service today.
+            </p>
+          </Reveal>
+          <Reveal delay={100} direction="right" className="flex justify-center lg:col-span-5 lg:col-start-8">
+            <figure className="w-full max-w-xs">
+              <ResponsiveMedia
+                kind="vertical-reel"
+                label={archiveVideo('founder-arabic').title}
+                purpose={archiveVideo('founder-arabic').purpose}
+                videoSrc={archiveVideo('founder-arabic').videoSrc}
+                videoFallbackSrc={archiveVideo('founder-arabic').videoFallbackSrc}
+                posterSrc={archiveVideo('founder-arabic').posterSrc}
+                assetId="VISION-FOUNDER-ARABIC"
+                autoPlay={false}
+                className="aspect-[9/16] w-full"
+              />
+              <figcaption className="mt-3 text-xs text-ivory-300">Founder vision · Arabic introduction</figcaption>
+            </figure>
+          </Reveal>
         </div>
       </section>
 
@@ -146,11 +180,12 @@ export default function OurVision() {
             </Reveal>
 
             <Reveal delay={150} direction="left" className="lg:col-span-5 lg:col-start-8">
-              <ResponsiveMedia
-                kind="portrait-image"
-                label="GLOBAL ECOSYSTEM MEDIA"
-                purpose="Visual representation of international reach and interconnectedness."
-                className="tomi-vision-frame w-full aspect-[4/5] shadow-2xl"
+              <ArchivePhoto
+                id="global-encounter"
+                caption="Global encounter · Founder archive · no partnership implied"
+                captionClassName="text-ivory-300"
+                sizes="(min-width: 1024px) 40vw, 92vw"
+                className="tomi-vision-frame mx-auto max-w-md shadow-2xl"
               />
             </Reveal>
           </div>

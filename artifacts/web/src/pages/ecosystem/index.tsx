@@ -7,7 +7,7 @@ import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
 import SectionHeading from '@/components/SectionHeading';
 import GeometricAccent from '@/components/GeometricAccent';
-import PhotoSlot from '@/components/PhotoSlot';
+import ArchivePhoto from '@/components/ArchivePhoto';
 import {
   Accordion,
   AccordionContent,
@@ -578,16 +578,12 @@ export default function Ecosystem() {
               style={{ animationDelay: '0.2s' }}
             >
               <div className="relative">
-                <PhotoSlot
-                  filename="ecosystem-network.jpg"
-                  alt="Global network visual"
-                  className="tomi-network-frame w-full aspect-[4/3]"
-                />
+                <ArchivePhoto id="institutional-dialogue" frameClassName="tomi-network-frame w-full aspect-[4/3]" sizes="(min-width: 1024px) 40vw, 92vw" objectPosition="center 40%" />
                 <p
                   className="mt-2 text-right text-[10px] tracking-widest uppercase"
                   style={{ color: 'hsl(188 46% 40%)' }}
                 >
-                  ECOSYSTEM VISUAL — GLOBAL NETWORK
+                  INSTITUTIONAL DIALOGUE · FOUNDER ARCHIVE · NO PARTNERSHIP IMPLIED
                 </p>
               </div>
             </div>

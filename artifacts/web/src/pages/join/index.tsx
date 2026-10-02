@@ -11,6 +11,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import ArchivePhoto from '@/components/ArchivePhoto';
 import PathCard from './PathCard';
 import InterestForm from './InterestForm';
 import InquiryForm from './InquiryForm';
@@ -150,6 +151,12 @@ export default function JoinTheMovement() {
           </div>
         </div>
       </HeroSurface>
+
+      <div style={{ backgroundColor: 'hsl(38 57% 94%)' }}>
+        <div className="mx-auto max-w-5xl px-6 pt-10">
+          <ArchivePhoto id="community-gathering" caption="Community outreach · Founder archive" sizes="(min-width: 1024px) 64rem, 92vw" frameClassName="aspect-[16/9] w-full" objectPosition="center 40%" />
+        </div>
+      </div>
 
       {/* Transition: lagoon → ivory */}
       <div style={{ backgroundColor: 'hsl(38 57% 94%)' }}>

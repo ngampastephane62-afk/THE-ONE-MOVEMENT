@@ -7,7 +7,9 @@ import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
 import SectionHeading from '@/components/SectionHeading';
 import GeometricAccent from '@/components/GeometricAccent';
-import PhotoSlot from '@/components/PhotoSlot';
+import ArchivePhoto, { archiveVideo } from '@/components/ArchivePhoto';
+import ResponsiveMedia from '@/components/ResponsiveMedia';
+import ProgramVision from '@/components/ProgramVision';
 import FashionEditionNote from '@/components/FashionEditionNote';
 import StatusNotice from '@/components/StatusNotice';
 import { PROGRAMS, getProgramBySlug, type Program, type ProgramStatus } from '@/lib/programs-data';
@@ -96,13 +98,7 @@ export default function ProgramDetail() {
               className="lg:col-span-5 lg:col-start-8 animate-fade-in"
               style={{ animationDelay: '0.3s' }}
             >
-              {program.mediaSlots[0] && (
-                <MediaSlotWithLabel
-                  filename={`programs-${program.slug}-hero.jpg`}
-                  label={program.mediaSlots[0]}
-                  className="tomi-program-detail-media w-full aspect-[3/4]"
-                />
-              )}
+              <ProgramHeroMedia slug={program.slug} name={program.name} tagline={program.tagline} />
             </div>
           </div>
         </div>
@@ -354,7 +350,7 @@ export default function ProgramDetail() {
             surface="light"
             className="mb-12"
           />
-          <ProgramMediaGrid slug={program.slug} mediaSlots={program.mediaSlots} />
+          <ProgramMediaGrid slug={program.slug} name={program.name} tagline={program.tagline} />
         </div>
       </section>
 
@@ -496,91 +492,61 @@ function StatusBadge({ status }: { status: ProgramStatus }) {
   );
 }
 
-/**
- * MediaSlotWithLabel — wraps PhotoSlot with a premium dev caption overlay.
- * The label is tiny, gold, uppercase — clearly a reserved production area.
- */
-function MediaSlotWithLabel({
-  filename,
-  label,
-  className,
-}: {
-  filename: string;
-  label: string;
-  className?: string;
-}) {
-  return (
-    <div className="relative" aria-hidden="false">
-      <PhotoSlot filename={filename} alt="" className={className} duotone />
-      <div
-        aria-hidden="true"
-        className="absolute bottom-0 inset-x-0 flex justify-center pb-4 pointer-events-none"
-      >
-        <span
-          style={{
-            fontSize: '0.5rem',
-            letterSpacing: '0.18em',
-            fontFamily: 'var(--font-display)',
-            textTransform: 'uppercase',
-            color: 'hsl(43 80% 73%)',
-            opacity: 0.55,
-          }}
-        >
-          {label}
-        </span>
-      </div>
-    </div>
-  );
+function ProgramHeroMedia({ slug, name, tagline }: { slug: string; name: string; tagline: string }) {
+  if (slug === 'summit') {
+    return <ArchivePhoto id="summit-goma" caption sizes="(min-width: 1024px) 38vw, 92vw" className="tomi-program-detail-media mx-auto max-w-md" captionClassName="text-ivory-300" />;
+  }
+  if (slug === 'fashion-week') {
+    return <ArchivePhoto id="runway-white" caption sizes="(min-width: 1024px) 38vw, 92vw" className="tomi-program-detail-media mx-auto max-w-md" captionClassName="text-ivory-300" />;
+  }
+  return <ProgramVision name={name} tagline={tagline} className="tomi-program-detail-media w-full aspect-[3/4]" />;
 }
 
-/**
- * ProgramMediaGrid — mosaic-style grid of all mediaSlots for the media section.
- * First slot is large; subsequent slots fill the secondary column.
- */
-function ProgramMediaGrid({
-  slug,
-  mediaSlots,
-}: {
-  slug: string;
-  mediaSlots: string[];
-}) {
-  if (mediaSlots.length === 0) return null;
-
-  const [primary, ...secondary] = mediaSlots;
-  const secondarySlots = secondary.slice(0, 3);
-
-  if (secondarySlots.length === 0) {
+function ProgramMediaGrid({ slug, name, tagline }: { slug: string; name: string; tagline: string }) {
+  if (slug === 'summit') {
     return (
-      <MediaSlotWithLabel
-        filename={`programs-${slug}-media-1.jpg`}
-        label={primary}
-        className="w-full aspect-[4/3]"
-      />
+      <div className="grid gap-8 md:grid-cols-12 md:items-center">
+        <div className="md:col-span-5 md:col-start-1">
+          <ArchivePhoto id="summit-goma" caption="The One Summit, Goma, DRC" sizes="(min-width: 768px) 40vw, 92vw" objectPosition="center" />
+        </div>
+        <p className="md:col-span-6 md:col-start-7 text-lg leading-relaxed text-ink-800">
+          The Summit carries the Movement's leadership and business conversation to the Democratic Republic of Congo. Further official details will be announced when confirmed.
+        </p>
+      </div>
     );
   }
-
-  return (
-    <div
-      className="grid gap-2"
-      style={{ gridTemplateColumns: '3fr 2fr' }}
-    >
-      {/* Primary — tall portrait */}
-      <MediaSlotWithLabel
-        filename={`programs-${slug}-media-1.jpg`}
-        label={primary}
-        className="w-full aspect-[2/3]"
-      />
-      {/* Secondary column */}
-      <div className="flex flex-col gap-2">
-        {secondarySlots.map((label, i) => (
-          <MediaSlotWithLabel
-            key={i}
-            filename={`programs-${slug}-media-${i + 2}.jpg`}
-            label={label}
-            className="w-full aspect-square"
+  if (slug === 'fashion-week') {
+    return (
+      <div className="grid grid-cols-12 gap-3 sm:gap-5">
+        <div className="col-span-12 sm:col-span-8"><ArchivePhoto id="runway-wide" caption sizes="(min-width: 640px) 60vw, 92vw" /></div>
+        <div className="col-span-6 sm:col-span-4"><ArchivePhoto id="designer-portrait" caption sizes="(min-width: 640px) 30vw, 46vw" /></div>
+        <div className="col-span-6 sm:col-span-4"><ArchivePhoto id="runway-cultural" caption sizes="(min-width: 640px) 30vw, 46vw" /></div>
+        <div className="col-span-12 sm:col-span-8"><ArchivePhoto id="audience" caption sizes="(min-width: 640px) 60vw, 92vw" /></div>
+        <div className="col-span-12 sm:col-span-5"><ArchivePhoto id="casting-portrait" caption sizes="(min-width: 640px) 40vw, 92vw" /></div>
+        <div className="col-span-12 sm:col-span-7"><ArchivePhoto id="casting-group" caption sizes="(min-width: 640px) 58vw, 92vw" /></div>
+        <figure className="col-span-12 mx-auto w-full max-w-xs sm:col-span-5 sm:mx-0">
+          <ResponsiveMedia
+            kind="vertical-reel"
+            label={archiveVideo('fashion-archive').title}
+            purpose={archiveVideo('fashion-archive').purpose}
+            videoSrc={archiveVideo('fashion-archive').videoSrc}
+            videoFallbackSrc={archiveVideo('fashion-archive').videoFallbackSrc}
+            posterSrc={archiveVideo('fashion-archive').posterSrc}
+            assetId="FASHION-ARCHIVE-REEL"
+            autoPlay={false}
+            className="aspect-[9/16] w-full"
           />
-        ))}
+          <figcaption className="mt-2 text-[11px] text-ink-700">Fashion Week · performance and runway · Founder archive</figcaption>
+        </figure>
       </div>
+    );
+  }
+  return (
+    <div className="grid gap-8 md:grid-cols-12 md:items-center">
+      <ProgramVision name={name} tagline={tagline} className="md:col-span-6 w-full aspect-[16/10]" />
+      <p className="md:col-span-5 md:col-start-8 text-ink-800 leading-relaxed">
+        This program is presented through its vision. No historic photography is shown because none is confirmed. Official details will be announced when confirmed.
+      </p>
     </div>
   );
 }
