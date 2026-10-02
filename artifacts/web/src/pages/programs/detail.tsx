@@ -8,6 +8,7 @@ import GoldThread from '@/components/GoldThread';
 import SectionHeading from '@/components/SectionHeading';
 import GeometricAccent from '@/components/GeometricAccent';
 import PhotoSlot from '@/components/PhotoSlot';
+import FashionEditionNote from '@/components/FashionEditionNote';
 import StatusNotice from '@/components/StatusNotice';
 import { PROGRAMS, getProgramBySlug, type Program, type ProgramStatus } from '@/lib/programs-data';
 
@@ -62,6 +63,7 @@ export default function ProgramDetail() {
                 {program.name}
               </h1>
               <GoldThread className="mt-7" length="220px" node />
+              {program.slug === 'fashion-week' && <FashionEditionNote dark />}
               <p
                 className="mt-6 text-ivory-200 text-lg leading-relaxed max-w-xl animate-fade-in"
                 style={{ animationDelay: '0.15s' }}
@@ -98,7 +100,7 @@ export default function ProgramDetail() {
                 <MediaSlotWithLabel
                   filename={`programs-${program.slug}-hero.jpg`}
                   label={program.mediaSlots[0]}
-                  className="w-full aspect-[3/4]"
+                  className="tomi-program-detail-media w-full aspect-[3/4]"
                 />
               )}
             </div>

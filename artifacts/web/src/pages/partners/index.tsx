@@ -4,7 +4,6 @@ import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
 import SectionHeading from '@/components/SectionHeading';
 import { Button } from '@/components/ui/button';
-import PhotoSlot from '@/components/PhotoSlot';
 import Reveal from '@/components/Reveal';
 import { Download, Handshake } from 'lucide-react';
 
@@ -35,145 +34,21 @@ export default function Partners() {
 
       {/* STRUCTURAL CATEGORIES */}
       <section className="py-section-lg bg-ivory-100">
-        <div className="mx-auto max-w-7xl px-6 space-y-24">
+        <div className="mx-auto max-w-7xl px-6 space-y-12">
 
-          {/* 1. INSTITUTIONAL RELATIONSHIPS */}
-          <div>
-            <Reveal>
-              <SectionHeading eyebrow="SUPPORT" heading="INSTITUTIONAL RELATIONSHIPS" surface="light" thread />
-              <p className="mt-6 text-ink-700 max-w-3xl leading-relaxed">
-                Reserved for approved records involving public institutions, UN bodies, embassies and international cooperation organizations.
+          <Reveal>
+            <div className="tomi-empty-slot p-8 sm:p-12">
+              <p className="text-eyebrow text-gold-400">PARTNER REGISTRY</p>
+              <h2 className="mt-4 max-w-2xl text-display-md text-ivory-100" style={{ fontFamily: 'var(--font-display)' }}>
+                NO PARTNERSHIPS PUBLISHED YET.
+              </h2>
+              <p className="mt-5 max-w-2xl leading-relaxed text-ivory-200">
+                Institutions, sponsors, companies, NGOs, universities and ambassadors will appear
+                here only once a relationship is verified and approved in writing. Until then,
+                this page stays honest and shows none.
               </p>
-            </Reveal>
-            <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-6">
-              {[1, 2, 3, 4].map(i => (
-                <Reveal key={i} delay={i * 50}>
-                  <div className="aspect-video bg-white border border-sand-200 rounded-sm flex items-center justify-center p-6 shadow-sm">
-                    <span className="text-[10px] text-sand-400 uppercase tracking-widest text-center font-semibold">Institution record slot {i}</span>
-                  </div>
-                </Reveal>
-              ))}
             </div>
-          </div>
-
-          {/* 2. PREVIOUS SPONSORS */}
-          <div>
-            <Reveal>
-              <SectionHeading eyebrow="INVESTMENT" heading="PREVIOUS SPONSORS" surface="light" thread />
-            </Reveal>
-            <div className="mt-10 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
-              {[1, 2, 3, 4, 5].map(i => (
-                <Reveal key={i} delay={i * 50}>
-                  <div className="aspect-square bg-white border border-sand-200 rounded-sm flex items-center justify-center p-4 shadow-sm">
-                    <span className="text-[10px] text-sand-400 uppercase tracking-widest text-center font-semibold">Sponsor record slot {i}</span>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-
-          {/* 3. CORPORATE PARTNERS */}
-          <div>
-            <Reveal>
-              <SectionHeading eyebrow="COLLABORATION" heading="CORPORATE PARTNERS" surface="light" thread />
-              <p className="mt-6 text-ink-700 max-w-3xl leading-relaxed">
-                Reserved for verified companies across Technology, Energy, Media, Finance, Luxury, Hospitality, Real Estate and Professional Services.
-              </p>
-            </Reveal>
-            <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-6">
-              {[1, 2, 3, 4].map(i => (
-                <Reveal key={i} delay={i * 50}>
-                  <div className="h-24 bg-white border border-sand-200 rounded-sm flex items-center justify-center px-4 shadow-sm">
-                    <span className="text-[10px] text-sand-400 uppercase tracking-widest text-center font-semibold">Company record slot {i}</span>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-
-          {/* 4. NGOs & UNIVERSITIES */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-            <div>
-              <Reveal>
-                <SectionHeading eyebrow="CIVIL SOCIETY" heading="NGOs" surface="light" thread />
-              </Reveal>
-              <div className="mt-8 grid grid-cols-2 gap-4">
-                {[1, 2].map(i => (
-                  <Reveal key={i} delay={i * 50}>
-                    <div className="h-20 bg-white border border-sand-200 rounded-sm flex items-center justify-center shadow-sm">
-                      <span className="text-[10px] text-sand-400 uppercase tracking-widest font-semibold">NGO record slot</span>
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
-            </div>
-            <div>
-              <Reveal>
-                <SectionHeading eyebrow="ACADEMIA" heading="UNIVERSITIES" surface="light" thread />
-              </Reveal>
-              <div className="mt-8 grid grid-cols-2 gap-4">
-                {[1, 2].map(i => (
-                  <Reveal key={i} delay={i * 50}>
-                    <div className="h-20 bg-white border border-sand-200 rounded-sm flex items-center justify-center shadow-sm">
-                      <span className="text-[10px] text-sand-400 uppercase tracking-widest font-semibold">University record slot</span>
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* 5. AMBASSADORS */}
-          <div>
-            <Reveal>
-              <SectionHeading eyebrow="REPRESENTATION" heading="AMBASSADORS" surface="light" thread />
-              <p className="mt-6 text-ink-700 max-w-3xl leading-relaxed">
-                Profile architecture for approved Official, Cultural, Fashion, Creator, Influencer, Actor and Celebrity Ambassadors.
-              </p>
-            </Reveal>
-            <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-              {[1, 2, 3, 4].map(i => (
-                <Reveal key={i} delay={i * 100}>
-                  <div className="flex flex-col group">
-                    <PhotoSlot
-                      filename={`ambassador-${i}.jpg`}
-                      alt=""
-                      imageType="Founder media required"
-                      purpose="Verified Ambassador Portrait."
-                      className="aspect-[4/5] w-full rounded-sm overflow-hidden border border-sand-200 shadow-sm"
-                    />
-                    <div className="mt-4">
-                      <h4 className="text-lg font-display text-ink-900">Ambassador profile slot {i}</h4>
-                      <p className="text-xs text-gold-600 font-semibold tracking-wider uppercase mt-1">Category pending approval</p>
-                    </div>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-
-          {/* 6. STRATEGIC SUPPORTERS */}
-          <div>
-            <Reveal>
-              <SectionHeading eyebrow="ENDORSEMENT" heading="STRATEGIC SUPPORTERS" surface="light" thread />
-            </Reveal>
-            <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[1, 2, 3].map(i => (
-                <Reveal key={i} delay={i * 100}>
-                  <div className="flex items-center gap-4 bg-white border border-sand-200 p-4 rounded-sm shadow-sm">
-                    <div className="w-16 h-16 bg-sand-100 rounded-full flex-shrink-0 flex items-center justify-center border border-sand-200 overflow-hidden">
-                      <span className="text-[8px] text-sand-400 font-semibold uppercase text-center leading-tight">Portrait<br/>Slot</span>
-                    </div>
-                    <div>
-                      <h4 className="text-base font-display text-ink-900 leading-tight">Supporter profile slot {i}</h4>
-                      <p className="text-xs text-ink-500 mt-1">Reserved for an approved record</p>
-                    </div>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-
+          </Reveal>
         </div>
       </section>
 

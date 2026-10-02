@@ -11,7 +11,7 @@ import Reveal from '@/components/Reveal';
 
 export default function OurVision() {
   return (
-    <div>
+    <div className="tomi-vision-editorial">
       <Helmet>
         <title>OUR VISION — THE ONE MOVEMENT INTERNATIONAL</title>
         <meta name="description" content="Our vision, purpose, and global ambition. Connecting humanity, creating opportunity, and building peace." />
@@ -45,7 +45,7 @@ export default function OurVision() {
                   kind="portrait-image"
                   label="HERO MEDIA — CINEMATIC CULTURES MONTAGE"
                   purpose="Establish the global, cinematic scope of the movement."
-                  className="w-full aspect-[3/4]"
+                  className="tomi-vision-frame w-full aspect-[3/4]"
                 />
               </Reveal>
             </div>
@@ -94,7 +94,7 @@ export default function OurVision() {
                 alt=""
                 imageType="Founder media required"
                 purpose="A genuine moment of human connection or creative expression."
-                className="w-full aspect-square sm:aspect-[4/5] shadow-xl"
+                className="tomi-vision-frame w-full aspect-square sm:aspect-[4/5] shadow-xl"
               />
             </Reveal>
             <Reveal direction="left" className="lg:col-span-6 lg:col-start-7 order-1 lg:order-2">
@@ -137,7 +137,7 @@ export default function OurVision() {
                   What starts as physical programs and events is evolving into a comprehensive digital and physical network. Our ambition is to unite fifteen sectors into a single, navigable ecosystem.
                 </p>
                 <p>
-                  The future direction of the Movement includes a dedicated member platform, enabling continuous cross-border collaboration and unlocking opportunities previously constrained by geography.
+                  Future vision: an AI-powered, trusted, all-in-one global collaboration ecosystem. It is a direction we are working toward, not a service available today.
                 </p>
               </div>
               <Link href="/ecosystem" className="mt-10 inline-block">
@@ -150,7 +150,7 @@ export default function OurVision() {
                 kind="portrait-image"
                 label="GLOBAL ECOSYSTEM MEDIA"
                 purpose="Visual representation of international reach and interconnectedness."
-                className="w-full aspect-[4/5] shadow-2xl"
+                className="tomi-vision-frame w-full aspect-[4/5] shadow-2xl"
               />
             </Reveal>
           </div>

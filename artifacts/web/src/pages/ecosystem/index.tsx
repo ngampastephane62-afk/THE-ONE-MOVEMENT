@@ -581,7 +581,7 @@ export default function Ecosystem() {
                 <PhotoSlot
                   filename="ecosystem-network.jpg"
                   alt="Global network visual"
-                  className="w-full aspect-[4/3]"
+                  className="tomi-network-frame w-full aspect-[4/3]"
                 />
                 <p
                   className="mt-2 text-right text-[10px] tracking-widest uppercase"
@@ -659,12 +659,12 @@ export default function Ecosystem() {
           </div>
 
           {/* Desktop: constellation */}
-          <div className="hidden lg:block">
+          <div className="tomi-sector-explorer hidden lg:block">
             <SectorConstellation />
           </div>
 
           {/* Mobile / tablet: accordion */}
-          <div className="lg:hidden">
+          <div className="tomi-sector-explorer lg:hidden">
             <SectorAccordion />
           </div>
         </div>

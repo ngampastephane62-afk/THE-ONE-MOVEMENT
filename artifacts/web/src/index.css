@@ -830,3 +830,183 @@
     inset: -1px;
   }
 }
+
+/* ── TOMI constellation + editorial slots ───────────────────────────────── */
+.tomi-const-stage{position:relative;width:100%;max-width:34rem;margin:0 auto;aspect-ratio:1/1;border-radius:50%;background:radial-gradient(circle,hsl(39 52% 54%/.14),transparent 55%)}
+.tomi-const-svg{position:absolute;inset:0;width:100%;height:100%}
+.tomi-const-ring{fill:none;stroke:hsl(43 80% 73%/.25);stroke-width:.25;stroke-dasharray:1 1.6}
+.tomi-const-spoke{stroke:hsl(43 80% 73%/.2);stroke-width:.2;transition:stroke .3s,stroke-width .3s}
+.tomi-const-spoke.is-active{stroke:hsl(43 80% 73%);stroke-width:.45}
+.tomi-const-core{position:absolute;left:50%;top:50%;width:22%;aspect-ratio:1;transform:translate(-50%,-50%);display:grid;place-items:center;border-radius:50%;border:1px solid hsl(43 80% 73%/.6);background:hsl(187 67% 9%);color:hsl(43 80% 73%);font-family:var(--font-display);font-size:clamp(.7rem,2.6vw,1.1rem);letter-spacing:.14em;box-shadow:0 0 50px hsl(39 52% 54%/.25)}
+.tomi-const-node{position:absolute;transform:translate(-50%,-50%);width:2.75rem;height:2.75rem;display:grid;place-items:center;background:none;border:0;cursor:pointer}
+.tomi-const-dot{width:.7rem;height:.7rem;border-radius:50%;border:1px solid hsl(43 80% 73%);background:hsl(187 67% 12%);transition:transform .3s,background .3s}
+.tomi-const-node:hover .tomi-const-dot,.tomi-const-node.is-active .tomi-const-dot{background:hsl(43 80% 73%);transform:scale(1.7)}
+.tomi-const-label{display:none;position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:-.35rem;white-space:nowrap;font-size:.625rem;letter-spacing:.12em;text-transform:uppercase;color:hsl(38 44% 87%/.85)}
+.tomi-const-node.is-active .tomi-const-label{color:hsl(43 80% 73%)}
+@media(min-width:640px){.tomi-const-label{display:block}}
+.tomi-const-panel{border-left:2px solid hsl(39 52% 54%);padding:.25rem 0 .25rem 1.5rem;animation:signalIn .5s ease-out both}
+.tomi-const-chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.tomi-const-chips button{min-height:2.5rem;padding:.4rem .8rem;border:1px solid hsl(39 52% 54%/.35);background:hsl(187 67% 10%/.8);color:hsl(38 44% 87%);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;transition:all .2s}
+.tomi-const-chips button:hover,.tomi-const-chips button.is-active{background:hsl(39 52% 54%/.22);border-color:hsl(43 80% 73%);color:hsl(43 80% 73%)}
+.tomi-const-chips button:focus-visible,.tomi-const-node:focus-visible{outline:2px solid hsl(43 80% 73%);outline-offset:2px}
+.tomi-empty-slot{border:1px dashed hsl(39 52% 54%/.4);background:linear-gradient(135deg,hsl(188 66% 16%/.5),hsl(187 67% 10%/.8));color:hsl(38 44% 87%)}
+@media(prefers-reduced-motion:reduce){.tomi-const-panel{animation:none}}
+
+/* Editorial presentation: authentic media first, reserved frames stay honest. */
+.tomi-hero-edition {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  color: hsl(43 80% 73% / .8);
+  font-size: .6rem;
+  letter-spacing: .18em;
+}
+.tomi-editorial-chapter {
+  position: relative;
+}
+.tomi-editorial-chapter::before {
+  content: attr(data-chapter);
+  position: absolute;
+  top: 1.5rem;
+  left: max(1.5rem, calc((100% - 80rem) / 2 + 1.5rem));
+  color: hsl(39 52% 54%);
+  font-size: .6rem;
+  letter-spacing: .2em;
+  line-height: 1.5;
+}
+.tomi-fashion-editorial {
+  box-shadow: 0 28px 70px hsl(30 37% 7% / .07);
+}
+.tomi-fashion-media {
+  position: relative;
+  padding: 2rem;
+  background:
+    radial-gradient(ellipse at 50% 20%, hsl(39 52% 54% / .18), transparent 60%),
+    hsl(187 67% 10%);
+}
+.tomi-fashion-media::before {
+  content: '';
+  position: absolute;
+  inset: 1rem;
+  border: 1px solid hsl(39 52% 54% / .22);
+  pointer-events: none;
+}
+.tomi-edition-note {
+  margin-top: 2rem;
+  padding-block: 1.25rem;
+  border-top: 1px solid hsl(39 52% 54% / .35);
+  border-bottom: 1px solid hsl(39 52% 54% / .35);
+  color: hsl(29 40% 12%);
+}
+.tomi-edition-note-dark {
+  color: hsl(38 44% 87%);
+}
+.tomi-edition-number {
+  display: block;
+  color: hsl(37 55% 40%);
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1;
+}
+.tomi-edition-note-dark .tomi-edition-number {
+  color: hsl(43 80% 73%);
+}
+.tomi-editorial-card,
+.tomi-program-editorial-card {
+  border: 1px solid hsl(39 52% 54% / .22);
+  transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
+}
+.tomi-editorial-card:hover,
+.tomi-program-editorial-card:hover {
+  transform: translateY(-5px);
+  border-color: hsl(39 52% 54% / .65);
+  box-shadow: 0 18px 45px hsl(187 67% 4% / .15);
+}
+.tomi-archive-editorial {
+  background:
+    radial-gradient(ellipse at 80% 0%, hsl(39 52% 54% / .08), transparent 55%),
+    hsl(187 67% 10%);
+}
+.tomi-archive-editorial .tomi-photo-placeholder {
+  min-height: 14rem;
+}
+.tomi-photo-placeholder {
+  background-image: radial-gradient(ellipse at 50% 20%, hsl(39 52% 54% / .08), transparent 65%);
+}
+.tomi-photo-fallback-lines {
+  border: 1px solid hsl(39 52% 54% / .25);
+}
+.tomi-photo-fallback-lines::before,
+.tomi-photo-fallback-lines::after {
+  content: '';
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+}
+.tomi-photo-fallback-lines::before {
+  inset: -1px auto auto -1px;
+  border-top: 1px solid hsl(43 80% 73% / .6);
+  border-left: 1px solid hsl(43 80% 73% / .6);
+}
+.tomi-photo-fallback-lines::after {
+  inset: auto -1px -1px auto;
+  border-bottom: 1px solid hsl(43 80% 73% / .6);
+  border-right: 1px solid hsl(43 80% 73% / .6);
+}
+.tomi-vision-frame,
+.tomi-network-frame,
+.tomi-program-detail-media {
+  border: 1px solid hsl(39 52% 54% / .4);
+  box-shadow: .8rem .8rem 0 hsl(39 52% 54% / .07), 0 25px 70px hsl(187 67% 4% / .15);
+}
+.tomi-vision-editorial h1 {
+  font-size: clamp(2rem, 4.6vw, 4rem);
+  line-height: 1.12;
+}
+.tomi-sector-explorer {
+  padding: clamp(1rem, 3vw, 2.5rem);
+  border: 1px solid hsl(39 52% 54% / .25);
+  background: radial-gradient(ellipse at 35% 50%, hsl(39 52% 54% / .07), transparent 70%);
+}
+.tomi-const-chips button {
+  min-height: 2.75rem;
+}
+.tomi-const-panel {
+  min-height: 13rem;
+}
+.tomi-const-panel a:focus-visible {
+  outline: 2px solid hsl(43 80% 73%);
+  outline-offset: 5px;
+}
+@media (max-width: 639px) {
+  .tomi-hero-edition {
+    font-size: .5rem;
+    letter-spacing: .12em;
+  }
+  .tomi-fashion-media {
+    padding: 1.5rem;
+  }
+  .tomi-editorial-chapter::before {
+    top: 1.1rem;
+    font-size: .5rem;
+  }
+  .tomi-const-stage {
+    max-width: 22rem;
+  }
+  .tomi-const-panel {
+    min-height: 12rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tomi-editorial-card,
+  .tomi-program-editorial-card,
+  .tomi-const-spoke,
+  .tomi-const-dot,
+  .tomi-const-chips button {
+    transition: none;
+  }
+  .tomi-editorial-card:hover,
+  .tomi-program-editorial-card:hover {
+    transform: none;
+  }
+}

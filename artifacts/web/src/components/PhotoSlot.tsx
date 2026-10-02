@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
-import GeometricAccent from './GeometricAccent';
 
 interface PhotoSlotProps {
   /** Filename only — resolved to /brand-photos/{filename} */
@@ -71,7 +70,7 @@ export default function PhotoSlot({
         aria-hidden={alt ? undefined : true}
         aria-label={alt || undefined}
         role={alt ? 'img' : undefined}
-        className={cn('flex flex-col items-center justify-center p-4 relative overflow-hidden', className)}
+        className={cn('tomi-photo-placeholder flex flex-col items-center justify-center p-6 relative overflow-hidden', className)}
         style={{
           borderRadius: radius,
           backgroundColor: 'hsl(188 66% 16%)', // lagoon-800
@@ -79,15 +78,8 @@ export default function PhotoSlot({
         }}
       >
         {/* Centered geometric motif */}
-        <span className="absolute inset-0 flex flex-col justify-center overflow-hidden opacity-30">
-          <GeometricAccent variant="gold-on-lagoon" height={20} />
-          <GeometricAccent variant="gold-on-lagoon" height={20} />
-          <GeometricAccent variant="gold-on-lagoon" height={20} />
-          <GeometricAccent variant="gold-on-lagoon" height={20} />
-          <GeometricAccent variant="gold-on-lagoon" height={20} />
-          <GeometricAccent variant="gold-on-lagoon" height={20} />
-          <GeometricAccent variant="gold-on-lagoon" height={20} />
-          <GeometricAccent variant="gold-on-lagoon" height={20} />
+        <span className="tomi-photo-fallback-lines absolute inset-5" aria-hidden="true">
+          <span className="absolute inset-4 border border-gold-500/10" />
         </span>
         {/* Subtle gold radial glow */}
         <span
@@ -99,7 +91,8 @@ export default function PhotoSlot({
           }}
         />
         {/* Editorial brief shown only while approved photography is absent. */}
-        <span className="relative z-10 text-center flex flex-col gap-2 items-center text-ivory-300 opacity-90">
+        <span className="relative z-10 text-center flex flex-col gap-3 items-center text-ivory-300 opacity-90">
+          <span className="mb-2 h-px w-12 bg-gold-500/60" aria-hidden="true" />
           <span className="text-[10px] font-semibold tracking-[0.2em] uppercase" style={{ color: 'hsl(39 52% 54%)' }}>
             {imageType || 'Brand photography'}
           </span>

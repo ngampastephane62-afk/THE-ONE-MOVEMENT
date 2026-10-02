@@ -35,6 +35,39 @@ export default function MediaHub() {
         </div>
       </HeroSurface>
 
+      {/* INTERNATIONAL MEDIA REACH */}
+      <section className="tomi-aurora-surface py-section-lg" aria-labelledby="media-reach-heading">
+        <div className="mx-auto max-w-7xl px-6">
+          <Reveal>
+            <p className="text-eyebrow text-gold-400">INTERNATIONAL MEDIA REACH</p>
+            <h2 id="media-reach-heading" className="mt-4 max-w-3xl text-display-lg text-ivory-100" style={{ fontFamily: 'var(--font-display)' }}>
+              DISTRIBUTION CAPABILITY THROUGH TROPIK AGENCY.
+            </h2>
+            <GoldThread className="mt-8" length="220px" node />
+          </Reveal>
+          <div className="mt-12 grid gap-px bg-lagoon-600/50 sm:grid-cols-3">
+            {[
+              { v: '353+', l: 'Media outlets in the Tropik Agency network' },
+              { v: '18', l: 'Categories of outlets available for distribution' },
+              { v: '3', l: 'Formats: Article, Press Release, Campaign' },
+            ].map((x, i) => (
+              <Reveal key={x.v} delay={i * 90} className="bg-lagoon-900 p-8">
+                <p className="text-display-lg text-gold-400" style={{ fontFamily: 'var(--font-display)' }}>{x.v}</p>
+                <p className="mt-3 text-sm leading-relaxed text-ivory-200">{x.l}</p>
+              </Reveal>
+            ))}
+          </div>
+          <p className="mt-8 max-w-3xl text-sm leading-relaxed text-ivory-300">
+            These figures describe the distribution capabilities of Tropik Agency. They do not
+            represent TOMI partners, guaranteed coverage or endorsement, and are not verified
+            published TOMI coverage.
+          </p>
+          <Link href="/join#institutional-inquiry" className="mt-8 inline-block" data-testid="link-media-reach-inquiry">
+            <Button size="lg" variant="gold-outline">ENQUIRE ABOUT MEDIA REACH</Button>
+          </Link>
+        </div>
+      </section>
+
       {/* 2. LATEST / FEATURED MEDIA */}
       <section className="py-section-lg bg-ivory-100 border-b border-sand-200">
         <div className="mx-auto max-w-7xl px-6">
@@ -111,7 +144,7 @@ export default function MediaHub() {
             {[1, 2, 3].map(i => (
               <Reveal key={i} delay={i * 100}>
                 <article className="h-full bg-white border border-sand-200 p-6 rounded-sm shadow-sm flex flex-col">
-                  <div className="h-8 w-24 bg-sand-200 rounded-sm mb-4 animate-pulse opacity-50" title="Verified logo placeholder" />
+                  <div className="mb-4 h-px w-12 bg-gold-500" aria-hidden="true" />
                   <h4 className="text-lg font-display text-ink-900 mb-3">Approved coverage position {i}</h4>
                   <p className="text-sm text-ink-700 leading-relaxed mb-6 flex-1">
                     Coverage excerpt will be placed here once verified and approved by the Founder.

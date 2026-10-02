@@ -39,7 +39,7 @@ const PROGRAMS: {
     slug: 'fashion-week',
     name: 'THE ONE FASHION WEEK INTERNATIONAL',
     tagline: 'Fashion. Design. Runway. Culture.',
-    desc: 'The program where the Movement began. Five editions across the Democratic Republic of Congo — in Bukavu, Goma and Kinshasa — carried a message of peace, unity and radical inclusion. Any formal institutional-support attribution for the fifth edition remains subject to Founder confirmation.',
+    desc: 'The program where the Movement began. Five completed editions in Bukavu, Goma and Kinshasa carried a message of peace, unity and radical inclusion. The sixth is planned for November and is currently postponed.',
     photo: 'programs-fashion-week.jpg',
     label: 'FASHION WEEK IMAGE',
   },
@@ -162,8 +162,7 @@ export default function Programs() {
         <div className="mx-auto max-w-7xl px-6">
           {/* Grid: 1-col mobile / 2-col tablet / 3-col desktop */}
           <ul
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px"
-            style={{ backgroundColor: 'hsl(188 66% 22%)' }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
             role="list"
           >
             {PROGRAMS.map((program) => (
@@ -304,7 +303,7 @@ function ProgramCard({
       onMouseLeave={() => setHovered(false)}
     >
       <article
-        className="flex flex-col h-full cursor-pointer"
+        className="tomi-program-editorial-card flex flex-col h-full cursor-pointer"
         style={{
           borderTop: '2px solid hsl(39 52% 54%)',
           backgroundColor: hovered ? 'hsl(188 66% 16%)' : 'hsl(187 67% 12%)',
@@ -317,6 +316,8 @@ function ProgramCard({
             filename={photo}
             alt=""
             className="w-full aspect-[4/3]"
+            imageType="Founder-selected program media"
+            purpose={label}
             duotone
           />
           {/* Dev label — tiny, elegant, disappears behind real photos */}
@@ -345,7 +346,7 @@ function ProgramCard({
           <h3
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: '0.78rem',
+              fontSize: '1.15rem',
               letterSpacing: '0.12em',
               lineHeight: 1.4,
               textTransform: 'uppercase',

@@ -6,27 +6,13 @@ import GoldThread from '@/components/GoldThread';
 import PhotoSlot from '@/components/PhotoSlot';
 import ResponsiveMedia from '@/components/ResponsiveMedia';
 import Reveal from '@/components/Reveal';
+import TomiConstellation from '@/components/TomiConstellation';
+import FashionEditionNote from '@/components/FashionEditionNote';
 import SectionHeading from '@/components/SectionHeading';
 import homeHeroBackground from '@/assets/media/home/TOMI_HOME_HERO_BG_01.webp';
 import movementReel from '@/assets/media/home/TOMI_HOME_MOVEMENT_REEL_01.mp4';
 import movementReelFallback from '@/assets/media/home/TOMI_HOME_MOVEMENT_REEL_01.webm';
 import movementReelPoster from '@/assets/media/home/TOMI_HOME_MOVEMENT_REEL_01-poster.webp';
-
-const ECOSYSTEM_AREAS = [
-  { label: 'Business', target: 'business' },
-  { label: 'Culture', target: 'art' },
-  { label: 'Fashion', target: 'fashion' },
-  { label: 'Music', target: 'music' },
-  { label: 'Film', target: 'film' },
-  { label: 'Art', target: 'art' },
-  { label: 'Dance', target: 'dance' },
-  { label: 'Programs', target: 'programs' },
-  { label: 'Institutions', target: 'diplomacy' },
-  { label: 'Opportunities', target: 'opportunities' },
-  { label: 'Media', target: 'media' },
-  { label: 'Community', target: 'ngos' },
-  { label: 'Technology / AI', target: 'technology' },
-];
 
 const PROGRAMS = [
   {
@@ -51,7 +37,7 @@ const PROGRAMS = [
 
 export default function HomeExperience() {
   return (
-    <div>
+    <div className="tomi-editorial-page tomi-home-editorial">
       <Helmet>
         <title>THE ONE MOVEMENT INTERNATIONAL — ONE HUMANITY. ONE MOVEMENT. ONE FUTURE.</title>
         <meta
@@ -80,6 +66,10 @@ export default function HomeExperience() {
           data-asset-id="H01"
         />
         <div className="tomi-home-hero-overlay pointer-events-none absolute inset-0" aria-hidden="true" />
+        <div className="tomi-hero-edition relative z-10 mx-auto max-w-7xl px-6 pt-6" aria-hidden="true">
+          <span>01 / THE INTRODUCTION</span>
+          <span>DR CONGO → THE WORLD</span>
+        </div>
 
         <div className="relative z-10 mx-auto flex min-h-[calc(100svh-4rem)] max-w-7xl items-center px-6 py-section-lg">
           <div className="max-w-4xl">
@@ -117,7 +107,7 @@ export default function HomeExperience() {
       <GeometricAccent variant="lagoon-on-ivory" height={18} />
 
       {/* 02 — Understanding: one concise explanation plus future movement video. */}
-      <section className="bg-ivory-100 py-section-lg" aria-labelledby="what-heading">
+      <section className="bg-ivory-100 py-section-lg tomi-editorial-chapter" data-chapter="02 / THE MOVEMENT" aria-labelledby="what-heading">
         <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-12 lg:items-center">
           <Reveal className="lg:col-span-5">
             <SectionHeading
@@ -149,7 +139,7 @@ export default function HomeExperience() {
       </section>
 
       {/* 03 — Ecosystem preview: breadth without full explanation. */}
-      <section className="tomi-aurora-surface py-section-lg" aria-labelledby="ecosystem-preview-heading">
+      <section className="tomi-aurora-surface py-section-lg tomi-editorial-chapter" data-chapter="03 / ALL IN ONE MOVEMENT" aria-labelledby="ecosystem-preview-heading">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
             <SectionHeading
@@ -161,24 +151,8 @@ export default function HomeExperience() {
             />
           </Reveal>
 
-          <Reveal delay={90} className="tomi-ecosystem-preview mt-12 relative">
-            {/* TEMPORARY GRAPHIC - TO BE REPLACED WITH CLICKABLE TOMI ECOSYSTEM */}
-            <div className="tomi-ecosystem-core">
-              <span>TOMI</span>
-              <small>Connection</small>
-            </div>
-            <div className="tomi-ecosystem-orbit" aria-label="TOMI ecosystem areas">
-              {ECOSYSTEM_AREAS.map((area, index) => (
-                <Link
-                  key={area.label}
-                  href={`/ecosystem#${area.target}`}
-                  style={{ '--area-index': index } as React.CSSProperties}
-                  data-testid={`link-ecosystem-world-${area.target}-${index}`}
-                >
-                  {area.label}
-                </Link>
-              ))}
-            </div>
+          <Reveal delay={90} className="mt-12">
+            <TomiConstellation />
           </Reveal>
 
           <Reveal delay={140} className="mt-10">
@@ -190,7 +164,7 @@ export default function HomeExperience() {
       </section>
 
       {/* 04 — Visual proof: Fashion Week receives flagship treatment. */}
-      <section className="bg-ivory-100 py-section-lg" aria-labelledby="fashion-proof-heading">
+      <section className="bg-ivory-100 py-section-lg tomi-editorial-chapter" data-chapter="04 / THE ORIGIN" aria-labelledby="fashion-proof-heading">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
             <SectionHeading
@@ -202,8 +176,8 @@ export default function HomeExperience() {
             />
           </Reveal>
 
-          <div className="mt-12 grid overflow-hidden rounded-sharp border border-sand-200 bg-ivory-50 lg:grid-cols-12">
-            <Reveal direction="left" className="lg:col-span-6 flex justify-center lg:justify-start">
+          <div className="tomi-fashion-editorial mt-12 grid overflow-hidden rounded-sharp border border-sand-200 bg-ivory-50 lg:grid-cols-12">
+            <Reveal direction="left" className="tomi-fashion-media lg:col-span-6 flex justify-center">
               <ResponsiveMedia
                 kind="vertical-reel"
                 label="FOUNDER FASHION WEEK REEL REQUIRED"
@@ -212,7 +186,7 @@ export default function HomeExperience() {
               />
             </Reveal>
             <Reveal delay={100} direction="right" className="flex flex-col justify-center p-7 sm:p-10 lg:col-span-6">
-              <p className="text-eyebrow text-gold-600">FLAGSHIP HISTORICAL PROOF</p>
+              <p className="text-eyebrow text-gold-600">FIVE EDITIONS COMPLETED · SIXTH POSTPONED</p>
               <h2 id="fashion-proof-heading" className="mt-4 text-display-md text-ink-900" style={{ fontFamily: 'var(--font-display)' }}>
                 THE ONE FASHION WEEK INTERNATIONAL
               </h2>
@@ -220,6 +194,7 @@ export default function HomeExperience() {
                 Fashion carried a message of peace from Bukavu to Goma and Kinshasa.
                 Five editions are complete. The sixth is planned for November and currently postponed.
               </p>
+              <FashionEditionNote />
               <Link href="/programs/fashion-week" className="mt-8">
                 <Button variant="gold-outline">DISCOVER THE STORY</Button>
               </Link>
@@ -229,7 +204,7 @@ export default function HomeExperience() {
       </section>
 
       {/* 05 — Concise program previews. */}
-      <section className="bg-ivory-50 py-section-lg" aria-labelledby="program-preview-heading">
+      <section className="bg-ivory-50 py-section-lg tomi-editorial-chapter" data-chapter="05 / THE PROGRAMS" aria-labelledby="program-preview-heading">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
             <div className="flex flex-col gap-7 sm:flex-row sm:items-end sm:justify-between">
@@ -249,7 +224,7 @@ export default function HomeExperience() {
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {PROGRAMS.map((program, index) => (
               <Reveal key={program.slug} delay={index * 90}>
-                <article className="group overflow-hidden rounded-sharp border border-sand-200 bg-ivory-100">
+                <article className="tomi-editorial-card group overflow-hidden rounded-sharp border border-sand-200 bg-ivory-100">
                   <PhotoSlot
                     filename={program.filename}
                     alt=""
@@ -274,7 +249,7 @@ export default function HomeExperience() {
       </section>
 
       {/* 06 — Founder archive composition, deliberately not a standard gallery. */}
-      <section className="bg-lagoon-900 py-section-lg" aria-labelledby="archive-heading">
+      <section className="bg-lagoon-900 py-section-lg tomi-editorial-chapter tomi-archive-editorial" data-chapter="06 / MOVEMENT IN ACTION" aria-labelledby="archive-heading">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
             <SectionHeading
@@ -284,6 +259,12 @@ export default function HomeExperience() {
               size="lg"
               thread
             />
+          </Reveal>
+          <Reveal delay={80} className="mt-6 flex flex-col gap-4 border-b border-gold-500/25 pb-6 sm:flex-row sm:items-end sm:justify-between">
+            <p className="max-w-lg text-sm leading-relaxed text-ivory-200">
+              An archive of people, culture and collaboration. Each frame is reserved for authentic Founder-selected media.
+            </p>
+            <span className="shrink-0 text-[10px] uppercase tracking-[0.2em] text-gold-400">The Founder archive / media pending</span>
           </Reveal>
           <div className="mt-12 grid grid-cols-12 gap-3 sm:gap-5">
             <Reveal direction="left" className="col-span-12 sm:col-span-7">
