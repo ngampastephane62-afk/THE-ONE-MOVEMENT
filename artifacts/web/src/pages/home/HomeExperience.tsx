@@ -7,6 +7,7 @@ import PhotoSlot from '@/components/PhotoSlot';
 import ResponsiveMedia from '@/components/ResponsiveMedia';
 import Reveal from '@/components/Reveal';
 import SectionHeading from '@/components/SectionHeading';
+import homeHeroBackground from '@/assets/media/home/TOMI_HOME_HERO_BG_01.webp';
 
 const ECOSYSTEM_AREAS = [
   { label: 'Business', target: 'business' },
@@ -64,8 +65,18 @@ export default function HomeExperience() {
 
       {/* 01 — Introduction: headline first, explanation and actions revealed after it. */}
       <section className="tomi-home-hero relative overflow-hidden bg-lagoon-900">
-        <div className="tomi-surface-grid pointer-events-none absolute inset-0" aria-hidden="true" />
-        <div className="tomi-hero-glow pointer-events-none absolute inset-0" aria-hidden="true" />
+        <img
+          src={homeHeroBackground}
+          alt=""
+          aria-hidden="true"
+          width={1536}
+          height={1024}
+          fetchPriority="high"
+          loading="eager"
+          className="tomi-home-hero-image pointer-events-none absolute inset-0 h-full w-full"
+          data-asset-id="H01"
+        />
+        <div className="tomi-home-hero-overlay pointer-events-none absolute inset-0" aria-hidden="true" />
 
         <div className="relative z-10 mx-auto flex min-h-[calc(100svh-4rem)] max-w-7xl items-center px-6 py-section-lg">
           <div className="max-w-4xl">
