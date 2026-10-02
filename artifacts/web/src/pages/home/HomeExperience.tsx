@@ -8,6 +8,9 @@ import ResponsiveMedia from '@/components/ResponsiveMedia';
 import Reveal from '@/components/Reveal';
 import SectionHeading from '@/components/SectionHeading';
 import homeHeroBackground from '@/assets/media/home/TOMI_HOME_HERO_BG_01.webp';
+import movementReel from '@/assets/media/home/TOMI_HOME_MOVEMENT_REEL_01.mp4';
+import movementReelFallback from '@/assets/media/home/TOMI_HOME_MOVEMENT_REEL_01.webm';
+import movementReelPoster from '@/assets/media/home/TOMI_HOME_MOVEMENT_REEL_01-poster.webp';
 
 const ECOSYSTEM_AREAS = [
   { label: 'Business', target: 'business' },
@@ -133,8 +136,12 @@ export default function HomeExperience() {
           <Reveal delay={100} direction="right" className="lg:col-span-6 lg:col-start-7 flex justify-center lg:justify-end">
             <ResponsiveMedia
               kind="vertical-reel"
-              label="FOUNDER MOVEMENT REEL REQUIRED"
+              label="TOMI Movement Reel"
               purpose="Explain The One Movement through people, culture, meetings and international collaboration."
+              videoSrc={movementReel}
+              videoFallbackSrc={movementReelFallback}
+              posterSrc={movementReelPoster}
+              assetId="H02"
               className="aspect-[9/16] w-full max-w-sm shadow-2xl"
             />
           </Reveal>
