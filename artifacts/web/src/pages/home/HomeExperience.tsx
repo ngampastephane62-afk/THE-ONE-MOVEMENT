@@ -13,6 +13,9 @@ import homeHeroBackground from '@/assets/media/home/TOMI_HOME_HERO_BG_01.webp';
 import movementReel from '@/assets/media/home/TOMI_HOME_MOVEMENT_REEL_01.mp4';
 import movementReelFallback from '@/assets/media/home/TOMI_HOME_MOVEMENT_REEL_01.webm';
 import movementReelPoster from '@/assets/media/home/TOMI_HOME_MOVEMENT_REEL_01-poster.webp';
+import founderMontage from '@/assets/media/home/TOMI_FOUNDER_MOVEMENT_MONTAGE.mp4';
+import founderMontageFallback from '@/assets/media/home/TOMI_FOUNDER_MOVEMENT_MONTAGE.webm';
+import founderMontagePoster from '@/assets/media/home/TOMI_FOUNDER_MOVEMENT_MONTAGE-poster.webp';
 
 const PROGRAMS = [
   {
@@ -20,18 +23,24 @@ const PROGRAMS = [
     name: 'The One Summit',
     description: 'Leadership, ideas and business across continents.',
     filename: 'program-summit.jpg',
+    alt: 'Business-event scene from the Founder Movement Reel.',
+    hasMontageStill: true,
   },
   {
     slug: 'diplomatic-gala',
     name: 'The One Diplomatic Gala',
     description: 'Culture and dialogue in service of peace.',
     filename: 'program-gala.jpg',
+    alt: 'People in formal attire from the Founder Movement Reel.',
+    hasMontageStill: true,
   },
   {
     slug: 'awards',
     name: 'The One Awards',
     description: 'Recognition for courage and positive impact.',
     filename: 'program-awards.jpg',
+    alt: 'A person holding an award in the Founder Movement Reel.',
+    hasMontageStill: true,
   },
 ];
 
@@ -177,13 +186,22 @@ export default function HomeExperience() {
           </Reveal>
 
           <div className="tomi-fashion-editorial mt-12 grid overflow-hidden rounded-sharp border border-sand-200 bg-ivory-50 lg:grid-cols-12">
-            <Reveal direction="left" className="tomi-fashion-media lg:col-span-6 flex justify-center">
-              <ResponsiveMedia
-                kind="vertical-reel"
-                label="FOUNDER FASHION WEEK REEL REQUIRED"
-                purpose="Show runway, designers, audience, culture and the human energy of five completed editions."
-                className="aspect-[9/16] h-full w-full max-w-sm shadow-xl"
-              />
+            <Reveal direction="left" className="tomi-fashion-media lg:col-span-6 flex flex-col items-center justify-center">
+              <figure className="w-full max-w-sm">
+                <ResponsiveMedia
+                  kind="vertical-reel"
+                  label="Founder Movement Reel — fashion, culture and connection"
+                  purpose="Founder-supplied Movement montage, not a recording of a specific Fashion Week edition."
+                  videoSrc={founderMontage}
+                  videoFallbackSrc={founderMontageFallback}
+                  posterSrc={founderMontagePoster}
+                  assetId="FOUNDER-MONTAGE"
+                  className="aspect-[9/16] w-full shadow-xl"
+                />
+                <figcaption className="mt-3 text-xs leading-relaxed text-ivory-200">
+                  Founder Movement Reel · Fashion and culture imagery, not footage attributed to a specific Fashion Week edition.
+                </figcaption>
+              </figure>
             </Reveal>
             <Reveal delay={100} direction="right" className="flex flex-col justify-center p-7 sm:p-10 lg:col-span-6">
               <p className="text-eyebrow text-gold-600">FIVE EDITIONS COMPLETED · SIXTH POSTPONED</p>
@@ -227,7 +245,7 @@ export default function HomeExperience() {
                 <article className="tomi-editorial-card group overflow-hidden rounded-sharp border border-sand-200 bg-ivory-100">
                   <PhotoSlot
                     filename={program.filename}
-                    alt=""
+                    alt={program.alt}
                     imageType={`Founder media required · ${program.name}`}
                     purpose="Program image or short Reel."
                     aspectRatio="4:3"
@@ -235,6 +253,11 @@ export default function HomeExperience() {
                     className="aspect-[4/3] w-full"
                   />
                   <div className="p-6">
+                    {program.hasMontageStill && (
+                      <p className="mb-3 text-[10px] leading-relaxed uppercase tracking-[0.1em] text-ink-700">
+                        Founder Movement Reel · illustrative imagery, not program edition footage
+                      </p>
+                    )}
                     <h3 className="font-display text-lg text-ink-900">{program.name}</h3>
                     <p className="mt-3 text-sm leading-relaxed text-ink-700">{program.description}</p>
                     <Link href={`/programs/${program.slug}`} className="mt-5 inline-block text-xs font-semibold uppercase tracking-[0.16em] text-gold-600">
@@ -262,17 +285,17 @@ export default function HomeExperience() {
           </Reveal>
           <Reveal delay={80} className="mt-6 flex flex-col gap-4 border-b border-gold-500/25 pb-6 sm:flex-row sm:items-end sm:justify-between">
             <p className="max-w-lg text-sm leading-relaxed text-ivory-200">
-              An archive of people, culture and collaboration. Each frame is reserved for authentic Founder-selected media.
+              People, culture and collaboration, shown through stills from the Founder-supplied Movement Reel.
             </p>
-            <span className="shrink-0 text-[10px] uppercase tracking-[0.2em] text-gold-400">The Founder archive / media pending</span>
+            <span className="text-[10px] uppercase tracking-[0.2em] text-gold-400">Founder Movement Reel / no partnership attribution</span>
           </Reveal>
           <div className="mt-12 grid grid-cols-12 gap-3 sm:gap-5">
             <Reveal direction="left" className="col-span-12 sm:col-span-7">
               <PhotoSlot
                 filename="archive-event.jpg"
-                alt=""
+                alt="People gathering at a business event in the Founder Movement Reel."
                 imageType="Founder archive required · Event"
-                purpose="A defining TOMI event or collaboration moment."
+                purpose="Business-event imagery from the Founder Movement Reel, without event attribution."
                 aspectRatio="16:10"
                 className="aspect-[16/10] w-full"
               />
@@ -280,7 +303,7 @@ export default function HomeExperience() {
             <Reveal delay={80} direction="right" className="col-span-7 sm:col-span-5">
               <PhotoSlot
                 filename="archive-human.jpg"
-                alt=""
+                alt="People gathered together in the Founder Movement Reel."
                 imageType="Founder archive required · Human moment"
                 purpose="People meeting, creating or working together."
                 aspectRatio="4:5"
@@ -290,7 +313,7 @@ export default function HomeExperience() {
             <Reveal delay={140} className="col-span-5 sm:col-span-4">
               <PhotoSlot
                 filename="archive-culture.jpg"
-                alt=""
+                alt="Fashion styling and performance imagery from the Founder Movement Reel."
                 imageType="Founder archive required · Culture"
                 purpose="Culture, identity and international participation."
                 aspectRatio="1:1"
@@ -299,10 +322,10 @@ export default function HomeExperience() {
             </Reveal>
             <Reveal delay={180} className="col-span-12 sm:col-span-8">
               <PhotoSlot
-                filename="archive-institution.jpg"
-                alt=""
+                filename="archive-conversation.jpg"
+                alt="A conversation scene from the Founder Movement Reel."
                 imageType="Founder archive required · Collaboration"
-                purpose="A verified partnership, meeting or institutional moment."
+                purpose="Conversation imagery from the Founder Movement Reel; no institutional or partnership attribution."
                 aspectRatio="16:9"
                 className="aspect-video w-full"
               />
