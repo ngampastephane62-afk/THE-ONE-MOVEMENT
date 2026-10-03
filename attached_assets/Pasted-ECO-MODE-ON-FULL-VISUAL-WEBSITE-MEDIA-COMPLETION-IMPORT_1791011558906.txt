@@ -1,0 +1,590 @@
+ECO MODE ON — FULL VISUAL WEBSITE MEDIA COMPLETION.
+
+IMPORTANT: THE PREVIOUS MEDIA-INTEGRATION REPORT WAS INCORRECT.
+
+The Founder has manually inspected the ACTUAL website.
+
+The site is still showing empty media boxes / missing imagery across multiple pages including:
+
+- Our Vision
+- Programs / Summit
+- Partners
+- Media
+- other public sections
+
+Therefore:
+
+DO NOT rely on the previous report.
+DO NOT assume a page is complete because an asset exists in /public.
+DO NOT assume a media URL being valid means it is visually integrated.
+
+THIS TIME AUDIT THE ACTUAL VISUAL FRONTEND OF THE WHOLE PUBLIC WEBSITE.
+
+============================================================
+1. PRESERVE ONLY THE FIRST TWO HOME MEDIA EXPERIENCES
+============================================================
+
+On HOME, the first two major media experiences that were already working BEFORE the archive integration are APPROVED.
+
+KEEP THEM EXACTLY AS THEY ARE:
+
+1. HOME HERO / FIRST VISUAL
+2. HOME MOVEMENT VIDEO / SECOND MAJOR MEDIA EXPERIENCE
+
+Do not replace them.
+Do not redesign them.
+Do not change their files.
+
+AFTER THOSE FIRST TWO HOME MEDIA EXPERIENCES:
+
+you may replace/fix the remaining Home imagery using the Founder archive.
+
+============================================================
+2. VISUALLY AUDIT THE WHOLE PUBLIC WEBSITE
+============================================================
+
+Do NOT only search for specific placeholder text.
+
+Inspect the actual rendered visual structure of EVERY public route and section.
+
+Audit:
+
+HOME
+OUR VISION
+ECOSYSTEM
+PROGRAMS
+THE ONE SUMMIT
+THE ONE FASHION WEEK
+THE ONE DIPLOMATIC GALA
+THE ONE AWARDS
+THE ONE FASHION NIGHT
+THE ONE INVESTMENT FORUM
+MEDIA
+PARTNERS
+NEWS
+JOIN
+
+Look for EVERY:
+
+- empty media box
+- placeholder frame
+- FOUNDER MEDIA REQUIRED
+- MEDIA REQUIRED
+- blank image container
+- decorative box intended for photography
+- missing hero image
+- missing program image
+- missing institutional image
+- missing video
+- incorrect old Movement Reel screenshot
+- repeated image being used merely as filler
+- media component whose intended image is not actually visible
+
+THIS IS A VISUAL AUDIT.
+
+Do not simply grep for placeholder strings and stop.
+
+============================================================
+3. USE THE MEDIA ALREADY AVAILABLE IN THE PROJECT
+============================================================
+
+DO NOT re-analyze the entire 1 GB ZIP unless an expected selected asset is genuinely missing.
+
+The previous process states that selected optimized assets already exist here:
+
+PHOTOS:
+artifacts/web/public/brand-photos/founder/
+
+VIDEOS:
+artifacts/web/public/founder-videos/
+
+CATALOG:
+artifacts/web/src/assets/media/founder/catalog.json
+
+FIRST inspect those directories.
+
+Use the existing optimized media.
+
+If a required selected file is absent there, THEN retrieve that specific file from the already attached Founder archive.
+
+Do not perform another broad archive analysis.
+
+============================================================
+4. EXACT MEDIA DIRECTION
+============================================================
+
+We have already reviewed the Founder archive.
+
+Use the following mappings as the SOURCE OF TRUTH.
+
+------------------------------
+HOME — AFTER FIRST TWO SECTIONS
+------------------------------
+
+Do not touch Home Hero or Home Movement Video.
+
+For later Home sections use a balanced selection from:
+
+summit-goma.webp
+runway-edition-five.webp
+community-outreach.webp
+human-connection.webp
+community-gathering.webp
+cultural-performance.webp
+
+Use institutional imagery only where the section actually discusses institutional/global engagement.
+
+Do not turn Home into a giant gallery.
+
+------------------------------
+OUR VISION
+------------------------------
+
+The large right-side HERO MEDIA box MUST contain:
+
+human-connection.webp
+
+The HUMAN CONNECTION / POWER OF MEETING media box MUST contain:
+
+community-outreach.webp
+
+Additional Vision imagery may use:
+
+community-gathering.webp
+cultural-performance.webp
+
+If appropriate, the existing optimized Arabic Founder introduction video may be used in a later Vision/media storytelling section.
+
+There must be NO empty Founder Media Required frame.
+
+------------------------------
+ECOSYSTEM
+------------------------------
+
+Preserve the interactive constellation.
+
+Use authentic imagery selectively around it.
+
+Use existing selected photographs showing:
+
+human connection
+dialogue
+culture
+international engagement
+community
+
+Do NOT replace the constellation with photographs.
+
+Photography supports the ecosystem; it does not become the ecosystem.
+
+------------------------------
+PROGRAMS OVERVIEW
+------------------------------
+
+THE ONE SUMMIT:
+
+Use:
+summit-goma.webp
+
+This is based on the archive source:
+
+"The One summit Goma DRc.JPG"
+
+THE ONE FASHION WEEK:
+
+Use:
+runway-edition-five.webp
+
+Source archive includes:
+
+"Runway THE ONE FASHION WEEK ED 5.JPG"
+"Runway show .JPG"
+"The one fashion week edition 5 .PNG"
+"Model casting.JPG"
+"Model CASTING DUBAÏ.JPG"
+"Designer Nelly amini.JPG"
+"Desiger from Russia .JPG"
+"TOFW_Web_525.JPEG"
+
+DO NOT use old Founder Movement Reel screenshots for Summit or Fashion Week cards.
+
+------------------------------
+DIPLOMATIC GALA
+AWARDS
+FASHION NIGHT
+INVESTMENT FORUM
+------------------------------
+
+There is NO verified historical program-specific media confirmed for these programs.
+
+DO NOT falsely assign an unrelated event photograph and present it as documentation of that program.
+
+Instead create/retain a FINISHED PREMIUM BRANDED VISUAL TREATMENT using:
+
+- TOMI emerald
+- gold
+- typography
+- subtle geometry
+- program title
+- tasteful motion if already supported
+
+But:
+
+NO "FOUNDER MEDIA REQUIRED"
+NO "MEDIA REQUIRED"
+NO "ILLUSTRATIVE IMAGERY, NOT PROGRAM EDITION FOOTAGE"
+NO DEVELOPMENT INSTRUCTIONS
+
+These must look like intentional final designs, not placeholders.
+
+------------------------------
+THE ONE SUMMIT DETAIL PAGE
+------------------------------
+
+Use:
+
+summit-goma.webp
+
+as the principal authentic program photograph.
+
+If more Summit-specific verified photographs are unavailable, use ONE authentic hero plus branded editorial sections.
+
+Do not fabricate a Summit gallery.
+
+------------------------------
+FASHION WEEK DETAIL PAGE
+------------------------------
+
+This page SHOULD be highly photographic.
+
+Use the already optimized versions of the strongest archive originals corresponding to:
+
+Runway THE ONE FASHION WEEK ED 5.JPG
+Runway show .JPG
+The one fashion week edition 5 .PNG
+Designer Nelly amini.JPG
+Desiger from Russia .JPG
+Model casting.JPG
+Model CASTING DUBAÏ.JPG
+TOFW_Web_525.JPEG
+
+and the previously selected high-resolution IMG_* Fashion Week/event photographs.
+
+Use:
+
+fashion-archive.mp4
+
+for authentic Fashion Week video.
+
+Create a premium editorial composition:
+
+- strong hero
+- large runway moment
+- designer story
+- casting/backstage
+- audience/event atmosphere
+- mixed portrait/landscape gallery
+- video
+
+Do not create an equal-size generic grid.
+
+FACT LOCK:
+
+FIVE completed editions.
+
+SIXTH planned/postponed for November.
+
+Do NOT invent a year.
+
+------------------------------
+PARTNERS / INSTITUTIONAL
+------------------------------
+
+THIS PAGE MUST HAVE REAL PHOTOGRAPHY.
+
+Use optimized versions of archive material corresponding to:
+
+"Ambassador of Drc UAE.JPG"
+"Ambassador of Tanzania .heic"
+"His Excellency Rashid Bin Nasser AL NUAIMI .JPG"
+"Private office of sheikh saeed bin ahmed almaktoum.JPG"
+"Private office of sheikh Hamadan Al nahyan .JPG"
+"Nobel prize Dr Denise Mukwege .jpg"
+"Juhudi foundation .JPG"
+"Ministry of culture .jpg"
+"Regal gold trading .JPG"
+
+and any already selected optimized institutional images such as:
+
+dialogue
+diplomatic
+global
+office
+conversation
+
+Use:
+
+institutional-meeting.mp4
+
+where appropriate.
+
+IMPORTANT:
+
+Do NOT automatically call these people/institutions PARTNERS.
+
+Where formal relationship is not verified, present the photography under:
+
+INSTITUTIONAL ENGAGEMENT
+GLOBAL ENCOUNTERS
+DIPLOMATIC & INSTITUTIONAL DIALOGUE
+MOVEMENT IN CONVERSATION
+SELECTED ENGAGEMENTS
+
+Do not infer identities from faces.
+
+Use verified filename/context only.
+
+------------------------------
+MEDIA
+------------------------------
+
+MEDIA PAGE MUST BE VISUALLY RICH.
+
+Use:
+
+cultural-performance.webp
+runway imagery
+community imagery
+audience/event imagery
+institutional imagery where contextually appropriate
+
+Use the FOUR already selected optimized videos.
+
+Known intended video material includes:
+
+fashion-archive.mp4
+institutional-meeting.mp4
+
+plus the optimized equivalents of:
+
+Donation The One Movement .MP4
+What is The One Movement Arabic.MP4
+
+Create sections such as:
+
+FEATURED MEDIA
+VIDEOS & REELS
+FROM THE ARCHIVE
+MOVEMENT IN ACTION
+INTERNATIONAL MEDIA REACH
+PRESS / COVERAGE
+
+Do not create empty media frames.
+
+------------------------------
+HUMANITARIAN / MOVEMENT IN ACTION
+------------------------------
+
+Use optimized versions corresponding to:
+
+Donation.JPG
+Donation TOFW.JPG
+Donation for children who suffer because of war.JPG
+Save the children .jpg
+Donation The One Movement .MP4
+
+Use them respectfully.
+
+No exaggerated humanitarian claims.
+
+------------------------------
+NEWS
+------------------------------
+
+Use:
+
+cultural-performance.webp
+
+and other authentic archive imagery ONLY where it is contextually appropriate.
+
+Do not invent stories, headlines or dates merely to use photographs.
+
+------------------------------
+JOIN
+------------------------------
+
+Use:
+
+community-gathering.webp
+
+as the principal supporting human/community image.
+
+Keep Join focused on conversion.
+
+JOIN = EXPRESSION OF INTEREST.
+
+Do not imply active account creation or paid membership.
+
+============================================================
+5. REMOVE DEVELOPMENT PLACEHOLDERS
+============================================================
+
+Across the ENTIRE public frontend there must be ZERO visible:
+
+FOUNDER MEDIA REQUIRED
+MEDIA REQUIRED
+IMAGE REQUIRED
+VIDEO REQUIRED
+PLACEHOLDER
+ILLUSTRATIVE IMAGERY, NOT PROGRAM EDITION FOOTAGE
+
+or similar internal production instructions.
+
+If authentic historical media does not exist, replace the placeholder with a finished branded composition.
+
+============================================================
+6. VERIFY MEDIA IS ACTUALLY VISIBLE
+============================================================
+
+This is where the previous implementation failed.
+
+DO NOT verify only:
+
+- file exists
+- HTTP 200
+- build succeeded
+- asset copied into dist
+
+VERIFY THE ACTUAL COMPONENT.
+
+For each public route:
+
+1. render the page
+2. identify every intended media region
+3. confirm that region contains a real <img>, <picture>, <video>, branded finished visual, or intended graphical component
+4. confirm its dimensions are non-zero
+5. confirm the image/video is visually rendered
+6. confirm there is no placeholder text covering it
+7. confirm object-fit/object-position is appropriate
+
+If browser visual tooling fails, inspect the rendered DOM/component tree AND take local route screenshots using the project's existing browser/test capability if available.
+
+DO NOT CLAIM VISUAL COMPLETION BASED ONLY ON ASSET URLs.
+
+============================================================
+7. DO NOT WASTE CREDITS
+============================================================
+
+ECO MODE STRICT.
+
+DO NOT:
+
+- re-index 137 files
+- re-review all archive media
+- re-extract the entire ZIP
+- regenerate existing optimized assets
+- install packages
+- refactor unrelated components
+- touch backend
+- touch database
+- touch forms unless media layout broke them
+- redesign navigation
+- build repeatedly
+- create alternative versions
+
+FIRST:
+inspect existing selected media directory + catalog.
+
+SECOND:
+audit visual media regions.
+
+THIRD:
+bind the known assets.
+
+FOURTH:
+run one final build.
+
+============================================================
+8. RESPONSIVE
+============================================================
+
+After media is actually integrated, verify media layout at:
+
+390px
+768px
+1440px
+
+Focus ONLY on:
+
+- image visibility
+- video visibility
+- crop
+- object positioning
+- overflow
+- portrait/landscape treatment
+
+Do not perform a general redesign.
+
+============================================================
+9. FINAL REPORT
+============================================================
+
+DO NOT give another generic "media integrated" report.
+
+Give a ROUTE-BY-ROUTE MEDIA TABLE:
+
+ROUTE
+SECTION
+PREVIOUS STATE
+NEW ASSET
+ACTUAL COMPONENT/PATH
+VISUALLY VERIFIED YES/NO
+
+Example:
+
+/our-vision
+Hero
+Empty Founder Media frame
+human-connection.webp
+<ResponsiveMedia ...>
+YES
+
+/our-vision
+Human Connection
+Empty Founder Media frame
+community-outreach.webp
+<ResponsiveMedia ...>
+YES
+
+/programs
+The One Summit
+Old reel screenshot
+summit-goma.webp
+...
+YES
+
+Continue for EVERY media region changed.
+
+Then report:
+
+TOTAL EMPTY MEDIA REGIONS BEFORE
+TOTAL EMPTY MEDIA REGIONS AFTER
+
+TOTAL OLD REEL FILLERS BEFORE
+TOTAL OLD REEL FILLERS AFTER
+
+TOTAL AUTHENTIC PHOTOS ACTUALLY RENDERED
+TOTAL AUTHENTIC VIDEOS ACTUALLY RENDERED
+TOTAL INTENTIONAL BRANDED PROGRAM TREATMENTS
+
+FINAL BUILD:
+PASS / FAIL
+
+VISUAL VERIFICATION:
+PASS / PARTIAL / FAIL
+
+If visual verification is PARTIAL, explicitly say exactly what was not visually verified.
+
+DO NOT PUBLISH.
+
+STOP AND WAIT FOR FOUNDER APPROVAL.
