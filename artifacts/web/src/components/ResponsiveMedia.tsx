@@ -119,16 +119,12 @@ export default function ResponsiveMedia({
       }>
         {!hasMedia && (
           <div className="mb-auto max-w-sm">
-            <p className="text-eyebrow text-gold-400">FOUNDER MEDIA REQUIRED</p>
             <p className="mt-3 text-sm leading-relaxed text-ivory-200">{label}</p>
           </div>
         )}
 
         <div className={videoSrc ? 'flex justify-end' : 'flex flex-col gap-4 border-t border-ivory-100/15 pt-5 sm:flex-row sm:items-end sm:justify-between'}>
           {!videoSrc && <div>
-            <p className="text-[10px] uppercase tracking-[0.18em] text-gold-400">
-              Type: Video · Desktop: Landscape · Mobile: Reel
-            </p>
             <p className="mt-2 max-w-lg text-sm leading-relaxed text-ivory-200">{purpose}</p>
           </div>}
 

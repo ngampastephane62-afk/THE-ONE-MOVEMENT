@@ -1,0 +1,271 @@
+ECO MODE ON — TARGETED MEDIA BINDING FIX ONLY.
+
+IMPORTANT: DO NOT RE-ANALYZE THE 1 GB ZIP.
+DO NOT RE-EXTRACT THE ARCHIVE.
+DO NOT RE-CURATE MEDIA.
+DO NOT GENERATE NEW DERIVATIVES UNLESS A REFERENCED FILE IS ACTUALLY MISSING.
+DO NOT REDESIGN THE WEBSITE.
+DO NOT PUBLISH.
+
+Your previous report stated:
+
+- 137 archive files indexed
+- 105 unique images reviewed
+- 12 unique videos reviewed
+- 18 photographs selected
+- 4 videos selected
+- responsive WebP derivatives generated (~6.3 MB)
+- optimized MP4s generated (~20.3 MB)
+- WebM fallbacks/posters generated
+- 48 new asset URLs verified
+
+However, the ACTUAL rendered preview does NOT match that report.
+
+The founder has visually verified the site.
+
+VISIBLE FAILURES INCLUDE:
+
+1. OUR VISION hero still displays:
+   "FOUNDER MEDIA REQUIRED"
+   "HERO MEDIA — CINEMATIC CULTURES MONTAGE"
+
+2. OUR VISION / HUMAN CONNECTION still displays:
+   "FOUNDER MEDIA REQUIRED"
+   instead of a real selected founder photograph.
+
+3. PROGRAMS cards are still using frames from the old Founder Movement Reel and displaying:
+   "FOUNDER MOVEMENT REEL · ILLUSTRATIVE IMAGERY, NOT PROGRAM EDITION FOOTAGE"
+
+4. Multiple pages that were reported as media-complete are still rendering placeholders or old media.
+
+Therefore this is NOT a media-curation task.
+
+THIS IS A MEDIA-BINDING / RENDERING BUG FIX.
+
+==================================================
+STEP 1 — LOCATE THE ALREADY GENERATED MEDIA
+==================================================
+
+Do NOT inspect the ZIP again.
+
+Locate ONLY the files generated/selected during the immediately previous founder-media integration.
+
+Find the existing:
+
+- selected WebP derivatives
+- selected MP4 files
+- WebM fallbacks
+- poster images
+- media manifest/mapping if one was created
+
+Use modification timestamps and the previous implementation changes to locate them efficiently.
+
+Report internally where those files physically exist.
+
+Do not recreate them if they already exist.
+
+==================================================
+STEP 2 — FIND THE ACTUAL PLACEHOLDERS
+==================================================
+
+Search SOURCE CODE specifically for these exact strings:
+
+"FOUNDER MEDIA REQUIRED"
+"MEDIA REQUIRED"
+"Founder Movement Reel"
+"illustrative imagery"
+"not program edition footage"
+"HERO MEDIA — CINEMATIC CULTURES MONTAGE"
+
+Also search for the component(s) responsible for those placeholders.
+
+Do NOT scan unrelated backend/database code.
+
+We need the actual rendered React components/routes.
+
+==================================================
+STEP 3 — TRACE WHY PREVIOUS MEDIA IS NOT RENDERING
+==================================================
+
+Determine which of these is causing the failure:
+
+A. media files exist but components were never updated
+B. wrong import/path
+C. wrong public directory
+D. stale placeholder props
+E. media manifest exists but routes do not consume it
+F. generated files are outside Vite-served paths
+G. fallback/placeholder branch is still winning
+H. case-sensitive filename/path mismatch
+I. old reel fallback is being used instead of selected archive media
+
+Fix the actual cause.
+
+DO NOT perform another design pass.
+
+==================================================
+STEP 4 — BIND REAL MEDIA TO ALL PUBLIC ROUTES
+==================================================
+
+Use the ALREADY SELECTED media from the previous pass.
+
+Bind real media into:
+
+HOME
+OUR VISION
+ECOSYSTEM
+PROGRAMS
+THE ONE SUMMIT
+THE ONE FASHION WEEK
+THE ONE DIPLOMATIC GALA
+THE ONE AWARDS
+THE ONE FASHION NIGHT
+THE ONE INVESTMENT FORUM
+MEDIA
+PARTNERS
+NEWS
+JOIN
+
+IMPORTANT:
+
+For Summit:
+use the authentic selected Summit media.
+
+For Fashion Week:
+use the authentic selected Fashion Week runway/designer/casting/event media.
+
+For humanitarian/community:
+use the already selected authentic Donation/community material.
+
+For institutional encounters:
+use the already selected authentic encounter photography.
+
+For programs where no authentic historical media exists:
+KEEP the premium branded vision treatment.
+
+But REMOVE wording such as:
+
+"FOUNDER MEDIA REQUIRED"
+
+from the PUBLIC rendered website.
+
+A production visitor must NEVER see internal development instructions.
+
+If no authentic historical image exists, render the finished branded treatment without internal placeholder labels.
+
+==================================================
+STEP 5 — OUR VISION MUST BE FIXED
+==================================================
+
+The screenshots show two obvious failures.
+
+OUR VISION HERO:
+
+Replace the large right-side
+"FOUNDER MEDIA REQUIRED"
+placeholder with one of the already selected authentic founder media assets appropriate to global human/cultural connection.
+
+HUMAN CONNECTION:
+
+Replace the large left-side
+"FOUNDER MEDIA REQUIRED"
+placeholder with one of the already selected authentic human/institutional/community photographs.
+
+Maintain the existing editorial composition.
+
+Do not redesign the section.
+
+==================================================
+STEP 6 — PROGRAM CARDS
+==================================================
+
+Do NOT use arbitrary frames from the old Movement Reel as permanent program photography.
+
+THE ONE SUMMIT:
+Use authentic Summit image.
+
+THE ONE FASHION WEEK:
+Use authentic Fashion Week image/video.
+
+For Gala / Awards / Fashion Night / Investment Forum:
+
+If there is no verified historical program-specific media, use the existing premium branded visual treatment.
+
+DO NOT falsely present unrelated photographs as documentation of those programs.
+
+But remove all developer-facing language such as:
+
+"illustrative imagery, not program edition footage"
+
+from the visual card itself.
+
+That information belongs in development logic/documentation, not the public-facing design.
+
+==================================================
+STEP 7 — VERIFY ACTUAL RENDERING, NOT JUST URL EXISTENCE
+==================================================
+
+This is critical.
+
+Do NOT report success because an asset URL returns HTTP 200.
+
+For each changed route, verify the actual rendered DOM/component references the intended media asset.
+
+Programmatically verify:
+
+- no rendered/public component contains "FOUNDER MEDIA REQUIRED"
+- no rendered/public component contains "MEDIA REQUIRED"
+- no public program card contains "illustrative imagery, not program edition footage"
+- selected media paths are actually referenced by page/component source
+- referenced files exist in the built output
+
+Then build once.
+
+==================================================
+STEP 8 — KEEP COST LOW
+==================================================
+
+This should be a TARGETED PATCH.
+
+Do not:
+
+- reopen/analyze 137 archive files
+- inspect the ZIP again
+- redesign sections
+- refactor unrelated code
+- install packages
+- change backend architecture
+- change forms
+- change database
+- build repeatedly
+- create alternative designs
+- touch post-launch OS features
+
+Use what was already produced.
+
+==================================================
+STEP 9 — FINAL REPORT
+==================================================
+
+After the fix, report ONLY:
+
+1. Root cause of why the previous media pass did not render
+2. Directory containing the previously generated optimized assets
+3. Components/routes actually changed
+4. Number of visible FOUNDER MEDIA REQUIRED placeholders before → after
+5. Number of visible MEDIA REQUIRED placeholders before → after
+6. Which real asset is now bound to:
+   - Our Vision hero
+   - Human Connection
+   - Summit
+   - Fashion Week
+   - Media
+   - Partners/Institutional
+   - News
+   - Join
+7. Which programs intentionally retain branded treatments because authentic historical media is unavailable
+8. Final build result
+
+DO NOT PUBLISH.
+
+STOP after this targeted fix.

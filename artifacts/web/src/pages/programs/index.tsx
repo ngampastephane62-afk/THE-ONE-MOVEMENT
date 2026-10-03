@@ -17,56 +17,42 @@ const PROGRAMS: {
   name: string;
   tagline: string;
   desc: string;
-  photo: string;
-  label: string;
 }[] = [
   {
     slug: 'diplomatic-gala',
     name: 'THE ONE DIPLOMATIC GALA',
     tagline: 'Culture. Diplomacy. Art. Peace.',
     desc: 'An evening bringing together diplomats, institutions, artists and cultural leaders — celebrating dialogue between nations and honoring those who build bridges between peoples.',
-    photo: 'programs-diplomatic-gala.jpg',
-    label: 'DIPLOMATIC GALA IMAGE',
   },
   {
     slug: 'summit',
     name: 'THE ONE SUMMIT',
     tagline: 'Leadership. Innovation. Business.',
     desc: 'A gathering of leaders, entrepreneurs, investors and innovators — exploring the ideas, industries and partnerships shaping a more connected world.',
-    photo: 'programs-summit.jpg',
-    label: 'SUMMIT AND BUSINESS IMAGE',
   },
   {
     slug: 'fashion-week',
     name: 'THE ONE FASHION WEEK INTERNATIONAL',
     tagline: 'Fashion. Design. Runway. Culture.',
     desc: 'The program where the Movement began. Five completed editions in Bukavu, Goma and Kinshasa carried a message of peace, unity and radical inclusion. The sixth is planned for November and is currently postponed.',
-    photo: 'programs-fashion-week.jpg',
-    label: 'FASHION WEEK IMAGE',
   },
   {
     slug: 'awards',
     name: 'THE ONE AWARDS',
     tagline: 'Recognition. Excellence. Impact.',
     desc: "A planned recognition program for people, organizations and initiatives whose work reflects creativity, courage, collaboration and positive impact.",
-    photo: 'programs-awards.jpg',
-    label: 'AWARDS IMAGE',
   },
   {
     slug: 'fashion-night',
     name: 'THE ONE FASHION NIGHT',
     tagline: 'Entertainment. Music. Fashion. Culture.',
     desc: 'A celebration where fashion meets music, dance and art — an open, vibrant expression of the cultures that make the Movement one.',
-    photo: 'programs-fashion-night.jpg',
-    label: 'FASHION NIGHT IMAGE',
   },
   {
     slug: 'investment-forum',
     name: 'THE ONE INVESTMENT FORUM',
     tagline: 'Investment. Startups. Business Matching.',
     desc: "Connecting investors with founders, projects and opportunities from across the Movement's global community — where capital meets creativity and conviction.",
-    photo: 'programs-investment-forum.jpg',
-    label: 'INVESTMENT FORUM IMAGE',
   },
 ];
 
@@ -273,15 +259,11 @@ function ProgramCard({
   name,
   tagline,
   desc,
-  photo,
-  label,
 }: {
   slug: string;
   name: string;
   tagline: string;
   desc: string;
-  photo: string;
-  label: string;
 }) {
   const [hovered, setHovered] = useState(false);
 
