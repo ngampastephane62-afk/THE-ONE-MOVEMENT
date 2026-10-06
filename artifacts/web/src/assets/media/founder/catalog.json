@@ -144,8 +144,8 @@
     "conversation": {
       "sourceIndex": 77,
       "source": "00_FOUNDER_RAW_MEDIA_DROP/01_PHOTOS/Nobel prize Dr Denise Mukwege .jpg",
-      "caption": "A conversation from the Founder archive",
-      "alt": "A conversation from the Founder archive",
+      "caption": "Dr Denis Mukwege · TOMI partner",
+      "alt": "Dr Denis Mukwege · TOMI partner",
       "uses": [
         "vision",
         "partners"
@@ -228,7 +228,7 @@
     "diplomatic-encounter": {
       "sourceIndex": 84,
       "source": "00_FOUNDER_RAW_MEDIA_DROP/01_PHOTOS/Ambassador of Drc UAE.JPG",
-      "caption": "Diplomatic encounter · Founder archive",
+      "caption": "Ambassador of the DRC to the UAE · TOMI partner",
       "alt": "Diplomatic encounter",
       "uses": [
         "partners"
@@ -255,7 +255,7 @@
     "global-encounter": {
       "sourceIndex": 96,
       "source": "00_FOUNDER_RAW_MEDIA_DROP/01_PHOTOS/Ambassador of Tanzania .heic",
-      "caption": "Global encounter · Founder archive",
+      "caption": "Ambassador of Tanzania · TOMI partner",
       "alt": "Global encounter",
       "uses": [
         "partners"
@@ -282,7 +282,7 @@
     "institutional-dialogue": {
       "sourceIndex": 104,
       "source": "00_FOUNDER_RAW_MEDIA_DROP/01_PHOTOS/92af4209-2dab-4a5d-bcbe-c3b8e6d6443a.JPG",
-      "caption": "Institutional dialogue · Founder archive",
+      "caption": "Institutional partner · Founder archive",
       "alt": "Institutional dialogue",
       "uses": [
         "vision",
@@ -311,7 +311,7 @@
     "office-encounter": {
       "sourceIndex": 106,
       "source": "00_FOUNDER_RAW_MEDIA_DROP/01_PHOTOS/Private office of sheikh saeed bin ahmed almaktoum.JPG",
-      "caption": "Selected institutional encounter · Founder archive",
+      "caption": "Private Office of Sheikh Saeed bin Ahmed Al Maktoum · TOMI partner",
       "alt": "Selected institutional encounter",
       "uses": [
         "partners"
@@ -540,8 +540,8 @@
     "institutional-meeting": {
       "sourceIndex": 129,
       "source": "00_FOUNDER_RAW_MEDIA_DROP/02_VIDEOS_REELS/Meeting with The Private Office of Sheikh Hamdan Al Nahyan.MOV",
-      "title": "Institutional dialogue",
-      "purpose": "Meeting footage from the Founder archive; no official partnership or endorsement is implied.",
+      "title": "Private Office of Sheikh Hamdan Al Nahyan",
+      "purpose": "Meeting with the Private Office of Sheikh Hamdan Al Nahyan, a TOMI partner.",
       "duration": 49.933333,
       "videoSrc": "/founder-videos/institutional-meeting.mp4",
       "videoFallbackSrc": "/founder-videos/institutional-meeting.webm",

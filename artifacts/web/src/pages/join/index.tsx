@@ -170,7 +170,7 @@ export default function JoinTheMovement() {
         <div className="mx-auto max-w-7xl px-6">
           <SectionHeading
             eyebrow="WHY JOIN"
-            heading="A PLACE TO BEGIN."
+            heading="CONNECT. COLLABORATE. CREATE IMPACT."
             size="lg"
             surface="light"
             thread
@@ -180,7 +180,7 @@ export default function JoinTheMovement() {
             {[
               {
                 label: 'CONNECTION',
-                 body: 'Explore the people, programs and ideas the Movement aims to bring together. Direct member-to-member connection is a future platform feature.',
+                 body: 'Connect your interests with an ecosystem spanning business, institutions, culture, media, innovation and community. Begin through the team; member-to-member digital tools remain future direction.',
               },
               {
                 label: 'OPPORTUNITY',
@@ -188,7 +188,7 @@ export default function JoinTheMovement() {
               },
               {
                 label: 'PURPOSE',
-                 body: 'A shared ambition to create more room for exchange between cultures, talents, institutions and ideas.',
+                 body: 'Bring your skills, organization or ideas into conversations about collaboration, cultural exchange and community impact across Africa, the UAE and international networks.',
               },
             ].map(({ label, body }) => (
               <div

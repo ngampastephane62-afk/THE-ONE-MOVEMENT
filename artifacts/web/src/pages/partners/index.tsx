@@ -8,7 +8,7 @@ import Reveal from '@/components/Reveal';
 import ArchivePhoto from '@/components/ArchivePhoto';
 import ResponsiveMedia from '@/components/ResponsiveMedia';
 import { archiveVideo } from '@/components/ArchivePhoto';
-import { Download, Handshake } from 'lucide-react';
+import { Handshake } from 'lucide-react';
 
 export default function Partners() {
   return (
@@ -21,48 +21,31 @@ export default function Partners() {
 
       {/* HERO */}
       <HeroSurface glowOrigin="bottom-center" minHeight="60vh">
-        <div className="mx-auto w-full max-w-7xl px-6 py-section-lg">
-          <Reveal>
+        <div className="mx-auto w-full max-w-7xl px-6 py-section-lg grid gap-10 lg:grid-cols-12 items-center">
+          <Reveal className="lg:col-span-6">
             <p className="text-eyebrow text-gold-400 mb-6">OUR PARTNERS & ALLIES</p>
             <h1 className="text-display-xl text-ivory-100 uppercase" style={{ fontFamily: 'var(--font-display)' }}>
               BUILD WITH THE MOVEMENT.
             </h1>
             <GoldThread className="mt-8" length="200px" node />
             <p className="mt-6 text-ivory-200 text-lg leading-relaxed max-w-2xl">
-              A verification-first environment for organizations and individuals exploring meaningful collaboration.
+              Ambassadors, private offices and institutions connected to a global Africa–UAE–international network, opening routes to collaboration and access.
             </p>
+          </Reveal>
+          <Reveal delay={120} className="w-full max-w-md mx-auto lg:col-span-5 lg:col-start-8">
+            <ArchivePhoto id="office-encounter" priority caption sizes="(min-width: 1024px) 40vw, (min-width: 640px) 28rem, 92vw" captionClassName="text-ivory-300" />
           </Reveal>
         </div>
       </HeroSurface>
 
-      {/* STRUCTURAL CATEGORIES */}
-      <section className="py-section-lg bg-ivory-100">
-        <div className="mx-auto max-w-7xl px-6 space-y-12">
-
-          <Reveal>
-            <div className="tomi-empty-slot p-8 sm:p-12">
-              <p className="text-eyebrow text-gold-400">PARTNER REGISTRY</p>
-              <h2 className="mt-4 max-w-2xl text-display-md text-ivory-100" style={{ fontFamily: 'var(--font-display)' }}>
-                NO PARTNERSHIPS PUBLISHED YET.
-              </h2>
-              <p className="mt-5 max-w-2xl leading-relaxed text-ivory-200">
-                Institutions, sponsors, companies, NGOs, universities and ambassadors will appear
-                here only once a relationship is verified and approved in writing. Until then,
-                this page stays honest and shows none.
-              </p>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* INSTITUTIONAL ENGAGEMENT — encounters, not partner records */}
+      {/* CONFIRMED PARTNERSHIPS */}
       <section className="py-section-lg bg-ivory-50 border-t border-sand-200" aria-labelledby="engagement-heading">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
-            <SectionHeading eyebrow="GLOBAL ENCOUNTERS" heading="DIPLOMATIC & INSTITUTIONAL DIALOGUE" surface="light" size="lg" thread />
+            <SectionHeading eyebrow="PROOF OF NETWORK" heading="OUR PARTNERS IN DIALOGUE" surface="light" size="lg" thread />
             <p id="engagement-heading" className="mt-6 max-w-2xl leading-relaxed text-ink-800">
-              Selected moments of conversation from the Founder archive. These are encounters, not partner records:
-              a photograph does not establish a partnership, sponsorship or endorsement, and no one is identified here.
+              Partners of The One Movement, shown through photographs and footage from the Founder archive.
+              These relationships can open access to collaboration across business, diplomacy, culture and community; outcomes are discussed case by case. New enquiries are reviewed separately below.
             </p>
           </Reveal>
           <div className="mt-12 grid grid-cols-12 items-start gap-4 sm:gap-6">
@@ -85,13 +68,13 @@ export default function Partners() {
               className="aspect-[9/16] w-full max-w-xs"
             />
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-ink-700 sm:mt-0">
-              Institutional dialogue · meeting footage from the Founder archive. No official partnership or endorsement is implied.
+              Meeting with the Private Office of Sheikh Hamdan Al Nahyan · Founder archive footage.
             </p>
           </Reveal>
         </div>
       </section>
 
-      {/* PARTNERSHIP JOURNEY & PACKAGES */}
+      {/* PARTNERSHIP OPPORTUNITIES */}
       <section className="py-section-lg bg-lagoon-900 text-ivory-100">
         <div className="mx-auto max-w-7xl px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
@@ -100,7 +83,7 @@ export default function Partners() {
               <Reveal>
                 <SectionHeading eyebrow="JOIN US" heading="PARTNERSHIP OPPORTUNITIES" surface="dark" thread />
                 <p className="mt-6 text-ivory-200 leading-relaxed text-lg">
-                  Every collaboration begins with a conversation. Explore our structured partnership tiers and begin the journey.
+                  Every collaboration begins with a conversation. Share your organization's interests and explore how to connect with the Movement.
                 </p>
                 <div className="mt-10 space-y-4">
                   <Link href="/join#institutional-inquiry" className="inline-block" data-testid="link-partnership-inquiry">
@@ -108,10 +91,6 @@ export default function Partners() {
                       <Handshake className="mr-2 h-4 w-4" /> BEGIN THE CONVERSATION
                     </Button>
                   </Link>
-                  <Button variant="outline" size="xl" className="w-full sm:w-auto border-ivory-100/30 text-ivory-100 hover:bg-ivory-100/10" disabled>
-                    <Download className="mr-2 h-4 w-4" /> DOWNLOAD PARTNERSHIP DECK
-                  </Button>
-                  <p className="text-xs text-ivory-400/60 text-center sm:text-left mt-2 italic">* Deck in preparation</p>
                 </div>
               </Reveal>
             </div>
@@ -120,26 +99,23 @@ export default function Partners() {
               <Reveal delay={150}>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
-                  {/* Tiers placeholder architecture */}
                   <div className="bg-lagoon-800 border border-lagoon-700 p-6 rounded-sm">
-                    <h4 className="text-sm font-semibold text-gold-400 uppercase tracking-widest mb-4">Sponsorship Tiers</h4>
+                    <h4 className="text-sm font-semibold text-gold-400 uppercase tracking-widest mb-4">Ways to collaborate</h4>
                     <ul className="space-y-3">
-                      {['Platinum', 'Diamond', 'Gold', 'Silver'].map(tier => (
-                        <li key={tier} className="flex justify-between items-center py-2 border-b border-lagoon-700 last:border-0">
-                          <span className="font-display text-lg text-ivory-100">{tier}</span>
-                          <span className="text-xs text-ivory-400 uppercase tracking-wider">Details via Inquiry</span>
+                      {['Connect institutions', 'Support a program', 'Develop cultural exchange'].map(path => (
+                        <li key={path} className="py-2 border-b border-lagoon-700 last:border-0">
+                          <span className="font-display text-lg text-ivory-100">{path}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
 
                   <div className="bg-lagoon-800 border border-lagoon-700 p-6 rounded-sm">
-                    <h4 className="text-sm font-semibold text-gold-400 uppercase tracking-widest mb-4">Partnership Packages</h4>
+                    <h4 className="text-sm font-semibold text-gold-400 uppercase tracking-widest mb-4">From connection to opportunity</h4>
                     <ul className="space-y-3">
-                      {['Partner — Premium', 'Partner — Basic'].map(pkg => (
-                        <li key={pkg} className="flex flex-col py-2 border-b border-lagoon-700 last:border-0">
-                          <span className="font-display text-lg text-ivory-100">{pkg}</span>
-                          <span className="text-xs text-ivory-400 uppercase tracking-wider mt-1">Structure pending</span>
+                      {['Share expertise', 'Explore collaborations', 'Create shared experiences'].map(path => (
+                        <li key={path} className="flex flex-col py-2 border-b border-lagoon-700 last:border-0">
+                          <span className="font-display text-lg text-ivory-100">{path}</span>
                         </li>
                       ))}
                     </ul>
@@ -159,7 +135,7 @@ export default function Partners() {
           <Reveal>
             <p className="text-[10px] font-semibold text-ink-500 tracking-[0.2em] uppercase">OUR DISPLAY POLICY</p>
             <p className="mt-3 text-sm text-ink-700 leading-relaxed">
-              Every organization and individual listed on this page has provided written authorization to appear here. We do not display logos, names, or endorsements without documented consent.
+              Confirmed partners appear above. Organizations and individuals who enquire are reviewed before any public listing.
             </p>
           </Reveal>
         </div>

@@ -583,7 +583,7 @@ export default function Ecosystem() {
                   className="mt-2 text-right text-[10px] tracking-widest uppercase"
                   style={{ color: 'hsl(188 46% 40%)' }}
                 >
-                  INSTITUTIONAL DIALOGUE · FOUNDER ARCHIVE · NO PARTNERSHIP IMPLIED
+                  INSTITUTIONAL PARTNER · FOUNDER ARCHIVE
                 </p>
               </div>
             </div>
@@ -670,6 +670,34 @@ export default function Ecosystem() {
       <div style={{ backgroundColor: 'hsl(38 57% 94%)' }}>
         <GeometricAccent variant="lagoon-on-ivory" height={20} />
       </div>
+
+      <section className="bg-ivory-50 py-section-lg border-b border-sand-200" aria-labelledby="ecosystem-connections-heading">
+        <div className="mx-auto max-w-7xl px-6">
+          <h2 id="ecosystem-connections-heading" className="text-display-md text-ink-900" style={{ fontFamily: 'var(--font-display)' }}>DIFFERENT WORLDS. SHARED OPPORTUNITIES.</h2>
+          <p className="mt-6 max-w-2xl text-ink-800 leading-relaxed">Business, institutions, culture, media and community connect across Africa, the UAE and international networks. Innovation and technology are part of the direction that connects them.</p>
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {([
+              { id: 'summit-goma', title: 'Business & programs', text: 'Leadership, ideas and enterprise brought into the same conversation.' },
+              { id: 'office-encounter', title: 'Institutions & diplomacy', text: 'Partner relationships that support dialogue across borders.' },
+              { id: 'cultural-performance', title: 'Culture & creative economy', text: 'Talent, expression and cultural exchange connect people.' },
+              { id: 'runway-wide', title: 'Media & visibility', text: 'Shared stages give creative work a place to be seen.' },
+              { id: 'community-gathering', title: 'Community & impact', text: 'People and local action are part of a wider network.' },
+            ] as const).map(({ id, title, text }) => (
+              <article key={id} className="overflow-hidden border border-sand-200 bg-ivory-100">
+                <ArchivePhoto id={id} frameClassName="aspect-[4/3] w-full" objectPosition={id === 'summit-goma' ? 'center 30%' : 'center'} sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw" />
+                <div className="p-5"><h3 className="font-display text-lg text-ink-900">{title}</h3><p className="mt-3 text-sm leading-relaxed text-ink-700">{text}</p></div>
+              </article>
+            ))}
+            <article className="overflow-hidden border border-gold-500/30 bg-lagoon-900">
+              <div role="img" aria-label="Innovation and technology — ecosystem vision" className="relative aspect-[4/3] overflow-hidden">
+                <GeometricAccent variant="gold-on-lagoon" height={400} />
+                <div className="absolute inset-0 flex items-center justify-center p-6"><p className="font-display text-xl text-gold-400 text-center">IDEAS.<br />CONNECTION.<br />POSSIBILITY.</p></div>
+              </div>
+              <div className="p-5"><h3 className="font-display text-lg text-ivory-100">Innovation & technology</h3><p className="mt-3 text-sm leading-relaxed text-ivory-200">A connected digital workspace is future direction. Today's website, programs and enquiries are the starting point.</p></div>
+            </article>
+          </div>
+        </div>
+      </section>
 
       {/* ─────────────────────────────────────────────────────────────────────
           4. SECTOR GRID FALLBACK — ivory

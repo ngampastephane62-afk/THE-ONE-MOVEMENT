@@ -18,3 +18,15 @@ International Media Reach may state **353+ media outlets, 18 categories, and Art
 **Why:** The user explicitly authorized reusing accessible Founder uploads and instructed that a placeholder must not remain when contextually appropriate Founder media is already available.
 
 **Why:** The Founder archive mixes originals, screenshots, logos, promotional clips and misleading filenames. Neither a descriptive filename nor an encounter photograph establishes program history, a person's identity or a formal partnership.
+
+The Founder has now confirmed that the people and organizations represented in the supplied partner/institutional material are genuine partners (“on est en partenariat avec tous ces gens”). Present that material as partnerships, not merely encounters. Use only supplied or known identities and relationships; do not infer extra titles, roles, endorsement or guaranteed outcomes.
+
+**Why:** Explicit Founder confirmation supersedes the earlier precaution of treating all institutional material as unverified encounters. Photography alone still does not authorize unrelated claims.
+
+**How to apply:** Preserve this confirmation when editing partner, institutional and global-network copy. Keep press distribution capabilities and future enquiries separate from confirmed partners.
+
+Position TOMI as a global ecosystem of connections and opportunities across business, institutions, diplomacy, culture, creative economy, media, community, innovation and programs, including Africa–UAE–international connections. Fashion Week and humanitarian activity are parts of that ecosystem, not its dominant identity.
+
+**Why:** The Founder instructed “mettre en valeur l'écosystème” and “tout ce qu'il y a dans l'écosystème est intégré pour en profiter, pour être connecté”, with fewer credits.
+
+**How to apply:** Reuse available optimized media, preserve the first two approved Home experiences, balance contextual imagery, and avoid broad archive re-analysis or website redesign.

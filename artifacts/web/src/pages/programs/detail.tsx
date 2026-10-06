@@ -545,7 +545,7 @@ function ProgramMediaGrid({ slug, name, tagline }: { slug: string; name: string;
     <div className="grid gap-8 md:grid-cols-12 md:items-center">
       <ProgramVision name={name} tagline={tagline} className="md:col-span-6 w-full aspect-[16/10]" />
       <p className="md:col-span-5 md:col-start-8 text-ink-800 leading-relaxed">
-        This program is presented through its vision. No historic photography is shown because none is confirmed. Official details will be announced when confirmed.
+        Culture, leadership and collaboration take different forms across the Movement. Official details for this program will be announced when confirmed.
       </p>
     </div>
   );

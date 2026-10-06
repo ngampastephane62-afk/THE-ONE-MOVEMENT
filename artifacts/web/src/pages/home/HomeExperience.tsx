@@ -246,7 +246,7 @@ export default function HomeExperience() {
           <Reveal>
             <SectionHeading
               eyebrow="MOVEMENT IN ACTION"
-              heading="REAL PEOPLE. REAL MOMENTS."
+              heading="CONNECTIONS ACROSS WORLDS."
               surface="dark"
               size="lg"
               thread
@@ -254,19 +254,19 @@ export default function HomeExperience() {
           </Reveal>
           <Reveal delay={80} className="mt-6 flex flex-col gap-4 border-b border-gold-500/25 pb-6 sm:flex-row sm:items-end sm:justify-between">
             <p className="max-w-lg text-sm leading-relaxed text-ivory-200">
-              People, culture and collaboration, shown through photographs from the Founder archive.
+              Communities, institutions and culture connected through one network, shown through the Founder archive.
             </p>
-            <span className="text-[10px] uppercase tracking-[0.2em] text-gold-400">Founder archive / no partnership attribution</span>
+            <span className="text-[10px] uppercase tracking-[0.2em] text-gold-400">Founder archive / partner network</span>
           </Reveal>
           <div className="mt-12 grid grid-cols-12 items-start gap-3 sm:gap-5">
             <Reveal direction="left" className="col-span-12 sm:col-span-7">
-              <ArchivePhoto id="community-gathering" caption sizes="(min-width: 640px) 58vw, 92vw" captionClassName="text-ivory-300" />
+              <ArchivePhoto id="office-encounter" caption sizes="(min-width: 640px) 58vw, 92vw" captionClassName="text-ivory-300" />
             </Reveal>
             <Reveal delay={80} direction="right" className="col-span-7 sm:col-span-5">
-              <ArchivePhoto id="community-outreach" caption sizes="(min-width: 640px) 40vw, 58vw" captionClassName="text-ivory-300" />
+              <ArchivePhoto id="community-outreach" caption="Community & impact" sizes="(min-width: 640px) 40vw, 58vw" captionClassName="text-ivory-300" />
             </Reveal>
             <Reveal delay={140} className="col-span-12 sm:col-span-7">
-              <ArchivePhoto id="institutional-dialogue" caption="Institutional dialogue · Founder archive · no partnership implied" sizes="(min-width: 640px) 58vw, 92vw" captionClassName="text-ivory-300" />
+              <ArchivePhoto id="institutional-dialogue" caption="Institutional partner · Founder archive" sizes="(min-width: 640px) 58vw, 92vw" captionClassName="text-ivory-300" />
             </Reveal>
             <Reveal delay={180} className="col-span-12 sm:col-span-5">
               <ArchivePhoto id="cultural-performance" caption sizes="(min-width: 640px) 40vw, 92vw" captionClassName="text-ivory-300" />

@@ -26,3 +26,9 @@ Do not publish media changes before Founder visual approval.
 **Why:** The Founder repeatedly instructed “DO NOT PUBLISH” and to stop after the requested verification/report.
 
 **How to apply:** Deliver the current workspace preview for approval; do not publish or suggest publishing as part of these media-fix requests.
+
+An unscrolled full-page capture can show large blank areas where offscreen scroll-reveal content has not activated.
+
+**Why:** The Partners full-page capture appeared empty below its hero, but scrolling through the actual page exposed correctly loaded photographs and video. Sampling during the reveal transition also produced false invisible-media alarms.
+
+**How to apply:** Inspect media after scrolling into its region and distinguish fading content from genuinely zero-opacity, unloaded or dimensionless content. Use screenshots of settled affected regions rather than treating an initial full-page capture as proof of missing bindings.

@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import ArchivePhoto, { archiveVideo } from '@/components/ArchivePhoto';
 import ResponsiveMedia from '@/components/ResponsiveMedia';
 import Reveal from '@/components/Reveal';
-import { Download, Mail } from 'lucide-react';
+import { Mail } from 'lucide-react';
 
 export default function MediaHub() {
   return (
@@ -29,7 +29,7 @@ export default function MediaHub() {
             </h1>
             <GoldThread className="mt-8" length="200px" node />
             <p className="mt-6 text-ivory-200 text-lg leading-relaxed max-w-2xl">
-              The latest media, coverage, resources and pathways for journalists and production partners.
+              Institutions, programs, culture and video from the connected network, with pathways for journalists and production partners.
             </p>
           </Reveal>
         </div>
@@ -77,7 +77,7 @@ export default function MediaHub() {
 
           <div className="mt-12 grid grid-cols-12 items-start gap-5 sm:gap-6">
             <Reveal delay={100} className="col-span-12 lg:col-span-7">
-              <ArchivePhoto id="runway-wide" caption="Runway atmosphere · Founder archive" sizes="(min-width: 1024px) 58vw, 92vw" />
+              <ArchivePhoto id="institutional-dialogue" caption="Institutional partnership" sizes="(min-width: 1024px) 58vw, 92vw" />
             </Reveal>
             <Reveal delay={160} className="col-span-6 lg:col-span-5">
               <ArchivePhoto id="runway-white" caption sizes="(min-width: 1024px) 40vw, 46vw" />
@@ -89,7 +89,7 @@ export default function MediaHub() {
               <ArchivePhoto id="cultural-performance" caption sizes="(min-width: 1024px) 32vw, 92vw" />
             </Reveal>
             <Reveal delay={280} className="col-span-12 sm:col-span-6 lg:col-span-4">
-              <ArchivePhoto id="audience" caption sizes="(min-width: 1024px) 32vw, 92vw" />
+              <ArchivePhoto id="summit-goma" caption sizes="(min-width: 1024px) 32vw, 92vw" />
             </Reveal>
           </div>
         </div>
@@ -103,7 +103,7 @@ export default function MediaHub() {
           </Reveal>
 
           <div className="mt-12 grid grid-cols-1 min-[520px]:grid-cols-2 lg:grid-cols-4 gap-6">
-            {(['fashion-archive', 'community-outreach', 'founder-arabic', 'institutional-meeting'] as const).map((id, i) => {
+            {(['institutional-meeting', 'founder-arabic', 'fashion-archive', 'community-outreach'] as const).map((id, i) => {
               const v = archiveVideo(id);
               return (
                 <Reveal key={id} delay={i * 100}>
@@ -121,7 +121,7 @@ export default function MediaHub() {
                     />
                     <figcaption className="mt-3 text-xs leading-relaxed text-ivory-300">
                       <span className="block font-semibold text-gold-400">{v.title}</span>
-                      {v.purpose}
+                      {id === 'founder-arabic' && 'The wider digital platform is future vision, not a service available today.'}
                     </figcaption>
                   </figure>
                 </Reveal>
@@ -138,9 +138,9 @@ export default function MediaHub() {
             <SectionHeading eyebrow="COVERAGE" heading="PRESS / COVERAGE" surface="light" thread />
             <div className="mt-10 max-w-2xl border border-sand-200 bg-white p-8 shadow-sm">
               <div className="mb-4 h-px w-12 bg-gold-500" aria-hidden="true" />
-              <h4 className="text-lg font-display text-ink-900">Awaiting verified records</h4>
+              <h4 className="text-lg font-display text-ink-900">Editorial enquiries</h4>
               <p className="mt-3 text-sm leading-relaxed text-ink-700">
-                No published coverage is listed yet. Articles and press mentions will appear here only after they are verified and approved by the Founder.
+                Contact the team for interviews, program context and information about the Movement's partner network. Published articles and press mentions are listed only when confirmed.
               </p>
             </div>
           </Reveal>
@@ -154,24 +154,17 @@ export default function MediaHub() {
             <Reveal className="lg:col-span-5">
               <SectionHeading eyebrow="RESOURCES" heading="MEDIA KIT" surface="light" thread />
               <p className="mt-6 text-ink-700 leading-relaxed">
-                Downloadable assets, verified brand guidelines, and approved photography for editorial use.
-                Resources will become available as they are authorized for public distribution.
+                For editorial photography, brand materials or interview requests, contact the Movement through the media inquiry pathway.
               </p>
             </Reveal>
             <div className="lg:col-span-6 lg:col-start-7">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {[
-                  { name: 'Brand Assets & Logos', status: 'In Preparation' },
-                  { name: 'Movement Overview', status: 'In Preparation' },
-                  { name: 'Founder Biographies', status: 'In Preparation' },
-                  { name: 'Approved Photography', status: 'In Preparation' }
-                ].map((item, i) => (
+                {['Photography & permissions', 'Interviews & editorial context'].map((name, i) => (
                   <Reveal key={i} delay={i * 50}>
                     <div className="border border-sand-300 bg-white p-5 rounded-sm flex flex-col justify-between h-full shadow-sm hover:border-gold-500/50 transition-colors">
-                      <h5 className="font-semibold text-ink-900 text-sm">{item.name}</h5>
+                      <h5 className="font-semibold text-ink-900 text-sm">{name}</h5>
                       <div className="mt-4 flex items-center justify-between">
-                        <span className="text-[10px] uppercase tracking-widest text-sand-500 font-semibold">{item.status}</span>
-                        <Download className="w-4 h-4 text-sand-400" />
+                        <Link href="/join#institutional-inquiry" className="text-xs font-semibold text-gold-600 underline underline-offset-4">SEND AN ENQUIRY</Link>
                       </div>
                     </div>
                   </Reveal>

@@ -34,8 +34,9 @@ export default function OurVision() {
                 <GoldThread className="mt-8" length="240px" node />
                 <p className="mt-6 text-ivory-200 text-lg leading-relaxed max-w-lg">
                   The One Movement International brings people, cultures, businesses and
-                  institutions together. Our vision is a trusted global collaboration ecosystem
-                  that expands opportunity and dialogue without borders.
+                  institutions together across Africa, the UAE and international networks.
+                  Business, diplomacy, culture, media, innovation and community each
+                  contribute to a global ecosystem of connection and opportunity.
                 </p>
               </Reveal>
             </div>
@@ -110,12 +111,12 @@ export default function OurVision() {
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
             <SectionHeading eyebrow="ONE HUMANITY" heading="PEOPLE BEFORE PLATFORMS." surface="light" size="lg" thread />
-            <p id="vision-people-heading" className="sr-only">People, community and dialogue</p>
+            <p id="vision-people-heading" className="mt-6 max-w-2xl text-ink-800 leading-relaxed">People and institutions connect across business, culture and diplomacy. Programs bring those connections into shared experiences; partnerships help the conversation travel further.</p>
           </Reveal>
           <div className="mt-12 grid grid-cols-12 items-start gap-4 sm:gap-6">
-            <Reveal className="col-span-12 sm:col-span-7"><ArchivePhoto id="community-gathering" caption sizes="(min-width: 640px) 58vw, 92vw" /></Reveal>
+            <Reveal className="col-span-12 sm:col-span-7"><ArchivePhoto id="cultural-performance" caption="Culture & creative economy" sizes="(min-width: 640px) 58vw, 92vw" /></Reveal>
             <Reveal delay={80} className="col-span-12 sm:col-span-5"><ArchivePhoto id="institutional-dialogue" caption sizes="(min-width: 640px) 40vw, 92vw" /></Reveal>
-            <Reveal delay={120} className="col-span-12 sm:col-span-5 sm:col-start-2"><ArchivePhoto id="casting-group" caption sizes="(min-width: 640px) 40vw, 92vw" /></Reveal>
+            <Reveal delay={120} className="col-span-12 sm:col-span-5 sm:col-start-2"><ArchivePhoto id="summit-goma" caption="The One Summit · Goma, DRC" sizes="(min-width: 640px) 40vw, 92vw" /></Reveal>
             <Reveal delay={160} className="col-span-8 col-start-3 sm:col-span-4 sm:col-start-8"><ArchivePhoto id="conversation" caption sizes="(min-width: 640px) 32vw, 70vw" /></Reveal>
           </div>
         </div>
@@ -182,7 +183,7 @@ export default function OurVision() {
             <Reveal delay={150} direction="left" className="lg:col-span-5 lg:col-start-8">
               <ArchivePhoto
                 id="global-encounter"
-                caption="Global encounter · Founder archive · no partnership implied"
+                caption="Ambassador of Tanzania · TOMI partner"
                 captionClassName="text-ivory-300"
                 sizes="(min-width: 1024px) 40vw, 92vw"
                 className="tomi-vision-frame mx-auto max-w-md shadow-2xl"
