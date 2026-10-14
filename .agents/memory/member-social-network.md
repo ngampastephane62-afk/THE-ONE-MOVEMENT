@@ -21,6 +21,12 @@ New members may join, create a limited profile, follow people, like and comment 
 
 **How to apply:** Do not introduce an unrequested membership-approval queue or confuse email verification with business certification. Enforce posting eligibility on the server using distinct, genuinely new accounts that both attributed the invitation and still follow the inviter. Free membership, profile creation, discovery, likes and comments remain available before posting unlock; packages and events are separate.
 
+Verified users must be able to explore the feed immediately after signing in, before filling in their profile. Profession, sectors, biography and other details can be completed later. Members should easily open their followers and following lists and connect using Google rather than repeatedly entering email codes where the configured login methods allow it.
+
+**Why:** The Founder relayed user feedback that the compulsory profile form caused visitors to leave before seeing the platform.
+
+**How to apply:** Use progressive onboarding without a blocking profile form. Preserve explicit consent before making a profile discoverable to other members; do not confuse this with optional public-internet visibility. Never promise that Google or a new-device security check can always be skipped.
+
 Members may choose to make their profile publicly visible outside the signed-in network; private contact details, messages and previously member-only posts are not implicitly made public.
 
 **Why:** The Founder asked to make member profiles public and shareable, but existing members consented only to signed-in network visibility for their activity. The older public-directory opt-in covered text fields, not network photos or covers.

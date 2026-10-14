@@ -6,7 +6,6 @@ import PostCard from '@/components/network/PostCard';
 import ReportDialog, { type ReportTarget } from '@/components/network/ReportDialog';
 import { Avatar, Empty, ErrorBox, Skeleton, UploadTray, btn, btnGhost, card, field, useAct, useUploads } from '@/components/network/kit';
 import { useMe } from './ctx';
-import InvitationProgress from '@/components/network/InvitationProgress';
 
 const TABS: { id: GetNetworkStateFeed; label: string }[] = [
   { id: 'all', label: 'For you' }, { id: 'following', label: 'Following' }, { id: 'business', label: 'Business' }, { id: 'reel', label: 'Reels' },
@@ -68,7 +67,14 @@ export default function Feed() {
   return (
     <div className="flex flex-col gap-4 px-3 pt-4 md:px-0 md:pt-0 lg:flex-row lg:items-start">
       <div className="flex min-w-0 flex-1 flex-col gap-4">
-        {me.founder || base.growth?.canPost ? <Composer /> : <InvitationProgress growth={base.growth} />}
+        {me.founder || base.growth?.canPost ? <Composer /> : (
+          <div className={`${card} flex flex-wrap items-center justify-between gap-2 p-3 text-sm`}>
+            <p className="text-ink-700">Explore the feed freely. Publishing unlocks after {base.growth?.requiredInvites ?? 11} invited members follow you.</p>
+            <Link href="/member/invite" className="text-xs font-semibold text-lagoon-700 hover:underline" data-testid="link-feed-invite">
+              Invitation progress {base.growth?.qualifiedInvites ?? 0}/{base.growth?.requiredInvites ?? 11}
+            </Link>
+          </div>
+        )}
         <div className="flex gap-1 overflow-x-auto rounded-full bg-ivory-200 p-1" role="tablist">
           {TABS.map((t) => <button key={t.id} role="tab" aria-selected={feed === t.id} onClick={() => switchFeed(t.id)} className={`flex-1 whitespace-nowrap rounded-full px-3 py-1.5 text-xs ${feed === t.id ? 'bg-ivory-50 font-semibold text-lagoon-900 shadow-sm' : 'text-ink-700'}`} data-testid={`tab-feed-${t.id}`}>{t.label}</button>)}
         </div>
