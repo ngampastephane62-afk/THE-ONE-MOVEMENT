@@ -116,7 +116,7 @@ router.get("/network/media/:id", async (req, res) => {
   const [upload] = await db.select().from(uploads).where(and(eq(uploads.id, String(req.params.id)), eq(uploads.ready, true)));
   if (!upload) throw new NetworkError(404, "Media not found.");
   let allowed = upload.ownerId === who.member.id;
-  if (!allowed && res.locals.networkEnabled) {
+  if (!allowed) {
     const [profile] = await db.select().from(profiles).where(and(eq(profiles.memberId, upload.ownerId), eq(profiles.enabled, true), eq(profiles.suspended, false)));
     if (profile) {
       try {

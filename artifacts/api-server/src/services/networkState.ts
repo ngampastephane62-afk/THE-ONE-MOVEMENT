@@ -82,7 +82,7 @@ export async function networkState(context: NetworkActor, query: Record<string, 
   if (query.feed === "following") postFilters.push(inArray(posts.authorId, followedIds.length ? followedIds : [-1]));
   if (query.feed === "business" || query.feed === "reel") postFilters.push(eq(posts.kind, String(query.feed)));
   const myProfile = rows.find(r => r.member.id === self.id)?.profile;
-  const postRows = myProfile?.enabled ? await db.select().from(posts).where(and(...postFilters)).orderBy(desc(posts.id)).limit(31) : [];
+  const postRows = await db.select().from(posts).where(and(...postFilters)).orderBy(desc(posts.id)).limit(31);
   const page = postRows.slice(0, 30);
   const postIds = page.map(p => p.id);
   const [likeRows, viewRows, commentRows] = postIds.length ? await Promise.all([
@@ -114,15 +114,21 @@ export async function networkState(context: NetworkActor, query: Record<string, 
     });
   }
   const me = dto.get(self.id)!;
-  if (!me?.enabled) return { ...empty, me };
+  if (!me) return empty;
   const qualifiedInvites = await qualifiedInviteCount(self.id);
   const growth = {
     inviteCode: myProfile!.inviteCode, qualifiedInvites, requiredInvites: REQUIRED_INVITES,
-    canPost: context.founder || qualifiedInvites >= REQUIRED_INVITES,
+    canPost: me.enabled && (context.founder || qualifiedInvites >= REQUIRED_INVITES),
   };
   const q = String(query.q ?? "").trim().slice(0, 100).toLowerCase();
   const sector = String(query.sector ?? "");
-  const memberList = (context.founder ? usableRows : eligible).filter(r => r.profile.enabled).map(r => dto.get(r.member.id)!)
+  const connectionIds = query.connections && targetId ? new Set(allFollows
+    .filter(f => query.connections === "followers" ? f.followingId === targetId : f.followerId === targetId)
+    .map(f => query.connections === "followers" ? f.followerId : f.followingId)) : null;
+  // An unavailable target must not reveal its relationships through this filter.
+  const connectionTargetVisible = !query.connections || (!!targetId && eligibleIds.includes(targetId));
+  const memberList = (context.founder && !query.connections ? usableRows : eligible).filter(r => r.profile.enabled && connectionTargetVisible &&
+    (!query.connections || connectionIds?.has(r.member.id))).map(r => dto.get(r.member.id)!)
     .filter(m => (!sector || m.sectors.includes(sector as NetworkMember["sectors"][number])) &&
       (!q || [m.fullName, m.profession, m.organization, m.country, m.bio, m.offering, m.lookingFor].join(" ").toLowerCase().includes(q)));
   const postDtos: NetworkPost[] = page.filter(p => dto.has(p.authorId)).map(p => ({

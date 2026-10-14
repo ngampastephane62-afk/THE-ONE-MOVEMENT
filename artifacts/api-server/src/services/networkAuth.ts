@@ -41,11 +41,13 @@ export async function networkAuth(req: Request, res: Response, next: NextFunctio
   const founder = !!process.env.TOMI_FOUNDER_EMAIL &&
     identity.email === process.env.TOMI_FOUNDER_EMAIL.trim().toLowerCase();
   let [member] = await db.select().from(members).where(eq(members.clerkId, clerkId)).limit(1);
-  if (!member && founder) {
+  if (!member) {
+    const name = identity.fullName.trim().slice(0, 100);
     [member] = await db.insert(members).values({
-      clerkId, fullName: identity.fullName || "Founder",
-      profession: "Founder & CEO", organization: "The One Movement International",
-      sectors: ["business", "humanitarian-action"],
+      clerkId, fullName: name.length >= 2 ? name : founder ? "Founder" : "Member",
+      profession: founder ? "Founder & CEO" : "",
+      organization: founder ? "The One Movement International" : "",
+      sectors: founder ? ["business", "humanitarian-action"] : [],
     }).onConflictDoNothing().returning();
     if (!member) [member] = await db.select().from(members).where(eq(members.clerkId, clerkId)).limit(1);
   }
@@ -60,7 +62,7 @@ export async function networkAuth(req: Request, res: Response, next: NextFunctio
 }
 export function actor(res: Response, enabled = true) {
   const value = res.locals.actor as NetworkActor;
-  if (!value.member) throw new NetworkError(409, "Complete your member profile first.");
+  if (!value.member) throw new NetworkError(409, "Your member space could not be opened. Please try again.");
   if (enabled && !res.locals.networkEnabled) throw new NetworkError(409, "Join the member network before taking part.");
   return { ...value, member: value.member };
 }

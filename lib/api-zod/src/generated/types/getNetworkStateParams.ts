@@ -5,6 +5,7 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+import type { GetNetworkStateConnections } from './getNetworkStateConnections';
 import type { GetNetworkStateFeed } from './getNetworkStateFeed';
 
 export type GetNetworkStateParams = {
@@ -15,6 +16,7 @@ q?: string;
 sector?: string;
 feed?: GetNetworkStateFeed;
 person?: number;
+connections?: GetNetworkStateConnections;
 thread?: number;
 before?: number;
 };

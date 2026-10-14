@@ -29,7 +29,7 @@ export async function networkAction(req: Request, res: Response) {
   const parsed = NetworkActionBody.strict().safeParse(req.body);
   if (!parsed.success) throw new NetworkError(400, "Invalid network action.");
   const input: NetworkActionInput = parsed.data;
-  const who = actor(res, !["join", "upload.complete", "profile.media"].includes(input.action));
+   const who = actor(res, !["join", "upload.complete", "profile.media", "post.view"].includes(input.action));
   const self = who.member.id;
   const id = () => number(input.id);
   const target = () => number(input.targetId);

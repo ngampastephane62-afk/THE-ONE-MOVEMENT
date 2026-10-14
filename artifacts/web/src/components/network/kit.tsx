@@ -20,11 +20,27 @@ export function useAct() {
     },
   });
   return {
-    run: (data: NetworkActionInput) => m.mutateAsync({ data }),
+    run: async (data: NetworkActionInput) => {
+      try { return await m.mutateAsync({ data }); }
+      catch (e) {
+        if (!needsJoin(e) || data.action === 'join' || data.action === 'post.view') throw e;
+        const ok = window.confirm('Join the TOMI member network?\n\nActivating makes your name and network profile visible to other signed-in TOMI members. It does not publish anything to the public internet, and your public directory setting stays unchanged.\n\nPress OK to activate and continue.');
+        if (!ok) throw e;
+        await m.mutateAsync({ data: { action: 'join', accepted: true } });
+        return m.mutateAsync({ data });
+      }
+    },
     pending: m.isPending,
     error: m.isError,
     reset: m.reset,
   };
+}
+
+export const JOIN_REQUIRED = 'Join the member network before taking part.';
+interface ApiErrorShape { status?: number; data?: { error?: unknown } | null }
+function needsJoin(e: unknown) {
+  const x = e as ApiErrorShape | null;
+  return x?.status === 409 && x.data?.error === JOIN_REQUIRED;
 }
 
 export function errStatus(e: unknown): number | undefined {

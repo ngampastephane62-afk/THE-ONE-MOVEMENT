@@ -87,7 +87,7 @@ router.get("/member/profile", memberAuth, async (req, res) => {
 router.put("/member/profile", memberAuth, memberWrite, async (req, res) => {
   const parsed = SaveMemberProfileBody.strict().safeParse(req.body);
   if (!parsed.success) {
-    res.status(400).json({ error: "Check your profile fields and choose between one and eight sectors." });
+    res.status(400).json({ error: "Check your profile fields and choose up to eight sectors." });
     return;
   }
   const input = parsed.data;
@@ -103,8 +103,8 @@ router.put("/member/profile", memberAuth, memberWrite, async (req, res) => {
     website: input.website.trim(),
     sectors: [...new Set(input.sectors)],
   };
-  if (data.fullName.length < 2 || data.profession.length < 2) {
-    res.status(400).json({ error: "Your name and profession need at least two characters." });
+  if (data.fullName.length < 2) {
+    res.status(400).json({ error: "Your name needs at least two characters." });
     return;
   }
   if (data.website) {

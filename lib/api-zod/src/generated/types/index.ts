@@ -10,6 +10,7 @@ export * from './detailedHealthStatus';
 export * from './donationCampaign';
 export * from './getEcosystemMembers200';
 export * from './getNetworkPaymentStatusParams';
+export * from './getNetworkStateConnections';
 export * from './getNetworkStateFeed';
 export * from './getNetworkStateParams';
 export * from './healthStatus';

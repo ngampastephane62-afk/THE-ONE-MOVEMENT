@@ -21,6 +21,7 @@ import Packages from './Packages';
 import Certifications from './Certifications';
 import Admin from './Admin';
 import SettingsPage from './Settings';
+import Connections from './Connections';
 
 
 function Frame({ children }: { children: ReactNode }) {
@@ -46,27 +47,33 @@ function Onboard({ title, eyebrow, children }: { title: string; eyebrow: string;
   );
 }
 
-function JoinConsent({ onJoined }: { onJoined: () => void }) {
+function ActivationPrompt() {
   const { run, pending } = useAct();
-  const [ok, setOk] = useState(false);
   const [err, setErr] = useState(false);
   return (
-    <Onboard eyebrow="ONE LAST STEP" title="Join the member network">
-      <p className="text-sm leading-relaxed text-ink-700">The network is where designers, NGO workers, investors and institutions present their work, follow each other and open private conversations.</p>
-      <ul className="mt-4 flex flex-col gap-2 text-sm text-ink-800">
-        <li>• Signed-in, verified members will see your network profile: name, role, organization, country, bio, sectors, photo and posts.</li>
-        <li>• Your visibility on the public website does not change. If your profile is private on the public directory, it stays private.</li>
-        <li>• Messages only open after the other member accepts your request. You can block or report anyone.</li>
-        <li>• Membership is free. Free members can follow, like, comment and message right away; publishing posts unlocks once 11 people you invited follow you. Packages and events do not replace this step.</li>
-        <li>• Official badges come only from a reviewed certification — never from sign-up.</li>
-      </ul>
-      <label className="mt-5 flex cursor-pointer items-start gap-3 rounded-2xl border border-gold-500/40 bg-ivory-100 p-4">
-        <input type="checkbox" checked={ok} onChange={(e) => setOk(e.target.checked)} className="mt-1 h-4 w-4 accent-[hsl(187_67%_12%)]" data-testid="checkbox-join-consent" />
-        <span className="text-sm text-ink-900">I agree that other signed-in members can see my network profile and activity.</span>
-      </label>
-      {err && <p className="mt-3 text-sm text-crimson-700" role="alert">Joining failed. Please try again.</p>}
-      <button className={`${btn} mt-5 px-6 py-3 text-sm`} disabled={!ok || pending} onClick={() => { setErr(false); run({ action: 'join', accepted: true }).then(onJoined).catch(() => setErr(true)); }} data-testid="button-join-network">Enter the network</button>
-    </Onboard>
+    <section className="mx-3 mb-4 rounded-2xl border border-gold-500/40 bg-lagoon-900 p-4 text-ivory-100 md:mx-0" data-testid="panel-activate">
+      <p className="text-eyebrow text-gold-400">YOU ARE BROWSING</p>
+      <p className="mt-1 text-sm leading-relaxed text-ivory-200">Read the feed and explore people freely. To follow, like, comment or message, activate your membership. Activate makes your name and network profile visible to signed-in TOMI members only, not to the public internet. Your public directory setting does not change.</p>
+      {err && <p className="mt-2 text-xs text-coral-500" role="alert">Activation failed. Please try again.</p>}
+      <div className="mt-3 flex flex-wrap gap-2">
+        <button className="inline-flex items-center rounded-full bg-gold-500 px-4 py-2 text-xs font-semibold text-ink-900 hover:bg-gold-400 disabled:opacity-50" disabled={pending} onClick={() => { setErr(false); run({ action: 'join', accepted: true }).catch(() => setErr(true)); }} data-testid="button-activate">Activate membership</button>
+        <Link href="/member/settings" className="inline-flex items-center rounded-full border border-ivory-200/40 px-4 py-2 text-xs font-semibold text-ivory-100 hover:border-gold-400" data-testid="link-edit-before-activate">Edit my profile first</Link>
+      </div>
+    </section>
+  );
+}
+
+function CompleteProfile({ me }: { me: Ctx['me'] }) {
+  const key = `tomi-complete-dismissed-${me.id}`;
+  const [hidden, setHidden] = useState(() => { try { return localStorage.getItem(key) === '1'; } catch { return false; } });
+  if (hidden || !me.enabled || (me.profession && me.sectors.length && me.bio)) return null;
+  return (
+    <div className="mx-3 mb-4 flex flex-wrap items-center gap-3 rounded-2xl border border-sand-200 bg-ivory-50 p-3 md:mx-0" data-testid="panel-complete-profile">
+      <Avatar m={me} size={36} />
+      <p className="min-w-0 flex-1 text-sm text-ink-800">Help members find you: add your role, sectors, photo and a short description. Optional, any time.</p>
+      <Link href="/member/settings" className={btn} data-testid="link-complete-profile">Complete profile</Link>
+      <button type="button" className="text-xs text-sand-400 hover:text-ink-800" onClick={() => { try { localStorage.setItem(key, '1'); } catch { /* ignore */ } setHidden(true); }} data-testid="button-dismiss-complete">Later</button>
+    </div>
   );
 }
 
@@ -100,7 +107,8 @@ function AppShell({ me, base, children }: Ctx & { children: ReactNode }) {
               <Bell className="h-5 w-5" />{unread > 0 && <span className="absolute right-0.5 top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-coral-500 px-1 text-[10px] font-bold text-ink-900">{unread}</span>}
             </Link>
             <Link href="/" className="hidden rounded-full px-3 py-1.5 text-xs text-ivory-300 hover:text-gold-400 sm:inline-flex" data-testid="link-public-site">Public site</Link>
-            <Link href="/member/settings" aria-label="Settings" className="rounded-full p-1" data-testid="link-settings"><Avatar m={me} size={32} /></Link>
+            <Link href="/member/settings" aria-label="Settings and edit profile" className="rounded-full p-2 text-ivory-300 hover:text-gold-400" data-testid="link-settings"><Settings className="h-4 w-4" /></Link>
+            <Link href={`/member/profile/${me.id}`} aria-label="My profile" className="flex items-center gap-1.5 rounded-full p-1 pr-1 sm:pr-3 text-xs text-ivory-200 hover:text-gold-400" data-testid="link-header-profile"><Avatar m={me} size={32} /><span className="hidden sm:inline">My profile</span></Link>
             <button type="button" onClick={() => signOut({ redirectUrl: basePath || '/' })} aria-label="Sign out" className="rounded-full p-2 text-ivory-300 hover:text-gold-400" data-testid="button-signout"><LogOut className="h-4 w-4" /></button>
           </div>
         </div>
@@ -119,7 +127,7 @@ function AppShell({ me, base, children }: Ctx & { children: ReactNode }) {
           <Link href="/member/settings" className={`flex items-center gap-3 rounded-full px-4 py-2.5 text-sm ${active('/member/settings') ? 'bg-lagoon-900 font-semibold text-gold-400' : 'text-ink-800 hover:bg-ivory-200'}`}><Settings className="h-4 w-4" />Settings & workspace</Link>
           <Link href="/donate" className="mt-4 flex items-center gap-3 rounded-2xl border border-gold-500/40 bg-gold-500/10 px-4 py-3 text-sm text-ink-800 hover:border-gold-500" data-testid="link-humanitarian"><HandHeart className="h-4 w-4 text-gold-700" />Humanitarian action</Link>
         </aside>
-        <main className="min-w-0 flex-1"><PendingInvitation />{children}</main>
+        <main className="min-w-0 flex-1">{me.enabled ? <PendingInvitation /> : <ActivationPrompt />}<CompleteProfile me={me} />{children}</main>
       </div>
       <nav aria-label="Network" className="fixed inset-x-0 bottom-0 z-40 grid border-t border-sand-200 bg-ivory-50/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden" style={{ gridTemplateColumns: `repeat(${nav.length}, 1fr)` }}>
         {nav.map(({ href, label, icon: I, exact }) => (
@@ -143,8 +151,8 @@ function NetworkGate() {
   if (stateQ.isError) {
     const s = errStatus(stateQ.error);
     return (
-      <Onboard eyebrow={s === 403 ? 'ACCESS PAUSED' : 'CONNECTION'} title={s === 403 ? 'Verified email required' : 'The network did not load'}>
-        <p className="mb-4 text-sm text-ink-700">{s === 403 ? 'Only members with a verified email address can enter the network. If your account was suspended after moderation, contact the TOMI team.' : 'Check your connection and try again.'}</p>
+      <Onboard eyebrow={s === 403 ? 'ACCESS PAUSED' : 'CONNECTION'} title={s === 403 ? 'Verified account required' : 'The network did not load'}>
+        <p className="mb-4 text-sm text-ink-700">{s === 403 ? 'Only members with a verified account can enter the network. If your account was suspended after moderation, contact the TOMI team.' : 'Check your connection and try again.'}</p>
         <ErrorBox onRetry={() => stateQ.refetch()} msg="Unable to open your member network." />
       </Onboard>
     );
@@ -153,12 +161,11 @@ function NetworkGate() {
   if (!state.me) {
     return (
       <Onboard eyebrow="WELCOME" title="Create your member profile">
-        <p className="mb-6 text-sm text-ink-700">Name, role and at least one sector are enough to begin. You decide separately whether you appear in the public web directory.</p>
+        <p className="mb-6 text-sm text-ink-700">Your name is enough to begin. Everything else is optional and can be edited later.</p>
         <ProfileForm initial={profileQ.data?.profile ?? null} defaultName={user?.fullName ?? ''} onDone={() => stateQ.refetch()} />
       </Onboard>
     );
   }
-  if (!state.me.enabled) return <JoinConsent onJoined={() => stateQ.refetch()} />;
   const me = state.me;
   return (
     <MeCtx.Provider value={{ me, base: state }}>
@@ -167,6 +174,7 @@ function NetworkGate() {
           <Route path="/member" component={Feed} />
           <Route path="/user-portal"><Redirect to="/member" replace /></Route>
           <Route path="/member/people" component={People} />
+          <Route path="/member/profile/:id/:conn" component={Connections} />
           <Route path="/member/profile/:id" component={ProfilePage} />
           <Route path="/member/messages/:id?" component={Messages} />
           <Route path="/member/packages" component={Packages} />

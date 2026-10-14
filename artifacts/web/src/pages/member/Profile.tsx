@@ -20,7 +20,7 @@ export default function ProfilePage() {
   const [intro, setIntro] = useState('');
   const [err, setErr] = useState('');
   const params = { person: pid };
-  const q = useGetNetworkState(params, { query: { queryKey: getGetNetworkStateQueryKey(params), enabled: Number.isFinite(pid) } });
+  const q = useGetNetworkState(params, { query: { queryKey: getGetNetworkStateQueryKey(params), enabled: Number.isFinite(pid), refetchInterval: 30000 } });
 
   if (q.isLoading) return <div className="p-3 md:p-0"><Skeleton rows={2} /></div>;
   if (q.isError) return <div className="p-3 md:p-0"><ErrorBox onRetry={() => q.refetch()} /></div>;
@@ -55,8 +55,8 @@ export default function ProfilePage() {
           <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-sand-400">
             {p.country && <span className="inline-flex items-center gap-1"><MapPin className="h-3.5 w-3.5" />{p.country}</span>}
             {p.website && <a href={p.website} target="_blank" rel="noopener noreferrer nofollow" className="inline-flex items-center gap-1 text-lagoon-600 hover:underline"><ExternalLink className="h-3.5 w-3.5" />{p.website.replace(/^https?:\/\//, '')}</a>}
-            <span data-testid="text-followers"><b className="text-ink-900">{p.followers}</b> followers</span>
-            <span data-testid="text-following"><b className="text-ink-900">{p.following}</b> following</span>
+            <Link href={`/member/profile/${p.id}/followers`} className="rounded hover:text-lagoon-700 hover:underline" data-testid="link-followers"><b className="text-ink-900">{p.followers}</b> followers</Link>
+            <Link href={`/member/profile/${p.id}/following`} className="rounded hover:text-lagoon-700 hover:underline" data-testid="link-following"><b className="text-ink-900">{p.following}</b> following</Link>
           </div>
           <section className="mt-4 border-t border-sand-100 pt-4" aria-label="Member description">
             <h2 className="text-eyebrow text-gold-700">ABOUT</h2>

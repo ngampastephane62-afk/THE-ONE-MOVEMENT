@@ -23,8 +23,6 @@ type Errors = Partial<Record<keyof MemberProfileInput, string>>;
 function validate(v: MemberProfileInput): Errors {
   const e: Errors = {};
   if (v.fullName.trim().length < 2) e.fullName = 'Enter at least 2 characters.';
-  if (v.profession.trim().length < 2) e.profession = 'Enter at least 2 characters.';
-  if (v.sectors.length < 1) e.sectors = 'Choose at least one sector.';
   if (v.sectors.length > 8) e.sectors = 'Choose up to 8 sectors.';
   if (v.website.trim()) {
     try {
@@ -87,13 +85,13 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel }: 
         <label className="text-sm text-ink-900">Full name *
           <input className={`${fieldCls} mt-1`} value={v.fullName} maxLength={100} onChange={(e) => set('fullName', e.target.value)} data-testid="input-fullName" />{err('fullName')}
         </label>
-        <label className="text-sm text-ink-900">Profession or role *
+        <label className="text-sm text-ink-900">Profession or role <span className="text-sand-400">(optional)</span>
           <input className={`${fieldCls} mt-1`} value={v.profession} maxLength={100} placeholder="e.g. Textile designer" onChange={(e) => set('profession', e.target.value)} data-testid="input-profession" />{err('profession')}
         </label>
       </fieldset>
 
       <fieldset>
-        <legend className="text-eyebrow text-gold-700">YOUR SECTORS * <span className="normal-case tracking-normal text-sand-400">({v.sectors.length}/8)</span></legend>
+        <legend className="text-eyebrow text-gold-700">YOUR SECTORS <span className="normal-case tracking-normal text-sand-400">(optional, {v.sectors.length}/8)</span></legend>
         <div className="mt-3 flex flex-wrap gap-2">
           {SECTORS.map((s) => {
             const on = v.sectors.includes(s.slug as MemberProfileInputSectorsItem);
@@ -157,7 +155,7 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel }: 
       <div className="flex flex-wrap gap-3">
         <button type="submit" disabled={save.isPending} data-testid="button-save-profile"
           className="inline-flex items-center gap-2 bg-lagoon-900 px-6 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-ivory-100 hover:bg-lagoon-800 disabled:opacity-60">
-          {save.isPending && <Loader2 className="h-4 w-4 animate-spin" />} {initial ? 'Save changes' : 'Create my member space'}
+          {save.isPending && <Loader2 className="h-4 w-4 animate-spin" />} {initial ? 'Save changes' : 'Save profile'}
         </button>
         {onCancel && (
           <button type="button" onClick={onCancel} data-testid="button-cancel-edit" className="px-4 py-3 text-xs uppercase tracking-wider text-ink-700 hover:text-ink-900">Cancel</button>

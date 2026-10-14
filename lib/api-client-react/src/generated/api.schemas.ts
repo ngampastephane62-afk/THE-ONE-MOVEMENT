@@ -119,10 +119,7 @@ export interface MemberProfileInput {
      * @maxLength 100
      */
   fullName: string;
-  /**
-     * @minLength 2
-     * @maxLength 100
-     */
+  /** @maxLength 100 */
   profession: string;
   /** @maxLength 150 */
   organization: string;
@@ -136,10 +133,7 @@ export interface MemberProfileInput {
   lookingFor: string;
   /** @maxLength 500 */
   website: string;
-  /**
-     * @minItems 1
-     * @maxItems 8
-     */
+  /** @maxItems 8 */
   sectors: MemberProfileInputSectorsItem[];
   isPublic: boolean;
   publicMedia?: boolean;
@@ -329,6 +323,7 @@ q?: string;
 sector?: string;
 feed?: GetNetworkStateFeed;
 person?: number;
+connections?: GetNetworkStateConnections;
 thread?: number;
 before?: number;
 };
@@ -341,6 +336,14 @@ export const GetNetworkStateFeed = {
   following: 'following',
   business: 'business',
   reel: 'reel',
+} as const;
+
+export type GetNetworkStateConnections = typeof GetNetworkStateConnections[keyof typeof GetNetworkStateConnections];
+
+
+export const GetNetworkStateConnections = {
+  followers: 'followers',
+  following: 'following',
 } as const;
 
 export type GetNetworkPaymentStatusParams = {
