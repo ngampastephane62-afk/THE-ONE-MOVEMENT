@@ -15,5 +15,6 @@ export const navItems: NavItem[] = [
   { label: "Programs", path: "/programs" },
   { label: "Media", path: "/media" },
   { label: "Partners", path: "/partners" },
+  { label: "Humanitarian Action", path: "/donate" },
   { label: "Join the Movement", path: "/join" },
 ];

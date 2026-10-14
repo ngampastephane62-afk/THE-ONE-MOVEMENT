@@ -5,10 +5,88 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
-export interface SavedItemInput {
-  /** @maxLength 100 */
-  itemId: string;
-  saved: boolean;
+export type NetworkActionInputAction = typeof NetworkActionInputAction[keyof typeof NetworkActionInputAction];
+
+
+export const NetworkActionInputAction = {
+  join: 'join',
+  postcreate: 'post.create',
+  postedit: 'post.edit',
+  postdelete: 'post.delete',
+  postlike: 'post.like',
+  postview: 'post.view',
+  commentcreate: 'comment.create',
+  commentdelete: 'comment.delete',
+  follow: 'follow',
+  block: 'block',
+  threadstart: 'thread.start',
+  threadaccept: 'thread.accept',
+  threaddecline: 'thread.decline',
+  messagesend: 'message.send',
+  messageread: 'message.read',
+  uploadcomplete: 'upload.complete',
+  profilemedia: 'profile.media',
+  certificationrequest: 'certification.request',
+  certificationdecide: 'certification.decide',
+  report: 'report',
+  moderatepost: 'moderate.post',
+  moderatemember: 'moderate.member',
+  reportresolve: 'report.resolve',
+  checkout: 'checkout',
+} as const;
+
+export interface NetworkActionInput {
+  action: NetworkActionInputAction;
+  id?: number;
+  targetId?: number;
+  /** @maxLength 5000 */
+  text?: string;
+  kind?: string;
+  /** @maxItems 6 */
+  mediaIds?: string[];
+  role?: string;
+  program?: string;
+  packageSlug?: string;
+  decision?: string;
+  accepted?: boolean;
+  agreementConfirmed?: boolean;
+  paymentConfirmed?: boolean;
+}
+
+export interface NetworkActionResult {
+  ok: boolean;
+  id?: number;
+  url?: string;
+}
+
+export interface NetworkUploadInput {
+  /** @maxLength 200 */
+  filename: string;
+  contentType: string;
+  /**
+     * @minimum 1
+     * @maximum 104857600
+     */
+  size: number;
+}
+
+export interface NetworkUploadTicket {
+  id: string;
+  uploadUrl: string;
+}
+
+export interface NetworkMedia {
+  id: string;
+  url: string;
+  filename: string;
+  contentType: string;
+}
+
+export interface NetworkBadge {
+  role: string;
+  program: string;
+  /** @nullable */
+  expiresAt: string | null;
 }
 
 export type MemberProfileInputSectorsItem = typeof MemberProfileInputSectorsItem[keyof typeof MemberProfileInputSectorsItem];
@@ -69,6 +147,148 @@ export type PublicMember = MemberProfileInput & {
   id: number;
 };
 
+export type NetworkMember = PublicMember & ({
+  enabled: boolean;
+  founder: boolean;
+  /** @nullable */
+  avatarUrl: string | null;
+  /** @nullable */
+  coverUrl: string | null;
+  followers: number;
+  following: number;
+  followed: boolean;
+  blocked: boolean;
+  suspended: boolean;
+  badges: NetworkBadge[];
+});
+
+export interface NetworkComment {
+  id: number;
+  author: NetworkMember;
+  text: string;
+  createdAt: string;
+}
+
+export interface NetworkPost {
+  id: number;
+  author: NetworkMember;
+  text: string;
+  kind: string;
+  media: NetworkMedia[];
+  likes: number;
+  views: number;
+  liked: boolean;
+  comments: NetworkComment[];
+  createdAt: string;
+  edited: boolean;
+}
+
+export interface NetworkThread {
+  id: number;
+  other: NetworkMember;
+  accepted: boolean;
+  declined: boolean;
+  requestedByMe: boolean;
+  lastMessage: string;
+  unread: number;
+  updatedAt: string;
+}
+
+export interface NetworkMessage {
+  id: number;
+  senderId: number;
+  text: string;
+  read: boolean;
+  createdAt: string;
+}
+
+export interface NetworkCertification {
+  id: number;
+  member: NetworkMember;
+  role: string;
+  program: string;
+  packageSlug: string;
+  note: string;
+  evidence: NetworkMedia[];
+  status: string;
+  decisionNote: string;
+  agreementConfirmed: boolean;
+  paymentConfirmed: boolean;
+  createdAt: string;
+  /** @nullable */
+  expiresAt: string | null;
+}
+
+export interface NetworkPackage {
+  slug: string;
+  name: string;
+  audience: string;
+  /** @nullable */
+  amount: number | null;
+  currency: string;
+  durationMonths: number;
+  documentSlug: string;
+  payable: boolean;
+}
+
+export interface NetworkDocument {
+  slug: string;
+  title: string;
+  url: string;
+  restricted: boolean;
+  accessible: boolean;
+}
+
+export interface NetworkReport {
+  id: number;
+  reporter: string;
+  /** @nullable */
+  postId: number | null;
+  /** @nullable */
+  memberId: number | null;
+  reason: string;
+  resolved: boolean;
+}
+
+export interface NetworkPaymentStatus {
+  status: string;
+  certificationId: number;
+}
+
+export interface DonationCampaign {
+  title: string;
+  description: string;
+  collector: string;
+  /** @nullable */
+  beneficiary: string | null;
+  active: boolean;
+  reason: string;
+  currency: string;
+}
+
+export interface NetworkState {
+  me: NetworkMember | null;
+  founder: NetworkMember | null;
+  members: NetworkMember[];
+  posts: NetworkPost[];
+  /** @nullable */
+  nextCursor: number | null;
+  person: NetworkMember | null;
+  threads: NetworkThread[];
+  messages: NetworkMessage[];
+  certifications: NetworkCertification[];
+  reports: NetworkReport[];
+  packages: NetworkPackage[];
+  documents: NetworkDocument[];
+  stripeReady: boolean;
+}
+
+export interface SavedItemInput {
+  /** @maxLength 100 */
+  itemId: string;
+  saved: boolean;
+}
+
 export type MemberProfile = PublicMember & {
   savedItems: string[];
 };
@@ -85,6 +305,32 @@ export interface DetailedHealthStatus {
   status: string;
   database: string;
 }
+
+export type GetNetworkStateParams = {
+/**
+ * @maxLength 100
+ */
+q?: string;
+sector?: string;
+feed?: GetNetworkStateFeed;
+person?: number;
+thread?: number;
+before?: number;
+};
+
+export type GetNetworkStateFeed = typeof GetNetworkStateFeed[keyof typeof GetNetworkStateFeed];
+
+
+export const GetNetworkStateFeed = {
+  all: 'all',
+  following: 'following',
+  business: 'business',
+  reel: 'reel',
+} as const;
+
+export type GetNetworkPaymentStatusParams = {
+sessionId: string;
+};
 
 export type GetEcosystemMembers200 = {
   members: PublicMember[];

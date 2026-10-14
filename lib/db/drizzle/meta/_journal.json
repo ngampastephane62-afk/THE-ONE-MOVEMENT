@@ -15,6 +15,20 @@
       "when": 1791986289788,
       "tag": "0001_loud_supreme_intelligence",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791997131178,
+      "tag": "0002_huge_justice",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1791997597707,
+      "tag": "0003_parched_felicia_hardy",
+      "breakpoints": true
     }
   ]
 }

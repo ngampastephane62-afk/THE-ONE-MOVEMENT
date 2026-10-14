@@ -11,6 +11,8 @@ import { logger } from "./lib/logger";
 import { clerkMiddleware } from "@clerk/express";
 import { publishableKeyFromHost } from "@clerk/shared/keys";
 import { CLERK_PROXY_PATH, clerkProxyMiddleware, getClerkProxyHost } from "./middlewares/clerkProxyMiddleware";
+import { processStripeWebhook } from "./services/networkPayments";
+import { networkErrors } from "./routes/network";
 
 const app: Express = express();
 
@@ -93,6 +95,16 @@ app.use(
     optionsSuccessStatus: 204,
   }),
 );
+app.post("/api/stripe/webhook", express.raw({ type: "application/json", limit: "1mb" }), async (req, res) => {
+  const signature = req.get("stripe-signature");
+  if (!signature || !Buffer.isBuffer(req.body)) return void res.status(400).json({ error: "Invalid webhook signature or body." });
+  try {
+    await processStripeWebhook(req.body, signature);
+    res.json({ received: true });
+  } catch {
+    res.status(400).json({ error: "Webhook verification or processing failed." });
+  }
+});
 app.use(express.json({ limit: "32kb" }));
 app.use(express.urlencoded({ extended: false, limit: "16kb" }));
 
@@ -105,6 +117,7 @@ app.use(
   })),
 );
 app.use("/api", router);
+app.use(networkErrors);
 
 // Generic error handler: never leak raw database/internal errors to the client.
 app.use(

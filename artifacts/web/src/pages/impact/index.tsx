@@ -23,7 +23,7 @@ export default function Impact() {
       <section className="bg-ivory-100 py-section-lg">
         <div className="mx-auto max-w-7xl px-6 grid gap-10 md:grid-cols-2 items-center">
           <ArchivePhoto id="community-gathering" caption="People coming together" />
-          <div><h2 className="text-display-md text-ink-900" style={{ fontFamily: 'var(--font-display)' }}>TAKE PART THROUGH CONNECTION.</h2><p className="mt-6 text-ink-800 leading-relaxed">Volunteers, organizations and institutions can share their interests with the team. Participation and collaboration are discussed in the context of confirmed activities; submitting an enquiry is not a promise of placement.</p><Link href="/join" className="mt-8 inline-block"><Button variant="gold-outline">EXPRESS YOUR INTEREST</Button></Link></div>
+          <div><h2 className="text-display-md text-ink-900" style={{ fontFamily: 'var(--font-display)' }}>TAKE PART THROUGH CONNECTION.</h2><p className="mt-6 text-ink-800 leading-relaxed">Volunteers, organizations and institutions can share their interests with the team. Participation and collaboration are discussed in the context of confirmed activities; submitting an enquiry is not a promise of placement.</p><Link href="/join" className="mt-8 inline-block"><Button variant="gold-outline">EXPRESS YOUR INTEREST</Button></Link><Link href="/donate" className="mt-4 block text-sm text-lagoon-600 underline underline-offset-4">Eastern DRC campaign — see readiness status</Link></div>
         </div>
       </section>
       <section className="bg-lagoon-900 py-section-lg">

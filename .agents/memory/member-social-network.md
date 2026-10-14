@@ -38,3 +38,9 @@ The Founder identifies The One Movement International as the collecting organiza
 **Why:** This is the Founder's answer about the donation recipient and collaborators; the beneficiary varies by emergency.
 
 **How to apply:** Define the beneficiary for each actual campaign, not a blanket promise that every named organization receives every donation. Merchant eligibility and legal fundraising requirements still need to be satisfied before payment activation.
+
+The Founder provided a Panzi Foundation fundraising film and a humanitarian story produced with “Fauna Rev” (the film credits identify FONAREV). The Panzi appeal may lead directly to Panzi's own page after their approval.
+
+**Why:** The Founder explicitly distinguishes Panzi's direct fundraising pathway from collecting money through TOMI, and supplied both films to support the humanitarian story.
+
+**How to apply:** Keep authorship separate and use the on-film FONAREV credit. Do not activate a Panzi fundraising destination until their approval and the official URL are confirmed. A direct Panzi donation is received through Panzi's own service, not TOMI's Stripe checkout.

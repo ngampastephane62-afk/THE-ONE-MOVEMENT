@@ -160,7 +160,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: 'Is membership free?',
-    a: 'Yes. Creating a free member account and ecosystem profile requires no payment, and neither does submitting an expression of interest. There is no paid membership, and an account does not guarantee event places or programme access.',
+    a: 'A member account and the social network are free: create a profile, publish, follow peers and message members who accept your request. Separately, optional annual commercial packages (for example designer, partner or sponsor packages) are offered under a written 12-month agreement. Submitting an expression of interest is always free, and neither an account nor a package guarantees event places.',
   },
   {
     q: 'Can organizations join?',
@@ -172,7 +172,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: 'Can I create a member account?',
-    a: 'Yes. You can create a free account and a private ecosystem profile from the Sign in page, independently of this enquiry form. You choose whether your profile appears in the public directory. A social network, messaging and marketplace features remain future direction.',
+    a: 'Yes. Create an account from Sign up, verify your email, build your profile and join the member network to post, follow and message. Your visibility on the public website is a separate choice. Official badges are granted only after a reviewed certification, never automatically.',
   },
 ];
 

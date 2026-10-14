@@ -10,5 +10,10 @@
   "devDependencies": {
     "@types/node": "catalog:",
     "tsx": "catalog:"
+  },
+  "dependencies": {
+    "@google-cloud/storage": "^8.4.0",
+    "@replit/connectors-sdk": "^0.4.1",
+    "@workspace/shared": "workspace:*"
   }
 }

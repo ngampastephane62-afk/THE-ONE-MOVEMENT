@@ -180,7 +180,7 @@ export default function JoinTheMovement() {
             {[
               {
                 label: 'CONNECTION',
-                 body: 'Connect your interests with an ecosystem spanning business, institutions, culture, media, innovation and community. Create a free member space to find your sectors; messaging and marketplace tools remain future direction.',
+                 body: 'Connect your interests with an ecosystem spanning business, institutions, culture, media, innovation and community. Create a free account to join the member network, publish your work and message peers; optional annual packages are available separately.',
               },
               {
                 label: 'OPPORTUNITY',
@@ -232,7 +232,7 @@ export default function JoinTheMovement() {
                   'The current public experience consists of this website, confirmed programs and direct enquiry pathways.',
                   'Submitting an expression of interest does not create an account, membership or guaranteed place.',
                   'The team may contact you with relevant official updates as plans are confirmed.',
-                  'Free member accounts and ecosystem profiles are available separately from this form, via Sign in.',
+                  'Free member accounts and the social network are available separately from this form, via Sign up. Optional annual packages are listed inside the member space.',
                   'Program participation and future platform access will be governed by the terms announced for each opportunity.',
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-4">

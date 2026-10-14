@@ -11,19 +11,19 @@ export default function Terms() {
         <title>Terms of Use — THE ONE MOVEMENT INTERNATIONAL</title>
         <meta
           name="description"
-          content="Terms for using The One Movement International public website and its current submission pathways."
+          content="Terms for TOMI Network, member publications, official certifications, commercial packages and public inquiries."
         />
         <meta property="og:title" content="Terms of Use — THE ONE MOVEMENT INTERNATIONAL" />
         <meta
           property="og:description"
-          content="Terms for using The One Movement International public website and its current submission pathways."
+          content="Terms for TOMI Network, member publications, official certifications, commercial packages and public inquiries."
         />
       </Helmet>
 
       <LegalPageFrame
         eyebrow="TERMS OF USE"
-        title="THE TERMS OF THIS PUBLIC SPACE."
-        intro="These terms describe the website, the personal member workspace, public ecosystem profiles, and the expression-of-interest and institutional inquiry pathways."
+        title="THE TERMS OF OUR SHARED SPACE."
+        intro="These terms describe the public website, TOMI Network, member publications and discussions, official-status applications, commercial packages and inquiries."
       >
         <LegalSection id="operator" title="1. Operator and scope">
           <p>
@@ -57,6 +57,8 @@ export default function Terms() {
           <LegalList>
             <li>an expression-of-interest form for people who want to connect with the Movement; and</li>
             <li>an institutional inquiry form for organizations and institutions to contact the Movement.</li>
+            <li>a verified-email member network with professional profiles, posts, media, follows and recipient-approved private discussions;</li>
+            <li>applications for programme-specific official status and optional commercial packages, with payment after review and written agreement.</li>
           </LegalList>
           <p>
             Submitting a form does not create a member account, guarantee
@@ -68,13 +70,41 @@ export default function Terms() {
 
         <LegalSection id="submissions" title="3. Submissions">
           <p>
-            A member account lets you maintain an ecosystem profile and save programmes
-            and official resources. It does not guarantee paid membership, partnership,
-            investment access or a place at an event. Public community profiles are
-            member-authored and are not verified endorsements by TOMI or its partners.
+            A member account lets you maintain an ecosystem profile, save resources
+            and, after opting into TOMI Network, interact with other members.
+            Email verification confirms access to an email address, not identity,
+            professional qualifications or business legitimacy. Profiles and posts
+            are member-authored and are not blanket endorsements by TOMI or its partners.
+            Official certifications require a separate Founder decision and apply only
+            to their stated role, programme and validity period.
             Official external resources belong to their named publishers and are not
             TOMI-operated programmes. AI-generated service illustrations are not
             photographs of actual events or completed collaborations.
+          </p>
+          <p>
+            Annual designer and partnership packages are optional and separate from
+            the free social account. Download the applicable official document and
+            review the written agreement before paying. Event participation, media,
+            travel and other deliverables remain subject to that agreement, confirmation,
+            availability and any relevant selection. Sales, visas, investment outcomes
+            and celebrity collaborations are not guaranteed. Custom packages require a
+            specific quote. A checkout payment covers the agreed twelve-month term;
+            it does not authorize automatic renewal. Renewal, cancellations, refunds
+            and any taxes are governed by the applicable written terms and mandatory law.
+          </p>
+          <p>
+            Founder approval and, where applicable, confirmed payment are separate
+            requirements for an official commercial badge. Payment alone does not
+            certify a business or grant official status. Capital investment proposals
+            require separate legally validated documentation; the website does not
+            sell equity or promise financial returns through checkout.
+          </p>
+          <p>
+            Humanitarian collections are not active until a specific beneficiary,
+            campaign terms, applicable authorization and payment-provider eligibility
+            have been confirmed. A referenced collaborator is not automatically a
+            recipient or participant in every campaign. No tax-deductibility or
+            completed humanitarian outcome is implied.
           </p>
           <p>
             You are responsible for the accuracy and completeness of the
@@ -102,6 +132,8 @@ export default function Terms() {
             <li>Do not introduce malware, automated abuse or content that infringes another person’s rights.</li>
             <li>Do not use website content or forms to send unsolicited advertising or fraudulent communications.</li>
             <li>Do not misrepresent an affiliation with the Movement, its operator, a partner or an institution.</li>
+            <li>Upload only content you have the right and consent to share. Respect the displayed file formats and size limits.</li>
+            <li>Do not harass members, evade blocks, send unwanted discussion requests or publish another person’s private information.</li>
           </LegalList>
         </LegalSection>
 
@@ -117,8 +149,9 @@ export default function Terms() {
             Except where applicable law permits or the operator gives
             permission, you may not reproduce, adapt, sell, publish, scrape,
             or commercially exploit website materials. Your submission remains
-            yours, but you give the operator permission to receive, store,
-            review and respond to it for the purposes described in the{' '}
+             yours, but you give the operator the non-exclusive permission needed
+             to store, deliver and display it to the audience you choose, and to
+             review applications and reports for the purposes described in the{' '}
             <a
               href="/privacy-policy"
               className="font-medium text-lagoon-700 underline decoration-gold-500 underline-offset-4 hover:text-ink-900"

@@ -13,19 +13,19 @@ export default function PrivacyPolicy() {
         <title>Privacy Policy — THE ONE MOVEMENT INTERNATIONAL</title>
         <meta
           name="description"
-          content="How The One Movement International handles information submitted through its public Join and institutional inquiry pathways."
+          content="How TOMI handles member profiles, network posts, media, private discussions, applications and package payments."
         />
         <meta property="og:title" content="Privacy Policy — THE ONE MOVEMENT INTERNATIONAL" />
         <meta
           property="og:description"
-          content="How The One Movement International handles information submitted through its public Join and institutional inquiry pathways."
+          content="How TOMI handles member profiles, network posts, media, private discussions, applications and package payments."
         />
       </Helmet>
 
       <LegalPageFrame
         eyebrow="PRIVACY & TRUST"
         title="HOW WE HANDLE INFORMATION."
-        intro="This Privacy Policy explains how the website handles member accounts, ecosystem profiles, saved resources, expressions of interest and institutional inquiries."
+        intro="This Privacy Policy explains how the website handles accounts, network activity, media, private discussions, official-status applications, package payments and inquiries."
       >
         <LegalSection id="overview" title="1. Overview">
           <p>
@@ -37,8 +37,10 @@ export default function PrivacyPolicy() {
           <p>
             Creating a member account provides a personal ecosystem workspace.
             An expression-of-interest or inquiry form does not create that account.
-            The website does not process payments, provide a wallet or marketplace,
-            or guarantee paid membership or programme participation.
+            Optional annual commercial packages are separate from the free account.
+            Payment is handled by Stripe after application review and confirmation of
+            written terms. There is no wallet, equity-investment checkout or active
+            humanitarian collection until its stated readiness conditions are met.
           </p>
         </LegalSection>
 
@@ -77,6 +79,30 @@ export default function PrivacyPolicy() {
             profile fields appear in the ecosystem showcase. Your login email,
             authentication identifier and saved items are not included in that showcase.
             You can edit your profile or switch public visibility off in your member space.
+          </p>
+          <p>
+            Joining TOMI Network is a separate choice: your professional profile,
+            avatar, cover and posts then become visible to other signed-in network
+            members, even if you keep your profile out of the public website directory.
+            Publications may include business information, images, videos, audio or PDF
+            documents. We store their contents and file metadata in protected storage,
+            along with publication and edit times.
+          </p>
+          <p>
+            Network records include follows, blocks, likes, unique member views,
+            comments, discussion requests, messages and read status. Aggregate
+            engagement counts appear on publications. Discussions are available through
+            the service only to their participants; a recipient must accept a request
+            before further messages can be sent. Messages are not end-to-end encrypted.
+            Blocking restricts access and interaction within the network.
+          </p>
+          <p>
+            Official-status applications contain the selected role, programme,
+            package, your explanation and any supporting files. These supporting
+            files and application details are restricted to you and the Founder
+            reviewing the application. Decisions, reasons, agreement confirmations,
+            payment confirmations and moderation actions are retained for administration
+            and accountability. A confidential investor document requires approved access.
           </p>
           <p>An expression of interest may include:</p>
           <LegalList>
@@ -120,6 +146,8 @@ export default function PrivacyPolicy() {
             <li>to administer the current submission workflow and its records;</li>
             <li>to provide sign-in, save your ecosystem preferences and bookmarks, and show relevant programmes and official resources;</li>
             <li>to display a community profile only when you explicitly enable its public visibility;</li>
+            <li>to provide the member network, deliver private discussions, display your chosen publications and calculate engagement counts;</li>
+            <li>to review official roles and commercial applications, moderate reported content and administer confirmed package payments;</li>
             <li>to protect the website, limit abusive traffic and investigate errors; and</li>
             <li>to comply with applicable legal obligations or protect rights and safety.</li>
           </LegalList>
@@ -193,6 +221,13 @@ export default function PrivacyPolicy() {
             visible to website visitors when you choose to publish them.
           </p>
           <p>
+            Stripe processes package payments and may receive your account email,
+            billing details and transaction information. Card details are entered on
+            Stripe-hosted checkout, not stored by TOMI. TOMI keeps payment-provider
+            references and payment/approval status to administer your application.
+            Review Stripe’s own privacy terms before paying.
+          </p>
+          <p>
             Because infrastructure and the people reviewing submissions may be
             located in different countries, information may be processed outside
             the country from which it was submitted. The operator uses the
@@ -208,11 +243,18 @@ export default function PrivacyPolicy() {
 
         <LegalSection id="retention" title="8. Retention">
           <p>
-            Submission records are kept for as long as reasonably necessary to
-            review and manage the relevant expression of interest or inquiry,
+            Account, network, application, payment-reference and submission records
+            are kept for as long as reasonably necessary to provide the relevant service,
             communicate with the submitter, maintain operational and security
             records, comply with legal obligations, resolve disputes and
             enforce applicable terms.
+          </p>
+          <p>
+            You can edit or remove your own posts and comments, change profile
+            visibility, unfollow or block members. Removing a publication stops its
+            ordinary network display; associated media may remain in protected storage
+            where used elsewhere or retained for security, backups or legal reasons.
+            Use the privacy-request pathway for account or data deletion requests.
           </p>
           <p>
             The current platform does not publish an automatic deletion

@@ -8,3 +8,4 @@
 - [Curated reel storage](curated-reel-storage.md) — avoid cancelling cloud SDK streams before their HTTP response; aborted video requests can crash the server.
 - [Named API request schemas](api-codegen-schemas.md) — reference component schemas to avoid Orval request-type/validator export collisions.
 - [Member social network](member-social-network.md) — member posts, follows and messaging; CEO-approved event certifications, programme packages and eastern DRC donations.
+- [Stripe connector runtime](stripe-connector-runtime.md) — proxy authentication differs from legacy secret-key examples; preserve StripeSync's installed migration directory.

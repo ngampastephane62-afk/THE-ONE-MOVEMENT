@@ -21,10 +21,19 @@ import type {
 
 import type {
   DetailedHealthStatus,
+  DonationCampaign,
   GetEcosystemMembers200,
+  GetNetworkPaymentStatusParams,
+  GetNetworkStateParams,
   HealthStatus,
   MemberProfileInput,
   MemberProfileResponse,
+  NetworkActionInput,
+  NetworkActionResult,
+  NetworkPaymentStatus,
+  NetworkState,
+  NetworkUploadInput,
+  NetworkUploadTicket,
   SavedItemInput
 } from './api.schemas';
 
@@ -54,6 +63,369 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   }
   return result;
 };
+
+export const getGetNetworkStateUrl = (params?: GetNetworkStateParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/network/state?${stringifiedParams}` : `/api/network/state`
+}
+
+/**
+ * @summary Verified-member network, scoped to session and optional selected profile or conversation
+ */
+export const getNetworkState = async (params?: GetNetworkStateParams, options?: RequestInit): Promise<NetworkState> => {
+
+  return customFetch<NetworkState>(getGetNetworkStateUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetNetworkStateQueryKey = (params?: GetNetworkStateParams,) => {
+    return [
+    `/api/network/state`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getGetNetworkStateQueryOptions = <TData = Awaited<ReturnType<typeof getNetworkState>>, TError = ErrorType<void>>(params?: GetNetworkStateParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getNetworkState>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetNetworkStateQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getNetworkState>>> = ({ signal }) => getNetworkState(params, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getNetworkState>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetNetworkStateQueryResult = NonNullable<Awaited<ReturnType<typeof getNetworkState>>>
+export type GetNetworkStateQueryError = ErrorType<void>
+
+
+/**
+ * @summary Verified-member network, scoped to session and optional selected profile or conversation
+ */
+
+export function useGetNetworkState<TData = Awaited<ReturnType<typeof getNetworkState>>, TError = ErrorType<void>>(
+ params?: GetNetworkStateParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getNetworkState>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetNetworkStateQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getNetworkActionUrl = () => {
+
+
+
+
+  return `/api/network/action`
+}
+
+export const networkAction = async (networkActionInput: NetworkActionInput, options?: RequestInit): Promise<NetworkActionResult> => {
+
+  return customFetch<NetworkActionResult>(getNetworkActionUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(networkActionInput)
+  }
+);}
+
+
+
+
+
+export const getNetworkActionMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof networkAction>>, TError,{data: BodyType<NetworkActionInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof networkAction>>, TError,{data: BodyType<NetworkActionInput>}, TContext> => {
+
+const mutationKey = ['networkAction'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof networkAction>>, {data: BodyType<NetworkActionInput>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  networkAction(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type NetworkActionMutationResult = NonNullable<Awaited<ReturnType<typeof networkAction>>>
+    export type NetworkActionMutationBody = BodyType<NetworkActionInput>
+    export type NetworkActionMutationError = ErrorType<void>
+
+    export const useNetworkAction = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof networkAction>>, TError,{data: BodyType<NetworkActionInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof networkAction>>,
+        TError,
+        {data: BodyType<NetworkActionInput>},
+        TContext
+      > => {
+      return useMutation(getNetworkActionMutationOptions(options));
+    }
+
+export const getRequestNetworkUploadUrl = () => {
+
+
+
+
+  return `/api/network/uploads`
+}
+
+export const requestNetworkUpload = async (networkUploadInput: NetworkUploadInput, options?: RequestInit): Promise<NetworkUploadTicket> => {
+
+  return customFetch<NetworkUploadTicket>(getRequestNetworkUploadUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(networkUploadInput)
+  }
+);}
+
+
+
+
+
+export const getRequestNetworkUploadMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof requestNetworkUpload>>, TError,{data: BodyType<NetworkUploadInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof requestNetworkUpload>>, TError,{data: BodyType<NetworkUploadInput>}, TContext> => {
+
+const mutationKey = ['requestNetworkUpload'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof requestNetworkUpload>>, {data: BodyType<NetworkUploadInput>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  requestNetworkUpload(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type RequestNetworkUploadMutationResult = NonNullable<Awaited<ReturnType<typeof requestNetworkUpload>>>
+    export type RequestNetworkUploadMutationBody = BodyType<NetworkUploadInput>
+    export type RequestNetworkUploadMutationError = ErrorType<unknown>
+
+    export const useRequestNetworkUpload = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof requestNetworkUpload>>, TError,{data: BodyType<NetworkUploadInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof requestNetworkUpload>>,
+        TError,
+        {data: BodyType<NetworkUploadInput>},
+        TContext
+      > => {
+      return useMutation(getRequestNetworkUploadMutationOptions(options));
+    }
+
+export const getGetNetworkPaymentStatusUrl = (params: GetNetworkPaymentStatusParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/network/payments/status?${stringifiedParams}` : `/api/network/payments/status`
+}
+
+export const getNetworkPaymentStatus = async (params: GetNetworkPaymentStatusParams, options?: RequestInit): Promise<NetworkPaymentStatus> => {
+
+  return customFetch<NetworkPaymentStatus>(getGetNetworkPaymentStatusUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetNetworkPaymentStatusQueryKey = (params?: GetNetworkPaymentStatusParams,) => {
+    return [
+    `/api/network/payments/status`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getGetNetworkPaymentStatusQueryOptions = <TData = Awaited<ReturnType<typeof getNetworkPaymentStatus>>, TError = ErrorType<unknown>>(params: GetNetworkPaymentStatusParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getNetworkPaymentStatus>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetNetworkPaymentStatusQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getNetworkPaymentStatus>>> = ({ signal }) => getNetworkPaymentStatus(params, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getNetworkPaymentStatus>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetNetworkPaymentStatusQueryResult = NonNullable<Awaited<ReturnType<typeof getNetworkPaymentStatus>>>
+export type GetNetworkPaymentStatusQueryError = ErrorType<unknown>
+
+
+
+export function useGetNetworkPaymentStatus<TData = Awaited<ReturnType<typeof getNetworkPaymentStatus>>, TError = ErrorType<unknown>>(
+ params: GetNetworkPaymentStatusParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getNetworkPaymentStatus>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetNetworkPaymentStatusQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getGetDonationCampaignUrl = () => {
+
+
+
+
+  return `/api/donations`
+}
+
+export const getDonationCampaign = async ( options?: RequestInit): Promise<DonationCampaign> => {
+
+  return customFetch<DonationCampaign>(getGetDonationCampaignUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetDonationCampaignQueryKey = () => {
+    return [
+    `/api/donations`
+    ] as const;
+    }
+
+
+export const getGetDonationCampaignQueryOptions = <TData = Awaited<ReturnType<typeof getDonationCampaign>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getDonationCampaign>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetDonationCampaignQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getDonationCampaign>>> = ({ signal }) => getDonationCampaign({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getDonationCampaign>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetDonationCampaignQueryResult = NonNullable<Awaited<ReturnType<typeof getDonationCampaign>>>
+export type GetDonationCampaignQueryError = ErrorType<unknown>
+
+
+
+export function useGetDonationCampaign<TData = Awaited<ReturnType<typeof getDonationCampaign>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getDonationCampaign>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetDonationCampaignQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
 
 export const getGetMemberProfileUrl = () => {
 

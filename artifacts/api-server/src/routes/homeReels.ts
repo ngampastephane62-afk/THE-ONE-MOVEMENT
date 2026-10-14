@@ -36,10 +36,13 @@ function loadAsset(bucket: string, filename: string): Promise<Buffer> {
 }
 
 // Only the explicitly curated public media files can be served here.
-router.get(["/home-reels/:filename", "/program-media/:filename"], async (req, res) => {
+router.get(["/home-reels/:filename", "/program-media/:filename", "/humanitarian-media/:filename"], async (req, res) => {
   const filename = String(req.params.filename);
   const isProgramMedia = req.path.startsWith("/program-media/");
-  const allowed = isProgramMedia
+  const isHumanitarianMedia = req.path.startsWith("/humanitarian-media/");
+  const allowed = isHumanitarianMedia
+    ? /^(panzi-appeal|tomi-fonarev-story)\.(mp4|webm|webp)$/.test(filename)
+    : isProgramMedia
     ? /^awards-(nominees|ciara)\.mp4$/.test(filename)
     : /^reel-[123]\.(mp4|webp)$/.test(filename);
   if (!allowed) {
@@ -52,11 +55,12 @@ router.get(["/home-reels/:filename", "/program-media/:filename"], async (req, re
     return;
   }
   try {
-    const bytes = await loadAsset(bucket, `${isProgramMedia ? "program-media" : "home-reels"}/${filename}`);
+    const folder = isHumanitarianMedia ? "humanitarian-media" : isProgramMedia ? "program-media" : "home-reels";
+    const bytes = await loadAsset(bucket, `${folder}/${filename}`);
     if (res.destroyed) return;
     const size = bytes.length;
     res.set({
-      "Content-Type": filename.endsWith(".mp4") ? "video/mp4" : "image/webp",
+      "Content-Type": filename.endsWith(".webm") ? "video/webm" : filename.endsWith(".mp4") ? "video/mp4" : "image/webp",
       "Accept-Ranges": "bytes",
       "Cache-Control": "public, max-age=86400",
       "X-Content-Type-Options": "nosniff",
@@ -87,7 +91,7 @@ router.get(["/home-reels/:filename", "/program-media/:filename"], async (req, re
     }
     res.end(bytes.subarray(start, end + 1));
   } catch (error) {
-    req.log.error({ err: error }, "Homepage reel unavailable");
+    req.log.error({ err: error }, "Curated media unavailable");
     res.sendStatus(502);
   }
 });

@@ -1,5 +1,6 @@
 import app from "./app";
 import { logger } from "./lib/logger";
+import { initializeStripe } from "./services/networkPayments";
 
 const rawPort = process.env["PORT"];
 
@@ -23,3 +24,14 @@ app.listen(port, (err) => {
 
   logger.info({ port }, "Server listening");
 });
+
+async function startPayments() {
+  try {
+    await initializeStripe();
+    logger.info("Stripe synchronization ready");
+  } catch {
+    logger.error("Stripe synchronization unavailable; checkout disabled; retrying in one minute");
+    setTimeout(() => void startPayments(), 60_000).unref();
+  }
+}
+void startPayments();

@@ -15,3 +15,4 @@ export * from "./aiUsageLog";
 export * from "./joinInterests";
 export * from "./institutionalInquiries";
 export * from "./ecosystemMembers";
+export * from "./network";

@@ -25,6 +25,7 @@ import JoinTheMovement from '@/pages/join';
 import SignIn from '@/pages/sign-in';
 import SignUp from '@/pages/sign-up';
 import Member from '@/pages/member';
+import Donate from '@/pages/donate';
 import PrivacyPolicy from '@/pages/privacy-policy';
 import Terms from '@/pages/terms';
 import DesignSystem from '@/pages/design-system';
@@ -111,13 +112,24 @@ function Router() {
       <Route path="/join" component={JoinTheMovement} />
       <Route path="/sign-in/*?" component={SignIn} />
       <Route path="/sign-up/*?" component={SignUp} />
-      <Route path="/member" component={Member} />
-      <Route path="/user-portal" component={Member} />
+      <Route path="/member/*?" component={Member} />
+      <Route path="/user-portal"><Redirect to="/member" replace /></Route>
+      <Route path="/donate" component={Donate} />
       <Route path="/privacy-policy" component={PrivacyPolicy} />
       <Route path="/terms" component={Terms} />
       <Route path="/design-system" component={DesignSystem} />
       <Route component={NotFound} />
     </Switch>
+  );
+}
+
+function Shell() {
+  const [location] = useLocation();
+  if (location === '/member' || location.startsWith('/member/')) return <Router />;
+  return (
+    <Layout>
+      <Router />
+    </Layout>
   );
 }
 
@@ -141,9 +153,7 @@ function ClerkProviderWithRoutes() {
       <QueryClientProvider client={queryClient}>
         <ClerkQueryClientCacheInvalidator />
         <TooltipProvider>
-          <Layout>
-            <Router />
-          </Layout>
+          <Shell />
           <SiteMetadata />
           <Toaster />
         </TooltipProvider>
