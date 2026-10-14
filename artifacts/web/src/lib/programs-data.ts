@@ -147,21 +147,25 @@ export const PROGRAMS: Program[] = [
     eyebrow: 'OFFICIAL PROGRAM — DIPLOMACY & CULTURE',
     tagline: 'Culture. Diplomacy. Art. Peace.',
     heroStatement:
-      'An evening where nations, institutions and cultures meet — honoring dialogue, celebrating art and advancing peace.',
+      'An event bringing institutions, NGOs, humanitarian organizations, private offices, governments and business leaders together through diplomatic exchange, culture and dialogue for peace.',
     purpose:
-      'The One Diplomatic Gala exists to create a rare space where diplomacy meets culture: an evening where ambassadors, institutions, artists and cultural leaders share one table and one purpose. In a divided world, the Gala stands for the conviction that dialogue between peoples is built not only in negotiations, but in shared celebration of human creativity.',
+      'The One Diplomatic Gala is conceived as a meeting point for institutions, NGOs, humanitarian organizations, private offices, governments and companies. Around one event, these communities can exchange perspectives, strengthen relationships and explore cooperation in service of peace and positive impact. Culture and art support that dialogue by creating a shared space beyond formal negotiations.',
     overview:
-      "The Gala gathers members of the diplomatic community, international organizations, cultural figures and Movement members for an evening of art, performance, recognition and connection. It is the Movement's most institutional stage — where the language of culture opens doors that politics alone cannot.",
+      'The programme is designed around speaker interventions, moderated diplomatic exchanges, institutional networking, cultural performances and recognition moments. Ambassadors, public-sector representatives, humanitarian actors and private-sector leaders can meet, discuss shared priorities and identify opportunities for collaboration. The official format, participants and schedule will be announced when confirmed.',
     themes: ['Diplomacy', 'Peace', 'Culture', 'Art', 'International Collaboration'],
     audiences: [
       'Embassies and diplomats',
       'Governments and institutions',
       'International organizations',
+      'NGOs and humanitarian organizations',
+      'Private offices',
       'Artists and cultural leaders',
       'Corporate leaders',
       'Media',
     ],
     experienceItems: [
+      'Speaker interventions and moderated exchanges',
+      'Diplomatic and humanitarian dialogue',
       'Cultural performances',
       'Recognition moments',
       'Institutional networking',

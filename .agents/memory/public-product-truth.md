@@ -33,6 +33,12 @@ Position TOMI as a global ecosystem of connections and opportunities across busi
 
 The Founder identifies the supplied celebrity Ambassador of Peace material as **The One Awards nominations**, not awards already presented. Use those assets for Awards previews and its program page, not for the Diplomatic Gala.
 
-**Why:** The user explicitly describes these celebrities as nominated and says the Gala will receive its own appropriate images.
+**Why:** The user explicitly describes these celebrities as nominated and separates their material from the Gala's diplomatic images.
 
 **How to apply:** Label the celebrity material as nominees, preserve the original supplied identities, and keep Awards and Gala media separate.
+
+The Diplomatic Gala brings institutions, NGOs, humanitarian organizations, private offices, governments and companies together around an event and diplomatic exchanges. The Founder selected his microphone photo with UN emblems as its preview and diplomatic partner/ambassador photos for its slideshow.
+
+**Why:** The user explicitly defined this concept and selected these images, rather than requesting a generic cultural gala.
+
+**How to apply:** Explain the cross-sector diplomatic purpose and include a speaker section. Do not infer a confirmed speaker line-up, UN sponsorship or past Gala attendance from the archive photos.

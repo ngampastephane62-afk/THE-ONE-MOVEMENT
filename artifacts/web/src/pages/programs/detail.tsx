@@ -11,6 +11,7 @@ import ArchivePhoto, { archiveVideo } from '@/components/ArchivePhoto';
 import ResponsiveMedia from '@/components/ResponsiveMedia';
 import ProgramVision from '@/components/ProgramVision';
 import { AwardsPreview, AwardsNominees } from '@/components/AwardsMedia';
+import { DiplomaticGalaPreview, DiplomaticGalaGallery, DiplomaticGalaSpeakers } from '@/components/DiplomaticGalaMedia';
 import FashionEditionNote from '@/components/FashionEditionNote';
 import StatusNotice from '@/components/StatusNotice';
 import { PROGRAMS, getProgramBySlug, type Program, type ProgramStatus } from '@/lib/programs-data';
@@ -345,8 +346,8 @@ export default function ProgramDetail() {
       >
         <div className="mx-auto max-w-7xl px-6">
           <SectionHeading
-            eyebrow={program.slug === 'awards' ? 'THE ONE AWARDS' : 'MEDIA'}
-            heading={program.slug === 'awards' ? 'AMBASSADOR OF PEACE NOMINEES' : 'MOMENTS FROM THE MOVEMENT'}
+            eyebrow={program.slug === 'awards' ? 'THE ONE AWARDS' : program.slug === 'diplomatic-gala' ? 'DIPLOMATIC CONNECTIONS' : 'MEDIA'}
+            heading={program.slug === 'awards' ? 'AMBASSADOR OF PEACE NOMINEES' : program.slug === 'diplomatic-gala' ? 'DIALOGUE ACROSS INSTITUTIONS' : 'MOMENTS FROM THE MOVEMENT'}
             size="lg"
             surface="light"
             className="mb-12"
@@ -354,6 +355,7 @@ export default function ProgramDetail() {
           <ProgramMediaGrid slug={program.slug} name={program.name} tagline={program.tagline} />
         </div>
       </section>
+      {program.slug === 'diplomatic-gala' && <DiplomaticGalaSpeakers />}
 
       {/* ───────────────────────────────────────────────────────────────────────
           10. PARTICIPATION — ivory
@@ -494,6 +496,9 @@ function StatusBadge({ status }: { status: ProgramStatus }) {
 }
 
 function ProgramHeroMedia({ slug, name, tagline }: { slug: string; name: string; tagline: string }) {
+  if (slug === 'diplomatic-gala') {
+    return <DiplomaticGalaPreview className="tomi-program-detail-media mx-auto w-full max-w-md aspect-[3/4]" />;
+  }
   if (slug === 'awards') {
     return <AwardsPreview className="tomi-program-detail-media w-full aspect-[4/3]" />;
   }
@@ -507,6 +512,7 @@ function ProgramHeroMedia({ slug, name, tagline }: { slug: string; name: string;
 }
 
 function ProgramMediaGrid({ slug, name, tagline }: { slug: string; name: string; tagline: string }) {
+  if (slug === 'diplomatic-gala') return <DiplomaticGalaGallery />;
   if (slug === 'awards') return <AwardsNominees />;
   if (slug === 'summit') {
     return (

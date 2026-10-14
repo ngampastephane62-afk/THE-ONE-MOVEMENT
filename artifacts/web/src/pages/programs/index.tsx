@@ -9,6 +9,7 @@ import GeometricAccent from '@/components/GeometricAccent';
 import ArchivePhoto from '@/components/ArchivePhoto';
 import ProgramVision from '@/components/ProgramVision';
 import { AwardsPreview } from '@/components/AwardsMedia';
+import { DiplomaticGalaPreview } from '@/components/DiplomaticGalaMedia';
 import StatBlock from '@/components/StatBlock';
 
 /* ── Program cards data ─────────────────────────────────────────────────── */
@@ -301,6 +302,8 @@ function ProgramCard({
             <ArchivePhoto id="runway-edition-five" frameClassName="w-full aspect-[4/3]" objectPosition="center 25%" sizes="(min-width: 1024px) 30vw, 92vw" />
           ) : slug === 'awards' ? (
             <AwardsPreview className="w-full aspect-[4/3]" />
+          ) : slug === 'diplomatic-gala' ? (
+            <DiplomaticGalaPreview className="w-full aspect-[4/3]" />
           ) : (
             <ProgramVision name={name} tagline={tagline} className="w-full aspect-[4/3]" />
           )}
