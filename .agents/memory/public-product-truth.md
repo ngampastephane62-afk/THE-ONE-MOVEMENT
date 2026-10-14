@@ -42,3 +42,9 @@ The Diplomatic Gala brings institutions, NGOs, humanitarian organizations, priva
 **Why:** The user explicitly defined this concept and selected these images, rather than requesting a generic cultural gala.
 
 **How to apply:** Explain the cross-sector diplomatic purpose and include a speaker section. Do not infer a confirmed speaker line-up, UN sponsorship or past Gala attendance from the archive photos.
+
+The ecosystem must be universal and community-led, not a showcase dominated by the CEO's face. The Founder wants people across creative work, investment, real estate, health and care, NGOs and institutions to find relevant programmes and reliable partner content, with converging pathways.
+
+**Why:** The user explicitly rejected a personal CEO-focused ecosystem and wants businesses, supporters and investors to see their place in TOMI.
+
+**How to apply:** Prioritize collective sector experiences and official partner-source resources. The user authorizes generated images to illustrate services, not to fabricate documentary evidence or partner endorsements. Use calm animated imagery and waving flags with accessible motion controls.
