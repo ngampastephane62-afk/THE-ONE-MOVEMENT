@@ -9,11 +9,17 @@ The Founder wants signing in after membership to open a distinct social-network 
 
 **How to apply:** Extend the existing member product and authentication rather than treating a redesigned profile page or a static feed as completion. Preserve the approved public homepage.
 
-New members may publish and discuss after their email is verified; they do not wait for individual CEO approval to access the social network. Official certifications remain a separate approval process.
+New members may join, create a limited profile, follow people, like and comment after their email is verified; they do not wait for individual CEO approval or buy an event package to access the social network. To create their own posts, ordinary members must first recruit more than 10 people (at least 11) who create accounts and follow their profile. Official certifications remain a separate approval process.
 
-**Why:** The Founder explicitly selected access after email verification rather than manual approval of every new member.
+**Why:** The Founder explicitly selected access after email verification rather than manual approval of every new member, then clarified the 11-person referral threshold for creating posts, without requiring event participation. Existing Founder content must remain possible.
 
-**How to apply:** Do not introduce an unrequested membership-approval queue or confuse email verification with business certification.
+**How to apply:** Do not introduce an unrequested membership-approval queue or confuse email verification with business certification. Enforce posting eligibility on the server using distinct, genuinely new accounts that both attributed the invitation and still follow the inviter. Free membership, profile creation, discovery, likes and comments remain available before posting unlock; packages and events are separate.
+
+Members may choose to make their profile publicly visible outside the signed-in network; private contact details, messages and previously member-only posts are not implicitly made public.
+
+**Why:** The Founder asked to make member profiles public and shareable, but existing members consented only to signed-in network visibility for their activity. The older public-directory opt-in covered text fields, not network photos or covers.
+
+**How to apply:** Honor each member's explicit public visibility setting; require separate consent before showing a network photo or cover publicly. Keep anonymous profile data limited and do not expose message or post media merely because a profile is public. Public profile responses should not remain cached after an opt-out.
 
 Distinguish ordinary ecosystem membership from official event/programme participation. Partner, sponsor, media partner and official-model certifications must be approved by the CEO and scoped to the relevant event/programme. A person calling themselves a model does not make them an official event model; account email verification does not certify a business or a partnership.
 

@@ -16,6 +16,7 @@ export const ecosystemMembersTable = pgTable("ecosystem_members", {
   sectors: text("sectors").array().notNull().default([]),
   savedItems: text("saved_items").array().notNull().default([]),
   isPublic: boolean("is_public").notNull().default(false),
+  publicMedia: boolean("public_media").notNull().default(false),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });

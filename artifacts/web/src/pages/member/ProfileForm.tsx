@@ -51,6 +51,7 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel }: 
     website: initial?.website ?? '',
     sectors: initial?.sectors ?? [],
     isPublic: initial?.isPublic ?? false,
+    publicMedia: initial?.publicMedia ?? false,
   }));
   const [errors, setErrors] = useState<Errors>({});
 
@@ -132,13 +133,17 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel }: 
 
       <div className="border border-gold-500/40 bg-ivory-200/50 p-5">
         <label className="flex cursor-pointer items-start gap-3">
-          <input type="checkbox" checked={v.isPublic} onChange={(e) => set('isPublic', e.target.checked)} className="mt-1 h-4 w-4 accent-[hsl(187_67%_12%)]" data-testid="checkbox-isPublic" />
+          <input type="checkbox" checked={v.isPublic} onChange={(e) => setV((p) => ({ ...p, isPublic: e.target.checked, publicMedia: e.target.checked ? p.publicMedia : false }))} className="mt-1 h-4 w-4 accent-[hsl(187_67%_12%)]" data-testid="checkbox-isPublic" />
           <span>
-            <span className="block text-sm font-semibold text-ink-900">Show my profile in the public community directory</span>
+            <span className="block text-sm font-semibold text-ink-900">Make my profile public (directory and shareable link)</span>
             <span className="mt-1 block text-xs leading-relaxed text-ink-700">
-              Off by default. If on, anyone can see your name, profession, organization, country, bio, offering, looking for, website and sectors on the Ecosystem page. Your email and saved items stay private. You can switch this off at any time.
+               Off by default. If on, anyone, including people without an account, can see your name, profession, organization, country, bio, offering, looking for, website and sectors at your public profile link. Your photo and cover remain private unless you choose the option below. Your posts, comments, messages, email and saved items are never shown publicly. Switch this off at any time and the public link stops working.
             </span>
           </span>
+        </label>
+        <label className="mt-3 flex cursor-pointer items-start gap-3 border-t border-gold-500/20 pt-3">
+          <input type="checkbox" checked={v.publicMedia} disabled={!v.isPublic} onChange={(e) => set('publicMedia', e.target.checked)} className="mt-1 h-4 w-4 accent-[hsl(187_67%_12%)] disabled:opacity-50" data-testid="checkbox-publicMedia" />
+          <span className="text-sm text-ink-800">Also show my network photo and cover to anyone visiting my public profile. This is off until I explicitly opt in.</span>
         </label>
       </div>
 

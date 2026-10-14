@@ -1,0 +1,1 @@
+ALTER TABLE "ecosystem_members" ADD COLUMN "public_media" boolean DEFAULT false NOT NULL;

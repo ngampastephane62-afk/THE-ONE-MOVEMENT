@@ -12,6 +12,8 @@ import Home from '@/pages/home';
 import OurVision from '@/pages/our-vision';
 import Ecosystem from '@/pages/ecosystem';
 import Community from '@/pages/community';
+import NetworkProfile from '@/pages/community/NetworkProfile';
+import Invitation from '@/pages/community/Invitation';
 import Programs from '@/pages/programs';
 import ProgramDetail from '@/pages/programs/detail';
 import Opportunities from '@/pages/opportunities';
@@ -100,6 +102,8 @@ function Router() {
       <Route path="/our-vision" component={OurVision} />
       <Route path="/ecosystem" component={Ecosystem} />
       <Route path="/community" component={Community} />
+      <Route path="/community/members/:id" component={NetworkProfile} />
+      <Route path="/invite/:code" component={Invitation} />
       <Route path="/programs" component={Programs} />
       <Route path="/programs/:slug" component={ProgramDetail} />
       <Route path="/opportunities" component={Opportunities} />

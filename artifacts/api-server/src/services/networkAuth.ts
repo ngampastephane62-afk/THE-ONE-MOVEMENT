@@ -11,9 +11,10 @@ export type NetworkActor = {
   member: typeof members.$inferSelect | null;
   clerkId: string;
   email: string;
+  accountCreatedAt: number;
   founder: boolean;
 };
-const identities = new Map<string, { email: string; fullName: string; verified: boolean; expires: number }>();
+const identities = new Map<string, { email: string; fullName: string; verified: boolean; accountCreatedAt: number; expires: number }>();
 export async function networkAuth(req: Request, res: Response, next: NextFunction) {
   res.set("Cache-Control", "no-store");
   const clerkId = getAuth(req).userId;
@@ -27,6 +28,7 @@ export async function networkAuth(req: Request, res: Response, next: NextFunctio
         email: primary?.emailAddress.toLowerCase() ?? "",
         fullName: [user.firstName, user.lastName].filter(Boolean).join(" "),
         verified: primary?.verification?.status === "verified",
+        accountCreatedAt: user.createdAt,
         expires: Date.now() + 60_000,
       };
       if (identities.size > 2000) identities.clear();
@@ -53,7 +55,7 @@ export async function networkAuth(req: Request, res: Response, next: NextFunctio
     const [profile] = await db.select().from(networkProfiles).where(eq(networkProfiles.memberId, member.id));
     if (profile?.suspended && !founder) return void res.status(403).json({ error: "This network account is suspended. Contact TOMI through the inquiry pathway." });
   }
-  res.locals.actor = { member: member ?? null, clerkId, email: identity.email, founder } satisfies NetworkActor;
+  res.locals.actor = { member: member ?? null, clerkId, email: identity.email, accountCreatedAt: identity.accountCreatedAt, founder } satisfies NetworkActor;
   next();
 }
 export function actor(res: Response, enabled = true) {

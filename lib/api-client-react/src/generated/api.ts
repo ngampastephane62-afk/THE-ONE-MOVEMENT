@@ -31,6 +31,7 @@ import type {
   NetworkActionInput,
   NetworkActionResult,
   NetworkPaymentStatus,
+  NetworkPublicProfileResponse,
   NetworkState,
   NetworkUploadInput,
   NetworkUploadTicket,
@@ -63,6 +64,83 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   }
   return result;
 };
+
+export const getGetPublicNetworkProfileUrl = (id: number,) => {
+
+
+
+
+  return `/api/community/profiles/${id}`
+}
+
+/**
+ * @summary Public opt-in ecosystem profile; no private identity, messages or posts
+ */
+export const getPublicNetworkProfile = async (id: number, options?: RequestInit): Promise<NetworkPublicProfileResponse> => {
+
+  return customFetch<NetworkPublicProfileResponse>(getGetPublicNetworkProfileUrl(id),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetPublicNetworkProfileQueryKey = (id: number,) => {
+    return [
+    `/api/community/profiles/${id}`
+    ] as const;
+    }
+
+
+export const getGetPublicNetworkProfileQueryOptions = <TData = Awaited<ReturnType<typeof getPublicNetworkProfile>>, TError = ErrorType<void>>(id: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getPublicNetworkProfile>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetPublicNetworkProfileQueryKey(id);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getPublicNetworkProfile>>> = ({ signal }) => getPublicNetworkProfile(id, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getPublicNetworkProfile>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetPublicNetworkProfileQueryResult = NonNullable<Awaited<ReturnType<typeof getPublicNetworkProfile>>>
+export type GetPublicNetworkProfileQueryError = ErrorType<void>
+
+
+/**
+ * @summary Public opt-in ecosystem profile; no private identity, messages or posts
+ */
+
+export function useGetPublicNetworkProfile<TData = Awaited<ReturnType<typeof getPublicNetworkProfile>>, TError = ErrorType<void>>(
+ id: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getPublicNetworkProfile>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetPublicNetworkProfileQueryOptions(id,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
 
 export const getGetNetworkStateUrl = (params?: GetNetworkStateParams,) => {
   const normalizedParams = new URLSearchParams();

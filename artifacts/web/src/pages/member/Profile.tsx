@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Link, useLocation, useParams } from 'wouter';
-import { Ban, ExternalLink, Flag, MapPin, MessageSquare, Pencil } from 'lucide-react';
+import { Ban, Copy, ExternalLink, UserPlus, Flag, MapPin, MessageSquare, Pencil } from 'lucide-react';
 import { useGetNetworkState, getGetNetworkStateQueryKey } from '@workspace/api-client-react';
 import { SECTORS } from '@/lib/sectors-data';
 import PostCard from '@/components/network/PostCard';
 import ReportDialog, { type ReportTarget } from '@/components/network/ReportDialog';
 import { Avatar, Badges, Empty, ErrorBox, Skeleton, btn, btnGhost, card, field, useAct } from '@/components/network/kit';
 import { useMe } from './ctx';
+import { publicProfileUrl } from '@/lib/network-invitations';
 
 export default function ProfilePage() {
   const { id } = useParams<{ id: string }>();
@@ -39,7 +40,7 @@ export default function ProfilePage() {
           <div className="-mt-12 flex flex-wrap items-end justify-between gap-3">
             <div className="rounded-full bg-ivory-50 p-1"><Avatar m={p} size={96} /></div>
             <div className="flex flex-wrap gap-2">
-              {mine ? <Link href="/member/settings" className={btnGhost} data-testid="link-edit-profile"><Pencil className="h-3.5 w-3.5" />Edit profile</Link> : p.blocked ? (
+              {mine ? <><Link href="/member/invite" className={btnGhost} data-testid="link-growth"><UserPlus className="h-3.5 w-3.5" />{me.founder || base.growth?.canPost ? 'Invite' : `Invite ${Math.min(base.growth?.qualifiedInvites ?? 0, base.growth?.requiredInvites ?? 11)}/${base.growth?.requiredInvites ?? 11}`}</Link><Link href="/member/settings" className={btnGhost} data-testid="link-edit-profile"><Pencil className="h-3.5 w-3.5" />Edit profile</Link></> : p.blocked ? (
                 <button className={btnGhost} disabled={pending} onClick={() => doAct(run({ action: 'block', targetId: p.id, accepted: false }))} data-testid="button-unblock">Unblock</button>
               ) : (<>
                 <button className={p.followed ? btnGhost : btn} disabled={pending} onClick={() => doAct(run({ action: 'follow', targetId: p.id, accepted: !p.followed }))} data-testid="button-follow">{p.followed ? 'Following' : 'Follow'}</button>
@@ -65,6 +66,7 @@ export default function ProfilePage() {
             </div>
           )}
           {sectors.length > 0 && <div className="mt-4 flex flex-wrap gap-1.5">{sectors.map((s) => <span key={s.slug} className="rounded-full bg-lagoon-900 px-2.5 py-1 text-[10px] uppercase tracking-wider text-gold-400">{s.name}</span>)}</div>}
+          {mine && me.isPublic && <PublicLink id={me.id} />}
           {!mine && (
             <div className="mt-4 flex gap-4 border-t border-sand-100 pt-3 text-xs text-sand-400">
               <button onClick={() => setReport({ memberId: p.id })} className="inline-flex items-center gap-1 hover:text-crimson-700" data-testid="button-report-member"><Flag className="h-3.5 w-3.5" />Report</button>
@@ -89,10 +91,27 @@ export default function ProfilePage() {
 
       <section className="flex flex-col gap-4 px-3 md:px-0">
         <h2 className="font-display text-lg text-ink-900">Posts</h2>
-        {posts.length === 0 ? <Empty title={mine ? 'Share your first post' : 'No posts yet'} body={mine ? 'Show the network what you build, design or defend.' : `${p.fullName} has not published yet.`}>{mine && <Link href="/member" className={btn}>Write a post</Link>}</Empty>
+        {posts.length === 0 ? <Empty title={mine ? 'Share your first post' : 'No posts yet'} body={mine ? 'Show the network what you build, design or defend.' : `${p.fullName} has not published yet.`}>{mine && (me.founder || base.growth?.canPost ? <Link href="/member" className={btn}>Write a post</Link> : <Link href="/member/invite" className={btn}>Invite 11 people to unlock posting</Link>)}</Empty>
           : posts.map((x) => <PostCard key={x.id} post={x} meId={me.id} onReport={(postId, memberId) => setReport({ postId, memberId })} />)}
       </section>
       <ReportDialog target={report} onClose={() => setReport(null)} />
+    </div>
+  );
+}
+
+function PublicLink({ id }: { id: number }) {
+  const url = publicProfileUrl(id);
+  const [st, setSt] = useState<'ok' | 'fail' | null>(null);
+  const copy = () => { if (!navigator.clipboard) { setSt('fail'); return; } navigator.clipboard.writeText(url).then(() => setSt('ok'), () => setSt('fail')); };
+  return (
+    <div className="mt-4 rounded-xl bg-ivory-100 p-3" data-testid="panel-public-link">
+      <p className="text-eyebrow text-gold-700">PUBLIC PROFILE LINK</p>
+      <p className="mt-1 text-xs text-ink-700">Anyone can see your profile details here. Posts are never shown publicly.</p>
+      <div className="mt-2 flex flex-wrap items-center gap-2">
+        <input readOnly value={url} onFocus={(e) => e.currentTarget.select()} className={`${field} min-w-0 flex-1 py-1.5 font-mono text-xs`} data-testid="input-public-link" />
+        <button type="button" className={btnGhost} onClick={copy} data-testid="button-copy-public-link"><Copy className="h-3.5 w-3.5" />{st === 'ok' ? 'Copied' : 'Copy'}</button>
+      </div>
+      {st === 'fail' && <p className="mt-1 text-xs text-crimson-700" role="alert">Copy failed. Select the link and copy it manually.</p>}
     </div>
   );
 }

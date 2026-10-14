@@ -5,7 +5,7 @@ import {
   networkThreads as threads, networkMessages as messages,
   networkCertifications as certifications, networkReports as reports,
 } from "@workspace/db";
-import { and, desc, eq, inArray, lt, or } from "drizzle-orm";
+import { and, desc, eq, inArray, lt, or, sql } from "drizzle-orm";
 import type { NetworkMember, NetworkPost, NetworkState } from "@workspace/api-zod";
 import { type NetworkActor, NetworkError } from "./networkAuth";
 import { catalog, DOCUMENTS, stripeReady } from "./networkPayments";
@@ -13,6 +13,13 @@ import { mediaDto } from "./networkFiles";
 
 export const ROLES = new Set(["business", "partner", "sponsor", "media-partner", "official-model", "exhibitor", "speaker", "designer", "investor"]);
 export const PROGRAMS = new Set(["ecosystem", "diplomatic-gala", "summit", "fashion-week", "awards", "fashion-night", "investment-forum"]);
+export const REQUIRED_INVITES = 11;
+export async function qualifiedInviteCount(memberId: number) {
+  const [count] = await db.select({ value: sql<number>`count(*)::integer` }).from(profiles)
+    .innerJoin(follows, and(eq(follows.followerId, profiles.memberId), eq(follows.followingId, memberId)))
+    .where(and(eq(profiles.referredBy, memberId), eq(profiles.enabled, true), eq(profiles.suspended, false)));
+  return count?.value ?? 0;
+}
 export function activeBadge(row: typeof certifications.$inferSelect) {
   if (row.status !== "approved" || (row.expiresAt && row.expiresAt.getTime() <= Date.now())) return false;
   const commercial = ["partner", "sponsor", "designer", "exhibitor"].includes(row.role);
@@ -47,7 +54,7 @@ export async function ownThread(id: number, memberId: number) {
 export async function networkState(context: NetworkActor, query: Record<string, unknown>): Promise<NetworkState> {
   const empty: NetworkState = {
     me: null, founder: null, members: [], posts: [], nextCursor: null, person: null,
-    threads: [], messages: [], certifications: [], reports: [], packages: [], documents: [], stripeReady,
+    threads: [], messages: [], certifications: [], reports: [], packages: [], documents: [], stripeReady, growth: null,
   };
   const self = context.member;
   if (!self) return empty;
@@ -108,6 +115,11 @@ export async function networkState(context: NetworkActor, query: Record<string, 
   }
   const me = dto.get(self.id)!;
   if (!me?.enabled) return { ...empty, me };
+  const qualifiedInvites = await qualifiedInviteCount(self.id);
+  const growth = {
+    inviteCode: myProfile!.inviteCode, qualifiedInvites, requiredInvites: REQUIRED_INVITES,
+    canPost: context.founder || qualifiedInvites >= REQUIRED_INVITES,
+  };
   const q = String(query.q ?? "").trim().slice(0, 100).toLowerCase();
   const sector = String(query.sector ?? "");
   const memberList = (context.founder ? usableRows : eligible).filter(r => r.profile.enabled).map(r => dto.get(r.member.id)!)
@@ -135,6 +147,7 @@ export async function networkState(context: NetworkActor, query: Record<string, 
   const canInvestor = context.founder || certs.some(c => c.memberId === self.id && c.role === "investor" && activeBadge(c));
   const reportRows = context.founder ? await db.select().from(reports).orderBy(desc(reports.id)).limit(100) : [];
   return {
+    growth,
     me, founder: [...dto.values()].find(m => m.founder && m.enabled && !blockedIds.has(m.id)) ?? null,
     members: memberList.slice(0, 200), person: targetId && !blockedIds.has(targetId) ? dto.get(targetId) ?? null :
       targetId && myBlocks.has(targetId) ? dto.get(targetId) ?? null : null,

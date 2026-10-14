@@ -11,6 +11,20 @@ tags:
   - name: health
     description: Health operations
 paths:
+  /community/profiles/{id}:
+    get:
+      operationId: getPublicNetworkProfile
+      tags: [network]
+      summary: Public opt-in ecosystem profile; no private identity, messages or posts
+      parameters:
+        - {name: id, in: path, required: true, schema: {type: integer, minimum: 1}}
+      responses:
+        "200":
+          description: Explicitly public, non-suspended member
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/NetworkPublicProfileResponse"}
+        "404": {description: Member not publicly listed}
   /network/state:
     get:
       operationId: getNetworkState
@@ -195,7 +209,7 @@ components:
       additionalProperties: false
       required: [action]
       properties:
-        action: {type: string, enum: [join, post.create, post.edit, post.delete, post.like, post.view, comment.create, comment.delete, follow, block, thread.start, thread.accept, thread.decline, message.send, message.read, upload.complete, profile.media, certification.request, certification.decide, report, moderate.post, moderate.member, report.resolve, checkout]}
+        action: {type: string, enum: [join, referral.claim, post.create, post.edit, post.delete, post.like, post.view, comment.create, comment.delete, follow, block, thread.start, thread.accept, thread.decline, message.send, message.read, upload.complete, profile.media, certification.request, certification.decide, report, moderate.post, moderate.member, report.resolve, checkout]}
         id: {type: integer}
         targetId: {type: integer}
         text: {type: string, maxLength: 5000}
@@ -371,8 +385,9 @@ components:
         currency: {type: string}
     NetworkState:
       type: object
-      required: [me, founder, members, posts, nextCursor, person, threads, messages, certifications, reports, packages, documents, stripeReady]
+      required: [me, founder, members, posts, nextCursor, person, threads, messages, certifications, reports, packages, documents, stripeReady, growth]
       properties:
+        growth: {anyOf: [{$ref: "#/components/schemas/NetworkGrowth"}, {type: "null"}]}
         me: {anyOf: [{$ref: "#/components/schemas/NetworkMember"}, {type: "null"}]}
         founder: {anyOf: [{$ref: "#/components/schemas/NetworkMember"}, {type: "null"}]}
         members: {type: array, items: {$ref: "#/components/schemas/NetworkMember"}}
@@ -386,6 +401,19 @@ components:
         packages: {type: array, items: {$ref: "#/components/schemas/NetworkPackage"}}
         documents: {type: array, items: {$ref: "#/components/schemas/NetworkDocument"}}
         stripeReady: {type: boolean}
+    NetworkGrowth:
+      type: object
+      required: [inviteCode, qualifiedInvites, requiredInvites, canPost]
+      properties:
+        inviteCode: {type: string}
+        qualifiedInvites: {type: integer}
+        requiredInvites: {type: integer}
+        canPost: {type: boolean}
+    NetworkPublicProfileResponse:
+      type: object
+      required: [profile]
+      properties:
+        profile: {$ref: "#/components/schemas/NetworkMember"}
     SavedItemInput:
       type: object
       additionalProperties: false
@@ -436,6 +464,8 @@ components:
             enum: [fashion, music, dance, film, art, business, investment, tourism, diplomacy, innovation, technology, ngos, media, education, humanitarian-action, real-estate, health-care]
         isPublic:
           type: boolean
+        publicMedia:
+          type: boolean
     PublicMember:
       allOf:
         - $ref: "#/components/schemas/MemberProfileInput"
@@ -448,8 +478,10 @@ components:
       allOf:
         - $ref: "#/components/schemas/PublicMember"
         - type: object
-          required: [savedItems]
+          required: [savedItems, publicMedia]
           properties:
+            publicMedia:
+              type: boolean
             savedItems:
               type: array
               items:

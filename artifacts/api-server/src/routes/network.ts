@@ -1,9 +1,9 @@
 import { Router } from "express";
 import {
   db, networkUploads as uploads, networkProfiles as profiles, networkPosts as posts,
-  networkCertifications as certificates,
+  networkCertifications as certificates, ecosystemMembersTable as members, networkFollows as follows,
 } from "@workspace/db";
-import { and, eq, sql } from "drizzle-orm";
+import { and, eq, sql, or, isNull } from "drizzle-orm";
 import { GetNetworkStateQueryParams, RequestNetworkUploadBody } from "@workspace/api-zod";
 import { networkAuth, networkEnabled, networkWrite, actor, NetworkError, type NetworkActor } from "../services/networkAuth";
 import { networkAction } from "../services/networkActions";
@@ -13,6 +13,55 @@ import { DOCUMENTS, paymentStatus } from "../services/networkPayments";
 import type { Request, Response, NextFunction } from "express";
 
 const router = Router();
+router.get("/community/profiles/:id", async (req, res) => {
+  const id = Number(req.params.id);
+  if (!Number.isSafeInteger(id) || id < 1) throw new NetworkError(404, "Profile not found.");
+  const [row] = await db.select({ member: members, profile: profiles }).from(members)
+    .leftJoin(profiles, eq(profiles.memberId, members.id))
+    .where(and(eq(members.id, id), eq(members.isPublic, true), or(eq(profiles.suspended, false), isNull(profiles.memberId)))).limit(1);
+  if (!row) throw new NetworkError(404, "Profile not found.");
+  const { member: m, profile: p } = row;
+  const [counts, certs] = await Promise.all([
+    db.select({
+      followers: sql<number>`count(*) filter (where ${follows.followingId} = ${id})::integer`,
+      following: sql<number>`count(*) filter (where ${follows.followerId} = ${id})::integer`,
+    }).from(follows).where(or(eq(follows.followingId, id), eq(follows.followerId, id))),
+    p?.enabled ? db.select().from(certificates).where(eq(certificates.memberId, id)) : Promise.resolve([]),
+  ]);
+  const avatar = m.publicMedia && p?.enabled && p.avatarId ? await db.select({ id: uploads.id }).from(uploads)
+    .where(and(eq(uploads.id, p.avatarId), eq(uploads.ownerId, id), eq(uploads.ready, true))).limit(1) : [];
+  const cover = m.publicMedia && p?.enabled && p.coverId ? await db.select({ id: uploads.id }).from(uploads)
+    .where(and(eq(uploads.id, p.coverId), eq(uploads.ownerId, id), eq(uploads.ready, true))).limit(1) : [];
+  res.set("Cache-Control", "no-store").json({ profile: {
+    id, fullName: m.fullName, profession: m.profession, organization: m.organization, country: m.country,
+    bio: m.bio, offering: m.offering, lookingFor: m.lookingFor, website: m.website, sectors: m.sectors,
+    isPublic: true, enabled: !!p?.enabled, founder: !!p?.founder, suspended: false,
+    avatarUrl: avatar.length ? `/api/community/media/${avatar[0]!.id}` : null,
+    coverUrl: cover.length ? `/api/community/media/${cover[0]!.id}` : null,
+    followers: p?.enabled ? counts[0]?.followers ?? 0 : 0, following: p?.enabled ? counts[0]?.following ?? 0 : 0,
+    followed: false, blocked: false,
+    badges: certs.filter(activeBadge).map(c => ({ role: c.role, program: c.program, expiresAt: c.expiresAt?.toISOString() ?? null })),
+  } });
+});
+router.get("/community/media/:id", async (req, res) => {
+  const [upload] = await db.select().from(uploads)
+    .innerJoin(profiles, and(eq(profiles.memberId, uploads.ownerId), or(eq(profiles.avatarId, uploads.id), eq(profiles.coverId, uploads.id))))
+    .innerJoin(members, eq(members.id, profiles.memberId))
+    .where(and(eq(uploads.id, String(req.params.id)), eq(uploads.ready, true),
+      eq(members.isPublic, true), eq(members.publicMedia, true), eq(profiles.enabled, true), eq(profiles.suspended, false)))
+    .limit(1).then(rows => rows.map(r => r.network_uploads));
+  if (!upload || !upload.contentType.startsWith("image/")) throw new NetworkError(404, "Image not found.");
+  res.set({
+    "Content-Type": upload.contentType, "Content-Length": String(upload.size),
+    "Cache-Control": "no-store", "Content-Disposition": "inline",
+    "X-Content-Type-Options": "nosniff",
+  });
+  if (req.method === "HEAD") return void res.end();
+  objectFile(upload.objectPath).createReadStream().on("error", () => {
+    if (!res.headersSent) res.status(502).end();
+    else if (!res.destroyed) res.end();
+  }).pipe(res);
+});
 router.get("/donations", (_req, res) => {
   res.json({
     title: "Stand with communities in eastern DR Congo",

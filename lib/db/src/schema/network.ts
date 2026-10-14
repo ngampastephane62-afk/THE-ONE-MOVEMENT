@@ -1,16 +1,18 @@
-import { pgTable, serial, text, timestamp, integer, boolean, uniqueIndex, index } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, timestamp, integer, boolean, uniqueIndex, index, uuid } from "drizzle-orm/pg-core";
 import { ecosystemMembersTable as members } from "./ecosystemMembers";
 
 export const networkProfiles = pgTable("network_profiles", {
   memberId: integer("member_id").primaryKey().references(() => members.id, { onDelete: "cascade" }),
   enabled: boolean("enabled").notNull().default(false),
   founder: boolean("founder").notNull().default(false),
+  inviteCode: uuid("invite_code").notNull().defaultRandom().unique(),
+  referredBy: integer("referred_by").references(() => members.id, { onDelete: "set null" }),
   stripeCustomerId: text("stripe_customer_id"),
   avatarId: text("avatar_id"),
   coverId: text("cover_id"),
   suspended: boolean("suspended").notNull().default(false),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-});
+}, t => [index("network_profiles_referrer_idx").on(t.referredBy)]);
 export const networkUploads = pgTable("network_uploads", {
   id: text("id").primaryKey(),
   ownerId: integer("owner_id").notNull().references(() => members.id, { onDelete: "cascade" }),

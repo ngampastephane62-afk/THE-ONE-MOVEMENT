@@ -8,5 +8,6 @@
 import type { PublicMember } from './publicMember';
 
 export type MemberProfile = PublicMember & {
+  publicMedia: boolean;
   savedItems: string[];
 };

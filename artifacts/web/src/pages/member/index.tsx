@@ -1,8 +1,10 @@
 import { useState, type ReactNode } from 'react';
+import InvitationProgress from '@/components/network/InvitationProgress';
+import PendingInvitation from '@/components/network/PendingInvitation';
 import { Helmet } from 'react-helmet-async';
 import { Link, Redirect, Route, Switch, useLocation } from 'wouter';
 import { Show, useAuth, useUser, useClerk } from '@clerk/react';
-import { Award, Bell, Briefcase, HandHeart, Home, LogOut, MessageSquare, Settings, Shield, Users } from 'lucide-react';
+import { Award, Bell, UserPlus, Briefcase, HandHeart, Home, LogOut, MessageSquare, Settings, Shield, Users } from 'lucide-react';
 import {
   useGetMemberProfile, getGetMemberProfileQueryKey, useGetNetworkState, getGetNetworkStateQueryKey,
 } from '@workspace/api-client-react';
@@ -55,6 +57,7 @@ function JoinConsent({ onJoined }: { onJoined: () => void }) {
         <li>• Signed-in, verified members will see your network profile: name, role, organization, country, bio, sectors, photo and posts.</li>
         <li>• Your visibility on the public website does not change. If your profile is private on the public directory, it stays private.</li>
         <li>• Messages only open after the other member accepts your request. You can block or report anyone.</li>
+        <li>• Membership is free. Free members can follow, like, comment and message right away; publishing posts unlocks once 11 people you invited follow you. Packages and events do not replace this step.</li>
         <li>• Official badges come only from a reviewed certification — never from sign-up.</li>
       </ul>
       <label className="mt-5 flex cursor-pointer items-start gap-3 rounded-2xl border border-gold-500/40 bg-ivory-100 p-4">
@@ -109,10 +112,11 @@ function AppShell({ me, base, children }: Ctx & { children: ReactNode }) {
               <I className="h-4 w-4" />{label}{label === 'Messages' && unread > 0 && <span className="ml-auto rounded-full bg-coral-500 px-1.5 text-[10px] font-bold text-ink-900">{unread}</span>}
             </Link>
           ))}
+          <Link href="/member/invite" className={`flex items-center gap-3 rounded-full px-4 py-2.5 text-sm ${active('/member/invite') ? 'bg-lagoon-900 font-semibold text-gold-400' : 'text-ink-800 hover:bg-ivory-200'}`} data-testid="nav-invite"><UserPlus className="h-4 w-4" />Invite{base.growth && !me.founder && <span className="ml-auto text-[10px] text-sand-400">{Math.min(base.growth.qualifiedInvites, base.growth.requiredInvites)}/{base.growth.requiredInvites}</span>}</Link>
           <Link href="/member/settings" className={`flex items-center gap-3 rounded-full px-4 py-2.5 text-sm ${active('/member/settings') ? 'bg-lagoon-900 font-semibold text-gold-400' : 'text-ink-800 hover:bg-ivory-200'}`}><Settings className="h-4 w-4" />Settings & workspace</Link>
           <Link href="/donate" className="mt-4 flex items-center gap-3 rounded-2xl border border-gold-500/40 bg-gold-500/10 px-4 py-3 text-sm text-ink-800 hover:border-gold-500" data-testid="link-humanitarian"><HandHeart className="h-4 w-4 text-gold-700" />Humanitarian action</Link>
         </aside>
-        <main className="min-w-0 flex-1">{children}</main>
+        <main className="min-w-0 flex-1"><PendingInvitation />{children}</main>
       </div>
       <nav aria-label="Network" className="fixed inset-x-0 bottom-0 z-40 grid border-t border-sand-200 bg-ivory-50/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden" style={{ gridTemplateColumns: `repeat(${nav.length}, 1fr)` }}>
         {nav.map(({ href, label, icon: I, exact }) => (
@@ -130,7 +134,7 @@ function NetworkGate() {
   const { isSignedIn } = useAuth();
   const { user } = useUser();
   const profileQ = useGetMemberProfile({ query: { enabled: !!isSignedIn, queryKey: getGetMemberProfileQueryKey() } });
-  const stateQ = useGetNetworkState(undefined, { query: { enabled: !!isSignedIn, queryKey: getGetNetworkStateQueryKey() } });
+  const stateQ = useGetNetworkState(undefined, { query: { enabled: !!isSignedIn, queryKey: getGetNetworkStateQueryKey(), refetchInterval: 25000 } });
 
   if (profileQ.isLoading || stateQ.isLoading) return <Frame><div className="mx-auto max-w-2xl px-4 py-10"><Skeleton rows={4} /></div></Frame>;
   if (stateQ.isError) {
@@ -165,6 +169,7 @@ function NetworkGate() {
           <Route path="/member/packages" component={Packages} />
           <Route path="/member/certifications" component={Certifications} />
           <Route path="/member/admin">{me.founder ? <Admin /> : <Redirect to="/member" replace />}</Route>
+          <Route path="/member/invite"><div className="flex flex-col gap-4 px-3 pt-4 md:px-0 md:pt-0"><h1 className="font-display text-2xl text-ink-900">Invite and unlock publishing</h1><InvitationProgress growth={state.growth} founder={me.founder} /></div></Route>
           <Route path="/member/settings" component={SettingsPage} />
           <Route><Redirect to="/member" replace /></Route>
         </Switch>

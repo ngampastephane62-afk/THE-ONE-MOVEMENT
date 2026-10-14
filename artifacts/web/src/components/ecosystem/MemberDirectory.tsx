@@ -33,6 +33,7 @@ function MemberCard({ m }: { m: PublicMember }) {
       <div className="mt-auto flex flex-wrap gap-1.5 pt-1">
         {m.sectors.map((s) => <span key={s} className="bg-ivory-200 px-2 py-0.5 text-[10px] uppercase tracking-wider text-ink-700">{sectorName(s)}</span>)}
       </div>
+      <Link href={`/community/members/${m.id}`} className="inline-flex items-center gap-1.5 text-xs font-semibold text-lagoon-700 hover:text-gold-700" data-testid={`link-member-profile-${m.id}`}>View network profile</Link>
       {site && (
         <a href={site} target="_blank" rel="noopener noreferrer nofollow" className="inline-flex items-center gap-1.5 text-xs font-semibold text-lagoon-600 hover:text-gold-700" data-testid={`link-member-site-${m.id}`}>
           <Globe className="h-3.5 w-3.5" aria-hidden="true" /> Website

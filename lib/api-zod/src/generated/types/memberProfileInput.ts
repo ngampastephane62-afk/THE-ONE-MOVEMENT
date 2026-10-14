@@ -36,4 +36,5 @@ export interface MemberProfileInput {
      */
   sectors: MemberProfileInputSectorsItem[];
   isPublic: boolean;
+  publicMedia?: boolean;
 }

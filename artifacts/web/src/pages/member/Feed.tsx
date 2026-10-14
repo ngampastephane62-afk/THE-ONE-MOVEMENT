@@ -6,6 +6,7 @@ import PostCard from '@/components/network/PostCard';
 import ReportDialog, { type ReportTarget } from '@/components/network/ReportDialog';
 import { Avatar, Empty, ErrorBox, Skeleton, UploadTray, btn, btnGhost, card, field, useAct, useUploads } from '@/components/network/kit';
 import { useMe } from './ctx';
+import InvitationProgress from '@/components/network/InvitationProgress';
 
 const TABS: { id: GetNetworkStateFeed; label: string }[] = [
   { id: 'all', label: 'For you' }, { id: 'following', label: 'Following' }, { id: 'business', label: 'Business' }, { id: 'reel', label: 'Reels' },
@@ -67,12 +68,12 @@ export default function Feed() {
   return (
     <div className="flex flex-col gap-4 px-3 pt-4 md:px-0 md:pt-0 lg:flex-row lg:items-start">
       <div className="flex min-w-0 flex-1 flex-col gap-4">
-        <Composer />
+        {me.founder || base.growth?.canPost ? <Composer /> : <InvitationProgress growth={base.growth} />}
         <div className="flex gap-1 overflow-x-auto rounded-full bg-ivory-200 p-1" role="tablist">
           {TABS.map((t) => <button key={t.id} role="tab" aria-selected={feed === t.id} onClick={() => switchFeed(t.id)} className={`flex-1 whitespace-nowrap rounded-full px-3 py-1.5 text-xs ${feed === t.id ? 'bg-ivory-50 font-semibold text-lagoon-900 shadow-sm' : 'text-ink-700'}`} data-testid={`tab-feed-${t.id}`}>{t.label}</button>)}
         </div>
         {q.isLoading && !posts.length ? <Skeleton /> : q.isError ? <ErrorBox onRetry={() => q.refetch()} msg="The feed could not be loaded." /> : posts.length === 0 ? (
-          <Empty title={feed === 'following' ? 'Nobody followed yet' : 'The first story starts with you'} body={feed === 'following' ? 'Follow people whose work moves you and their posts will gather here.' : 'No posts here yet. Introduce yourself, share a project, or present what your organization needs.'}>
+          <Empty title={feed === 'following' ? 'Nobody followed yet' : (me.founder || base.growth?.canPost ? 'The first story starts with you' : 'Nothing here yet')} body={feed === 'following' ? 'Follow people whose work moves you and their posts will gather here.' : (me.founder || base.growth?.canPost ? 'No posts here yet. Introduce yourself, share a project, or present what your organization needs.' : 'No posts here yet. Follow people in your sectors; publishing opens once 11 people you invited follow you.')}>
             <Link href="/member/people" className={btnGhost}>Find people</Link>
           </Empty>
         ) : (
@@ -90,9 +91,10 @@ export default function Feed() {
             <p className="text-eyebrow text-gold-400">GETTING STARTED</p>
             <ol className="mt-3 flex flex-col gap-2 text-sm">
               <li><Link href="/member/settings" className="underline-offset-2 hover:underline">1 · Add a photo and cover</Link></li>
-              <li>2 · Publish a first post about your work</li>
-              <li><Link href="/member/people" className="underline-offset-2 hover:underline">3 · Follow peers in your sectors</Link></li>
-              <li><Link href="/member/certifications" className="underline-offset-2 hover:underline">4 · Apply for an official role</Link></li>
+              {!me.founder && <li><Link href="/member/invite" className="underline-offset-2 hover:underline">2 · Invite 11 people {base.growth ? `(${Math.min(base.growth.qualifiedInvites, base.growth.requiredInvites)}/${base.growth.requiredInvites})` : ''}</Link></li>}
+              <li>{me.founder ? 2 : 3} · Publish a first post about your work{!me.founder && !base.growth?.canPost ? ' (after step 2)' : ''}</li>
+              <li><Link href="/member/people" className="underline-offset-2 hover:underline">{me.founder ? 3 : 4} · Follow peers in your sectors</Link></li>
+              <li><Link href="/member/certifications" className="underline-offset-2 hover:underline">{me.founder ? 4 : 5} · Apply for an official role</Link></li>
             </ol>
           </div>
         )}

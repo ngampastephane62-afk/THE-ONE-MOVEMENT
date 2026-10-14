@@ -10,6 +10,7 @@ export type NetworkActionInputAction = typeof NetworkActionInputAction[keyof typ
 
 export const NetworkActionInputAction = {
   join: 'join',
+  referralclaim: 'referral.claim',
   postcreate: 'post.create',
   postedit: 'post.edit',
   postdelete: 'post.delete',
@@ -141,6 +142,7 @@ export interface MemberProfileInput {
      */
   sectors: MemberProfileInputSectorsItem[];
   isPublic: boolean;
+  publicMedia?: boolean;
 }
 
 export type PublicMember = MemberProfileInput & {
@@ -266,7 +268,15 @@ export interface DonationCampaign {
   currency: string;
 }
 
+export interface NetworkGrowth {
+  inviteCode: string;
+  qualifiedInvites: number;
+  requiredInvites: number;
+  canPost: boolean;
+}
+
 export interface NetworkState {
+  growth: NetworkGrowth | null;
   me: NetworkMember | null;
   founder: NetworkMember | null;
   members: NetworkMember[];
@@ -283,6 +293,10 @@ export interface NetworkState {
   stripeReady: boolean;
 }
 
+export interface NetworkPublicProfileResponse {
+  profile: NetworkMember;
+}
+
 export interface SavedItemInput {
   /** @maxLength 100 */
   itemId: string;
@@ -290,6 +304,7 @@ export interface SavedItemInput {
 }
 
 export type MemberProfile = PublicMember & {
+  publicMedia: boolean;
   savedItems: string[];
 };
 

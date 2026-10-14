@@ -67,7 +67,7 @@ function publicProfile(row: typeof members.$inferSelect) {
 }
 
 function privateProfile(row: typeof members.$inferSelect) {
-  return { ...publicProfile(row), savedItems: row.savedItems };
+  return { ...publicProfile(row), savedItems: row.savedItems, publicMedia: row.publicMedia };
 }
 
 router.get("/ecosystem/members", async (_req, res) => {

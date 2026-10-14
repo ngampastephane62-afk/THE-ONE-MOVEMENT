@@ -5,11 +5,11 @@ import {
   networkReports as reports, networkAudit as audit,
 } from "@workspace/db";
 import { NetworkActionBody, type NetworkActionInput } from "@workspace/api-zod";
-import { and, eq, inArray, or, ne } from "drizzle-orm";
+import { and, eq, inArray, or, ne, isNull } from "drizzle-orm";
 import type { Request, Response } from "express";
 import { actor, NetworkError, requireFounder } from "./networkAuth";
 import { ownedMedia, completeUpload } from "./networkFiles";
-import { visibleMember, visiblePost, ownThread, ROLES, PROGRAMS, isBlocked } from "./networkState";
+import { visibleMember, visiblePost, ownThread, ROLES, PROGRAMS, isBlocked, qualifiedInviteCount, REQUIRED_INVITES } from "./networkState";
 import { checkout, PACKAGE_DEFINITIONS, customPackages } from "./networkPayments";
 
 function number(value: unknown) {
@@ -39,6 +39,27 @@ export async function networkAction(req: Request, res: Response) {
       await db.update(profiles).set({ enabled: accepted(input.accepted) }).where(eq(profiles.memberId, self));
       break;
     }
+    case "referral.claim": {
+      if (!res.locals.networkEnabled) throw new NetworkError(409, "Join the network before accepting an invitation.");
+      if (input.accepted !== true) throw new NetworkError(400, "Accept the invitation and follow explicitly.");
+      const code = input.kind ?? "";
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(code)) throw new NetworkError(400, "Invalid invitation.");
+      const [inviter] = await db.select().from(profiles).where(eq(profiles.inviteCode, code)).limit(1);
+      if (!inviter || !inviter.enabled || inviter.suspended || inviter.memberId === self) throw new NetworkError(404, "This invitation is unavailable.");
+      // A referral only credits a newly created, verified account that did not
+      // exist when the invitation became available. Each account has one sponsor.
+      if (who.accountCreatedAt < inviter.createdAt.getTime() || who.accountCreatedAt < Date.now() - 24 * 60 * 60 * 1000) {
+        throw new NetworkError(403, "Only accounts created after this invitation and within the last 24 hours can be credited.");
+      }
+      if (await isBlocked(self, inviter.memberId)) throw new NetworkError(403, "This member cannot be followed.");
+      await db.transaction(async tx => {
+        const [credited] = await tx.update(profiles).set({ referredBy: inviter.memberId })
+          .where(and(eq(profiles.memberId, self), isNull(profiles.referredBy), eq(profiles.enabled, true))).returning({ memberId: profiles.memberId });
+        if (!credited) throw new NetworkError(409, "This account already accepted an invitation.");
+        await tx.insert(follows).values({ followerId: self, followingId: inviter.memberId }).onConflictDoNothing();
+      });
+      break;
+    }
     case "upload.complete": {
       if (!input.mediaIds?.length || input.mediaIds.length > 6) throw new NetworkError(400, "Choose your uploaded file.");
       for (const mediaId of input.mediaIds) await completeUpload(self, mediaId);
@@ -54,6 +75,9 @@ export async function networkAction(req: Request, res: Response) {
     }
     case "post.create":
     case "post.edit": {
+      if (input.action === "post.create" && !who.founder && await qualifiedInviteCount(self) < REQUIRED_INVITES) {
+        throw new NetworkError(403, `Invite ${REQUIRED_INVITES} new members who create accounts and follow you before publishing.`);
+      }
       const content = text(input.text, 5000, false);
       const media = await ownedMedia(self, input.mediaIds);
       if (!content && !media.length) throw new NetworkError(400, "Write something or attach media.");

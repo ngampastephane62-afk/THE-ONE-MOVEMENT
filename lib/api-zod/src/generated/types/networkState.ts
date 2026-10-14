@@ -7,6 +7,7 @@
  */
 import type { NetworkCertification } from './networkCertification';
 import type { NetworkDocument } from './networkDocument';
+import type { NetworkGrowth } from './networkGrowth';
 import type { NetworkMember } from './networkMember';
 import type { NetworkMessage } from './networkMessage';
 import type { NetworkPackage } from './networkPackage';
@@ -15,6 +16,7 @@ import type { NetworkReport } from './networkReport';
 import type { NetworkThread } from './networkThread';
 
 export interface NetworkState {
+  growth: NetworkGrowth | null;
   me: NetworkMember | null;
   founder: NetworkMember | null;
   members: NetworkMember[];
