@@ -6,6 +6,7 @@ import GoldThread from '@/components/GoldThread';
 import ArchivePhoto, { archiveVideo } from '@/components/ArchivePhoto';
 import ProgramVision from '@/components/ProgramVision';
 import ResponsiveMedia from '@/components/ResponsiveMedia';
+import HomeReelStrip from '@/components/HomeReelStrip';
 import Reveal from '@/components/Reveal';
 import TomiConstellation from '@/components/TomiConstellation';
 import FashionEditionNote from '@/components/FashionEditionNote';
@@ -164,22 +165,7 @@ export default function HomeExperience() {
 
           <div className="tomi-fashion-editorial mt-12 grid overflow-hidden rounded-sharp border border-sand-200 bg-ivory-50 lg:grid-cols-12">
             <Reveal direction="left" className="tomi-fashion-media lg:col-span-6 flex flex-col items-center justify-center">
-              <figure className="w-full max-w-sm">
-                <ResponsiveMedia
-                  kind="vertical-reel"
-                  label={archiveVideo('fashion-archive').title}
-                  purpose={archiveVideo('fashion-archive').purpose}
-                  videoSrc={archiveVideo('fashion-archive').videoSrc}
-                  videoFallbackSrc={archiveVideo('fashion-archive').videoFallbackSrc}
-                  posterSrc={archiveVideo('fashion-archive').posterSrc}
-                  assetId="HOME-FASHION-ARCHIVE"
-                  autoPlay={false}
-                  className="aspect-[9/16] w-full shadow-xl"
-                />
-                <figcaption className="mt-3 text-xs leading-relaxed text-ivory-200">
-                  Fashion Week · performance and runway · Founder archive footage.
-                </figcaption>
-              </figure>
+              <HomeReelStrip />
             </Reveal>
             <Reveal delay={100} direction="right" className="flex flex-col justify-center p-7 sm:p-10 lg:col-span-6">
               <p className="text-eyebrow text-gold-600">FIVE EDITIONS COMPLETED · SIXTH POSTPONED</p>

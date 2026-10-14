@@ -5,3 +5,4 @@
 - [Public live-versus-future boundary](public-product-truth.md) — current site/programs/enquiries are live; AI, social, member platform and commerce remain future until functional.
 - [Homepage reveal principle](homepage-reveal-principle.md) — keep Home focused on introduction, visual proof, discovery and Join; detailed explanations belong on dedicated pages.
 - [Browser media verification](browser-media-verification.md) — test Chromium may lack H.264/AAC; check codec support before treating a valid MP4 as broken.
+- [Curated reel storage](curated-reel-storage.md) — avoid cancelling cloud SDK streams before their HTTP response; aborted video requests can crash the server.
