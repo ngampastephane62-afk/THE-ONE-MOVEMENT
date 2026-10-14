@@ -13,7 +13,8 @@ import Reveal from '@/components/Reveal';
 import TomiConstellation from '@/components/TomiConstellation';
 import FashionEditionNote from '@/components/FashionEditionNote';
 import SectionHeading from '@/components/SectionHeading';
-import homeHeroBackground from '@/assets/media/home/TOMI_HOME_HERO_BG_01.webp';
+import HomeBrandHero from '@/components/home/HomeBrandHero';
+import HomeArchiveCarousel from '@/components/home/HomeArchiveCarousel';
 import movementReel from '@/assets/media/home/TOMI_HOME_MOVEMENT_REEL_01.mp4';
 import movementReelFallback from '@/assets/media/home/TOMI_HOME_MOVEMENT_REEL_01.webm';
 import movementReelPoster from '@/assets/media/home/TOMI_HOME_MOVEMENT_REEL_01-poster.webp';
@@ -41,57 +42,8 @@ export default function HomeExperience() {
         <link rel="canonical" href="/" />
       </Helmet>
 
-      {/* 01 — Introduction: headline first, explanation and actions revealed after it. */}
-      <section className="tomi-home-hero relative overflow-hidden bg-lagoon-900">
-        <img
-          src={homeHeroBackground}
-          alt=""
-          aria-hidden="true"
-          width={1536}
-          height={1024}
-          fetchPriority="high"
-          loading="eager"
-          className="tomi-home-hero-image pointer-events-none absolute inset-0 h-full w-full"
-          data-asset-id="H01"
-        />
-        <div className="tomi-home-hero-overlay pointer-events-none absolute inset-0" aria-hidden="true" />
-        <div className="tomi-hero-edition relative z-10 mx-auto max-w-7xl px-6 pt-6" aria-hidden="true">
-          <span>01 / THE INTRODUCTION</span>
-          <span>DR CONGO → THE WORLD</span>
-        </div>
-
-        <div className="relative z-10 mx-auto flex min-h-[calc(100svh-4rem)] max-w-7xl items-center px-6 py-section-lg">
-          <div className="max-w-4xl">
-            <p className="text-eyebrow text-gold-400 animate-fade-in">GLOBAL CONNECTION ECOSYSTEM</p>
-            <h1 className="mt-5 text-display-xl text-ivory-100" style={{ fontFamily: 'var(--font-display)' }}>
-              <span className="block animate-cinematic-1">ONE HUMANITY.</span>
-              <span className="block animate-cinematic-2">ONE MOVEMENT.</span>
-              <span className="block animate-cinematic-3 text-gold-400">ONE FUTURE.</span>
-            </h1>
-            <GoldThread className="mt-8" length="280px" node />
-            <p className="mt-10 text-xs uppercase tracking-[0.2em] text-ivory-300/60 animate-cinematic-3">
-              Scroll to discover
-            </p>
-          </div>
-        </div>
-
-        <div className="relative z-10 mx-auto max-w-7xl px-6 pb-section-lg">
-          <Reveal className="max-w-2xl">
-            <p className="text-xl leading-relaxed text-ivory-100 sm:text-2xl">
-              A global movement bringing creatives, entrepreneurs, institutions and
-              changemakers together through programs, dialogue and development collaboration.
-            </p>
-          </Reveal>
-          <Reveal delay={120} className="mt-8 flex flex-col gap-4 sm:flex-row">
-            <Link href="/join">
-              <Button size="lg">JOIN THE MOVEMENT</Button>
-            </Link>
-            <Link href="/ecosystem">
-              <Button size="lg" variant="gold-outline">EXPLORE THE ECOSYSTEM</Button>
-            </Link>
-          </Reveal>
-        </div>
-      </section>
+      {/* 01 — Brand identity over a gently waving peace flag. */}
+      <HomeBrandHero />
 
       <GeometricAccent variant="lagoon-on-ivory" height={18} />
 
@@ -250,19 +202,8 @@ export default function HomeExperience() {
             </p>
             <span className="text-[10px] uppercase tracking-[0.2em] text-gold-400">Founder archive / partner network</span>
           </Reveal>
-          <div className="mt-12 grid grid-cols-12 items-start gap-3 sm:gap-5">
-            <Reveal direction="left" className="col-span-12 sm:col-span-7">
-              <ArchivePhoto id="office-encounter" caption sizes="(min-width: 640px) 58vw, 92vw" captionClassName="text-ivory-300" />
-            </Reveal>
-            <Reveal delay={80} direction="right" className="col-span-7 sm:col-span-5">
-              <ArchivePhoto id="community-outreach" caption="Community & impact" sizes="(min-width: 640px) 40vw, 58vw" captionClassName="text-ivory-300" />
-            </Reveal>
-            <Reveal delay={140} className="col-span-12 sm:col-span-7">
-              <ArchivePhoto id="institutional-dialogue" caption="Institutional partner · Founder archive" sizes="(min-width: 640px) 58vw, 92vw" captionClassName="text-ivory-300" />
-            </Reveal>
-            <Reveal delay={180} className="col-span-12 sm:col-span-5">
-              <ArchivePhoto id="cultural-performance" caption sizes="(min-width: 640px) 40vw, 92vw" captionClassName="text-ivory-300" />
-            </Reveal>
+          <div className="mt-12">
+            <HomeArchiveCarousel />
           </div>
           <p id="archive-heading" className="sr-only">Founder archive media structure</p>
         </div>
