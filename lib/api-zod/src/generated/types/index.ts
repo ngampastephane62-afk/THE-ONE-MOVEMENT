@@ -7,4 +7,11 @@
  */
 
 export * from './detailedHealthStatus';
+export * from './getEcosystemMembers200';
 export * from './healthStatus';
+export * from './memberProfile';
+export * from './memberProfileInput';
+export * from './memberProfileInputSectorsItem';
+export * from './memberProfileResponse';
+export * from './publicMember';
+export * from './savedItemInput';

@@ -3,7 +3,7 @@ name: Public live-versus-future boundary
 description: Truth standard for public claims about current services, future platform features and institutional attribution.
 ---
 
-Public copy must describe the website, confirmed programs and enquiry pathways as the current experience. The AI Copilot, ASK TOMI, social network, member accounts, collaboration workspace, marketplace, wallet and payments are future direction until genuinely functional. A future member's sector/profession may shape their ecosystem experience, but that personalization is not current functionality. An expression of interest never creates an account, membership or confirmed place.
+Public copy must distinguish real functionality from planned services. The public website, confirmed programmes, enquiries, member accounts, private ecosystem profiles, sector-based recommendations, saved programmes/resources and optional public profile directory are current capabilities. The AI Copilot, ASK TOMI, social network, messaging, collaboration tools, marketplace, wallet and payments remain future direction until genuinely functional. An expression-of-interest form never creates an account, paid membership or confirmed event place; account registration is a separate flow.
 
 **Why:** The Founder direction includes a larger AI-powered collaboration ecosystem, but launch safety requires a clear boundary between that vision and what visitors can use now. Institutional-support attribution must also remain subject to Founder confirmation unless source evidence is available.
 
@@ -48,3 +48,9 @@ The ecosystem must be universal and community-led, not a showcase dominated by t
 **Why:** The user explicitly rejected a personal CEO-focused ecosystem and wants businesses, supporters and investors to see their place in TOMI.
 
 **How to apply:** Prioritize collective sector experiences and official partner-source resources. The user authorizes generated images to illustrate services, not to fabricate documentary evidence or partner endorsements. Use calm animated imagery and waving flags with accessible motion controls.
+
+Member ecosystem profiles are private by default; public showcase visibility requires an explicit choice and can be withdrawn. Keep login identity and bookmarks out of public directory responses. Curated UN-system resources are publisher-attributed knowledge, not evidence of a separate relationship with every listed agency.
+
+**Why:** The user approved an ecosystem plus member platform, while their earlier public-truth and partnership constraints still apply. A community showcase must not silently publish account information or imply endorsements.
+
+**How to apply:** Separate account access from paid/event membership, expose only opt-in profile fields, preserve recommendations/bookmarks privately, and label AI illustration and source-check dates honestly.

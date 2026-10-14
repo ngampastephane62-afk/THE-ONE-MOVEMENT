@@ -9,6 +9,228 @@ import * as zod from 'zod';
 
 
 /**
+ * @summary Get the signed-in member's private ecosystem profile
+ */
+export const getMemberProfileResponseProfileOneOneOneFullNameMin = 2;
+export const getMemberProfileResponseProfileOneOneOneFullNameMax = 100;
+
+export const getMemberProfileResponseProfileOneOneOneProfessionMin = 2;
+export const getMemberProfileResponseProfileOneOneOneProfessionMax = 100;
+
+export const getMemberProfileResponseProfileOneOneOneOrganizationMax = 150;
+
+export const getMemberProfileResponseProfileOneOneOneCountryMax = 100;
+
+export const getMemberProfileResponseProfileOneOneOneBioMax = 1000;
+
+export const getMemberProfileResponseProfileOneOneOneOfferingMax = 500;
+
+export const getMemberProfileResponseProfileOneOneOneLookingForMax = 500;
+
+export const getMemberProfileResponseProfileOneOneOneWebsiteMax = 500;
+
+export const getMemberProfileResponseProfileOneOneOneSectorsMax = 8;
+
+
+
+export const GetMemberProfileResponse = zod.object({
+  "profile": zod.union([zod.object({
+  "fullName": zod.string().min(getMemberProfileResponseProfileOneOneOneFullNameMin).max(getMemberProfileResponseProfileOneOneOneFullNameMax),
+  "profession": zod.string().min(getMemberProfileResponseProfileOneOneOneProfessionMin).max(getMemberProfileResponseProfileOneOneOneProfessionMax),
+  "organization": zod.string().max(getMemberProfileResponseProfileOneOneOneOrganizationMax),
+  "country": zod.string().max(getMemberProfileResponseProfileOneOneOneCountryMax),
+  "bio": zod.string().max(getMemberProfileResponseProfileOneOneOneBioMax),
+  "offering": zod.string().max(getMemberProfileResponseProfileOneOneOneOfferingMax),
+  "lookingFor": zod.string().max(getMemberProfileResponseProfileOneOneOneLookingForMax),
+  "website": zod.string().max(getMemberProfileResponseProfileOneOneOneWebsiteMax),
+  "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).min(1).max(getMemberProfileResponseProfileOneOneOneSectorsMax),
+  "isPublic": zod.boolean()
+}).and(zod.object({
+  "id": zod.number()
+})).and(zod.object({
+  "savedItems": zod.array(zod.string())
+})),zod.null()])
+})
+
+
+/**
+ * @summary Create or update only the authenticated member's profile
+ */
+export const saveMemberProfileBodyFullNameMin = 2;
+export const saveMemberProfileBodyFullNameMax = 100;
+
+export const saveMemberProfileBodyProfessionMin = 2;
+export const saveMemberProfileBodyProfessionMax = 100;
+
+export const saveMemberProfileBodyOrganizationMax = 150;
+
+export const saveMemberProfileBodyCountryMax = 100;
+
+export const saveMemberProfileBodyBioMax = 1000;
+
+export const saveMemberProfileBodyOfferingMax = 500;
+
+export const saveMemberProfileBodyLookingForMax = 500;
+
+export const saveMemberProfileBodyWebsiteMax = 500;
+
+export const saveMemberProfileBodySectorsMax = 8;
+
+
+
+export const SaveMemberProfileBody = zod.object({
+  "fullName": zod.string().min(saveMemberProfileBodyFullNameMin).max(saveMemberProfileBodyFullNameMax),
+  "profession": zod.string().min(saveMemberProfileBodyProfessionMin).max(saveMemberProfileBodyProfessionMax),
+  "organization": zod.string().max(saveMemberProfileBodyOrganizationMax),
+  "country": zod.string().max(saveMemberProfileBodyCountryMax),
+  "bio": zod.string().max(saveMemberProfileBodyBioMax),
+  "offering": zod.string().max(saveMemberProfileBodyOfferingMax),
+  "lookingFor": zod.string().max(saveMemberProfileBodyLookingForMax),
+  "website": zod.string().max(saveMemberProfileBodyWebsiteMax),
+  "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).min(1).max(saveMemberProfileBodySectorsMax),
+  "isPublic": zod.boolean()
+})
+
+export const saveMemberProfileResponseProfileOneOneOneFullNameMin = 2;
+export const saveMemberProfileResponseProfileOneOneOneFullNameMax = 100;
+
+export const saveMemberProfileResponseProfileOneOneOneProfessionMin = 2;
+export const saveMemberProfileResponseProfileOneOneOneProfessionMax = 100;
+
+export const saveMemberProfileResponseProfileOneOneOneOrganizationMax = 150;
+
+export const saveMemberProfileResponseProfileOneOneOneCountryMax = 100;
+
+export const saveMemberProfileResponseProfileOneOneOneBioMax = 1000;
+
+export const saveMemberProfileResponseProfileOneOneOneOfferingMax = 500;
+
+export const saveMemberProfileResponseProfileOneOneOneLookingForMax = 500;
+
+export const saveMemberProfileResponseProfileOneOneOneWebsiteMax = 500;
+
+export const saveMemberProfileResponseProfileOneOneOneSectorsMax = 8;
+
+
+
+export const SaveMemberProfileResponse = zod.object({
+  "profile": zod.union([zod.object({
+  "fullName": zod.string().min(saveMemberProfileResponseProfileOneOneOneFullNameMin).max(saveMemberProfileResponseProfileOneOneOneFullNameMax),
+  "profession": zod.string().min(saveMemberProfileResponseProfileOneOneOneProfessionMin).max(saveMemberProfileResponseProfileOneOneOneProfessionMax),
+  "organization": zod.string().max(saveMemberProfileResponseProfileOneOneOneOrganizationMax),
+  "country": zod.string().max(saveMemberProfileResponseProfileOneOneOneCountryMax),
+  "bio": zod.string().max(saveMemberProfileResponseProfileOneOneOneBioMax),
+  "offering": zod.string().max(saveMemberProfileResponseProfileOneOneOneOfferingMax),
+  "lookingFor": zod.string().max(saveMemberProfileResponseProfileOneOneOneLookingForMax),
+  "website": zod.string().max(saveMemberProfileResponseProfileOneOneOneWebsiteMax),
+  "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).min(1).max(saveMemberProfileResponseProfileOneOneOneSectorsMax),
+  "isPublic": zod.boolean()
+}).and(zod.object({
+  "id": zod.number()
+})).and(zod.object({
+  "savedItems": zod.array(zod.string())
+})),zod.null()])
+})
+
+
+/**
+ * @summary Save or remove a programme or official resource from this member's workspace
+ */
+export const toggleMemberSavedItemBodyItemIdMax = 100;
+
+
+
+export const ToggleMemberSavedItemBody = zod.object({
+  "itemId": zod.string().max(toggleMemberSavedItemBodyItemIdMax),
+  "saved": zod.boolean()
+})
+
+export const toggleMemberSavedItemResponseProfileOneOneOneFullNameMin = 2;
+export const toggleMemberSavedItemResponseProfileOneOneOneFullNameMax = 100;
+
+export const toggleMemberSavedItemResponseProfileOneOneOneProfessionMin = 2;
+export const toggleMemberSavedItemResponseProfileOneOneOneProfessionMax = 100;
+
+export const toggleMemberSavedItemResponseProfileOneOneOneOrganizationMax = 150;
+
+export const toggleMemberSavedItemResponseProfileOneOneOneCountryMax = 100;
+
+export const toggleMemberSavedItemResponseProfileOneOneOneBioMax = 1000;
+
+export const toggleMemberSavedItemResponseProfileOneOneOneOfferingMax = 500;
+
+export const toggleMemberSavedItemResponseProfileOneOneOneLookingForMax = 500;
+
+export const toggleMemberSavedItemResponseProfileOneOneOneWebsiteMax = 500;
+
+export const toggleMemberSavedItemResponseProfileOneOneOneSectorsMax = 8;
+
+
+
+export const ToggleMemberSavedItemResponse = zod.object({
+  "profile": zod.union([zod.object({
+  "fullName": zod.string().min(toggleMemberSavedItemResponseProfileOneOneOneFullNameMin).max(toggleMemberSavedItemResponseProfileOneOneOneFullNameMax),
+  "profession": zod.string().min(toggleMemberSavedItemResponseProfileOneOneOneProfessionMin).max(toggleMemberSavedItemResponseProfileOneOneOneProfessionMax),
+  "organization": zod.string().max(toggleMemberSavedItemResponseProfileOneOneOneOrganizationMax),
+  "country": zod.string().max(toggleMemberSavedItemResponseProfileOneOneOneCountryMax),
+  "bio": zod.string().max(toggleMemberSavedItemResponseProfileOneOneOneBioMax),
+  "offering": zod.string().max(toggleMemberSavedItemResponseProfileOneOneOneOfferingMax),
+  "lookingFor": zod.string().max(toggleMemberSavedItemResponseProfileOneOneOneLookingForMax),
+  "website": zod.string().max(toggleMemberSavedItemResponseProfileOneOneOneWebsiteMax),
+  "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).min(1).max(toggleMemberSavedItemResponseProfileOneOneOneSectorsMax),
+  "isPublic": zod.boolean()
+}).and(zod.object({
+  "id": zod.number()
+})).and(zod.object({
+  "savedItems": zod.array(zod.string())
+})),zod.null()])
+})
+
+
+/**
+ * @summary Discover members who explicitly opted into the public showcase
+ */
+export const getEcosystemMembersResponseMembersItemOneFullNameMin = 2;
+export const getEcosystemMembersResponseMembersItemOneFullNameMax = 100;
+
+export const getEcosystemMembersResponseMembersItemOneProfessionMin = 2;
+export const getEcosystemMembersResponseMembersItemOneProfessionMax = 100;
+
+export const getEcosystemMembersResponseMembersItemOneOrganizationMax = 150;
+
+export const getEcosystemMembersResponseMembersItemOneCountryMax = 100;
+
+export const getEcosystemMembersResponseMembersItemOneBioMax = 1000;
+
+export const getEcosystemMembersResponseMembersItemOneOfferingMax = 500;
+
+export const getEcosystemMembersResponseMembersItemOneLookingForMax = 500;
+
+export const getEcosystemMembersResponseMembersItemOneWebsiteMax = 500;
+
+export const getEcosystemMembersResponseMembersItemOneSectorsMax = 8;
+
+
+
+export const GetEcosystemMembersResponse = zod.object({
+  "members": zod.array(zod.object({
+  "fullName": zod.string().min(getEcosystemMembersResponseMembersItemOneFullNameMin).max(getEcosystemMembersResponseMembersItemOneFullNameMax),
+  "profession": zod.string().min(getEcosystemMembersResponseMembersItemOneProfessionMin).max(getEcosystemMembersResponseMembersItemOneProfessionMax),
+  "organization": zod.string().max(getEcosystemMembersResponseMembersItemOneOrganizationMax),
+  "country": zod.string().max(getEcosystemMembersResponseMembersItemOneCountryMax),
+  "bio": zod.string().max(getEcosystemMembersResponseMembersItemOneBioMax),
+  "offering": zod.string().max(getEcosystemMembersResponseMembersItemOneOfferingMax),
+  "lookingFor": zod.string().max(getEcosystemMembersResponseMembersItemOneLookingForMax),
+  "website": zod.string().max(getEcosystemMembersResponseMembersItemOneWebsiteMax),
+  "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).min(1).max(getEcosystemMembersResponseMembersItemOneSectorsMax),
+  "isPublic": zod.boolean()
+}).and(zod.object({
+  "id": zod.number()
+})))
+})
+
+
+/**
  * Returns server health status
  * @summary Health check
  */

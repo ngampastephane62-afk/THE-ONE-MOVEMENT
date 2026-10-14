@@ -160,7 +160,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: 'Is membership free?',
-    a: 'Submitting an expression of interest does not require payment. No account or membership is created. Any future membership terms will be communicated before someone chooses whether to continue.',
+    a: 'Yes. Creating a free member account and ecosystem profile requires no payment, and neither does submitting an expression of interest. There is no paid membership, and an account does not guarantee event places or programme access.',
   },
   {
     q: 'Can organizations join?',
@@ -171,8 +171,8 @@ export const FAQ_ITEMS: FaqItem[] = [
     a: 'Expressions of interest may be submitted from many locations. Participation remains subject to applicable requirements and the terms of any confirmed program.',
   },
   {
-    q: 'When will member accounts launch?',
-    a: 'No account launch date has been confirmed. The member platform, profiles and social features are future direction. People who submit an expression of interest may receive official updates as plans are confirmed.',
+    q: 'Can I create a member account?',
+    a: 'Yes. You can create a free account and a private ecosystem profile from the Sign in page, independently of this enquiry form. You choose whether your profile appears in the public directory. A social network, messaging and marketplace features remain future direction.',
   },
 ];
 

@@ -14,3 +14,4 @@ export * from "./auditLog";
 export * from "./aiUsageLog";
 export * from "./joinInterests";
 export * from "./institutionalInquiries";
+export * from "./ecosystemMembers";

@@ -180,11 +180,11 @@ export default function JoinTheMovement() {
             {[
               {
                 label: 'CONNECTION',
-                 body: 'Connect your interests with an ecosystem spanning business, institutions, culture, media, innovation and community. Begin through the team; member-to-member digital tools remain future direction.',
+                 body: 'Connect your interests with an ecosystem spanning business, institutions, culture, media, innovation and community. Create a free member space to find your sectors; messaging and marketplace tools remain future direction.',
               },
               {
                 label: 'OPPORTUNITY',
-                 body: 'Hear about programs, collaborations and openings as they are confirmed across fifteen sectors and six official programs.',
+                 body: 'Hear about programs, collaborations and openings as they are confirmed across seventeen sectors and six official programs.',
               },
               {
                 label: 'PURPOSE',
@@ -232,7 +232,7 @@ export default function JoinTheMovement() {
                   'The current public experience consists of this website, confirmed programs and direct enquiry pathways.',
                   'Submitting an expression of interest does not create an account, membership or guaranteed place.',
                   'The team may contact you with relevant official updates as plans are confirmed.',
-                  'A future member platform may support profiles and connection across sectors; it is not available yet.',
+                  'Free member accounts and ecosystem profiles are available separately from this form, via Sign in.',
                   'Program participation and future platform access will be governed by the terms announced for each opportunity.',
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-4">
@@ -387,7 +387,8 @@ export default function JoinTheMovement() {
               <p className="mt-4 text-ink-700 text-sm leading-relaxed">
                 Tell us about your interests and how you would like to engage.
                 This form does not create an account, membership or confirmed
-                place. The team may contact you about relevant future developments.
+                place. To create a free member space, use{' '}
+                <Link href="/sign-up" className="underline text-lagoon-600" data-testid="link-join-signup">Create your member space</Link>. The team may contact you about relevant future developments.
               </p>
               <p className="mt-4 text-sand-400 text-xs leading-relaxed">
                 Required fields are marked with{' '}

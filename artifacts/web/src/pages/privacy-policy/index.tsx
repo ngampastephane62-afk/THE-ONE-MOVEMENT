@@ -25,19 +25,20 @@ export default function PrivacyPolicy() {
       <LegalPageFrame
         eyebrow="PRIVACY & TRUST"
         title="HOW WE HANDLE INFORMATION."
-        intro="This Privacy Policy explains how the current public website handles information submitted through an expression of interest or an institutional inquiry."
+        intro="This Privacy Policy explains how the website handles member accounts, ecosystem profiles, saved resources, expressions of interest and institutional inquiries."
       >
         <LegalSection id="overview" title="1. Overview">
           <p>
             This policy applies to the public website of The One Movement
-            International and the two public submission pathways currently
-            available on it. It describes the information the website receives,
+            International, its member space and its public submission pathways.
+            It describes the information the website receives,
             why it is used, and the choices available to people who submit it.
           </p>
           <p>
-            The current website does not create a member account, process a
-            payment, provide a wallet or marketplace, or activate membership
-            from a submission.
+            Creating a member account provides a personal ecosystem workspace.
+            An expression-of-interest or inquiry form does not create that account.
+            The website does not process payments, provide a wallet or marketplace,
+            or guarantee paid membership or programme participation.
           </p>
         </LegalSection>
 
@@ -63,6 +64,19 @@ export default function PrivacyPolicy() {
           <p>
             The website collects the information needed to receive, review,
             respond to, and administer the relevant submission.
+          </p>
+          <p>
+            Member authentication is handled by Clerk, including sign-in details,
+            email verification and essential session cookies. Member profiles store
+            the name, profession, selected sectors and optional organization,
+            country, biography, website, offering and interests you provide.
+            Saved programmes and resources are private to your account.
+          </p>
+          <p>
+            Profiles are private by default. If you enable public visibility, those
+            profile fields appear in the ecosystem showcase. Your login email,
+            authentication identifier and saved items are not included in that showcase.
+            You can edit your profile or switch public visibility off in your member space.
           </p>
           <p>An expression of interest may include:</p>
           <LegalList>
@@ -104,6 +118,8 @@ export default function PrivacyPolicy() {
               preference permits it;
             </li>
             <li>to administer the current submission workflow and its records;</li>
+            <li>to provide sign-in, save your ecosystem preferences and bookmarks, and show relevant programmes and official resources;</li>
+            <li>to display a community profile only when you explicitly enable its public visibility;</li>
             <li>to protect the website, limit abusive traffic and investigate errors; and</li>
             <li>to comply with applicable legal obligations or protect rights and safety.</li>
           </LegalList>
@@ -172,8 +188,9 @@ export default function PrivacyPolicy() {
             The website relies on third-party infrastructure providers for
             services such as hosting, database operation, security and network
             delivery. Those providers may process information on behalf of the
-            operator as needed to provide those services. The current website
-            does not publish a separate provider directory.
+            operator as needed to provide those services. Clerk provides account
+            authentication and session management. Public profile fields are also
+            visible to website visitors when you choose to publish them.
           </p>
           <p>
             Because infrastructure and the people reviewing submissions may be

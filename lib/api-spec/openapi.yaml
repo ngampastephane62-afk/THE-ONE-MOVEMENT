@@ -11,6 +11,83 @@ tags:
   - name: health
     description: Health operations
 paths:
+  /member/profile:
+    get:
+      operationId: getMemberProfile
+      tags: [member]
+      summary: Get the signed-in member's private ecosystem profile
+      responses:
+        "200":
+          description: Member profile or null before onboarding
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MemberProfileResponse"
+        "401":
+          description: Sign-in required
+    put:
+      operationId: saveMemberProfile
+      tags: [member]
+      summary: Create or update only the authenticated member's profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MemberProfileInput"
+      responses:
+        "200":
+          description: Saved private profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MemberProfileResponse"
+        "400":
+          description: Invalid profile
+        "401":
+          description: Sign-in required
+  /member/saved:
+    post:
+      operationId: toggleMemberSavedItem
+      tags: [member]
+      summary: Save or remove a programme or official resource from this member's workspace
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SavedItemInput"
+      responses:
+        "200":
+          description: Updated private profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MemberProfileResponse"
+        "400":
+          description: Invalid saved item
+        "401":
+          description: Sign-in required
+        "409":
+          description: Complete your profile first
+  /ecosystem/members:
+    get:
+      operationId: getEcosystemMembers
+      tags: [ecosystem]
+      summary: Discover members who explicitly opted into the public showcase
+      responses:
+        "200":
+          description: Public member-authored profiles, without private identity or saved items
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [members]
+                properties:
+                  members:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/PublicMember"
   /healthz:
     get:
       operationId: healthCheck
@@ -39,6 +116,82 @@ paths:
                 $ref: "#/components/schemas/DetailedHealthStatus"
 components:
   schemas:
+    SavedItemInput:
+      type: object
+      additionalProperties: false
+      required: [itemId, saved]
+      properties:
+        itemId:
+          type: string
+          maxLength: 100
+        saved:
+          type: boolean
+    MemberProfileInput:
+      type: object
+      additionalProperties: false
+      required: [fullName, profession, organization, country, bio, offering, lookingFor, website, sectors, isPublic]
+      properties:
+        fullName:
+          type: string
+          minLength: 2
+          maxLength: 100
+        profession:
+          type: string
+          minLength: 2
+          maxLength: 100
+        organization:
+          type: string
+          maxLength: 150
+        country:
+          type: string
+          maxLength: 100
+        bio:
+          type: string
+          maxLength: 1000
+        offering:
+          type: string
+          maxLength: 500
+        lookingFor:
+          type: string
+          maxLength: 500
+        website:
+          type: string
+          maxLength: 500
+        sectors:
+          type: array
+          minItems: 1
+          maxItems: 8
+          items:
+            type: string
+            enum: [fashion, music, dance, film, art, business, investment, tourism, diplomacy, innovation, technology, ngos, media, education, humanitarian-action, real-estate, health-care]
+        isPublic:
+          type: boolean
+    PublicMember:
+      allOf:
+        - $ref: "#/components/schemas/MemberProfileInput"
+        - type: object
+          required: [id]
+          properties:
+            id:
+              type: integer
+    MemberProfile:
+      allOf:
+        - $ref: "#/components/schemas/PublicMember"
+        - type: object
+          required: [savedItems]
+          properties:
+            savedItems:
+              type: array
+              items:
+                type: string
+    MemberProfileResponse:
+      type: object
+      required: [profile]
+      properties:
+        profile:
+          anyOf:
+            - $ref: "#/components/schemas/MemberProfile"
+            - type: "null"
     HealthStatus:
       type: object
       properties:

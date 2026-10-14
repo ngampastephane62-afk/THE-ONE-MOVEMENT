@@ -1,8 +1,12 @@
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useEffect, useRef } from 'react';
+import { QueryClient, QueryClientProvider, useQueryClient } from '@tanstack/react-query';
+import { ClerkProvider, Show, useClerk } from '@clerk/react';
+import { publishableKeyFromHost } from '@clerk/react/internal';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { Route, Switch, Router as WouterRouter, useLocation } from 'wouter';
+import { Route, Switch, Router as WouterRouter, useLocation, Redirect } from 'wouter';
+import { basePath, stripBase, clerkAppearance, clerkLocalization } from '@/lib/clerk';
 import Layout from '@/components/Layout';
 import Home from '@/pages/home';
 import OurVision from '@/pages/our-vision';
@@ -19,12 +23,57 @@ import Partners from '@/pages/partners';
 import PartnerDetail from '@/pages/partners/detail';
 import JoinTheMovement from '@/pages/join';
 import SignIn from '@/pages/sign-in';
+import SignUp from '@/pages/sign-up';
+import Member from '@/pages/member';
 import PrivacyPolicy from '@/pages/privacy-policy';
 import Terms from '@/pages/terms';
 import DesignSystem from '@/pages/design-system';
 import NotFound from '@/pages/not-found';
 
 const queryClient = new QueryClient();
+
+const clerkPubKey = publishableKeyFromHost(
+  window.location.hostname,
+  import.meta.env.VITE_CLERK_PUBLISHABLE_KEY,
+);
+
+const clerkProxyUrl = import.meta.env.VITE_CLERK_PROXY_URL;
+
+if (!clerkPubKey) {
+  throw new Error('Missing VITE_CLERK_PUBLISHABLE_KEY in .env file');
+}
+
+function HomeRedirect() {
+  return (
+    <>
+      <Show when="signed-in">
+        <Redirect to="/member" />
+      </Show>
+      <Show when="signed-out">
+        <Home />
+      </Show>
+    </>
+  );
+}
+
+function ClerkQueryClientCacheInvalidator() {
+  const { addListener } = useClerk();
+  const qc = useQueryClient();
+  const prevUserIdRef = useRef<string | null | undefined>(undefined);
+
+  useEffect(() => {
+    const unsubscribe = addListener(({ user }) => {
+      const userId = user?.id ?? null;
+      if (prevUserIdRef.current !== undefined && prevUserIdRef.current !== userId) {
+        qc.clear();
+      }
+      prevUserIdRef.current = userId;
+    });
+    return unsubscribe;
+  }, [addListener, qc]);
+
+  return null;
+}
 const PUBLIC_ORIGIN = 'https://digital-asset-vault-ngampastephane6.replit.app';
 
 function SiteMetadata() {
@@ -46,7 +95,7 @@ function SiteMetadata() {
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={Home} />
+      <Route path="/" component={HomeRedirect} />
       <Route path="/our-vision" component={OurVision} />
       <Route path="/ecosystem" component={Ecosystem} />
       <Route path="/community" component={Community} />
@@ -60,7 +109,10 @@ function Router() {
       <Route path="/partners" component={Partners} />
       <Route path="/partners/:slug" component={PartnerDetail} />
       <Route path="/join" component={JoinTheMovement} />
-      <Route path="/sign-in" component={SignIn} />
+      <Route path="/sign-in/*?" component={SignIn} />
+      <Route path="/sign-up/*?" component={SignUp} />
+      <Route path="/member" component={Member} />
+      <Route path="/user-portal" component={Member} />
       <Route path="/privacy-policy" component={PrivacyPolicy} />
       <Route path="/terms" component={Terms} />
       <Route path="/design-system" component={DesignSystem} />
@@ -69,20 +121,43 @@ function Router() {
   );
 }
 
-function App() {
+function ClerkProviderWithRoutes() {
+  const [, setLocation] = useLocation();
+
   return (
-    <HelmetProvider>
+    <ClerkProvider
+      publishableKey={clerkPubKey}
+      proxyUrl={clerkProxyUrl}
+      appearance={clerkAppearance}
+      signInUrl={`${basePath}/sign-in`}
+      signUpUrl={`${basePath}/sign-up`}
+      signInFallbackRedirectUrl={`${basePath}/member`}
+      signUpFallbackRedirectUrl={`${basePath}/member`}
+      afterSignOutUrl={basePath || '/'}
+      localization={clerkLocalization}
+      routerPush={(to) => setLocation(stripBase(to))}
+      routerReplace={(to) => setLocation(stripBase(to), { replace: true })}
+    >
       <QueryClientProvider client={queryClient}>
+        <ClerkQueryClientCacheInvalidator />
         <TooltipProvider>
-          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
-            <Layout>
-              <Router />
-            </Layout>
-            <SiteMetadata />
-          </WouterRouter>
+          <Layout>
+            <Router />
+          </Layout>
+          <SiteMetadata />
           <Toaster />
         </TooltipProvider>
       </QueryClientProvider>
+    </ClerkProvider>
+  );
+}
+
+function App() {
+  return (
+    <HelmetProvider>
+      <WouterRouter base={basePath}>
+        <ClerkProviderWithRoutes />
+      </WouterRouter>
     </HelmetProvider>
   );
 }

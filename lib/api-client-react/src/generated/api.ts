@@ -6,22 +6,30 @@
  * OpenAPI spec version: 0.1.0
  */
 import {
+  useMutation,
   useQuery
 } from '@tanstack/react-query';
 import type {
+  MutationFunction,
   QueryFunction,
   QueryKey,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult
 } from '@tanstack/react-query';
 
 import type {
   DetailedHealthStatus,
-  HealthStatus
+  GetEcosystemMembers200,
+  HealthStatus,
+  MemberProfileInput,
+  MemberProfileResponse,
+  SavedItemInput
 } from './api.schemas';
 
 import { customFetch } from '../custom-fetch';
-import type { ErrorType } from '../custom-fetch';
+import type { ErrorType , BodyType } from '../custom-fetch';
 
 type AwaitedInput<T> = PromiseLike<T> | T;
 
@@ -46,6 +54,302 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   }
   return result;
 };
+
+export const getGetMemberProfileUrl = () => {
+
+
+
+
+  return `/api/member/profile`
+}
+
+/**
+ * @summary Get the signed-in member's private ecosystem profile
+ */
+export const getMemberProfile = async ( options?: RequestInit): Promise<MemberProfileResponse> => {
+
+  return customFetch<MemberProfileResponse>(getGetMemberProfileUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetMemberProfileQueryKey = () => {
+    return [
+    `/api/member/profile`
+    ] as const;
+    }
+
+
+export const getGetMemberProfileQueryOptions = <TData = Awaited<ReturnType<typeof getMemberProfile>>, TError = ErrorType<void>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getMemberProfile>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMemberProfileQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMemberProfile>>> = ({ signal }) => getMemberProfile({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMemberProfile>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetMemberProfileQueryResult = NonNullable<Awaited<ReturnType<typeof getMemberProfile>>>
+export type GetMemberProfileQueryError = ErrorType<void>
+
+
+/**
+ * @summary Get the signed-in member's private ecosystem profile
+ */
+
+export function useGetMemberProfile<TData = Awaited<ReturnType<typeof getMemberProfile>>, TError = ErrorType<void>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getMemberProfile>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetMemberProfileQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getSaveMemberProfileUrl = () => {
+
+
+
+
+  return `/api/member/profile`
+}
+
+/**
+ * @summary Create or update only the authenticated member's profile
+ */
+export const saveMemberProfile = async (memberProfileInput: MemberProfileInput, options?: RequestInit): Promise<MemberProfileResponse> => {
+
+  return customFetch<MemberProfileResponse>(getSaveMemberProfileUrl(),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(memberProfileInput)
+  }
+);}
+
+
+
+
+
+export const getSaveMemberProfileMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof saveMemberProfile>>, TError,{data: BodyType<MemberProfileInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof saveMemberProfile>>, TError,{data: BodyType<MemberProfileInput>}, TContext> => {
+
+const mutationKey = ['saveMemberProfile'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof saveMemberProfile>>, {data: BodyType<MemberProfileInput>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  saveMemberProfile(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type SaveMemberProfileMutationResult = NonNullable<Awaited<ReturnType<typeof saveMemberProfile>>>
+    export type SaveMemberProfileMutationBody = BodyType<MemberProfileInput>
+    export type SaveMemberProfileMutationError = ErrorType<void>
+
+    /**
+ * @summary Create or update only the authenticated member's profile
+ */
+export const useSaveMemberProfile = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof saveMemberProfile>>, TError,{data: BodyType<MemberProfileInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof saveMemberProfile>>,
+        TError,
+        {data: BodyType<MemberProfileInput>},
+        TContext
+      > => {
+      return useMutation(getSaveMemberProfileMutationOptions(options));
+    }
+
+export const getToggleMemberSavedItemUrl = () => {
+
+
+
+
+  return `/api/member/saved`
+}
+
+/**
+ * @summary Save or remove a programme or official resource from this member's workspace
+ */
+export const toggleMemberSavedItem = async (savedItemInput: SavedItemInput, options?: RequestInit): Promise<MemberProfileResponse> => {
+
+  return customFetch<MemberProfileResponse>(getToggleMemberSavedItemUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(savedItemInput)
+  }
+);}
+
+
+
+
+
+export const getToggleMemberSavedItemMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof toggleMemberSavedItem>>, TError,{data: BodyType<SavedItemInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof toggleMemberSavedItem>>, TError,{data: BodyType<SavedItemInput>}, TContext> => {
+
+const mutationKey = ['toggleMemberSavedItem'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof toggleMemberSavedItem>>, {data: BodyType<SavedItemInput>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  toggleMemberSavedItem(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type ToggleMemberSavedItemMutationResult = NonNullable<Awaited<ReturnType<typeof toggleMemberSavedItem>>>
+    export type ToggleMemberSavedItemMutationBody = BodyType<SavedItemInput>
+    export type ToggleMemberSavedItemMutationError = ErrorType<void>
+
+    /**
+ * @summary Save or remove a programme or official resource from this member's workspace
+ */
+export const useToggleMemberSavedItem = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof toggleMemberSavedItem>>, TError,{data: BodyType<SavedItemInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof toggleMemberSavedItem>>,
+        TError,
+        {data: BodyType<SavedItemInput>},
+        TContext
+      > => {
+      return useMutation(getToggleMemberSavedItemMutationOptions(options));
+    }
+
+export const getGetEcosystemMembersUrl = () => {
+
+
+
+
+  return `/api/ecosystem/members`
+}
+
+/**
+ * @summary Discover members who explicitly opted into the public showcase
+ */
+export const getEcosystemMembers = async ( options?: RequestInit): Promise<GetEcosystemMembers200> => {
+
+  return customFetch<GetEcosystemMembers200>(getGetEcosystemMembersUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetEcosystemMembersQueryKey = () => {
+    return [
+    `/api/ecosystem/members`
+    ] as const;
+    }
+
+
+export const getGetEcosystemMembersQueryOptions = <TData = Awaited<ReturnType<typeof getEcosystemMembers>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getEcosystemMembers>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetEcosystemMembersQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getEcosystemMembers>>> = ({ signal }) => getEcosystemMembers({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getEcosystemMembers>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetEcosystemMembersQueryResult = NonNullable<Awaited<ReturnType<typeof getEcosystemMembers>>>
+export type GetEcosystemMembersQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary Discover members who explicitly opted into the public showcase
+ */
+
+export function useGetEcosystemMembers<TData = Awaited<ReturnType<typeof getEcosystemMembers>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getEcosystemMembers>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetEcosystemMembersQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
 
 export const getHealthCheckUrl = () => {
 

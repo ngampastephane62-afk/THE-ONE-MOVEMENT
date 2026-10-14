@@ -5,6 +5,78 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+export interface SavedItemInput {
+  /** @maxLength 100 */
+  itemId: string;
+  saved: boolean;
+}
+
+export type MemberProfileInputSectorsItem = typeof MemberProfileInputSectorsItem[keyof typeof MemberProfileInputSectorsItem];
+
+
+export const MemberProfileInputSectorsItem = {
+  fashion: 'fashion',
+  music: 'music',
+  dance: 'dance',
+  film: 'film',
+  art: 'art',
+  business: 'business',
+  investment: 'investment',
+  tourism: 'tourism',
+  diplomacy: 'diplomacy',
+  innovation: 'innovation',
+  technology: 'technology',
+  ngos: 'ngos',
+  media: 'media',
+  education: 'education',
+  'humanitarian-action': 'humanitarian-action',
+  'real-estate': 'real-estate',
+  'health-care': 'health-care',
+} as const;
+
+export interface MemberProfileInput {
+  /**
+     * @minLength 2
+     * @maxLength 100
+     */
+  fullName: string;
+  /**
+     * @minLength 2
+     * @maxLength 100
+     */
+  profession: string;
+  /** @maxLength 150 */
+  organization: string;
+  /** @maxLength 100 */
+  country: string;
+  /** @maxLength 1000 */
+  bio: string;
+  /** @maxLength 500 */
+  offering: string;
+  /** @maxLength 500 */
+  lookingFor: string;
+  /** @maxLength 500 */
+  website: string;
+  /**
+     * @minItems 1
+     * @maxItems 8
+     */
+  sectors: MemberProfileInputSectorsItem[];
+  isPublic: boolean;
+}
+
+export type PublicMember = MemberProfileInput & {
+  id: number;
+};
+
+export type MemberProfile = PublicMember & {
+  savedItems: string[];
+};
+
+export interface MemberProfileResponse {
+  profile: MemberProfile | null;
+}
+
 export interface HealthStatus {
   status: string;
 }
@@ -13,4 +85,8 @@ export interface DetailedHealthStatus {
   status: string;
   database: string;
 }
+
+export type GetEcosystemMembers200 = {
+  members: PublicMember[];
+};
 

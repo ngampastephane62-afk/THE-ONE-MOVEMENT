@@ -1,3 +1,4 @@
+@layer theme, base, clerk, components, utilities;
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @plugin "@tailwindcss/typography";
@@ -1010,3 +1011,30 @@
     transform: none;
   }
 }
+
+/* ── Ecosystem world motion ───────────────────────────────────────────────── */
+.eco-hero {
+  background:
+    radial-gradient(ellipse 60% 60% at 85% 10%, hsl(39 52% 54% / 0.18), transparent 65%),
+    radial-gradient(ellipse 50% 50% at 5% 95%, hsl(189 74% 32% / 0.28), transparent 70%),
+    linear-gradient(150deg, hsl(187 67% 9%), hsl(188 66% 15%) 55%, hsl(187 67% 10%));
+}
+.eco-flag { position: relative; display: flex; align-items: flex-start; aspect-ratio: 5 / 3; }
+.eco-flag-pole { width: 3px; height: 135%; background: linear-gradient(hsl(43 80% 73%), hsl(37 55% 40%)); border-radius: 2px; flex-shrink: 0; }
+.eco-flag-cloth { display: flex; flex: 1; height: 100%; filter: drop-shadow(0 6px 10px hsl(187 67% 4% / 0.35)); }
+.eco-flag-strip { flex: 1; height: 100%; background-repeat: no-repeat; animation: ecoWave 2.6s ease-in-out infinite; }
+@keyframes ecoWave { 0%,100% { transform: translateY(calc(var(--amp) * -1)) scaleY(1); } 50% { transform: translateY(var(--amp)) scaleY(0.97); } }
+.eco-kenburns { animation: ecoKen 28s ease-in-out infinite alternate; transform-origin: 60% 40%; }
+@keyframes ecoKen { from { transform: scale(1.02) translate3d(0,0,0); } to { transform: scale(1.12) translate3d(-2%, -1.5%, 0); } }
+.eco-breathe { animation: ecoBreathe 6s ease-in-out infinite; }
+@keyframes ecoBreathe { 0%,100% { transform: scale(1); opacity: .92; } 50% { transform: scale(1.04); opacity: 1; } }
+.eco-detail-in { animation: fadeUp .45s cubic-bezier(0.22,1,0.36,1) both; }
+.eco-paused .eco-flag-strip, .eco-paused .eco-kenburns, .eco-paused .eco-breathe { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .eco-flag-strip, .eco-kenburns, .eco-breathe, .eco-detail-in { animation: none; }
+}
+
+/* Clerk pseudo-states (outside layers) */
+.cl-formFieldInput::placeholder { color: hsl(33 16% 45%); opacity: 1; }
+.cl-formFieldInput:focus { border-color: hsl(189 78% 24%); box-shadow: 0 0 0 2px hsl(39 52% 54% / 0.35); }
+.cl-formButtonPrimary:hover { background-color: hsl(188 66% 16%); }

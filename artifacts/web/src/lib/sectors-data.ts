@@ -162,6 +162,22 @@ export const SECTORS: Sector[] = [
     relatedPrograms: ['The One Summit', 'The One Awards'],
   },
   {
+    slug: 'real-estate',
+    name: 'Real Estate',
+    descriptor: 'Sustainable places and communities to live and work',
+    contributes: 'Built environments, responsible development and cross-sector collaboration that connect communities and enterprise.',
+    whoBelongs: ['Developers', 'Property professionals', 'Architects', 'Urban planners', 'Real estate investors'],
+    relatedPrograms: ['The One Summit', 'The One Diplomatic Gala'],
+  },
+  {
+    slug: 'health-care',
+    name: 'Health & Care',
+    descriptor: 'Well-being and care across communities',
+    contributes: 'Health knowledge, care and community well-being through learning, dialogue and responsible collaboration.',
+    whoBelongs: ['Healthcare professionals', 'Care organizations', 'Health innovators', 'Community health advocates'],
+    relatedPrograms: ['The One Summit', 'The One Awards', 'The One Diplomatic Gala'],
+  },
+  {
     slug: 'humanitarian-action',
     name: 'Humanitarian Action',
     descriptor: 'Impact where it matters most',

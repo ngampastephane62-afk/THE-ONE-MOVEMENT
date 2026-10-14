@@ -1,6 +1,7 @@
 import { type ReactNode, useState } from 'react';
 import { Link, useLocation } from 'wouter';
 import { navItems } from '@/lib/navigation';
+import { Show } from '@clerk/react';
 
 /**
  * Items shown in the desktop header nav bar.
@@ -100,6 +101,12 @@ export default function Layout({ children }: LayoutProps) {
 
           {/* Right: JOIN THE MOVEMENT primary CTA + hamburger */}
           <div className="flex items-center gap-3">
+            <Show when="signed-in">
+              <Link href="/member" data-testid="link-nav-member" className="hidden lg:inline-flex px-3 py-2 text-xs font-medium uppercase text-ivory-300 hover:text-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 rounded-sharp" style={{ letterSpacing: '0.1em' }}>My space</Link>
+            </Show>
+            <Show when="signed-out">
+              <Link href="/sign-in" data-testid="link-nav-signin" className="hidden lg:inline-flex px-3 py-2 text-xs font-medium uppercase text-ivory-300 hover:text-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 rounded-sharp" style={{ letterSpacing: '0.1em' }}>Sign in</Link>
+            </Show>
             {/* Desktop CTA — separated as primary action */}
             <Link
               href="/join"
@@ -184,6 +191,12 @@ export default function Layout({ children }: LayoutProps) {
                   </Link>
                 );
               })}
+              <Show when="signed-in">
+                <Link href="/member" onClick={() => setMenuOpen(false)} className="flex items-center px-2 py-4 text-base font-medium tracking-wide border-b text-gold-400" style={{ borderColor: 'hsl(188 46% 22%)' }}>My member space</Link>
+              </Show>
+              <Show when="signed-out">
+                <Link href="/sign-in" onClick={() => setMenuOpen(false)} className="flex items-center px-2 py-4 text-base font-medium tracking-wide border-b text-ivory-300 hover:text-ivory-100" style={{ borderColor: 'hsl(188 46% 22%)' }}>Sign in / Create member space</Link>
+              </Show>
               {/* Mobile JOIN CTA */}
               <div className="pt-6 pb-4">
                 <Link

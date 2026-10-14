@@ -23,7 +23,7 @@ export default function Terms() {
       <LegalPageFrame
         eyebrow="TERMS OF USE"
         title="THE TERMS OF THIS PUBLIC SPACE."
-        intro="These terms describe the current public website, its information, and the expression-of-interest and institutional inquiry pathways available today."
+        intro="These terms describe the website, the personal member workspace, public ecosystem profiles, and the expression-of-interest and institutional inquiry pathways."
       >
         <LegalSection id="operator" title="1. Operator and scope">
           <p>
@@ -67,6 +67,15 @@ export default function Terms() {
         </LegalSection>
 
         <LegalSection id="submissions" title="3. Submissions">
+          <p>
+            A member account lets you maintain an ecosystem profile and save programmes
+            and official resources. It does not guarantee paid membership, partnership,
+            investment access or a place at an event. Public community profiles are
+            member-authored and are not verified endorsements by TOMI or its partners.
+            Official external resources belong to their named publishers and are not
+            TOMI-operated programmes. AI-generated service illustrations are not
+            photographs of actual events or completed collaborations.
+          </p>
           <p>
             You are responsible for the accuracy and completeness of the
             information you submit and for updating it when it changes. You
