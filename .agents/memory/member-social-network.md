@@ -9,6 +9,12 @@ The Founder wants signing in after membership to open a distinct social-network 
 
 **How to apply:** Extend the existing member product and authentication rather than treating a redesigned profile page or a static feed as completion. Preserve the approved public homepage.
 
+New members may publish and discuss after their email is verified; they do not wait for individual CEO approval to access the social network. Official certifications remain a separate approval process.
+
+**Why:** The Founder explicitly selected access after email verification rather than manual approval of every new member.
+
+**How to apply:** Do not introduce an unrequested membership-approval queue or confuse email verification with business certification.
+
 Distinguish ordinary ecosystem membership from official event/programme participation. Partner, sponsor, media partner and official-model certifications must be approved by the CEO and scoped to the relevant event/programme. A person calling themselves a model does not make them an official event model; account email verification does not certify a business or a partnership.
 
 **Why:** The Founder explicitly requires his validation and wants to distinguish community members from members who have subscribed to official partnership packages.
@@ -26,3 +32,9 @@ The Founder requests humanitarian actions and an actual Donate pathway supportin
 **Why:** The product is also intended to enable humanitarian impact, not only professional networking.
 
 **How to apply:** Confirm the legal recipient and connect real payment processing before claiming donations are active. Do not invent beneficiaries, collected totals, impact results or tax-deductibility.
+
+The Founder identifies The One Movement International as the collecting organization, collaborating according to the humanitarian emergency with Fondation Panzi, Juhudi Fondation, MONUSCO, UNICEF or UNHCR.
+
+**Why:** This is the Founder's answer about the donation recipient and collaborators; the beneficiary varies by emergency.
+
+**How to apply:** Define the beneficiary for each actual campaign, not a blanket promise that every named organization receives every donation. Merchant eligibility and legal fundraising requirements still need to be satisfied before payment activation.
