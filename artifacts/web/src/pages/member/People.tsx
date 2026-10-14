@@ -42,11 +42,13 @@ export default function People() {
           {list.map((m) => (
             <li key={m.id} className={`${card} flex flex-col gap-3 p-4`} data-testid={`card-member-${m.id}`}>
               <PersonLine m={m} />
+              {m.bio && <p className="line-clamp-3 whitespace-pre-wrap break-words text-sm leading-relaxed text-ink-800" data-testid={`text-member-bio-${m.id}`}>{m.bio}</p>}
               {m.offering && <p className="line-clamp-2 text-sm text-ink-700"><span className="font-semibold text-ink-900">Offers: </span>{m.offering}</p>}
+              {m.lookingFor && <p className="line-clamp-2 text-sm text-ink-700"><span className="font-semibold text-ink-900">Looking for: </span>{m.lookingFor}</p>}
               <div className="mt-auto flex items-center justify-between gap-2 text-xs text-sand-400">
                 <span>{m.followers} followers</span>
                 <div className="flex gap-2">
-                  <Link href={`/member/profile/${m.id}`} className="rounded-full px-3 py-1.5 font-semibold text-ink-700 hover:bg-ivory-200">View</Link>
+                  <Link href={`/member/profile/${m.id}`} className="rounded-full px-3 py-1.5 font-semibold text-ink-700 hover:bg-ivory-200">View & connect</Link>
                   {!m.blocked && <button disabled={pending} onClick={() => run({ action: 'follow', targetId: m.id, accepted: !m.followed }).catch(() => undefined)} className={`rounded-full px-3 py-1.5 font-semibold ${m.followed ? 'border border-sand-300 text-ink-700' : 'bg-lagoon-900 text-ivory-50'}`} data-testid={`button-follow-${m.id}`}>{m.followed ? 'Following' : 'Follow'}</button>}
                 </div>
               </div>

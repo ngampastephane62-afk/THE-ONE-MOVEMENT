@@ -86,11 +86,14 @@ function AppShell({ me, base, children }: Ctx & { children: ReactNode }) {
   const nav = [...NAV, ...(me.founder ? [{ href: '/member/admin', label: 'Admin', icon: Shield }] : [])];
   return (
     <Frame>
-      <header className="sticky top-0 z-40 border-b border-gold-500/25 bg-lagoon-900/95 backdrop-blur">
-        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 px-4">
-          <Link href="/member" className="flex items-center gap-2" data-testid="link-network-home">
-            <img src={`${basePath}/logo.svg`} alt="" className="h-7" />
-            <span className="font-display text-xs tracking-[0.18em] text-ivory-100">TOMI <span className="text-gold-400">NETWORK</span></span>
+      <header className="fixed inset-x-0 top-0 z-40 border-b border-gold-500/25 bg-lagoon-900/95 backdrop-blur" data-testid="network-header">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-2 px-3 sm:px-4">
+          <Link href="/member" className="flex min-w-0 items-center gap-2 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500" aria-label="The One Movement International — Network home" data-testid="link-network-home">
+            <img src={`${basePath}/logo.svg`} alt="" className="h-8 w-8 shrink-0" />
+            <span className="min-w-0 font-display text-[10px] tracking-[0.08em] text-ivory-100 sm:text-xs">
+              <span className="block">THE ONE MOVEMENT</span>
+              <span className="mt-0.5 block text-[9px] tracking-[0.16em] text-gold-400 sm:text-[10px]">INTERNATIONAL</span>
+            </span>
           </Link>
           <div className="flex items-center gap-1">
             <Link href="/member/messages" className="relative rounded-full p-2 text-ivory-200 hover:text-gold-400 md:hidden" aria-label={`Messages${unread ? `, ${unread} need attention` : ''}`}>
@@ -102,8 +105,8 @@ function AppShell({ me, base, children }: Ctx & { children: ReactNode }) {
           </div>
         </div>
       </header>
-      <div className="mx-auto flex max-w-6xl gap-6 px-0 pb-24 sm:px-4 md:pb-10 md:pt-6">
-        <aside className="sticky top-20 hidden h-fit w-56 shrink-0 flex-col gap-1 md:flex">
+      <div className="mx-auto flex max-w-6xl gap-6 px-0 pb-24 pt-16 sm:px-4 md:pb-10 md:pt-24">
+        <aside className="sticky top-24 hidden h-fit w-56 shrink-0 flex-col gap-1 md:flex">
           <Link href={`/member/profile/${me.id}`} className="mb-3 flex items-center gap-3 rounded-2xl border border-sand-200 bg-ivory-50 p-3" data-testid="link-my-profile">
             <Avatar m={me} size={40} /><span className="min-w-0"><span className="block truncate text-sm font-semibold text-ink-900">{me.fullName}</span><span className="block text-xs text-sand-400">{me.followers} followers · {me.following} following</span></span>
           </Link>

@@ -86,10 +86,18 @@ export default function PostCard({ post, meId, onReport }: { post: NetworkPost; 
         <div className="mt-2 flex flex-col gap-3">
           {post.comments.map((c) => (
             <div key={c.id} className="flex gap-2" data-testid={`comment-${c.id}`}>
-              <Link href={`/member/profile/${c.author.id}`}><Avatar m={c.author} size={30} /></Link>
+              <Link href={`/member/profile/${c.author.id}`} aria-label={`View ${c.author.fullName}'s profile`} className="h-fit rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500" data-testid={`link-comment-avatar-${c.id}`}><Avatar m={c.author} size={36} /></Link>
               <div className="min-w-0 flex-1 rounded-2xl bg-ivory-100 px-3 py-2">
-                <div className="flex items-center justify-between gap-2 text-xs"><span className="font-semibold text-ink-900">{c.author.fullName}</span><span className="text-sand-400">{ago(c.createdAt)}</span></div>
-                <p className="whitespace-pre-wrap break-words text-sm text-ink-800">{c.text}</p>
+                <div className="flex items-start justify-between gap-2 text-xs">
+                  <Link href={`/member/profile/${c.author.id}`} className="min-w-0 break-words rounded font-semibold text-lagoon-800 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500" data-testid={`link-comment-author-${c.id}`}>{c.author.fullName}</Link>
+                  <span className="shrink-0 text-sand-400">{ago(c.createdAt)}</span>
+                </div>
+                <Link href={`/member/profile/${c.author.id}`} className="mt-1 block rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500" data-testid={`link-comment-description-${c.id}`}>
+                  <span className="block break-words text-xs text-ink-700">{[c.author.profession, c.author.organization].filter(Boolean).join(' · ')}</span>
+                  {c.author.bio && <span className="mt-1 line-clamp-3 whitespace-pre-wrap break-words text-xs leading-relaxed text-ink-700">{c.author.bio}</span>}
+                  <span className="mt-1 block text-[11px] font-semibold text-lagoon-700 hover:underline">View profile{c.author.id !== meId ? ' & connect' : ''}</span>
+                </Link>
+                <p className="mt-2 whitespace-pre-wrap break-words border-t border-sand-200 pt-2 text-sm text-ink-800">{c.text}</p>
                 {c.author.id === meId && <button type="button" onClick={() => act(run({ action: 'comment.delete', id: c.id }))} className="mt-1 text-[11px] text-sand-400 hover:text-crimson-700" data-testid={`button-delete-comment-${c.id}`}>Delete</button>}
               </div>
             </div>

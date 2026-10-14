@@ -58,7 +58,11 @@ export default function ProfilePage() {
             <span data-testid="text-followers"><b className="text-ink-900">{p.followers}</b> followers</span>
             <span data-testid="text-following"><b className="text-ink-900">{p.following}</b> following</span>
           </div>
-          {p.bio && <p className="mt-4 whitespace-pre-wrap text-[15px] leading-relaxed text-ink-800">{p.bio}</p>}
+          <section className="mt-4 border-t border-sand-100 pt-4" aria-label="Member description">
+            <h2 className="text-eyebrow text-gold-700">ABOUT</h2>
+            <p className="mt-2 whitespace-pre-wrap break-words text-[15px] leading-relaxed text-ink-800" data-testid="text-profile-bio">{p.bio || (mine ? 'Add a short description so other members can learn about your work and connect with you.' : 'This member has not added a description yet.')}</p>
+            {mine && !p.bio && <Link href="/member/settings" className="mt-2 inline-flex text-sm font-semibold text-lagoon-700 hover:underline">Add my description</Link>}
+          </section>
           {(p.offering || p.lookingFor) && (
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
               {p.offering && <div className="rounded-xl bg-ivory-100 p-3"><p className="text-eyebrow text-gold-700">OFFERS</p><p className="mt-1 text-sm text-ink-800">{p.offering}</p></div>}

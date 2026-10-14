@@ -9,6 +9,12 @@ The Founder wants signing in after membership to open a distinct social-network 
 
 **How to apply:** Extend the existing member product and authentication rather than treating a redesigned profile page or a static feed as completion. Preserve the approved public homepage.
 
+The member network must retain visible The One Movement International branding while scrolling. Comment authors should be identifiable through linked profiles and their member descriptions so members can discover and contact each other.
+
+**Why:** The Founder explicitly requested persistent branding and visible descriptions on comments to facilitate connections between members.
+
+**How to apply:** Keep the brand accessible on mobile as well as desktop; show descriptions members actually entered, never invented biographies, and preserve consent-based messaging.
+
 New members may join, create a limited profile, follow people, like and comment after their email is verified; they do not wait for individual CEO approval or buy an event package to access the social network. To create their own posts, ordinary members must first recruit more than 10 people (at least 11) who create accounts and follow their profile. Official certifications remain a separate approval process.
 
 **Why:** The Founder explicitly selected access after email verification rather than manual approval of every new member, then clarified the 11-person referral threshold for creating posts, without requiring event participation. Existing Founder content must remain possible.
