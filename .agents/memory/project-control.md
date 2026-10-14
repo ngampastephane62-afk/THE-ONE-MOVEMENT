@@ -9,8 +9,8 @@ The project stakeholder requires sole control and validation of work, including 
 
 **How to apply:** Deliver changes in preview for approval before publication. Obtain explicit approval before changing connected financial accounts, access, ownership, or billing settings. Do not infer account ownership, founder privileges, or who pays for usage from the display name of a chat participant; verify the actual workspace and account configuration.
 
-The stakeholder requires The One Movement's related work to be under a Tropik licence.
+The stakeholder identifies Tropik Agency as the creator and copyright holder of The One Movement ecosystem, with rights covering its creation, development, and organization.
 
-**Why:** This is an explicit business requirement, not evidence of a legally established licence or a transfer of ownership.
+**Why:** This is the stakeholder's explicit declaration of the business relationship and intended rights holder, not independently verified legal evidence or a transfer of technical account ownership.
 
-**How to apply:** Confirm the intended legal entity, scope, and licence terms before changing legal notices or merchant identity. A branding or footer edit does not transfer account ownership, payment proceeds, or legal rights.
+**How to apply:** Use Tropik Agency as the declared rights-holder context, but obtain exact legal details and licence terms before changing legal notices or merchant identity. A branding or footer edit does not transfer account ownership, payment proceeds, or legal rights. If work is still hosted in another developer's workspace, establish stakeholder-controlled hosting and billing before promising independent control or spending.
