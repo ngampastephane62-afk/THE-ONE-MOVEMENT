@@ -30,3 +30,9 @@ Position TOMI as a global ecosystem of connections and opportunities across busi
 **Why:** The Founder instructed “mettre en valeur l'écosystème” and “tout ce qu'il y a dans l'écosystème est intégré pour en profiter, pour être connecté”, with fewer credits.
 
 **How to apply:** Reuse available optimized media, preserve the first two approved Home experiences, balance contextual imagery, and avoid broad archive re-analysis or website redesign.
+
+The Founder identifies the supplied celebrity Ambassador of Peace material as **The One Awards nominations**, not awards already presented. Use those assets for Awards previews and its program page, not for the Diplomatic Gala.
+
+**Why:** The user explicitly describes these celebrities as nominated and says the Gala will receive its own appropriate images.
+
+**How to apply:** Label the celebrity material as nominees, preserve the original supplied identities, and keep Awards and Gala media separate.

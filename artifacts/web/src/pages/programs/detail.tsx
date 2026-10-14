@@ -10,6 +10,7 @@ import GeometricAccent from '@/components/GeometricAccent';
 import ArchivePhoto, { archiveVideo } from '@/components/ArchivePhoto';
 import ResponsiveMedia from '@/components/ResponsiveMedia';
 import ProgramVision from '@/components/ProgramVision';
+import { AwardsPreview, AwardsNominees } from '@/components/AwardsMedia';
 import FashionEditionNote from '@/components/FashionEditionNote';
 import StatusNotice from '@/components/StatusNotice';
 import { PROGRAMS, getProgramBySlug, type Program, type ProgramStatus } from '@/lib/programs-data';
@@ -344,8 +345,8 @@ export default function ProgramDetail() {
       >
         <div className="mx-auto max-w-7xl px-6">
           <SectionHeading
-            eyebrow="MEDIA"
-            heading="MOMENTS FROM THE MOVEMENT"
+            eyebrow={program.slug === 'awards' ? 'THE ONE AWARDS' : 'MEDIA'}
+            heading={program.slug === 'awards' ? 'AMBASSADOR OF PEACE NOMINEES' : 'MOMENTS FROM THE MOVEMENT'}
             size="lg"
             surface="light"
             className="mb-12"
@@ -493,6 +494,9 @@ function StatusBadge({ status }: { status: ProgramStatus }) {
 }
 
 function ProgramHeroMedia({ slug, name, tagline }: { slug: string; name: string; tagline: string }) {
+  if (slug === 'awards') {
+    return <AwardsPreview className="tomi-program-detail-media w-full aspect-[4/3]" />;
+  }
   if (slug === 'summit') {
     return <ArchivePhoto id="summit-goma" caption sizes="(min-width: 1024px) 38vw, 92vw" className="tomi-program-detail-media mx-auto max-w-md" captionClassName="text-ivory-300" />;
   }
@@ -503,6 +507,7 @@ function ProgramHeroMedia({ slug, name, tagline }: { slug: string; name: string;
 }
 
 function ProgramMediaGrid({ slug, name, tagline }: { slug: string; name: string; tagline: string }) {
+  if (slug === 'awards') return <AwardsNominees />;
   if (slug === 'summit') {
     return (
       <div className="grid gap-8 md:grid-cols-12 md:items-center">

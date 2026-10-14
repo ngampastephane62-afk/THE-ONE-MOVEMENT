@@ -17,14 +17,14 @@ const storage = new Storage({
   },
 });
 
-// This fixed set totals ~23 MB. Cache the completed downloads so seeking and
+// Cache the fixed curated media set so seeking and
 // aborted browser requests never cancel a shared cloud stream or re-fetch it.
 const assets = new Map<string, Promise<Buffer>>();
 
 function loadAsset(bucket: string, filename: string): Promise<Buffer> {
   let asset = assets.get(filename);
   if (!asset) {
-    asset = storage.bucket(bucket).file(`public/home-reels/${filename}`).download()
+    asset = storage.bucket(bucket).file(`public/${filename}`).download()
       .then(([bytes]) => bytes)
       .catch((error: unknown) => {
         assets.delete(filename);
@@ -35,10 +35,14 @@ function loadAsset(bucket: string, filename: string): Promise<Buffer> {
   return asset;
 }
 
-// Only the six curated public homepage assets can be served here.
-router.get("/home-reels/:filename", async (req, res) => {
+// Only the explicitly curated public media files can be served here.
+router.get(["/home-reels/:filename", "/program-media/:filename"], async (req, res) => {
   const filename = String(req.params.filename);
-  if (!/^reel-[123]\.(mp4|webp)$/.test(filename)) {
+  const isProgramMedia = req.path.startsWith("/program-media/");
+  const allowed = isProgramMedia
+    ? /^awards-(nominees|ciara)\.mp4$/.test(filename)
+    : /^reel-[123]\.(mp4|webp)$/.test(filename);
+  if (!allowed) {
     res.sendStatus(404);
     return;
   }
@@ -48,7 +52,7 @@ router.get("/home-reels/:filename", async (req, res) => {
     return;
   }
   try {
-    const bytes = await loadAsset(bucket, filename);
+    const bytes = await loadAsset(bucket, `${isProgramMedia ? "program-media" : "home-reels"}/${filename}`);
     if (res.destroyed) return;
     const size = bytes.length;
     res.set({

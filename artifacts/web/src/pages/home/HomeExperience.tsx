@@ -5,6 +5,7 @@ import GeometricAccent from '@/components/GeometricAccent';
 import GoldThread from '@/components/GoldThread';
 import ArchivePhoto, { archiveVideo } from '@/components/ArchivePhoto';
 import ProgramVision from '@/components/ProgramVision';
+import { AwardsPreview } from '@/components/AwardsMedia';
 import ResponsiveMedia from '@/components/ResponsiveMedia';
 import HomeReelStrip from '@/components/HomeReelStrip';
 import Reveal from '@/components/Reveal';
@@ -209,6 +210,8 @@ export default function HomeExperience() {
                 <article className="tomi-editorial-card group overflow-hidden rounded-sharp border border-sand-200 bg-ivory-100">
                   {program.slug === 'summit' ? (
                     <ArchivePhoto id="summit-goma" frameClassName="aspect-[4/3] w-full" objectPosition="center 30%" sizes="(min-width: 768px) 30vw, 92vw" />
+                  ) : program.slug === 'awards' ? (
+                    <AwardsPreview className="aspect-[4/3] w-full" />
                   ) : (
                     <ProgramVision name={program.name} className="aspect-[4/3] w-full" />
                   )}
