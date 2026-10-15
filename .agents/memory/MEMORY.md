@@ -10,3 +10,4 @@
 - [Member social network](member-social-network.md) — member posts, follows and messaging; CEO-approved event certifications, programme packages and eastern DRC donations.
 - [Stripe connector runtime](stripe-connector-runtime.md) — proxy authentication differs from legacy secret-key examples; preserve StripeSync's installed migration directory.
 - [Project control and Tropik licensing](project-control.md) — owner approval for releases and connected-account changes; verify ownership and licensing rather than infer them.
+- [Dependency remediation](dependency-remediation.md) — remove unnecessary vulnerable chains rather than suppress advisories; verify production-only auth transport with loopback tests.
