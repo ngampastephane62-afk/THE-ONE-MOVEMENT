@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'wouter';
-import HeroSurface from '@/components/HeroSurface';
-import GoldThread from '@/components/GoldThread';
+import PartnerOrbitStage from '@/components/partners/PartnerOrbitStage';
+import MediaCatalogue from '@/components/partners/MediaCatalogue';
 import SectionHeading from '@/components/SectionHeading';
 import { Button } from '@/components/ui/button';
 import Reveal from '@/components/Reveal';
@@ -19,24 +19,7 @@ export default function Partners() {
         <link rel="canonical" href="/partners" />
       </Helmet>
 
-      {/* HERO */}
-      <HeroSurface glowOrigin="bottom-center" minHeight="60vh">
-        <div className="mx-auto w-full max-w-7xl px-6 py-section-lg grid gap-10 lg:grid-cols-12 items-center">
-          <Reveal className="lg:col-span-6">
-            <p className="text-eyebrow text-gold-400 mb-6">OUR PARTNERS & ALLIES</p>
-            <h1 className="text-display-xl text-ivory-100 uppercase" style={{ fontFamily: 'var(--font-display)' }}>
-              BUILD WITH THE MOVEMENT.
-            </h1>
-            <GoldThread className="mt-8" length="200px" node />
-            <p className="mt-6 text-ivory-200 text-lg leading-relaxed max-w-2xl">
-              Ambassadors, private offices and institutions connected to a global Africa–UAE–international network, opening routes to collaboration and access.
-            </p>
-          </Reveal>
-          <Reveal delay={120} className="w-full max-w-md mx-auto lg:col-span-5 lg:col-start-8">
-            <ArchivePhoto id="office-encounter" priority caption sizes="(min-width: 1024px) 40vw, (min-width: 640px) 28rem, 92vw" captionClassName="text-ivory-300" />
-          </Reveal>
-        </div>
-      </HeroSurface>
+      <PartnerOrbitStage />
 
       {/* CONFIRMED PARTNERSHIPS */}
       <section className="py-section-lg bg-ivory-50 border-t border-sand-200" aria-labelledby="engagement-heading">
@@ -129,13 +112,15 @@ export default function Partners() {
         </div>
       </section>
 
+      <MediaCatalogue />
+
       {/* POLICY */}
       <section className="py-12 bg-ivory-50 border-t border-sand-200">
         <div className="mx-auto max-w-3xl px-6 text-center">
           <Reveal>
             <p className="text-[10px] font-semibold text-ink-500 tracking-[0.2em] uppercase">OUR DISPLAY POLICY</p>
             <p className="mt-3 text-sm text-ink-700 leading-relaxed">
-              Confirmed partners appear above. Organizations and individuals who enquire are reviewed before any public listing.
+              Confirmed partners appear above. Organizations and individuals who enquire are reviewed before any public listing. Outlets in the media coverage catalogue are not partners, do not imply endorsement, and placement requests are reviewed by the administrator without automatic checkout or guaranteed publication.
             </p>
           </Reveal>
         </div>

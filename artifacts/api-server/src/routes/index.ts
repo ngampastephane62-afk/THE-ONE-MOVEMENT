@@ -5,6 +5,7 @@ import institutionalInquiryRouter from "./institutionalInquiry";
 import homeReelsRouter from "./homeReels";
 import memberRouter from "./member";
 import networkRouter from "./network";
+import mediaRequestsRouter from "./mediaRequests";
 
 const router: IRouter = Router();
 
@@ -14,5 +15,6 @@ router.use(institutionalInquiryRouter);
 router.use(homeReelsRouter);
 router.use(memberRouter);
 router.use(networkRouter);
+router.use(mediaRequestsRouter);
 
 export default router;

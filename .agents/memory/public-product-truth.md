@@ -15,6 +15,12 @@ International Media Reach may state **353+ media outlets, 18 categories, and Art
 
 **How to apply:** Keep media distribution capabilities separate from approved partner records and factual press coverage. Before retaining a missing-media fallback, inspect accessible Founder uploads for contextually appropriate footage or stills. Prefer matching original photographs over montage stills; classify by visual content and reliable context, not filename alone. Montage imagery is illustration, not evidence of a particular program edition or institutional relationship. Where a program has no matching historic media, use an honest branded program-vision treatment instead of borrowing another event or institutional encounter. Do not search for stock or invent replacement media.
 
+The stakeholder wants every media article/placement enquiry to pass through them as administrator, rather than an automatic purchase. They supplied the Tropic Agency International Media Coverage PDF as the catalogue source.
+
+**Why:** The stakeholder explicitly said visitors may want to buy an article, “mais ça doit passer par moi comme admin.”
+
+**How to apply:** Keep enquiries private and subject to administrator review and discussion of terms. Do not turn an internal approval into payment confirmation, guaranteed editorial acceptance or a published article. Where the source does not specify a format, offer consultation rather than inventing article availability. Additional institutional/media partners and logos should come from the stakeholder, not be inferred from this distribution catalogue.
+
 **Why:** The user explicitly authorized reusing accessible Founder uploads and instructed that a placeholder must not remain when contextually appropriate Founder media is already available.
 
 **Why:** The Founder archive mixes originals, screenshots, logos, promotional clips and misleading filenames. Neither a descriptive filename nor an encounter photograph establishes program history, a person's identity or a formal partnership.

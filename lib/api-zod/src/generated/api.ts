@@ -9,6 +9,95 @@ import * as zod from 'zod';
 
 
 /**
+ * @summary Request a media placement for administrator review, never checkout
+ */
+export const createMediaRequestBodyOutletIdMax = 30;
+
+export const createMediaRequestBodyFormatMax = 30;
+
+export const createMediaRequestBodyContactNameMax = 120;
+
+export const createMediaRequestBodyEmailMin = 3;
+export const createMediaRequestBodyEmailMax = 254;
+
+export const createMediaRequestBodyOrganizationNameMax = 160;
+
+export const createMediaRequestBodyCountryMax = 90;
+
+export const createMediaRequestBodyMessageMin = 10;
+export const createMediaRequestBodyMessageMax = 800;
+
+export const createMediaRequestBodyWebsiteMax = 200;
+
+
+
+export const CreateMediaRequestBody = zod.object({
+  "outletId": zod.string().min(1).max(createMediaRequestBodyOutletIdMax),
+  "format": zod.string().min(1).max(createMediaRequestBodyFormatMax),
+  "contactName": zod.string().min(1).max(createMediaRequestBodyContactNameMax),
+  "email": zod.string().min(createMediaRequestBodyEmailMin).max(createMediaRequestBodyEmailMax),
+  "organizationName": zod.string().min(1).max(createMediaRequestBodyOrganizationNameMax),
+  "country": zod.string().min(1).max(createMediaRequestBodyCountryMax),
+  "message": zod.string().min(createMediaRequestBodyMessageMin).max(createMediaRequestBodyMessageMax),
+  "consentAccepted": zod.boolean(),
+  "website": zod.string().max(createMediaRequestBodyWebsiteMax).optional().describe('Honeypot; must be blank')
+})
+
+export const CreateMediaRequestResponse = zod.object({
+  "id": zod.number(),
+  "status": zod.string()
+})
+
+
+/**
+ * @summary Founder-only media enquiry inbox
+ */
+export const GetMediaRequestsResponseItem = zod.object({
+  "id": zod.number(),
+  "outletId": zod.string(),
+  "outletName": zod.string(),
+  "format": zod.string(),
+  "contactName": zod.string(),
+  "email": zod.string(),
+  "organizationName": zod.string(),
+  "country": zod.string(),
+  "message": zod.string(),
+  "status": zod.string(),
+  "createdAt": zod.string()
+})
+export const GetMediaRequestsResponse = zod.array(GetMediaRequestsResponseItem)
+
+
+/**
+ * @summary Founder-only review status, not a publication or payment confirmation
+ */
+
+
+
+export const UpdateMediaRequestParams = zod.object({
+  "id": zod.coerce.number().min(1)
+})
+
+export const UpdateMediaRequestBody = zod.object({
+  "status": zod.enum(['new', 'in_progress', 'approved', 'declined', 'closed'])
+})
+
+export const UpdateMediaRequestResponse = zod.object({
+  "id": zod.number(),
+  "outletId": zod.string(),
+  "outletName": zod.string(),
+  "format": zod.string(),
+  "contactName": zod.string(),
+  "email": zod.string(),
+  "organizationName": zod.string(),
+  "country": zod.string(),
+  "message": zod.string(),
+  "status": zod.string(),
+  "createdAt": zod.string()
+})
+
+
+/**
  * @summary Public opt-in ecosystem profile; no private identity, messages or posts
  */
 

@@ -11,6 +11,57 @@ tags:
   - name: health
     description: Health operations
 paths:
+  /media-requests:
+    post:
+      operationId: createMediaRequest
+      tags: [media]
+      summary: Request a media placement for administrator review, never checkout
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: "#/components/schemas/MediaInquiryInput"}
+      responses:
+        "201":
+          description: Recorded for administrator review
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/MediaInquiryReceipt"}
+        "400": {description: Invalid request}
+        "429": {description: Too many requests}
+    get:
+      operationId: getMediaRequests
+      tags: [media]
+      summary: Founder-only media enquiry inbox
+      responses:
+        "200":
+          description: Private requests
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {$ref: "#/components/schemas/MediaInquiry"}
+        "403": {description: Founder access required}
+  /media-requests/{id}:
+    patch:
+      operationId: updateMediaRequest
+      tags: [media]
+      summary: Founder-only review status, not a publication or payment confirmation
+      parameters:
+        - {name: id, in: path, required: true, schema: {type: integer, minimum: 1}}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: "#/components/schemas/MediaInquiryReview"}
+      responses:
+        "200":
+          description: Review saved
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/MediaInquiry"}
+        "403": {description: Founder access required}
+        "404": {description: Request not found}
   /community/profiles/{id}:
     get:
       operationId: getPublicNetworkProfile
@@ -205,6 +256,45 @@ paths:
                 $ref: "#/components/schemas/DetailedHealthStatus"
 components:
   schemas:
+    MediaInquiryInput:
+      type: object
+      required: [outletId, format, contactName, email, organizationName, country, message, consentAccepted]
+      properties:
+        outletId: {type: string, minLength: 1, maxLength: 30}
+        format: {type: string, minLength: 1, maxLength: 30}
+        contactName: {type: string, minLength: 1, maxLength: 120}
+        email: {type: string, minLength: 3, maxLength: 254}
+        organizationName: {type: string, minLength: 1, maxLength: 160}
+        country: {type: string, minLength: 1, maxLength: 90}
+        message: {type: string, minLength: 10, maxLength: 800}
+        consentAccepted: {type: boolean}
+        website: {type: string, maxLength: 200, description: Honeypot; must be blank}
+    MediaInquiryReceipt:
+      type: object
+      required: [id, status]
+      properties:
+        id: {type: integer}
+        status: {type: string}
+    MediaInquiryReview:
+      type: object
+      required: [status]
+      properties:
+        status: {type: string, enum: [new, in_progress, approved, declined, closed]}
+    MediaInquiry:
+      type: object
+      required: [id, outletId, outletName, format, contactName, email, organizationName, country, message, status, createdAt]
+      properties:
+        id: {type: integer}
+        outletId: {type: string}
+        outletName: {type: string}
+        format: {type: string}
+        contactName: {type: string}
+        email: {type: string}
+        organizationName: {type: string}
+        country: {type: string}
+        message: {type: string}
+        status: {type: string}
+        createdAt: {type: string}
     NetworkActionInput:
       type: object
       additionalProperties: false

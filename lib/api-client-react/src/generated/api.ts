@@ -26,6 +26,10 @@ import type {
   GetNetworkPaymentStatusParams,
   GetNetworkStateParams,
   HealthStatus,
+  MediaInquiry,
+  MediaInquiryInput,
+  MediaInquiryReceipt,
+  MediaInquiryReview,
   MemberProfileInput,
   MemberProfileResponse,
   NetworkActionInput,
@@ -64,6 +68,226 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   }
   return result;
 };
+
+export const getCreateMediaRequestUrl = () => {
+
+
+
+
+  return `/api/media-requests`
+}
+
+/**
+ * @summary Request a media placement for administrator review, never checkout
+ */
+export const createMediaRequest = async (mediaInquiryInput: MediaInquiryInput, options?: RequestInit): Promise<MediaInquiryReceipt> => {
+
+  return customFetch<MediaInquiryReceipt>(getCreateMediaRequestUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(mediaInquiryInput)
+  }
+);}
+
+
+
+
+
+export const getCreateMediaRequestMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createMediaRequest>>, TError,{data: BodyType<MediaInquiryInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof createMediaRequest>>, TError,{data: BodyType<MediaInquiryInput>}, TContext> => {
+
+const mutationKey = ['createMediaRequest'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createMediaRequest>>, {data: BodyType<MediaInquiryInput>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  createMediaRequest(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateMediaRequestMutationResult = NonNullable<Awaited<ReturnType<typeof createMediaRequest>>>
+    export type CreateMediaRequestMutationBody = BodyType<MediaInquiryInput>
+    export type CreateMediaRequestMutationError = ErrorType<void>
+
+    /**
+ * @summary Request a media placement for administrator review, never checkout
+ */
+export const useCreateMediaRequest = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createMediaRequest>>, TError,{data: BodyType<MediaInquiryInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof createMediaRequest>>,
+        TError,
+        {data: BodyType<MediaInquiryInput>},
+        TContext
+      > => {
+      return useMutation(getCreateMediaRequestMutationOptions(options));
+    }
+
+export const getGetMediaRequestsUrl = () => {
+
+
+
+
+  return `/api/media-requests`
+}
+
+/**
+ * @summary Founder-only media enquiry inbox
+ */
+export const getMediaRequests = async ( options?: RequestInit): Promise<MediaInquiry[]> => {
+
+  return customFetch<MediaInquiry[]>(getGetMediaRequestsUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetMediaRequestsQueryKey = () => {
+    return [
+    `/api/media-requests`
+    ] as const;
+    }
+
+
+export const getGetMediaRequestsQueryOptions = <TData = Awaited<ReturnType<typeof getMediaRequests>>, TError = ErrorType<void>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getMediaRequests>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMediaRequestsQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMediaRequests>>> = ({ signal }) => getMediaRequests({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMediaRequests>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetMediaRequestsQueryResult = NonNullable<Awaited<ReturnType<typeof getMediaRequests>>>
+export type GetMediaRequestsQueryError = ErrorType<void>
+
+
+/**
+ * @summary Founder-only media enquiry inbox
+ */
+
+export function useGetMediaRequests<TData = Awaited<ReturnType<typeof getMediaRequests>>, TError = ErrorType<void>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getMediaRequests>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetMediaRequestsQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getUpdateMediaRequestUrl = (id: number,) => {
+
+
+
+
+  return `/api/media-requests/${id}`
+}
+
+/**
+ * @summary Founder-only review status, not a publication or payment confirmation
+ */
+export const updateMediaRequest = async (id: number,
+    mediaInquiryReview: MediaInquiryReview, options?: RequestInit): Promise<MediaInquiry> => {
+
+  return customFetch<MediaInquiry>(getUpdateMediaRequestUrl(id),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(mediaInquiryReview)
+  }
+);}
+
+
+
+
+
+export const getUpdateMediaRequestMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateMediaRequest>>, TError,{id: number;data: BodyType<MediaInquiryReview>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateMediaRequest>>, TError,{id: number;data: BodyType<MediaInquiryReview>}, TContext> => {
+
+const mutationKey = ['updateMediaRequest'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateMediaRequest>>, {id: number;data: BodyType<MediaInquiryReview>}> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  updateMediaRequest(id,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateMediaRequestMutationResult = NonNullable<Awaited<ReturnType<typeof updateMediaRequest>>>
+    export type UpdateMediaRequestMutationBody = BodyType<MediaInquiryReview>
+    export type UpdateMediaRequestMutationError = ErrorType<void>
+
+    /**
+ * @summary Founder-only review status, not a publication or payment confirmation
+ */
+export const useUpdateMediaRequest = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateMediaRequest>>, TError,{id: number;data: BodyType<MediaInquiryReview>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof updateMediaRequest>>,
+        TError,
+        {id: number;data: BodyType<MediaInquiryReview>},
+        TContext
+      > => {
+      return useMutation(getUpdateMediaRequestMutationOptions(options));
+    }
 
 export const getGetPublicNetworkProfileUrl = (id: number,) => {
 

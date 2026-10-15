@@ -5,6 +5,84 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+export interface MediaInquiryInput {
+  /**
+     * @minLength 1
+     * @maxLength 30
+     */
+  outletId: string;
+  /**
+     * @minLength 1
+     * @maxLength 30
+     */
+  format: string;
+  /**
+     * @minLength 1
+     * @maxLength 120
+     */
+  contactName: string;
+  /**
+     * @minLength 3
+     * @maxLength 254
+     */
+  email: string;
+  /**
+     * @minLength 1
+     * @maxLength 160
+     */
+  organizationName: string;
+  /**
+     * @minLength 1
+     * @maxLength 90
+     */
+  country: string;
+  /**
+     * @minLength 10
+     * @maxLength 800
+     */
+  message: string;
+  consentAccepted: boolean;
+  /**
+     * Honeypot; must be blank
+     * @maxLength 200
+     */
+  website?: string;
+}
+
+export interface MediaInquiryReceipt {
+  id: number;
+  status: string;
+}
+
+export type MediaInquiryReviewStatus = typeof MediaInquiryReviewStatus[keyof typeof MediaInquiryReviewStatus];
+
+
+export const MediaInquiryReviewStatus = {
+  new: 'new',
+  in_progress: 'in_progress',
+  approved: 'approved',
+  declined: 'declined',
+  closed: 'closed',
+} as const;
+
+export interface MediaInquiryReview {
+  status: MediaInquiryReviewStatus;
+}
+
+export interface MediaInquiry {
+  id: number;
+  outletId: string;
+  outletName: string;
+  format: string;
+  contactName: string;
+  email: string;
+  organizationName: string;
+  country: string;
+  message: string;
+  status: string;
+  createdAt: string;
+}
+
 export type NetworkActionInputAction = typeof NetworkActionInputAction[keyof typeof NetworkActionInputAction];
 
 
