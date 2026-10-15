@@ -4,7 +4,6 @@ import { Pause, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import GoldThread from '@/components/GoldThread';
 import Reveal from '@/components/Reveal';
-import logo from '@/assets/media/home/tomi-peace-logo.webp';
 import flag from '@/assets/media/home/tomi-peace-flag.webp';
 import './home-experience.css';
 
@@ -53,18 +52,12 @@ export default function HomeBrandHero() {
 
       <div className="relative z-10 mx-auto flex min-h-[calc(100svh-4rem)] max-w-7xl flex-col justify-center px-6 py-section-md">
         <p className="text-eyebrow text-gold-400 animate-fade-in">GLOBAL CONNECTION ECOSYSTEM</p>
-        <h1 className="mt-6 animate-cinematic-1">
-          <span className="sr-only">The One Movement International — For Peace &amp; Unity. We Are One.</span>
-          <img
-            src={logo}
-            alt=""
-            width={1024}
-            height={355}
-            fetchPriority="high"
-            loading="eager"
-            className="tomi-brand-logo"
-            data-testid="img-brand-logo"
-          />
+        <h1 className="mt-6 animate-cinematic-1 text-display-xl text-ivory-100" data-testid="text-hero-title">
+          THE ONE MOVEMENT
+          <span className="mt-3 block text-gold-400">INTERNATIONAL</span>
+          <span className="mt-5 block font-sans text-sm font-medium tracking-[0.32em] text-ivory-200 sm:text-base">
+            FOR PEACE &amp; UNITY. WE ARE ONE.
+          </span>
         </h1>
         <GoldThread className="mt-8" length="280px" node />
 

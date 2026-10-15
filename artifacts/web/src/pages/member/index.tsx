@@ -22,6 +22,20 @@ import Certifications from './Certifications';
 import Admin from './Admin';
 import SettingsPage from './Settings';
 import Connections from './Connections';
+import { getPendingSector, clearPendingSector } from '@/lib/network-invitations';
+import { SECTORS } from '@/lib/sectors-data';
+
+function PendingSector() {
+  const { userId } = useAuth();
+  const [dismissed, setDismissed] = useState(false);
+  const sector = SECTORS.find(s => s.slug === getPendingSector(userId));
+  if (!sector || dismissed) return null;
+  return <div className="mx-3 mb-4 flex flex-wrap items-center gap-3 rounded-2xl border border-gold-500/40 bg-ivory-50 p-4 md:mx-0" data-testid="pending-sector">
+    <p className="flex-1 text-sm text-ink-800">You selected {sector.name}. Review your profile to add this sector. Nothing is saved until you confirm.</p>
+    <Link href="/member/settings" className={btn}>Review my profile</Link>
+    <button type="button" className="text-xs text-ink-700 underline" onClick={() => { clearPendingSector(); setDismissed(true); }}>Dismiss</button>
+  </div>;
+}
 
 
 function Frame({ children }: { children: ReactNode }) {
@@ -128,7 +142,7 @@ function AppShell({ me, base, children }: Ctx & { children: ReactNode }) {
           <Link href="/member/settings" className={`flex items-center gap-3 rounded-full px-4 py-2.5 text-sm ${active('/member/settings') ? 'bg-lagoon-900 font-semibold text-gold-400' : 'text-ink-800 hover:bg-ivory-200'}`}><Settings className="h-4 w-4" />Settings & workspace</Link>
           <Link href="/donate" className="mt-4 flex items-center gap-3 rounded-2xl border border-gold-500/40 bg-gold-500/10 px-4 py-3 text-sm text-ink-800 hover:border-gold-500" data-testid="link-humanitarian"><HandHeart className="h-4 w-4 text-gold-700" />Humanitarian action</Link>
         </aside>
-        <main className="min-w-0 flex-1">{me.enabled ? <PendingInvitation /> : !personalPage && <ActivationPrompt />}{!personalPage && <CompleteProfile me={me} />}{children}</main>
+        <main className="min-w-0 flex-1">{me.enabled ? <PendingInvitation /> : !personalPage && <ActivationPrompt />}{!personalPage && <CompleteProfile me={me} />}{!personalPage && <PendingSector />}{children}</main>
       </div>
       <nav aria-label="Network" className="fixed inset-x-0 bottom-0 z-40 grid border-t border-sand-200 bg-ivory-50/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden" style={{ gridTemplateColumns: `repeat(${nav.length}, 1fr)` }}>
         {nav.map(({ href, label, icon: I, exact }) => (

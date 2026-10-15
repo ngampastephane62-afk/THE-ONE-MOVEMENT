@@ -14,3 +14,9 @@ Check generated string-format validators against the installed Zod major before 
 **Why:** Orval generated a top-level `zod.email()` for an OpenAPI email format, but this workspace's validation package uses Zod 3, which does not expose that API. Generation succeeded while the downstream library typecheck failed.
 
 **How to apply:** Until generation targets a compatible Zod API, keep email constraints explicit in the server validator and the browser form; do not hand-edit generated files to hide the incompatibility.
+
+Do not rely on generator auto-detection of library majors in this workspace; pnpm catalog version references can prevent it from resolving the intended Zod and React Query majors.
+
+**Why:** After upgrading Orval, generation silently targeted Zod 4 despite the validation package using Zod 3. A successful generation alone was not evidence of compatibility.
+
+**How to apply:** Keep explicit compatible generation targets, and typecheck regenerated client and validators together. Fix generation configuration rather than manually repairing generated output.

@@ -4,7 +4,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Download, FileText, Loader2, Paperclip, RotateCw, ShieldCheck, Star, X } from 'lucide-react';
 import {
   requestNetworkUpload, useNetworkAction, getGetMemberProfileQueryKey,
-  type NetworkMember, type NetworkMedia, type NetworkActionInput,
+  getGetEcosystemMembersQueryKey, getGetPublicNetworkProfileQueryKey,
+  type NetworkMember, type NetworkMedia, type NetworkActionInput, type MemberProfileResponse,
 } from '@workspace/api-client-react';
 
 export const STATE_PREFIX = ['/api/network/state'] as const;
@@ -13,9 +14,16 @@ export function useAct() {
   const qc = useQueryClient();
   const m = useNetworkAction({
     mutation: {
-      onSuccess: () => {
+      onSuccess: (_result, variables) => {
         qc.invalidateQueries({ queryKey: STATE_PREFIX });
         qc.invalidateQueries({ queryKey: getGetMemberProfileQueryKey() });
+        if (['profile.media', 'join'].includes(variables.data.action)) {
+          qc.invalidateQueries({ queryKey: getGetEcosystemMembersQueryKey() });
+          const memberId = qc.getQueryData<MemberProfileResponse>(getGetMemberProfileQueryKey())?.profile?.id;
+          if (memberId) {
+            qc.invalidateQueries({ queryKey: getGetPublicNetworkProfileQueryKey(memberId) });
+          }
+        }
       },
     },
   });

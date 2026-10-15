@@ -48,7 +48,7 @@ export default function MediaRequestDialog({ outlet, onClose }: { outlet: MediaO
       <div className="max-h-[94dvh] w-full max-w-xl overflow-y-auto rounded-t-lg bg-ivory-50 shadow-2xl sm:rounded-sm">
         <div className="sticky top-0 flex items-start justify-between gap-4 border-b border-sand-200 bg-ivory-50 px-6 py-5">
           <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gold-600">Placement enquiry · reviewed by the administrator</p>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gold-600">Placement enquiry · reviewed by the CEO</p>
             <h2 id="mr-title" className="mt-1 text-2xl text-ink-900" style={{ fontFamily: 'var(--font-display)' }}>{outlet.name}</h2>
           </div>
           <button type="button" onClick={onClose} aria-label="Close" data-testid="button-close-request" className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-sand-300 hover:border-lagoon-700" autoFocus><X className="h-4 w-4" /></button>
@@ -60,13 +60,13 @@ export default function MediaRequestDialog({ outlet, onClose }: { outlet: MediaO
             <h3 className="mt-4 text-xl text-ink-900" style={{ fontFamily: 'var(--font-display)' }}>Enquiry received</h3>
             <p className="mt-2 text-sm text-ink-800">Reference <span className="font-mono font-semibold" data-testid="text-receipt-id">MR-{receipt.id}</span> · status: {receipt.status.replace('_', ' ')}</p>
             <p className="mt-4 text-sm leading-relaxed text-ink-700">
-              The administrator will review your request personally and may contact you by email. Nothing has been purchased or charged, and receiving this reference does not confirm availability, price, timing or publication. Editorial decisions remain with each outlet.
+              The CEO will review your request personally and may contact you by email. Nothing has been purchased or charged, and receiving this reference does not confirm availability, price, timing or publication. Editorial decisions remain with each outlet.
             </p>
             <button type="button" onClick={onClose} className="mt-6 rounded-full bg-lagoon-900 px-5 py-2.5 text-xs font-semibold uppercase tracking-widest text-ivory-50" data-testid="button-done-request">Close</button>
           </div>
         ) : (
           <form onSubmit={submit} noValidate className="grid gap-4 px-6 py-6">
-            <p className="text-sm leading-relaxed text-ink-700">No checkout and no payment here. Your brief goes to the administrator, who reviews every enquiry and discusses terms directly. Publication is never guaranteed.</p>
+            <p className="text-sm leading-relaxed text-ink-700">No checkout and no payment here. Your brief goes to the CEO, who reviews every enquiry and discusses terms directly. Publication is never guaranteed.</p>
             <div className="absolute -left-[9999px]" aria-hidden>
               <label>Website<input tabIndex={-1} autoComplete="off" value={v.website} onChange={set('website')} /></label>
             </div>

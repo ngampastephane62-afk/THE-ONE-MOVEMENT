@@ -1,6 +1,6 @@
 import { Router, type Request, type Response, type NextFunction } from "express";
 import { getAuth } from "@clerk/express";
-import { db, ecosystemMembersTable as members, networkProfiles } from "@workspace/db";
+import { db, ecosystemMembersTable as members, networkProfiles, networkUploads } from "@workspace/db";
 import { SaveMemberProfileBody, ToggleMemberSavedItemBody } from "@workspace/api-zod";
 import { desc, eq, sql, and, or, isNull } from "drizzle-orm";
 import { getClerkProxyHost } from "../middlewares/clerkProxyMiddleware";
@@ -75,11 +75,22 @@ function privateProfile(row: typeof members.$inferSelect) {
 
 router.get("/ecosystem/members", async (_req, res) => {
   res.set("Cache-Control", "no-store");
-  const rows = await db.select({ member: members }).from(members)
+  const rows = await db.select({ member: members, avatarId: networkUploads.id, enabled: networkProfiles.enabled }).from(members)
     .leftJoin(networkProfiles, eq(members.id, networkProfiles.memberId))
+    .leftJoin(networkUploads, and(
+      eq(networkUploads.id, networkProfiles.avatarId),
+      eq(networkUploads.ownerId, members.id),
+      eq(networkUploads.ready, true),
+      eq(members.publicMedia, true),
+      eq(networkProfiles.enabled, true),
+    ))
     .where(and(eq(members.isPublic, true), or(eq(networkProfiles.suspended, false), isNull(networkProfiles.memberId))))
     .orderBy(desc(members.updatedAt)).limit(100);
-  res.json({ members: rows.map(row => publicProfile(row.member)) });
+  res.json({ members: rows.map(row => ({
+    ...publicProfile(row.member),
+    avatarUrl: row.avatarId ? `/api/community/media/${row.avatarId}` : null,
+    enabled: row.enabled === true,
+  })) });
 });
 
 router.get("/member/profile", memberAuth, async (req, res) => {

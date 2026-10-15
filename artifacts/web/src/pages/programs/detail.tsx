@@ -10,6 +10,7 @@ import GeometricAccent from '@/components/GeometricAccent';
 import ArchivePhoto, { archiveVideo } from '@/components/ArchivePhoto';
 import ResponsiveMedia from '@/components/ResponsiveMedia';
 import ProgramVision from '@/components/ProgramVision';
+import ProgramSuppliedImage from '@/components/programs/ProgramSuppliedImage';
 import { AwardsPreview, AwardsNominees } from '@/components/AwardsMedia';
 import { DiplomaticGalaPreview, DiplomaticGalaGallery, DiplomaticGalaSpeakers } from '@/components/DiplomaticGalaMedia';
 import FashionEditionNote from '@/components/FashionEditionNote';
@@ -549,6 +550,29 @@ function ProgramMediaGrid({ slug, name, tagline }: { slug: string; name: string;
           />
           <figcaption className="mt-2 text-[11px] text-ink-700">Fashion Week · performance and runway · Founder archive</figcaption>
         </figure>
+      </div>
+    );
+  }
+  if (slug === 'fashion-night') {
+    return (
+      <div className="grid grid-cols-12 gap-5 md:items-end">
+        <ProgramSuppliedImage slug="fashion-night" className="col-span-12 md:col-span-8" frameClassName="aspect-[3/2] w-full" />
+        <div className="col-span-12 md:col-span-4">
+          <ProgramSuppliedImage slug="fashion-portrait" className="mx-auto max-w-xs md:max-w-none" frameClassName="aspect-[4/5] w-full" />
+          <p className="mt-6 text-ink-800 leading-relaxed">
+            Fashion, music and culture on one open stage. Official details for The One Fashion Night will be announced when confirmed.
+          </p>
+        </div>
+      </div>
+    );
+  }
+  if (slug === 'investment-forum') {
+    return (
+      <div className="grid gap-8 md:grid-cols-12 md:items-center">
+        <ProgramSuppliedImage slug="investment-forum" className="md:col-span-5 mx-auto w-full max-w-sm md:max-w-none" frameClassName="aspect-[2/3] w-full" />
+        <p className="md:col-span-6 md:col-start-7 text-lg text-ink-800 leading-relaxed">
+          Presentations, introductions and investment conversations across the Movement's network. The One Investment Forum has not yet taken place; official details will be announced when confirmed.
+        </p>
       </div>
     );
   }

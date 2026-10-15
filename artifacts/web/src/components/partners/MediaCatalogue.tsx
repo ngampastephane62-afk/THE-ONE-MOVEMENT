@@ -49,7 +49,7 @@ export default function MediaCatalogue() {
             </h2>
           </div>
           <div className="lg:col-span-5 text-sm leading-relaxed text-ink-700">
-            <p>Browse every outlet in the supplied coverage list and request the format it lists. Each enquiry is reviewed by the administrator — there is no automatic checkout.</p>
+            <p>Browse every outlet in the supplied coverage list and request the format it lists. Each enquiry is reviewed by the CEO — there is no automatic checkout.</p>
             <p className="mt-3 text-xs text-ink-600">These outlets are not TOMI partners and do not endorse the Movement. Listing does not guarantee availability or publication; editorial decisions belong to each outlet.</p>
             <a href={CATALOGUE_PDF} download className="mt-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-lagoon-900 underline-offset-4 hover:underline" data-testid="link-download-catalogue"><Download className="h-4 w-4" /> Source PDF</a>
           </div>

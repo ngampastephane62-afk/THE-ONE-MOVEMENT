@@ -14,6 +14,8 @@ import {
   type MemberProfileInputSectorsItem,
 } from '@workspace/api-client-react';
 import { SECTORS } from '@/lib/sectors-data';
+import { useAuth } from '@clerk/react';
+import { getPendingSector, clearPendingSector } from '@/lib/network-invitations';
 
 interface Props {
   initial: MemberProfile | null;
@@ -42,6 +44,8 @@ function validate(v: MemberProfileInput): Errors {
 const fieldCls = 'w-full border border-sand-300 bg-ivory-50 px-3 py-2.5 text-sm text-ink-900 focus:border-lagoon-600 focus:outline-none';
 
 export default function ProfileForm({ initial, defaultName, onDone, onCancel, appearance, onDraft }: Props) {
+  const { userId } = useAuth();
+  const [pendingSector] = useState(() => getPendingSector(userId));
   const qc = useQueryClient();
   const save = useSaveMemberProfile();
   const [v, setV] = useState<MemberProfileInput>(() => ({
@@ -53,7 +57,9 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
     offering: initial?.offering ?? '',
     lookingFor: initial?.lookingFor ?? '',
     website: initial?.website ?? '',
-    sectors: initial?.sectors ?? [],
+    sectors: pendingSector && !(initial?.sectors ?? []).includes(pendingSector as MemberProfileInputSectorsItem) && (initial?.sectors.length ?? 0) < 8
+      ? [...(initial?.sectors ?? []), pendingSector as MemberProfileInputSectorsItem]
+      : initial?.sectors ?? [],
     isPublic: initial?.isPublic ?? false,
     publicMedia: initial?.publicMedia ?? false,
     profileLayout: appearanceOf(initial).layout,
@@ -81,6 +87,7 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
     if (Object.keys(e).length) return;
     save.mutate({ data: payload }, {
       onSuccess: (res) => {
+        clearPendingSector();
         qc.setQueryData(getGetMemberProfileQueryKey(), res);
         qc.invalidateQueries({ queryKey: getGetEcosystemMembersQueryKey() });
         qc.invalidateQueries({ queryKey: STATE_PREFIX });
@@ -108,6 +115,7 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
 
       <fieldset>
         <legend className="text-eyebrow text-gold-700">YOUR SECTORS <span className="normal-case tracking-normal text-sand-400">(optional, {v.sectors.length}/8)</span></legend>
+        {pendingSector && <p className="mt-2 text-sm text-lagoon-700" role="status">Your sector choice is ready to review below. Select up to eight sectors, then save to confirm.</p>}
         <div className="mt-3 flex flex-wrap gap-2">
           {SECTORS.map((s) => {
             const on = v.sectors.includes(s.slug as MemberProfileInputSectorsItem);
@@ -125,6 +133,7 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
 
       <fieldset className="grid gap-5 sm:grid-cols-2">
         <legend className="mb-4 text-eyebrow text-gold-700">OPTIONAL DETAILS</legend>
+        <p className="text-sm leading-relaxed text-ink-700 sm:col-span-2">Choose what belongs on your page. All details below are optional: leave a field empty, or clear it and save, to hide it from your profile. You control public visibility and photos separately below.</p>
         <label className="text-sm text-ink-900">Organization
           <input className={`${fieldCls} mt-1`} value={v.organization} maxLength={150} onChange={(e) => set('organization', e.target.value)} data-testid="input-organization" />
         </label>

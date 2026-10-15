@@ -8,6 +8,7 @@ import SectionHeading from '@/components/SectionHeading';
 import GeometricAccent from '@/components/GeometricAccent';
 import ArchivePhoto from '@/components/ArchivePhoto';
 import ProgramVision from '@/components/ProgramVision';
+import ProgramSuppliedImage from '@/components/programs/ProgramSuppliedImage';
 import { AwardsPreview } from '@/components/AwardsMedia';
 import { DiplomaticGalaPreview } from '@/components/DiplomaticGalaMedia';
 import StatBlock from '@/components/StatBlock';
@@ -304,6 +305,8 @@ function ProgramCard({
             <AwardsPreview className="w-full aspect-[4/3]" />
           ) : slug === 'diplomatic-gala' ? (
             <DiplomaticGalaPreview className="w-full aspect-[4/3]" />
+          ) : slug === 'fashion-night' || slug === 'investment-forum' ? (
+            <ProgramSuppliedImage slug={slug} compact frameClassName="w-full aspect-[4/3]" />
           ) : (
             <ProgramVision name={name} tagline={tagline} className="w-full aspect-[4/3]" />
           )}

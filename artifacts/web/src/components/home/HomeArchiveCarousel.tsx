@@ -2,12 +2,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 import catalog from '@/assets/media/founder/catalog.json';
-import ambassador from '@/assets/media/programs/gala-ambassador.webp';
-import privateOffice from '@/assets/media/programs/gala-private-office.webp';
-import diplomaticHandshake from '@/assets/media/programs/gala-diplomatic-handshake.webp';
-import partnerMeeting from '@/assets/media/programs/gala-partner-meeting.webp';
-import partnerHandshake from '@/assets/media/programs/gala-partner-handshake.webp';
-import mediaDialogue from '@/assets/media/programs/gala-media-dialogue.webp';
+import runwayGroup from '@/assets/media/programs/fashion-night-runway-group.webp';
+import fashionPortrait from '@/assets/media/programs/fashion-portrait.webp';
 import './home-experience.css';
 
 type PhotoId = keyof typeof catalog.photos;
@@ -25,21 +21,18 @@ const fromCatalog = (id: PhotoId, caption?: string): Slide => {
   };
 };
 
+// Curated for breadth: community, culture, runway and partner institutions.
+// Leadership encounters remain on program pages; this strip leads with people.
 const SLIDES: Slide[] = [
-  fromCatalog('office-encounter'),
   fromCatalog('community-outreach', 'Community & impact'),
-  fromCatalog('institutional-dialogue'),
+  { key: 'runway-group', src: runwayGroup, alt: 'Models in printed gowns on an open-air night runway', caption: 'Night runway · supplied archive' },
   fromCatalog('cultural-performance'),
-  fromCatalog('diplomatic-encounter'),
+  fromCatalog('institutional-dialogue'),
+  fromCatalog('casting-group'),
   fromCatalog('global-encounter'),
+  { key: 'fashion-portrait', src: fashionPortrait, alt: 'Editorial fashion portrait at dusk', caption: 'Editorial fashion portrait · supplied archive' },
   fromCatalog('conversation'),
   fromCatalog('human-connection'),
-  { key: 'gala-ambassador', src: ambassador, alt: 'Diplomatic meeting', caption: 'Diplomatic meeting · Founder archive' },
-  { key: 'gala-private-office', src: privateOffice, alt: 'Private office meeting', caption: 'Private office meeting · Founder archive' },
-  { key: 'gala-diplomatic-handshake', src: diplomaticHandshake, alt: 'Diplomatic exchange', caption: 'Diplomatic exchange · Founder archive' },
-  { key: 'gala-partner-meeting', src: partnerMeeting, alt: 'Partner meeting', caption: 'Partner meeting · Founder archive' },
-  { key: 'gala-partner-handshake', src: partnerHandshake, alt: 'Partner meeting handshake', caption: 'Partner meeting · Founder archive' },
-  { key: 'gala-media-dialogue', src: mediaDialogue, alt: 'Media and institutional dialogue', caption: 'Media and institutional dialogue · Founder archive' },
 ];
 
 const INTERVAL = 6000;

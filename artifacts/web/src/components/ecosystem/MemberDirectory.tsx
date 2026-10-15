@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'wouter';
+import { useAuth } from '@clerk/react';
 import { Search, Globe, RotateCw } from 'lucide-react';
 import { useGetEcosystemMembers, type PublicMember } from '@workspace/api-client-react';
 import { SECTORS } from '@/lib/sectors-data';
@@ -17,23 +18,28 @@ function safeUrl(url: string): string | null {
 }
 
 function MemberCard({ m }: { m: PublicMember }) {
+  const { isSignedIn } = useAuth();
+  const [photoFailed, setPhotoFailed] = useState(false);
   const site = m.website ? safeUrl(m.website) : null;
+  const profileHref = isSignedIn && m.enabled ? `/member/profile/${m.id}` : `/community/members/${m.id}`;
   return (
     <article className="flex flex-col gap-3 border border-sand-200 bg-ivory-50 p-5" data-testid={`card-member-${m.id}`}>
-      <div className="flex items-center gap-3">
-        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-lagoon-900 font-display text-sm text-gold-400" aria-hidden="true">{initials(m.fullName)}</span>
+      <Link href={profileHref} className="flex items-center gap-3 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500" data-testid={`link-member-identity-${m.id}`}>
+        {m.avatarUrl && !photoFailed ? (
+          <img src={`${import.meta.env.BASE_URL}${m.avatarUrl.replace(/^\//, '')}`} alt="" loading="lazy" onError={() => setPhotoFailed(true)} className="h-11 w-11 shrink-0 rounded-full object-cover" />
+        ) : <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-lagoon-900 font-display text-sm text-gold-400" aria-hidden="true">{initials(m.fullName)}</span>}
         <div className="min-w-0">
           <h3 className="truncate font-display text-base text-ink-900">{m.fullName}</h3>
           <p className="truncate text-xs text-ink-700">{[m.profession, m.organization, m.country].filter(Boolean).join(' · ')}</p>
         </div>
-      </div>
+      </Link>
       {m.bio && <p className="text-sm leading-relaxed text-ink-700 line-clamp-3">{m.bio}</p>}
       {m.offering && <p className="text-xs text-ink-700"><span className="font-semibold text-lagoon-600">Offers: </span>{m.offering}</p>}
       {m.lookingFor && <p className="text-xs text-ink-700"><span className="font-semibold text-lagoon-600">Looking for: </span>{m.lookingFor}</p>}
       <div className="mt-auto flex flex-wrap gap-1.5 pt-1">
         {m.sectors.map((s) => <span key={s} className="bg-ivory-200 px-2 py-0.5 text-[10px] uppercase tracking-wider text-ink-700">{sectorName(s)}</span>)}
       </div>
-      <Link href={`/community/members/${m.id}`} className="inline-flex items-center gap-1.5 text-xs font-semibold text-lagoon-700 hover:text-gold-700" data-testid={`link-member-profile-${m.id}`}>View network profile</Link>
+      <Link href={profileHref} className="inline-flex items-center gap-1.5 text-xs font-semibold text-lagoon-700 hover:text-gold-700" data-testid={`link-member-profile-${m.id}`}>View profile · Follow · Message</Link>
       {site && (
         <a href={site} target="_blank" rel="noopener noreferrer nofollow" className="inline-flex items-center gap-1.5 text-xs font-semibold text-lagoon-600 hover:text-gold-700" data-testid={`link-member-site-${m.id}`}>
           <Globe className="h-3.5 w-3.5" aria-hidden="true" /> Website
@@ -44,7 +50,7 @@ function MemberCard({ m }: { m: PublicMember }) {
 }
 
 export default function MemberDirectory() {
-  const { data, isLoading, isError, refetch, isFetching } = useGetEcosystemMembers();
+  const { data, isLoading, isError, refetch, isFetching } = useGetEcosystemMembers({ query: { refetchInterval: 30000 } });
   const [q, setQ] = useState('');
   const [sector, setSector] = useState('');
   const members = data?.members;

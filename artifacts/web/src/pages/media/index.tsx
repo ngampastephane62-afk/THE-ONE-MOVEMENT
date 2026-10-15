@@ -4,7 +4,9 @@ import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
 import SectionHeading from '@/components/SectionHeading';
 import { Button } from '@/components/ui/button';
-import ArchivePhoto, { archiveVideo } from '@/components/ArchivePhoto';
+import { archiveVideo } from '@/components/ArchivePhoto';
+import MediaArchiveReel from '@/components/media/MediaArchiveReel';
+import MediaCatalogue from '@/components/partners/MediaCatalogue';
 import ResponsiveMedia from '@/components/ResponsiveMedia';
 import Reveal from '@/components/Reveal';
 import { Mail } from 'lucide-react';
@@ -68,6 +70,19 @@ export default function MediaHub() {
         </div>
       </section>
 
+      {/* MEDIA COVERAGE CATALOGUE — every request reviewed by the CEO */}
+      <div className="bg-ivory-100 border-t border-sand-200">
+        <div className="mx-auto max-w-7xl px-6 pt-10">
+          <div className="border-l-2 border-gold-500 bg-ivory-50 px-5 py-4 text-sm leading-relaxed text-ink-800" data-testid="text-catalogue-review-notice">
+            <strong className="font-semibold text-ink-900">How requests work.</strong>{' '}
+            Every coverage request is reviewed personally by the CEO before any next step. Sending a request takes no
+            payment and creates no commitment. Publication is never automatic or
+            guaranteed: each outlet makes its own editorial decision.
+          </div>
+        </div>
+        <MediaCatalogue />
+      </div>
+
       {/* 2. LATEST / FEATURED MEDIA */}
       <section className="py-section-lg bg-ivory-100 border-b border-sand-200">
         <div className="mx-auto max-w-7xl px-6">
@@ -75,22 +90,8 @@ export default function MediaHub() {
             <SectionHeading eyebrow="FEATURED MEDIA" heading="FROM THE ARCHIVE" surface="light" thread />
           </Reveal>
 
-          <div className="mt-12 grid grid-cols-12 items-start gap-5 sm:gap-6">
-            <Reveal delay={100} className="col-span-12 lg:col-span-7">
-              <ArchivePhoto id="institutional-dialogue" caption="Institutional partnership" sizes="(min-width: 1024px) 58vw, 92vw" />
-            </Reveal>
-            <Reveal delay={160} className="col-span-6 lg:col-span-5">
-              <ArchivePhoto id="runway-white" caption sizes="(min-width: 1024px) 40vw, 46vw" />
-            </Reveal>
-            <Reveal delay={200} className="col-span-6 lg:col-span-4">
-              <ArchivePhoto id="community-outreach" caption sizes="(min-width: 1024px) 32vw, 46vw" />
-            </Reveal>
-            <Reveal delay={240} className="col-span-12 sm:col-span-6 lg:col-span-4">
-              <ArchivePhoto id="cultural-performance" caption sizes="(min-width: 1024px) 32vw, 92vw" />
-            </Reveal>
-            <Reveal delay={280} className="col-span-12 sm:col-span-6 lg:col-span-4">
-              <ArchivePhoto id="summit-goma" caption sizes="(min-width: 1024px) 32vw, 92vw" />
-            </Reveal>
+          <div className="mt-12">
+            <MediaArchiveReel />
           </div>
         </div>
       </section>

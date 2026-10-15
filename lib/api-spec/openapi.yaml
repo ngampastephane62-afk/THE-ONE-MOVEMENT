@@ -573,6 +573,12 @@ components:
           properties:
             id:
               type: integer
+            avatarUrl:
+              type: ["string", "null"]
+              description: Public profile photo only when the member explicitly permits public media.
+            enabled:
+              type: boolean
+              description: Whether this public member has joined the signed-in social network.
     MemberProfile:
       allOf:
         - $ref: "#/components/schemas/PublicMember"

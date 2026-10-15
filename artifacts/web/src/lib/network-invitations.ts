@@ -1,10 +1,12 @@
 import { basePath } from '@/lib/clerk';
+import { SECTORS } from '@/lib/sectors-data';
 
 /** Verified production origin used for every shared/copied link. */
 export const PUBLIC_SHARE_ORIGIN = 'https://theonemovementinternational.ae';
 
 const INVITE_KEY = 'tomi.network.pendingInvite.v1';
 const FOLLOW_KEY = 'tomi.network.pendingFollow.v1';
+const SECTOR_KEY = 'tomi.network.pendingSector.v1';
 /** Pending items are kept at most 7 days in this browser. */
 const TTL_MS = 7 * 24 * 60 * 60 * 1000;
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -58,3 +60,14 @@ export function storePendingFollow(memberId: number, name: string) {
 }
 export const getPendingFollow = (userId?: string | null) => forUser<PendingFollow>(FOLLOW_KEY, userId);
 export const clearPendingFollow = () => drop(FOLLOW_KEY);
+
+interface PendingSector { slug: string; expiresAt: number; owner?: string }
+export function storePendingSector(slug: string, userId?: string | null) {
+  if (!SECTORS.some(s => s.slug === slug)) return;
+  write(SECTOR_KEY, { slug, expiresAt: Date.now() + TTL_MS, ...(userId ? { owner: userId } : {}) } satisfies PendingSector);
+}
+export function getPendingSector(userId?: string | null): string | null {
+  const pending = forUser<PendingSector>(SECTOR_KEY, userId);
+  return pending && SECTORS.some(s => s.slug === pending.slug) ? pending.slug : null;
+}
+export const clearPendingSector = () => drop(SECTOR_KEY);

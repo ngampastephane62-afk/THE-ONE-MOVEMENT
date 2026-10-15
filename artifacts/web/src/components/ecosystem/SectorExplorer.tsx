@@ -5,10 +5,17 @@ import { ECOSYSTEM_PERSONAS } from '@/lib/ecosystem-resources';
 import PersonaPicker from './PersonaPicker';
 import SectorDetail from './SectorDetail';
 
-export default function SectorExplorer() {
+interface Props {
+  selected?: string;
+  onSelect?: (slug: string) => void;
+}
+
+export default function SectorExplorer({ selected: controlled, onSelect }: Props = {}) {
   const [persona, setPersona] = useState<string | null>(null);
   const [query, setQuery] = useState('');
-  const [selected, setSelected] = useState<string>(SECTORS[0].slug);
+  const [local, setLocal] = useState<string>(SECTORS[0].slug);
+  const selected = controlled ?? local;
+  const setSelected = (slug: string) => { setLocal(slug); onSelect?.(slug); };
 
   const visible = useMemo(() => {
     const p = ECOSYSTEM_PERSONAS.find((x) => x.id === persona);
@@ -20,7 +27,8 @@ export default function SectorExplorer() {
     });
   }, [persona, query]);
 
-  const active = visible.find((s) => s.slug === selected) ?? visible[0];
+  // A sector chosen on the hero orbit always shows, even if filters would hide it.
+  const active = visible.find((s) => s.slug === selected) ?? (controlled ? SECTORS.find((s) => s.slug === controlled) : undefined) ?? visible[0];
 
   return (
     <section id="explore" className="scroll-mt-20" aria-labelledby="explore-title">

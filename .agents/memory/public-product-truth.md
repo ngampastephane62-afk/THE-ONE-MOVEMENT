@@ -60,3 +60,9 @@ Member ecosystem profiles are private by default; public showcase visibility req
 **Why:** The user approved an ecosystem plus member platform, while their earlier public-truth and partnership constraints still apply. A community showcase must not silently publish account information or imply endorsements.
 
 **How to apply:** Separate account access from paid/event membership, expose only opt-in profile fields, preserve recommendations/bookmarks privately, and label AI illustration and source-check dates honestly.
+
+The stakeholder requests a flag-led Home without the foreground logo banner; the Ecosystem keeps a subdued logo and a waving background flag, not a second small foreground flag. Sector discovery should represent all sectors interactively, rather than repeat CEO portraits.
+
+**Why:** They explicitly objected to repetitive similar images and Yuston Nessy appearing everywhere, and requested a community-led visual balance.
+
+**How to apply:** Keep programme photos context-specific, archive imagery animated with descriptive circumstances and accessible pause controls, and avoid reintroducing duplicate foreground branding. A chosen sector is a profile suggestion to review and save, not consent to publish a profile.
