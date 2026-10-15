@@ -102,12 +102,13 @@ export default function Layout({ children }: LayoutProps) {
           {/* Right: JOIN THE MOVEMENT primary CTA + hamburger */}
           <div className="flex items-center gap-3">
             <Show when="signed-in">
-              <Link href="/member" data-testid="link-nav-member" className="hidden lg:inline-flex px-3 py-2 text-xs font-medium uppercase text-ivory-300 hover:text-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 rounded-sharp" style={{ letterSpacing: '0.1em' }}>My space</Link>
+              <Link href="/member" data-testid="link-nav-member" className="inline-flex shrink-0 bg-gold-500 px-3 py-2 text-xs font-semibold uppercase text-ink-900 hover:bg-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 rounded-sharp" style={{ letterSpacing: '0.1em' }}>My space</Link>
             </Show>
             <Show when="signed-out">
               <Link href="/sign-in" data-testid="link-nav-signin" className="hidden lg:inline-flex px-3 py-2 text-xs font-medium uppercase text-ivory-300 hover:text-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 rounded-sharp" style={{ letterSpacing: '0.1em' }}>Sign in</Link>
             </Show>
             {/* Desktop CTA — separated as primary action */}
+            <Show when="signed-out">
             <Link
               href="/join"
               className={[
@@ -124,6 +125,7 @@ export default function Layout({ children }: LayoutProps) {
             >
               Join the Movement
             </Link>
+            </Show>
 
             {/* Mobile menu button */}
             <button

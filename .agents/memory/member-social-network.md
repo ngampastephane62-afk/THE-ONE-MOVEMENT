@@ -25,7 +25,7 @@ Verified users must be able to explore the feed immediately after signing in, be
 
 **Why:** The Founder relayed user feedback that the compulsory profile form caused visitors to leave before seeing the platform.
 
-**How to apply:** Use progressive onboarding without a blocking profile form. Preserve explicit consent before making a profile discoverable to other members; do not confuse this with optional public-internet visibility. Never promise that Google or a new-device security check can always be skipped.
+**How to apply:** Use progressive onboarding without a blocking profile form. After registration or sign-in, prioritize the member network over a previously visited public page; already signed-in visitors opening an auth page should return to their interface. Keep member-space access visible on mobile without opening a menu. Preserve explicit consent before making a profile discoverable to other members; do not confuse this with optional public-internet visibility. Never promise that Google or a new-device security check can always be skipped.
 
 Email must be the primary registration and sign-in option, accepting any valid provider, including iCloud and professional addresses. Google is optional, not required.
 

@@ -149,6 +149,8 @@ function ClerkProviderWithRoutes() {
       signUpUrl={`${basePath}/sign-up`}
       signInFallbackRedirectUrl={`${basePath}/member`}
       signUpFallbackRedirectUrl={`${basePath}/member`}
+      signInForceRedirectUrl={`${basePath}/member`}
+      signUpForceRedirectUrl={`${basePath}/member`}
       afterSignOutUrl={basePath || '/'}
       localization={clerkLocalization}
       routerPush={(to) => setLocation(stripBase(to))}
