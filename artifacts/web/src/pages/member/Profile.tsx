@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { Link, useLocation, useParams } from 'wouter';
-import { Ban, Copy, ExternalLink, UserPlus, Flag, MapPin, MessageSquare, Pencil } from 'lucide-react';
+import { Ban, Copy, UserPlus, Flag, MessageSquare, Palette, LayoutGrid, List, FileText } from 'lucide-react';
+import type { NetworkPost } from '@workspace/api-client-react';
+import ProfileHero, { appearanceOf, onCoverBtn } from '@/components/network/ProfileHero';
 import { useGetNetworkState, getGetNetworkStateQueryKey } from '@workspace/api-client-react';
 import { SECTORS } from '@/lib/sectors-data';
 import PostCard from '@/components/network/PostCard';
 import ReportDialog, { type ReportTarget } from '@/components/network/ReportDialog';
-import { Avatar, Badges, Empty, ErrorBox, Skeleton, btn, btnGhost, card, field, useAct } from '@/components/network/kit';
+import { Empty, ErrorBox, Skeleton, btn, btnGhost, card, field, useAct } from '@/components/network/kit';
 import { useMe } from './ctx';
 import { publicProfileUrl } from '@/lib/network-invitations';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 
 export default function ProfilePage() {
   const { id } = useParams<{ id: string }>();
@@ -19,6 +22,7 @@ export default function ProfilePage() {
   const [asking, setAsking] = useState(false);
   const [intro, setIntro] = useState('');
   const [err, setErr] = useState('');
+  const [openPost, setOpenPost] = useState<number | null>(null);
   const params = { person: pid };
   const q = useGetNetworkState(params, { query: { queryKey: getGetNetworkStateQueryKey(params), enabled: Number.isFinite(pid), refetchInterval: 30000 } });
 
@@ -29,36 +33,33 @@ export default function ProfilePage() {
   const mine = p.id === me.id;
   const thread = base.threads.find((t) => t.other.id === p.id);
   const posts = (q.data?.posts ?? []).filter((x) => x.author.id === p.id);
+  const opened = openPost != null ? posts.find((x) => x.id === openPost) : undefined;
   const sectors = SECTORS.filter((s) => (p.sectors as string[]).includes(s.slug));
   const doAct = (pr: Promise<unknown>) => { setErr(''); pr.catch(() => setErr('That action failed. Try again.')); };
 
+  const ap = appearanceOf(p);
+  const dark = ap.layout === 'immersive';
+  const ghost = dark ? onCoverBtn : btnGhost;
+  const primary = dark ? 'inline-flex items-center justify-center gap-1.5 rounded-full bg-gold-500 px-4 py-2 text-xs font-semibold text-ink-900 hover:bg-gold-400 disabled:opacity-50' : btn;
+  const statCls = dark ? 'rounded hover:text-gold-400 hover:underline' : 'rounded hover:text-lagoon-700 hover:underline';
+  const actions = mine ? <><Link href="/member/settings" className={primary} data-testid="link-edit-profile"><Palette className="h-3.5 w-3.5" />Customize page</Link><Link href="/member/invite" className={ghost} data-testid="link-growth"><UserPlus className="h-3.5 w-3.5" />{me.founder || base.growth?.canPost ? 'Invite' : `Invite ${Math.min(base.growth?.qualifiedInvites ?? 0, base.growth?.requiredInvites ?? 11)}/${base.growth?.requiredInvites ?? 11}`}</Link></> : p.blocked ? (
+    <button className={ghost} disabled={pending} onClick={() => doAct(run({ action: 'block', targetId: p.id, accepted: false }))} data-testid="button-unblock">Unblock</button>
+  ) : (<>
+    <button className={p.followed ? ghost : primary} disabled={pending} onClick={() => doAct(run({ action: 'follow', targetId: p.id, accepted: !p.followed }))} data-testid="button-follow">{p.followed ? 'Following' : 'Follow'}</button>
+    {thread ? <Link href={`/member/messages/${thread.id}`} className={ghost} data-testid="link-thread"><MessageSquare className="h-3.5 w-3.5" />{thread.accepted ? 'Message' : thread.declined && thread.requestedByMe ? 'Request declined' : thread.requestedByMe ? 'Request pending' : 'Respond to request'}</Link>
+      : <button className={ghost} onClick={() => setAsking(true)} data-testid="button-request-message"><MessageSquare className="h-3.5 w-3.5" />Request to message</button>}
+  </>);
+  const stats = <>
+    <Link href={`/member/profile/${p.id}/followers`} className={statCls} data-testid="link-followers"><b className={dark ? '' : 'text-ink-900'}>{p.followers}</b> followers</Link>
+    <Link href={`/member/profile/${p.id}/following`} className={statCls} data-testid="link-following"><b className={dark ? '' : 'text-ink-900'}>{p.following}</b> following</Link>
+    <span><b className={dark ? '' : 'text-ink-900'}>{posts.length}{q.data?.nextCursor ? '+' : ''}</b> posts</span>
+  </>;
+
   return (
     <div className="flex flex-col gap-4">
-      <section className={`${card} overflow-hidden rounded-none border-x-0 sm:rounded-2xl sm:border-x`}>
-        <div className="h-36 bg-lagoon-800 sm:h-48" style={p.coverUrl ? { backgroundImage: `url(${p.coverUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : { backgroundImage: 'radial-gradient(ellipse at 80% 20%, hsl(39 52% 54% / 0.35), transparent 60%), linear-gradient(135deg, hsl(187 67% 12%), hsl(189 74% 28%))' }} />
-        <div className="px-4 pb-5 sm:px-6">
-          <div className="-mt-12 flex flex-wrap items-end justify-between gap-3">
-            <div className="rounded-full bg-ivory-50 p-1"><Avatar m={p} size={96} /></div>
-            <div className="flex flex-wrap gap-2">
-              {mine ? <><Link href="/member/invite" className={btnGhost} data-testid="link-growth"><UserPlus className="h-3.5 w-3.5" />{me.founder || base.growth?.canPost ? 'Invite' : `Invite ${Math.min(base.growth?.qualifiedInvites ?? 0, base.growth?.requiredInvites ?? 11)}/${base.growth?.requiredInvites ?? 11}`}</Link><Link href="/member/settings" className={btnGhost} data-testid="link-edit-profile"><Pencil className="h-3.5 w-3.5" />Edit profile</Link></> : p.blocked ? (
-                <button className={btnGhost} disabled={pending} onClick={() => doAct(run({ action: 'block', targetId: p.id, accepted: false }))} data-testid="button-unblock">Unblock</button>
-              ) : (<>
-                <button className={p.followed ? btnGhost : btn} disabled={pending} onClick={() => doAct(run({ action: 'follow', targetId: p.id, accepted: !p.followed }))} data-testid="button-follow">{p.followed ? 'Following' : 'Follow'}</button>
-                {thread ? <Link href={`/member/messages/${thread.id}`} className={btnGhost} data-testid="link-thread"><MessageSquare className="h-3.5 w-3.5" />{thread.accepted ? 'Message' : thread.declined && thread.requestedByMe ? 'Request declined' : thread.requestedByMe ? 'Request pending' : 'Respond to request'}</Link>
-                  : <button className={btnGhost} onClick={() => setAsking(true)} data-testid="button-request-message"><MessageSquare className="h-3.5 w-3.5" />Request to message</button>}
-              </>)}
-            </div>
-          </div>
-          <h1 className="mt-3 flex flex-wrap items-center gap-2 font-display text-2xl text-ink-900" data-testid="text-profile-name">{p.fullName}</h1>
-          <div className="mt-1"><Badges m={p} /></div>
-          <p className="mt-1 text-ink-700">{[p.profession, p.organization].filter(Boolean).join(' · ')}</p>
-          <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-sand-400">
-            {p.country && <span className="inline-flex items-center gap-1"><MapPin className="h-3.5 w-3.5" />{p.country}</span>}
-            {p.website && <a href={p.website} target="_blank" rel="noopener noreferrer nofollow" className="inline-flex items-center gap-1 text-lagoon-600 hover:underline"><ExternalLink className="h-3.5 w-3.5" />{p.website.replace(/^https?:\/\//, '')}</a>}
-            <Link href={`/member/profile/${p.id}/followers`} className="rounded hover:text-lagoon-700 hover:underline" data-testid="link-followers"><b className="text-ink-900">{p.followers}</b> followers</Link>
-            <Link href={`/member/profile/${p.id}/following`} className="rounded hover:text-lagoon-700 hover:underline" data-testid="link-following"><b className="text-ink-900">{p.following}</b> following</Link>
-          </div>
-          <section className="mt-4 border-t border-sand-100 pt-4" aria-label="Member description">
+      <ProfileHero m={p} layout={ap.layout} coverPosition={ap.pos} actions={actions} stats={stats} />
+      <section className={`${card} mx-3 p-5 sm:p-6 md:mx-0`}>
+          <section aria-label="Member description">
             <h2 className="text-eyebrow text-gold-700">ABOUT</h2>
             <p className="mt-2 whitespace-pre-wrap break-words text-[15px] leading-relaxed text-ink-800" data-testid="text-profile-bio">{p.bio || (mine ? 'Add a short description so other members can learn about your work and connect with you.' : 'This member has not added a description yet.')}</p>
             {mine && !p.bio && <Link href="/member/settings" className="mt-2 inline-flex text-sm font-semibold text-lagoon-700 hover:underline">Add my description</Link>}
@@ -78,7 +79,6 @@ export default function ProfilePage() {
             </div>
           )}
           {err && <p className="mt-2 text-xs text-crimson-700" role="alert">{err}</p>}
-        </div>
       </section>
 
       {asking && (
@@ -94,10 +94,19 @@ export default function ProfilePage() {
       )}
 
       <section className="flex flex-col gap-4 px-3 md:px-0">
-        <h2 className="font-display text-lg text-ink-900">Posts</h2>
+        <div className="flex items-center justify-between"><h2 className="font-display text-lg text-ink-900">Posts</h2><span className="inline-flex items-center gap-1 text-xs text-sand-400">{ap.posts === 'grid' ? <LayoutGrid className="h-3.5 w-3.5" /> : <List className="h-3.5 w-3.5" />}{ap.posts === 'grid' ? 'Gallery' : 'List'}</span></div>
         {posts.length === 0 ? <Empty title={mine ? 'Share your first post' : 'No posts yet'} body={mine ? 'Show the network what you build, design or defend.' : `${p.fullName} has not published yet.`}>{mine && (me.founder || base.growth?.canPost ? <Link href="/member" className={btn}>Write a post</Link> : <Link href="/member/invite" className={btn}>Invite 11 people to unlock posting</Link>)}</Empty>
+          : ap.posts === 'grid' ? <PostGrid posts={posts} onOpen={setOpenPost} />
           : posts.map((x) => <PostCard key={x.id} post={x} meId={me.id} onReport={(postId, memberId) => setReport({ postId, memberId })} />)}
       </section>
+      {opened && (
+        <Dialog open onOpenChange={(value) => { if (!value) setOpenPost(null); }}>
+          <DialogContent className="w-[95vw] max-w-2xl border-0 bg-ivory-50 px-2 pb-2 pt-10" aria-describedby={undefined} data-testid="dialog-post">
+            <DialogTitle className="sr-only">Post by {opened.author.fullName}</DialogTitle>
+            <PostCard post={opened} meId={me.id} onReport={(postId, memberId) => setReport({ postId, memberId })} />
+          </DialogContent>
+        </Dialog>
+      )}
       <ReportDialog target={report} onClose={() => setReport(null)} />
     </div>
   );
@@ -116,6 +125,25 @@ function PublicLink({ id }: { id: number }) {
         <button type="button" className={btnGhost} onClick={copy} data-testid="button-copy-public-link"><Copy className="h-3.5 w-3.5" />{st === 'ok' ? 'Copied' : 'Copy'}</button>
       </div>
       {st === 'fail' && <p className="mt-1 text-xs text-crimson-700" role="alert">Copy failed. Select the link and copy it manually.</p>}
+    </div>
+  );
+}
+
+function PostGrid({ posts, onOpen }: { posts: NetworkPost[]; onOpen: (id: number) => void }) {
+  return (
+    <div className="grid grid-cols-3 gap-1 sm:gap-2" data-testid="grid-posts">
+      {posts.map((x) => {
+        const img = x.media.find((m) => m.contentType.startsWith('image/'));
+        const vid = !img && x.media.find((m) => m.contentType.startsWith('video/'));
+        return (
+          <button key={x.id} type="button" onClick={() => onOpen(x.id)} className="group relative aspect-square overflow-hidden rounded-md bg-lagoon-900 text-left sm:rounded-xl" aria-label={`Open post: ${x.text.slice(0, 60) || 'media'}`} data-testid={`tile-post-${x.id}`}>
+            {img ? <img src={img.url} alt="" loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+              : vid ? <video src={vid.url} muted playsInline preload="metadata" className="h-full w-full object-cover" />
+              : <span className="flex h-full flex-col justify-between bg-[linear-gradient(150deg,hsl(187_67%_12%),hsl(189_74%_24%))] p-2.5 sm:p-4"><FileText className="h-4 w-4 text-gold-400" /><span className="line-clamp-4 font-display text-[11px] leading-snug text-ivory-100 sm:text-sm">{x.text}</span></span>}
+            <span className="absolute inset-x-0 bottom-0 flex gap-3 bg-gradient-to-t from-lagoon-900/80 to-transparent px-2 pb-1.5 pt-6 text-[10px] font-semibold text-ivory-50 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">{x.likes} likes · {x.comments.length} comments</span>
+          </button>
+        );
+      })}
     </div>
   );
 }

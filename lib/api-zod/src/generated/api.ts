@@ -126,6 +126,9 @@ export const getPublicNetworkProfileResponseProfileOneOneWebsiteMax = 500;
 
 export const getPublicNetworkProfileResponseProfileOneOneSectorsMax = 8;
 
+export const getPublicNetworkProfileResponseProfileOneOneCoverPositionMin = 0;
+export const getPublicNetworkProfileResponseProfileOneOneCoverPositionMax = 100;
+
 
 
 export const GetPublicNetworkProfileResponse = zod.object({
@@ -140,7 +143,10 @@ export const GetPublicNetworkProfileResponse = zod.object({
   "website": zod.string().max(getPublicNetworkProfileResponseProfileOneOneWebsiteMax),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(getPublicNetworkProfileResponseProfileOneOneSectorsMax),
   "isPublic": zod.boolean(),
-  "publicMedia": zod.boolean().optional()
+  "publicMedia": zod.boolean().optional(),
+  "profileLayout": zod.enum(['immersive', 'centered', 'editorial']).optional(),
+  "coverPosition": zod.number().min(getPublicNetworkProfileResponseProfileOneOneCoverPositionMin).max(getPublicNetworkProfileResponseProfileOneOneCoverPositionMax).optional(),
+  "postsLayout": zod.enum(['grid', 'list']).optional()
 }).and(zod.object({
   "id": zod.number()
 })).and(zod.object({
@@ -198,6 +204,9 @@ export const getNetworkStateResponseMeOneOneOneWebsiteMax = 500;
 
 export const getNetworkStateResponseMeOneOneOneSectorsMax = 8;
 
+export const getNetworkStateResponseMeOneOneOneCoverPositionMin = 0;
+export const getNetworkStateResponseMeOneOneOneCoverPositionMax = 100;
+
 export const getNetworkStateResponseFounderOneOneOneFullNameMin = 2;
 export const getNetworkStateResponseFounderOneOneOneFullNameMax = 100;
 
@@ -216,6 +225,9 @@ export const getNetworkStateResponseFounderOneOneOneLookingForMax = 500;
 export const getNetworkStateResponseFounderOneOneOneWebsiteMax = 500;
 
 export const getNetworkStateResponseFounderOneOneOneSectorsMax = 8;
+
+export const getNetworkStateResponseFounderOneOneOneCoverPositionMin = 0;
+export const getNetworkStateResponseFounderOneOneOneCoverPositionMax = 100;
 
 export const getNetworkStateResponseMembersItemOneOneFullNameMin = 2;
 export const getNetworkStateResponseMembersItemOneOneFullNameMax = 100;
@@ -236,6 +248,9 @@ export const getNetworkStateResponseMembersItemOneOneWebsiteMax = 500;
 
 export const getNetworkStateResponseMembersItemOneOneSectorsMax = 8;
 
+export const getNetworkStateResponseMembersItemOneOneCoverPositionMin = 0;
+export const getNetworkStateResponseMembersItemOneOneCoverPositionMax = 100;
+
 export const getNetworkStateResponsePostsItemAuthorOneOneFullNameMin = 2;
 export const getNetworkStateResponsePostsItemAuthorOneOneFullNameMax = 100;
 
@@ -254,6 +269,9 @@ export const getNetworkStateResponsePostsItemAuthorOneOneLookingForMax = 500;
 export const getNetworkStateResponsePostsItemAuthorOneOneWebsiteMax = 500;
 
 export const getNetworkStateResponsePostsItemAuthorOneOneSectorsMax = 8;
+
+export const getNetworkStateResponsePostsItemAuthorOneOneCoverPositionMin = 0;
+export const getNetworkStateResponsePostsItemAuthorOneOneCoverPositionMax = 100;
 
 export const getNetworkStateResponsePostsItemCommentsItemAuthorOneOneFullNameMin = 2;
 export const getNetworkStateResponsePostsItemCommentsItemAuthorOneOneFullNameMax = 100;
@@ -274,6 +292,9 @@ export const getNetworkStateResponsePostsItemCommentsItemAuthorOneOneWebsiteMax 
 
 export const getNetworkStateResponsePostsItemCommentsItemAuthorOneOneSectorsMax = 8;
 
+export const getNetworkStateResponsePostsItemCommentsItemAuthorOneOneCoverPositionMin = 0;
+export const getNetworkStateResponsePostsItemCommentsItemAuthorOneOneCoverPositionMax = 100;
+
 export const getNetworkStateResponsePersonOneOneOneFullNameMin = 2;
 export const getNetworkStateResponsePersonOneOneOneFullNameMax = 100;
 
@@ -292,6 +313,9 @@ export const getNetworkStateResponsePersonOneOneOneLookingForMax = 500;
 export const getNetworkStateResponsePersonOneOneOneWebsiteMax = 500;
 
 export const getNetworkStateResponsePersonOneOneOneSectorsMax = 8;
+
+export const getNetworkStateResponsePersonOneOneOneCoverPositionMin = 0;
+export const getNetworkStateResponsePersonOneOneOneCoverPositionMax = 100;
 
 export const getNetworkStateResponseThreadsItemOtherOneOneFullNameMin = 2;
 export const getNetworkStateResponseThreadsItemOtherOneOneFullNameMax = 100;
@@ -312,6 +336,9 @@ export const getNetworkStateResponseThreadsItemOtherOneOneWebsiteMax = 500;
 
 export const getNetworkStateResponseThreadsItemOtherOneOneSectorsMax = 8;
 
+export const getNetworkStateResponseThreadsItemOtherOneOneCoverPositionMin = 0;
+export const getNetworkStateResponseThreadsItemOtherOneOneCoverPositionMax = 100;
+
 export const getNetworkStateResponseCertificationsItemMemberOneOneFullNameMin = 2;
 export const getNetworkStateResponseCertificationsItemMemberOneOneFullNameMax = 100;
 
@@ -330,6 +357,9 @@ export const getNetworkStateResponseCertificationsItemMemberOneOneLookingForMax 
 export const getNetworkStateResponseCertificationsItemMemberOneOneWebsiteMax = 500;
 
 export const getNetworkStateResponseCertificationsItemMemberOneOneSectorsMax = 8;
+
+export const getNetworkStateResponseCertificationsItemMemberOneOneCoverPositionMin = 0;
+export const getNetworkStateResponseCertificationsItemMemberOneOneCoverPositionMax = 100;
 
 
 
@@ -351,7 +381,10 @@ export const GetNetworkStateResponse = zod.object({
   "website": zod.string().max(getNetworkStateResponseMeOneOneOneWebsiteMax),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(getNetworkStateResponseMeOneOneOneSectorsMax),
   "isPublic": zod.boolean(),
-  "publicMedia": zod.boolean().optional()
+  "publicMedia": zod.boolean().optional(),
+  "profileLayout": zod.enum(['immersive', 'centered', 'editorial']).optional(),
+  "coverPosition": zod.number().min(getNetworkStateResponseMeOneOneOneCoverPositionMin).max(getNetworkStateResponseMeOneOneOneCoverPositionMax).optional(),
+  "postsLayout": zod.enum(['grid', 'list']).optional()
 }).and(zod.object({
   "id": zod.number()
 })).and(zod.object({
@@ -381,7 +414,10 @@ export const GetNetworkStateResponse = zod.object({
   "website": zod.string().max(getNetworkStateResponseFounderOneOneOneWebsiteMax),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(getNetworkStateResponseFounderOneOneOneSectorsMax),
   "isPublic": zod.boolean(),
-  "publicMedia": zod.boolean().optional()
+  "publicMedia": zod.boolean().optional(),
+  "profileLayout": zod.enum(['immersive', 'centered', 'editorial']).optional(),
+  "coverPosition": zod.number().min(getNetworkStateResponseFounderOneOneOneCoverPositionMin).max(getNetworkStateResponseFounderOneOneOneCoverPositionMax).optional(),
+  "postsLayout": zod.enum(['grid', 'list']).optional()
 }).and(zod.object({
   "id": zod.number()
 })).and(zod.object({
@@ -411,7 +447,10 @@ export const GetNetworkStateResponse = zod.object({
   "website": zod.string().max(getNetworkStateResponseMembersItemOneOneWebsiteMax),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(getNetworkStateResponseMembersItemOneOneSectorsMax),
   "isPublic": zod.boolean(),
-  "publicMedia": zod.boolean().optional()
+  "publicMedia": zod.boolean().optional(),
+  "profileLayout": zod.enum(['immersive', 'centered', 'editorial']).optional(),
+  "coverPosition": zod.number().min(getNetworkStateResponseMembersItemOneOneCoverPositionMin).max(getNetworkStateResponseMembersItemOneOneCoverPositionMax).optional(),
+  "postsLayout": zod.enum(['grid', 'list']).optional()
 }).and(zod.object({
   "id": zod.number()
 })).and(zod.object({
@@ -443,7 +482,10 @@ export const GetNetworkStateResponse = zod.object({
   "website": zod.string().max(getNetworkStateResponsePostsItemAuthorOneOneWebsiteMax),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(getNetworkStateResponsePostsItemAuthorOneOneSectorsMax),
   "isPublic": zod.boolean(),
-  "publicMedia": zod.boolean().optional()
+  "publicMedia": zod.boolean().optional(),
+  "profileLayout": zod.enum(['immersive', 'centered', 'editorial']).optional(),
+  "coverPosition": zod.number().min(getNetworkStateResponsePostsItemAuthorOneOneCoverPositionMin).max(getNetworkStateResponsePostsItemAuthorOneOneCoverPositionMax).optional(),
+  "postsLayout": zod.enum(['grid', 'list']).optional()
 }).and(zod.object({
   "id": zod.number()
 })).and(zod.object({
@@ -486,7 +528,10 @@ export const GetNetworkStateResponse = zod.object({
   "website": zod.string().max(getNetworkStateResponsePostsItemCommentsItemAuthorOneOneWebsiteMax),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(getNetworkStateResponsePostsItemCommentsItemAuthorOneOneSectorsMax),
   "isPublic": zod.boolean(),
-  "publicMedia": zod.boolean().optional()
+  "publicMedia": zod.boolean().optional(),
+  "profileLayout": zod.enum(['immersive', 'centered', 'editorial']).optional(),
+  "coverPosition": zod.number().min(getNetworkStateResponsePostsItemCommentsItemAuthorOneOneCoverPositionMin).max(getNetworkStateResponsePostsItemCommentsItemAuthorOneOneCoverPositionMax).optional(),
+  "postsLayout": zod.enum(['grid', 'list']).optional()
 }).and(zod.object({
   "id": zod.number()
 })).and(zod.object({
@@ -523,7 +568,10 @@ export const GetNetworkStateResponse = zod.object({
   "website": zod.string().max(getNetworkStateResponsePersonOneOneOneWebsiteMax),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(getNetworkStateResponsePersonOneOneOneSectorsMax),
   "isPublic": zod.boolean(),
-  "publicMedia": zod.boolean().optional()
+  "publicMedia": zod.boolean().optional(),
+  "profileLayout": zod.enum(['immersive', 'centered', 'editorial']).optional(),
+  "coverPosition": zod.number().min(getNetworkStateResponsePersonOneOneOneCoverPositionMin).max(getNetworkStateResponsePersonOneOneOneCoverPositionMax).optional(),
+  "postsLayout": zod.enum(['grid', 'list']).optional()
 }).and(zod.object({
   "id": zod.number()
 })).and(zod.object({
@@ -555,7 +603,10 @@ export const GetNetworkStateResponse = zod.object({
   "website": zod.string().max(getNetworkStateResponseThreadsItemOtherOneOneWebsiteMax),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(getNetworkStateResponseThreadsItemOtherOneOneSectorsMax),
   "isPublic": zod.boolean(),
-  "publicMedia": zod.boolean().optional()
+  "publicMedia": zod.boolean().optional(),
+  "profileLayout": zod.enum(['immersive', 'centered', 'editorial']).optional(),
+  "coverPosition": zod.number().min(getNetworkStateResponseThreadsItemOtherOneOneCoverPositionMin).max(getNetworkStateResponseThreadsItemOtherOneOneCoverPositionMax).optional(),
+  "postsLayout": zod.enum(['grid', 'list']).optional()
 }).and(zod.object({
   "id": zod.number()
 })).and(zod.object({
@@ -601,7 +652,10 @@ export const GetNetworkStateResponse = zod.object({
   "website": zod.string().max(getNetworkStateResponseCertificationsItemMemberOneOneWebsiteMax),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(getNetworkStateResponseCertificationsItemMemberOneOneSectorsMax),
   "isPublic": zod.boolean(),
-  "publicMedia": zod.boolean().optional()
+  "publicMedia": zod.boolean().optional(),
+  "profileLayout": zod.enum(['immersive', 'centered', 'editorial']).optional(),
+  "coverPosition": zod.number().min(getNetworkStateResponseCertificationsItemMemberOneOneCoverPositionMin).max(getNetworkStateResponseCertificationsItemMemberOneOneCoverPositionMax).optional(),
+  "postsLayout": zod.enum(['grid', 'list']).optional()
 }).and(zod.object({
   "id": zod.number()
 })).and(zod.object({
@@ -756,6 +810,9 @@ export const getMemberProfileResponseProfileOneOneOneWebsiteMax = 500;
 
 export const getMemberProfileResponseProfileOneOneOneSectorsMax = 8;
 
+export const getMemberProfileResponseProfileOneOneOneCoverPositionMin = 0;
+export const getMemberProfileResponseProfileOneOneOneCoverPositionMax = 100;
+
 
 
 export const GetMemberProfileResponse = zod.object({
@@ -770,7 +827,10 @@ export const GetMemberProfileResponse = zod.object({
   "website": zod.string().max(getMemberProfileResponseProfileOneOneOneWebsiteMax),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(getMemberProfileResponseProfileOneOneOneSectorsMax),
   "isPublic": zod.boolean(),
-  "publicMedia": zod.boolean().optional()
+  "publicMedia": zod.boolean().optional(),
+  "profileLayout": zod.enum(['immersive', 'centered', 'editorial']).optional(),
+  "coverPosition": zod.number().min(getMemberProfileResponseProfileOneOneOneCoverPositionMin).max(getMemberProfileResponseProfileOneOneOneCoverPositionMax).optional(),
+  "postsLayout": zod.enum(['grid', 'list']).optional()
 }).and(zod.object({
   "id": zod.number()
 })).and(zod.object({
@@ -802,6 +862,9 @@ export const saveMemberProfileBodyWebsiteMax = 500;
 
 export const saveMemberProfileBodySectorsMax = 8;
 
+export const saveMemberProfileBodyCoverPositionMin = 0;
+export const saveMemberProfileBodyCoverPositionMax = 100;
+
 
 
 export const SaveMemberProfileBody = zod.object({
@@ -815,7 +878,10 @@ export const SaveMemberProfileBody = zod.object({
   "website": zod.string().max(saveMemberProfileBodyWebsiteMax),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(saveMemberProfileBodySectorsMax),
   "isPublic": zod.boolean(),
-  "publicMedia": zod.boolean().optional()
+  "publicMedia": zod.boolean().optional(),
+  "profileLayout": zod.enum(['immersive', 'centered', 'editorial']).optional(),
+  "coverPosition": zod.number().min(saveMemberProfileBodyCoverPositionMin).max(saveMemberProfileBodyCoverPositionMax).optional(),
+  "postsLayout": zod.enum(['grid', 'list']).optional()
 })
 
 export const saveMemberProfileResponseProfileOneOneOneFullNameMin = 2;
@@ -837,6 +903,9 @@ export const saveMemberProfileResponseProfileOneOneOneWebsiteMax = 500;
 
 export const saveMemberProfileResponseProfileOneOneOneSectorsMax = 8;
 
+export const saveMemberProfileResponseProfileOneOneOneCoverPositionMin = 0;
+export const saveMemberProfileResponseProfileOneOneOneCoverPositionMax = 100;
+
 
 
 export const SaveMemberProfileResponse = zod.object({
@@ -851,7 +920,10 @@ export const SaveMemberProfileResponse = zod.object({
   "website": zod.string().max(saveMemberProfileResponseProfileOneOneOneWebsiteMax),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(saveMemberProfileResponseProfileOneOneOneSectorsMax),
   "isPublic": zod.boolean(),
-  "publicMedia": zod.boolean().optional()
+  "publicMedia": zod.boolean().optional(),
+  "profileLayout": zod.enum(['immersive', 'centered', 'editorial']).optional(),
+  "coverPosition": zod.number().min(saveMemberProfileResponseProfileOneOneOneCoverPositionMin).max(saveMemberProfileResponseProfileOneOneOneCoverPositionMax).optional(),
+  "postsLayout": zod.enum(['grid', 'list']).optional()
 }).and(zod.object({
   "id": zod.number()
 })).and(zod.object({
@@ -892,6 +964,9 @@ export const toggleMemberSavedItemResponseProfileOneOneOneWebsiteMax = 500;
 
 export const toggleMemberSavedItemResponseProfileOneOneOneSectorsMax = 8;
 
+export const toggleMemberSavedItemResponseProfileOneOneOneCoverPositionMin = 0;
+export const toggleMemberSavedItemResponseProfileOneOneOneCoverPositionMax = 100;
+
 
 
 export const ToggleMemberSavedItemResponse = zod.object({
@@ -906,7 +981,10 @@ export const ToggleMemberSavedItemResponse = zod.object({
   "website": zod.string().max(toggleMemberSavedItemResponseProfileOneOneOneWebsiteMax),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(toggleMemberSavedItemResponseProfileOneOneOneSectorsMax),
   "isPublic": zod.boolean(),
-  "publicMedia": zod.boolean().optional()
+  "publicMedia": zod.boolean().optional(),
+  "profileLayout": zod.enum(['immersive', 'centered', 'editorial']).optional(),
+  "coverPosition": zod.number().min(toggleMemberSavedItemResponseProfileOneOneOneCoverPositionMin).max(toggleMemberSavedItemResponseProfileOneOneOneCoverPositionMax).optional(),
+  "postsLayout": zod.enum(['grid', 'list']).optional()
 }).and(zod.object({
   "id": zod.number()
 })).and(zod.object({
@@ -938,6 +1016,9 @@ export const getEcosystemMembersResponseMembersItemOneWebsiteMax = 500;
 
 export const getEcosystemMembersResponseMembersItemOneSectorsMax = 8;
 
+export const getEcosystemMembersResponseMembersItemOneCoverPositionMin = 0;
+export const getEcosystemMembersResponseMembersItemOneCoverPositionMax = 100;
+
 
 
 export const GetEcosystemMembersResponse = zod.object({
@@ -952,7 +1033,10 @@ export const GetEcosystemMembersResponse = zod.object({
   "website": zod.string().max(getEcosystemMembersResponseMembersItemOneWebsiteMax),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(getEcosystemMembersResponseMembersItemOneSectorsMax),
   "isPublic": zod.boolean(),
-  "publicMedia": zod.boolean().optional()
+  "publicMedia": zod.boolean().optional(),
+  "profileLayout": zod.enum(['immersive', 'centered', 'editorial']).optional(),
+  "coverPosition": zod.number().min(getEcosystemMembersResponseMembersItemOneCoverPositionMin).max(getEcosystemMembersResponseMembersItemOneCoverPositionMax).optional(),
+  "postsLayout": zod.enum(['grid', 'list']).optional()
 }).and(zod.object({
   "id": zod.number()
 })))

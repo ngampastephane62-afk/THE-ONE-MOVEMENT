@@ -21,6 +21,8 @@ export * from './mediaInquiryReview';
 export * from './mediaInquiryReviewStatus';
 export * from './memberProfile';
 export * from './memberProfileInput';
+export * from './memberProfileInputPostsLayout';
+export * from './memberProfileInputProfileLayout';
 export * from './memberProfileInputSectorsItem';
 export * from './memberProfileResponse';
 export * from './networkActionInput';

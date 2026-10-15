@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { useUser } from '@clerk/react';
-import { useQueryClient } from '@tanstack/react-query';
-import { Camera, ImageIcon, Loader2 } from 'lucide-react';
-import { useGetMemberProfile, getGetMemberProfileQueryKey } from '@workspace/api-client-react';
-import { ACCEPT_IMG, Avatar, ErrorBox, STATE_PREFIX, Skeleton, card, useAct, useUploads } from '@/components/network/kit';
+import { Link } from 'wouter';
+import { Camera, Eye, ImageIcon, Loader2 } from 'lucide-react';
+import ProfileHero, { appearanceOf } from '@/components/network/ProfileHero';
+import { useGetMemberProfile, getGetMemberProfileQueryKey, type MemberProfileInput } from '@workspace/api-client-react';
+import { ACCEPT_IMG, ErrorBox, Skeleton, btn, card, useAct, useUploads } from '@/components/network/kit';
 import ProfileForm from './ProfileForm';
 import Workspace from './Workspace';
 import { useMe } from './ctx';
@@ -37,34 +38,50 @@ function MediaPicker({ kind }: { kind: 'avatar' | 'cover' }) {
 export default function SettingsPage() {
   const { me } = useMe();
   const { user } = useUser();
-  const qc = useQueryClient();
   const [tab, setTab] = useState<'profile' | 'workspace'>('profile');
   const [saved, setSaved] = useState(false);
+  const [draft, setDraft] = useState<MemberProfileInput | null>(null);
+  const [formKey, setFormKey] = useState(0);
   const q = useGetMemberProfile({ query: { queryKey: getGetMemberProfileQueryKey() } });
+  const src = draft ?? q.data?.profile ?? null;
+  const ap = appearanceOf(src);
+  const preview = { ...me, ...(draft ? { fullName: draft.fullName || me.fullName, profession: draft.profession, organization: draft.organization, country: draft.country, website: draft.website } : {}) };
+  const dirty = !!draft && !!q.data?.profile && (['profileLayout', 'coverPosition', 'postsLayout', 'fullName', 'profession', 'organization', 'country', 'website', 'bio', 'offering', 'lookingFor', 'sectors', 'isPublic', 'publicMedia'] as const).some((k) => k in appearanceKeys ? appearanceOf(draft)[appearanceKeys[k as keyof typeof appearanceKeys]] !== appearanceOf(q.data!.profile)[appearanceKeys[k as keyof typeof appearanceKeys]] : JSON.stringify(draft[k]) !== JSON.stringify(q.data!.profile![k]));
 
   return (
     <div className="flex flex-col gap-4 px-3 pt-4 md:px-0 md:pt-0">
-      <section className={`${card} overflow-hidden`}>
-        <div className="relative h-32 bg-lagoon-800 sm:h-40" style={me.coverUrl ? { backgroundImage: `url(${me.coverUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}>
-          <div className="absolute right-3 top-3"><MediaPicker kind="cover" /></div>
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="text-eyebrow text-gold-700">SETTINGS</p>
+          <h1 className="font-display text-2xl text-ink-900">Customize your page</h1>
+          <p className="mt-1 text-sm text-ink-700">Free for every member. Changes preview live below and apply once you save.</p>
         </div>
-        <div className="flex flex-wrap items-end gap-4 px-5 pb-5">
-          <div className="-mt-10 rounded-full bg-ivory-50 p-1"><Avatar m={me} size={84} /></div>
-          <MediaPicker kind="avatar" />
+        <Link href={`/member/profile/${me.id}`} className={btn} data-testid="link-view-my-profile"><Eye className="h-3.5 w-3.5" />View my profile</Link>
+      </div>
+      <div className="relative">
+        <p className="mb-2 flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] text-sand-400"><span className={`h-1.5 w-1.5 rounded-full ${dirty ? 'bg-coral-500' : 'bg-lagoon-600'}`} />{dirty ? 'Preview, unsaved changes' : 'Preview of your page'}</p>
+        <div className="overflow-hidden rounded-3xl ring-1 ring-sand-200">
+          <ProfileHero m={preview} layout={ap.layout} coverPosition={ap.pos} compact coverTools={<MediaPicker kind="cover" />} avatarTools={<MediaPicker kind="avatar" />}
+            stats={<><span><b>{me.followers}</b> followers</span><span><b>{me.following}</b> following</span></>} />
         </div>
-      </section>
+        <p className="mt-2 text-xs text-sand-400">Photo and cover save as soon as they finish uploading. Use the focal point slider to choose which part of your cover stays visible.</p>
+      </div>
       <div className="flex gap-1 rounded-full bg-ivory-200 p-1" role="tablist">
-        {([['profile', 'Profile & visibility'], ['workspace', 'Workspace bookmarks']] as const).map(([id, l]) => (
+        {([['profile', 'Page & visibility'], ['workspace', 'Workspace bookmarks']] as const).map(([id, l]) => (
           <button key={id} role="tab" aria-selected={tab === id} onClick={() => setTab(id)} className={`flex-1 rounded-full px-3 py-1.5 text-xs ${tab === id ? 'bg-ivory-50 font-semibold text-lagoon-900 shadow-sm' : 'text-ink-700'}`} data-testid={`tab-settings-${id}`}>{l}</button>
         ))}
       </div>
       {q.isLoading ? <Skeleton rows={2} /> : q.isError ? <ErrorBox onRetry={() => q.refetch()} /> : !q.data?.profile ? <ErrorBox onRetry={() => q.refetch()} msg="Profile not found." /> : tab === 'profile' ? (
         <div className={`${card} p-5 sm:p-7`}>
-          <p className="mb-5 text-sm text-ink-700">These details appear on your network profile for signed-in members. The public-directory switch below controls only the public website.</p>
-          {saved && <p className="mb-4 rounded-lg bg-lagoon-600/10 p-2 text-sm text-lagoon-700" role="status">Profile saved.</p>}
-          <ProfileForm initial={q.data.profile} defaultName={user?.fullName ?? ''} onDone={() => { setSaved(true); qc.invalidateQueries({ queryKey: STATE_PREFIX }); }} />
+          <p className="mb-5 text-sm text-ink-700">These details appear on your network page for signed-in members. The public-directory switch below controls only the public website.</p>
+          {saved && <p className="mb-4 flex flex-wrap items-center gap-3 rounded-lg bg-lagoon-600/10 p-2 text-sm text-lagoon-700" role="status">Page saved. <Link href={`/member/profile/${me.id}`} className="font-semibold underline" data-testid="link-view-saved">See it live</Link></p>}
+          <ProfileForm key={formKey} appearance initial={q.data.profile} defaultName={user?.fullName ?? ''} onDraft={(d) => { setDraft(d); }}
+            onCancel={dirty ? () => { setDraft(null); setSaved(false); setFormKey((k) => k + 1); } : undefined}
+            onDone={() => { setSaved(true); setDraft(null); }} />
         </div>
       ) : <Workspace profile={q.data.profile} onEdit={() => setTab('profile')} />}
     </div>
   );
 }
+
+const appearanceKeys = { profileLayout: 'layout', coverPosition: 'pos', postsLayout: 'posts' } as const;

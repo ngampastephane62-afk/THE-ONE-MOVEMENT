@@ -63,6 +63,9 @@ function publicProfile(row: typeof members.$inferSelect) {
     website: row.website,
     sectors: row.sectors,
     isPublic: row.isPublic,
+    profileLayout: row.profileLayout,
+    coverPosition: row.coverPosition,
+    postsLayout: row.postsLayout,
   };
 }
 

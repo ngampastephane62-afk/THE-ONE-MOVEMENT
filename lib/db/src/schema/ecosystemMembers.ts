@@ -1,4 +1,4 @@
-import { boolean, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
+import { boolean, integer, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
 
 // Clerk owns identity and verified-email authentication. This table contains
 // only the member's chosen ecosystem profile, private unless explicitly listed.
@@ -17,6 +17,9 @@ export const ecosystemMembersTable = pgTable("ecosystem_members", {
   savedItems: text("saved_items").array().notNull().default([]),
   isPublic: boolean("is_public").notNull().default(false),
   publicMedia: boolean("public_media").notNull().default(false),
+  profileLayout: text("profile_layout").$type<"immersive" | "centered" | "editorial">().notNull().default("immersive"),
+  coverPosition: integer("cover_position").notNull().default(50),
+  postsLayout: text("posts_layout").$type<"grid" | "list">().notNull().default("grid"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });

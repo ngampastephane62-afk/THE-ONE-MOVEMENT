@@ -191,6 +191,23 @@ export const MemberProfileInputSectorsItem = {
   'health-care': 'health-care',
 } as const;
 
+export type MemberProfileInputProfileLayout = typeof MemberProfileInputProfileLayout[keyof typeof MemberProfileInputProfileLayout];
+
+
+export const MemberProfileInputProfileLayout = {
+  immersive: 'immersive',
+  centered: 'centered',
+  editorial: 'editorial',
+} as const;
+
+export type MemberProfileInputPostsLayout = typeof MemberProfileInputPostsLayout[keyof typeof MemberProfileInputPostsLayout];
+
+
+export const MemberProfileInputPostsLayout = {
+  grid: 'grid',
+  list: 'list',
+} as const;
+
 export interface MemberProfileInput {
   /**
      * @minLength 2
@@ -215,6 +232,13 @@ export interface MemberProfileInput {
   sectors: MemberProfileInputSectorsItem[];
   isPublic: boolean;
   publicMedia?: boolean;
+  profileLayout?: MemberProfileInputProfileLayout;
+  /**
+     * @minimum 0
+     * @maximum 100
+     */
+  coverPosition?: number;
+  postsLayout?: MemberProfileInputPostsLayout;
 }
 
 export type PublicMember = MemberProfileInput & {

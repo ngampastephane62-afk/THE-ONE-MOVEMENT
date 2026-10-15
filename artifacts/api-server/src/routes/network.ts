@@ -36,6 +36,7 @@ router.get("/community/profiles/:id", async (req, res) => {
     id, fullName: m.fullName, profession: m.profession, organization: m.organization, country: m.country,
     bio: m.bio, offering: m.offering, lookingFor: m.lookingFor, website: m.website, sectors: m.sectors,
     isPublic: true, enabled: !!p?.enabled, founder: !!p?.founder, suspended: false,
+    profileLayout: m.profileLayout, coverPosition: m.coverPosition, postsLayout: m.postsLayout,
     avatarUrl: avatar.length ? `/api/community/media/${avatar[0]!.id}` : null,
     coverUrl: cover.length ? `/api/community/media/${cover[0]!.id}` : null,
     followers: p?.enabled ? counts[0]?.followers ?? 0 : 0, following: p?.enabled ? counts[0]?.following ?? 0 : 0,

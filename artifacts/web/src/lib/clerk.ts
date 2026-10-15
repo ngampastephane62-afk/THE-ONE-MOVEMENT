@@ -58,16 +58,19 @@ export const clerkAppearance = {
 };
 
 export const clerkLocalization = {
+  unstable__errors: {
+    form_identifier_not_found: 'No account found for this email. First visit? Choose “Create a free account” above to register.',
+  },
   signIn: {
     start: {
       title: 'Welcome back',
-      subtitle: 'Sign in to your TOMI member space',
+      subtitle: 'Sign in with your email. Google is optional.',
     },
   },
   signUp: {
     start: {
       title: 'Create your member space',
-      subtitle: 'A private workspace across the TOMI ecosystem',
+      subtitle: 'Use your email — no Google account required',
     },
   },
 };

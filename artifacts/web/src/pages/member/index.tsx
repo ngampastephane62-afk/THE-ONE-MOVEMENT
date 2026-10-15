@@ -87,6 +87,7 @@ const NAV = [
 
 function AppShell({ me, base, children }: Ctx & { children: ReactNode }) {
   const [loc] = useLocation();
+  const personalPage = loc === '/member/settings' || loc === `/member/profile/${me.id}`;
   const { signOut } = useClerk();
   const unread = base.threads.reduce((n, t) => n + t.unread, 0) + base.threads.filter((t) => !t.accepted && !t.requestedByMe).length;
   const active = (h: string, exact?: boolean) => (exact ? loc === h || loc === '/member/' : loc.startsWith(h));
@@ -127,7 +128,7 @@ function AppShell({ me, base, children }: Ctx & { children: ReactNode }) {
           <Link href="/member/settings" className={`flex items-center gap-3 rounded-full px-4 py-2.5 text-sm ${active('/member/settings') ? 'bg-lagoon-900 font-semibold text-gold-400' : 'text-ink-800 hover:bg-ivory-200'}`}><Settings className="h-4 w-4" />Settings & workspace</Link>
           <Link href="/donate" className="mt-4 flex items-center gap-3 rounded-2xl border border-gold-500/40 bg-gold-500/10 px-4 py-3 text-sm text-ink-800 hover:border-gold-500" data-testid="link-humanitarian"><HandHeart className="h-4 w-4 text-gold-700" />Humanitarian action</Link>
         </aside>
-        <main className="min-w-0 flex-1">{me.enabled ? <PendingInvitation /> : <ActivationPrompt />}<CompleteProfile me={me} />{children}</main>
+        <main className="min-w-0 flex-1">{me.enabled ? <PendingInvitation /> : !personalPage && <ActivationPrompt />}{!personalPage && <CompleteProfile me={me} />}{children}</main>
       </div>
       <nav aria-label="Network" className="fixed inset-x-0 bottom-0 z-40 grid border-t border-sand-200 bg-ivory-50/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden" style={{ gridTemplateColumns: `repeat(${nav.length}, 1fr)` }}>
         {nav.map(({ href, label, icon: I, exact }) => (

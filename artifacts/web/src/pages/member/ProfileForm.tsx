@@ -1,10 +1,14 @@
-import { useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { appearanceOf } from '@/components/network/ProfileHero';
+import AppearanceControls from './AppearanceControls';
+import { STATE_PREFIX } from '@/components/network/kit';
 import { useQueryClient } from '@tanstack/react-query';
 import { Loader2 } from 'lucide-react';
 import {
   useSaveMemberProfile,
   getGetMemberProfileQueryKey,
   getGetEcosystemMembersQueryKey,
+  getGetPublicNetworkProfileQueryKey,
   type MemberProfile,
   type MemberProfileInput,
   type MemberProfileInputSectorsItem,
@@ -16,6 +20,8 @@ interface Props {
   defaultName: string;
   onDone?: () => void;
   onCancel?: () => void;
+  appearance?: boolean;
+  onDraft?: (v: MemberProfileInput) => void;
 }
 
 type Errors = Partial<Record<keyof MemberProfileInput, string>>;
@@ -35,7 +41,7 @@ function validate(v: MemberProfileInput): Errors {
 
 const fieldCls = 'w-full border border-sand-300 bg-ivory-50 px-3 py-2.5 text-sm text-ink-900 focus:border-lagoon-600 focus:outline-none';
 
-export default function ProfileForm({ initial, defaultName, onDone, onCancel }: Props) {
+export default function ProfileForm({ initial, defaultName, onDone, onCancel, appearance, onDraft }: Props) {
   const qc = useQueryClient();
   const save = useSaveMemberProfile();
   const [v, setV] = useState<MemberProfileInput>(() => ({
@@ -50,7 +56,13 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel }: 
     sectors: initial?.sectors ?? [],
     isPublic: initial?.isPublic ?? false,
     publicMedia: initial?.publicMedia ?? false,
+    profileLayout: appearanceOf(initial).layout,
+    coverPosition: appearanceOf(initial).pos,
+    postsLayout: appearanceOf(initial).posts,
   }));
+  const draftRef = useRef(onDraft);
+  draftRef.current = onDraft;
+  useEffect(() => { draftRef.current?.(v); }, [v]);
   const [errors, setErrors] = useState<Errors>({});
 
   const set = <K extends keyof MemberProfileInput>(k: K, val: MemberProfileInput[K]) => setV((p) => ({ ...p, [k]: val }));
@@ -71,6 +83,9 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel }: 
       onSuccess: (res) => {
         qc.setQueryData(getGetMemberProfileQueryKey(), res);
         qc.invalidateQueries({ queryKey: getGetEcosystemMembersQueryKey() });
+        qc.invalidateQueries({ queryKey: STATE_PREFIX });
+        const id = res.profile?.id ?? initial?.id;
+        if (id) qc.invalidateQueries({ queryKey: getGetPublicNetworkProfileQueryKey(id) });
         onDone?.();
       },
     });
@@ -80,6 +95,7 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel }: 
 
   return (
     <form onSubmit={submit} noValidate className="flex flex-col gap-8" data-testid="form-member-profile">
+      {appearance && <AppearanceControls v={v} set={set} />}
       <fieldset className="grid gap-5 sm:grid-cols-2">
         <legend className="mb-4 text-eyebrow text-gold-700">THE ESSENTIALS</legend>
         <label className="text-sm text-ink-900">Full name *

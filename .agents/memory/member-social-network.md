@@ -21,11 +21,23 @@ New members may join, create a limited profile, follow people, like and comment 
 
 **How to apply:** Do not introduce an unrequested membership-approval queue or confuse email verification with business certification. Enforce posting eligibility on the server using distinct, genuinely new accounts that both attributed the invitation and still follow the inviter. Free membership, profile creation, discovery, likes and comments remain available before posting unlock; packages and events are separate.
 
-Verified users must be able to explore the feed immediately after signing in, before filling in their profile. Profession, sectors, biography and other details can be completed later. Members should easily open their followers and following lists and connect using Google rather than repeatedly entering email codes where the configured login methods allow it.
+Verified users must be able to explore the feed immediately after signing in, before filling in their profile. Profession, sectors, biography and other details can be completed later. Members should easily open their followers and following lists.
 
 **Why:** The Founder relayed user feedback that the compulsory profile form caused visitors to leave before seeing the platform.
 
 **How to apply:** Use progressive onboarding without a blocking profile form. Preserve explicit consent before making a profile discoverable to other members; do not confuse this with optional public-internet visibility. Never promise that Google or a new-device security check can always be skipped.
+
+Email must be the primary registration and sign-in option, accepting any valid provider, including iCloud and professional addresses. Google is optional, not required.
+
+**Why:** The Founder clarified that members should use their existing email to avoid extra procedures and must not perceive the service as Gmail-only. This supersedes the earlier Google-first presentation request.
+
+**How to apply:** Keep email fields before social sign-in options and clearly distinguish creating an account from signing into an existing one. Do not remove email verification or bypass account security to reduce steps.
+
+“Premium” registration means a polished, Instagram-like experience that remains free, not a paid subscription. Every member should have a personal profile page, with their cover behind the profile presentation and owner-controlled layout choices.
+
+**Why:** The stakeholder explicitly chose “Inscription gratuite, expérience haut de gamme” when asked to distinguish visual quality from paid membership.
+
+**How to apply:** Keep registration and profile appearance customization free, optional and separate from paid programme packages. Preserve existing public-profile and public-media consent; a personal page does not mean automatic publication on the public internet.
 
 Members may choose to make their profile publicly visible outside the signed-in network; private contact details, messages and previously member-only posts are not implicitly made public.
 

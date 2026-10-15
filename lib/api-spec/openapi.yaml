@@ -555,6 +555,16 @@ components:
           type: boolean
         publicMedia:
           type: boolean
+        profileLayout:
+          type: string
+          enum: [immersive, centered, editorial]
+        coverPosition:
+          type: integer
+          minimum: 0
+          maximum: 100
+        postsLayout:
+          type: string
+          enum: [grid, list]
     PublicMember:
       allOf:
         - $ref: "#/components/schemas/MemberProfileInput"

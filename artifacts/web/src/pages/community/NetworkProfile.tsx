@@ -2,10 +2,10 @@ import type { ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useParams } from 'wouter';
 import { Show } from '@clerk/react';
-import { ExternalLink, MapPin } from 'lucide-react';
+import ProfileHero, { appearanceOf } from '@/components/network/ProfileHero';
 import { useGetPublicNetworkProfile, getGetPublicNetworkProfileQueryKey } from '@workspace/api-client-react';
 import { SECTORS } from '@/lib/sectors-data';
-import { Avatar, Badges, ErrorBox, Skeleton, errStatus } from '@/components/network/kit';
+import { ErrorBox, Skeleton, errStatus } from '@/components/network/kit';
 import { storePendingFollow } from '@/lib/network-invitations';
 
 const cta = 'inline-flex items-center gap-2 bg-lagoon-900 px-6 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-ivory-100 hover:bg-lagoon-800';
@@ -18,7 +18,7 @@ export default function NetworkProfilePage() {
 
   const wrap = (body: ReactNode) => (
     <div className="min-h-[70dvh] bg-ivory-100 px-0 py-10 sm:px-4 sm:py-16">
-      <div className="mx-auto max-w-3xl">{body}</div>
+      <div className="mx-auto max-w-4xl">{body}</div>
     </div>
   );
 
@@ -36,22 +36,16 @@ export default function NetworkProfilePage() {
   if (q.isError || !q.data) return wrap(<div className="px-4"><ErrorBox onRetry={() => q.refetch()} msg="This profile could not be loaded." /></div>);
   const p = q.data.profile;
   const sectors = SECTORS.filter((s) => (p.sectors as string[]).includes(s.slug));
+  const ap = appearanceOf(p);
+  const shown = p.publicMedia === false ? { ...p, avatarUrl: null, coverUrl: null } : p;
   const first = p.fullName.split(' ')[0];
 
   return wrap(
-    <article className="overflow-hidden border-y border-sand-200 bg-ivory-50 sm:border" data-testid={`public-profile-${p.id}`}>
+    <article data-testid={`public-profile-${p.id}`}>
       <Helmet><title>{`${p.fullName} — TOMI NETWORK`}</title></Helmet>
-      <div className="h-40 bg-lagoon-800 sm:h-56" style={p.coverUrl ? { backgroundImage: `url(${p.coverUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : { backgroundImage: 'radial-gradient(ellipse at 80% 20%, hsl(39 52% 54% / 0.35), transparent 60%), linear-gradient(135deg, hsl(187 67% 12%), hsl(189 74% 28%))' }} />
-      <div className="px-5 pb-8 sm:px-8">
-        <div className="-mt-12 w-fit rounded-full bg-ivory-50 p-1"><Avatar m={p} size={96} /></div>
-        <h1 className="mt-3 font-display text-3xl text-ink-900" data-testid="text-public-name">{p.fullName}</h1>
-        <div className="mt-1"><Badges m={p} /></div>
-        <p className="mt-1 text-ink-700">{[p.profession, p.organization].filter(Boolean).join(' · ')}</p>
-        <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-sand-400">
-          {p.country && <span className="inline-flex items-center gap-1"><MapPin className="h-3.5 w-3.5" />{p.country}</span>}
-          {p.website && <a href={p.website} target="_blank" rel="noopener noreferrer nofollow" className="inline-flex items-center gap-1 text-lagoon-600 hover:underline"><ExternalLink className="h-3.5 w-3.5" />{p.website.replace(/^https?:\/\//, '')}</a>}
-          {p.enabled && <span><b className="text-ink-900">{p.followers}</b> followers</span>}
-        </div>
+      <ProfileHero m={shown} layout={ap.layout} coverPosition={ap.pos}
+        stats={p.enabled ? <span><b>{p.followers}</b> followers</span> : undefined} />
+      <div className="mt-4 border-y border-sand-200 bg-ivory-50 px-5 pb-8 pt-2 sm:rounded-3xl sm:border sm:px-8">
         {p.bio && <p className="mt-5 whitespace-pre-wrap text-[15px] leading-relaxed text-ink-800">{p.bio}</p>}
         {(p.offering || p.lookingFor) && (
           <div className="mt-5 grid gap-3 sm:grid-cols-2">

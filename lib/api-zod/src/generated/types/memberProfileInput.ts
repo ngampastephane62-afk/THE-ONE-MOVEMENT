@@ -5,6 +5,8 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+import type { MemberProfileInputPostsLayout } from './memberProfileInputPostsLayout';
+import type { MemberProfileInputProfileLayout } from './memberProfileInputProfileLayout';
 import type { MemberProfileInputSectorsItem } from './memberProfileInputSectorsItem';
 
 export interface MemberProfileInput {
@@ -31,4 +33,11 @@ export interface MemberProfileInput {
   sectors: MemberProfileInputSectorsItem[];
   isPublic: boolean;
   publicMedia?: boolean;
+  profileLayout?: MemberProfileInputProfileLayout;
+  /**
+     * @minimum 0
+     * @maximum 100
+     */
+  coverPosition?: number;
+  postsLayout?: MemberProfileInputPostsLayout;
 }
