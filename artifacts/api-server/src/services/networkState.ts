@@ -13,7 +13,6 @@ import { mediaDto } from "./networkFiles";
 
 export const ROLES = new Set(["business", "partner", "sponsor", "media-partner", "official-model", "exhibitor", "speaker", "designer", "investor"]);
 export const PROGRAMS = new Set(["ecosystem", "diplomatic-gala", "summit", "fashion-week", "awards", "fashion-night", "investment-forum"]);
-export const REQUIRED_INVITES = 11;
 export async function qualifiedInviteCount(memberId: number) {
   const [count] = await db.select({ value: sql<number>`count(*)::integer` }).from(profiles)
     .innerJoin(follows, and(eq(follows.followerId, profiles.memberId), eq(follows.followingId, memberId)))
@@ -118,8 +117,8 @@ export async function networkState(context: NetworkActor, query: Record<string, 
   if (!me) return empty;
   const qualifiedInvites = await qualifiedInviteCount(self.id);
   const growth = {
-    inviteCode: myProfile!.inviteCode, qualifiedInvites, requiredInvites: REQUIRED_INVITES,
-    canPost: me.enabled && (context.founder || qualifiedInvites >= REQUIRED_INVITES),
+    inviteCode: myProfile!.inviteCode, qualifiedInvites, requiredInvites: 0,
+    canPost: me.enabled,
   };
   const q = String(query.q ?? "").trim().slice(0, 100).toLowerCase();
   const sector = String(query.sector ?? "");

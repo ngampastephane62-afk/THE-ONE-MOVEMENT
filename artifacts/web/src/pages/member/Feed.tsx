@@ -69,9 +69,9 @@ export default function Feed() {
       <div className="flex min-w-0 flex-1 flex-col gap-4">
         {me.founder || base.growth?.canPost ? <Composer /> : (
           <div className={`${card} flex flex-wrap items-center justify-between gap-2 p-3 text-sm`}>
-            <p className="text-ink-700">Explore the feed freely. Publishing unlocks after {base.growth?.requiredInvites ?? 11} invited members follow you.</p>
-            <Link href="/member/invite" className="text-xs font-semibold text-lagoon-700 hover:underline" data-testid="link-feed-invite">
-              Invitation progress {base.growth?.qualifiedInvites ?? 0}/{base.growth?.requiredInvites ?? 11}
+            <p className="text-ink-700">Explore the feed freely. Activate your verified membership to publish. No invitations are required.</p>
+            <Link href="/member/settings" className="text-xs font-semibold text-lagoon-700 hover:underline" data-testid="link-feed-profile">
+              Review my profile
             </Link>
           </div>
         )}
@@ -79,7 +79,7 @@ export default function Feed() {
           {TABS.map((t) => <button key={t.id} role="tab" aria-selected={feed === t.id} onClick={() => switchFeed(t.id)} className={`flex-1 whitespace-nowrap rounded-full px-3 py-1.5 text-xs ${feed === t.id ? 'bg-ivory-50 font-semibold text-lagoon-900 shadow-sm' : 'text-ink-700'}`} data-testid={`tab-feed-${t.id}`}>{t.label}</button>)}
         </div>
         {q.isLoading && !posts.length ? <Skeleton /> : q.isError ? <ErrorBox onRetry={() => q.refetch()} msg="The feed could not be loaded." /> : posts.length === 0 ? (
-          <Empty title={feed === 'following' ? 'Nobody followed yet' : (me.founder || base.growth?.canPost ? 'The first story starts with you' : 'Nothing here yet')} body={feed === 'following' ? 'Follow people whose work moves you and their posts will gather here.' : (me.founder || base.growth?.canPost ? 'No posts here yet. Introduce yourself, share a project, or present what your organization needs.' : 'No posts here yet. Follow people in your sectors; publishing opens once 11 people you invited follow you.')}>
+          <Empty title={feed === 'following' ? 'Nobody followed yet' : 'The first story starts with you'} body={feed === 'following' ? 'Follow people whose work moves you and their posts will gather here.' : 'No posts here yet. Introduce yourself, share a project, or present what your organization needs.'}>
             <Link href="/member/people" className={btnGhost}>Find people</Link>
           </Empty>
         ) : (
@@ -97,8 +97,8 @@ export default function Feed() {
             <p className="text-eyebrow text-gold-400">GETTING STARTED</p>
             <ol className="mt-3 flex flex-col gap-2 text-sm">
               <li><Link href="/member/settings" className="underline-offset-2 hover:underline">1 · Add a photo and cover</Link></li>
-              {!me.founder && <li><Link href="/member/invite" className="underline-offset-2 hover:underline">2 · Invite 11 people {base.growth ? `(${Math.min(base.growth.qualifiedInvites, base.growth.requiredInvites)}/${base.growth.requiredInvites})` : ''}</Link></li>}
-              <li>{me.founder ? 2 : 3} · Publish a first post about your work{!me.founder && !base.growth?.canPost ? ' (after step 2)' : ''}</li>
+              <li>2 · Publish a first post about your work</li>
+              <li><Link href="/member/invite" className="underline-offset-2 hover:underline">3 · Invite people to connect (optional)</Link></li>
               <li><Link href="/member/people" className="underline-offset-2 hover:underline">{me.founder ? 3 : 4} · Follow peers in your sectors</Link></li>
               <li><Link href="/member/certifications" className="underline-offset-2 hover:underline">{me.founder ? 4 : 5} · Apply for an official role</Link></li>
             </ol>

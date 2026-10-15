@@ -42,7 +42,7 @@ export default function ProfilePage() {
   const ghost = dark ? onCoverBtn : btnGhost;
   const primary = dark ? 'inline-flex items-center justify-center gap-1.5 rounded-full bg-gold-500 px-4 py-2 text-xs font-semibold text-ink-900 hover:bg-gold-400 disabled:opacity-50' : btn;
   const statCls = dark ? 'rounded hover:text-gold-400 hover:underline' : 'rounded hover:text-lagoon-700 hover:underline';
-  const actions = mine ? <><Link href="/member/settings" className={primary} data-testid="link-edit-profile"><Palette className="h-3.5 w-3.5" />Customize page</Link><Link href="/member/invite" className={ghost} data-testid="link-growth"><UserPlus className="h-3.5 w-3.5" />{me.founder || base.growth?.canPost ? 'Invite' : `Invite ${Math.min(base.growth?.qualifiedInvites ?? 0, base.growth?.requiredInvites ?? 11)}/${base.growth?.requiredInvites ?? 11}`}</Link></> : p.blocked ? (
+  const actions = mine ? <><Link href="/member/settings" className={primary} data-testid="link-edit-profile"><Palette className="h-3.5 w-3.5" />Customize page</Link><Link href="/member/invite" className={ghost} data-testid="link-growth"><UserPlus className="h-3.5 w-3.5" />Invite</Link></> : p.blocked ? (
     <button className={ghost} disabled={pending} onClick={() => doAct(run({ action: 'block', targetId: p.id, accepted: false }))} data-testid="button-unblock">Unblock</button>
   ) : (<>
     <button className={p.followed ? ghost : primary} disabled={pending} onClick={() => doAct(run({ action: 'follow', targetId: p.id, accepted: !p.followed }))} data-testid="button-follow">{p.followed ? 'Following' : 'Follow'}</button>
@@ -95,7 +95,7 @@ export default function ProfilePage() {
 
       <section className="flex flex-col gap-4 px-3 md:px-0">
         <div className="flex items-center justify-between"><h2 className="font-display text-lg text-ink-900">Posts</h2><span className="inline-flex items-center gap-1 text-xs text-sand-400">{ap.posts === 'grid' ? <LayoutGrid className="h-3.5 w-3.5" /> : <List className="h-3.5 w-3.5" />}{ap.posts === 'grid' ? 'Gallery' : 'List'}</span></div>
-        {posts.length === 0 ? <Empty title={mine ? 'Share your first post' : 'No posts yet'} body={mine ? 'Show the network what you build, design or defend.' : `${p.fullName} has not published yet.`}>{mine && (me.founder || base.growth?.canPost ? <Link href="/member" className={btn}>Write a post</Link> : <Link href="/member/invite" className={btn}>Invite 11 people to unlock posting</Link>)}</Empty>
+        {posts.length === 0 ? <Empty title={mine ? 'Share your first post' : 'No posts yet'} body={mine ? 'Show the network what you build, design or defend.' : `${p.fullName} has not published yet.`}>{mine && <Link href="/member" className={btn}>Write a post</Link>}</Empty>
           : ap.posts === 'grid' ? <PostGrid posts={posts} onOpen={setOpenPost} />
           : posts.map((x) => <PostCard key={x.id} post={x} meId={me.id} onReport={(postId, memberId) => setReport({ postId, memberId })} />)}
       </section>

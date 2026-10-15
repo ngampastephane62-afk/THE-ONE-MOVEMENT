@@ -15,11 +15,11 @@ The member network must retain visible The One Movement International branding w
 
 **How to apply:** Keep the brand accessible on mobile as well as desktop; show descriptions members actually entered, never invented biographies, and preserve consent-based messaging.
 
-New members may join, create a limited profile, follow people, like and comment after their email is verified; they do not wait for individual CEO approval or buy an event package to access the social network. To create their own posts, ordinary members must first recruit more than 10 people (at least 11) who create accounts and follow their profile. Official certifications remain a separate approval process.
+New members may join, publish, follow people, like and comment after their email is verified and they activate network membership; they do not wait for individual CEO approval or buy an event package. Invitations are optional, with no referral threshold for publishing. Official certifications remain a separate approval process.
 
-**Why:** The Founder explicitly selected access after email verification rather than manual approval of every new member, then clarified the 11-person referral threshold for creating posts, without requiring event participation. Existing Founder content must remain possible.
+**Why:** On 2026-10-16 the stakeholder explicitly selected “Tous les membres vérifiés” and authorized removing the previous 11-person invitation condition. This supersedes the earlier referral-gated publishing requirement.
 
-**How to apply:** Do not introduce an unrequested membership-approval queue or confuse email verification with business certification. Enforce posting eligibility on the server using distinct, genuinely new accounts that both attributed the invitation and still follow the inviter. Free membership, profile creation, discovery, likes and comments remain available before posting unlock; packages and events are separate.
+**How to apply:** Keep server-side verified-identity, active-membership and suspension checks. Do not gate posts or reels on invitation counts, follower totals or programme purchases. Invitation statistics may remain as optional community-growth information.
 
 Verified users must be able to explore the feed immediately after signing in, before filling in their profile. Profession, sectors, biography and other details can be completed later. Members should easily open their followers and following lists.
 

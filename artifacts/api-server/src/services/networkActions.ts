@@ -9,7 +9,7 @@ import { and, eq, inArray, or, ne, isNull } from "drizzle-orm";
 import type { Request, Response } from "express";
 import { actor, NetworkError, requireFounder } from "./networkAuth";
 import { ownedMedia, completeUpload } from "./networkFiles";
-import { visibleMember, visiblePost, ownThread, ROLES, PROGRAMS, isBlocked, qualifiedInviteCount, REQUIRED_INVITES } from "./networkState";
+import { visibleMember, visiblePost, ownThread, ROLES, PROGRAMS, isBlocked } from "./networkState";
 import { checkout, PACKAGE_DEFINITIONS, customPackages } from "./networkPayments";
 
 function number(value: unknown) {
@@ -75,9 +75,6 @@ export async function networkAction(req: Request, res: Response) {
     }
     case "post.create":
     case "post.edit": {
-      if (input.action === "post.create" && !who.founder && await qualifiedInviteCount(self) < REQUIRED_INVITES) {
-        throw new NetworkError(403, `Invite ${REQUIRED_INVITES} new members who create accounts and follow you before publishing.`);
-      }
       const content = text(input.text, 5000, false);
       const media = await ownedMedia(self, input.mediaIds);
       if (!content && !media.length) throw new NetworkError(400, "Write something or attach media.");
