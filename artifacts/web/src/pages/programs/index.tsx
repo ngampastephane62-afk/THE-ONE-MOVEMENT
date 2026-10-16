@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
 import SectionHeading from '@/components/SectionHeading';
-import GeometricAccent from '@/components/GeometricAccent';
 import ArchivePhoto from '@/components/ArchivePhoto';
 import ProgramVision from '@/components/ProgramVision';
 import ProgramSuppliedImage from '@/components/programs/ProgramSuppliedImage';
@@ -104,7 +103,6 @@ export default function Programs() {
 
       {/* Transition: lagoon → ivory */}
       <div style={{ backgroundColor: 'hsl(38 57% 94%)' }}>
-        <GeometricAccent variant="lagoon-on-ivory" height={20} />
       </div>
 
       {/* ─────────────────────────────────────────────────────────────────────
@@ -139,7 +137,6 @@ export default function Programs() {
         style={{ backgroundColor: 'hsl(187 67% 12%)' }}
         aria-hidden="true"
       >
-        <GeometricAccent variant="gold-on-lagoon" height={20} />
       </div>
 
       {/* ─────────────────────────────────────────────────────────────────────
@@ -301,9 +298,9 @@ function ProgramCard({
           {slug === 'summit' ? (
             <ArchivePhoto id="summit-goma" frameClassName="w-full aspect-[4/3]" objectPosition="center 30%" sizes="(min-width: 1024px) 30vw, 92vw" />
           ) : slug === 'fashion-week' ? (
-            <ProgrammeCover programme="fashion-week" className="w-full aspect-[4/3]" />
+            <ProgrammeCover programme="fashion-week" className="w-full" />
           ) : slug === 'awards' ? (
-            <AwardsPreview className="w-full aspect-[4/3]" />
+            <AwardsPreview className="w-full" />
           ) : slug === 'diplomatic-gala' ? (
             <DiplomaticGalaPreview className="w-full aspect-[4/3]" />
           ) : slug === 'fashion-night' || slug === 'investment-forum' ? (

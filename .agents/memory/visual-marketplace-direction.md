@@ -9,6 +9,12 @@ The stakeholder wants an African identity inspired by Wakanda and Kuba textiles 
 
 **How to apply:** Keep patterns readable, motion pausable and reduced-motion aware. Do not imply Marvel affiliation or historical authenticity for original geometric artwork.
 
+The stakeholder approved the regional backgrounds and animations but explicitly asked to remove the repeated ornamental contours and keep internal editorial/work-in-progress text off public pages.
+
+**Why:** Their mobile screenshots showed repeated triangular header/hero/footer trim, giant letterboxing around posters, cropped faces and visible missing-data/editorial notes.
+
+**How to apply:** Preserve the approved backgrounds and motion when refining presentation. Keep imagery properly framed and public copy visitor-facing; do not reintroduce decorative perimeter bands or expose workflow notes. Retain concise factual statuses, legally necessary notices and accessible source/licence attribution rather than replacing them with false confirmations.
+
 The stakeholder designates the supplied Naomi Campbell artwork as The One Awards cover, and the supplied three-model artwork as The One Fashion Week cover.
 
 **Why:** They explicitly corrected which artwork represents each programme, despite wording printed on the posters.

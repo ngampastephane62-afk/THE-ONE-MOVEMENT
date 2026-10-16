@@ -27,11 +27,11 @@ interface RegionBackdropProps {
   minHeight?: string;
   /** Show the pause/play control (default true) */
   controls?: boolean;
-  /** Show image credit line (default true) */
+  /** Deprecated: background credits are listed in page sources */
   credit?: boolean;
 }
 
-export default function RegionBackdrop({ region, children, className, minHeight = '28rem', controls = true, credit = true }: RegionBackdropProps) {
+export default function RegionBackdrop({ region, children, className, minHeight = '28rem', controls = true }: RegionBackdropProps) {
   const [paused, setPaused] = useState(false);
   const [reduced, setReduced] = useState(false);
   useEffect(() => {
@@ -90,7 +90,6 @@ export default function RegionBackdrop({ region, children, className, minHeight 
           <span>{reduced ? 'Motion reduced' : still ? 'Play' : 'Pause'}</span>
         </button>
       )}
-      {credit && art && <p className="region-backdrop-credit">{art.credit}</p>}
     </section>
   );
 }

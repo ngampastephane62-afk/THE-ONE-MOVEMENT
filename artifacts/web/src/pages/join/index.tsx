@@ -4,7 +4,6 @@ import { Link } from 'wouter';
 import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
 import SectionHeading from '@/components/SectionHeading';
-import GeometricAccent from '@/components/GeometricAccent';
 import {
   Accordion,
   AccordionContent,
@@ -160,7 +159,6 @@ export default function JoinTheMovement() {
 
       {/* Transition: lagoon → ivory */}
       <div style={{ backgroundColor: 'hsl(38 57% 94%)' }}>
-        <GeometricAccent variant="lagoon-on-ivory" height={20} />
       </div>
 
       {/* ─────────────────────────────────────────────────────────────────
@@ -252,7 +250,6 @@ export default function JoinTheMovement() {
       </section>
 
       {/* Transition: ivory → lagoon */}
-      <GeometricAccent variant="gold-on-lagoon" height={20} />
 
       {/* ─────────────────────────────────────────────────────────────────
           4. CHOOSE YOUR PATH — dark lagoon surface
@@ -286,7 +283,6 @@ export default function JoinTheMovement() {
 
       {/* Transition: lagoon → ivory */}
       <div style={{ backgroundColor: 'hsl(38 57% 94%)' }}>
-        <GeometricAccent variant="lagoon-on-ivory" height={20} />
       </div>
 
       {/* ─────────────────────────────────────────────────────────────────
@@ -407,7 +403,6 @@ export default function JoinTheMovement() {
       </section>
 
       {/* Transition: ivory → lagoon */}
-      <GeometricAccent variant="gold-on-lagoon" height={20} />
 
       {/* ─────────────────────────────────────────────────────────────────
           8. INSTITUTIONAL INQUIRY — dark lagoon surface
@@ -487,7 +482,6 @@ export default function JoinTheMovement() {
 
       {/* Transition: lagoon → ivory */}
       <div style={{ backgroundColor: 'hsl(38 57% 94%)' }}>
-        <GeometricAccent variant="lagoon-on-ivory" height={20} />
       </div>
 
       {/* ─────────────────────────────────────────────────────────────────
@@ -547,7 +541,6 @@ export default function JoinTheMovement() {
       </section>
 
       {/* Transition: ivory → lagoon */}
-      <GeometricAccent variant="gold-on-lagoon" height={20} />
 
       {/* ─────────────────────────────────────────────────────────────────
           11. CLOSING SIGNATURE — cinematic lagoon surface

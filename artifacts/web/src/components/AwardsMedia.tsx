@@ -14,11 +14,10 @@ export function AwardsNominees() {
       <h3 className="font-display text-2xl text-ink-900">Ambassador of Peace — Celebrity Nominees</h3>
       <p className="mt-3 max-w-3xl text-ink-800">
         Meet the celebrities nominated for The One Awards’ Ambassador of Peace recognition.
-        These nominations are not an announcement of awards already presented.
       </p>
       <div className="mt-8 grid items-start gap-6 md:grid-cols-3">
         <figure>
-          <img src={winniePoster} alt="Winnie Harlow · official TOMI nomination poster" className="aspect-[9/16] w-full object-contain bg-lagoon-900" loading="lazy" />
+          <img src={winniePoster} alt="Winnie Harlow · official TOMI nomination poster" width={1200} height={848} className="block h-auto w-full" loading="lazy" />
           <figcaption className="mt-3 text-sm text-ink-700">Winnie Harlow · Ambassador of Peace nominee</figcaption>
         </figure>
         {[

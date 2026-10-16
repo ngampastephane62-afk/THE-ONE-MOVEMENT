@@ -6,7 +6,6 @@ import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
 import SectionHeading from '@/components/SectionHeading';
 import StatBlock from '@/components/StatBlock';
-import GeometricAccent from '@/components/GeometricAccent';
 import PhotoMosaic from '@/components/PhotoMosaic';
 import PhotoSlot from '@/components/PhotoSlot';
 import HomeExperience from './HomeExperience';
@@ -236,7 +235,6 @@ function LegacyHome() {
 
       {/* Transition: hero → ivory */}
       <div style={{ backgroundColor: 'hsl(38 57% 94%)' }}>
-        <GeometricAccent variant="lagoon-on-ivory" height={20} />
       </div>
 
       {/* ─────────────────────────────────────────────────────────────────────
@@ -325,7 +323,6 @@ function LegacyHome() {
 
       {/* Transition: ivory → off-white (story section) */}
       <div style={{ backgroundColor: 'hsl(40 71% 98%)' }}>
-        <GeometricAccent variant="lagoon-on-ivory" height={16} />
       </div>
 
       {/* ─────────────────────────────────────────────────────────────────────
@@ -433,7 +430,6 @@ function LegacyHome() {
 
       {/* Transition: ivory → lagoon */}
       <div style={{ backgroundColor: 'hsl(187 67% 12%)' }}>
-        <GeometricAccent variant="gold-on-lagoon" height={20} />
       </div>
 
       {/* ─────────────────────────────────────────────────────────────────────
@@ -493,7 +489,6 @@ function LegacyHome() {
 
       {/* Transition: lagoon → ivory */}
       <div style={{ backgroundColor: 'hsl(38 57% 94%)' }}>
-        <GeometricAccent variant="lagoon-on-ivory" height={20} />
       </div>
 
       {/* ─────────────────────────────────────────────────────────────────────
@@ -577,7 +572,6 @@ function LegacyHome() {
 
       {/* Transition: ivory → lagoon */}
       <div style={{ backgroundColor: 'hsl(187 67% 12%)' }}>
-        <GeometricAccent variant="gold-on-lagoon" height={20} />
       </div>
 
       {/* ─────────────────────────────────────────────────────────────────────
@@ -831,7 +825,6 @@ function LegacyHome() {
 
       {/* Transition: lagoon → ivory */}
       <div style={{ backgroundColor: 'hsl(187 67% 12%)' }}>
-        <GeometricAccent variant="gold-on-lagoon" height={20} />
       </div>
 
       {/* ─────────────────────────────────────────────────────────────────────

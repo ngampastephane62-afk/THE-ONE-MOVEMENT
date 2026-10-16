@@ -3,7 +3,6 @@ import { useMemo, useState } from 'react';
 import { Link } from 'wouter';
 import { ExternalLink } from 'lucide-react';
 import {
-  IMPACT_DISCLAIMER,
   IMPACT_LEADERS,
   IMPACT_REGIONS,
   IMPACT_SECTORS,
@@ -59,9 +58,6 @@ export default function ThanksWorld() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-6xl px-6 pt-10">
-        <p className="max-w-3xl border-l-2 border-gold-500 pl-4 text-sm leading-relaxed text-ink-800" data-testid="text-impact-disclaimer">{IMPACT_DISCLAIMER}</p>
-      </div>
 
       {IMPACT_REGIONS.map((r, ri) => (
         <RegionSection key={r.key} region={r.key} label={r.campaign} country={r.label} sector={sector} alt={ri % 2 === 1} />
@@ -69,8 +65,7 @@ export default function ThanksWorld() {
 
       <section className="bg-lagoon-900 py-section-lg text-center text-ivory-100">
         <div className="mx-auto max-w-3xl px-6">
-          <p className="font-display text-2xl leading-relaxed text-ivory-200">Recognition is not affiliation. Any TOMI relationship is explicitly labelled separately.</p>
-          <p className="mt-6 text-xs text-ivory-300">Historical figures are presented as memorial references and are not available for any programme.</p>
+          <p className=" text-xs text-ivory-300">Historical figures are presented as memorial references and are not available for any programme.</p>
         </div>
       </section>
     </div>
@@ -119,23 +114,23 @@ function RegionSection({ region, label, country, sector, alt }: { region: Impact
 function LeaderCard({ person }: { person: ImpactLeader }) {
   return (
     <li className="flex flex-col bg-ivory-100 p-6" data-testid={`card-leader-${person.slug}`}>
-      <PersonPortrait slug={person.slug} name={person.name} className="mb-5 aspect-[4/3] overflow-hidden bg-lagoon-900" />
+      <PersonPortrait slug={person.slug} name={person.name} className="mb-5 aspect-[4/5] overflow-hidden bg-lagoon-900" />
       <div className="flex items-start gap-4">
         <div>
           <p className="font-display text-xl leading-tight text-ink-900">{person.name}</p>
           <p className="mt-1 text-xs text-ink-700">{person.role} · {person.country}</p>
         </div>
       </div>
-      {person.slug === 'denis-mukwege' && <div className="mt-4 border border-gold-500 bg-gold-500/10 p-3" data-testid="badge-mukwege-partner"><p className="text-xs font-semibold text-lagoon-900">TOMI certified partner</p><p className="mt-1 text-[11px] text-ink-700">Partner status declared and certified by The One Movement International. Not an identity check of a member account or an endorsement by the Nobel Committee.</p><a className="mt-2 inline-block text-[11px] underline" href="https://www.nobelprize.org/prizes/peace/2018/mukwege/facts/" target="_blank" rel="noopener noreferrer">Nobel Peace Prize 2018 · official record</a></div>}
+      {person.slug === 'denis-mukwege' && <div className="mt-4 border border-gold-500 bg-gold-500/10 p-3" data-testid="badge-mukwege-partner"><p className="text-xs font-semibold text-lagoon-900">TOMI certified partner</p><a className="mt-2 inline-block text-[11px] underline" href="https://www.nobelprize.org/prizes/peace/2018/mukwege/facts/" target="_blank" rel="noopener noreferrer">Nobel Peace Prize laureate 2018</a></div>}
       {person.historical && <p className="mt-4 self-start border border-sand-400 px-2 py-0.5 text-[10px] uppercase tracking-[0.16em] text-ink-700">In memoriam {person.lifespan} · not available</p>}
       <p className="mt-4 flex-1 text-sm leading-relaxed text-ink-800">{person.summary}</p>
       <WealthLabel slug={person.slug} historical={person.historical} />
       <PortraitCredit slug={person.slug} />
       <div className="mt-4 flex flex-wrap gap-1.5">{person.sectors.map((s) => <span key={s} className="text-[10px] uppercase tracking-[0.12em] text-gold-600">{SECTOR_LABEL[s]}</span>).reduce<React.ReactNode[]>((a, el, i) => (i ? [...a, <span key={`d${i}`} className="text-sand-400">/</span>, el] : [el]), [])}</div>
-      <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-1 border-t border-sand-300 pt-3">
+      <details className="mt-4 border-t border-sand-300 pt-3"><summary className="cursor-pointer text-[10px] uppercase tracking-widest text-ink-700">Sources</summary><ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
         {person.sources.map((s) => <li key={s.url}><a href={s.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-[11px] text-lagoon-600 hover:underline">{s.label.replace('Wikipedia — ', 'Wikipedia')}<ExternalLink className="h-2.5 w-2.5" /></a></li>)}
         {person.website && <li><a href={person.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-[11px] text-lagoon-600 hover:underline">Official site<ExternalLink className="h-2.5 w-2.5" /></a></li>}
-      </ul>
+      </ul></details>
     </li>
   );
 }

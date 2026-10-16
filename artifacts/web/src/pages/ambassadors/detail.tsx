@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { useEffect } from 'react';
 import { Link, useLocation, useParams } from 'wouter';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
-import { AMBASSADOR_NOMINEES, AMBASSADOR_STATUS_NOTE, getAmbassadorBySlug } from '@workspace/shared';
+import { AMBASSADOR_NOMINEES, getAmbassadorBySlug } from '@workspace/shared';
 import GoldThread from '@/components/GoldThread';
 import CollaborationRequest from '@/components/editorial/CollaborationRequest';
 import { posterFor } from '@/components/editorial/posters';
@@ -42,8 +42,7 @@ export default function AmbassadorDetail() {
             </ul>
           </div>
           <figure className="lg:col-span-5 lg:col-start-8">
-            {poster && <img src={poster.src} alt={`Official TOMI poster: ${person.name}, Ambassador of Peace nominee`} className="w-full bg-lagoon-800 object-contain shadow-[0_30px_60px_-30px_hsl(187_67%_5%)]" />}
-            <figcaption className="mt-3 text-[11px] text-ivory-300">Official TOMI poster · {person.posterSource}</figcaption>
+            {poster && <img src={poster.src} alt={`Official TOMI poster: ${person.name}, Ambassador of Peace nominee`} width={poster.width} height={poster.height} className="block h-auto w-full shadow-[0_30px_60px_-30px_hsl(187_67%_5%)]" />}
           </figure>
         </div>
       </section>
@@ -72,10 +71,8 @@ export default function AmbassadorDetail() {
               <div>
                 <p className="text-eyebrow text-gold-600">SOURCES</p>
                 <ul className="mt-4 space-y-2">{person.sources.map((s) => <li key={s.url}><a href={s.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-ink-800 hover:underline">{s.label}<ExternalLink className="h-3 w-3" /></a></li>)}</ul>
-                <p className="mt-3 text-[11px] text-ink-700">Sources reviewed {person.reviewed}.</p>
               </div>
             </div>
-            <p className="border-l-2 border-gold-500 pl-4 text-sm leading-relaxed text-ink-800">{AMBASSADOR_STATUS_NOTE} No personal endorsement of TOMI by {person.name} is implied beyond the official nomination materials.</p>
           </div>
           <aside className="lg:col-span-5">
             <div className="lg:sticky lg:top-24"><CollaborationRequest targetSlug={person.slug} targetName={person.name} /></div>

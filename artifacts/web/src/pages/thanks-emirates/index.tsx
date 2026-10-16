@@ -90,7 +90,7 @@ export default function ThanksEmirates() {
           </Reveal>
           <Reveal delay={120} className="space-y-5 text-lg leading-relaxed text-ink-800 lg:col-span-6 lg:col-start-7">
             <p>Thank You, Emirates is not a campaign attached to TOMI from outside. It is one expression of the Movement's founding philosophy: people of different nationalities, cultures and backgrounds can meet, understand one another and build together.</p>
-            <p>The One Movement provides the ecosystem. The initiative provides the human story that makes the philosophy visible. Its original vision, of human and success stories, a global community, an ideas platform, humanitarian initiatives and digital humanitarian diplomacy, is preserved.</p>
+            <p>The One Movement provides the ecosystem; the initiative tells the human story. Success stories, a global community, an ideas platform, humanitarian initiatives and digital humanitarian diplomacy all have a place here.</p>
           </Reveal>
         </div>
       </section>

@@ -6,7 +6,6 @@ import { Badge } from '@/components/ui/badge';
 import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
 import SectionHeading from '@/components/SectionHeading';
-import GeometricAccent from '@/components/GeometricAccent';
 import ArchivePhoto, { archiveVideo } from '@/components/ArchivePhoto';
 import ResponsiveMedia from '@/components/ResponsiveMedia';
 import ProgramVision from '@/components/ProgramVision';
@@ -111,7 +110,6 @@ export default function ProgramDetail() {
 
       {/* Transition: lagoon → ivory */}
       <div style={{ backgroundColor: 'hsl(38 57% 94%)' }}>
-        <GeometricAccent variant="lagoon-on-ivory" height={20} />
       </div>
 
       {/* ───────────────────────────────────────────────────────────────────────
@@ -163,7 +161,6 @@ export default function ProgramDetail() {
 
       {/* Transition: ivory → lagoon */}
       <div style={{ backgroundColor: 'hsl(187 67% 12%)' }} aria-hidden="true">
-        <GeometricAccent variant="gold-on-lagoon" height={20} />
       </div>
 
       {/* ───────────────────────────────────────────────────────────────────────
@@ -204,7 +201,6 @@ export default function ProgramDetail() {
 
       {/* Transition: lagoon → ivory */}
       <div style={{ backgroundColor: 'hsl(38 57% 94%)' }}>
-        <GeometricAccent variant="lagoon-on-ivory" height={20} />
       </div>
 
       {/* ───────────────────────────────────────────────────────────────────────
@@ -282,7 +278,6 @@ export default function ProgramDetail() {
 
       {/* Transition: ivory → lagoon */}
       <div style={{ backgroundColor: 'hsl(187 67% 12%)' }} aria-hidden="true">
-        <GeometricAccent variant="gold-on-lagoon" height={20} />
       </div>
 
       {/* ───────────────────────────────────────────────────────────────────────
@@ -314,7 +309,6 @@ export default function ProgramDetail() {
 
       {/* Transition: lagoon → ivory */}
       <div style={{ backgroundColor: 'hsl(38 57% 94%)' }}>
-        <GeometricAccent variant="lagoon-on-ivory" height={20} />
       </div>
 
       {/* ───────────────────────────────────────────────────────────────────────
@@ -402,7 +396,6 @@ export default function ProgramDetail() {
       {program.relatedProgramSlugs.length > 0 && (
         <>
           <div style={{ backgroundColor: 'hsl(187 67% 12%)' }} aria-hidden="true">
-            <GeometricAccent variant="gold-on-lagoon" height={20} />
           </div>
           <section
             className="py-section-lg"
@@ -504,13 +497,13 @@ function ProgramHeroMedia({ slug, name, tagline }: { slug: string; name: string;
     return <DiplomaticGalaPreview className="tomi-program-detail-media mx-auto w-full max-w-md aspect-[3/4]" />;
   }
   if (slug === 'awards') {
-    return <AwardsPreview className="tomi-program-detail-media w-full aspect-[4/3]" />;
+    return <AwardsPreview className="tomi-program-detail-media w-full" />;
   }
   if (slug === 'summit') {
     return <ArchivePhoto id="summit-goma" caption sizes="(min-width: 1024px) 38vw, 92vw" className="tomi-program-detail-media mx-auto max-w-md" captionClassName="text-ivory-300" />;
   }
   if (slug === 'fashion-week') {
-    return <ProgrammeCover programme="fashion-week" className="tomi-program-detail-media mx-auto w-full max-w-md aspect-[4/5]" />;
+    return <ProgrammeCover programme="fashion-week" className="tomi-program-detail-media mx-auto w-full max-w-md" />;
   }
   return <ProgramVision name={name} tagline={tagline} className="tomi-program-detail-media w-full aspect-[3/4]" />;
 }

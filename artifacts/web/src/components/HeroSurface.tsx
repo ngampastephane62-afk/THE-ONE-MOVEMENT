@@ -96,8 +96,6 @@ export default function HeroSurface({
       <span className="tomi-surface-grid pointer-events-none absolute inset-0" aria-hidden="true" />
       {/* Original Kuba-inspired lattice, masked away from the text column */}
       <span className="kuba-field" aria-hidden="true" />
-      <span className="kuba-panel-edge" aria-hidden="true" />
-      <span className="kuba-band pointer-events-none absolute inset-x-0 bottom-0 z-[5]" aria-hidden="true" />
       <div className="relative z-10">{children}</div>
       {atmosphere && (
         <button

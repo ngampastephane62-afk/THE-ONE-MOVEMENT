@@ -71,6 +71,7 @@ for (const p of supplements) {
 }
 // Missing page portraits: explicitly selected editorial image-search results.
 for (const [slug, image, credit, source] of [
+  ["malala-yousafzai", "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/03/Malala_Yousafzai_2023_portrait_2x3.jpg/330px-Malala_Yousafzai_2023_portrait_2x3.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail", "Wikimedia Commons · see original file for author and licence", "https://commons.wikimedia.org/wiki/File:Malala_Yousafzai_2023_portrait_2x3.jpg"],
   ["graca-machel", "https://sahistory.org.za/sites/default/files/bio_pics/graca-machel-300x234.jpg", "South African History Archive · Graça Machel portrait", "https://sahistory.org.za/people/graca-simbine-machel"],
   ["tebello-nyokong", "https://www.litnet.co.za/wp-content/uploads/2026/08/Tebello-Nyokong-Foto-erkenning_verskaf-deur-Rhodes-universiteit-se-mediaspan-600x400.jpg", "Rhodes University media team / LitNet", "https://www.litnet.co.za/"],
 ]) {

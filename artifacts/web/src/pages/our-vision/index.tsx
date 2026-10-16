@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
 import SectionHeading from '@/components/SectionHeading';
-import GeometricAccent from '@/components/GeometricAccent';
 import EditorialFilm from '@/components/EditorialFilm';
 import Reveal from '@/components/Reveal';
 
@@ -45,7 +44,6 @@ export default function OurVision() {
         </div>
       </HeroSurface>
 
-      <div className="bg-ivory-100"><GeometricAccent variant="lagoon-on-ivory" height={20} /></div>
 
       {/* A MOVEMENT THAT TRAVELS */}
       <section className="bg-ivory-100 py-section-xl">

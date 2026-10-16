@@ -670,5 +670,12 @@
     "source": "https://commons.wikimedia.org/wiki/File:Ilham_Aliyev_attends_Summit_of_NAM_Contact_Group_on_fight_against_COVID-19_63_%28cropped%29.jpg",
     "width": 640,
     "height": 864
+  },
+  "malala-yousafzai": {
+    "path": "people/malala-yousafzai.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Malala_Yousafzai_2023_portrait_2x3.jpg",
+    "width": 640,
+    "height": 960
   }
 }

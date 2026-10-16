@@ -1,7 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
-import GeometricAccent from '@/components/GeometricAccent';
 import GoldThread from '@/components/GoldThread';
 import ArchivePhoto, { archiveVideo } from '@/components/ArchivePhoto';
 import ProgramVision from '@/components/ProgramVision';
@@ -45,7 +44,6 @@ export default function HomeExperience() {
       {/* 01 — Brand identity over a gently waving peace flag. */}
       <HomeBrandHero />
 
-      <GeometricAccent variant="lagoon-on-ivory" height={18} />
 
       {/* 02 — Understanding: one concise explanation plus future movement video. */}
       <section className="bg-ivory-100 py-section-lg tomi-editorial-chapter" data-chapter="02 / THE MOVEMENT" aria-labelledby="what-heading">

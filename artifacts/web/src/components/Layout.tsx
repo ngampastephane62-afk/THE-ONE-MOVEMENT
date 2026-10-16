@@ -205,7 +205,6 @@ export default function Layout({ children }: LayoutProps) {
             </div>
           </nav>
         )}
-        <div className="kuba-band kuba-band-thin" aria-hidden="true" />
       </header>
 
       {/* ── Page content ───────────────────────────────────────────────────── */}
@@ -221,8 +220,6 @@ export default function Layout({ children }: LayoutProps) {
           borderColor: 'hsl(188 46% 20%)',
         }}
       >
-        {/* Kuba-inspired woven band */}
-        <div className="kuba-band" aria-hidden="true" />
 
         <span className="kuba-field kuba-field-steps" aria-hidden="true" />
         <div className="relative mx-auto max-w-7xl px-6 py-14">
