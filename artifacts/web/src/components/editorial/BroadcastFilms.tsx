@@ -4,18 +4,25 @@ import NativeVideo from './NativeVideo';
 const media = (name: string) => `${import.meta.env.BASE_URL}api/documentary/media/${name}`;
 const FILMS = [
   {
-    id: 'monusco', name: 'MONUSCO · Radio Okapi',
-    title: 'Campaign film',
-    description: 'The MONUSCO / Radio Okapi film supplied by the Founder, presented alongside the campaign against disinformation.',
-    file: 'radio-okapi-trailer.mp4', poster: 'radio-okapi.webp',
-    duration: '2 min 09 s', credit: 'Film credit: MONUSCO / United Nations · Radio Okapi.',
-  },
-  {
     id: 'canal', name: 'CANAL+',
     title: 'The One Documentaire · Teaser',
     description: 'A documentary highlight supplied by the Founder, presented here with the CANAL+ broadcast file.',
     file: 'documentary-teaser-03.mp4', poster: 'documentary-teaser-03.webp',
     duration: '29 s', credit: 'The One Documentaire · Founder archive. This teaser is not the complete film.',
+  },
+  {
+    id: 'archive-01', name: 'CANAL+ · 02',
+    title: 'The One Documentaire · Teaser 02',
+    description: 'More documentary highlights supplied by the Founder, available here in the same collection.',
+    file: 'documentary-teaser-01.mp4', poster: 'documentary-teaser-01.webp',
+    duration: '1 min 16 s', credit: 'Founder archive · Documentary excerpt, not the complete film.',
+  },
+  {
+    id: 'archive-02', name: 'CANAL+ · 03',
+    title: 'The One Documentaire · Teaser 03',
+    description: 'More documentary highlights supplied by the Founder, available here in the same collection.',
+    file: 'documentary-teaser-02.mp4', poster: 'documentary-teaser-02.webp',
+    duration: '7 s', credit: 'Founder archive · Documentary excerpt, not the complete film.',
   },
   {
     id: 'tv5monde', name: 'TV5MONDE Afrique · France 24',
@@ -25,25 +32,18 @@ const FILMS = [
     duration: '1 min 26 s', credit: 'Visible broadcaster credits: TV5MONDE Afrique · France 24. Archive supplied by the Founder.',
   },
   {
-    id: 'archive-01', name: 'THE ONE DOCUMENTAIRE · 01',
-    title: 'Documentary highlight 01',
-    description: 'More documentary highlights supplied by the Founder, available here in the same collection.',
-    file: 'documentary-teaser-01.mp4', poster: 'documentary-teaser-01.webp',
-    duration: '1 min 16 s', credit: 'Founder archive · Documentary excerpt, not the complete film.',
-  },
-  {
-    id: 'archive-02', name: 'THE ONE DOCUMENTAIRE · 02',
-    title: 'Documentary highlight 02',
-    description: 'More documentary highlights supplied by the Founder, available here in the same collection.',
-    file: 'documentary-teaser-02.mp4', poster: 'documentary-teaser-02.webp',
-    duration: '7 s', credit: 'Founder archive · Documentary excerpt, not the complete film.',
-  },
-  {
     id: 'archive-04', name: 'THE ONE DOCUMENTAIRE · 04',
     title: 'Documentary highlight 04',
     description: 'More documentary highlights supplied by the Founder, available here in the same collection.',
     file: 'documentary-teaser-04.mp4', poster: 'documentary-teaser-04.webp',
     duration: '1 min 01 s', credit: 'Founder archive · Documentary excerpt, not the complete film.',
+  },
+  {
+    id: 'radio-okapi', name: 'RADIO OKAPI',
+    title: 'Radio Okapi · Film archive',
+    description: 'A separate film from the archive supplied by the Founder.',
+    file: 'radio-okapi-trailer.mp4', poster: 'radio-okapi.webp',
+    duration: '2 min 09 s', credit: 'Film credit: MONUSCO / United Nations · Radio Okapi.',
   },
 ];
 
@@ -81,7 +81,7 @@ export default function BroadcastFilms({ embedded = false }: { embedded?: boolea
       data-testid="section-broadcast-films">
       <div className={embedded ? '' : 'mx-auto max-w-6xl'}>
         <p className="text-eyebrow text-gold-700">WATCH · BROADCAST & DOCUMENTARY HIGHLIGHTS</p>
-        <h2 id="broadcast-films-heading" className="mt-3 font-display text-3xl uppercase sm:text-5xl">MONUSCO. CANAL+. TV5MONDE.</h2>
+        <h2 id="broadcast-films-heading" className="mt-3 font-display text-3xl uppercase sm:text-5xl">CANAL+. TV5MONDE. THE ONE DOCUMENTAIRE.</h2>
         <p className="mt-4 max-w-3xl text-sm leading-relaxed text-ink-700">Watch the films here, one after another. Start the first video to play the collection in sequence.</p>
         <nav aria-label="Broadcast films" className="mt-5 flex flex-wrap gap-3">
           {FILMS.map((film, i) => (

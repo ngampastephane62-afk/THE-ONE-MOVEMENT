@@ -15,6 +15,12 @@ The Founder explicitly requires the uploaded MONUSCO campaign film, CANAL+ tease
 
 **How to apply:** Show native inline players and keep the supplied documentary highlights together, with an optional next-video sequence. Audit existing uploads, including the original ZIP, before asking for reuploads or claiming a film is unavailable. Confirm ambiguous broadcaster-to-file mappings rather than treating an unrelated generic teaser as verified broadcaster footage.
 
+The Founder confirmed the 29-second runway/interview teaser for CANAL+ and added “Les 3”, asking for the three teasers together. The Founder explicitly rejected the 2:09 Radio Okapi film as the MONUSCO campaign film.
+
+**Why:** This is a direct correction of the provisional video associations, not a request to remove the Radio Okapi archive itself.
+
+**How to apply:** Keep the three CANAL+ teasers together. Keep Radio Okapi credited separately; never label it as the requested anti-disinformation campaign or substitute it while identifying the actual campaign source.
+
 The stakeholder describes a ten-year journey and confirms that the supplied press outlets are longstanding partners with evidence. Their explicit News requirement is publisher attribution, publisher logos, links to the outlets' pages and an administrator's ability to add more coverage.
 
 **Why:** The stakeholder corrected an initial plan to put the press review in Media and supplied screenshots documenting the coverage. Treat this documented coverage confidently without repeating speculative or “unverified partner” labels.
@@ -110,3 +116,9 @@ Tropik Magazine is intended to be sold in both digital and printed versions: US$
 **Why:** The Founder explicitly states that readers must buy the magazine, in electronic or printed form. This is separate from the free humanitarian films and professional ecosystem subscriptions. After being told that the supplied PDF is a ten-page media kit rather than a full reader issue, the Founder explicitly confirmed selling that PDF as-is.
 
 **How to apply:** Do not expose the paid PDF as a free public download. Use the supplied document as confirmed, describing its actual contents and length honestly rather than asking for a replacement issue again. The Founder supplied the retail prices and delivery range but no destination-based tariff or shipping countries: require an exact delivery quote accepted before charging a print order; do not choose arbitrary fees or promise worldwide delivery. Editorial-partnership or paid-feature prices in the document are not magazine retail prices. Keep real sales closed while the connected Stripe account is in test mode.
+
+The Founder subsequently clarified that Tropik needs a readable editorial web page, not just a purchase screen: convert the full supplied presentation PDF into web content from the introduction through distribution, offer the kit alongside it, and publish supplied magazine stories as online articles on the same page.
+
+**Why:** The Founder explicitly corrected the storefront-only interpretation and supplied magazine artwork as article material.
+
+**How to apply:** Distinguish the presentation/media kit, readable online articles, paid reader editions, and publication opportunities. The new stated offer is US$200 for one inside page of the printed magazine, separate from a reader buying a copy. Future contributor submissions belong in a separate space, not directly in the curated public page. Confirm any change from paid PDF access to a free kit download before releasing the currently protected file. Do not assume that the ambiguous spoken term “moquette” means a marketplace or an editable magazine mockup without clarification.

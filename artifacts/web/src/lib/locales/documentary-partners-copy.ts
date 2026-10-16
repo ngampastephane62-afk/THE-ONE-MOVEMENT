@@ -1,5 +1,9 @@
 export const documentaryPartnersCopy: Record<string, Record<string, string>> = {
   fr: {
+    'The One Documentaire · Teaser 02': 'The One Documentaire · Bande-annonce 02',
+    'The One Documentaire · Teaser 03': 'The One Documentaire · Bande-annonce 03',
+    'Radio Okapi · Film archive': 'Radio Okapi · Archives filmées',
+    'A separate film from the archive supplied by the Founder.': 'Un film distinct issu des archives fournies par le fondateur.',
     'WATCH · BROADCAST & DOCUMENTARY HIGHLIGHTS': 'À VOIR · DIFFUSIONS ET EXTRAITS DOCUMENTAIRES',
     'Watch the films here, one after another. Start the first video to play the collection in sequence.': 'Regardez les films ici, les uns à la suite des autres. Lancez la première vidéo pour enchaîner la collection.',
     'Campaign film': 'Film de campagne',
