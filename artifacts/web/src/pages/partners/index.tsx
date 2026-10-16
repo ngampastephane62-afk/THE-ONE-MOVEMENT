@@ -6,7 +6,7 @@ import PartnerHistory from '@/components/partners/PartnerHistory';
 import SectionHeading from '@/components/SectionHeading';
 import { Button } from '@/components/ui/button';
 import Reveal from '@/components/Reveal';
-import ArchivePhoto from '@/components/ArchivePhoto';
+import DocumentaryTeasers from '@/components/editorial/DocumentaryTeasers';
 import ResponsiveMedia from '@/components/ResponsiveMedia';
 import { archiveVideo } from '@/components/ArchivePhoto';
 import { Handshake } from 'lucide-react';
@@ -28,19 +28,12 @@ export default function Partners() {
       <section className="py-section-lg bg-ivory-50 border-t border-sand-200" aria-labelledby="engagement-heading">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
-            <SectionHeading eyebrow="PROOF OF NETWORK" heading="OUR PARTNERS IN DIALOGUE" surface="light" size="lg" thread />
+            <SectionHeading eyebrow="SINCE THE FIRST EDITION" heading="OUR DOCUMENTARY ARCHIVE" surface="light" size="lg" thread />
             <p id="engagement-heading" className="mt-6 max-w-2xl leading-relaxed text-ink-800">
-              Partners of The One Movement, shown through photographs and footage from the Founder archive.
-              These relationships can open access to collaboration across business, diplomacy, culture and community; outcomes are discussed case by case. New enquiries are reviewed separately below.
+              Since its first edition, The One Movement has produced documentaries and magazines.
             </p>
           </Reveal>
-          <div className="mt-12 grid grid-cols-12 items-start gap-4 sm:gap-6">
-            <Reveal className="col-span-12 sm:col-span-7"><ArchivePhoto id="institutional-dialogue" caption sizes="(min-width: 640px) 58vw, 92vw" /></Reveal>
-            <Reveal delay={80} className="col-span-6 sm:col-span-5"><ArchivePhoto id="diplomatic-encounter" caption sizes="(min-width: 640px) 40vw, 46vw" /></Reveal>
-            <Reveal delay={120} className="col-span-6 sm:col-span-4"><ArchivePhoto id="global-encounter" caption sizes="(min-width: 640px) 32vw, 46vw" /></Reveal>
-            <Reveal delay={160} className="col-span-6 sm:col-span-4"><ArchivePhoto id="office-encounter" caption sizes="(min-width: 640px) 32vw, 46vw" /></Reveal>
-            <Reveal delay={200} className="col-span-6 sm:col-span-4"><ArchivePhoto id="conversation" caption sizes="(min-width: 640px) 32vw, 46vw" /></Reveal>
-          </div>
+          <DocumentaryTeasers />
           <Reveal className="mt-12 flex flex-col items-center sm:flex-row sm:items-center sm:gap-10">
             <ResponsiveMedia
               kind="vertical-reel"

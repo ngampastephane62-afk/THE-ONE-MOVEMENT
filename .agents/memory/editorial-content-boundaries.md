@@ -33,9 +33,9 @@ The stakeholder wants a Dubai documentary announcement and links to CANAL+. The 
 
 **How to apply:** Clearly distinguish announced development and intended distribution from confirmed commissioning or scheduling. Broadcaster-wide audience statistics must have a dated official source and must never be presented as views of TOMI's interview.
 
-The documentary section must represent TOMI's ongoing documentary history, with Goma first and Kinshasa subsequently, not only a future Dubai film. The stakeholder also identifies a supplied trailer as produced by MONUSCO through Radio Okapi.
+The documentary section must represent TOMI's ongoing documentary history, with Goma first and Kinshasa subsequently, not only a future Dubai film. The stakeholder states that The One Movement has produced documentaries and magazines since its first edition and identifies the later supplied teasers as excerpts of The One Documentaire. The stakeholder also identifies a supplied trailer as produced by MONUSCO through Radio Okapi.
 
-**Why:** The stakeholder states they have made documentary videos since the beginning and wants highlights leading to longer exclusive content.
+**Why:** The stakeholder states they have made documentary videos since the beginning and wants highlights leading to longer exclusive content. They explicitly supplied four more archive excerpts to replace the static partner-photo gallery; those files are not evidence of a newly completed Dubai production or four separately numbered editions.
 
 **How to apply:** Distinguish TOMI productions, externally produced trailers and the future Dubai project. Credit MONUSCO/Radio Okapi accurately; do not assume permission to place third-party footage behind a paid-access restriction merely because it was supplied.
 
@@ -73,7 +73,7 @@ TV5MONDE's published embed URL can still reject cross-site framing with `X-Frame
 
 **Why:** The supplied report's structured metadata offered an embed URL, but that endpoint returned SAMEORIGIN when checked. Metadata alone did not establish that a working embedded player was available.
 
-**How to apply:** Verify framing headers before embedding; use an honest link to the official report when framing is blocked. Do not mirror the broadcaster's video or silently substitute a direct media URL to bypass the official player.
+**How to apply:** Verify framing headers before embedding; use an honest link to the official report when framing is blocked. Do not download the broadcaster's video or silently substitute a direct media URL to bypass its official player. A broadcast archive file later uploaded directly by the Founder is a separate supplied asset, not a reason to scrape the blocked player. Preserve the official-report link, credit the broadcasters visible in the supplied file, and do not infer its edition or equate its duration with the linked report.
 
 The Founder requests broadcaster introductions for CANAL+ and Africa 24 TV, then the MONUSCO campaign video followed by Madi TV, and a future production with their partner The Film Makers. They also request mention of Netflix.
 
@@ -98,3 +98,9 @@ The Founder explicitly confirms that the previously supplied brands and institut
 **Why:** The Founder corrected the limited presentation and asked whether all the previously uploaded logos had been received. Some source assets were inside the original ZIP, not separate recent attachments.
 
 **How to apply:** Audit nested archive folders before asking for reuploads. Describe the collection as historical signed partnerships per the Founder, without implying that every contract is currently active. An individual logo does not establish a start year or a specific deliverable; leave those unstated until supplied.
+
+Tropik Magazine is intended to be sold in both digital and printed versions.
+
+**Why:** The Founder explicitly states that readers must buy the magazine, in electronic or printed form. This is separate from the free humanitarian films and professional ecosystem subscriptions.
+
+**How to apply:** Do not expose a full paid issue as a free public PDF. Confirm the actual retail issue, prices and print-fulfilment terms before opening sales. Editorial-partnership or paid-feature prices in a media kit are not magazine retail prices.

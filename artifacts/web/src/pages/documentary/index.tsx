@@ -6,6 +6,7 @@ import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
 import Reveal from '@/components/Reveal';
 import ProducerProfile from '@/components/editorial/ProducerProfile';
+import BroadcastOverview from '@/components/editorial/BroadcastOverview';
 import { PaymentReturn, useReturnParams } from '@/components/humanitarian/shared';
 
 export default function Documentary() {
@@ -24,31 +25,12 @@ export default function Documentary() {
           <h1 className="mt-6 text-display-xl text-ivory-100"><span className="block animate-cinematic-1">THE ONE</span><span className="block animate-cinematic-2 text-gold-400">DOCUMENTARY</span></h1>
           <div className="animate-cinematic-3">
             <GoldThread className="mt-10" length="240px" node />
-            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-ivory-200">An archive of moments from the Movement's path: Goma first, Kinshasa next, Dubai in development. Supporting it supports the TOMI humanitarian fund.</p>
+            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-ivory-200">Since its first edition, The One Movement has produced documentaries and magazines. This collection gathers films from that history: Goma first, Kinshasa next, and a separate Dubai project in development.</p>
           </div>
         </div>
       </HeroSurface>
 
-      <section className="border-b border-sand-300 py-section-lg" aria-labelledby="documentary-broadcast-heading">
-        <div className="mx-auto max-w-6xl px-6">
-          <p className="text-eyebrow text-gold-700">BROADCAST & DISTRIBUTION</p>
-          <h2 id="documentary-broadcast-heading" className="mt-3 text-display-md text-ink-900">CANAL+ & Africa 24 TV.</h2>
-          <p className="mt-4 max-w-3xl text-sm leading-relaxed text-ink-800">Discover the broadcasters named by the Founder in the documentary journey. The links below introduce the organisations; they are not links to TOMI films.</p>
-          <div className="mt-8 grid gap-8 md:grid-cols-2">
-            <article data-testid="documentary-canal-plus">
-              <div className="inline-block bg-ink-900 px-4 py-3"><img src={`${import.meta.env.BASE_URL}api/documentary/media/canal-logo.png`} alt="CANAL+ logo" className="h-7 w-auto" loading="lazy" data-testid="img-documentary-canal-logo" /></div>
-              <h3 className="mt-4 font-display text-2xl text-ink-900">CANAL+</h3>
-              <p className="mt-3 text-sm leading-relaxed text-ink-800">An international media and entertainment group active in audiovisual production, broadcasting, distribution and streaming. Its activities include television channels and the STUDIOCANAL film and television studio.</p>
-              <a href="https://www.canalplusgroup.com/en/group" target="_blank" rel="noreferrer" className="mt-4 inline-block py-2 text-sm font-semibold text-lagoon-700 underline underline-offset-4">About CANAL+ · Official website</a>
-            </article>
-            <article data-testid="documentary-africa24">
-              <h3 className="font-display text-2xl text-ink-900">Africa 24 TV</h3>
-              <p className="mt-3 text-sm leading-relaxed text-ink-800">A pan-African news broadcaster covering African current affairs around the clock, with an African editorial perspective. The Africa24 group also offers English-language, cultural and sports channels.</p>
-              <a href="https://africa24group.com/" target="_blank" rel="noreferrer" className="mt-4 inline-block py-2 text-sm font-semibold text-lagoon-700 underline underline-offset-4">About Africa24 · Official website</a>
-            </article>
-          </div>
-        </div>
-      </section>
+      <BroadcastOverview />
 
       <section className="py-section-lg">
         <div className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-12">

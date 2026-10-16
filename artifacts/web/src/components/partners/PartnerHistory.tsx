@@ -11,10 +11,12 @@ const SECTIONS: { key: HistoryCategory; label: string; note: string }[] = [
   { key: 'institutional', label: 'Government & cooperation', note: 'Governments and development agencies.' },
 ];
 
-function Mark({ id, name }: { id: number; name: string }) {
+function Mark({ id, name, description, sourceUrl, linkLabel, slug }: {
+  id: number; name: string; description?: string; sourceUrl?: string; linkLabel?: string; slug?: string;
+}) {
   const [failed, setFailed] = useState(false);
   return (
-    <li className="group flex flex-col border-b border-r border-sand-300" data-testid={`history-partner-${id}`}>
+    <li id={slug} className="group flex scroll-mt-28 flex-col border-b border-r border-sand-300" data-testid={`history-partner-${id}`}>
       <div className="flex aspect-[3/2] items-center justify-center bg-ivory-50 p-5 transition-colors group-hover:bg-ivory-100">
         {failed ? (
           <span className="text-center font-display text-lg leading-tight text-ink-700" aria-hidden="true">{name}</span>
@@ -27,6 +29,8 @@ function Mark({ id, name }: { id: number; name: string }) {
         <span className="font-mono text-[10px] text-gold-700">{String(id).padStart(2, '0')}</span>
         <span>{name}</span>
       </p>
+      {description && <p className="px-3 pb-3 text-xs leading-relaxed text-ink-700">{description}</p>}
+      {sourceUrl && <a href={sourceUrl} target="_blank" rel="noreferrer" className="mx-3 mb-3 inline-flex min-h-11 items-center text-xs font-semibold text-lagoon-700 underline underline-offset-4">{linkLabel}</a>}
     </li>
   );
 }
@@ -34,8 +38,9 @@ function Mark({ id, name }: { id: number; name: string }) {
 export default function PartnerHistory() {
   useEffect(() => {
     const go = () => {
-      if (window.location.hash.slice(1) === 'partner-history') {
-        document.getElementById('partner-history')?.scrollIntoView({ block: 'start', behavior: 'instant' });
+      const id = window.location.hash.slice(1);
+      if (['partner-history', 'history-reloved-luxury', 'history-madi-tv'].includes(id)) {
+        document.getElementById(id)?.scrollIntoView({ block: 'start', behavior: 'instant' });
       }
     };
     go();
@@ -93,7 +98,7 @@ export default function PartnerHistory() {
                   <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-ink-500">{items.length} {items.length === 1 ? 'mark' : 'marks'}</p>
                 </div>
                 <ul className="grid grid-cols-2 border-l border-t border-sand-300 sm:grid-cols-3 lg:col-span-9 lg:grid-cols-4">
-                  {items.map((p) => <Mark key={p.id} id={p.id} name={p.name} />)}
+                  {items.map((p) => <Mark key={p.id} {...p} />)}
                 </ul>
               </section>
             );

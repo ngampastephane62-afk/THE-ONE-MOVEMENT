@@ -34,13 +34,21 @@ with zipfile.ZipFile(archive) as z:
                     "-bordercolor", "white", "-border", "16", "-quality", "90",
                     str(out / f"archive-partner-{i:02}.webp")]
         subprocess.run(command, check=True)
+    # The Founder identified this monogram as Re-Loved Luxury.
+    source = out / "source-reloved-luxury.png"
+    source.write_bytes(z.read(by_name["IMG_4188.PNG"]))
+    subprocess.run(["magick", str(source), "-background", "white", "-alpha", "remove",
+                    "-alpha", "off", "-trim", "+repage", "-resize", "600x260>",
+                    "-bordercolor", "white", "-border", "16", "-quality", "90",
+                    str(out / "archive-partner-42.webp")], check=True)
     strip = out / "source-historical-strip.jpg"
     strip.write_bytes(z.read(by_name["9e2a5f5a-b8ad-4715-88c6-b6541b7082fd.JPG"]))
     # Faithful crops of readable marks in the supplied historical partner banner.
     for i, crop in [(38, "50x48+96+51"), (39, "40x42+400+51"),
-                    (40, "78x35+451+57"), (41, "40x42+536+51")]:
+                    (40, "78x35+451+57"), (41, "40x42+536+51"),
+                    (43, "36x45+581+50")]:
         subprocess.run(["magick", str(strip), "-crop", crop, "+repage",
                         "-resize", "300x140", "-background", "white", "-alpha", "remove",
                         "-bordercolor", "white", "-border", "16", "-quality", "90",
                         str(out / f"archive-partner-{i:02}.webp")], check=True)
-print("Prepared 41 distinct partner marks from the Founder's archive.")
+print("Prepared 43 distinct partner marks from the Founder's archive.")

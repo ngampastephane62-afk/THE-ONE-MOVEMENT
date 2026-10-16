@@ -44,6 +44,16 @@ export const partnerHistory = [
   { id: 39, name: 'RFI', category: 'broadcast' },
   { id: 40, name: 'Rawbank', category: 'business' },
   { id: 41, name: 'FA TV', category: 'broadcast' },
+  {
+    id: 42, name: 'Re-Loved Luxury', category: 'business', slug: 'history-reloved-luxury',
+    description: 'Dubai-based pre-owned luxury fashion and accessories business.',
+    sourceUrl: 'https://www.instagram.com/re_loved_luxury/', linkLabel: 'Instagram · Re-Loved Luxury',
+  },
+  {
+    id: 43, name: 'Madi TV', category: 'broadcast', slug: 'history-madi-tv',
+    description: 'Congolese Swahili-language television channel based in Goma.',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Madi_TV', linkLabel: 'About Madi TV · Wikipedia',
+  },
 ] as const;
 
 export type HistoryCategory = typeof partnerHistory[number]['category'];
