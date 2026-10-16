@@ -36,7 +36,8 @@ export default function Documentary() {
           <p className="mt-4 max-w-3xl text-sm leading-relaxed text-ink-800">Discover the broadcasters named by the Founder in the documentary journey. The links below introduce the organisations; they are not links to TOMI films.</p>
           <div className="mt-8 grid gap-8 md:grid-cols-2">
             <article data-testid="documentary-canal-plus">
-              <h3 className="font-display text-2xl text-ink-900">CANAL+</h3>
+              <div className="inline-block bg-ink-900 px-4 py-3"><img src={`${import.meta.env.BASE_URL}api/documentary/media/canal-logo.png`} alt="CANAL+ logo" className="h-7 w-auto" loading="lazy" data-testid="img-documentary-canal-logo" /></div>
+              <h3 className="mt-4 font-display text-2xl text-ink-900">CANAL+</h3>
               <p className="mt-3 text-sm leading-relaxed text-ink-800">An international media and entertainment group active in audiovisual production, broadcasting, distribution and streaming. Its activities include television channels and the STUDIOCANAL film and television studio.</p>
               <a href="https://www.canalplusgroup.com/en/group" target="_blank" rel="noreferrer" className="mt-4 inline-block py-2 text-sm font-semibold text-lagoon-700 underline underline-offset-4">About CANAL+ · Official website</a>
             </article>

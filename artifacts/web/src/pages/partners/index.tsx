@@ -1,6 +1,8 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'wouter';
 import PartnerOrbitStage from '@/components/partners/PartnerOrbitStage';
+import PartnerEditorial from '@/components/partners/PartnerEditorial';
+import PartnerHistory from '@/components/partners/PartnerHistory';
 import SectionHeading from '@/components/SectionHeading';
 import { Button } from '@/components/ui/button';
 import Reveal from '@/components/Reveal';
@@ -57,6 +59,10 @@ export default function Partners() {
           </Reveal>
         </div>
       </section>
+
+      <PartnerHistory />
+
+      <PartnerEditorial />
 
       {/* PARTNERSHIP OPPORTUNITIES */}
       <section className="py-section-lg bg-lagoon-900 text-ivory-100">
@@ -119,10 +125,10 @@ export default function Partners() {
           <Reveal>
             <p className="text-[10px] font-semibold text-ink-500 tracking-[0.2em] uppercase">OUR DISPLAY POLICY</p>
             <p className="mt-3 text-sm text-ink-700 leading-relaxed">
-              Confirmed partners appear above. Organizations and individuals who enquire are reviewed before any public listing.
+              Past partnerships recovered from the Founder archive and current relationship areas appear above. Organizations and individuals who enquire are reviewed before any public listing.
             </p>
-            <p className="mt-6 text-sm text-ink-700 leading-relaxed">Production partner for the documentary: The Film Makers, led by Qais Qandil. <Link href="/the-one-documentary#production-partner" className="font-semibold text-lagoon-700 underline underline-offset-4" data-testid="link-production-partner">Meet the production partner</Link></p>
-            <Link href="/media" className="mt-4 inline-block text-sm font-semibold text-lagoon-700 underline underline-offset-4">Looking for press coverage? Visit Media.</Link>
+            <p className="mt-3 text-sm text-ink-700 leading-relaxed">Industry profiles are editorial context and do not indicate a partnership.</p>
+            <Link href="/news" className="mt-4 inline-block text-sm font-semibold text-lagoon-700 underline underline-offset-4" data-testid="link-press-news">Looking for press coverage? Visit News.</Link>
           </Reveal>
         </div>
       </section>

@@ -1,0 +1,16 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "bPGIaUKKqA0dptt0Q-fHt"
+uri = "file://generated-artifacts/partner-history/logos-a-identifier.jpg"
+type = "image"
+title = "Quatre logos à identifier"
+description = "Symboles retrouvés dans votre archive : 1 monogramme noir, 2 tête de dragon, 3 logo hôtel doré, 4 logo vert. Leurs noms doivent être précisés avant ajout."
+logical_id = "5fb0fdab-15b0-44c3-bdc6-cbda354b7db8"
+content_hash = "sha256:05d9d4ac9acfdbeab18b7c606617d52c06057fa8505cec0d2cdc0d7f86188904"
+size = 22660
+mtime_ms = 1792155195159
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/5fb0fdab-15b0-44c3-bdc6-cbda354b7db8/386a4453-e4a6-435b-9a1c-718e625ebc6c"
+storage_version_token = "1792155285861910"
+content_type = "image/jpeg"

@@ -142,9 +142,11 @@ router.get("/documentary/goma/stream", async (req, res) => {
 router.get("/documentary/media/:filename", async (req, res) => {
   const name = String(req.params.filename);
   const portraits = Array.from({ length: 26 }, (_, index) => `tfm-portrait-${String(index + 1).padStart(2, "0")}.webp`);
-  if (!["goma-preview.mp4", "radio-okapi-trailer.mp4", "goma.webp", "radio-okapi.webp", ...portraits].includes(name)) return void res.sendStatus(404);
+  const partnerLogos = Array.from({ length: 41 }, (_, index) => `archive-partner-${String(index + 1).padStart(2, "0")}.webp`);
+  if (!["goma-preview.mp4", "radio-okapi-trailer.mp4", "goma.webp", "radio-okapi.webp", "ben-amadasun.webp", "canal-logo.png", "netflix-logo.svg", ...portraits, ...partnerLogos].includes(name)) return void res.sendStatus(404);
   const bucket = process.env.DEFAULT_OBJECT_STORAGE_BUCKET_ID;
   if (!bucket) throw new NetworkError(503, "Media storage is unavailable.");
-  sendBufferedVideo(req, res, await video(`/${bucket}/public/documentary/${name}`), name.endsWith(".webp") ? "image/webp" : "video/mp4");
+  const contentType = name.endsWith(".webp") ? "image/webp" : name.endsWith(".png") ? "image/png" : name.endsWith(".svg") ? "image/svg+xml" : "video/mp4";
+  sendBufferedVideo(req, res, await video(`/${bucket}/public/documentary/${name}`), contentType);
 });
 export default router;

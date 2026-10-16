@@ -86,3 +86,15 @@ The Founder identifies The Film Makers (thefilmmakers.com) as their production p
 **Why:** The 2026 slate includes casting suggestions, potential streaming platforms and financial projections; those are not evidence of completed collaborations, contractual casting or TOMI financing.
 
 **How to apply:** Use the producer's published past film credits for actor profiles. Attribute portraits and film associations to its portfolio, not TOMI endorsements or documentary participation. Keep upcoming casting suggestions and non-public financial projections out of the public partner presentation.
+
+The Founder wants Partners to read like a newspaper or magazine, not a collection of screenshots, with media/magazine, broadcaster, humanitarian, diplomatic, business and bilateral relationship categories. They will supply partner logos, identities, collaboration start dates and shared work.
+
+**Why:** The Founder states that Tropik and The One Movement have signed major partnerships since their creation and wants each relationship explained, rather than a generic logo wall.
+
+**How to apply:** Present known relationships confidently while distinguishing signed partnerships, documented coverage, official encounters and editorial industry profiles. Add dates and shared productions when supplied; do not infer them. The supplied Ben Amadasun screenshot is an African Business interview dated 2023-02-28, not evidence of a TOMI–Netflix agreement. Netflix's own 2024-09-03 announcement calls him VP of Content for Middle East and Africa; date that title instead of assuming it is current.
+
+The Founder explicitly confirms that the previously supplied brands and institutional logos represent partnerships signed over the last ten years and wants them represented on Partners, not only in News or left as future collaboration areas.
+
+**Why:** The Founder corrected the limited presentation and asked whether all the previously uploaded logos had been received. Some source assets were inside the original ZIP, not separate recent attachments.
+
+**How to apply:** Audit nested archive folders before asking for reuploads. Describe the collection as historical signed partnerships per the Founder, without implying that every contract is currently active. An individual logo does not establish a start year or a specific deliverable; leave those unstated until supplied.
