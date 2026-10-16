@@ -6,13 +6,13 @@ import { Button } from '@/components/ui/button';
 import GoldThread from '@/components/GoldThread';
 import ArchivePhoto, { archiveVideo } from '@/components/ArchivePhoto';
 import ProgramVision from '@/components/ProgramVision';
-import { AwardsPreview } from '@/components/AwardsMedia';
 import { DiplomaticGalaPreview } from '@/components/DiplomaticGalaMedia';
 import ResponsiveMedia from '@/components/ResponsiveMedia';
 import HomeReelStrip from '@/components/HomeReelStrip';
 import Reveal from '@/components/Reveal';
 import TomiConstellation from '@/components/TomiConstellation';
 import FashionEditionNote from '@/components/FashionEditionNote';
+import ProgrammeFilm from "@/components/programs/ProgrammeFilm";
 import SectionHeading from '@/components/SectionHeading';
 import HomeBrandHero from '@/components/home/HomeBrandHero';
 import HomeArchiveCarousel from '@/components/home/HomeArchiveCarousel';
@@ -122,13 +122,14 @@ export default function HomeExperience() {
               <HomeReelStrip />
             </Reveal>
             <Reveal delay={100} direction="right" className="flex flex-col justify-center p-7 sm:p-10 lg:col-span-6">
-              <p className="text-eyebrow text-gold-600">FIVE EDITIONS COMPLETED · SIXTH POSTPONED</p>
+              <ProgrammeFilm id="fashion-knight-2026" className="mb-8 w-full max-w-sm" caption="Official artwork · The Founder as Chevalier de la paix et de l’unité" />
+              <p className="text-eyebrow text-gold-600">FIVE EDITIONS COMPLETED · SIXTH IN DUBAI</p>
               <h2 id="fashion-proof-heading" className="mt-4 text-display-md text-ink-900" style={{ fontFamily: 'var(--font-display)' }}>
                 THE ONE FASHION WEEK INTERNATIONAL
               </h2>
               <p className="mt-6 leading-relaxed text-ink-800">
                 Fashion carried a message of peace from Bukavu to Goma and Kinshasa.
-                Five editions are complete. The sixth is planned for November and currently postponed.
+                Five editions are complete. The sixth, the first in Dubai, takes place on <time dateTime="2026-12-22">22 December 2026</time>.
               </p>
               <FashionEditionNote />
               <Link href="/programs/fashion-week" className="mt-8">
@@ -164,13 +165,13 @@ export default function HomeExperience() {
                   {program.slug === 'summit' ? (
                     <ArchivePhoto id="summit-goma" actions={false} frameClassName="aspect-[4/3] w-full" objectPosition="center 30%" sizes="(min-width: 768px) 30vw, 92vw" />
                   ) : program.slug === 'awards' ? (
-                    <AwardsPreview actions={false} className="aspect-[4/3] w-full" />
+                    <ProgrammeFilm id="awards-rosina-2027" className="w-full" caption="Rosina · producer, partner and speaker · 2 January 2027" />
                   ) : program.slug === 'diplomatic-gala' ? (
                     <DiplomaticGalaPreview actions={false} className="aspect-[4/3] w-full" />
                   ) : (
                     <ProgramVision name={program.name} className="aspect-[4/3] w-full" />
                   )}
-                  {programCardMedia(program.slug) && <div className="px-6"><PhotoActions source={programCardMedia(program.slug)!.source} title={programCardMedia(program.slug)!.title} /></div>}
+                  {program.slug !== 'awards' && programCardMedia(program.slug) && <div className="px-6"><PhotoActions source={programCardMedia(program.slug)!.source} title={programCardMedia(program.slug)!.title} /></div>}
                   <div className="p-6">
                     <h3 className="font-display text-lg text-ink-900">{program.name}</h3>
                     <p className="mt-3 text-sm leading-relaxed text-ink-700">{program.description}</p>

@@ -16,6 +16,9 @@ import FashionEditionNote from '@/components/FashionEditionNote';
 import StatusNotice from '@/components/StatusNotice';
 import ProgrammeNominees from '@/components/editorial/ProgrammeNominees';
 import ProgrammeCover from '@/components/programs/ProgrammeCover';
+import ProgrammeFilm from "@/components/programs/ProgrammeFilm";
+import PeaceVoices from "@/components/programs/PeaceVoices";
+import FashionConnections from "@/components/programs/FashionConnections";
 import { PROGRAMS, getProgramBySlug, type Program, type ProgramStatus } from '@/lib/programs-data';
 
 /* ── Page ─────────────────────────────────────────────────────────────────── */
@@ -353,6 +356,9 @@ export default function ProgramDetail() {
         </div>
       </section>
       {program.slug === 'diplomatic-gala' && <DiplomaticGalaSpeakers />}
+      {program.slug === "awards" && <AwardsRosina />}
+      {program.slug === "fashion-week" && <FashionConnections />}
+      {program.slug === "fashion-week" && <PeaceVoices />}
       {(program.slug === 'awards' || program.slug === 'summit' || program.slug === 'fashion-week') && <ProgrammeNominees programme={program.slug} />}
 
       {/* ───────────────────────────────────────────────────────────────────────
@@ -497,7 +503,7 @@ function ProgramHeroMedia({ slug, name, tagline }: { slug: string; name: string;
     return <DiplomaticGalaPreview tone="dark" className="tomi-program-detail-media mx-auto w-full max-w-md aspect-[3/4]" />;
   }
   if (slug === 'awards') {
-    return <AwardsPreview tone="dark" className="tomi-program-detail-media w-full" />;
+    return <ProgrammeFilm id="awards-rosina-2027" tone="dark" className="tomi-program-detail-media mx-auto w-full max-w-md" caption="Rosina · producer, partner and speaker · 2 January 2027" />;
   }
   if (slug === 'summit') {
     return <ArchivePhoto id="summit-goma" caption sizes="(min-width: 1024px) 38vw, 92vw" className="tomi-program-detail-media mx-auto max-w-md" captionClassName="text-ivory-300" />;
@@ -713,5 +719,26 @@ function RelatedProgramCard({ slug }: { slug: string }) {
         </p>
       </div>
     </Link>
+  );
+}
+
+/** Rosina — producer, partner and speaker of The One Awards (stylized supplied clip). */
+function AwardsRosina() {
+  return (
+    <section className="py-section-lg" style={{ backgroundColor: 'hsl(187 67% 12%)' }} aria-labelledby="awards-rosina-heading">
+      <div className="mx-auto grid max-w-7xl gap-10 px-6 md:grid-cols-12 md:items-center">
+        <figure className="mx-auto w-full max-w-sm md:col-span-5">
+          <img src={`${import.meta.env.BASE_URL}api/program-media/awards-rosina-2027.webp`} alt="Rosina · producer, partner and speaker of The One Awards" className="block h-auto w-full" loading="lazy" />
+        </figure>
+        <div className="md:col-span-6 md:col-start-7">
+          <p className="text-eyebrow text-gold-400">PRODUCER · PARTNER · SPEAKER</p>
+          <h2 id="awards-rosina-heading" className="mt-3 text-display-lg text-ivory-100" style={{ fontFamily: 'var(--font-display)' }}>ROSINA</h2>
+          <GoldThread className="mt-6 mb-6" length="180px" node />
+          <p className="text-lg leading-relaxed text-ivory-200">
+            Rosina is a producer and partner of The One Awards, and a speaker at the ceremony on <time dateTime="2027-01-02">2 January 2027</time>.
+          </p>
+        </div>
+      </div>
+    </section>
   );
 }

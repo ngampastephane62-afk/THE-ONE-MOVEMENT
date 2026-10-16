@@ -19,3 +19,5 @@
 - [Paid publication files](paid-publication-assets.md) — protect raw uploads in development as well as paid downloads; test payments never unlock the PDF.
 - [Partner presentation](partner-presentation.md) — institutions and banking before brands; media last, then source-labelled audiences; photos visible for three seconds.
 - [Editorial asset storage](editorial-asset-storage.md) — standalone media jobs should avoid app DB/auth imports; malformed sidecar field names can resemble stream failures.
+- [Dubai programme announcements](dubai-programme-announcements.md) — confirmed December 2026/January 2027 dates; Fashion Week networking, supporting voices and Awards speaker framing.
+- [Magazine measurement](magazine-measurement.md) — library/book reading, genuine digital-session statistics separate from social reach, and raw aggregate timestamp decoding.

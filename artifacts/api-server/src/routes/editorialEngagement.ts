@@ -17,6 +17,7 @@ export const EDITORIAL_VIDEO_IDS = new Set([
   "goma-donation", "previous-editions", "home-reel-1", "home-reel-2", "home-reel-3",
   "fashion-archive-reel", "institutional-meeting", "impact-community",
   "pink-october-burj-khalifa",
+  "home-we-are-one-2026", "fashion-knight-2026", "awards-rosina-2027",
   "documentary-teaser-01", "documentary-teaser-02", "documentary-teaser-03", "documentary-teaser-04",
   "fashion-week-tv5",
 ]);

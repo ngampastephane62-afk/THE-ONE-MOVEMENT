@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import PhotoActions from '@/components/editorial/PhotoActions';
+import VideoActions from "@/components/editorial/VideoActions";
 import { programCardMedia } from '@/lib/cover-media';
 import ProgrammeCover from '@/components/programs/ProgrammeCover';
 import { useState } from 'react';
@@ -11,7 +12,7 @@ import SectionHeading from '@/components/SectionHeading';
 import ArchivePhoto from '@/components/ArchivePhoto';
 import ProgramVision from '@/components/ProgramVision';
 import ProgramSuppliedImage from '@/components/programs/ProgramSuppliedImage';
-import { AwardsPreview } from '@/components/AwardsMedia';
+import { ProgrammeFilmPoster } from '@/components/programs/ProgrammeFilm';
 import { DiplomaticGalaPreview } from '@/components/DiplomaticGalaMedia';
 import StatBlock from '@/components/StatBlock';
 
@@ -39,13 +40,13 @@ const PROGRAMS: {
     slug: 'fashion-week',
     name: 'THE ONE FASHION WEEK INTERNATIONAL',
     tagline: 'Fashion. Design. Runway. Culture.',
-    desc: 'The program where the Movement began. Five completed editions in Bukavu, Goma and Kinshasa carried a message of peace, unity and radical inclusion. The sixth is planned for November and is currently postponed.',
+    desc: 'The program where the Movement began. Five completed editions in Bukavu, Goma and Kinshasa carried a message of peace, unity and radical inclusion. The sixth, the first in Dubai, takes place on 22 December 2026.',
   },
   {
     slug: 'awards',
     name: 'THE ONE AWARDS',
     tagline: 'Recognition. Excellence. Impact.',
-    desc: "A planned recognition program for people, organizations and initiatives whose work reflects creativity, courage, collaboration and positive impact.",
+    desc: "2 January 2027. Recognition for creativity, courage, collaboration and positive impact, with Rosina as producer, partner and speaker.",
   },
   {
     slug: 'fashion-night',
@@ -304,7 +305,7 @@ function ProgramCard({
           ) : slug === 'fashion-week' ? (
             <ProgrammeCover programme="fashion-week" actions={false} className="w-full" />
           ) : slug === 'awards' ? (
-            <AwardsPreview actions={false} className="w-full" />
+            <ProgrammeFilmPoster id="awards-rosina-2027" className="w-full" />
           ) : slug === 'diplomatic-gala' ? (
             <DiplomaticGalaPreview actions={false} className="w-full aspect-[4/3]" />
           ) : slug === 'fashion-night' || slug === 'investment-forum' ? (
@@ -358,7 +359,7 @@ function ProgramCard({
       </article>
     </Link>
     {/* Reactions sit outside the card link so no control is nested in an anchor. */}
-    {media && <div className="px-1"><PhotoActions source={media.source} title={media.title} tone="light" /></div>}
+    {slug === "fashion-week" || slug === "awards" ? <div className="px-1"><VideoActions videoId={slug === 'fashion-week' ? 'fashion-knight-2026' : 'awards-rosina-2027'} title={slug === 'fashion-week' ? 'The One Fashion Week International · 22 December 2026 · official artwork' : 'Rosina · producer and speaker · The One Awards'} tone="light" /></div> : media && <div className="px-1"><PhotoActions source={media.source} title={media.title} tone="light" /></div>}
     </div>
   );
 }

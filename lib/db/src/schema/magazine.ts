@@ -1,5 +1,17 @@
-import { pgTable, serial, text, integer, boolean, timestamp, index } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, integer, boolean, timestamp, index, uniqueIndex } from "drizzle-orm/pg-core";
 import { ecosystemMembersTable } from "./ecosystemMembers";
+
+/** Anonymous reading sessions, not people. No IP, email or account identity is stored. */
+export const magazineReadingEvents = pgTable("magazine_reading_events", {
+  id: serial("id").primaryKey(),
+  editionId: text("edition_id").notNull(),
+  sessionHash: text("session_hash").notNull(),
+  eventKey: text("event_key").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+}, (t) => [
+  uniqueIndex("magazine_reading_event_unique").on(t.editionId, t.sessionHash, t.eventKey),
+  index("magazine_reading_edition_idx").on(t.editionId, t.createdAt),
+]);
 
 export const magazineOrders = pgTable("magazine_orders", {
   id: serial("id").primaryKey(),

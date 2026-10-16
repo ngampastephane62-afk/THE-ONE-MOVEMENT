@@ -5,6 +5,44 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+export interface MagazineStatistics {
+  editionId: string;
+  opens: number;
+  pagesViewed: number;
+  engagedSessions: number;
+  /** @nullable */
+  startedAt: string | null;
+  updatedAt: string;
+}
+
+export type MagazineReadingInputEditionId = typeof MagazineReadingInputEditionId[keyof typeof MagazineReadingInputEditionId];
+
+
+export const MagazineReadingInputEditionId = {
+  'tropik-editorial-2026': 'tropik-editorial-2026',
+} as const;
+
+export type MagazineReadingInputEvent = typeof MagazineReadingInputEvent[keyof typeof MagazineReadingInputEvent];
+
+
+export const MagazineReadingInputEvent = {
+  open: 'open',
+  page: 'page',
+  engaged: 'engaged',
+} as const;
+
+export interface MagazineReadingInput {
+  editionId: MagazineReadingInputEditionId;
+  /** @pattern ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$ */
+  sessionId: string;
+  event: MagazineReadingInputEvent;
+  /**
+     * @minimum 0
+     * @maximum 12
+     */
+  page?: number;
+}
+
 export interface PartnerIntroductionInput {
   /**
      * @minimum 1
@@ -1040,6 +1078,10 @@ export interface DetailedHealthStatus {
   status: string;
   database: string;
 }
+
+export type RecordMagazineReadingEvent200 = {
+  recorded: boolean;
+};
 
 export type CreatePartnerIntroduction201 = {
   id: number;

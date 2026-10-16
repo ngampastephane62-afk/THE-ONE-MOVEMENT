@@ -51,7 +51,9 @@ import type {
   MagazineOrder,
   MagazineOrderInput,
   MagazineOrderList,
+  MagazineReadingInput,
   MagazineShippingQuoteInput,
+  MagazineStatistics,
   MagazineSubmission,
   MagazineSubmissionInput,
   MagazineSubmissionList,
@@ -79,6 +81,7 @@ import type {
   ProfessionalBusiness,
   ProfessionalIntroductionInput,
   ProfessionalState,
+  RecordMagazineReadingEvent200,
   SavedItemInput,
   UpdateHumanitarianOffer200,
   UpdateMediaEngagementParams,
@@ -112,6 +115,183 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   }
   return result;
 };
+
+export const getGetMagazineStatisticsUrl = () => {
+
+
+
+
+  return `/api/magazine/statistics`
+}
+
+export const getMagazineStatistics = async ( options?: Parameters<typeof customFetch>[1]): Promise<MagazineStatistics> => {
+
+  return customFetch<MagazineStatistics>(getGetMagazineStatisticsUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetMagazineStatisticsQueryKey = () => {
+    return [
+    `/api/magazine/statistics`
+    ] as const;
+    }
+
+
+export const getGetMagazineStatisticsQueryOptions = <TData = Awaited<ReturnType<typeof getMagazineStatistics>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMagazineStatistics>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMagazineStatisticsQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMagazineStatistics>>> = ({ signal }) => getMagazineStatistics({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMagazineStatistics>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMagazineStatisticsQueryResult = NonNullable<Awaited<ReturnType<typeof getMagazineStatistics>>>
+export type GetMagazineStatisticsQueryError = ErrorType<unknown>
+
+
+export function useGetMagazineStatistics<TData = Awaited<ReturnType<typeof getMagazineStatistics>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMagazineStatistics>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMagazineStatistics>>,
+          TError,
+          Awaited<ReturnType<typeof getMagazineStatistics>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMagazineStatistics<TData = Awaited<ReturnType<typeof getMagazineStatistics>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMagazineStatistics>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMagazineStatistics>>,
+          TError,
+          Awaited<ReturnType<typeof getMagazineStatistics>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMagazineStatistics<TData = Awaited<ReturnType<typeof getMagazineStatistics>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMagazineStatistics>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetMagazineStatistics<TData = Awaited<ReturnType<typeof getMagazineStatistics>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMagazineStatistics>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMagazineStatisticsQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getRecordMagazineReadingEventUrl = () => {
+
+
+
+
+  return `/api/magazine/reading-events`
+}
+
+export const recordMagazineReadingEvent = async (magazineReadingInput: MagazineReadingInput, options?: Parameters<typeof customFetch>[1]): Promise<RecordMagazineReadingEvent200> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<RecordMagazineReadingEvent200>(getRecordMagazineReadingEventUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(magazineReadingInput)
+  }
+);}
+
+
+
+
+
+export const getRecordMagazineReadingEventMutationKey = () => ['recordMagazineReadingEvent'] as const;
+
+export const getRecordMagazineReadingEventMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof recordMagazineReadingEvent>>, TError,RecordMagazineReadingEventMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof recordMagazineReadingEvent>>, TError,RecordMagazineReadingEventMutationVariables, TContext> => {
+
+const mutationKey = getRecordMagazineReadingEventMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof recordMagazineReadingEvent>>, RecordMagazineReadingEventMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  recordMagazineReadingEvent(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type RecordMagazineReadingEventMutationResult = NonNullable<Awaited<ReturnType<typeof recordMagazineReadingEvent>>>
+    export type RecordMagazineReadingEventMutationBody = BodyType<MagazineReadingInput>
+    export type RecordMagazineReadingEventMutationError = ErrorType<void>
+    export type RecordMagazineReadingEventMutationVariables = {data: BodyType<MagazineReadingInput>}
+
+    export const useRecordMagazineReadingEvent = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof recordMagazineReadingEvent>>, TError,RecordMagazineReadingEventMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof recordMagazineReadingEvent>>,
+        TError,
+        RecordMagazineReadingEventMutationVariables,
+        TContext
+      > => {
+      return useMutation(getRecordMagazineReadingEventMutationOptions(options), queryClient);
+    }
 
 export const getCreatePartnerIntroductionUrl = () => {
 

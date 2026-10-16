@@ -4,7 +4,6 @@ import { programAssetSource } from '@/lib/media-share';
 
 /** Stable engagement identities for programme cover photos (bundled URLs are hashed). */
 export const COVER_SOURCES = {
-  'fashion-week': { source: '/assets/media/editorial/fashion-three-models.webp', title: 'The One Fashion Week · official artwork' },
   awards: { source: '/assets/media/editorial/awards-naomi.webp', title: 'The One Awards · official artwork' },
   'diplomatic-gala': { source: programAssetSource('gala-founder-speaking.webp'), title: 'The Founder speaking · institutional engagement archive' },
 } as const;

@@ -122,6 +122,13 @@ export async function networkState(context: NetworkActor, query: Record<string, 
     canPost: me.enabled && (context.founder || qualifiedInvites >= 10),
   };
   const q = String(query.q ?? "").trim().slice(0, 100).toLowerCase();
+  const roleTerms: Record<string, string[]> = {
+    stylist: ["stylist", "styliste", "designer", "couturi", "modéliste", "tailor"],
+    model: ["model", "modèle", "mannequin", "runway", "défilé"],
+    photographer: ["photograph", "photographe", "photography", "photographie"],
+    influencer: ["influenc", "content creator", "créateur de contenu", "créatrice de contenu"],
+  };
+  const searchTerms = roleTerms[q] ?? [q];
   const sector = String(query.sector ?? "");
   const connectionIds = query.connections && targetId ? new Set(allFollows
     .filter(f => query.connections === "followers" ? f.followingId === targetId : f.followerId === targetId)
@@ -131,7 +138,7 @@ export async function networkState(context: NetworkActor, query: Record<string, 
   const memberList = (context.founder && !query.connections ? usableRows : eligible).filter(r => r.profile.enabled && connectionTargetVisible &&
     (!query.connections || connectionIds?.has(r.member.id))).map(r => dto.get(r.member.id)!)
     .filter(m => (!sector || m.sectors.includes(sector as NetworkMember["sectors"][number])) &&
-      (!q || [m.fullName, m.profession, m.organization, m.country, m.bio, m.offering, m.lookingFor].join(" ").toLowerCase().includes(q)));
+      (!q || searchTerms.some(term => [m.fullName, m.profession, m.organization, m.country, m.bio, m.offering, m.lookingFor].join(" ").toLowerCase().includes(term))));
   const postDtos: NetworkPost[] = page.filter(p => dto.has(p.authorId)).map(p => ({
     id: p.id, author: dto.get(p.authorId)!, text: p.text, kind: p.kind, createdAt: p.createdAt.toISOString(),
     edited: p.updatedAt.getTime() > p.createdAt.getTime(),

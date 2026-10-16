@@ -73,7 +73,7 @@ export interface Program {
 
   /**
    * Date string — omit until officially confirmed.
-   * @example "November 2025"
+   * @example "22 December 2026"
    */
   date?: string;
 
@@ -237,9 +237,12 @@ export const PROGRAMS: Program[] = [
     eyebrow: 'OFFICIAL PROGRAM — FASHION & CULTURE',
     tagline: 'Fashion. Design. Runway. Culture.',
     heroStatement:
-      'The program where the Movement began — a fashion week where every body, every origin and every story belongs on the runway.',
-    // Status: postponed — the sixth edition is planned for November but not yet taken place.
-    status: 'postponed',
+      'Sixth edition: Dubai, 22 December 2026. The program where the Movement began — a fashion week where every body, every origin and every story belongs on the runway.',
+    // Sixth edition confirmed: Dubai, 22 December 2026 (first Dubai edition).
+    status: 'announced',
+    editionNumber: 6,
+    date: '22 December 2026',
+    city: 'Dubai',
     purpose:
       'The One Fashion Week International exists to prove that fashion can carry a message larger than fashion: peace, unity and radical inclusion. Born in the Democratic Republic of Congo, it gives the world\'s stage to talents the industry has overlooked — celebrating every body, every ability, every origin and every story.',
     overview:
@@ -265,7 +268,7 @@ export const PROGRAMS: Program[] = [
       "Fashion Week is where the Movement's story began, and it remains one program among six. Its five completed editions provide the historical foundation for the Movement's wider future direction.",
     // historyNote: verified completed history only. The sixth edition must NOT appear here.
     historyNote:
-      'Five editions have been completed in the Democratic Republic of Congo — in Bukavu, Goma and Kinshasa. The fifth edition was held in Kinshasa under the theme Peace and Unity. Any formal institutional-support attribution remains subject to Founder confirmation. The sixth edition is planned for November and is currently postponed. Further official information will be announced.',
+      'Five editions have been completed in the Democratic Republic of Congo — in Bukavu, Goma and Kinshasa. The fifth edition was held in Kinshasa under the theme Peace and Unity. Any formal institutional-support attribution remains subject to Founder confirmation. The sixth edition, the first in Dubai, is confirmed for 22 December 2026. Further official information will be announced.',
     mediaSlots: [
       'FASHION WEEK IMAGE — RUNWAY',
       'DESIGNER SHOWCASE IMAGE',
@@ -275,7 +278,7 @@ export const PROGRAMS: Program[] = [
     primaryCTA: { label: 'JOIN THE MOVEMENT', href: '/join' },
     relatedProgramSlugs: ['fashion-night', 'awards'],
     verificationNotice:
-      'Applications are not currently open. Registration information will be published after confirmation.',
+      'Applications are not currently open. Registration information for 22 December 2026 will be published after confirmation.',
     seoTitle: 'The One Fashion Week International — The One Movement International',
     seoDescription:
       'Born in the DRC. Five editions of fashion for peace, unity and radical inclusion — one official program of The One Movement International.',
@@ -288,7 +291,8 @@ export const PROGRAMS: Program[] = [
     eyebrow: 'OFFICIAL PROGRAM — RECOGNITION',
     tagline: 'Recognition. Excellence. Impact.',
     heroStatement:
-      'Honoring the people and organizations whose work embodies what the Movement stands for.',
+      'Ceremony date: 2 January 2027. Honoring the people and organizations whose work embodies what the Movement stands for.',
+    date: '2 January 2027',
     purpose:
       "The One Awards exist to recognize excellence that serves something larger than itself: creativity, courage, collaboration and positive impact across the Movement's global community.",
     overview:

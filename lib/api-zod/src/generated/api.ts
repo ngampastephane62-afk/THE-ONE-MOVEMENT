@@ -8,6 +8,34 @@
 import * as zod from 'zod';
 
 
+export const GetMagazineStatisticsResponse = zod.object({
+  "editionId": zod.string(),
+  "opens": zod.number().int(),
+  "pagesViewed": zod.number().int(),
+  "engagedSessions": zod.number().int(),
+  "startedAt": zod.string().nullable(),
+  "updatedAt": zod.string()
+})
+
+
+export const recordMagazineReadingEventBodySessionIdRegExp = new RegExp('^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$');
+export const recordMagazineReadingEventBodyPageMin = 0;
+export const recordMagazineReadingEventBodyPageMax = 12;
+
+
+
+export const RecordMagazineReadingEventBody = zod.object({
+  "editionId": zod.enum(['tropik-editorial-2026']),
+  "sessionId": zod.string().regex(recordMagazineReadingEventBodySessionIdRegExp),
+  "event": zod.enum(['open', 'page', 'engaged']),
+  "page": zod.number().int().min(recordMagazineReadingEventBodyPageMin).max(recordMagazineReadingEventBodyPageMax).optional()
+})
+
+export const RecordMagazineReadingEventResponse = zod.object({
+  "recorded": zod.boolean()
+})
+
+
 export const createPartnerIntroductionBodyPartnerIdMax = 44;
 
 export const createPartnerIntroductionBodyContactNameMax = 120;

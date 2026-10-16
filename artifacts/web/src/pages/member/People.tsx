@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'wouter';
+import { Link, useSearch } from 'wouter';
 import { Search } from 'lucide-react';
 import { useGetNetworkState, getGetNetworkStateQueryKey } from '@workspace/api-client-react';
 import { SECTORS } from '@/lib/sectors-data';
@@ -9,8 +9,11 @@ import { useMe } from './ctx';
 export default function People() {
   const { me } = useMe();
   const { run, pending } = useAct();
-  const [input, setInput] = useState('');
-  const [q, setQ] = useState('');
+  const search = useSearch();
+  const initialQ = (new URLSearchParams(search).get('q') ?? '').trim().slice(0, 100);
+  const [input, setInput] = useState(initialQ);
+  const [q, setQ] = useState(initialQ);
+  useEffect(() => { setInput(initialQ); setQ(initialQ); }, [initialQ]);
   const [sector, setSector] = useState('');
   const [onlyFollowing, setOnlyFollowing] = useState(false);
   const t = useRef<number | undefined>(undefined);

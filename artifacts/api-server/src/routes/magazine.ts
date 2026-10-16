@@ -7,9 +7,11 @@ import { createRateLimiter } from "../lib/inMemoryRateLimiter";
 import { objectFile } from "../services/networkFiles";
 import { magazineConfiguration, magazineOrderView, magazineCheckout, ownMagazineOrder, refreshMagazineOrder } from "../services/magazinePayments";
 import submissionRouter from "./magazineSubmissions";
+import readingRouter from "./magazineReading";
 
 const router = Router();
 router.use(submissionRouter);
+router.use(readingRouter);
 const writes = createRateLimiter({ maxRequests: 15, windowMs: 60_000 });
 const downloads = createRateLimiter({ maxRequests: 20, windowMs: 60_000 });
 router.get("/magazine/kit.pdf", downloads, async (_req, res) => {

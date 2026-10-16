@@ -11,6 +11,35 @@ tags:
   - name: health
     description: Health operations
 paths:
+  /magazine/statistics:
+    get:
+      operationId: getMagazineStatistics
+      responses:
+        "200":
+          description: Real reader activity measured since collection began; sessions are not unique people
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/MagazineStatistics"}
+  /magazine/reading-events:
+    post:
+      operationId: recordMagazineReadingEvent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: "#/components/schemas/MagazineReadingInput"}
+      responses:
+        "200":
+          description: Event accepted idempotently
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [recorded]
+                properties:
+                  recorded: {type: boolean}
+        "400": {description: Invalid reading event}
+        "429": {description: Too many requests}
   /partner-introductions:
     post:
       operationId: createPartnerIntroduction
@@ -875,6 +904,24 @@ paths:
                 $ref: "#/components/schemas/DetailedHealthStatus"
 components:
   schemas:
+    MagazineStatistics:
+      type: object
+      required: [editionId, opens, pagesViewed, engagedSessions, startedAt, updatedAt]
+      properties:
+        editionId: {type: string}
+        opens: {type: integer}
+        pagesViewed: {type: integer}
+        engagedSessions: {type: integer}
+        startedAt: {type: [string, "null"]}
+        updatedAt: {type: string}
+    MagazineReadingInput:
+      type: object
+      required: [editionId, sessionId, event]
+      properties:
+        editionId: {type: string, enum: [tropik-editorial-2026]}
+        sessionId: {type: string, pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'}
+        event: {type: string, enum: [open, page, engaged]}
+        page: {type: integer, minimum: 0, maximum: 12}
     PartnerIntroductionInput:
       type: object
       required: [partnerId, contactName, organizationName, country, email, message, consentAccepted]

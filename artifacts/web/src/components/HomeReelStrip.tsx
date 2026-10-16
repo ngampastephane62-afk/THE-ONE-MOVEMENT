@@ -3,21 +3,37 @@ import useEmblaCarousel from 'embla-carousel-react';
 import { ArrowLeft, ArrowRight, Pause, Play, Volume2, VolumeX } from 'lucide-react';
 import VideoActions from './editorial/VideoActions';
 
-const reels = [1, 2, 3].map((number) => ({
-  number,
-  video: `${import.meta.env.BASE_URL}api/home-reels/reel-${number}.mp4`,
-  poster: `${import.meta.env.BASE_URL}api/home-reels/reel-${number}.webp`,
-}));
+const NEW_REEL_ID = 'home-we-are-one-2026';
+function initialReels() {
+  const requested = new URLSearchParams(window.location.search).get('video') ||
+    window.location.hash.replace(/^#video-/, '');
+  // Historical links retain the original film and its own reactions.
+  const legacyFirst = requested === 'home-reel-1';
+  return [1, 2, 3].map((number) => {
+    const isNew = number === 1 && !legacyFirst;
+    const file = isNew ? 'we-are-one-2026' : `reel-${number}`;
+    return {
+      number,
+      id: isNew ? NEW_REEL_ID : `home-reel-${number}`,
+      title: isNew ? 'We Are One — for peace and unity' : `The One Movement — reel ${number}`,
+      video: `${import.meta.env.BASE_URL}api/home-reels/${file}.mp4`,
+      webm: isNew ? `${import.meta.env.BASE_URL}api/home-reels/${file}.webm` : undefined,
+      poster: `${import.meta.env.BASE_URL}api/home-reels/${file}.webp`,
+    };
+  });
+}
 
 export default function HomeReelStrip() {
-  const requested = Math.max(0, reels.findIndex(reel => `home-reel-${reel.number}` === new URLSearchParams(window.location.search).get('video')));
+  const [reels] = useState(initialReels);
+  const requestedId = new URLSearchParams(window.location.search).get('video') || window.location.hash.replace(/^#video-/, '');
+  const requested = Math.max(0, reels.findIndex(reel => reel.id === requestedId));
   const [carouselRef, carousel] = useEmblaCarousel({ loop: true, align: 'center', startIndex: requested });
   const container = useRef<HTMLDivElement>(null);
   const videos = useRef<(HTMLVideoElement | null)[]>([]);
   const [active, setActive] = useState(requested);
   const [visible, setVisible] = useState(false);
   // A shared reel link opens paused so the visitor lands on that reel.
-  const [playing, setPlaying] = useState(() => !new URLSearchParams(window.location.search).get('video')?.startsWith('home-reel-'));
+  const [playing, setPlaying] = useState(() => !requestedId.startsWith('home-'));
   const [sound, setSound] = useState(false);
   const [blocked, setBlocked] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -33,7 +49,7 @@ export default function HomeReelStrip() {
     };
     updateMotion();
     motion.addEventListener('change', updateMotion);
-    if (new URLSearchParams(window.location.search).get('video')?.startsWith('home-reel-') || window.location.hash.startsWith('#video-home-reel-')) {
+    if (requestedId.startsWith('home-')) {
       window.setTimeout(() => node.scrollIntoView({ block: 'center', behavior: motion.matches ? 'auto' : 'smooth' }), 120);
     }
     const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), { threshold: 0.1 });
@@ -52,7 +68,7 @@ export default function HomeReelStrip() {
     videos.current.forEach((video, index) => {
       if (!video) return;
       video.muted = !sound || index !== active;
-      if (visible && playing) {
+      if (visible && playing && index === active) {
         void video.play().then(() => {
           if (index === active) setBlocked(false);
         }).catch(() => {
@@ -64,23 +80,26 @@ export default function HomeReelStrip() {
 
   useEffect(() => {
     if (!carousel || !visible || !playing || sound || reducedMotion) return;
-    const timer = window.setInterval(() => carousel.scrollNext(), 8000);
+    // Let the new opening film tell its full story before moving on.
+    const duration = reels[active]?.id === NEW_REEL_ID ? 51080 : 8000;
+    const timer = window.setInterval(() => carousel.scrollNext(), duration);
     return () => window.clearInterval(timer);
   }, [carousel, visible, playing, sound, reducedMotion, active]);
 
   const playFromTap = () => {
     setPlaying(true);
-    videos.current.forEach((video) => { if (video) void video.play().catch(() => setBlocked(true)); });
+    const video = videos.current[active];
+    if (video) void video.play().catch(() => setBlocked(true));
   };
 
   const controlClass = 'flex h-10 w-10 items-center justify-center rounded-full border border-gold-500/50 bg-lagoon-900/90 text-gold-400 hover:bg-lagoon-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-400 focus-visible:outline-offset-2';
 
   return (
-    <div ref={container} id={`video-home-reel-${reels[active]?.number ?? 1}`} className="w-full max-w-sm scroll-mt-28" data-testid="home-reel-strip" role="region" aria-roledescription="carousel" aria-label="The One Movement — three reels">
+    <div ref={container} id="home-reels" className="w-full max-w-sm scroll-mt-28" data-testid="home-reel-strip" role="region" aria-roledescription="carousel" aria-label="The One Movement — three reels">
       <div ref={carouselRef} className="overflow-hidden rounded-sharp border border-gold-500/30 bg-lagoon-800 shadow-xl">
         <div className="flex touch-pan-y">
           {reels.map((reel, index) => (
-            <div id={`video-home-reel-${reel.number}`} key={reel.number} className="min-w-0 flex-[0_0_100%]" role="group" aria-roledescription="slide" aria-label={`Reel ${reel.number} of 3`} aria-hidden={active !== index}>
+            <div id={`video-${reel.id}`} key={reel.id} className="min-w-0 flex-[0_0_100%]" role="group" aria-roledescription="slide" aria-label={`Reel ${reel.number} of 3`} aria-hidden={active !== index}>
               <video
                 ref={(node) => { videos.current[index] = node; }}
                 poster={reel.poster}
@@ -89,10 +108,11 @@ export default function HomeReelStrip() {
                 playsInline
                 preload="none"
                 className="h-auto max-h-[80vh] w-full object-contain bg-ink-900"
-                aria-label={`Movement reel ${reel.number}`}
+                aria-label={reel.title}
                 onError={() => { if (active === index) setFailed(true); }}
                 onPlaying={() => { if (active === index) { setBlocked(false); setFailed(false); } }}
               >
+                {reel.webm && <source src={reel.webm} type="video/webm" />}
                 <source src={reel.video} type="video/mp4" />
               </video>
             </div>
@@ -115,7 +135,7 @@ export default function HomeReelStrip() {
       <p className="mt-3 text-xs leading-relaxed text-ivory-200">The One Movement · Reel {active + 1} / 3</p>
       {/* Any interaction with reactions stops auto-advance so a comment draft never moves to another reel. */}
       <div className="mt-4 bg-ivory-100 p-3 text-ink-900" onFocusCapture={() => setPlaying(false)} onPointerDownCapture={() => setPlaying(false)}>
-        <VideoActions key={active} videoId={`home-reel-${reels[active]?.number ?? 1}`} title={`The One Movement — reel ${active + 1}`} />
+        <VideoActions key={active} videoId={reels[active]?.id ?? NEW_REEL_ID} title={reels[active]?.title ?? 'The One Movement'} />
       </div>
       {(blocked || failed) && <p role="status" className="mt-2 text-xs text-ivory-200">{failed ? 'This reel could not load. Try the next reel or reload the page.' : 'Tap play to start the reels.'}</p>}
     </div>

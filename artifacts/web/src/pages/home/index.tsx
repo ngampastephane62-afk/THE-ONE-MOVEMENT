@@ -44,7 +44,7 @@ const PROGRAMS: {
     slug: 'fashion-week',
     name: 'THE ONE FASHION WEEK INTERNATIONAL',
     tagline: 'Fashion as a force for peace and cultural exchange.',
-    extra: 'Five completed editions. Born in the DRC. The sixth is planned for November and currently postponed.',
+    extra: 'Five completed editions. Born in the DRC. Sixth edition: Dubai, 22 December 2026.',
   },
   {
     slug: 'summit',
@@ -555,7 +555,7 @@ function LegacyHome() {
               <GoldThread className="mt-5 mb-6" length="180px" node />
               <p className="text-ink-800 leading-relaxed">
                 Fashion crosses language, carries identity and creates room for people to meet.
-                Five editions are completed. The sixth is planned for November and is currently postponed.
+                Five editions are completed. The sixth edition, the first in Dubai, takes place on 22 December 2026.
               </p>
               <Link href="/programs/fashion-week" className="mt-7">
                 <Button variant="gold-outline" size="sm" aria-label="Explore The One Fashion Week International">

@@ -9,9 +9,9 @@ The stakeholder wants an African identity inspired by Wakanda and Kuba textiles 
 
 **How to apply:** Keep patterns readable, motion pausable and reduced-motion aware. Do not imply Marvel affiliation or historical authenticity for original geometric artwork.
 
-The stakeholder supplied the standalone three-line THE ONE MOVEMENT INTERNATIONAL logo to replace the previous peace/slogan banner and the platform's generic icon plus typed name. Inside the member platform, the logo is an entry point to the ecosystem with access according to subscription.
+The stakeholder supplied the standalone three-line THE ONE MOVEMENT INTERNATIONAL logo to replace the previous peace/slogan banner and the platform's generic icon plus typed name. Members must be able to explore the public site without signing out and return to their personal ecosystem; navigation must not trap them in their account.
 
-**Why:** Their screenshots explicitly identified both header treatments and requested subscription-dependent ecosystem access from the logo.
+**Why:** Their screenshots identified both header treatments; they subsequently clarified that signed-in members must still be able to discover the public site. Subscription-dependent privileges do not require restricting public discovery.
 
 **How to apply:** Use the supplied mark, not a recreated wordmark. Keep it legible on dark headers without an ornamental frame; show real subscription-based access without conflating payment with business approval or certification.
 
@@ -21,9 +21,9 @@ The stakeholder approved the regional backgrounds and animations but explicitly 
 
 **How to apply:** Preserve the approved backgrounds and motion when refining presentation. Keep imagery properly framed and public copy visitor-facing; do not reintroduce decorative perimeter bands or expose workflow notes. Retain concise factual statuses, legally necessary notices and accessible source/licence attribution rather than replacing them with false confirmations.
 
-The stakeholder designates the supplied Naomi Campbell artwork as The One Awards cover, and the supplied three-model artwork as The One Fashion Week cover.
+The stakeholder designates the supplied Naomi Campbell artwork as The One Awards cover. For the upcoming Dubai Fashion Week, the founder explicitly replaced the earlier three-model cover with his animated horseman artwork, presenting himself as “Chevalier de la paix et de l’unité.”
 
-**Why:** They explicitly corrected which artwork represents each programme, despite wording printed on the posters.
+**Why:** They explicitly corrected which artwork represents each programme, despite wording printed on the posters, and later selected the horseman for the first Dubai edition.
 
 **How to apply:** Keep programme-cover choice separate from any claim about celebrity attendance, casting or awards already conferred.
 
