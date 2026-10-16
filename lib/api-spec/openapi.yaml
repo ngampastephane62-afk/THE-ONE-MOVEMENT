@@ -1097,6 +1097,22 @@ components:
         website:
           type: string
           maxLength: 500
+        instagramUrl:
+          type: string
+          maxLength: 500
+          description: Optional Instagram profile link; not an OAuth connection.
+        facebookUrl:
+          type: string
+          maxLength: 500
+          description: Optional Facebook profile or page link.
+        tiktokUrl:
+          type: string
+          maxLength: 500
+          description: Optional TikTok profile link.
+        linkedinUrl:
+          type: string
+          maxLength: 500
+          description: Optional LinkedIn profile or company link.
         sectors:
           type: array
           maxItems: 8

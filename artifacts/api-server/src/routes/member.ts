@@ -4,6 +4,7 @@ import { db, ecosystemMembersTable as members, networkProfiles, networkUploads }
 import { SaveMemberProfileBody, ToggleMemberSavedItemBody } from "@workspace/api-zod";
 import { desc, eq, sql, and, or, isNull } from "drizzle-orm";
 import { getClerkProxyHost } from "../middlewares/clerkProxyMiddleware";
+import { SOCIAL_PROFILES, normalizeSocialProfile } from "@workspace/shared";
 
 const router = Router();
 const savedIds = new Set([
@@ -61,6 +62,10 @@ function publicProfile(row: typeof members.$inferSelect) {
     offering: row.offering,
     lookingFor: row.lookingFor,
     website: row.website,
+    instagramUrl: row.instagramUrl,
+    facebookUrl: row.facebookUrl,
+    tiktokUrl: row.tiktokUrl,
+    linkedinUrl: row.linkedinUrl,
     sectors: row.sectors,
     isPublic: row.isPublic,
     profileLayout: row.profileLayout,
@@ -105,6 +110,15 @@ router.put("/member/profile", memberAuth, memberWrite, async (req, res) => {
     return;
   }
   const input = parsed.data;
+  for (const { field } of SOCIAL_PROFILES) {
+    // Omission preserves existing links for older clients; an empty string clears one.
+    if (input[field] === undefined) continue;
+    try { input[field] = normalizeSocialProfile(field, input[field]!); }
+    catch (error) {
+      res.status(400).json({ error: (error as Error).message });
+      return;
+    }
+  }
   const data = {
     ...input,
     fullName: input.fullName.trim(),

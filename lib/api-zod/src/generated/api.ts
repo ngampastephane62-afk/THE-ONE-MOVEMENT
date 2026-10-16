@@ -615,6 +615,14 @@ export const getPublicNetworkProfileResponseProfileOneOneLookingForMax = 500;
 
 export const getPublicNetworkProfileResponseProfileOneOneWebsiteMax = 500;
 
+export const getPublicNetworkProfileResponseProfileOneOneInstagramUrlMax = 500;
+
+export const getPublicNetworkProfileResponseProfileOneOneFacebookUrlMax = 500;
+
+export const getPublicNetworkProfileResponseProfileOneOneTiktokUrlMax = 500;
+
+export const getPublicNetworkProfileResponseProfileOneOneLinkedinUrlMax = 500;
+
 export const getPublicNetworkProfileResponseProfileOneOneSectorsMax = 8;
 
 export const getPublicNetworkProfileResponseProfileOneOneCoverPositionMin = 0;
@@ -632,6 +640,10 @@ export const GetPublicNetworkProfileResponse = zod.object({
   "offering": zod.string().max(getPublicNetworkProfileResponseProfileOneOneOfferingMax),
   "lookingFor": zod.string().max(getPublicNetworkProfileResponseProfileOneOneLookingForMax),
   "website": zod.string().max(getPublicNetworkProfileResponseProfileOneOneWebsiteMax),
+  "instagramUrl": zod.string().max(getPublicNetworkProfileResponseProfileOneOneInstagramUrlMax).optional().describe('Optional Instagram profile link; not an OAuth connection.'),
+  "facebookUrl": zod.string().max(getPublicNetworkProfileResponseProfileOneOneFacebookUrlMax).optional().describe('Optional Facebook profile or page link.'),
+  "tiktokUrl": zod.string().max(getPublicNetworkProfileResponseProfileOneOneTiktokUrlMax).optional().describe('Optional TikTok profile link.'),
+  "linkedinUrl": zod.string().max(getPublicNetworkProfileResponseProfileOneOneLinkedinUrlMax).optional().describe('Optional LinkedIn profile or company link.'),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(getPublicNetworkProfileResponseProfileOneOneSectorsMax),
   "isPublic": zod.boolean(),
   "publicMedia": zod.boolean().optional(),
@@ -695,6 +707,14 @@ export const getNetworkStateResponseMeOneOneOneLookingForMax = 500;
 
 export const getNetworkStateResponseMeOneOneOneWebsiteMax = 500;
 
+export const getNetworkStateResponseMeOneOneOneInstagramUrlMax = 500;
+
+export const getNetworkStateResponseMeOneOneOneFacebookUrlMax = 500;
+
+export const getNetworkStateResponseMeOneOneOneTiktokUrlMax = 500;
+
+export const getNetworkStateResponseMeOneOneOneLinkedinUrlMax = 500;
+
 export const getNetworkStateResponseMeOneOneOneSectorsMax = 8;
 
 export const getNetworkStateResponseMeOneOneOneCoverPositionMin = 0;
@@ -716,6 +736,14 @@ export const getNetworkStateResponseFounderOneOneOneOfferingMax = 500;
 export const getNetworkStateResponseFounderOneOneOneLookingForMax = 500;
 
 export const getNetworkStateResponseFounderOneOneOneWebsiteMax = 500;
+
+export const getNetworkStateResponseFounderOneOneOneInstagramUrlMax = 500;
+
+export const getNetworkStateResponseFounderOneOneOneFacebookUrlMax = 500;
+
+export const getNetworkStateResponseFounderOneOneOneTiktokUrlMax = 500;
+
+export const getNetworkStateResponseFounderOneOneOneLinkedinUrlMax = 500;
 
 export const getNetworkStateResponseFounderOneOneOneSectorsMax = 8;
 
@@ -739,6 +767,14 @@ export const getNetworkStateResponseMembersItemOneOneLookingForMax = 500;
 
 export const getNetworkStateResponseMembersItemOneOneWebsiteMax = 500;
 
+export const getNetworkStateResponseMembersItemOneOneInstagramUrlMax = 500;
+
+export const getNetworkStateResponseMembersItemOneOneFacebookUrlMax = 500;
+
+export const getNetworkStateResponseMembersItemOneOneTiktokUrlMax = 500;
+
+export const getNetworkStateResponseMembersItemOneOneLinkedinUrlMax = 500;
+
 export const getNetworkStateResponseMembersItemOneOneSectorsMax = 8;
 
 export const getNetworkStateResponseMembersItemOneOneCoverPositionMin = 0;
@@ -760,6 +796,14 @@ export const getNetworkStateResponsePostsItemAuthorOneOneOfferingMax = 500;
 export const getNetworkStateResponsePostsItemAuthorOneOneLookingForMax = 500;
 
 export const getNetworkStateResponsePostsItemAuthorOneOneWebsiteMax = 500;
+
+export const getNetworkStateResponsePostsItemAuthorOneOneInstagramUrlMax = 500;
+
+export const getNetworkStateResponsePostsItemAuthorOneOneFacebookUrlMax = 500;
+
+export const getNetworkStateResponsePostsItemAuthorOneOneTiktokUrlMax = 500;
+
+export const getNetworkStateResponsePostsItemAuthorOneOneLinkedinUrlMax = 500;
 
 export const getNetworkStateResponsePostsItemAuthorOneOneSectorsMax = 8;
 
@@ -783,6 +827,14 @@ export const getNetworkStateResponsePostsItemCommentsItemAuthorOneOneLookingForM
 
 export const getNetworkStateResponsePostsItemCommentsItemAuthorOneOneWebsiteMax = 500;
 
+export const getNetworkStateResponsePostsItemCommentsItemAuthorOneOneInstagramUrlMax = 500;
+
+export const getNetworkStateResponsePostsItemCommentsItemAuthorOneOneFacebookUrlMax = 500;
+
+export const getNetworkStateResponsePostsItemCommentsItemAuthorOneOneTiktokUrlMax = 500;
+
+export const getNetworkStateResponsePostsItemCommentsItemAuthorOneOneLinkedinUrlMax = 500;
+
 export const getNetworkStateResponsePostsItemCommentsItemAuthorOneOneSectorsMax = 8;
 
 export const getNetworkStateResponsePostsItemCommentsItemAuthorOneOneCoverPositionMin = 0;
@@ -804,6 +856,14 @@ export const getNetworkStateResponsePersonOneOneOneOfferingMax = 500;
 export const getNetworkStateResponsePersonOneOneOneLookingForMax = 500;
 
 export const getNetworkStateResponsePersonOneOneOneWebsiteMax = 500;
+
+export const getNetworkStateResponsePersonOneOneOneInstagramUrlMax = 500;
+
+export const getNetworkStateResponsePersonOneOneOneFacebookUrlMax = 500;
+
+export const getNetworkStateResponsePersonOneOneOneTiktokUrlMax = 500;
+
+export const getNetworkStateResponsePersonOneOneOneLinkedinUrlMax = 500;
 
 export const getNetworkStateResponsePersonOneOneOneSectorsMax = 8;
 
@@ -827,6 +887,14 @@ export const getNetworkStateResponseThreadsItemOtherOneOneLookingForMax = 500;
 
 export const getNetworkStateResponseThreadsItemOtherOneOneWebsiteMax = 500;
 
+export const getNetworkStateResponseThreadsItemOtherOneOneInstagramUrlMax = 500;
+
+export const getNetworkStateResponseThreadsItemOtherOneOneFacebookUrlMax = 500;
+
+export const getNetworkStateResponseThreadsItemOtherOneOneTiktokUrlMax = 500;
+
+export const getNetworkStateResponseThreadsItemOtherOneOneLinkedinUrlMax = 500;
+
 export const getNetworkStateResponseThreadsItemOtherOneOneSectorsMax = 8;
 
 export const getNetworkStateResponseThreadsItemOtherOneOneCoverPositionMin = 0;
@@ -848,6 +916,14 @@ export const getNetworkStateResponseCertificationsItemMemberOneOneOfferingMax = 
 export const getNetworkStateResponseCertificationsItemMemberOneOneLookingForMax = 500;
 
 export const getNetworkStateResponseCertificationsItemMemberOneOneWebsiteMax = 500;
+
+export const getNetworkStateResponseCertificationsItemMemberOneOneInstagramUrlMax = 500;
+
+export const getNetworkStateResponseCertificationsItemMemberOneOneFacebookUrlMax = 500;
+
+export const getNetworkStateResponseCertificationsItemMemberOneOneTiktokUrlMax = 500;
+
+export const getNetworkStateResponseCertificationsItemMemberOneOneLinkedinUrlMax = 500;
 
 export const getNetworkStateResponseCertificationsItemMemberOneOneSectorsMax = 8;
 
@@ -872,6 +948,10 @@ export const GetNetworkStateResponse = zod.object({
   "offering": zod.string().max(getNetworkStateResponseMeOneOneOneOfferingMax),
   "lookingFor": zod.string().max(getNetworkStateResponseMeOneOneOneLookingForMax),
   "website": zod.string().max(getNetworkStateResponseMeOneOneOneWebsiteMax),
+  "instagramUrl": zod.string().max(getNetworkStateResponseMeOneOneOneInstagramUrlMax).optional().describe('Optional Instagram profile link; not an OAuth connection.'),
+  "facebookUrl": zod.string().max(getNetworkStateResponseMeOneOneOneFacebookUrlMax).optional().describe('Optional Facebook profile or page link.'),
+  "tiktokUrl": zod.string().max(getNetworkStateResponseMeOneOneOneTiktokUrlMax).optional().describe('Optional TikTok profile link.'),
+  "linkedinUrl": zod.string().max(getNetworkStateResponseMeOneOneOneLinkedinUrlMax).optional().describe('Optional LinkedIn profile or company link.'),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(getNetworkStateResponseMeOneOneOneSectorsMax),
   "isPublic": zod.boolean(),
   "publicMedia": zod.boolean().optional(),
@@ -907,6 +987,10 @@ export const GetNetworkStateResponse = zod.object({
   "offering": zod.string().max(getNetworkStateResponseFounderOneOneOneOfferingMax),
   "lookingFor": zod.string().max(getNetworkStateResponseFounderOneOneOneLookingForMax),
   "website": zod.string().max(getNetworkStateResponseFounderOneOneOneWebsiteMax),
+  "instagramUrl": zod.string().max(getNetworkStateResponseFounderOneOneOneInstagramUrlMax).optional().describe('Optional Instagram profile link; not an OAuth connection.'),
+  "facebookUrl": zod.string().max(getNetworkStateResponseFounderOneOneOneFacebookUrlMax).optional().describe('Optional Facebook profile or page link.'),
+  "tiktokUrl": zod.string().max(getNetworkStateResponseFounderOneOneOneTiktokUrlMax).optional().describe('Optional TikTok profile link.'),
+  "linkedinUrl": zod.string().max(getNetworkStateResponseFounderOneOneOneLinkedinUrlMax).optional().describe('Optional LinkedIn profile or company link.'),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(getNetworkStateResponseFounderOneOneOneSectorsMax),
   "isPublic": zod.boolean(),
   "publicMedia": zod.boolean().optional(),
@@ -942,6 +1026,10 @@ export const GetNetworkStateResponse = zod.object({
   "offering": zod.string().max(getNetworkStateResponseMembersItemOneOneOfferingMax),
   "lookingFor": zod.string().max(getNetworkStateResponseMembersItemOneOneLookingForMax),
   "website": zod.string().max(getNetworkStateResponseMembersItemOneOneWebsiteMax),
+  "instagramUrl": zod.string().max(getNetworkStateResponseMembersItemOneOneInstagramUrlMax).optional().describe('Optional Instagram profile link; not an OAuth connection.'),
+  "facebookUrl": zod.string().max(getNetworkStateResponseMembersItemOneOneFacebookUrlMax).optional().describe('Optional Facebook profile or page link.'),
+  "tiktokUrl": zod.string().max(getNetworkStateResponseMembersItemOneOneTiktokUrlMax).optional().describe('Optional TikTok profile link.'),
+  "linkedinUrl": zod.string().max(getNetworkStateResponseMembersItemOneOneLinkedinUrlMax).optional().describe('Optional LinkedIn profile or company link.'),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(getNetworkStateResponseMembersItemOneOneSectorsMax),
   "isPublic": zod.boolean(),
   "publicMedia": zod.boolean().optional(),
@@ -979,6 +1067,10 @@ export const GetNetworkStateResponse = zod.object({
   "offering": zod.string().max(getNetworkStateResponsePostsItemAuthorOneOneOfferingMax),
   "lookingFor": zod.string().max(getNetworkStateResponsePostsItemAuthorOneOneLookingForMax),
   "website": zod.string().max(getNetworkStateResponsePostsItemAuthorOneOneWebsiteMax),
+  "instagramUrl": zod.string().max(getNetworkStateResponsePostsItemAuthorOneOneInstagramUrlMax).optional().describe('Optional Instagram profile link; not an OAuth connection.'),
+  "facebookUrl": zod.string().max(getNetworkStateResponsePostsItemAuthorOneOneFacebookUrlMax).optional().describe('Optional Facebook profile or page link.'),
+  "tiktokUrl": zod.string().max(getNetworkStateResponsePostsItemAuthorOneOneTiktokUrlMax).optional().describe('Optional TikTok profile link.'),
+  "linkedinUrl": zod.string().max(getNetworkStateResponsePostsItemAuthorOneOneLinkedinUrlMax).optional().describe('Optional LinkedIn profile or company link.'),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(getNetworkStateResponsePostsItemAuthorOneOneSectorsMax),
   "isPublic": zod.boolean(),
   "publicMedia": zod.boolean().optional(),
@@ -1027,6 +1119,10 @@ export const GetNetworkStateResponse = zod.object({
   "offering": zod.string().max(getNetworkStateResponsePostsItemCommentsItemAuthorOneOneOfferingMax),
   "lookingFor": zod.string().max(getNetworkStateResponsePostsItemCommentsItemAuthorOneOneLookingForMax),
   "website": zod.string().max(getNetworkStateResponsePostsItemCommentsItemAuthorOneOneWebsiteMax),
+  "instagramUrl": zod.string().max(getNetworkStateResponsePostsItemCommentsItemAuthorOneOneInstagramUrlMax).optional().describe('Optional Instagram profile link; not an OAuth connection.'),
+  "facebookUrl": zod.string().max(getNetworkStateResponsePostsItemCommentsItemAuthorOneOneFacebookUrlMax).optional().describe('Optional Facebook profile or page link.'),
+  "tiktokUrl": zod.string().max(getNetworkStateResponsePostsItemCommentsItemAuthorOneOneTiktokUrlMax).optional().describe('Optional TikTok profile link.'),
+  "linkedinUrl": zod.string().max(getNetworkStateResponsePostsItemCommentsItemAuthorOneOneLinkedinUrlMax).optional().describe('Optional LinkedIn profile or company link.'),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(getNetworkStateResponsePostsItemCommentsItemAuthorOneOneSectorsMax),
   "isPublic": zod.boolean(),
   "publicMedia": zod.boolean().optional(),
@@ -1069,6 +1165,10 @@ export const GetNetworkStateResponse = zod.object({
   "offering": zod.string().max(getNetworkStateResponsePersonOneOneOneOfferingMax),
   "lookingFor": zod.string().max(getNetworkStateResponsePersonOneOneOneLookingForMax),
   "website": zod.string().max(getNetworkStateResponsePersonOneOneOneWebsiteMax),
+  "instagramUrl": zod.string().max(getNetworkStateResponsePersonOneOneOneInstagramUrlMax).optional().describe('Optional Instagram profile link; not an OAuth connection.'),
+  "facebookUrl": zod.string().max(getNetworkStateResponsePersonOneOneOneFacebookUrlMax).optional().describe('Optional Facebook profile or page link.'),
+  "tiktokUrl": zod.string().max(getNetworkStateResponsePersonOneOneOneTiktokUrlMax).optional().describe('Optional TikTok profile link.'),
+  "linkedinUrl": zod.string().max(getNetworkStateResponsePersonOneOneOneLinkedinUrlMax).optional().describe('Optional LinkedIn profile or company link.'),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(getNetworkStateResponsePersonOneOneOneSectorsMax),
   "isPublic": zod.boolean(),
   "publicMedia": zod.boolean().optional(),
@@ -1106,6 +1206,10 @@ export const GetNetworkStateResponse = zod.object({
   "offering": zod.string().max(getNetworkStateResponseThreadsItemOtherOneOneOfferingMax),
   "lookingFor": zod.string().max(getNetworkStateResponseThreadsItemOtherOneOneLookingForMax),
   "website": zod.string().max(getNetworkStateResponseThreadsItemOtherOneOneWebsiteMax),
+  "instagramUrl": zod.string().max(getNetworkStateResponseThreadsItemOtherOneOneInstagramUrlMax).optional().describe('Optional Instagram profile link; not an OAuth connection.'),
+  "facebookUrl": zod.string().max(getNetworkStateResponseThreadsItemOtherOneOneFacebookUrlMax).optional().describe('Optional Facebook profile or page link.'),
+  "tiktokUrl": zod.string().max(getNetworkStateResponseThreadsItemOtherOneOneTiktokUrlMax).optional().describe('Optional TikTok profile link.'),
+  "linkedinUrl": zod.string().max(getNetworkStateResponseThreadsItemOtherOneOneLinkedinUrlMax).optional().describe('Optional LinkedIn profile or company link.'),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(getNetworkStateResponseThreadsItemOtherOneOneSectorsMax),
   "isPublic": zod.boolean(),
   "publicMedia": zod.boolean().optional(),
@@ -1157,6 +1261,10 @@ export const GetNetworkStateResponse = zod.object({
   "offering": zod.string().max(getNetworkStateResponseCertificationsItemMemberOneOneOfferingMax),
   "lookingFor": zod.string().max(getNetworkStateResponseCertificationsItemMemberOneOneLookingForMax),
   "website": zod.string().max(getNetworkStateResponseCertificationsItemMemberOneOneWebsiteMax),
+  "instagramUrl": zod.string().max(getNetworkStateResponseCertificationsItemMemberOneOneInstagramUrlMax).optional().describe('Optional Instagram profile link; not an OAuth connection.'),
+  "facebookUrl": zod.string().max(getNetworkStateResponseCertificationsItemMemberOneOneFacebookUrlMax).optional().describe('Optional Facebook profile or page link.'),
+  "tiktokUrl": zod.string().max(getNetworkStateResponseCertificationsItemMemberOneOneTiktokUrlMax).optional().describe('Optional TikTok profile link.'),
+  "linkedinUrl": zod.string().max(getNetworkStateResponseCertificationsItemMemberOneOneLinkedinUrlMax).optional().describe('Optional LinkedIn profile or company link.'),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(getNetworkStateResponseCertificationsItemMemberOneOneSectorsMax),
   "isPublic": zod.boolean(),
   "publicMedia": zod.boolean().optional(),
@@ -1317,6 +1425,14 @@ export const getMemberProfileResponseProfileOneOneOneLookingForMax = 500;
 
 export const getMemberProfileResponseProfileOneOneOneWebsiteMax = 500;
 
+export const getMemberProfileResponseProfileOneOneOneInstagramUrlMax = 500;
+
+export const getMemberProfileResponseProfileOneOneOneFacebookUrlMax = 500;
+
+export const getMemberProfileResponseProfileOneOneOneTiktokUrlMax = 500;
+
+export const getMemberProfileResponseProfileOneOneOneLinkedinUrlMax = 500;
+
 export const getMemberProfileResponseProfileOneOneOneSectorsMax = 8;
 
 export const getMemberProfileResponseProfileOneOneOneCoverPositionMin = 0;
@@ -1334,6 +1450,10 @@ export const GetMemberProfileResponse = zod.object({
   "offering": zod.string().max(getMemberProfileResponseProfileOneOneOneOfferingMax),
   "lookingFor": zod.string().max(getMemberProfileResponseProfileOneOneOneLookingForMax),
   "website": zod.string().max(getMemberProfileResponseProfileOneOneOneWebsiteMax),
+  "instagramUrl": zod.string().max(getMemberProfileResponseProfileOneOneOneInstagramUrlMax).optional().describe('Optional Instagram profile link; not an OAuth connection.'),
+  "facebookUrl": zod.string().max(getMemberProfileResponseProfileOneOneOneFacebookUrlMax).optional().describe('Optional Facebook profile or page link.'),
+  "tiktokUrl": zod.string().max(getMemberProfileResponseProfileOneOneOneTiktokUrlMax).optional().describe('Optional TikTok profile link.'),
+  "linkedinUrl": zod.string().max(getMemberProfileResponseProfileOneOneOneLinkedinUrlMax).optional().describe('Optional LinkedIn profile or company link.'),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(getMemberProfileResponseProfileOneOneOneSectorsMax),
   "isPublic": zod.boolean(),
   "publicMedia": zod.boolean().optional(),
@@ -1371,6 +1491,14 @@ export const saveMemberProfileBodyLookingForMax = 500;
 
 export const saveMemberProfileBodyWebsiteMax = 500;
 
+export const saveMemberProfileBodyInstagramUrlMax = 500;
+
+export const saveMemberProfileBodyFacebookUrlMax = 500;
+
+export const saveMemberProfileBodyTiktokUrlMax = 500;
+
+export const saveMemberProfileBodyLinkedinUrlMax = 500;
+
 export const saveMemberProfileBodySectorsMax = 8;
 
 export const saveMemberProfileBodyCoverPositionMin = 0;
@@ -1387,6 +1515,10 @@ export const SaveMemberProfileBody = zod.object({
   "offering": zod.string().max(saveMemberProfileBodyOfferingMax),
   "lookingFor": zod.string().max(saveMemberProfileBodyLookingForMax),
   "website": zod.string().max(saveMemberProfileBodyWebsiteMax),
+  "instagramUrl": zod.string().max(saveMemberProfileBodyInstagramUrlMax).optional().describe('Optional Instagram profile link; not an OAuth connection.'),
+  "facebookUrl": zod.string().max(saveMemberProfileBodyFacebookUrlMax).optional().describe('Optional Facebook profile or page link.'),
+  "tiktokUrl": zod.string().max(saveMemberProfileBodyTiktokUrlMax).optional().describe('Optional TikTok profile link.'),
+  "linkedinUrl": zod.string().max(saveMemberProfileBodyLinkedinUrlMax).optional().describe('Optional LinkedIn profile or company link.'),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(saveMemberProfileBodySectorsMax),
   "isPublic": zod.boolean(),
   "publicMedia": zod.boolean().optional(),
@@ -1412,6 +1544,14 @@ export const saveMemberProfileResponseProfileOneOneOneLookingForMax = 500;
 
 export const saveMemberProfileResponseProfileOneOneOneWebsiteMax = 500;
 
+export const saveMemberProfileResponseProfileOneOneOneInstagramUrlMax = 500;
+
+export const saveMemberProfileResponseProfileOneOneOneFacebookUrlMax = 500;
+
+export const saveMemberProfileResponseProfileOneOneOneTiktokUrlMax = 500;
+
+export const saveMemberProfileResponseProfileOneOneOneLinkedinUrlMax = 500;
+
 export const saveMemberProfileResponseProfileOneOneOneSectorsMax = 8;
 
 export const saveMemberProfileResponseProfileOneOneOneCoverPositionMin = 0;
@@ -1429,6 +1569,10 @@ export const SaveMemberProfileResponse = zod.object({
   "offering": zod.string().max(saveMemberProfileResponseProfileOneOneOneOfferingMax),
   "lookingFor": zod.string().max(saveMemberProfileResponseProfileOneOneOneLookingForMax),
   "website": zod.string().max(saveMemberProfileResponseProfileOneOneOneWebsiteMax),
+  "instagramUrl": zod.string().max(saveMemberProfileResponseProfileOneOneOneInstagramUrlMax).optional().describe('Optional Instagram profile link; not an OAuth connection.'),
+  "facebookUrl": zod.string().max(saveMemberProfileResponseProfileOneOneOneFacebookUrlMax).optional().describe('Optional Facebook profile or page link.'),
+  "tiktokUrl": zod.string().max(saveMemberProfileResponseProfileOneOneOneTiktokUrlMax).optional().describe('Optional TikTok profile link.'),
+  "linkedinUrl": zod.string().max(saveMemberProfileResponseProfileOneOneOneLinkedinUrlMax).optional().describe('Optional LinkedIn profile or company link.'),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(saveMemberProfileResponseProfileOneOneOneSectorsMax),
   "isPublic": zod.boolean(),
   "publicMedia": zod.boolean().optional(),
@@ -1475,6 +1619,14 @@ export const toggleMemberSavedItemResponseProfileOneOneOneLookingForMax = 500;
 
 export const toggleMemberSavedItemResponseProfileOneOneOneWebsiteMax = 500;
 
+export const toggleMemberSavedItemResponseProfileOneOneOneInstagramUrlMax = 500;
+
+export const toggleMemberSavedItemResponseProfileOneOneOneFacebookUrlMax = 500;
+
+export const toggleMemberSavedItemResponseProfileOneOneOneTiktokUrlMax = 500;
+
+export const toggleMemberSavedItemResponseProfileOneOneOneLinkedinUrlMax = 500;
+
 export const toggleMemberSavedItemResponseProfileOneOneOneSectorsMax = 8;
 
 export const toggleMemberSavedItemResponseProfileOneOneOneCoverPositionMin = 0;
@@ -1492,6 +1644,10 @@ export const ToggleMemberSavedItemResponse = zod.object({
   "offering": zod.string().max(toggleMemberSavedItemResponseProfileOneOneOneOfferingMax),
   "lookingFor": zod.string().max(toggleMemberSavedItemResponseProfileOneOneOneLookingForMax),
   "website": zod.string().max(toggleMemberSavedItemResponseProfileOneOneOneWebsiteMax),
+  "instagramUrl": zod.string().max(toggleMemberSavedItemResponseProfileOneOneOneInstagramUrlMax).optional().describe('Optional Instagram profile link; not an OAuth connection.'),
+  "facebookUrl": zod.string().max(toggleMemberSavedItemResponseProfileOneOneOneFacebookUrlMax).optional().describe('Optional Facebook profile or page link.'),
+  "tiktokUrl": zod.string().max(toggleMemberSavedItemResponseProfileOneOneOneTiktokUrlMax).optional().describe('Optional TikTok profile link.'),
+  "linkedinUrl": zod.string().max(toggleMemberSavedItemResponseProfileOneOneOneLinkedinUrlMax).optional().describe('Optional LinkedIn profile or company link.'),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(toggleMemberSavedItemResponseProfileOneOneOneSectorsMax),
   "isPublic": zod.boolean(),
   "publicMedia": zod.boolean().optional(),
@@ -1529,6 +1685,14 @@ export const getEcosystemMembersResponseMembersItemOneLookingForMax = 500;
 
 export const getEcosystemMembersResponseMembersItemOneWebsiteMax = 500;
 
+export const getEcosystemMembersResponseMembersItemOneInstagramUrlMax = 500;
+
+export const getEcosystemMembersResponseMembersItemOneFacebookUrlMax = 500;
+
+export const getEcosystemMembersResponseMembersItemOneTiktokUrlMax = 500;
+
+export const getEcosystemMembersResponseMembersItemOneLinkedinUrlMax = 500;
+
 export const getEcosystemMembersResponseMembersItemOneSectorsMax = 8;
 
 export const getEcosystemMembersResponseMembersItemOneCoverPositionMin = 0;
@@ -1546,6 +1710,10 @@ export const GetEcosystemMembersResponse = zod.object({
   "offering": zod.string().max(getEcosystemMembersResponseMembersItemOneOfferingMax),
   "lookingFor": zod.string().max(getEcosystemMembersResponseMembersItemOneLookingForMax),
   "website": zod.string().max(getEcosystemMembersResponseMembersItemOneWebsiteMax),
+  "instagramUrl": zod.string().max(getEcosystemMembersResponseMembersItemOneInstagramUrlMax).optional().describe('Optional Instagram profile link; not an OAuth connection.'),
+  "facebookUrl": zod.string().max(getEcosystemMembersResponseMembersItemOneFacebookUrlMax).optional().describe('Optional Facebook profile or page link.'),
+  "tiktokUrl": zod.string().max(getEcosystemMembersResponseMembersItemOneTiktokUrlMax).optional().describe('Optional TikTok profile link.'),
+  "linkedinUrl": zod.string().max(getEcosystemMembersResponseMembersItemOneLinkedinUrlMax).optional().describe('Optional LinkedIn profile or company link.'),
   "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(getEcosystemMembersResponseMembersItemOneSectorsMax),
   "isPublic": zod.boolean(),
   "publicMedia": zod.boolean().optional(),

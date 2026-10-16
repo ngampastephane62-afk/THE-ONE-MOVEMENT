@@ -1242,8 +1242,8 @@ body {
   .hero-emirates-art { opacity: 0.4; }
   .hero-emirates-veil { background: linear-gradient(0deg, hsl(187 67% 10% / 0.95), hsl(187 67% 10% / 0.7) 70%, hsl(187 67% 10% / 0.45)); }
 }
-.tomi-header-logo { height: auto; width: 6.5rem; display: block; object-fit: contain; }
-@media (min-width: 640px) { .tomi-header-logo { width: 8rem; } }
+.tomi-header-logo { height: auto; width: 4.75rem; display: block; object-fit: contain; }
+@media (min-width: 640px) { .tomi-header-logo { width: 6rem; } }
 @media (prefers-reduced-motion: reduce) {
   .region-backdrop-art, .hero-emirates-art { animation: none; transform: none; }
 }

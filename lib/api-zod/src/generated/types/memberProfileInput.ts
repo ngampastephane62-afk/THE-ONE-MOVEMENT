@@ -29,6 +29,26 @@ export interface MemberProfileInput {
   lookingFor: string;
   /** @maxLength 500 */
   website: string;
+  /**
+     * Optional Instagram profile link; not an OAuth connection.
+     * @maxLength 500
+     */
+  instagramUrl?: string;
+  /**
+     * Optional Facebook profile or page link.
+     * @maxLength 500
+     */
+  facebookUrl?: string;
+  /**
+     * Optional TikTok profile link.
+     * @maxLength 500
+     */
+  tiktokUrl?: string;
+  /**
+     * Optional LinkedIn profile or company link.
+     * @maxLength 500
+     */
+  linkedinUrl?: string;
   /** @maxItems 8 */
   sectors: MemberProfileInputSectorsItem[];
   isPublic: boolean;

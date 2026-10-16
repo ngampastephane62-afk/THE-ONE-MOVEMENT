@@ -45,8 +45,8 @@ export default function SettingsPage() {
   const q = useGetMemberProfile({ query: { queryKey: getGetMemberProfileQueryKey() } });
   const src = draft ?? q.data?.profile ?? null;
   const ap = appearanceOf(src);
-  const preview = { ...me, ...(draft ? { fullName: draft.fullName || me.fullName, profession: draft.profession, organization: draft.organization, country: draft.country, website: draft.website } : {}) };
-  const dirty = !!draft && !!q.data?.profile && (['profileLayout', 'coverPosition', 'postsLayout', 'fullName', 'profession', 'organization', 'country', 'website', 'bio', 'offering', 'lookingFor', 'sectors', 'isPublic', 'publicMedia'] as const).some((k) => k in appearanceKeys ? appearanceOf(draft)[appearanceKeys[k as keyof typeof appearanceKeys]] !== appearanceOf(q.data!.profile)[appearanceKeys[k as keyof typeof appearanceKeys]] : JSON.stringify(draft[k]) !== JSON.stringify(q.data!.profile![k]));
+  const preview = { ...me, ...(draft ? { fullName: draft.fullName || me.fullName, profession: draft.profession, organization: draft.organization, country: draft.country, website: draft.website, instagramUrl: draft.instagramUrl, facebookUrl: draft.facebookUrl, tiktokUrl: draft.tiktokUrl, linkedinUrl: draft.linkedinUrl } : {}) };
+  const dirty = !!draft && !!q.data?.profile && (['profileLayout', 'coverPosition', 'postsLayout', 'fullName', 'profession', 'organization', 'country', 'website', 'instagramUrl', 'facebookUrl', 'tiktokUrl', 'linkedinUrl', 'bio', 'offering', 'lookingFor', 'sectors', 'isPublic', 'publicMedia'] as const).some((k) => k in appearanceKeys ? appearanceOf(draft)[appearanceKeys[k as keyof typeof appearanceKeys]] !== appearanceOf(q.data!.profile)[appearanceKeys[k as keyof typeof appearanceKeys]] : JSON.stringify(draft[k]) !== JSON.stringify(q.data!.profile![k]));
 
   return (
     <div className="flex flex-col gap-4 px-3 pt-4 md:px-0 md:pt-0">

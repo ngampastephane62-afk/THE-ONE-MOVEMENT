@@ -21,6 +21,12 @@ Videos should retain their native aspect ratio, support member comments and like
 
 **How to apply:** Avoid forced landscape crops and respect reduced-motion settings. Distinguish user-initiated sharing from automatic posting to a connected social account.
 
+Members should be able to list Instagram, Facebook, TikTok and LinkedIn profiles. The stakeholder also wants the possibility of republishing a member's own Instagram post on TOMI.
+
+**Why:** They requested profile links and separately asked whether a post published on Instagram could also be published on the member's TOMI account.
+
+**How to apply:** Treat a profile URL, an authorised account connection and a replicated post as separate capabilities. Preserve member choice and TOMI publishing eligibility; never describe an entered URL as a connected account or automatically copy content without authorisation.
+
 The One Awards should include every officially established ambassador, with sourced biographies and official social links. Separate regional impact-leader selections (Africa, USA and eventually other regions/sectors) from TOMI ambassadors.
 
 The same peace-ambassador nominees are announced as planned Summit speakers and Fashion Week red-carpet participants, as well as participants in other activities. Use one shared profile across programmes, not separate contradictory biographies.

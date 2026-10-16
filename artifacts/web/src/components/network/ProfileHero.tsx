@@ -2,6 +2,7 @@ import type { CSSProperties, ReactNode } from 'react';
 import { ExternalLink, MapPin } from 'lucide-react';
 import type { NetworkMember } from '@workspace/api-client-react';
 import { Avatar, Badges } from './kit';
+import { SOCIAL_PROFILES, normalizeSocialProfile, type SocialProfileField } from '@workspace/shared';
 
 export type ProfileLayout = 'immersive' | 'centered' | 'editorial';
 export type PostsLayout = 'grid' | 'list';
@@ -19,7 +20,7 @@ export function appearanceOf(m: { profileLayout?: string; coverPosition?: number
   return { layout, pos, posts };
 }
 
-type HeroMember = Pick<NetworkMember, 'fullName' | 'avatarUrl' | 'coverUrl' | 'profession' | 'organization' | 'country' | 'website'> & Partial<Pick<NetworkMember, 'badges' | 'founder' | 'id' | 'enabled' | 'followers' | 'following' | 'followed' | 'blocked' | 'suspended'>>;
+type HeroMember = Pick<NetworkMember, 'fullName' | 'avatarUrl' | 'coverUrl' | 'profession' | 'organization' | 'country' | 'website'> & Partial<Pick<NetworkMember, 'badges' | 'founder' | 'id' | 'enabled' | 'followers' | 'following' | 'followed' | 'blocked' | 'suspended' | SocialProfileField>>;
 
 const FALLBACK = 'radial-gradient(ellipse at 78% 18%, hsl(39 52% 54% / 0.42), transparent 58%), radial-gradient(ellipse at 10% 90%, hsl(189 74% 28% / 0.7), transparent 60%), linear-gradient(140deg, hsl(187 67% 10%), hsl(189 70% 22%))';
 
@@ -50,6 +51,13 @@ function Meta({ m, dark }: { m: HeroMember; dark: boolean }) {
           {m.website && <a href={m.website} target="_blank" rel="noopener noreferrer nofollow" className={`inline-flex items-center gap-1 hover:underline ${dark ? 'text-gold-400' : 'text-lagoon-600'}`} data-testid="link-profile-website"><ExternalLink className="h-3.5 w-3.5" />{m.website.replace(/^https?:\/\//, '')}</a>}
         </div>
       )}
+      <div className="mt-3 flex flex-wrap gap-2">
+        {SOCIAL_PROFILES.map(({ field, name }) => {
+          let href = '';
+          try { href = normalizeSocialProfile(field, m[field] ?? ''); } catch { return null; }
+          return href ? <a key={field} href={href} target="_blank" rel="noopener noreferrer nofollow ugc" className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 ${dark ? 'border-ivory-100/30 text-ivory-100 hover:border-gold-400' : 'border-sand-300 text-lagoon-700 hover:border-lagoon-600'}`} data-testid={`link-profile-${field}`} aria-label={`${m.fullName} — ${name}`}>{name}<ExternalLink className="h-3 w-3" /></a> : null;
+        })}
+      </div>
     </>
   );
 }

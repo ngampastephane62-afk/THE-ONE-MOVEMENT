@@ -16,6 +16,7 @@ import {
 import { SECTORS } from '@/lib/sectors-data';
 import { useAuth } from '@clerk/react';
 import { getPendingSector, clearPendingSector } from '@/lib/network-invitations';
+import { SOCIAL_PROFILES, normalizeSocialProfile } from '@workspace/shared';
 
 interface Props {
   initial: MemberProfile | null;
@@ -32,6 +33,10 @@ function validate(v: MemberProfileInput): Errors {
   const e: Errors = {};
   if (v.fullName.trim().length < 2) e.fullName = 'Enter at least 2 characters.';
   if (v.sectors.length > 8) e.sectors = 'Choose up to 8 sectors.';
+  for (const { field } of SOCIAL_PROFILES) {
+    try { normalizeSocialProfile(field, v[field] ?? ''); }
+    catch (error) { e[field] = (error as Error).message; }
+  }
   if (v.website.trim()) {
     try {
       const u = new URL(v.website.trim());
@@ -57,6 +62,10 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
     offering: initial?.offering ?? '',
     lookingFor: initial?.lookingFor ?? '',
     website: initial?.website ?? '',
+    instagramUrl: initial?.instagramUrl ?? '',
+    facebookUrl: initial?.facebookUrl ?? '',
+    tiktokUrl: initial?.tiktokUrl ?? '',
+    linkedinUrl: initial?.linkedinUrl ?? '',
     sectors: pendingSector && !(initial?.sectors ?? []).includes(pendingSector as MemberProfileInputSectorsItem) && (initial?.sectors.length ?? 0) < 8
       ? [...(initial?.sectors ?? []), pendingSector as MemberProfileInputSectorsItem]
       : initial?.sectors ?? [],
@@ -152,6 +161,17 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
         <label className="text-sm text-ink-900 sm:col-span-2">Website
           <input className={`${fieldCls} mt-1`} type="url" value={v.website} maxLength={500} placeholder="https://" onChange={(e) => set('website', e.target.value)} data-testid="input-website" />{err('website')}
         </label>
+      </fieldset>
+
+      <fieldset className="grid gap-5 sm:grid-cols-2">
+        <legend className="mb-3 text-eyebrow text-gold-700">SOCIAL PROFILES</legend>
+        <p className="text-sm leading-relaxed text-ink-700 sm:col-span-2">Add your profile links. These links appear on your member profile and, if you make it public, on your public page. They do not connect your accounts or import posts. Clear a field and save to remove a link.</p>
+        {SOCIAL_PROFILES.map(({ field, name, placeholder }) => (
+          <label key={field} className="text-sm text-ink-900">{name}
+            <input className={`${fieldCls} mt-1`} type="url" inputMode="url" autoCapitalize="none" autoCorrect="off" value={v[field] ?? ''} maxLength={500} placeholder={placeholder} onChange={(e) => set(field, e.target.value)} aria-invalid={!!errors[field]} aria-describedby={errors[field] ? `error-${field}` : undefined} data-testid={`input-${field}`} />
+            {errors[field] && <span id={`error-${field}`} className="mt-1 block text-xs text-crimson-700" role="alert">{errors[field]}</span>}
+          </label>
+        ))}
       </fieldset>
 
       <div className="border border-gold-500/40 bg-ivory-200/50 p-5">

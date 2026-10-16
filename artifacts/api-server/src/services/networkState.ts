@@ -104,6 +104,7 @@ export async function networkState(context: NetworkActor, query: Record<string, 
     dto.set(m.id, {
       id: m.id, fullName: m.fullName, profession: m.profession, organization: m.organization,
       country: m.country, bio: m.bio, offering: m.offering, lookingFor: m.lookingFor, website: m.website,
+      instagramUrl: m.instagramUrl, facebookUrl: m.facebookUrl, tiktokUrl: m.tiktokUrl, linkedinUrl: m.linkedinUrl,
       sectors: m.sectors as NetworkMember["sectors"], isPublic: m.isPublic, enabled: p.enabled, founder: p.founder,
       avatarUrl: p.avatarId ? media.get(p.avatarId)?.url ?? null : null,
       coverUrl: p.coverId ? media.get(p.coverId)?.url ?? null : null,

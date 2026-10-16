@@ -119,7 +119,7 @@ function AppShell({ me, base, children }: Ctx & { children: ReactNode }) {
       <header className="fixed inset-x-0 top-0 z-40 border-b border-gold-500/25 bg-lagoon-900/95 backdrop-blur" data-testid="network-header">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-2 px-3 sm:px-4">
           <Link href="/member/ecosystem" className="flex shrink-0 items-center rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500" aria-label="The One Movement International — Ecosystem" data-testid="link-network-home">
-            <img src={tomiLogo} alt="The One Movement International" width={640} height={336} className="h-auto w-[88px] object-contain sm:w-28" data-testid="img-network-logo" />
+            <img src={tomiLogo} alt="The One Movement International" width={640} height={336} className="h-auto w-[72px] object-contain sm:w-24" data-testid="img-network-logo" />
           </Link>
           <div className="flex items-center gap-1">
             <LanguageSwitcher />
