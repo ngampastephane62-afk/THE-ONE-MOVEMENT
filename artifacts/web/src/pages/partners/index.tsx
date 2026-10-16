@@ -2,7 +2,8 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'wouter';
 import PartnerOrbitStage from '@/components/partners/PartnerOrbitStage';
 import PartnerEditorial from '@/components/partners/PartnerEditorial';
-import PartnerHistory from '@/components/partners/PartnerHistory';
+import { PartnerInstitutions, PartnerMedia } from '@/components/partners/PartnerHistory';
+import BroadcasterAudience from '@/components/partners/BroadcasterAudience';
 import SectionHeading from '@/components/SectionHeading';
 import { Button } from '@/components/ui/button';
 import Reveal from '@/components/Reveal';
@@ -16,7 +17,7 @@ export default function Partners() {
     <div className="bg-ivory-50 min-h-screen">
       <Helmet>
         <title>OUR PARTNERS — THE ONE MOVEMENT INTERNATIONAL</title>
-        <meta name="description" content="Partnership pathways and verified relationship architecture for The One Movement International." />
+        <meta name="description" content="Governments, UN entities, diplomatic missions, Rawbank, private companies, international brands and broadcasters that have partnered with The One Movement International." />
          <meta property="og:title" content="Our Partners — The One Movement International" />
          <meta property="og:description" content="Explore the Movement's partner network and begin a conversation about institutional, cultural or programme collaboration." />
         <link rel="canonical" href="/partners" />
@@ -24,7 +25,15 @@ export default function Partners() {
 
       <PartnerOrbitStage />
 
-      {/* CONFIRMED PARTNERSHIPS */}
+      <PartnerInstitutions />
+
+      <PartnerMedia />
+
+      <BroadcasterAudience />
+
+      <PartnerEditorial />
+
+      {/* DOCUMENTARY ARCHIVE */}
       <section className="py-section-lg bg-ivory-50 border-t border-sand-200" aria-labelledby="engagement-heading">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
@@ -53,9 +62,6 @@ export default function Partners() {
         </div>
       </section>
 
-      <PartnerHistory />
-
-      <PartnerEditorial />
 
       {/* PARTNERSHIP OPPORTUNITIES */}
       <section className="py-section-lg bg-lagoon-900 text-ivory-100">
@@ -118,7 +124,7 @@ export default function Partners() {
           <Reveal>
             <p className="text-[10px] font-semibold text-ink-500 tracking-[0.2em] uppercase">OUR DISPLAY POLICY</p>
             <p className="mt-3 text-sm text-ink-700 leading-relaxed">
-              Past partnerships recovered from the Founder archive and current relationship areas appear above. Organizations and individuals who enquire are reviewed before any public listing.
+              Partners listed on this page are relationships confirmed by the Founder. Organisations that enquire are reviewed before any public listing, and an enquiry is never shown as a partnership.
             </p>
             <p className="mt-3 text-sm text-ink-700 leading-relaxed">Industry profiles are editorial context and do not indicate a partnership.</p>
             <Link href="/news" className="mt-4 inline-block text-sm font-semibold text-lagoon-700 underline underline-offset-4" data-testid="link-press-news">Looking for press coverage? Visit News.</Link>

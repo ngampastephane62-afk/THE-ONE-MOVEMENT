@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { Pause, Play, ChevronLeft, ChevronRight } from 'lucide-react';
-import ArchivePhoto from '@/components/ArchivePhoto';
 import catalog from '@/assets/media/founder/catalog.json';
 import { usePrefersReducedMotion } from './util';
 import { DRC_AMBASSADOR_SOURCE, OFFICIAL_MEETINGS, meetingImageUrl } from './official-meetings';
@@ -16,35 +15,59 @@ const SLIDES: Slide[] = [
   { id: 'global-encounter', word: 'ACCESS', region: 'International', people: 'Yuston Nessy · Ambassador of Tanzania' },
   { id: 'conversation', word: 'CONVERSATION', region: 'Culture & business', people: 'Yuston Nessy · Dr Denis Mukwege' },
 ];
-const DURATION = 1000;
+const DURATION = 3000;
+const srcOf = (sl: Slide) => sl.filename ? meetingImageUrl(sl.filename)
+  : `${import.meta.env.BASE_URL}brand-photos/${catalog.photos[sl.id!].filename}`;
 
 export default function PartnerOrbitStage() {
   const reduced = usePrefersReducedMotion();
+  // `i` = photo actually on screen (only set once its image has loaded).
   const [i, setI] = useState(0);
+  const [target, setTarget] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [hasVisiblePhoto, setHasVisiblePhoto] = useState(false);
+  const [failed, setFailed] = useState<Set<number>>(() => new Set());
   const [paused, setPaused] = useState(false);
   const [hoverHold, setHoverHold] = useState(false);
-  const running = !reduced && !paused && !hoverHold;
+  const running = hasVisiblePhoto && !reduced && !paused && !hoverHold;
   const timer = useRef<number | null>(null);
 
+  // Load the requested slide; the current photo stays visible until it is decoded.
   useEffect(() => {
-    if (!running) return;
-    timer.current = window.setTimeout(() => setI((n) => (n + 1) % SLIDES.length), DURATION);
-    return () => { if (timer.current) window.clearTimeout(timer.current); };
-  }, [i, running]);
+    if (target === i && hasVisiblePhoto) { setLoading(false); return; }
+    let cancelled = false;
+    setLoading(true);
+    const img = new Image();
+    img.src = srcOf(SLIDES[target]);
+    img.decode().then(() => {
+      if (!cancelled) { setI(target); setHasVisiblePhoto(true); setLoading(false); }
+    }, () => {
+      if (cancelled) return;
+      setFailed((f) => new Set(f).add(target));
+      setLoading(false);
+      // Skip the unavailable photo; the last good one remains on screen.
+      setTarget((t) => ((t + 1) % SLIDES.length === i ? i : (t + 1) % SLIDES.length));
+    });
+    return () => { cancelled = true; };
+  }, [target, i, hasVisiblePhoto]);
 
-  const go = (d: number) => setI((n) => (n + d + SLIDES.length) % SLIDES.length);
+  // Each loaded photo is held for exactly DURATION before the next is requested.
+  useEffect(() => {
+    if (!running || target !== i) return;
+    timer.current = window.setTimeout(() => setTarget((n) => (n + 1) % SLIDES.length), DURATION);
+    return () => { if (timer.current) window.clearTimeout(timer.current); };
+  }, [i, target, running]);
+
+  const go = (d: number) => setTarget((n) => (n + d + SLIDES.length) % SLIDES.length);
   const s = SLIDES[i];
   const caption = s.id ? catalog.photos[s.id].caption : s.caption!;
 
   useEffect(() => {
-    // Prime the next images so the one-second cadence does not reveal empty frames.
-    for (let offset = 1; offset <= 2; offset++) {
-      const slide = SLIDES[(i + offset) % SLIDES.length];
-      const image = new Image();
-      image.src = slide.filename ? meetingImageUrl(slide.filename)
-        : `${import.meta.env.BASE_URL}brand-photos/${catalog.photos[slide.id!].filename}`;
-    }
+    // Warm the following photo while the current one is held.
+    const image = new Image();
+    image.src = srcOf(SLIDES[(i + 1) % SLIDES.length]);
   }, [i]);
+
 
   return (
     <section
@@ -65,8 +88,8 @@ export default function PartnerOrbitStage() {
         .tomi-arc { animation: tomi-spin 38s linear infinite; }
         .tomi-arc-slow { animation: tomi-spin 70s linear infinite reverse; }
         .tomi-stage[data-still="true"] .tomi-arc, .tomi-stage[data-still="true"] .tomi-arc-slow { animation-play-state: paused; }
-        .tomi-rise { animation: tomi-rise .18s ease-out both; }
-        .tomi-in { animation: tomi-in .18s ease-out both; }
+        .tomi-rise { animation: tomi-rise .5s ease-out both; }
+        .tomi-in { animation: tomi-in .6s ease-out both; }
         .tomi-bar { transform-origin: left; animation: tomi-progress ${DURATION}ms linear both; }
         @media (prefers-reduced-motion: reduce) {
           .tomi-arc, .tomi-arc-slow, .tomi-rise, .tomi-in, .tomi-bar { animation: none !important; }
@@ -88,7 +111,7 @@ export default function PartnerOrbitStage() {
             Build with the Movement.
           </h1>
           <p className="mt-4 max-w-lg text-ivory-200 leading-relaxed">
-            Ambassadors, private offices and institutions connected to a global Africa–UAE–international network, opening routes to collaboration and access.
+            Governments, UN entities, diplomatic missions, a leading Congolese bank and international brands have worked with the Movement across a decade of editions between Africa, the UAE and the world.
           </p>
           <div key={`c-${i}`} className="tomi-rise mt-8 border-l border-gold-500/60 pl-4" style={{ animationDelay: '180ms' }} aria-live={running ? 'off' : 'polite'}>
             <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-gold-400">
@@ -119,9 +142,9 @@ export default function PartnerOrbitStage() {
             <div aria-hidden className="absolute inset-[14%] rounded-full bg-[radial-gradient(circle,hsl(40_70%_55%/0.22),transparent_70%)]" />
              <div className="absolute inset-[9%] overflow-hidden rounded-full shadow-[0_40px_80px_-30px_hsl(187_60%_2%/0.9)]">
                <div key={`p-${i}`} className="tomi-in h-full w-full">
-                 {s.id ? <ArchivePhoto id={s.id} priority={i === 0} frameClassName="aspect-square" objectPosition={s.position ?? 'center 30%'} sizes="(min-width: 1024px) 34vw, 72vw" alt={`${s.people} — ${caption}`} />
-                   : <img src={meetingImageUrl(s.filename!)} width={1000} height={1000} alt={`${s.people} — ${caption}`} decoding="async" fetchPriority={i === 0 ? 'high' : 'auto'} className="h-full w-full object-cover" style={{ objectPosition: s.position }} data-testid={`img-official-meeting-${s.filename}`} />}
-              </div>
+                  <img src={srcOf(s)} width={1000} height={1000} alt={`${s.people} — ${caption}`} decoding="async" fetchPriority={i === 0 ? 'high' : 'auto'} className="h-full w-full object-cover" style={{ objectPosition: s.position ?? 'center 30%' }} data-testid={`img-official-meeting-${s.filename ?? s.id}`} />
+                </div>
+                {loading && <span className="absolute bottom-[12%] left-1/2 -translate-x-1/2 rounded-full bg-ink-900/70 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-ivory-100" role="status">Loading next photograph</span>}
             </div>
           </div>
            <div className="mt-4 max-w-md text-center" aria-live={running ? 'off' : 'polite'} data-testid="text-partner-people">
@@ -140,9 +163,10 @@ export default function PartnerOrbitStage() {
           </div>
           <div className="mt-4 flex w-full max-w-xs gap-1" role="tablist" aria-label="Choose partner photograph">
             {SLIDES.map((sl, n) => (
-              <button key={sl.id ?? sl.filename} role="tab" aria-selected={n === i} aria-label={`${n + 1}. ${sl.people} — ${sl.id ? catalog.photos[sl.id].caption : sl.caption}`} onClick={() => setI(n)} data-testid={`button-stage-dot-${n}`} className="relative h-11 flex-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400">
+              <button key={sl.id ?? sl.filename} role="tab" aria-selected={n === i} aria-label={`${n + 1}. ${sl.people} — ${sl.id ? catalog.photos[sl.id].caption : sl.caption}`} onClick={() => setTarget(n)} data-testid={`button-stage-dot-${n}`} className="relative h-11 flex-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400">
                 <span className="absolute inset-x-0 top-1/2 h-px bg-ivory-100/25" />
-                {n === i && <span key={`b-${i}-${running}`} className={`absolute inset-x-0 top-1/2 h-px bg-gold-400 ${running ? 'tomi-bar' : ''}`} />}
+                {n === i && <span key={`b-${i}-${running}`} className={`absolute inset-x-0 top-1/2 h-px bg-gold-400 ${running && target === i ? 'tomi-bar' : ''}`} />}
+                {failed.has(n) && <span className="sr-only">photograph unavailable</span>}
               </button>
             ))}
           </div>

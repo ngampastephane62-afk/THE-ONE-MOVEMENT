@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useRef, useState, type ReactNode 
 import { socialProfileCopy } from './locales/social-profile-copy';
 import { documentaryPartnersCopy } from './locales/documentary-partners-copy';
 import { magazineCopy } from './locales/magazine-copy';
+import { partnersCopy } from './locales/partners-copy';
 
 export const LANGUAGES = [
   { code: 'en', label: 'English', tag: 'EN' },
@@ -55,7 +56,7 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
       const load = loaders[`./locales/${language}.json`];
       if (!load) { setError(true); setLoading(false); return; }
       load().then(value => {
-        if (active) { loadedLanguage.current = language; setDictionary({ ...value, ...socialProfileCopy[language], ...documentaryPartnersCopy[language], ...magazineCopy[language] }); setLoading(false); }
+        if (active) { loadedLanguage.current = language; setDictionary({ ...value, ...socialProfileCopy[language], ...documentaryPartnersCopy[language], ...magazineCopy[language], ...partnersCopy[language] }); setLoading(false); }
       }).catch(() => { if (active) { setError(true); setLoading(false); } });
     }
     return () => { active = false; };

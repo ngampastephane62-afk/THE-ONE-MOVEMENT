@@ -1,7 +1,8 @@
 import { Link } from 'wouter';
 import { ArrowUpRight, Instagram, Facebook, Newspaper, BookOpen } from 'lucide-react';
 import Reveal from '@/components/Reveal';
-import { SOCIAL, KIT_FIGURES, KIT_FIGURES_SOURCE, WEBSITE_READERS } from './social-sources';
+import { SOCIAL, WEBSITE_READERS } from './social-sources';
+import AudienceEvidence from './AudienceEvidence';
 
 const STAGES = [
   { n: 'I', icon: Newspaper, title: 'An editorial article', where: 'TOMI News', text: 'Your story, edited and published as an article in the ecosystem News — readable, searchable and shareable.' },
@@ -54,14 +55,10 @@ export default function EditorialOffer() {
         <p className="mt-4 text-xs leading-relaxed text-ink-700">Editorial selection applies at every stage. Social relay is chosen by the editorial team; audience varies by story and is not guaranteed per article.</p>
 
         <div className="mt-20 grid gap-12 lg:grid-cols-12">
-          <Reveal className="lg:col-span-7">
-            <p className="text-eyebrow text-gold-600">REACH</p>
-            <dl className="mt-5 grid grid-cols-2 gap-px bg-ink-900/15">
-              {KIT_FIGURES.map((f) => <div key={f.label} className="bg-ivory-100 p-5"><dd className="font-display text-[clamp(2.2rem,5vw,3.6rem)] leading-none text-lagoon-900" translate="no">{f.value}</dd><dt className="mt-2 text-xs uppercase tracking-[0.15em] text-ink-700">{f.label}</dt></div>)}
-              {WEBSITE_READERS && <div className="col-span-2 bg-ivory-50 p-5" data-testid="text-website-readers"><dd className="font-display text-4xl text-lagoon-900" translate="no">{WEBSITE_READERS.total}</dd><dt className="mt-1 text-xs uppercase tracking-[0.15em] text-ink-700">Website readers · {WEBSITE_READERS.period} · {WEBSITE_READERS.source}</dt></div>}
-            </dl>
-            <p className="mt-3 text-xs text-ink-700" data-testid="text-figures-source">{KIT_FIGURES_SOURCE}</p>
-          </Reveal>
+          <div className="lg:col-span-7">
+            {WEBSITE_READERS && <div className="bg-ivory-50 p-5" data-testid="text-website-readers"><p className="font-display text-4xl text-lagoon-900" translate="no">{WEBSITE_READERS.total}</p><p className="mt-1 text-xs uppercase tracking-[0.15em] text-ink-700">Website readers · {WEBSITE_READERS.period} · {WEBSITE_READERS.source}</p></div>}
+            <p className="font-display text-[clamp(1.8rem,3.5vw,2.8rem)] italic leading-tight text-ink-900">An article written once, carried to an audience that mostly discovers Tropik for the first time.</p>
+          </div>
           <Reveal delay={120} className="lg:col-span-5">
             <p className="text-eyebrow text-gold-600">FOLLOW TROPIK</p>
             <p className="mt-5 leading-relaxed text-ink-800">See the stories, covers and events on the official Tropik pages — the public audience the editorial relay speaks to.</p>
@@ -72,6 +69,7 @@ export default function EditorialOffer() {
             </div>
           </Reveal>
         </div>
+        <AudienceEvidence />
       </div>
     </section>
   );

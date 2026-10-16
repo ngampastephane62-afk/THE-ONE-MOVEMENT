@@ -25,7 +25,7 @@ router.get("/magazine/kit.pdf", downloads, async (_req, res) => {
 });
 router.get("/magazine/assets/:filename", async (req, res) => {
   const name = String(req.params.filename);
-  if (!/^(artwork-(0[1-9]|1[0-6])|kit-page-(0[1-9]|10)|heritage-0[1-4]|print-reader-01)\.webp$/.test(name)) return void res.sendStatus(404);
+  if (!/^(artwork-(0[1-9]|1[0-6])|kit-page-(0[1-9]|10)|heritage-0[1-4]|print-reader-01|audience-reel-0[1-6]|audience-proof-(overview|week|instagram))\.webp$/.test(name)) return void res.sendStatus(404);
   const bucket = process.env.DEFAULT_OBJECT_STORAGE_BUCKET_ID;
   if (!bucket) throw new NetworkError(503, "Magazine storage is unavailable.");
   const [bytes] = await objectFile(`/${bucket}/public/magazine/editorial/${name}`).download();

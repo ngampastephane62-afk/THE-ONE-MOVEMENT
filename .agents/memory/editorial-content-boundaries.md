@@ -75,9 +75,9 @@ The international-language scope covers the existing site, not only Thanks Emira
 
 **How to apply:** Keep the selector persistent across navigation and translate shared UI and form instructions. Preserve user-authored content, names, source attribution and exact monetary terms; do not send visitor content to a live translation service.
 
-The Founder describes a documentary about edition 4 of The One Movement International as having been broadcast on TV5MONDE. They want documentary videos to play in sequence and official-meeting photographs presented in circular frames with participants named, one second per photo and a pause control.
+The Founder describes a documentary about edition 4 of The One Movement International as having been broadcast on TV5MONDE. They want documentary videos to play in sequence and official-meeting photographs presented in circular frames with participants named, three seconds per loaded photo and a pause control.
 
-**Why:** These are explicit editorial directions supplied on 2026-10-16, including the description of the DRC ambassador meeting as an official encounter in Abu Dhabi.
+**Why:** These are explicit editorial directions supplied on 2026-10-16, including the description of the DRC ambassador meeting as an official encounter in Abu Dhabi. The Founder subsequently replaced the original one-second timing with three seconds because viewers could not see the photos.
 
 **How to apply:** The supplied TV5MONDE report confirms coverage of The One Fashion Week in Goma; it does not itself establish the edition number. Keep that association attributed to the Founder. Do not assume an existing film is that documentary, invent identities from faces, or treat a screenshot as an original photo or video.
 

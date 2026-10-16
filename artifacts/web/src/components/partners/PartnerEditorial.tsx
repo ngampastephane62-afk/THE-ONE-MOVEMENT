@@ -9,8 +9,8 @@ type Desk = { no: string; kicker: string; title: string; body: string; href: str
 const DESKS: Desk[] = [
   { no: '01', kicker: 'MEDIA & MAGAZINE', title: 'In the press.', body: 'Coverage of the Movement by newspapers, magazines and broadcasters is collected on the News page, with each article credited to its publication.', href: '/news', cta: 'Read the coverage on News', testid: 'media' },
   { no: '03', kicker: 'HUMANITARIAN', title: 'Goma, with UNHCR.', body: 'According to the Founder, the Movement’s humanitarian action in Goma was carried out in collaboration with UNHCR, the UN Refugee Agency.', href: '/impact', cta: 'See the humanitarian work', testid: 'humanitarian' },
-  { no: '04', kicker: 'DIPLOMATIC', title: 'Named official meetings.', body: 'Ambassadors and private offices met by the Founder, shown in the archive above. Each meeting is presented as it took place, not as a government endorsement.', href: '#engagement-heading', cta: 'View the archive', testid: 'diplomatic' },
-  { no: '05', kicker: 'BUSINESS', title: 'Enterprise and the creative economy.', body: 'Companies working with African fashion, film and culture. Brands that partnered with the Movement are shown in the recovered archive above.', href: '#history-business', cta: 'See the business partners', testid: 'business' },
+  { no: '04', kicker: 'DIPLOMATIC', title: 'Named official meetings.', body: 'Embassies, consulates and private offices the Movement has worked with. Each relationship is presented as it took place, not as a government endorsement.', href: '#history-diplomatic', cta: 'See diplomatic partners', testid: 'diplomatic' },
+  { no: '05', kicker: 'BUSINESS', title: 'Enterprise and the creative economy.', body: 'Rawbank, private groups and international brands that have partnered with the Movement are presented above.', href: '#history-banking', cta: 'See the business partners', testid: 'business' },
   { no: '06', kicker: 'BILATERAL RELATIONS', title: 'Africa, the UAE and beyond.', body: 'The Movement works between African nations, the United Arab Emirates and international institutions, connecting cultural programmes across borders.', href: '/join#institutional-inquiry', cta: 'Propose an exchange', testid: 'bilateral' },
 ];
 
@@ -111,7 +111,7 @@ export default function PartnerEditorial() {
           </div>
         </article>
 
-        <p className="mx-auto mt-10 max-w-2xl text-center text-xs italic leading-relaxed text-ink-700">Editor’s note: partner logos have been recovered from the Founder archive; dates and shared work will be added to each profile as they are completed.</p>
+        <p className="mx-auto mt-10 max-w-2xl text-center text-xs italic leading-relaxed text-ink-700">Dates and programme details for each partnership will be added to partner profiles over time.</p>
       </div>
     </section>
   );

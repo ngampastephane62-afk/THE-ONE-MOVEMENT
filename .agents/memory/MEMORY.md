@@ -17,3 +17,5 @@
 - [Visual and marketplace direction](visual-marketplace-direction.md) — Kuba identity, supplied programme covers, regional landmarks and a proposed seller-funded humanitarian marketplace.
 - [Editorial portrait sourcing](editorial-portrait-sourcing.md) — preserve returned Wikimedia thumbnail URLs; unsupported width rewrites fail and biography requests can be throttled.
 - [Paid publication files](paid-publication-assets.md) — protect raw uploads in development as well as paid downloads; test payments never unlock the PDF.
+- [Partner presentation](partner-presentation.md) — institutions and banking before brands; media last, then source-labelled audiences; photos visible for three seconds.
+- [Editorial asset storage](editorial-asset-storage.md) — standalone media jobs should avoid app DB/auth imports; malformed sidecar field names can resemble stream failures.
