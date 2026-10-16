@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
 import Reveal from '@/components/Reveal';
+import ProducerProfile from '@/components/editorial/ProducerProfile';
 import { PaymentReturn, useReturnParams } from '@/components/humanitarian/shared';
 
 export default function Documentary() {
@@ -101,14 +102,16 @@ export default function Documentary() {
             <p className="mt-3 text-sm leading-relaxed text-ink-800">A distinct future project. Planned distribution is unconfirmed and no broadcaster acquisition is claimed. A previous documentary about the Movement was broadcast via CANAL+ and TV5MONDE.</p>
             <div className="mt-6 border-t border-sand-300 pt-5" data-testid="documentary-netflix-production">
               <h4 className="font-display text-xl text-ink-900">Future production & Netflix ambition.</h4>
-              <p className="mt-3 text-sm leading-relaxed text-ink-800">The Founder is preparing a new production with a producer whose profile will be introduced once supplied. Netflix is an intended distribution platform, not a confirmed partner, commissioner or scheduled release.</p>
+              <p className="mt-3 text-sm leading-relaxed text-ink-800">The Founder is preparing a new production with producer Qais Qandil of The Film Makers, introduced below. Netflix is an intended distribution platform, not a confirmed partner, commissioner or scheduled release.</p>
             </div>
             <Link href="/media" className="mt-4 inline-block text-sm font-semibold text-lagoon-700 underline underline-offset-4" data-testid="link-media-coverage">Previous coverage on Media</Link>
           </Reveal>
         </div>
       </section>
 
-      <section className="bg-lagoon-900 py-section-lg text-center text-ivory-100">
+      <ProducerProfile />
+
+      <section className="border-t border-gold-500/20 bg-lagoon-900 py-section-lg text-center text-ivory-100">
         <Reveal className="mx-auto max-w-3xl px-6">
           <h2 className="text-display-md">PRODUCTION & DISTRIBUTION ENQUIRIES</h2>
           <p className="mt-5 text-ivory-300">Broadcasters, producers and institutions interested in the project can reach the team directly.</p>

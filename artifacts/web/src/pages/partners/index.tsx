@@ -121,6 +121,7 @@ export default function Partners() {
             <p className="mt-3 text-sm text-ink-700 leading-relaxed">
               Confirmed partners appear above. Organizations and individuals who enquire are reviewed before any public listing.
             </p>
+            <p className="mt-6 text-sm text-ink-700 leading-relaxed">Production partner for the documentary: The Film Makers, led by Qais Qandil. <Link href="/the-one-documentary#production-partner" className="font-semibold text-lagoon-700 underline underline-offset-4" data-testid="link-production-partner">Meet the production partner</Link></p>
             <Link href="/media" className="mt-4 inline-block text-sm font-semibold text-lagoon-700 underline underline-offset-4">Looking for press coverage? Visit Media.</Link>
           </Reveal>
         </div>

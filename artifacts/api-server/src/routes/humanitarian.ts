@@ -141,7 +141,8 @@ router.get("/documentary/goma/stream", async (req, res) => {
 });
 router.get("/documentary/media/:filename", async (req, res) => {
   const name = String(req.params.filename);
-  if (!["goma-preview.mp4", "radio-okapi-trailer.mp4", "goma.webp", "radio-okapi.webp"].includes(name)) return void res.sendStatus(404);
+  const portraits = Array.from({ length: 26 }, (_, index) => `tfm-portrait-${String(index + 1).padStart(2, "0")}.webp`);
+  if (!["goma-preview.mp4", "radio-okapi-trailer.mp4", "goma.webp", "radio-okapi.webp", ...portraits].includes(name)) return void res.sendStatus(404);
   const bucket = process.env.DEFAULT_OBJECT_STORAGE_BUCKET_ID;
   if (!bucket) throw new NetworkError(503, "Media storage is unavailable.");
   sendBufferedVideo(req, res, await video(`/${bucket}/public/documentary/${name}`), name.endsWith(".webp") ? "image/webp" : "video/mp4");

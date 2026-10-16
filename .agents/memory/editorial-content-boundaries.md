@@ -75,8 +75,14 @@ TV5MONDE's published embed URL can still reject cross-site framing with `X-Frame
 
 **How to apply:** Verify framing headers before embedding; use an honest link to the official report when framing is blocked. Do not mirror the broadcaster's video or silently substitute a direct media URL to bypass the official player.
 
-The Founder requests broadcaster introductions for CANAL+ and Africa 24 TV, then the MONUSCO campaign video followed by Madi TV, and a future production with a producer whose profile they will supply. They also request mention of Netflix.
+The Founder requests broadcaster introductions for CANAL+ and Africa 24 TV, then the MONUSCO campaign video followed by Madi TV, and a future production with their partner The Film Makers. They also request mention of Netflix.
 
-**Why:** This editorial order was supplied on 2026-10-16 without new video attachments, a producer profile or evidence of a Netflix agreement.
+**Why:** This editorial order was supplied on 2026-10-16 without new video attachments or evidence of a Netflix agreement. The producer's official website and slate were subsequently supplied.
 
-**How to apply:** Preserve the requested order when the actual sources arrive. Do not equate the existing Radio Okapi trailer with the requested campaign film without confirmation. Treat Netflix as a distribution ambition until an agreement is established; do not invent the producer's identity or substitute broadcaster homepages for film sources.
+**How to apply:** Preserve the requested order when the actual sources arrive. Do not equate the existing Radio Okapi trailer with the requested campaign film without confirmation. Treat Netflix as a distribution ambition until an agreement is established; do not substitute broadcaster homepages for film sources.
+
+The Founder identifies The Film Makers (thefilmmakers.com) as their production partner and wants the actors from its portfolio represented. Its supplied slate distinguishes previous films from upcoming projects with interested, optional or illustrative casting.
+
+**Why:** The 2026 slate includes casting suggestions, potential streaming platforms and financial projections; those are not evidence of completed collaborations, contractual casting or TOMI financing.
+
+**How to apply:** Use the producer's published past film credits for actor profiles. Attribute portraits and film associations to its portfolio, not TOMI endorsements or documentary participation. Keep upcoming casting suggestions and non-public financial projections out of the public partner presentation.
