@@ -3,6 +3,12 @@ name: Dubai programme announcements
 description: Confirmed event dates, Fashion Week networking and the distinction between supporting voices and event attendees.
 ---
 
+New event-preparation information supplied by the owner is reserved for sponsors and people who have paid, not public announcement copy. The owner will add the venue, time and entry conditions later.
+
+**Why:** The owner explicitly corrected the proposed public treatment of the newly supplied Summit and launch information: “Ce n'est pas encore une information publique.”
+
+**How to apply:** Do not publish new planning details or infer permission from uploaded promotional visuals. Confirm the audience of new videos separately when unclear. Any sponsor/paid access must be enforced server-side, not merely hidden in the interface. This does not automatically retract previously approved public announcements.
+
 The One Fashion Week International is announced for 22 December 2026 in Dubai. The One Awards are announced for 2 January 2027.
 
 **Why:** The owner confirmed the Fashion Week date and clarified that the January event is the following year, correcting an initial January 2026 entry.
