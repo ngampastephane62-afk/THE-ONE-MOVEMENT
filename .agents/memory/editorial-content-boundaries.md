@@ -74,3 +74,9 @@ TV5MONDE's published embed URL can still reject cross-site framing with `X-Frame
 **Why:** The supplied report's structured metadata offered an embed URL, but that endpoint returned SAMEORIGIN when checked. Metadata alone did not establish that a working embedded player was available.
 
 **How to apply:** Verify framing headers before embedding; use an honest link to the official report when framing is blocked. Do not mirror the broadcaster's video or silently substitute a direct media URL to bypass the official player.
+
+The Founder requests broadcaster introductions for CANAL+ and Africa 24 TV, then the MONUSCO campaign video followed by Madi TV, and a future production with a producer whose profile they will supply. They also request mention of Netflix.
+
+**Why:** This editorial order was supplied on 2026-10-16 without new video attachments, a producer profile or evidence of a Netflix agreement.
+
+**How to apply:** Preserve the requested order when the actual sources arrive. Do not equate the existing Radio Okapi trailer with the requested campaign film without confirmation. Treat Netflix as a distribution ambition until an agreement is established; do not invent the producer's identity or substitute broadcaster homepages for film sources.

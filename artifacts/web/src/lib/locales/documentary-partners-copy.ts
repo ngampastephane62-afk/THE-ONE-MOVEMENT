@@ -1,5 +1,17 @@
 export const documentaryPartnersCopy: Record<string, Record<string, string>> = {
   fr: {
+    'BROADCAST & DISTRIBUTION': 'DIFFUSION & DISTRIBUTION',
+    'CANAL+ & Africa 24 TV.': 'CANAL+ & Africa 24 TV.',
+    'Discover the broadcasters named by the Founder in the documentary journey. The links below introduce the organisations; they are not links to TOMI films.': 'Découvrez les diffuseurs cités par le fondateur dans le parcours documentaire. Les liens ci-dessous présentent ces organismes ; ils ne donnent pas accès aux films TOMI.',
+    'An international media and entertainment group active in audiovisual production, broadcasting, distribution and streaming. Its activities include television channels and the STUDIOCANAL film and television studio.': 'Un groupe international de médias et de divertissement, actif dans la production audiovisuelle, la diffusion, la distribution et le streaming. Ses activités comprennent des chaînes de télévision et le studio de cinéma et de télévision STUDIOCANAL.',
+    'About CANAL+ · Official website': 'Présentation de CANAL+ · Site officiel',
+    'A pan-African news broadcaster covering African current affairs around the clock, with an African editorial perspective. The Africa24 group also offers English-language, cultural and sports channels.': 'Une chaîne panafricaine d’information qui couvre l’actualité africaine en continu, avec un regard éditorial africain. Le groupe Africa24 propose également des chaînes anglophone, culturelle et sportive.',
+    'About Africa24 · Official website': 'Présentation d’Africa24 · Site officiel',
+    'CAMPAIGN & NEXT ARCHIVE FILMS': 'CAMPAGNE & PROCHAINES VIDÉOS D’ARCHIVES',
+    'MONUSCO, then Madi TV.': 'MONUSCO, puis Madi TV.',
+    'The Founder has requested the MONUSCO campaign video next, followed by Madi TV. These specific videos are not available here yet. The Radio Okapi trailer already in the collection is credited separately and is not presented as the requested campaign film.': 'Le fondateur souhaite présenter ensuite la vidéo de campagne avec la MONUSCO, puis celle de Madi TV. Ces vidéos précises ne sont pas encore disponibles ici. La bande-annonce Radio Okapi déjà présente dans la collection conserve ses propres crédits et n’est pas présentée comme le film de campagne demandé.',
+    'Future production & Netflix ambition.': 'Future production & objectif Netflix.',
+    'The Founder is preparing a new production with a producer whose profile will be introduced once supplied. Netflix is an intended distribution platform, not a confirmed partner, commissioner or scheduled release.': 'Le fondateur prépare une nouvelle production avec un producteur dont le profil sera présenté dès réception. Netflix est une plateforme de diffusion envisagée, et non un partenaire confirmé, un commanditaire ou une sortie programmée.',
     'Official meetings': 'Rencontres officielles',
     'Official meeting · Founder archive': 'Rencontre officielle · Archives du fondateur',
     'Official handshake · Founder archive': 'Poignée de main officielle · Archives du fondateur',

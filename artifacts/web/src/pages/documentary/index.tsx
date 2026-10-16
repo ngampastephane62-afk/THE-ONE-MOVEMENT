@@ -28,6 +28,26 @@ export default function Documentary() {
         </div>
       </HeroSurface>
 
+      <section className="border-b border-sand-300 py-section-lg" aria-labelledby="documentary-broadcast-heading">
+        <div className="mx-auto max-w-6xl px-6">
+          <p className="text-eyebrow text-gold-700">BROADCAST & DISTRIBUTION</p>
+          <h2 id="documentary-broadcast-heading" className="mt-3 text-display-md text-ink-900">CANAL+ & Africa 24 TV.</h2>
+          <p className="mt-4 max-w-3xl text-sm leading-relaxed text-ink-800">Discover the broadcasters named by the Founder in the documentary journey. The links below introduce the organisations; they are not links to TOMI films.</p>
+          <div className="mt-8 grid gap-8 md:grid-cols-2">
+            <article data-testid="documentary-canal-plus">
+              <h3 className="font-display text-2xl text-ink-900">CANAL+</h3>
+              <p className="mt-3 text-sm leading-relaxed text-ink-800">An international media and entertainment group active in audiovisual production, broadcasting, distribution and streaming. Its activities include television channels and the STUDIOCANAL film and television studio.</p>
+              <a href="https://www.canalplusgroup.com/en/group" target="_blank" rel="noreferrer" className="mt-4 inline-block py-2 text-sm font-semibold text-lagoon-700 underline underline-offset-4">About CANAL+ · Official website</a>
+            </article>
+            <article data-testid="documentary-africa24">
+              <h3 className="font-display text-2xl text-ink-900">Africa 24 TV</h3>
+              <p className="mt-3 text-sm leading-relaxed text-ink-800">A pan-African news broadcaster covering African current affairs around the clock, with an African editorial perspective. The Africa24 group also offers English-language, cultural and sports channels.</p>
+              <a href="https://africa24group.com/" target="_blank" rel="noreferrer" className="mt-4 inline-block py-2 text-sm font-semibold text-lagoon-700 underline underline-offset-4">About Africa24 · Official website</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <section className="py-section-lg">
         <div className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-12">
           <Reveal className="lg:col-span-7">
@@ -41,6 +61,11 @@ export default function Documentary() {
             <h2 className="mt-4 font-display text-3xl text-ink-900">Humanitarian action is not a subscription.</h2>
             <p className="mt-5 text-sm leading-relaxed text-ink-800">A donation supports humanitarian needs, not a badge, publication rights or access to people. Professional ecosystem services are separate.</p>
             <Link href="/donate" className="mt-6 inline-block font-semibold text-lagoon-700 underline" data-testid="link-donate">Make a voluntary contribution</Link>
+            <div className="mt-10 border-t border-sand-300 pt-6" data-testid="documentary-campaign-order">
+              <p className="text-eyebrow text-gold-700">CAMPAIGN & NEXT ARCHIVE FILMS</p>
+              <h3 className="mt-3 font-display text-xl text-ink-900">MONUSCO, then Madi TV.</h3>
+              <p className="mt-3 text-sm leading-relaxed text-ink-800">The Founder has requested the MONUSCO campaign video next, followed by Madi TV. These specific videos are not available here yet. The Radio Okapi trailer already in the collection is credited separately and is not presented as the requested campaign film.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -74,6 +99,10 @@ export default function Documentary() {
             <p className="text-eyebrow text-gold-600">SEPARATE PROJECT · DUBAI</p>
             <h3 className="mt-3 font-display text-2xl text-ink-900">A Dubai production, in development.</h3>
             <p className="mt-3 text-sm leading-relaxed text-ink-800">A distinct future project. Planned distribution is unconfirmed and no broadcaster acquisition is claimed. A previous documentary about the Movement was broadcast via CANAL+ and TV5MONDE.</p>
+            <div className="mt-6 border-t border-sand-300 pt-5" data-testid="documentary-netflix-production">
+              <h4 className="font-display text-xl text-ink-900">Future production & Netflix ambition.</h4>
+              <p className="mt-3 text-sm leading-relaxed text-ink-800">The Founder is preparing a new production with a producer whose profile will be introduced once supplied. Netflix is an intended distribution platform, not a confirmed partner, commissioner or scheduled release.</p>
+            </div>
             <Link href="/media" className="mt-4 inline-block text-sm font-semibold text-lagoon-700 underline underline-offset-4" data-testid="link-media-coverage">Previous coverage on Media</Link>
           </Reveal>
         </div>
