@@ -117,14 +117,7 @@ export default function GoldThread({
 
       {/* Optional node dot */}
       {node && (
-        <span
-          className="relative z-10 rounded-full bg-gold-500 border-2 border-gold-400 shrink-0"
-          style={{
-            width: '7px',
-            height: '7px',
-            boxShadow: '0 0 6px hsl(43 80% 73% / 0.6)',
-          }}
-        />
+        <span className="kuba-node relative z-10 shrink-0" style={{ boxShadow: '0 0 0 3px hsl(187 67% 10% / 0.6)' }} />
       )}
     </span>
   );

@@ -13,6 +13,9 @@ import {
 } from '@workspace/shared';
 import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
+import PersonPortrait, { PortraitCredit } from '@/components/editorial/PersonPortrait';
+import WealthLabel from '@/components/editorial/WealthLabel';
+import RegionBackdrop from '@/components/RegionBackdrop';
 
 const SECTOR_LABEL = Object.fromEntries(IMPACT_SECTORS.map((s) => [s.key, s.label])) as Record<ImpactSector, string>;
 
@@ -32,7 +35,7 @@ export default function ThanksWorld() {
           <h1 className="mt-6 font-display text-[clamp(3rem,10vw,7.5rem)] leading-[0.9] tracking-[-0.02em] text-ivory-100 animate-cinematic-2">THANKS,<br /><span className="text-gold-400">WORLD.</span></h1>
           <GoldThread className="mt-8" length="220px" node />
           <p className="mt-8 max-w-2xl text-lg leading-relaxed text-ivory-200 animate-cinematic-3">Gratitude, region by region. Each directory recognises people whose public, documented work changed what was possible for others.</p>
-          <nav className="mt-10 grid max-w-3xl gap-px bg-gold-500/25 sm:grid-cols-3" aria-label="Regions">
+          <nav className="mt-10 grid max-w-4xl gap-px bg-gold-500/25 sm:grid-cols-3" aria-label="Regions">
             <Link href="/thanks-emirates" className="block bg-lagoon-900/80 p-5 hover:bg-lagoon-800" data-testid="link-region-emirates"><p className="font-display text-xl text-ivory-100">Thanks Emirates</p><p className="mt-1 text-[10px] uppercase tracking-[0.2em] text-gold-400">Story initiative</p></Link>
             {IMPACT_REGIONS.map((r) => (
               <a key={r.key} href={`#${r.key}`} className="block bg-lagoon-900/80 p-5 hover:bg-lagoon-800" data-testid={`link-region-${r.key}`}><p className="font-display text-xl text-ivory-100">{r.campaign}</p><p className="mt-1 text-[10px] uppercase tracking-[0.2em] text-gold-400">Impact directory</p></a>
@@ -66,7 +69,7 @@ export default function ThanksWorld() {
 
       <section className="bg-lagoon-900 py-section-lg text-center text-ivory-100">
         <div className="mx-auto max-w-3xl px-6">
-          <p className="font-display text-2xl leading-relaxed text-ivory-200">Recognition is not affiliation. These directories honour public work; they do not claim it.</p>
+          <p className="font-display text-2xl leading-relaxed text-ivory-200">Recognition is not affiliation. Any TOMI relationship is explicitly labelled separately.</p>
           <p className="mt-6 text-xs text-ivory-300">Historical figures are presented as memorial references and are not available for any programme.</p>
         </div>
       </section>
@@ -82,7 +85,13 @@ function RegionSection({ region, label, country, sector, alt }: { region: Impact
   const overlaps = sector === 'all' ? [] : IMPACT_LEADERS.filter((l) => l.region === region && l.sectors[0] !== sector && l.sectors.includes(sector));
 
   return (
-    <section id={region} className={`scroll-mt-32 py-section-lg ${alt ? 'bg-ivory-50' : ''}`}>
+    <div id={region} className={`scroll-mt-32 py-section-lg ${alt ? 'bg-ivory-50' : ''}`}>
+      <RegionBackdrop region={region === 'usa' || region === 'south-america' ? 'americas' : region} minHeight="25rem" className="mb-12">
+        <div className="mx-auto max-w-6xl px-6 py-24">
+          <p className="text-eyebrow text-gold-400">{country} · PEOPLE & PUBLIC IMPACT</p>
+          <h2 className="mt-5 font-display text-5xl text-ivory-100 sm:text-7xl">{label}</h2>
+        </div>
+      </RegionBackdrop>
       <div className="mx-auto max-w-6xl px-6">
         <div className="flex flex-wrap items-end justify-between gap-4 border-b border-ink-900/80 pb-5">
           <h2 className="font-display text-[clamp(2.25rem,6vw,4.5rem)] leading-none text-ink-900">{label}</h2>
@@ -103,23 +112,25 @@ function RegionSection({ region, label, country, sector, alt }: { region: Impact
           </div>
         )}
       </div>
-    </section>
+    </div>
   );
 }
 
 function LeaderCard({ person }: { person: ImpactLeader }) {
-  const initials = person.name.split(' ').filter(Boolean).slice(0, 2).map((w) => w[0]).join('');
   return (
     <li className="flex flex-col bg-ivory-100 p-6" data-testid={`card-leader-${person.slug}`}>
+      <PersonPortrait slug={person.slug} name={person.name} className="mb-5 aspect-[4/3] overflow-hidden bg-lagoon-900" />
       <div className="flex items-start gap-4">
-        <span className={`flex h-12 w-12 shrink-0 items-center justify-center font-display text-lg ${person.historical ? 'border border-sand-400 text-ink-700' : 'bg-lagoon-900 text-gold-400'}`} aria-hidden="true">{initials}</span>
         <div>
           <p className="font-display text-xl leading-tight text-ink-900">{person.name}</p>
           <p className="mt-1 text-xs text-ink-700">{person.role} · {person.country}</p>
         </div>
       </div>
+      {person.slug === 'denis-mukwege' && <div className="mt-4 border border-gold-500 bg-gold-500/10 p-3" data-testid="badge-mukwege-partner"><p className="text-xs font-semibold text-lagoon-900">TOMI certified partner</p><p className="mt-1 text-[11px] text-ink-700">Partner status declared and certified by The One Movement International. Not an identity check of a member account or an endorsement by the Nobel Committee.</p><a className="mt-2 inline-block text-[11px] underline" href="https://www.nobelprize.org/prizes/peace/2018/mukwege/facts/" target="_blank" rel="noopener noreferrer">Nobel Peace Prize 2018 · official record</a></div>}
       {person.historical && <p className="mt-4 self-start border border-sand-400 px-2 py-0.5 text-[10px] uppercase tracking-[0.16em] text-ink-700">In memoriam {person.lifespan} · not available</p>}
       <p className="mt-4 flex-1 text-sm leading-relaxed text-ink-800">{person.summary}</p>
+      <WealthLabel slug={person.slug} historical={person.historical} />
+      <PortraitCredit slug={person.slug} />
       <div className="mt-4 flex flex-wrap gap-1.5">{person.sectors.map((s) => <span key={s} className="text-[10px] uppercase tracking-[0.12em] text-gold-600">{SECTOR_LABEL[s]}</span>).reduce<React.ReactNode[]>((a, el, i) => (i ? [...a, <span key={`d${i}`} className="text-sand-400">/</span>, el] : [el]), [])}</div>
       <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-1 border-t border-sand-300 pt-3">
         {person.sources.map((s) => <li key={s.url}><a href={s.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-[11px] text-lagoon-600 hover:underline">{s.label.replace('Wikipedia — ', 'Wikipedia')}<ExternalLink className="h-2.5 w-2.5" /></a></li>)}

@@ -3,6 +3,7 @@ import { LanguageSwitcher } from '@/lib/locale';
 import { Link, useLocation } from 'wouter';
 import { navItems } from '@/lib/navigation';
 import { Show } from '@clerk/react';
+import tomiLogo from '@/assets/media/home/tomi-peace-logo.webp';
 
 /**
  * Items shown in the desktop header nav bar.
@@ -49,20 +50,10 @@ export default function Layout({ children }: LayoutProps) {
           {/* Wordmark */}
           <Link
             href="/"
-            className="shrink-0 py-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2 rounded-sharp"
+            className="shrink-0 py-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2 rounded-sharp"
             aria-label="The One Movement International — Home"
           >
-            <span
-              className="block whitespace-nowrap text-xs font-semibold uppercase sm:text-sm"
-              style={{
-                fontFamily: 'var(--font-display)',
-                color: 'hsl(38 57% 94%)',
-                letterSpacing: '0.16em',
-              }}
-            >
-              <span className="sm:hidden" translate="no">THE ONE</span>
-              <span className="hidden sm:inline" translate="no">THE ONE MOVEMENT</span>
-            </span>
+            <img src={tomiLogo} alt="The One Movement International — For Peace & Unity" className="tomi-header-logo" width={1024} height={355} data-testid="img-header-logo" />
           </Link>
 
           {/* Desktop nav links — core pages only; JOIN THE MOVEMENT is the primary CTA */}
@@ -76,8 +67,9 @@ export default function Layout({ children }: LayoutProps) {
                 <Link
                   key={item.path}
                   href={item.path}
+                  aria-current={isActive ? 'page' : undefined}
                   className={[
-                    'relative px-2.5 xl:px-4 py-5 text-xs font-medium uppercase',
+                    'kuba-nav-link relative px-2.5 xl:px-4 py-5 text-xs font-medium uppercase',
                     'transition-colors duration-150',
                     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-1',
                     'rounded-sharp',
@@ -89,13 +81,6 @@ export default function Layout({ children }: LayoutProps) {
                 >
                   {item.label}
                   {/* Gold underline — active state */}
-                  {isActive && (
-                    <span
-                      aria-hidden="true"
-                      className="absolute inset-x-2.5 xl:inset-x-4 bottom-0 h-[2px]"
-                      style={{ backgroundColor: 'hsl(43 80% 73%)' }}
-                    />
-                  )}
                 </Link>
               );
             })}
@@ -115,7 +100,7 @@ export default function Layout({ children }: LayoutProps) {
             <Link
               href="/join"
               className={[
-                'hidden shrink-0 whitespace-nowrap lg:inline-flex items-center gap-2 px-5 py-2 text-xs font-semibold uppercase rounded-sharp',
+                'kuba-cta hidden shrink-0 whitespace-nowrap lg:inline-flex items-center gap-2 px-5 py-2 text-xs font-semibold uppercase rounded-sharp',
                 'transition-colors duration-150',
                 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2',
                 location === '/join' ? 'opacity-90' : '',
@@ -206,7 +191,7 @@ export default function Layout({ children }: LayoutProps) {
               <div className="pt-6 pb-4">
                 <Link
                   href="/join"
-                  className="flex items-center justify-center px-5 py-4 text-sm font-semibold uppercase rounded-sharp focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400"
+                  className="kuba-cta flex items-center justify-center px-5 py-4 text-sm font-semibold uppercase rounded-sharp focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400"
                   style={{
                     backgroundColor: 'hsl(39 52% 54%)',
                     color: 'hsl(30 37% 7%)',
@@ -220,6 +205,7 @@ export default function Layout({ children }: LayoutProps) {
             </div>
           </nav>
         )}
+        <div className="kuba-band kuba-band-thin" aria-hidden="true" />
       </header>
 
       {/* ── Page content ───────────────────────────────────────────────────── */}
@@ -228,23 +214,18 @@ export default function Layout({ children }: LayoutProps) {
       {/* ── Footer ─────────────────────────────────────────────────────────── */}
       <footer
         role="contentinfo"
-        className="border-t"
+        className="relative overflow-hidden border-t"
         style={{
           background:
             'radial-gradient(ellipse 45% 80% at 85% 100%, hsl(39 52% 54% / 0.12), transparent 70%), hsl(187 67% 10%)',
           borderColor: 'hsl(188 46% 20%)',
         }}
       >
-        {/* Gold thread separator */}
-        <div
-          className="h-px w-full"
-          style={{
-            background:
-              'linear-gradient(90deg, transparent 0%, hsl(39 52% 54% / 0.35) 25%, hsl(43 80% 73% / 0.55) 50%, hsl(39 52% 54% / 0.35) 75%, transparent 100%)',
-          }}
-        />
+        {/* Kuba-inspired woven band */}
+        <div className="kuba-band" aria-hidden="true" />
 
-        <div className="mx-auto max-w-7xl px-6 py-14">
+        <span className="kuba-field kuba-field-steps" aria-hidden="true" />
+        <div className="relative mx-auto max-w-7xl px-6 py-14">
           <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
             {/* Column 1 — Identity */}
             <div className="lg:col-span-1">
@@ -258,7 +239,7 @@ export default function Layout({ children }: LayoutProps) {
               >
                 The One Movement International
               </p>
-              <p className="text-sm leading-relaxed" style={{ color: 'hsl(36 20% 55%)' }}>
+              <p className="text-sm leading-relaxed" style={{ color: 'hsl(36 24% 68%)' }}>
                 A global movement developing connections across culture, business,
                 diplomacy, education, tourism, media and humanitarian action.
               </p>
@@ -287,14 +268,8 @@ export default function Layout({ children }: LayoutProps) {
                   <li key={label}>
                     <Link
                       href={href}
-                      className="text-sm leading-snug py-1 block transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 rounded-sharp"
-                      style={{ color: 'hsl(36 20% 55%)' }}
-                      onMouseEnter={(e) =>
-                        ((e.target as HTMLElement).style.color = 'hsl(38 57% 94%)')
-                      }
-                      onMouseLeave={(e) =>
-                        ((e.target as HTMLElement).style.color = 'hsl(36 20% 55%)')
-                      }
+                      className="kuba-footer-link text-sm leading-snug py-1 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 rounded-sharp"
+                      style={{ color: 'hsl(36 24% 68%)' }}
                     >
                       {label}
                     </Link>
@@ -319,14 +294,8 @@ export default function Layout({ children }: LayoutProps) {
                   <li key={label}>
                     <Link
                       href={href}
-                      className="text-sm leading-snug py-1 block transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 rounded-sharp"
-                      style={{ color: 'hsl(36 20% 55%)' }}
-                      onMouseEnter={(e) =>
-                        ((e.target as HTMLElement).style.color = 'hsl(38 57% 94%)')
-                      }
-                      onMouseLeave={(e) =>
-                        ((e.target as HTMLElement).style.color = 'hsl(36 20% 55%)')
-                      }
+                      className="kuba-footer-link text-sm leading-snug py-1 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 rounded-sharp"
+                      style={{ color: 'hsl(36 24% 68%)' }}
                     >
                       {label}
                     </Link>
@@ -349,14 +318,8 @@ export default function Layout({ children }: LayoutProps) {
                     <li key={label}>
                       <Link
                         href={href}
-                        className="text-sm leading-snug py-1 block transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 rounded-sharp"
-                        style={{ color: 'hsl(36 20% 55%)' }}
-                        onMouseEnter={(e) =>
-                          ((e.target as HTMLElement).style.color = 'hsl(38 57% 94%)')
-                        }
-                        onMouseLeave={(e) =>
-                          ((e.target as HTMLElement).style.color = 'hsl(36 20% 55%)')
-                        }
+                        className="kuba-footer-link text-sm leading-snug py-1 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 rounded-sharp"
+                        style={{ color: 'hsl(36 24% 68%)' }}
                       >
                         {label}
                       </Link>
@@ -394,10 +357,10 @@ export default function Layout({ children }: LayoutProps) {
             className="mt-12 pt-8 border-t flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
             style={{ borderColor: 'hsl(188 46% 20%)' }}
           >
-            <p className="text-xs" style={{ color: 'hsl(36 20% 40%)' }}>
+            <p className="text-xs" style={{ color: 'hsl(36 20% 60%)' }}>
               &copy; {new Date().getFullYear()} The One Movement International. All rights reserved.
             </p>
-            <p className="text-xs" style={{ color: 'hsl(36 20% 35%)' }}>
+            <p className="text-xs" style={{ color: 'hsl(36 20% 58%)' }}>
               One World. One Purpose. One Movement.
             </p>
           </div>

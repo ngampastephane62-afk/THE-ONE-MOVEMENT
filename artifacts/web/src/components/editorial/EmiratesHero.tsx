@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { Pause, Play } from 'lucide-react';
+import emiratesArt from '@/assets/media/editorial/emirates-dunes.webp';
 
 /**
  * Classic moving background for Thanks Emirates: a slow panorama of stylised
@@ -43,6 +44,7 @@ export default function EmiratesHero({ children }: { children: ReactNode }) {
       `}</style>
 
       <div className={`pointer-events-none absolute inset-0 -z-10 ${still ? 'tomi-still' : ''}`} aria-hidden="true">
+        <img src={emiratesArt} alt="" decoding="async" className="region-backdrop-art" style={{ objectPosition: '62% 50%', animationPlayState: still ? 'paused' : 'running' }} />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_30%,hsl(39_52%_54%/0.28),transparent_55%),radial-gradient(ellipse_at_10%_90%,hsl(187_60%_30%/0.6),transparent_60%)]" />
         <div className="tomi-drift absolute right-[12%] top-[14%] h-40 w-40 rounded-full bg-gold-400/20 blur-2xl" />
 
@@ -65,7 +67,7 @@ export default function EmiratesHero({ children }: { children: ReactNode }) {
             </figure>
           ))}
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-lagoon-900/70 via-lagoon-900/30 to-lagoon-900/95" />
+        <div className="absolute inset-0 bg-gradient-to-b from-lagoon-900/55 via-lagoon-900/10 to-lagoon-900/95" />
       </div>
 
       {/* UAE flag band */}
@@ -88,6 +90,7 @@ export default function EmiratesHero({ children }: { children: ReactNode }) {
         {reduced ? 'Motion reduced' : still ? 'Play' : 'Pause'}
       </button>
 
+      <p className="absolute bottom-2 right-4 z-10 text-[10px] tracking-wide text-ivory-300/70">Dubai dunes artwork supplied by The One Movement</p>
       <div className="relative w-full pb-[clamp(14rem,30vh,18rem)]">{children}</div>
     </section>
   );

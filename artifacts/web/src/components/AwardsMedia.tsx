@@ -2,18 +2,10 @@ import winniePoster from '@/assets/media/programs/awards-winnie-harlow.webp';
 import nomineesPoster from '@/assets/media/programs/awards-nominees-poster.webp';
 import ciaraPoster from '@/assets/media/programs/awards-ciara-poster.webp';
 import SocialVideo from '@/components/editorial/SocialVideo';
+import ProgrammeCover from '@/components/programs/ProgrammeCover';
 
 export function AwardsPreview({ className = '' }: { className?: string }) {
-  return (
-    <div className={`flex items-center justify-center overflow-hidden bg-lagoon-900 ${className}`}>
-      <img
-        src={winniePoster}
-        alt="Winnie Harlow — nominated for the Ambassador of Peace award"
-        loading="lazy"
-        className="h-full w-full object-contain"
-      />
-    </div>
-  );
+  return <ProgrammeCover programme="awards" className={className} />;
 }
 
 export function AwardsNominees() {
@@ -26,7 +18,7 @@ export function AwardsNominees() {
       </p>
       <div className="mt-8 grid items-start gap-6 md:grid-cols-3">
         <figure>
-          <AwardsPreview className="aspect-[9/16] w-full" />
+          <img src={winniePoster} alt="Winnie Harlow · official TOMI nomination poster" className="aspect-[9/16] w-full object-contain bg-lagoon-900" loading="lazy" />
           <figcaption className="mt-3 text-sm text-ink-700">Winnie Harlow · Ambassador of Peace nominee</figcaption>
         </figure>
         {[

@@ -14,3 +14,5 @@
 - [Editorial boundaries](editorial-content-boundaries.md) — News press archive vs Media catalogue, documented partners, Goma donations, Thanks Emirates participation and documentary claims.
 - [Localization transformations](localization-transforms.md) — bounded indexed translation rows prevent missing-phrase misalignment; use simple schemas with explicit coverage checks.
 - [Ecosystem product rules](ecosystem-product-rules.md) — monthly professional services separate from free humanitarian media; ten-person rules, native video, UAE and regional leaders.
+- [Visual and marketplace direction](visual-marketplace-direction.md) — Kuba identity, supplied programme covers, regional landmarks and a proposed seller-funded humanitarian marketplace.
+- [Editorial portrait sourcing](editorial-portrait-sourcing.md) — preserve returned Wikimedia thumbnail URLs; unsupported width rewrites fail and biography requests can be throttled.

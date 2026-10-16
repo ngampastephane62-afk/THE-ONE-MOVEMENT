@@ -9,6 +9,7 @@ const router = Router();
 export const EDITORIAL_VIDEO_IDS = new Set([
   "goma", "radio-okapi", "panzi", "nyota", "movement-unity",
   "nancy-isime-nomination", "peace-award-announcement", "ciara-nomination",
+  "mohombi-nomination",
   "movement-reel", "fashion-week-reel", "awards-reel",
   "goma-donation", "previous-editions", "home-reel-1", "home-reel-2", "home-reel-3",
   "fashion-archive-reel", "institutional-meeting", "impact-community",

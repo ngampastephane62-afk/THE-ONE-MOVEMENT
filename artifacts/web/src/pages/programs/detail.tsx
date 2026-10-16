@@ -16,6 +16,7 @@ import { DiplomaticGalaPreview, DiplomaticGalaGallery, DiplomaticGalaSpeakers } 
 import FashionEditionNote from '@/components/FashionEditionNote';
 import StatusNotice from '@/components/StatusNotice';
 import ProgrammeNominees from '@/components/editorial/ProgrammeNominees';
+import ProgrammeCover from '@/components/programs/ProgrammeCover';
 import { PROGRAMS, getProgramBySlug, type Program, type ProgramStatus } from '@/lib/programs-data';
 
 /* ── Page ─────────────────────────────────────────────────────────────────── */
@@ -509,7 +510,7 @@ function ProgramHeroMedia({ slug, name, tagline }: { slug: string; name: string;
     return <ArchivePhoto id="summit-goma" caption sizes="(min-width: 1024px) 38vw, 92vw" className="tomi-program-detail-media mx-auto max-w-md" captionClassName="text-ivory-300" />;
   }
   if (slug === 'fashion-week') {
-    return <ArchivePhoto id="runway-white" caption sizes="(min-width: 1024px) 38vw, 92vw" className="tomi-program-detail-media mx-auto max-w-md" captionClassName="text-ivory-300" />;
+    return <ProgrammeCover programme="fashion-week" className="tomi-program-detail-media mx-auto w-full max-w-md aspect-[4/5]" />;
   }
   return <ProgramVision name={name} tagline={tagline} className="tomi-program-detail-media w-full aspect-[3/4]" />;
 }

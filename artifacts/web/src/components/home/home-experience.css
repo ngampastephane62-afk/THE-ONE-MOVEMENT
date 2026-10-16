@@ -151,3 +151,24 @@
 @media (prefers-reduced-motion: reduce) {
   .tomi-archive-slide { transition: none; }
 }
+
+/* Kuba-inspired layer for home hero */
+.tomi-brand-hero {
+  background:
+    radial-gradient(ellipse 55% 50% at 78% 38%, hsl(12 58% 38% / 0.22), transparent 70%),
+    radial-gradient(ellipse 60% 55% at 70% 40%, hsl(39 52% 54% / 0.16), transparent 70%),
+    linear-gradient(160deg, hsl(187 67% 7%), hsl(188 66% 13%) 60%, hsl(24 40% 9%));
+}
+.tomi-brand-hero::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 12px;
+  z-index: 15;
+  pointer-events: none;
+  background: var(--kuba-band) repeat-x 0 0 / 32px 12px, hsl(var(--kuba-ink));
+  border-top: 1px solid hsl(39 52% 54% / 0.45);
+}
+.tomi-archive-frame { box-shadow: inset 0 0 0 4px hsl(187 67% 8%), inset 0 0 0 5px hsl(12 58% 38% / 0.5); }
+.tomi-archive-dots span[data-active='true'] { border-radius: 0; transform: rotate(45deg) scale(1.4); background: hsl(43 80% 73%); }

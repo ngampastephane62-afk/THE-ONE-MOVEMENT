@@ -1,0 +1,674 @@
+{
+  "mukesh-ambani": {
+    "path": "people/mukesh-ambani.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Mukesh_Ambani.jpg",
+    "width": 640,
+    "height": 848
+  },
+  "gina-rinehart": {
+    "path": "people/gina-rinehart.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Gina_Rinehart_June_2015.jpg",
+    "width": 640,
+    "height": 924
+  },
+  "mansour-bin-zayed": {
+    "path": "people/mansour-bin-zayed.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/his-highness-sheikh-mansour-bin-zayed-al-nahyan",
+    "width": 640,
+    "height": 560
+  },
+  "maktoum-bin-mohammed": {
+    "path": "people/maktoum-bin-mohammed.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/his-highness-sheikh-maktoum-bin-mohammed-bin-rashid-al-maktoum",
+    "width": 640,
+    "height": 520
+  },
+  "mohammed-bin-rashid": {
+    "path": "people/mohammed-bin-rashid.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/his-highness-sheikh-mohammed-bin-rashid-al-maktoum",
+    "width": 640,
+    "height": 560
+  },
+  "hamdan-bin-mohammed": {
+    "path": "people/hamdan-bin-mohammed.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/his-highness-sheikh-hamdan-bin-mohammed-bin-rashid-al-maktoum",
+    "width": 640,
+    "height": 520
+  },
+  "saif-bin-zayed": {
+    "path": "people/saif-bin-zayed.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/lieutenant-general-his-highness-sheikh-saif-bin-zayed-al-nahyan",
+    "width": 640,
+    "height": 560
+  },
+  "abdulrahman-al-owais": {
+    "path": "people/abdulrahman-al-owais.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/his-excellency-abdulrahman-bin-mohamed-al-owais",
+    "width": 640,
+    "height": 520
+  },
+  "abdullah-bin-zayed": {
+    "path": "people/abdullah-bin-zayed.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/his-highness-sheikh-abdullah-bin-zayed-al-nahyan",
+    "width": 640,
+    "height": 520
+  },
+  "mohamed-al-hussaini": {
+    "path": "people/mohamed-al-hussaini.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/his-excellency-mohamed-bin-hadi-al-hussaini",
+    "width": 640,
+    "height": 520
+  },
+  "mohammad-al-gergawi": {
+    "path": "people/mohammad-al-gergawi.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/his-excellency-mohammad-bin-abdullah-al-gergawi",
+    "width": 640,
+    "height": 560
+  },
+  "nahayan-bin-mabarak": {
+    "path": "people/nahayan-bin-mabarak.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/his-excellency-sheikh-nahayan-bin-mabarak-al-nahayan",
+    "width": 640,
+    "height": 520
+  },
+  "thani-al-zeyoudi": {
+    "path": "people/thani-al-zeyoudi.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/his-excellency-dr-thani-bin-ahmed-al-zeyoudi-6",
+    "width": 640,
+    "height": 520
+  },
+  "sultan-al-jaber": {
+    "path": "people/sultan-al-jaber.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/his-excellency-dr-sultan-bin-ahmad-sultan-al-jaber",
+    "width": 640,
+    "height": 520
+  },
+  "reem-al-hashimy": {
+    "path": "people/reem-al-hashimy.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/her-excellency-reem-bint-ebrahim-al-hashimy",
+    "width": 640,
+    "height": 560
+  },
+  "ahmad-al-falasi": {
+    "path": "people/ahmad-al-falasi.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/his-excellency-dr-ahmad-belhoul-al-falasi",
+    "width": 640,
+    "height": 520
+  },
+  "suhail-al-mazrouei": {
+    "path": "people/suhail-al-mazrouei.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/his-excellency-suhail-bin-mohammed-al-mazrouei",
+    "width": 640,
+    "height": 520
+  },
+  "ahmed-al-sayegh": {
+    "path": "people/ahmed-al-sayegh.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/his-excellency-ahmed-bin-ali-al-sayegh-4",
+    "width": 640,
+    "height": 520
+  },
+  "shamma-al-mazrui": {
+    "path": "people/shamma-al-mazrui.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/her-excellency-shamma-bint-suhail-faris-al-mazrui",
+    "width": 640,
+    "height": 520
+  },
+  "sarah-al-amiri": {
+    "path": "people/sarah-al-amiri.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/her-excellency-sarah-bint-yousif-al-amiri",
+    "width": 640,
+    "height": 520
+  },
+  "abdulrahman-al-awar": {
+    "path": "people/abdulrahman-al-awar.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/his-excellency-dr-abdul-rahman-bin-abdulmanan-al-awar",
+    "width": 640,
+    "height": 520
+  },
+  "abdulla-al-marri": {
+    "path": "people/abdulla-al-marri.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/his-excellency-abdulla-bin-touq-al-mari",
+    "width": 640,
+    "height": 520
+  },
+  "abdullah-al-nuaimi": {
+    "path": "people/abdullah-al-nuaimi.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/his-excellency-abdullah-bin-sultan-bin-awad-al-nuaimi",
+    "width": 640,
+    "height": 520
+  },
+  "amna-al-dahak": {
+    "path": "people/amna-al-dahak.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/her-excellenc-dr-amna-bint-abdullah-al-dahak-al-shamsi",
+    "width": 640,
+    "height": 520
+  },
+  "sana-suhail": {
+    "path": "people/sana-suhail.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/her-excellency-sana-bint-mohamed-suhail",
+    "width": 640,
+    "height": 520
+  },
+  "mohamed-alsuwaidi": {
+    "path": "people/mohamed-alsuwaidi.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/his-excellency-mohamed-bin-hassan-alsuwaidi",
+    "width": 640,
+    "height": 520
+  },
+  "salem-al-qassimi": {
+    "path": "people/salem-al-qassimi.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/his-excellency-sheikh-salem-bin-khalid-al-qassimi",
+    "width": 640,
+    "height": 520
+  },
+  "maryam-al-hammadi": {
+    "path": "people/maryam-al-hammadi.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/her-excellency-maryam-bint-ahmed-al-hammadi",
+    "width": 640,
+    "height": 520
+  },
+  "omar-al-olama": {
+    "path": "people/omar-al-olama.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/his-excellency-omar-bin-sultan-al-olama",
+    "width": 640,
+    "height": 520
+  },
+  "mohamed-al-mazrouei": {
+    "path": "people/mohamed-al-mazrouei.webp",
+    "credit": "UAE Cabinet · official portrait",
+    "source": "https://uaecabinet.ae/en/fetch-cab-members/his-excellency-mohamed-bin-mubarak-fadhel-al-mazrouei",
+    "width": 640,
+    "height": 520
+  },
+  "ben-amadasun": {
+    "path": "people/ben-amadasun.webp",
+    "credit": "Portrait supplied by TOMI",
+    "source": "https://mg.co.za/friday/2026-09-11-ten-years-in-netflix-announces-new-expansive-slate-for-the-rest-of-2026",
+    "width": 640,
+    "height": 640
+  },
+  "denis-mukwege": {
+    "path": "people/denis-mukwege.webp",
+    "credit": "Portrait supplied by TOMI · photographer signature retained",
+    "source": "https://www.nobelprize.org/prizes/peace/2018/mukwege/facts/",
+    "width": 640,
+    "height": 772
+  },
+  "amina-mohammed": {
+    "path": "people/amina-mohammed.webp",
+    "credit": "United Nations · portrait supplied by TOMI",
+    "source": "https://www.un.org/sg/en/content/dsg/biography",
+    "width": 640,
+    "height": 966
+  },
+  "david-jonsson-poster": {
+    "path": "people/david-jonsson-poster.webp",
+    "credit": "TOMI · supplied nomination poster",
+    "source": "",
+    "width": 1000,
+    "height": 706
+  },
+  "mohombi-poster": {
+    "path": "people/mohombi-poster.webp",
+    "credit": "TOMI · supplied announcement film",
+    "source": "",
+    "width": 640,
+    "height": 1138
+  },
+  "ciara-poster": {
+    "path": "people/ciara-poster.webp",
+    "credit": "TOMI · supplied announcement film",
+    "source": "",
+    "width": 640,
+    "height": 1140
+  },
+  "navi-pillay": {
+    "path": "people/navi-pillay.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Navi_Pillay_June_2014.jpg",
+    "width": 640,
+    "height": 824
+  },
+  "antonio-guterres": {
+    "path": "people/antonio-guterres.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Beate_Meinl-Reisinger_New-York_visit_-_March_2025_-_MGR8622_%28cropped_1%29.jpg",
+    "width": 640,
+    "height": 858
+  },
+  "bernard-arnault": {
+    "path": "people/bernard-arnault.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Bernard_Arnault_%283%29_-_2017_%28cropped%29.jpg",
+    "width": 640,
+    "height": 836
+  },
+  "lula-da-silva": {
+    "path": "people/lula-da-silva.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Foto_oficial_de_Luiz_In%C3%A1cio_Lula_da_Silva_%28ombros%29_denoise_%28cropped%29.jpg",
+    "width": 640,
+    "height": 840
+  },
+  "jorge-paulo-lemann": {
+    "path": "people/jorge-paulo-lemann.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Jorge_Paulo_Lemann_em_fevereiro_de_2012.png",
+    "width": 640,
+    "height": 544
+  },
+  "cathy-freeman": {
+    "path": "people/cathy-freeman.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Cathy_Freeman_%28cropped%29.jpg",
+    "width": 640,
+    "height": 892
+  },
+  "aliko-dangote": {
+    "path": "people/aliko-dangote.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Al_Shabani_at_the_acquisition_of_Dangote_Cement_by_ICD_in_2014_%28cropped%29.jpg",
+    "width": 640,
+    "height": 856
+  },
+  "mo-ibrahim": {
+    "path": "people/mo-ibrahim.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Mo_Ibrahim.jpg",
+    "width": 640,
+    "height": 956
+  },
+  "strive-masiyiwa": {
+    "path": "people/strive-masiyiwa.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Strive_Masiyawa%2C_Africa_Leadership_Academy%2C_Nairobi%2C_Kenya%2C_2019_%28cropped%29.jpg",
+    "width": 640,
+    "height": 854
+  },
+  "oprah-winfrey": {
+    "path": "people/oprah-winfrey.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Oprah_Winfrey_2016.jpg",
+    "width": 640,
+    "height": 928
+  },
+  "warren-buffett": {
+    "path": "people/warren-buffett.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Warren_Buffett_at_the_2015_SelectUSA_Investment_Summit_%28cropped%29.jpg",
+    "width": 640,
+    "height": 854
+  },
+  "robert-f-smith": {
+    "path": "people/robert-f-smith.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Robert_F._Smith%2C_2018_%28crop%29.jpg",
+    "width": 640,
+    "height": 892
+  },
+  "chimamanda-ngozi-adichie": {
+    "path": "people/chimamanda-ngozi-adichie.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Chimamanda_Ngozi_Adichie_%282015%29.png",
+    "width": 640,
+    "height": 824
+  },
+  "angelique-kidjo": {
+    "path": "people/angelique-kidjo.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Ang%C3%A9lique_Kidjo_Gershwin_2023.jpg",
+    "width": 640,
+    "height": 884
+  },
+  "wole-soyinka": {
+    "path": "people/wole-soyinka.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Wole_Soyinka_in_2018_%283x4_cropped%29.jpg",
+    "width": 640,
+    "height": 852
+  },
+  "ava-duvernay": {
+    "path": "people/ava-duvernay.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Ava_DuVernay_at_the_2026_Sundance_Film_Festival_012326_%28cropped%29.jpg",
+    "width": 640,
+    "height": 950
+  },
+  "lin-manuel-miranda": {
+    "path": "people/lin-manuel-miranda.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:LinManuelMiranda-byPhilipRomano.jpg",
+    "width": 640,
+    "height": 962
+  },
+  "beyonce": {
+    "path": "people/beyonce.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Beyonc%C3%A9_-_Tottenham_Hotspur_Stadium_-_1st_June_2023_%2810_of_118%29_%2852946364598%29_%28best_crop%29.jpg",
+    "width": 640,
+    "height": 854
+  },
+  "patrick-awuah": {
+    "path": "people/patrick-awuah.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Patrick_Awuah_%28Ashesi%29.jpg",
+    "width": 640,
+    "height": 960
+  },
+  "fred-swaniker": {
+    "path": "people/fred-swaniker.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Fred_Swaniker_-_PopTech_2015_-_Camden%2C_Maine.jpg",
+    "width": 640,
+    "height": 960
+  },
+  "michelle-obama": {
+    "path": "people/michelle-obama.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Michelle_Obama_2013_official_portrait.jpg",
+    "width": 640,
+    "height": 964
+  },
+  "geoffrey-canada": {
+    "path": "people/geoffrey-canada.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Geoffrey_Canada_in_July_2024_%2853889840393%29.jpg",
+    "width": 640,
+    "height": 854
+  },
+  "sal-khan": {
+    "path": "people/sal-khan.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Salman_Khan_TED_2011.jpg",
+    "width": 640,
+    "height": 786
+  },
+  "leymah-gbowee": {
+    "path": "people/leymah-gbowee.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Leymah_Gbowee_no_Fronteiras_do_Pensamento_Porto_Alegre_2013_%289730602149%29_%28cropped%29.jpg",
+    "width": 640,
+    "height": 854
+  },
+  "desmond-tutu": {
+    "path": "people/desmond-tutu.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Archbishop-Tutu-medium.jpg",
+    "width": 640,
+    "height": 960
+  },
+  "jose-andres": {
+    "path": "people/jose-andres.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Jose_Andres_Puerta_2012_Shankbone.JPG",
+    "width": 640,
+    "height": 800
+  },
+  "melinda-french-gates": {
+    "path": "people/melinda-french-gates.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Melinda_Gates_2014.jpg",
+    "width": 640,
+    "height": 800
+  },
+  "jimmy-carter": {
+    "path": "people/jimmy-carter.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Jimmy_Carter_Official_Portrait2_%283x4_cropped%29.jpg",
+    "width": 640,
+    "height": 850
+  },
+  "wangari-maathai": {
+    "path": "people/wangari-maathai.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Wangari_Maathai_in_2001.jpg",
+    "width": 640,
+    "height": 1032
+  },
+  "juliana-rotich": {
+    "path": "people/juliana-rotich.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Juliana_Rotich_in_Berlin%2C_April_2017_%28cropped%29.jpg",
+    "width": 640,
+    "height": 638
+  },
+  "jennifer-doudna": {
+    "path": "people/jennifer-doudna.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Jennifer_Doudna_by_Christopher_Michel_in_2023_01.jpg",
+    "width": 640,
+    "height": 924
+  },
+  "katalin-kariko": {
+    "path": "people/katalin-kariko.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Katalin_Karik%C3%B3_by_Christopher_Michel_in_2024_02.jpg",
+    "width": 640,
+    "height": 960
+  },
+  "kizzmekia-corbett": {
+    "path": "people/kizzmekia-corbett.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Kizzmekia_Corbett_portrait.jpg",
+    "width": 640,
+    "height": 896
+  },
+  "nelson-mandela": {
+    "path": "people/nelson-mandela.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Nelson_Mandela_1994.jpg",
+    "width": 640,
+    "height": 828
+  },
+  "ellen-johnson-sirleaf": {
+    "path": "people/ellen-johnson-sirleaf.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Ellen_Johnson-Sirleaf_%282022%29_%28cropped%29.jpg",
+    "width": 640,
+    "height": 852
+  },
+  "ngozi-okonjo-iweala": {
+    "path": "people/ngozi-okonjo-iweala.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Ngozi_Okonjo-Iweala_takes_over_as_new_WTO_Director-General%2C_1_March_2021_%2850993534756%29_%28cropped%29.jpg",
+    "width": 640,
+    "height": 854
+  },
+  "barack-obama": {
+    "path": "people/barack-obama.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:President_Barack_Obama.jpg",
+    "width": 640,
+    "height": 800
+  },
+  "john-lewis": {
+    "path": "people/john-lewis.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:John_Lewis-2006_%28cropped%29.jpg",
+    "width": 640,
+    "height": 924
+  },
+  "stacey-abrams": {
+    "path": "people/stacey-abrams.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Stacey_Abrams_at_the_2026_New_York_Film_Festival-044.jpg",
+    "width": 640,
+    "height": 960
+  },
+  "david-jonsson": {
+    "path": "people/david-jonsson.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:David_Jonsson_by_Gage_Skidmore.jpg",
+    "width": 640,
+    "height": 784
+  },
+  "ciara": {
+    "path": "people/ciara.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Russell_Wilson_and_Ciara_2019_%28Cropped_-_Ciara%29.png",
+    "width": 640,
+    "height": 822
+  },
+  "mohombi": {
+    "path": "people/mohombi.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Mohombi%2C_Melodifestivalen_2019%2C_Final%2C_Friends_Arena%2C_Solna-4_%28cropped%29.jpg",
+    "width": 640,
+    "height": 714
+  },
+  "winnie-harlow": {
+    "path": "people/winnie-harlow.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Winnie_Harlow_Cannes_2018.jpg",
+    "width": 640,
+    "height": 906
+  },
+  "nancy-isime": {
+    "path": "people/nancy-isime.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Nancy_Isime_at_AMVCA_2020_24_%28cropped%29.jpg",
+    "width": 640,
+    "height": 726
+  },
+  "kevin-hart": {
+    "path": "people/kevin-hart.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Kevin_Hart_2014_%28cropped_2%29.jpg",
+    "width": 640,
+    "height": 864
+  },
+  "mohamed-bin-zayed": {
+    "path": "people/mohamed-bin-zayed.webp",
+    "credit": "Wikimedia Commons · see original file for author and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Mohamed_bin_Zayed_Al_Nahyan_-_2024_%28cropped%29.jpg",
+    "width": 640,
+    "height": 822
+  },
+  "graca-machel": {
+    "path": "people/graca-machel.webp",
+    "credit": "South African History Archive · Graça Machel portrait",
+    "source": "https://sahistory.org.za/people/graca-simbine-machel",
+    "width": 640,
+    "height": 500
+  },
+  "tebello-nyokong": {
+    "path": "people/tebello-nyokong.webp",
+    "credit": "Rhodes University media team / LitNet",
+    "source": "https://www.litnet.co.za/",
+    "width": 640,
+    "height": 426
+  },
+  "hussain-sajwani": {
+    "path": "people/hussain-sajwani.webp",
+    "credit": "Forbes Middle East · editorial portrait",
+    "source": "https://www.forbesmiddleeast.com/lists/the-worlds-richest-arabs-2026/",
+    "width": 640,
+    "height": 640
+  },
+  "abdulla-al-futtaim": {
+    "path": "people/abdulla-al-futtaim.webp",
+    "credit": "Forbes Middle East · editorial portrait",
+    "source": "https://www.forbesmiddleeast.com/lists/the-worlds-richest-arabs-2026/",
+    "width": 640,
+    "height": 640
+  },
+  "abdulla-al-ghurair": {
+    "path": "people/abdulla-al-ghurair.webp",
+    "credit": "Forbes Middle East · editorial portrait",
+    "source": "https://www.forbesmiddleeast.com/lists/the-worlds-richest-arabs-2026/",
+    "width": 640,
+    "height": 640
+  },
+  "waleed-al-zaabi": {
+    "path": "people/waleed-al-zaabi.webp",
+    "credit": "Forbes Middle East · editorial portrait",
+    "source": "https://www.forbesmiddleeast.com/lists/the-worlds-richest-arabs-2026/",
+    "width": 640,
+    "height": 640
+  },
+  "mohamed-alabbar": {
+    "path": "people/mohamed-alabbar.webp",
+    "credit": "Forbes Middle East · editorial portrait",
+    "source": "https://www.forbesmiddleeast.com/lists/the-worlds-richest-arabs-2026/",
+    "width": 640,
+    "height": 640
+  },
+  "hussain-binghatti": {
+    "path": "people/hussain-binghatti.webp",
+    "credit": "Forbes Middle East · editorial portrait",
+    "source": "https://www.forbesmiddleeast.com/lists/the-worlds-richest-arabs-2026/",
+    "width": 640,
+    "height": 640
+  },
+  "abbas-sajwani": {
+    "path": "people/abbas-sajwani.webp",
+    "credit": "Forbes Middle East · editorial portrait",
+    "source": "https://www.forbesmiddleeast.com/lists/the-worlds-richest-arabs-2026/",
+    "width": 640,
+    "height": 640
+  },
+  "humaid-al-nuaimi": {
+    "path": "people/humaid-al-nuaimi.webp",
+    "credit": "Sharjah24 · official portrait",
+    "source": "https://sharjah24.ae/",
+    "width": 640,
+    "height": 360
+  },
+  "hamad-al-sharqi": {
+    "path": "people/hamad-al-sharqi.webp",
+    "credit": "Rashed Al Mansoori / UAE Presidential Court / The National",
+    "source": "https://www.thenationalnews.com/",
+    "width": 640,
+    "height": 360
+  },
+  "saud-al-mualla": {
+    "path": "people/saud-al-mualla.webp",
+    "credit": "Sheikh Saud bin Rashid Al Mualla with President Sheikh Mohamed · Abdulla Al Bedwawi / UAE Presidential Court",
+    "source": "https://www.thenationalnews.com/",
+    "width": 640,
+    "height": 360
+  },
+  "sultan-al-qasimi": {
+    "path": "people/sultan-al-qasimi.webp",
+    "credit": "Wikimedia Commons · original file and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Official_portrait_Sheikh_Dr_Sultan_bin_Mohammed_Al_Qasimi.png",
+    "width": 640,
+    "height": 422
+  },
+  "saud-al-qasimi": {
+    "path": "people/saud-al-qasimi.webp",
+    "credit": "Wikimedia Commons · original file and licence",
+    "source": "https://commons.wikimedia.org/wiki/File:Ilham_Aliyev_attends_Summit_of_NAM_Contact_Group_on_fight_against_COVID-19_63_%28cropped%29.jpg",
+    "width": 640,
+    "height": 864
+  }
+}

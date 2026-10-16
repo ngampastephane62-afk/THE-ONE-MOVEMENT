@@ -3,6 +3,7 @@ import { AMBASSADOR_NOMINEES, AMBASSADOR_STATUS_NOTE } from '@workspace/shared';
 import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
 import NomineeCard from '@/components/editorial/NomineeCard';
+import NomineeFilm from '@/components/editorial/NomineeFilm';
 
 export default function Ambassadors() {
   return (
@@ -24,6 +25,10 @@ export default function Ambassadors() {
           <p className="max-w-3xl border-l-2 border-gold-500 pl-4 text-sm leading-relaxed text-ink-800" data-testid="text-nominee-status">{AMBASSADOR_STATUS_NOTE}</p>
           <div className="mt-12 grid grid-cols-2 gap-4 sm:gap-8 lg:grid-cols-4">
             {AMBASSADOR_NOMINEES.map((p, i) => <NomineeCard key={p.slug} person={p} index={i} />)}
+          </div>
+          <h2 className="mb-6 mt-14 font-display text-3xl text-ink-900">Announcement films</h2>
+          <div className="grid items-start gap-8 md:grid-cols-3">
+            {['mohombi', 'ciara', 'nancy-isime'].map(slug => <NomineeFilm key={slug} slug={slug} />)}
           </div>
           <div className="mt-16 grid gap-px bg-sand-300 sm:grid-cols-3">
             {[

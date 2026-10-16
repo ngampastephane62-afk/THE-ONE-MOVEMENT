@@ -7,7 +7,7 @@
  * Historical figures are marked and presented as memorial references only.
  */
 
-export type ImpactRegion = "africa" | "usa";
+export type ImpactRegion = "africa" | "usa" | "europe" | "asia" | "south-america" | "oceania";
 export type ImpactSector =
   | "business"
   | "arts"
@@ -47,13 +47,17 @@ export const IMPACT_SECTORS: { key: ImpactSector; label: string }[] = [
 export const IMPACT_REGIONS: { key: ImpactRegion; label: string; campaign: string }[] = [
   { key: "africa", label: "Africa", campaign: "Thanks Africa" },
   { key: "usa", label: "United States", campaign: "Thanks USA" },
+  { key: "europe", label: "Europe", campaign: "Thanks Europe" },
+  { key: "asia", label: "Asia", campaign: "Thanks Asia" },
+  { key: "south-america", label: "South America", campaign: "Thanks South America" },
+  { key: "oceania", label: "Oceania", campaign: "Thanks Oceania" },
 ];
 
 /** Date every Wikipedia source and key claim below was fetched and checked. */
 export const IMPACT_SOURCES_REVIEWED = "2026-10-16";
 
 export const IMPACT_DISCLAIMER =
-  "A curated TOMI editorial selection drawn from Wikipedia, Forbes profiles and other public sources. It is not a Forbes ranking or an official list, and no person named here is a TOMI ambassador, nominee, partner or participant.";
+  "A curated TOMI editorial selection, not a ranking or an endorsement. Inclusion does not imply participation or affiliation. Dr Denis Mukwege is separately identified as a TOMI partner on the organisation's declaration. Public wealth estimates are dated, not audited personal disclosures.";
 
 const w = (title: string): ImpactSource => ({
   label: `Wikipedia — ${title.replace(/_/g, " ")}`,
@@ -61,6 +65,17 @@ const w = (title: string): ImpactSource => ({
 });
 
 export const IMPACT_LEADERS: ImpactLeader[] = [
+  { slug: "ben-amadasun", name: "Ben Amadasun", region: "africa", country: "Nigeria", sectors: ["arts", "business"], role: "Vice President of Content, Netflix Middle East & Africa", summary: "Netflix executive overseeing content in the Middle East and Africa, supporting African screen stories and production.", sources: [{ label: "Mail & Guardian · 11 Sep 2026", url: "https://mg.co.za/friday/2026-09-11-ten-years-in-netflix-announces-new-expansive-slate-for-the-rest-of-2026" }] },
+  { slug: "amina-mohammed", name: "Amina J. Mohammed", region: "africa", country: "Nigeria", sectors: ["civic", "humanitarian"], role: "Deputy Secretary-General, United Nations", summary: "UN Deputy Secretary-General and Chair of the United Nations Sustainable Development Group; previously Nigeria's Minister of Environment.", sources: [{ label: "United Nations · biography", url: "https://www.un.org/sg/en/content/dsg/biography" }] },
+  { slug: "navi-pillay", name: "Navi Pillay", region: "africa", country: "South Africa", sectors: ["humanitarian", "civic"], role: "Nobel Peace Prize 2026 laureate", summary: "Jurist and former United Nations High Commissioner for Human Rights. Awarded the 2026 Nobel Peace Prize for her efforts to promote peace and international law, announced 9 October 2026.", sources: [{ label: "Nobel Committee · 9 Oct 2026", url: "https://www.nobelprize.org/prizes/peace/2026/press-release/" }] },
+  { slug: "antonio-guterres", name: "António Guterres", region: "europe", country: "Portugal", sectors: ["civic", "humanitarian"], role: "Secretary-General, United Nations", summary: "Ninth Secretary-General of the United Nations, in office since January 2017. Previously served as UN High Commissioner for Refugees.", sources: [{ label: "United Nations · Secretary-General", url: "https://www.un.org/sg/en" }] },
+  { slug: "bernard-arnault", name: "Bernard Arnault", region: "europe", country: "France", sectors: ["business"], role: "Chairman and CEO, LVMH", summary: "Leads the LVMH luxury goods group, whose businesses span fashion, leather goods, wines, jewellery and retail.", sources: [w("Bernard_Arnault"), { label: "LVMH", url: "https://www.lvmh.com/" }] },
+  { slug: "malala-yousafzai", name: "Malala Yousafzai", region: "asia", country: "Pakistan", sectors: ["education", "humanitarian"], role: "Education advocate · Nobel Peace Prize 2014", summary: "Co-founder of Malala Fund and advocate for girls' education; co-recipient of the 2014 Nobel Peace Prize.", sources: [{ label: "Nobel Prize", url: "https://www.nobelprize.org/prizes/peace/2014/yousafzai/facts/" }] },
+  { slug: "mukesh-ambani", name: "Mukesh Ambani", region: "asia", country: "India", sectors: ["business"], role: "Chairman, Reliance Industries", summary: "Leads Reliance Industries across energy, retail and digital services.", sources: [w("Mukesh_Ambani")] },
+  { slug: "lula-da-silva", name: "Luiz Inácio Lula da Silva", region: "south-america", country: "Brazil", sectors: ["civic"], role: "President of Brazil", summary: "Brazilian president, serving a third term beginning in January 2023.", sources: [w("Luiz_Inácio_Lula_da_Silva")] },
+  { slug: "jorge-paulo-lemann", name: "Jorge Paulo Lemann", region: "south-america", country: "Brazil", sectors: ["business"], role: "Investor · co-founder, 3G Capital", summary: "Brazilian investor associated with 3G Capital and international consumer businesses.", sources: [w("Jorge_Paulo_Lemann")] },
+  { slug: "cathy-freeman", name: "Cathy Freeman", region: "oceania", country: "Australia", sectors: ["education"], role: "Olympic champion and education advocate", summary: "Olympic 400-metre champion at Sydney 2000; her foundation supports education for Aboriginal and Torres Strait Islander young people.", sources: [w("Cathy_Freeman")] },
+  { slug: "gina-rinehart", name: "Gina Rinehart", region: "oceania", country: "Australia", sectors: ["business"], role: "Executive chairman, Hancock Prospecting", summary: "Australian business leader in mining and agriculture.", sources: [w("Gina_Rinehart")] },
   /* Business & Industry */
   { slug: "aliko-dangote", name: "Aliko Dangote", region: "africa", country: "Nigeria", sectors: ["business"], role: "Founder, Dangote Group", summary: "Built the Dangote Group across cement, sugar, fertiliser and refining, including the Dangote Petroleum Refinery near Lagos; the Aliko Dangote Foundation funds health and nutrition work.", website: "https://www.dangote.com", sources: [w("Aliko_Dangote"), { label: "Forbes profile", url: "https://www.forbes.com/profile/aliko-dangote/" }] },
   { slug: "mo-ibrahim", name: "Mo Ibrahim", region: "africa", country: "Sudan / United Kingdom", sectors: ["business", "civic"], role: "Founder, Celtel and the Mo Ibrahim Foundation", summary: "Founded the mobile operator Celtel, which brought mobile telephony to many African markets; his foundation publishes the Ibrahim Index of African Governance.", website: "https://mo.ibrahim.foundation", sources: [w("Mo_Ibrahim")] },

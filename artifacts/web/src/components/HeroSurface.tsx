@@ -1,4 +1,6 @@
-import { type ReactNode } from 'react';
+import { type ReactNode, useEffect, useState } from 'react';
+import { Pause, Play } from 'lucide-react';
+import emiratesArt from '@/assets/media/editorial/emirates-dunes.webp';
 import { cn } from '@/lib/utils';
 
 interface HeroSurfaceProps {
@@ -12,6 +14,8 @@ interface HeroSurfaceProps {
   glowOrigin?: 'bottom-center' | 'behind';
   /** Minimum height — CSS value */
   minHeight?: string;
+  /** Show the supplied Emirates dunes art as atmospheric layer (default true) */
+  atmosphere?: boolean;
 }
 
 /**
@@ -31,7 +35,18 @@ export default function HeroSurface({
   className,
   glowOrigin = 'bottom-center',
   minHeight = '70vh',
+  atmosphere = true,
 }: HeroSurfaceProps) {
+  const [paused, setPaused] = useState(false);
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const on = () => setReduced(mq.matches);
+    on();
+    mq.addEventListener('change', on);
+    return () => mq.removeEventListener('change', on);
+  }, []);
+  const still = paused || reduced;
   // Lagoon-900 base with warm gold radial glow — the teal-meets-gold sunrise atmosphere
   const glowGradients =
     glowOrigin === 'behind'
@@ -52,15 +67,23 @@ export default function HeroSurface({
         'flex flex-col justify-center',
         className,
       )}
+      data-paused={still ? 'true' : 'false'}
       style={{
         minHeight,
         backgroundColor: 'hsl(187 67% 12%)',
         background: `
           ${glowGradients},
-          hsl(187 67% 12%)
+          radial-gradient(ellipse 45% 40% at 95% 0%, hsl(12 58% 38% / 0.22) 0%, transparent 70%),
+        hsl(187 67% 12%)
         `,
       }}
     >
+      {atmosphere && (
+        <>
+          <img src={emiratesArt} alt="" aria-hidden="true" decoding="async" className="hero-emirates-art pointer-events-none" />
+          <span aria-hidden="true" className="hero-emirates-veil pointer-events-none absolute inset-0" />
+        </>
+      )}
       {/* Lagoon-to-transparent vignette at top */}
       <span
         aria-hidden="true"
@@ -71,7 +94,26 @@ export default function HeroSurface({
         }}
       />
       <span className="tomi-surface-grid pointer-events-none absolute inset-0" aria-hidden="true" />
+      {/* Original Kuba-inspired lattice, masked away from the text column */}
+      <span className="kuba-field" aria-hidden="true" />
+      <span className="kuba-panel-edge" aria-hidden="true" />
+      <span className="kuba-band pointer-events-none absolute inset-x-0 bottom-0 z-[5]" aria-hidden="true" />
       <div className="relative z-10">{children}</div>
+      {atmosphere && (
+        <button
+          type="button"
+          onClick={() => setPaused((p) => !p)}
+          disabled={reduced}
+          aria-pressed={still}
+          aria-label={still ? 'Play background motion' : 'Pause background motion'}
+          className="region-backdrop-toggle"
+          style={{ top: 'auto', bottom: '1.5rem' }}
+          data-testid="button-hero-motion"
+        >
+          {still ? <Play className="h-3 w-3" /> : <Pause className="h-3 w-3" />}
+          <span>{reduced ? 'Motion reduced' : still ? 'Play' : 'Pause'}</span>
+        </button>
+      )}
     </section>
   );
 }

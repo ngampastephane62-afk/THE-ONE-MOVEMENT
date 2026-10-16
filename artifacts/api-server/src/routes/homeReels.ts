@@ -36,12 +36,18 @@ function loadAsset(bucket: string, filename: string): Promise<Buffer> {
 }
 
 // Only the explicitly curated public media files can be served here.
-router.get(["/home-reels/:filename", "/program-media/:filename", "/humanitarian-media/:filename", "/editorial-media/:filename"], async (req, res) => {
+router.get(["/home-reels/:filename", "/program-media/:filename", "/humanitarian-media/:filename", "/editorial-media/:filename", "/editorial-portraits/:filename", "/nominee-media/:filename"], async (req, res) => {
   const filename = String(req.params.filename);
   const isProgramMedia = req.path.startsWith("/program-media/");
   const isHumanitarianMedia = req.path.startsWith("/humanitarian-media/");
   const isEditorialMedia = req.path.startsWith("/editorial-media/");
-  const allowed = isEditorialMedia
+  const isPortrait = req.path.startsWith("/editorial-portraits/");
+  const isNominee = req.path.startsWith("/nominee-media/");
+  const allowed = isPortrait
+    ? /^[a-z][a-z0-9-]{1,65}\.webp$/.test(filename)
+    : isNominee
+    ? /^(mohombi|ciara)-announcement\.(mp4|webm)$/.test(filename)
+    : isEditorialMedia
     ? /^(goma-donation|previous-editions)\.(mp4|webm|webp)$/.test(filename)
     : isHumanitarianMedia
     ? /^(panzi-appeal|tomi-fonarev-story)\.(mp4|webm|webp)$/.test(filename)
@@ -58,7 +64,7 @@ router.get(["/home-reels/:filename", "/program-media/:filename", "/humanitarian-
     return;
   }
   try {
-    const folder = isEditorialMedia ? "editorial-media" : isHumanitarianMedia ? "humanitarian-media" : isProgramMedia ? "program-media" : "home-reels";
+    const folder = isPortrait ? "people" : isNominee ? "nominee-videos" : isEditorialMedia ? "editorial-media" : isHumanitarianMedia ? "humanitarian-media" : isProgramMedia ? "program-media" : "home-reels";
     const bytes = await loadAsset(bucket, `${folder}/${filename}`);
     if (res.destroyed) return;
     const size = bytes.length;

@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import ProgrammeCover from '@/components/programs/ProgrammeCover';
 import { useState } from 'react';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
@@ -300,7 +301,7 @@ function ProgramCard({
           {slug === 'summit' ? (
             <ArchivePhoto id="summit-goma" frameClassName="w-full aspect-[4/3]" objectPosition="center 30%" sizes="(min-width: 1024px) 30vw, 92vw" />
           ) : slug === 'fashion-week' ? (
-            <ArchivePhoto id="runway-edition-five" frameClassName="w-full aspect-[4/3]" objectPosition="center 25%" sizes="(min-width: 1024px) 30vw, 92vw" />
+            <ProgrammeCover programme="fashion-week" className="w-full aspect-[4/3]" />
           ) : slug === 'awards' ? (
             <AwardsPreview className="w-full aspect-[4/3]" />
           ) : slug === 'diplomatic-gala' ? (

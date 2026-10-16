@@ -51,6 +51,32 @@ const ALL: AmbassadorProgramme[] = ["awards", "summit", "fashion-week"];
 
 export const AMBASSADOR_NOMINEES: AmbassadorProfile[] = [
   {
+    slug: "david-jonsson",
+    name: "David Jonsson",
+    role: "Actor",
+    bio: "British actor known for Industry, Rye Lane and Alien: Romulus. Winner of the 2025 BAFTA EE Rising Star Award. The supplied TOMI poster announces his Ambassador of Peace nomination; its Black Panther casting claim is not independently established and is not reproduced here.",
+    business: ["Film, television and theatre actor."],
+    impact: ["Recognised by BAFTA for his contribution as an emerging screen performer."],
+    socials: [{ label: "BAFTA profile", url: "https://www.bafta.org/awards/film/ee-rising-star-award/" }],
+    sources: [{ label: "BAFTA", url: "https://www.bafta.org/awards/film/ee-rising-star-award/" }, { label: "Wikipedia — David Jonsson", url: "https://en.wikipedia.org/wiki/David_Jonsson" }],
+    poster: "david-jonsson",
+    posterSource: "Supplied TOMI announcement artwork",
+    programmes: ALL, programmeLabels: PROGRAMME_LABELS, reviewed: "2026-10-16",
+  },
+  {
+    slug: "mohombi",
+    name: "Mohombi",
+    role: "Singer, songwriter and dancer",
+    bio: "Congolese-Swedish singer and songwriter known internationally for Bumpy Ride and for collaborations across African and international pop music. Featured in the supplied TOMI Ambassador of Peace announcement film.",
+    business: ["Recording artist and songwriter."],
+    impact: ["Connects Congolese and international music audiences."],
+    socials: [{ label: "Instagram", url: "https://www.instagram.com/mohombi/" }],
+    sources: [{ label: "Wikipedia — Mohombi", url: "https://en.wikipedia.org/wiki/Mohombi" }],
+    poster: "mohombi",
+    posterSource: "Frame from the supplied TOMI announcement film",
+    programmes: ALL, programmeLabels: PROGRAMME_LABELS, reviewed: "2026-10-16",
+  },
+  {
     slug: "winnie-harlow",
     name: "Winnie Harlow",
     role: "Model, entrepreneur and vitiligo advocate",

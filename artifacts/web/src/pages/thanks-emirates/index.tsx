@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import EmiratesHero from '@/components/editorial/EmiratesHero';
 import GoldThread from '@/components/GoldThread';
 import Reveal from '@/components/Reveal';
+import EmiratesDirectory from '@/components/editorial/EmiratesDirectory';
 
 const PRINCIPLES = [
   ['Unity', 'Difference held together rather than dissolved.'],
@@ -80,6 +81,7 @@ export default function ThanksEmirates() {
         </div>
       </EmiratesHero>
 
+      <EmiratesDirectory />
       <section className="py-section-xl">
         <div className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-12">
           <Reveal className="lg:col-span-5">

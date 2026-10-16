@@ -6,6 +6,8 @@ import { AMBASSADOR_NOMINEES, AMBASSADOR_STATUS_NOTE, getAmbassadorBySlug } from
 import GoldThread from '@/components/GoldThread';
 import CollaborationRequest from '@/components/editorial/CollaborationRequest';
 import { posterFor } from '@/components/editorial/posters';
+import WealthLabel from '@/components/editorial/WealthLabel';
+import NomineeFilm from '@/components/editorial/NomineeFilm';
 
 const PROGRAMME_HREF: Record<string, string> = { awards: '/programs/awards', summit: '/programs/summit', 'fashion-week': '/programs/fashion-week' };
 
@@ -52,6 +54,11 @@ export default function AmbassadorDetail() {
             <div>
               <p className="text-eyebrow text-gold-600">PROFILE</p>
               <p className="mt-4 font-display text-2xl leading-snug text-ink-900">{person.bio}</p>
+              <WealthLabel slug={person.slug} />
+            </div>
+            <div>
+              <h2 className="mb-5 font-display text-2xl text-ink-900">Announcement film</h2>
+              <NomineeFilm slug={person.slug} />
             </div>
             <div className="grid gap-10 sm:grid-cols-2">
               <div><p className="text-eyebrow text-gold-600">WORK & BUSINESS</p><ul className="mt-4 space-y-3 text-ink-800">{person.business.map((b) => <li key={b} className="border-t border-sand-300 pt-3 text-sm leading-relaxed">{b}</li>)}</ul></div>
