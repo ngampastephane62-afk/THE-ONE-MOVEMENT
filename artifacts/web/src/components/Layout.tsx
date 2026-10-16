@@ -3,7 +3,7 @@ import { LanguageSwitcher } from '@/lib/locale';
 import { Link, useLocation } from 'wouter';
 import { navItems } from '@/lib/navigation';
 import { Show } from '@clerk/react';
-import tomiLogo from '@/assets/media/home/tomi-peace-logo.webp';
+import tomiLogo from '@/assets/media/home/tomi-official-logo.png';
 
 /**
  * Items shown in the desktop header nav bar.
@@ -53,7 +53,7 @@ export default function Layout({ children }: LayoutProps) {
             className="shrink-0 py-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2 rounded-sharp"
             aria-label="The One Movement International — Home"
           >
-            <img src={tomiLogo} alt="The One Movement International — For Peace & Unity" className="tomi-header-logo" width={1024} height={355} data-testid="img-header-logo" />
+            <img src={tomiLogo} alt="The One Movement International" className="tomi-header-logo" width={640} height={336} data-testid="img-header-logo" />
           </Link>
 
           {/* Desktop nav links — core pages only; JOIN THE MOVEMENT is the primary CTA */}

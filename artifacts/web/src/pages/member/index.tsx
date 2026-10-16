@@ -10,6 +10,7 @@ import {
 } from '@workspace/api-client-react';
 import { basePath } from '@/lib/clerk';
 import universe from '@/assets/media/ecosystem/community-universe.webp';
+import tomiLogo from '@/assets/media/home/tomi-official-logo.png';
 import { Avatar, ErrorBox, Skeleton, btn, errStatus, useAct } from '@/components/network/kit';
 import { MeCtx, type Ctx } from './ctx';
 import ProfileForm from './ProfileForm';
@@ -24,6 +25,7 @@ import SettingsPage from './Settings';
 import Connections from './Connections';
 import ThanksEmiratesForm from './ThanksEmirates';
 import Membership from './Membership';
+import MemberEcosystem from './Ecosystem';
 import Business, { BusinessDetail } from './Business';
 import { LanguageSwitcher } from '@/lib/locale';
 import { getPendingSector, clearPendingSector } from '@/lib/network-invitations';
@@ -52,7 +54,9 @@ function Onboard({ title, eyebrow, children }: { title: string; eyebrow: string;
       <div className="relative h-44 overflow-hidden bg-lagoon-900 sm:h-56">
         <img src={universe} alt="" className="h-full w-full object-cover opacity-60" />
         <div className="absolute inset-0 bg-gradient-to-t from-lagoon-900 to-transparent" />
-        <img src={`${basePath}/logo.svg`} alt="TOMI" className="absolute left-5 top-5 h-9" />
+        <Link href="/member/ecosystem" aria-label="The One Movement International — Ecosystem" className="absolute left-5 top-5 rounded focus-visible:ring-2 focus-visible:ring-gold-500">
+          <img src={tomiLogo} alt="The One Movement International" width={640} height={336} className="h-14 w-auto" />
+        </Link>
       </div>
       <div className="mx-auto -mt-16 max-w-2xl px-4 pb-16">
         <div className="relative rounded-3xl border border-sand-200 bg-ivory-50 p-6 shadow-xl sm:p-8">
@@ -114,12 +118,8 @@ function AppShell({ me, base, children }: Ctx & { children: ReactNode }) {
     <Frame>
       <header className="fixed inset-x-0 top-0 z-40 border-b border-gold-500/25 bg-lagoon-900/95 backdrop-blur" data-testid="network-header">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-2 px-3 sm:px-4">
-          <Link href="/member" className="flex min-w-0 items-center gap-2 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500" aria-label="The One Movement International — Network home" data-testid="link-network-home">
-            <img src={`${basePath}/logo.svg`} alt="" className="h-8 w-8 shrink-0" />
-            <span className="min-w-0 font-display text-[10px] tracking-[0.08em] text-ivory-100 sm:text-xs">
-              <span className="block">THE ONE MOVEMENT</span>
-              <span className="mt-0.5 block text-[9px] tracking-[0.16em] text-gold-400 sm:text-[10px]">INTERNATIONAL</span>
-            </span>
+          <Link href="/member/ecosystem" className="flex shrink-0 items-center rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500" aria-label="The One Movement International — Ecosystem" data-testid="link-network-home">
+            <img src={tomiLogo} alt="The One Movement International" width={640} height={336} className="h-auto w-[88px] object-contain sm:w-28" data-testid="img-network-logo" />
           </Link>
           <div className="flex items-center gap-1">
             <LanguageSwitcher />
@@ -201,6 +201,7 @@ function NetworkGate() {
       <AppShell me={me} base={state}>
         <Switch>
           <Route path="/member" component={Feed} />
+          <Route path="/member/ecosystem" component={MemberEcosystem} />
           <Route path="/user-portal"><Redirect to="/member" replace /></Route>
           <Route path="/member/people" component={People} />
           <Route path="/member/profile/:id/:conn" component={Connections} />

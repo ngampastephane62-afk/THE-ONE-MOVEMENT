@@ -9,6 +9,12 @@ The stakeholder wants an African identity inspired by Wakanda and Kuba textiles 
 
 **How to apply:** Keep patterns readable, motion pausable and reduced-motion aware. Do not imply Marvel affiliation or historical authenticity for original geometric artwork.
 
+The stakeholder supplied the standalone three-line THE ONE MOVEMENT INTERNATIONAL logo to replace the previous peace/slogan banner and the platform's generic icon plus typed name. Inside the member platform, the logo is an entry point to the ecosystem with access according to subscription.
+
+**Why:** Their screenshots explicitly identified both header treatments and requested subscription-dependent ecosystem access from the logo.
+
+**How to apply:** Use the supplied mark, not a recreated wordmark. Keep it legible on dark headers without an ornamental frame; show real subscription-based access without conflating payment with business approval or certification.
+
 The stakeholder approved the regional backgrounds and animations but explicitly asked to remove the repeated ornamental contours and keep internal editorial/work-in-progress text off public pages.
 
 **Why:** Their mobile screenshots showed repeated triangular header/hero/footer trim, giant letterboxing around posters, cropped faces and visible missing-data/editorial notes.
