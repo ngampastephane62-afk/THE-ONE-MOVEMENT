@@ -9,6 +9,12 @@ Paid membership is a monthly subscription to professional ecosystem services, in
 
 **How to apply:** The stakeholder approved Professional at US$29/month and Business / Sponsor at US$99/month. Preserve separate annual event packages. Distinguish paid service access, member identity verification and business legality checks.
 
+The stakeholder intends members to begin paying real monthly subscriptions, not enter a sandbox checkout.
+
+**Why:** They explicitly corrected the “test payment confirmed” experience on 2026-10-16 and said members would start subscribing and paying.
+
+**How to apply:** Do not treat sandbox payments as launch readiness or relabel historical test receipts as real money. Verify the production Stripe connection and collection readiness separately from free-account access and humanitarian fundraising approval.
+
 After Join the Movement, members should immediately reach an editable account/profile. Publication should require ten genuine followers who joined through invitations. CEO business verification should include ten people attesting to the business.
 
 **Why:** The stakeholder explicitly requested immediate account access and these two distinct ten-person conditions.

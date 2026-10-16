@@ -6,12 +6,12 @@ import { usePrefersReducedMotion } from './util';
 
 type PhotoId = keyof typeof catalog.photos;
 
-const SLIDES: { id: PhotoId; word: string; region: string }[] = [
-  { id: 'office-encounter', word: 'TRUST', region: 'UAE' },
-  { id: 'institutional-dialogue', word: 'DIALOGUE', region: 'Institutions' },
-  { id: 'diplomatic-encounter', word: 'DIPLOMACY', region: 'Africa · UAE' },
-  { id: 'global-encounter', word: 'ACCESS', region: 'International' },
-  { id: 'conversation', word: 'CONVERSATION', region: 'Culture & business' },
+const SLIDES: { id: PhotoId; word: string; region: string; people: string; position?: string }[] = [
+  { id: 'office-encounter', word: 'TRUST', region: 'UAE', people: 'Yuston Nessy · Private Office of Sheikh Saeed bin Ahmed Al Maktoum' },
+  { id: 'institutional-dialogue', word: 'DIALOGUE', region: 'Institutions', people: 'Yuston Nessy · Institutional meeting' },
+  { id: 'diplomatic-encounter', word: 'DIPLOMACY', region: 'Abu Dhabi · UAE', people: 'Yuston Nessy · Ambassador of the DRC to the UAE', position: 'center 40%' },
+  { id: 'global-encounter', word: 'ACCESS', region: 'International', people: 'Yuston Nessy · Ambassador of Tanzania' },
+  { id: 'conversation', word: 'CONVERSATION', region: 'Culture & business', people: 'Yuston Nessy · Dr Denis Mukwege' },
 ];
 const DURATION = 6500;
 
@@ -104,12 +104,16 @@ export default function PartnerOrbitStage() {
               <circle cx="100" cy="100" r="96" fill="none" stroke="hsl(42 60% 70% / .28)" strokeWidth=".5" strokeDasharray="2 6" />
             </svg>
             <div aria-hidden className="absolute inset-[14%] rounded-full bg-[radial-gradient(circle,hsl(40_70%_55%/0.22),transparent_70%)]" />
-            <div className="absolute inset-[12%] flex items-end justify-center">
-              <div key={`p-${i}`} className="tomi-in w-[78%] shadow-[0_40px_80px_-30px_hsl(187_60%_2%/0.9)]">
-                <ArchivePhoto id={s.id} priority={i === 0} frameClassName="aspect-[4/5]" objectPosition="center 30%" sizes="(min-width: 1024px) 34vw, 70vw" alt={p.caption} />
+             <div className="absolute inset-[9%] overflow-hidden rounded-full shadow-[0_40px_80px_-30px_hsl(187_60%_2%/0.9)]">
+               <div key={`p-${i}`} className="tomi-in h-full w-full">
+                 <ArchivePhoto id={s.id} priority={i === 0} frameClassName="aspect-square" objectPosition={s.position ?? 'center 30%'} sizes="(min-width: 1024px) 34vw, 72vw" alt={`${s.people} — ${p.caption}`} />
               </div>
             </div>
           </div>
+           <div className="mt-4 max-w-md text-center" aria-live={running ? 'off' : 'polite'} data-testid="text-partner-people">
+             <p className="text-sm font-semibold leading-relaxed text-gold-400">{s.people}</p>
+             <p className="mt-1 text-xs leading-relaxed text-ivory-200">{p.caption}</p>
+           </div>
           <div className="mt-4 flex items-center justify-center gap-3">
             <button type="button" onClick={() => go(-1)} aria-label="Previous partner" data-testid="button-stage-prev" className="grid h-11 w-11 place-items-center rounded-full border border-ivory-100/25 hover:border-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400"><ChevronLeft className="h-4 w-4" /></button>
             <button type="button" onClick={() => go(1)} aria-label="Next partner" data-testid="button-stage-next" className="grid h-11 w-11 place-items-center rounded-full border border-ivory-100/25 hover:border-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400"><ChevronRight className="h-4 w-4" /></button>

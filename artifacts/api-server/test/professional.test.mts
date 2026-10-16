@@ -12,7 +12,8 @@ const g = globalThis as any;
 const require = createRequire(import.meta.url);
 const prices = new Map<string, any>(), sessions = new Map<string, any>(), subscriptions = new Map<string, any>();
 g.stripe = {
-  balance: { retrieve: async () => ({ livemode: false }) },
+  // Simulated live provider; no network calls or real charges.
+  balance: { retrieve: async () => ({ livemode: true }) },
   customers: { create: async (p: any) => ({ id: `cus_${p.metadata.tomi_member}` }) },
   products: { create: async (p: any) => ({ id: `prod_${p.metadata.tomi_monthly_tier}` }) },
   prices: {
@@ -25,7 +26,7 @@ g.stripe = {
   checkout: { sessions: {
     create: async (p: any) => {
       const id = `cs_test_${sessions.size}`;
-      const session = { ...p, id, url: `https://checkout.stripe.com/c/pay/${id}`, status: "open", payment_status: "unpaid", subscription: null, livemode: false };
+      const session = { ...p, id, url: `https://checkout.stripe.com/c/pay/${id}`, status: "open", payment_status: "unpaid", subscription: null, livemode: true };
       sessions.set(id, session); return session;
     },
     retrieve: async (id: string) => sessions.get(id),
@@ -116,7 +117,7 @@ try {
       session.status = "complete"; session.payment_status = "paid"; session.subscription = `sub_fixture_${memberId}`;
       subscriptions.set(session.subscription, {
         id: session.subscription, customer: session.customer, metadata: session.subscription_data.metadata,
-        livemode: false, status: "active", cancel_at_period_end: false,
+        livemode: true, status: "active", cancel_at_period_end: false,
         items: { data: [{ price, quantity: 1, current_period_end: Math.floor(Date.now() / 1000) + 30 * 86400 }] },
         latest_invoice: { status: "paid", amount_paid: price.unit_amount },
       });
@@ -167,14 +168,16 @@ try {
       assert.equal((await request("/professional/introductions", { targetSlug: "ciara", message: "An actual detailed collaboration request." })).status, 409);
       const video = "/editorial/videos/goma/engagement";
       assert.equal((await request(video, undefined, 0)).status, 200);
+      const beforeEngagement = (await request(video)).body;
       await request(video, { action: "like", accepted: true });
       await request(video, { action: "like", accepted: true });
-      assert.equal((await request(video)).body.likes, 1);
-      await request(video, { action: "comment", text: "An isolated test comment." });
-      const commentId = (await request(video)).body.comments[0].id;
+      assert.equal((await request(video)).body.likes, beforeEngagement.likes + 1);
+      const commentText = `Isolated fixture comment ${crypto.randomUUID()}`;
+      await request(video, { action: "comment", text: commentText });
+      const commentId = (await request(video)).body.comments.find((comment: any) => comment.text === commentText).id;
       assert.equal((await request(video, { action: "delete", id: commentId }, ids[1])).status, 404);
       await request(video, { action: "delete", id: commentId });
-      assert.equal((await request(video)).body.comments.length, 0);
+      assert.equal((await request(video)).body.comments.length, beforeEngagement.comments.length);
       console.log("PASS: monthly prices, consent, idempotency, verified paid access, cancellation, ten-follower gate, ten-attester review, introductions and video persistence.");
     } finally {
       server.closeAllConnections(); await new Promise<void>(resolve => server.close(() => resolve()));

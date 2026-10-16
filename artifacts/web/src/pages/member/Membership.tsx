@@ -42,7 +42,7 @@ export default function Membership() {
         <h1 className="font-display text-2xl text-ink-900">Work the network on purpose</h1>
         <p className="mt-1 max-w-2xl text-sm leading-relaxed text-ink-700">Your free account stays fully editable. A paid badge shows membership only. It is not an identity check or a legal certification. Humanitarian films and donations are separate and always free to watch.</p>
       </header>
-      {s.testMode && <p className="rounded-xl border border-gold-500/40 bg-gold-500/10 p-3 text-xs text-ink-800" data-testid="text-test-mode">Test mode: payments use a sandbox. No real card is charged.</p>}
+      {s.testMode && <p className="rounded-xl border border-gold-500/40 bg-gold-500/10 p-3 text-xs text-ink-800" role="status" data-testid="text-test-mode">Real subscriptions are not enabled yet. Test checkout is closed. Your free account remains available.</p>}
       {polling && <p className="flex items-center gap-2 rounded-xl bg-lagoon-900 p-3 text-xs text-ivory-100" data-testid="status-polling"><Loader2 className="h-4 w-4 animate-spin" />Confirming your payment with our billing provider...</p>}
       {returning && !polling && !m?.active && <p className="rounded-xl border border-sand-300 p-3 text-xs text-ink-700" role="status">We have not received confirmation yet. It can take a few minutes. Refresh later; nothing is granted until billing confirms.</p>}
       {err && <p className="text-sm text-crimson-700" role="alert" data-testid="text-membership-error">{err}</p>}

@@ -9,8 +9,10 @@ import * as tables from "@workspace/db";
 // The payment provider and transport identity are isolated fakes, never live charges.
 const globals = globalThis as any;
 const require = createRequire(import.meta.url);
+// Local process only: the provider below is entirely fake.
+process.env.TOMI_HUMANITARIAN_LIVE_AUTHORIZED = "true";
 const stripe = {
-  balance: { retrieve: async () => ({ livemode: false }) },
+  balance: { retrieve: async () => ({ livemode: true }) },
   checkout: { sessions: {
     async create(params: any, options: any) {
       if (globals.sessions.has(options.idempotencyKey)) return globals.sessions.get(options.idempotencyKey);
@@ -18,7 +20,7 @@ const stripe = {
       const session = {
         id, metadata: params.metadata, status: "open", payment_status: "unpaid",
         currency: params.line_items[0].price_data.currency, amount_total: params.line_items[0].price_data.unit_amount,
-        mode: "payment", livemode: false, payment_intent: `pi_fixture_${params.metadata.tomi_humanitarian}`,
+        mode: "payment", livemode: true, payment_intent: `pi_fixture_${params.metadata.tomi_humanitarian}`,
         url: `https://checkout.stripe.com/c/pay/${id}`,
       };
       globals.sessions.set(options.idempotencyKey, session);
@@ -94,7 +96,7 @@ try {
     };
     try {
       const cfg = await request("/humanitarian/config");
-      assert.equal(cfg.result.testMode, true);
+      assert.equal(cfg.result.testMode, false);
       assert.equal(cfg.result.minimumAed, 200);
       const input = { kind: "donation", amount: 100, currency: "usd", accepted: true, requestId: crypto.randomUUID() };
       assert.equal((await request("/humanitarian/checkout", "POST", { ...input, amount: 99 })).status, 400);

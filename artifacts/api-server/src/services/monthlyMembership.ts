@@ -17,7 +17,8 @@ export async function monthlyMode() {
   if (stripeReady) {
     try {
       const balance = await (await getUncachableStripeClient()).balance.retrieve();
-      available = true; testMode = !balance.livemode;
+      testMode = !balance.livemode;
+      available = balance.livemode;
     } catch { /* Payment-dependent actions fail closed; free services remain usable. */ }
   }
   return modeCache = { until: Date.now() + 30_000, available, testMode };
@@ -94,7 +95,9 @@ export async function requireMonthly(memberId: number, business = false) {
 export async function monthlyCheckout(who: NetworkActor & { member: NonNullable<NetworkActor["member"]> }, tier: string, origin: string) {
   const plan = MONTHLY_PLANS.find(p => p.slug === tier);
   const mode = await monthlyMode();
-  if (!plan || !mode.available) throw new NetworkError(503, "Monthly checkout is unavailable.");
+  if (!plan || !mode.available) throw new NetworkError(503, mode.testMode
+    ? "Real subscriptions are not enabled yet. Test checkout is closed. Your free account remains available."
+    : "Monthly checkout is unavailable.");
   await refreshMonthly(who.member.id, true);
   if ((await monthlyMembership(who.member.id))?.active) throw new NetworkError(409, "You already have an active membership. Cancel renewal before choosing another plan after the current period.");
   const stripe = await getUncachableStripeClient();

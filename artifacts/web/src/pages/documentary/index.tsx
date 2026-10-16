@@ -1,24 +1,11 @@
 import { Helmet } from 'react-helmet-async';
-import SocialVideo from '@/components/editorial/SocialVideo';
+import DocumentarySequence from '@/components/editorial/DocumentarySequence';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
 import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
 import Reveal from '@/components/Reveal';
 import { PaymentReturn, useReturnParams } from '@/components/humanitarian/shared';
-
-const api = (p: string) => `${import.meta.env.BASE_URL}${p.replace(/^\//, '')}`;
-const GOMA_POSTER = api('api/documentary/media/goma.webp');
-
-function GomaFilm() {
-  return (
-    <div data-testid="player-goma-full">
-      <p className="mb-2 text-eyebrow text-lagoon-700">HUMANITARIAN FILM · FREE TO WATCH</p>
-      <SocialVideo videoId="goma" title="Goma — full humanitarian film" src={api('api/documentary/goma/stream')} poster={GOMA_POSTER} className="bg-ink-900" />
-      <p className="mt-3 text-sm text-ink-800">Humanitarian films are free. No donation, subscription or member account is required to watch.</p>
-    </div>
-  );
-}
 
 export default function Documentary() {
   const { sessionId, cancelled } = useReturnParams();
@@ -44,10 +31,10 @@ export default function Documentary() {
       <section className="py-section-lg">
         <div className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-12">
           <Reveal className="lg:col-span-7">
-            <p className="text-eyebrow text-gold-600">CHAPTER 01 · GOMA · HISTORICAL FILM</p>
-            <h2 className="mt-3 text-display-md text-ink-900">Goma.</h2>
-            <p className="mt-3 text-sm text-ink-700">Full film: 59 seconds. Available to everyone.</p>
-            <div className="mt-6"><GomaFilm /></div>
+            <p className="text-eyebrow text-gold-600">DOCUMENTARY COLLECTION · CONTINUOUS PLAYBACK</p>
+            <h2 className="mt-3 text-display-md text-ink-900">Watch the collection.</h2>
+            <p className="mt-3 text-sm text-ink-700">Goma first, then the Radio Okapi trailer. Start the first video to watch in sequence.</p>
+            <div className="mt-6"><DocumentarySequence /></div>
           </Reveal>
           <div className="lg:col-span-5">
             <p className="text-eyebrow text-gold-700">WATCH FREELY · SUPPORT VOLUNTARILY</p>
@@ -58,16 +45,11 @@ export default function Documentary() {
         </div>
       </section>
 
-      <section className="bg-lagoon-900 py-section-lg text-ivory-100">
-        <div className="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <p className="text-eyebrow text-gold-400">PUBLIC · OUTSIDE THE ARCHIVE</p>
-            <h2 className="mt-3 text-display-md">Radio Okapi trailer</h2>
-            <p className="mt-4 text-sm leading-relaxed text-ivory-300">Duration 2:09. Credit: MONUSCO / United Nations, Radio Okapi. This is not a TOMI production and is shown freely for context.</p>
-          </div>
-          <div className="lg:col-span-8">
-            <SocialVideo videoId="radio-okapi" title="Radio Okapi — MONUSCO trailer" src={api('api/documentary/media/radio-okapi-trailer.mp4')} poster={api('api/documentary/media/radio-okapi.webp')} className="border border-gold-500/30 bg-ink-950" data-testid="player-radio-okapi" />
-          </div>
+      <section className="bg-lagoon-900 py-section-lg text-ivory-100" data-testid="documentary-edition-four">
+        <div className="mx-auto max-w-6xl px-6">
+          <p className="text-eyebrow text-gold-400">THE ONE MOVEMENT INTERNATIONAL · EDITION 4</p>
+          <h2 className="mt-3 text-display-md">The fourth-edition documentary.</h2>
+          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-ivory-200">Broadcast on TV5MONDE, according to the Founder. The video will join this collection once the authorised file or playback link is supplied.</p>
         </div>
       </section>
 

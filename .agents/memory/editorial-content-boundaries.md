@@ -62,3 +62,9 @@ The international-language scope covers the existing site, not only Thanks Emira
 **Why:** The stakeholder requested “langues internationales” for the whole site; these seven languages were the committed scope.
 
 **How to apply:** Keep the selector persistent across navigation and translate shared UI and form instructions. Preserve user-authored content, names, source attribution and exact monetary terms; do not send visitor content to a live translation service.
+
+The Founder describes a documentary about edition 4 of The One Movement International as having been broadcast on TV5MONDE. They want documentary videos to play in sequence and official-meeting photographs presented in circular frames with participants named.
+
+**Why:** These are explicit editorial directions supplied on 2026-10-16, including the description of the DRC ambassador meeting as an official encounter in Abu Dhabi.
+
+**How to apply:** Keep the edition-4 broadcast claim attributed to the Founder until a source is supplied. Do not assume an existing film is that documentary, invent identities from faces, or treat a screenshot as the original photo or video. Request missing full names and authorised media sources.

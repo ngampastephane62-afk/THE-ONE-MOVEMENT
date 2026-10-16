@@ -15,8 +15,8 @@ export async function humanitarianConfiguration() {
         const stripe = await getUncachableStripeClient();
         const balance = await stripe.balance.retrieve();
         testMode = !balance.livemode;
-        available = testMode || process.env.TOMI_HUMANITARIAN_LIVE_AUTHORIZED === "true";
-        reason = testMode ? "Test checkout only. Test payments do not collect real donations."
+        available = !testMode && process.env.TOMI_HUMANITARIAN_LIVE_AUTHORIZED === "true";
+        reason = testMode ? "Real contributions are not enabled yet. Test checkout is closed. No money has been collected."
           : available ? "One-time contributions are received by The One Movement International, which allocates funds according to humanitarian urgency."
           : "Real collection awaits confirmation of fundraising authorization and payment-provider eligibility. No live payments are enabled.";
       } catch { reason = "Payment-provider availability could not be checked. Please retry later."; }
