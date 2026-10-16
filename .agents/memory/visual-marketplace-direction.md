@@ -35,4 +35,10 @@ Marketplace sellers and buyers should manage transactions through their own prof
 
 **Why:** They explicitly describe this as the benefit that makes a monthly subscription attractive to brands and stylists, not a TOMI-managed retail catalogue.
 
-**How to apply:** Design seller product/order management and buyer purchase tracking as real account capabilities. Keep business-licence documents private and review them separately from paid membership and community attestations. Bank onboarding belongs with the payment provider, not public profiles or chat. Their phrase “souscrit pendant un an” still needs clarification: do not impose a twelve-month waiting period or invent an annual prepaid plan without confirmation.
+**How to apply:** Design seller product/order management and buyer purchase tracking as real account capabilities. Keep business-licence documents private and review them separately from paid membership and community attestations. Bank onboarding belongs with the payment provider, not public profiles or chat.
+
+Sellers may start selling as soon as their monthly subscription is activated, once their business licence is validated and payment-provider requirements are satisfied. No twelve-month waiting period or annual prepayment requirement applies.
+
+**Why:** The stakeholder explicitly selected “Dès l’activation de son abonnement mensuel” in response to the seller-access timing question.
+
+**How to apply:** Treat active monthly membership, approved business licence and authorised payment onboarding as separate eligibility conditions; do not gate sales on membership seniority.
