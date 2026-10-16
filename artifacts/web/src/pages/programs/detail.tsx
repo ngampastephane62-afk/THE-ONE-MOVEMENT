@@ -15,6 +15,7 @@ import { DiplomaticGalaPreview, DiplomaticGalaGallery, DiplomaticGalaSpeakers } 
 import FashionEditionNote from '@/components/FashionEditionNote';
 import StatusNotice from '@/components/StatusNotice';
 import ProgrammeNominees from '@/components/editorial/ProgrammeNominees';
+import ProgrammeServiceOffers from '@/components/programs/ProgrammeServiceOffers';
 import ProgrammeCover from '@/components/programs/ProgrammeCover';
 import ProgrammeFilm from "@/components/programs/ProgrammeFilm";
 import PeaceVoices from "@/components/programs/PeaceVoices";
@@ -110,6 +111,8 @@ export default function ProgramDetail() {
           </div>
         </div>
       </HeroSurface>
+
+      <ProgrammeServiceOffers programme={program.slug} />
 
       {/* Transition: lagoon → ivory */}
       <div style={{ backgroundColor: 'hsl(38 57% 94%)' }}>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import type { ProgrammeServiceOffer } from '@workspace/shared';
 import { CONSENT_TEXT, ORG_TYPE_OPTIONS } from './join-data';
 
 /* ── Types ────────────────────────────────────────────────────────────────── */
@@ -126,8 +127,28 @@ function Field({
 
 /* ── Component ────────────────────────────────────────────────────────────── */
 
-export default function InquiryForm({ privacyRequest = false }: { privacyRequest?: boolean }) {
-  const [fields, setFields] = useState<InquiryState>(INITIAL);
+export type InquiryIntent = 'investment' | 'partnership' | 'programme-service' | undefined;
+
+const INTENT_MESSAGES = {
+  investment: 'Investment enquiry — The One Movement Multinational\n\nI would like to discuss the project, its funding requirements, budget and development milestones.\nMy investment interests and indicative budget:\n',
+  partnership: 'Partnership enquiry — The One Movement\n\nI would like to discuss a visibility package, outdoor marketing, media or programme collaboration.\nMy objectives, preferred locations, timing and indicative budget:\n',
+};
+
+export default function InquiryForm({ privacyRequest = false, intent, serviceOffer, existingSponsor = false }: {
+  privacyRequest?: boolean; intent?: InquiryIntent; serviceOffer?: ProgrammeServiceOffer; existingSponsor?: boolean;
+}) {
+  const [fields, setFields] = useState<InquiryState>(() => ({
+    ...INITIAL,
+    message: serviceOffer
+      ? 'My professional background, objectives and preferred participation:\n'
+      : !privacyRequest && intent && intent !== 'programme-service' ? INTENT_MESSAGES[intent] : '',
+    organizationType: serviceOffer || (!privacyRequest && intent === 'partnership') ? 'partner' : '',
+    contactRole: serviceOffer?.name ?? '',
+  }));
+  const [sponsorReview, setSponsorReview] = useState(existingSponsor);
+  const serviceContext = serviceOffer
+    ? `Professional service enquiry\nProgramme: ${serviceOffer.programmeName}\nRole: ${serviceOffer.name}\nNon-sponsor fee: ${serviceOffer.priceUsd === null ? 'Tailored quote' : `USD ${serviceOffer.priceUsd.toLocaleString('en-US')}`}; subject to agreed scope.\nExisting sponsor inclusion review: ${sponsorReview ? 'Requested — check agreed benefits before any extra charge' : 'Not requested'}\n\n`
+    : '';
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [apiMessage, setApiMessage] = useState('');
@@ -142,6 +163,9 @@ export default function InquiryForm({ privacyRequest = false }: { privacyRequest
     setApiMessage('');
 
     const newErrors = validate(fields);
+    if ((serviceContext + fields.message.trim()).length > MAX_LEN.message) {
+      newErrors.message = `Please shorten your message to ${MAX_LEN.message - serviceContext.length} characters.`;
+    }
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
@@ -157,13 +181,13 @@ export default function InquiryForm({ privacyRequest = false }: { privacyRequest
         contactName: fields.contactName.trim(),
         contactRole: fields.contactRole.trim(),
         email: fields.email.trim(),
-        message: fields.message.trim(),
+        message: serviceContext + fields.message.trim(),
         consentAccepted: true,
       };
       if (fields.city.trim()) payload.city = fields.city.trim();
       if (fields.website.trim()) payload.website = fields.website.trim();
 
-      const res = await fetch('/api/institutional-inquiry', {
+      const res = await fetch(`${import.meta.env.BASE_URL}api/institutional-inquiry`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -229,7 +253,20 @@ export default function InquiryForm({ privacyRequest = false }: { privacyRequest
   const isSubmitting = status === 'submitting';
 
   return (
-    <form onSubmit={handleSubmit} noValidate aria-label="Institutional inquiry form">
+    <form onSubmit={handleSubmit} noValidate aria-label={serviceOffer ? 'Programme service enquiry form' : 'Institutional inquiry form'}>
+      {serviceOffer && (
+        <div className="mb-8 border-s-2 border-gold-500 bg-lagoon-800/50 px-4 py-4" role="note">
+          <p className="text-eyebrow text-gold-400">{serviceOffer.programmeName} · {serviceOffer.name}</p>
+          <p className="mt-3 text-sm text-ivory-200">
+            {serviceOffer.priceUsd === null ? 'A tailored fee will be proposed for your agreed scope.' : `Non-sponsor service fee: USD ${serviceOffer.priceUsd.toLocaleString('en-US')}. This is not a sponsorship purchase.`}
+          </p>
+          <label className="mt-5 flex items-start gap-3 text-sm leading-relaxed text-ivory-200">
+            <input type="checkbox" className="mt-1 h-4 w-4 shrink-0 accent-gold-500" checked={sponsorReview} onChange={(e) => setSponsorReview(e.target.checked)} />
+            <span>I am already a sponsor. Please check the benefits in my agreement before quoting an additional service fee.</span>
+          </label>
+          <p className="mt-3 text-xs leading-relaxed text-ivory-300">No payment is taken here. Programme selection, deliverables and any fee are confirmed in writing after review.</p>
+        </div>
+      )}
       {privacyRequest && (
         <div
           className="mb-8 border-s-2 border-gold-500 bg-lagoon-800/50 px-4 py-4"
@@ -273,10 +310,10 @@ export default function InquiryForm({ privacyRequest = false }: { privacyRequest
         {/* Organization */}
         <fieldset className="space-y-5">
           <legend className="text-xs font-semibold text-ivory-300 uppercase tracking-widest mb-4 pb-2 border-b border-lagoon-700/50 w-full">
-            Organization
+            {serviceOffer ? 'Professional or organisation' : 'Organization'}
           </legend>
 
-          <Field id="inq-orgName" label="Organization Name" error={errors.organizationName} required>
+          <Field id="inq-orgName" label={serviceOffer ? 'Organisation or professional name' : 'Organization Name'} error={errors.organizationName} required>
             <input
               id="inq-orgName"
               type="text"
@@ -291,7 +328,7 @@ export default function InquiryForm({ privacyRequest = false }: { privacyRequest
             />
           </Field>
 
-          <Field id="inq-orgType" label="Organization Type" error={errors.organizationType} required>
+          {!serviceOffer && <Field id="inq-orgType" label="Organization Type" error={errors.organizationType} required>
             <select
               id="inq-orgType"
               value={fields.organizationType}
@@ -310,7 +347,7 @@ export default function InquiryForm({ privacyRequest = false }: { privacyRequest
                 <option key={slug} value={slug}>{label}</option>
               ))}
             </select>
-          </Field>
+          </Field>}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <Field id="inq-country" label="Country" error={errors.country} required>
@@ -415,14 +452,14 @@ export default function InquiryForm({ privacyRequest = false }: { privacyRequest
         {/* Message */}
         <Field
           id="inq-message"
-          label={`${privacyRequest ? 'Privacy / data-rights request details' : 'Message'} (${fields.message.length} / ${MAX_LEN.message})`}
+          label={`${privacyRequest ? 'Privacy / data-rights request details' : 'Message'} (${fields.message.length} / ${MAX_LEN.message - serviceContext.length})`}
           error={errors.message}
           required
         >
           <textarea
             id="inq-message"
             rows={5}
-            maxLength={MAX_LEN.message}
+            maxLength={MAX_LEN.message - serviceContext.length}
             value={fields.message}
             onChange={(e) => setField('message', e.target.value)}
             aria-required="true"

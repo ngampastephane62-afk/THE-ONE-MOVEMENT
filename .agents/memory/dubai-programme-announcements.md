@@ -9,6 +9,12 @@ New event-preparation information supplied by the owner is reserved for sponsors
 
 **How to apply:** Do not publish new planning details or infer permission from uploaded promotional visuals. Confirm the audience of new videos separately when unclear. Any sponsor/paid access must be enforced server-side, not merely hidden in the interface. This does not automatically retract previously approved public announcements.
 
+The owner separately approved the two accompanying new videos for the public homepage carousel; the event-planning restriction does not apply to those films.
+
+**Why:** The owner answered “Non, les vidéos peuvent apparaître dans le carrousel public” when explicitly asked about their audience.
+
+**How to apply:** Keep the supplied films public without adding the private planning details as captions or announcements.
+
 The One Fashion Week International is announced for 22 December 2026 in Dubai. The One Awards are announced for 2 January 2027.
 
 **Why:** The owner confirmed the Fashion Week date and clarified that the January event is the following year, correcting an initial January 2026 entry.

@@ -3,29 +3,33 @@ import { Link } from 'wouter';
 import PartnerOrbitStage from '@/components/partners/PartnerOrbitStage';
 import PartnerEditorial from '@/components/partners/PartnerEditorial';
 import { PartnerInstitutions, PartnerMedia } from '@/components/partners/PartnerHistory';
+import PartnerOpportunities from '@/components/partners/PartnerOpportunities';
+import InvestmentPresentation from '@/components/partners/InvestmentPresentation';
 import BroadcasterAudience from '@/components/partners/BroadcasterAudience';
 import SectionHeading from '@/components/SectionHeading';
-import { Button } from '@/components/ui/button';
 import Reveal from '@/components/Reveal';
 import DocumentaryTeasers from '@/components/editorial/DocumentaryTeasers';
 import ResponsiveMedia from '@/components/ResponsiveMedia';
 import { archiveVideo } from '@/components/ArchivePhoto';
-import { Handshake } from 'lucide-react';
 
 export default function Partners() {
   return (
     <div className="bg-ivory-50 min-h-screen">
       <Helmet>
-        <title>OUR PARTNERS — THE ONE MOVEMENT INTERNATIONAL</title>
-        <meta name="description" content="Governments, UN entities, diplomatic missions, Rawbank, private companies, international brands and broadcasters that have partnered with The One Movement International." />
-         <meta property="og:title" content="Our Partners — The One Movement International" />
-         <meta property="og:description" content="Explore the Movement's partner network and begin a conversation about institutional, cultural or programme collaboration." />
+        <title>PARTNERS & INVESTMENT — THE ONE MOVEMENT INTERNATIONAL</title>
+        <meta name="description" content="Governments, UN entities, diplomatic missions, Rawbank, private companies, international brands and broadcasters that have partnered with The One Movement International — and the paths to invest in or partner with the Movement." />
+         <meta property="og:title" content="Partners & Investment — The One Movement International" />
+         <meta property="og:description" content="Explore the Movement's partner network and explore investment and partnership opportunities." />
         <link rel="canonical" href="/partners" />
       </Helmet>
 
       <PartnerOrbitStage />
 
       <PartnerInstitutions />
+
+      <PartnerOpportunities />
+
+      <InvestmentPresentation />
 
       <PartnerMedia />
 
@@ -62,61 +66,6 @@ export default function Partners() {
         </div>
       </section>
 
-
-      {/* PARTNERSHIP OPPORTUNITIES */}
-      <section className="py-section-lg bg-lagoon-900 text-ivory-100">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-
-            <div className="lg:col-span-5">
-              <Reveal>
-                <SectionHeading eyebrow="JOIN US" heading="PARTNERSHIP OPPORTUNITIES" surface="dark" thread />
-                <p className="mt-6 text-ivory-200 leading-relaxed text-lg">
-                  Every collaboration begins with a conversation. Share your organization's interests and explore how to connect with the Movement.
-                </p>
-                <div className="mt-10 space-y-4">
-                  <Link href="/join#institutional-inquiry" className="inline-block" data-testid="link-partnership-inquiry">
-                    <Button size="xl" className="bg-gold-500 text-ink-900 hover:bg-gold-400 w-full sm:w-auto">
-                      <Handshake className="mr-2 h-4 w-4" /> BEGIN THE CONVERSATION
-                    </Button>
-                  </Link>
-                </div>
-              </Reveal>
-            </div>
-
-            <div className="lg:col-span-7">
-              <Reveal delay={150}>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-
-                  <div className="bg-lagoon-800 border border-lagoon-700 p-6 rounded-sm">
-                    <h4 className="text-sm font-semibold text-gold-400 uppercase tracking-widest mb-4">Ways to collaborate</h4>
-                    <ul className="space-y-3">
-                      {['Connect institutions', 'Support a program', 'Develop cultural exchange'].map(path => (
-                        <li key={path} className="py-2 border-b border-lagoon-700 last:border-0">
-                          <span className="font-display text-lg text-ivory-100">{path}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="bg-lagoon-800 border border-lagoon-700 p-6 rounded-sm">
-                    <h4 className="text-sm font-semibold text-gold-400 uppercase tracking-widest mb-4">From connection to opportunity</h4>
-                    <ul className="space-y-3">
-                      {['Share expertise', 'Explore collaborations', 'Create shared experiences'].map(path => (
-                        <li key={path} className="flex flex-col py-2 border-b border-lagoon-700 last:border-0">
-                          <span className="font-display text-lg text-ivory-100">{path}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                </div>
-              </Reveal>
-            </div>
-
-          </div>
-        </div>
-      </section>
 
       {/* POLICY */}
       <section className="py-12 bg-ivory-50 border-t border-sand-200">

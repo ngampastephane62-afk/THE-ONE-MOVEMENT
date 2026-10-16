@@ -9,7 +9,7 @@ function initialReels() {
     window.location.hash.replace(/^#video-/, '');
   // Historical links retain the original film and its own reactions.
   const legacyFirst = requested === 'home-reel-1';
-  return [1, 2, 3].map((number) => {
+  const existing = [1, 2, 3].map((number) => {
     const isNew = number === 1 && !legacyFirst;
     const file = isNew ? 'we-are-one-2026' : `reel-${number}`;
     return {
@@ -19,8 +19,21 @@ function initialReels() {
       video: `${import.meta.env.BASE_URL}api/home-reels/${file}.mp4`,
       webm: isNew ? `${import.meta.env.BASE_URL}api/home-reels/${file}.webm` : undefined,
       poster: `${import.meta.env.BASE_URL}api/home-reels/${file}.webp`,
+      duration: isNew ? 51080 : 8000,
     };
   });
+  return [...existing, ...[
+    { file: 'movement-vision-2026', title: 'The One Movement — a shared vision', duration: 52734 },
+    { file: 'movement-together-2026', title: 'The One Movement — together as one', duration: 30000 },
+  ].map((reel, index) => ({
+    number: index + existing.length + 1,
+    id: `home-${reel.file}`,
+    title: reel.title,
+    video: `${import.meta.env.BASE_URL}api/home-reels/${reel.file}.mp4`,
+    webm: `${import.meta.env.BASE_URL}api/home-reels/${reel.file}.webm`,
+    poster: `${import.meta.env.BASE_URL}api/home-reels/${reel.file}.webp`,
+    duration: reel.duration,
+  }))];
 }
 
 export default function HomeReelStrip() {
@@ -59,7 +72,7 @@ export default function HomeReelStrip() {
 
   useEffect(() => {
     if (!carousel) return;
-    const select = () => { setActive(carousel.selectedScrollSnap()); setSound(false); };
+    const select = () => { setActive(carousel.selectedScrollSnap()); setSound(false); setFailed(false); setBlocked(false); };
     carousel.on('select', select);
     return () => { carousel.off('select', select); };
   }, [carousel]);
@@ -80,8 +93,8 @@ export default function HomeReelStrip() {
 
   useEffect(() => {
     if (!carousel || !visible || !playing || sound || reducedMotion) return;
-    // Let the new opening film tell its full story before moving on.
-    const duration = reels[active]?.id === NEW_REEL_ID ? 51080 : 8000;
+    // Give each newly supplied film its full running time before moving on.
+    const duration = reels[active]?.duration ?? 8000;
     const timer = window.setInterval(() => carousel.scrollNext(), duration);
     return () => window.clearInterval(timer);
   }, [carousel, visible, playing, sound, reducedMotion, active]);
@@ -95,11 +108,11 @@ export default function HomeReelStrip() {
   const controlClass = 'flex h-10 w-10 items-center justify-center rounded-full border border-gold-500/50 bg-lagoon-900/90 text-gold-400 hover:bg-lagoon-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-400 focus-visible:outline-offset-2';
 
   return (
-    <div ref={container} id="home-reels" className="w-full max-w-sm scroll-mt-28" data-testid="home-reel-strip" role="region" aria-roledescription="carousel" aria-label="The One Movement — three reels">
+    <div ref={container} id="home-reels" className="w-full max-w-sm scroll-mt-28" data-testid="home-reel-strip" role="region" aria-roledescription="carousel" aria-label={`The One Movement — ${reels.length} reels`}>
       <div ref={carouselRef} className="overflow-hidden rounded-sharp border border-gold-500/30 bg-lagoon-800 shadow-xl">
         <div className="flex touch-pan-y">
           {reels.map((reel, index) => (
-            <div id={`video-${reel.id}`} key={reel.id} className="min-w-0 flex-[0_0_100%]" role="group" aria-roledescription="slide" aria-label={`Reel ${reel.number} of 3`} aria-hidden={active !== index}>
+            <div id={`video-${reel.id}`} key={reel.id} className="min-w-0 flex-[0_0_100%]" role="group" aria-roledescription="slide" aria-label={`Reel ${reel.number} of ${reels.length}`} aria-hidden={active !== index}>
               <video
                 ref={(node) => { videos.current[index] = node; }}
                 poster={reel.poster}
@@ -124,15 +137,15 @@ export default function HomeReelStrip() {
           <button type="button" className={controlClass} aria-label="Previous reel" onClick={() => carousel?.scrollPrev()}><ArrowLeft size={18} /></button>
           <button type="button" className={controlClass} aria-label="Next reel" onClick={() => carousel?.scrollNext()}><ArrowRight size={18} /></button>
         </div>
-        <div className="flex gap-2" aria-label="Choose a reel">
-          {reels.map((reel, index) => <button key={reel.number} type="button" aria-label={`Go to reel ${reel.number}`} aria-current={active === index ? 'true' : undefined} onClick={() => carousel?.scrollTo(index)} className="flex h-9 w-7 items-center justify-center"><span className={`h-1.5 rounded-full transition-all ${active === index ? 'w-6 bg-gold-400' : 'w-1.5 bg-ivory-300/40'}`} /></button>)}
+        <div className="flex gap-1" aria-label="Choose a reel">
+          {reels.map((reel, index) => <button key={reel.number} type="button" aria-label={`Go to reel ${reel.number}`} aria-current={active === index ? 'true' : undefined} onClick={() => carousel?.scrollTo(index)} className="flex h-9 w-5 items-center justify-center"><span className={`h-1.5 rounded-full transition-all ${active === index ? 'w-5 bg-gold-400' : 'w-1.5 bg-ivory-300/40'}`} /></button>)}
         </div>
         <div className="flex gap-2">
           <button type="button" className={controlClass} aria-label={playing && !blocked ? 'Pause reels' : 'Play reels'} onClick={() => playing && !blocked ? setPlaying(false) : playFromTap()}>{playing && !blocked ? <Pause size={18} /> : <Play size={18} />}</button>
           <button type="button" className={controlClass} aria-label={sound ? 'Mute reel' : 'Unmute reel'} aria-pressed={sound} onClick={() => setSound(!sound)}>{sound ? <Volume2 size={18} /> : <VolumeX size={18} />}</button>
         </div>
       </div>
-      <p className="mt-3 text-xs leading-relaxed text-ivory-200">The One Movement · Reel {active + 1} / 3</p>
+      <p className="mt-3 text-xs leading-relaxed text-ivory-200">The One Movement · Reel {active + 1} / {reels.length}</p>
       {/* Any interaction with reactions stops auto-advance so a comment draft never moves to another reel. */}
       <div className="mt-4 bg-ivory-100 p-3 text-ink-900" onFocusCapture={() => setPlaying(false)} onPointerDownCapture={() => setPlaying(false)}>
         <VideoActions key={active} videoId={reels[active]?.id ?? NEW_REEL_ID} title={reels[active]?.title ?? 'The One Movement'} />

@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
-import { useState, useRef } from 'react';
-import { Link } from 'wouter';
+import { useState, useRef, useEffect } from 'react';
+import { Link, useSearch } from 'wouter';
+import { getProgrammeServiceOffer } from '@workspace/shared';
 import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
 import SectionHeading from '@/components/SectionHeading';
@@ -13,7 +14,7 @@ import {
 import ArchivePhoto from '@/components/ArchivePhoto';
 import PathCard from './PathCard';
 import InterestForm from './InterestForm';
-import InquiryForm from './InquiryForm';
+import InquiryForm, { type InquiryIntent } from './InquiryForm';
 import {
   PATH_DEFINITIONS,
   JOURNEY_STEPS,
@@ -33,13 +34,26 @@ function scrollTo(el: HTMLElement | null) {
 
 export default function JoinTheMovement() {
   const [activePath, setActivePath] = useState<string | null>(null);
-  const privacyRequest =
-    typeof window !== 'undefined' &&
-    new URLSearchParams(window.location.search).get('request') === 'privacy';
+  const search = new URLSearchParams(useSearch());
+  const privacyRequest = search.get('request') === 'privacy';
+  const requestedIntent = search.get('intent');
+  const serviceOffer = !privacyRequest && requestedIntent === 'programme-service'
+    ? getProgrammeServiceOffer(search.get('program') ?? '', search.get('service') ?? '')
+    : undefined;
+  const inquiryIntent: InquiryIntent = serviceOffer ? 'programme-service'
+    : !privacyRequest && (requestedIntent === 'investment' || requestedIntent === 'partnership') ? requestedIntent : undefined;
 
   const formSectionRef = useRef<HTMLElement>(null);
   const inquirySectionRef = useRef<HTMLElement>(null);
   const heroCtaRef = useRef<HTMLAnchorElement>(null);
+
+  useEffect(() => {
+    if (!inquiryIntent) return;
+    const timer = window.setTimeout(() => {
+      inquirySectionRef.current?.scrollIntoView({ block: 'start', behavior: 'instant' });
+    }, 100);
+    return () => window.clearTimeout(timer);
+  }, [inquiryIntent, serviceOffer?.programme, serviceOffer?.role]);
 
   function handlePathSelect(path: PathDefinition) {
     const newId = activePath === path.id ? null : path.id;
@@ -419,12 +433,21 @@ export default function JoinTheMovement() {
             {/* Left */}
             <div className="lg:col-span-4">
               <SectionHeading
-                eyebrow={privacyRequest ? 'PRIVACY & DATA RIGHTS' : 'INSTITUTIONAL PATHWAY'}
-                heading={privacyRequest ? 'PRIVACY REQUEST' : 'INSTITUTIONAL INQUIRY'}
+                eyebrow={privacyRequest ? 'PRIVACY & DATA RIGHTS' : serviceOffer ? 'PROGRAMME PARTICIPATION SERVICES' : inquiryIntent ? 'INVESTMENT & PARTNERSHIPS' : 'INSTITUTIONAL PATHWAY'}
+                heading={privacyRequest ? 'PRIVACY REQUEST' : serviceOffer ? `${serviceOffer.name.toUpperCase()} · ${serviceOffer.programmeName.toUpperCase()}` : inquiryIntent === 'investment' ? 'INVEST IN THE ONE MOVEMENT MULTINATIONAL' : inquiryIntent === 'partnership' ? 'BECOME A PARTNER' : 'INSTITUTIONAL INQUIRY'}
                 size="md"
                 surface="dark"
                 thread
               />
+              {inquiryIntent && (
+                <p className="mt-5 border-s-2 border-gold-500 px-4 text-sm leading-relaxed text-ivory-200" role="note">
+                  {serviceOffer
+                    ? 'Choose a professional service for this activity without buying a sponsorship package. Describe your objectives so the team can confirm selection, scope and deliverables. Existing sponsors can request a check of their agreed inclusions before any additional fee.'
+                    : inquiryIntent === 'investment'
+                    ? 'Discuss the project, its funding needs and development milestones directly with TOMI. This enquiry is not an investment commitment. Read the public investment presentation on the Partners page.'
+                    : 'Tell TOMI about your visibility objectives, outdoor marketing needs, preferred locations, timing and budget. Package scope and availability are agreed with the team; this enquiry does not activate a partnership.'}
+                </p>
+              )}
               {privacyRequest && (
                 <div
                   className="mt-5 border-s-2 border-gold-500 bg-lagoon-800/40 px-4 py-4"
@@ -441,9 +464,10 @@ export default function JoinTheMovement() {
               <p className="mt-4 text-ivory-200 text-sm leading-relaxed">
                 {privacyRequest
                   ? 'Provide enough information for the operator to locate and review your request. The form remains the existing institutional inquiry pathway and does not create a new request type.'
+                  : serviceOffer ? 'Apply as an independent professional or on behalf of an organisation. This enquiry is sent to TOMI for review; it does not reserve a place or charge a fee.'
                   : "Embassies, governments, international organizations, universities, NGOs, sponsors, partners and media organizations engage through this pathway. Provide your organization's information and our team will contact you directly."}
               </p>
-              {!privacyRequest && <div className="mt-8 space-y-4">
+              {!privacyRequest && !serviceOffer && <div className="mt-8 space-y-4">
                 {[
                   'Embassy or diplomatic mission',
                   'Government or ministry',
@@ -473,7 +497,11 @@ export default function JoinTheMovement() {
                   backgroundColor: 'hsl(187 55% 15%)',
                 }}
               >
-                <InquiryForm privacyRequest={privacyRequest} />
+                <InquiryForm
+                  key={privacyRequest ? 'privacy' : serviceOffer ? `${serviceOffer.programme}-${serviceOffer.role}-${search.get('coverage') ?? ''}` : inquiryIntent ?? 'institutional'}
+                  privacyRequest={privacyRequest} intent={inquiryIntent} serviceOffer={serviceOffer}
+                  existingSponsor={search.get('coverage') === 'existing-sponsor'}
+                />
               </div>
             </div>
           </div>

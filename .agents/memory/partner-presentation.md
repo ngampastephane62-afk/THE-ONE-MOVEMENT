@@ -26,3 +26,9 @@ Partner leadership introductions must use a TOMI-handled form only; never expose
 **Why:** The owner explicitly chose “Aucune adresse : uniquement le formulaire de mise en relation” and wants enquiries to arrive with TOMI.
 
 **How to apply:** Keep the partner target separate from the requester’s own organisation. Make requests accessible to the Founder, explain that receipt does not guarantee an introduction, and use verified public names and correct institutional roles. Mark unknown leadership honestly; distinguish parent-group executives from individual brand or local management.
+
+The owner wants separate investment and commercial partnership paths. The investor deck and final annual partnership document supplied on 2026-10-17 are intended for public on-page reading, explaining The One Movement Multinational, funding needs, budget and partnership benefits. Partnership enquiries should cover visibility and outdoor marketing.
+
+**Why:** The owner explicitly requested a public presentation rather than a download-only document, while separately reserving event-preparation information for sponsors and people who have paid.
+
+**How to apply:** This authorizes public copies of these supplied documents, not unrelated confidential documents or private event information. Preserve the distinction between investment and sponsorship fees, and between funding requirements, valuation, funds raised and projected revenue. Do not invent allocation details or returns.

@@ -13,6 +13,7 @@ import editorialEngagementRouter from "./editorialEngagement";
 import partnerIntroductionsRouter from "./partnerIntroductions";
 import officialMeetingsRouter from "./officialMeetings";
 import magazineRouter from "./magazine";
+import publicInvestmentRouter from "./publicInvestment";
 
 const router: IRouter = Router();
 
@@ -30,5 +31,6 @@ router.use(editorialEngagementRouter);
 router.use(partnerIntroductionsRouter);
 router.use(officialMeetingsRouter);
 router.use(magazineRouter);
+router.use(publicInvestmentRouter);
 
 export default router;

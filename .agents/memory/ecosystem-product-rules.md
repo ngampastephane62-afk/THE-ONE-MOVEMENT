@@ -9,6 +9,12 @@ Paid membership is a monthly subscription to professional ecosystem services, in
 
 **How to apply:** The stakeholder approved Professional at US$29/month and Business / Sponsor at US$99/month. Preserve separate annual event packages. Distinguish paid service access, member identity verification and business legality checks.
 
+Each event has its own income-generating professional participation services; participants need not buy a sponsor package. The owner sets the non-sponsor Summit speaker fee at US$10,000. Designers/stylists, models, hair stylists and makeup artists also need distinct service offers, but their fees have not been provided.
+
+**Why:** The owner explicitly distinguishes impact, speaking, photo/video, branding, highlights, media opportunities and networking from purchasing sponsorship.
+
+**How to apply:** Keep programme-specific services separate from annual sponsorship, monthly subscriptions and capital investment. Existing sponsors should have their written inclusions checked before an additional fee is proposed. Do not invent role prices, promise editorial coverage or assume all sponsor levels guarantee a speaking slot.
+
 The stakeholder intends members to begin paying real monthly subscriptions, not enter a sandbox checkout.
 
 **Why:** They explicitly corrected the “test payment confirmed” experience on 2026-10-16 and said members would start subscribing and paying.
