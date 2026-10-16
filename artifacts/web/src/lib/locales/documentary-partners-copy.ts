@@ -1,5 +1,18 @@
 export const documentaryPartnersCopy: Record<string, Record<string, string>> = {
   fr: {
+    'WATCH · BROADCAST & DOCUMENTARY HIGHLIGHTS': 'À VOIR · DIFFUSIONS ET EXTRAITS DOCUMENTAIRES',
+    'Watch the films here, one after another. Start the first video to play the collection in sequence.': 'Regardez les films ici, les uns à la suite des autres. Lancez la première vidéo pour enchaîner la collection.',
+    'Campaign film': 'Film de campagne',
+    'The MONUSCO / Radio Okapi film supplied by the Founder, presented alongside the campaign against disinformation.': 'Le film MONUSCO / Radio Okapi fourni par le fondateur, présenté dans le contexte de la campagne contre la désinformation.',
+    'Film credit: MONUSCO / United Nations · Radio Okapi.': 'Crédit du film : MONUSCO / Nations unies · Radio Okapi.',
+    'The One Documentaire · Teaser': 'The One Documentaire · Bande-annonce',
+    'A documentary highlight supplied by the Founder, presented here with the CANAL+ broadcast file.': 'Un extrait documentaire fourni par le fondateur, présenté ici avec le dossier CANAL+.',
+    'The One Documentaire · Founder archive. This teaser is not the complete film.': 'The One Documentaire · Archives du fondateur. Cette bande-annonce n’est pas le film complet.',
+    'More documentary highlights supplied by the Founder, available here in the same collection.': 'D’autres extraits documentaires fournis par le fondateur, réunis ici dans la même collection.',
+    'Documentary highlight 01': 'Extrait documentaire 01',
+    'Documentary highlight 02': 'Extrait documentaire 02',
+    'Documentary highlight 04': 'Extrait documentaire 04',
+    'Founder archive · Documentary excerpt, not the complete film.': 'Archives du fondateur · Extrait documentaire, et non le film complet.',
     'SINCE THE FIRST EDITION': 'DEPUIS LA PREMIÈRE ÉDITION',
     'OUR DOCUMENTARY ARCHIVE': 'NOS ARCHIVES DOCUMENTAIRES',
     'A television archive of The One Fashion Week, supplied by the Founder.': 'Une archive télévisée de The One Fashion Week, fournie par le fondateur.',

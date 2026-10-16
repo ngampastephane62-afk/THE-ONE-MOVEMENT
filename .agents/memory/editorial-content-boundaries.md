@@ -9,6 +9,12 @@ Keep Tropik's media distribution catalogue in Media and partner profiles in Part
 
 **How to apply:** Short conceptual descriptions and links are appropriate elsewhere, but do not duplicate the media catalogue, partner galleries or entire report sections.
 
+The Founder explicitly requires the uploaded MONUSCO campaign film, CANAL+ teaser and TV5MONDE video to appear directly with their respective subjects on the same page, in one consecutive video collection.
+
+**Why:** The Founder repeated this requirement after screenshots showed “video pending” notices and broadcaster descriptions without the uploaded clips. Having a video somewhere else on the site does not satisfy it.
+
+**How to apply:** Show native inline players and keep the supplied documentary highlights together, with an optional next-video sequence. Audit existing uploads, including the original ZIP, before asking for reuploads or claiming a film is unavailable. Confirm ambiguous broadcaster-to-file mappings rather than treating an unrelated generic teaser as verified broadcaster footage.
+
 The stakeholder describes a ten-year journey and confirms that the supplied press outlets are longstanding partners with evidence. Their explicit News requirement is publisher attribution, publisher logos, links to the outlets' pages and an administrator's ability to add more coverage.
 
 **Why:** The stakeholder corrected an initial plan to put the press review in Media and supplied screenshots documenting the coverage. Treat this documented coverage confidently without repeating speculative or “unverified partner” labels.

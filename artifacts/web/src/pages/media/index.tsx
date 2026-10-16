@@ -9,6 +9,7 @@ import MediaCatalogue from '@/components/partners/MediaCatalogue';
 import Reveal from '@/components/Reveal';
 import { Mail } from 'lucide-react';
 import MagazineFeature from '@/components/magazine/MagazineFeature';
+import BroadcastFilms from '@/components/editorial/BroadcastFilms';
 
 export default function MediaHub() {
   return (
@@ -36,6 +37,8 @@ export default function MediaHub() {
           </Reveal>
         </div>
       </HeroSurface>
+
+      <BroadcastFilms />
 
       <MagazineFeature />
 
@@ -101,55 +104,6 @@ export default function MediaHub() {
               credit="Film credit: Ngonga Inbox"
             />
           </Reveal>
-        </div>
-      </section>
-
-      {/* BROADCAST & INSTITUTIONAL CONTEXT */}
-      <section className="py-section-lg bg-ivory-50 border-b border-sand-200" aria-labelledby="broadcast-heading">
-        <div className="mx-auto max-w-6xl px-6">
-          <Reveal>
-            <SectionHeading eyebrow="BROADCAST & INSTITUTIONAL CONTEXT" heading="ON SCREEN, BEYOND THE ROOM" surface="light" thread />
-          </Reveal>
-          <div className="mt-12 grid gap-10 lg:grid-cols-12">
-            <Reveal className="lg:col-span-7">
-              <article className="border border-sand-200 bg-ivory-100 p-8" data-testid="card-tv5monde">
-                <p className="text-eyebrow text-gold-600">TV5MONDE</p>
-                <h3 id="broadcast-heading" className="mt-2 font-display text-2xl text-ink-900">An international French-language broadcaster</h3>
-                <dl className="mt-8 grid grid-cols-3 gap-4 border-y border-sand-200 py-6">
-                  {[['60 million', 'weekly viewers'], ['432 million', 'households'], ['200', 'countries & territories']].map(([v, l]) => (
-                    <div key={l}>
-                      <dt className="sr-only">{l}</dt>
-                      <dd className="font-display text-xl text-lagoon-600 sm:text-3xl">{v}</dd>
-                      <dd className="mt-1 text-xs text-ink-700">{l}</dd>
-                    </div>
-                  ))}
-                </dl>
-                <p className="mt-4 text-xs leading-relaxed text-ink-700" data-testid="text-tv5-disclaimer">
-                  Channel-wide figures officially published by TV5MONDE on 12 March 2024. They describe the broadcaster's overall reach and are <strong>not</strong> viewing figures for any TOMI interview.
-                </p>
-                <div className="mt-6 border-l-2 border-gold-500 pl-4">
-                  <p className="text-sm font-semibold text-ink-900">Interview archive — video pending</p>
-                  <p className="mt-1 text-sm text-ink-700">According to the Founder, TOMI was presented in a TV5MONDE interview. The exact clip has not yet been identified, so no video is shown here.</p>
-                </div>
-                <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-xs font-semibold">
-                  <a href="https://www.tv5monde.com/" target="_blank" rel="noreferrer" className="text-lagoon-600 underline underline-offset-4" data-testid="link-tv5monde">tv5monde.com</a>
-                  <a href="https://presse.tv5monde.com/nos-chiffres-cles" target="_blank" rel="noreferrer" className="text-lagoon-600 underline underline-offset-4" data-testid="link-tv5-figures">Official key figures</a>
-                  <a href="https://www.youtube.com/@TV5MONDE" target="_blank" rel="noreferrer" className="text-lagoon-600 underline underline-offset-4" data-testid="link-tv5-youtube">YouTube channel</a>
-                </div>
-              </article>
-            </Reveal>
-            <Reveal delay={120} className="lg:col-span-5">
-              <article className="h-full border border-sand-200 bg-ivory-100 p-8" data-testid="card-monusco">
-                <p className="text-eyebrow text-gold-600">MONUSCO</p>
-                <h3 className="mt-2 font-display text-2xl text-ink-900">Anti-disinformation campaign</h3>
-                <p className="mt-4 text-sm leading-relaxed text-ink-700">According to the Founder, TOMI took part in a campaign against disinformation associated with MONUSCO, the United Nations mission in the Democratic Republic of the Congo. This description does not imply endorsement.</p>
-                <div className="mt-6 border-l-2 border-gold-500 pl-4">
-                  <p className="text-sm font-semibold text-ink-900">Film awaiting archive validation</p>
-                </div>
-                <a href="https://monusco.unmissions.org/" target="_blank" rel="noreferrer" className="mt-6 inline-block text-xs font-semibold text-lagoon-600 underline underline-offset-4" data-testid="link-monusco">monusco.unmissions.org</a>
-              </article>
-            </Reveal>
-          </div>
         </div>
       </section>
 

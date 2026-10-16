@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { ArrowUpRight } from 'lucide-react';
-import NativeVideo from '@/components/editorial/NativeVideo';
+import BroadcastFilms from '@/components/editorial/BroadcastFilms';
 import { historyLogo } from '@/lib/partner-history';
 
 const media = (name: string) => `${import.meta.env.BASE_URL}api/documentary/media/${name}`;
@@ -54,34 +54,7 @@ export default function BroadcastOverview() {
           <p className="mt-3 max-w-3xl text-sm italic leading-relaxed text-ink-700">From a Goma runway on international television to the broadcasters named by the Founder: the media relationships behind the documentary journey.</p>
         </header>
 
-        {/* Lead: TV5MONDE excerpt */}
-        <article className="mt-10 grid gap-8 lg:grid-cols-12" data-testid="article-fashion-week-tv5">
-          <figure className="lg:col-span-8">
-            <div className="border border-ink-900 bg-ink-900">
-              <NativeVideo
-                src={media('fashion-week-tv5.mp4')}
-                poster={media('fashion-week-tv5-runway.webp')}
-                width={1280}
-                height={720}
-                className="aspect-video"
-                aria-label="The One Fashion Week, television archive, 1 min 26 s"
-                data-testid="video-fashion-week-tv5"
-              />
-            </div>
-            <figcaption className="mt-3 flex flex-wrap gap-x-4 gap-y-1 border-b border-sand-300 pb-3 text-xs text-ink-700">
-              <span className="font-semibold text-ink-900">TV5MONDE Afrique · France 24</span>
-              <span>1 min 26 s</span>
-              <span>Archive supplied by the Founder</span>
-            </figcaption>
-          </figure>
-          <div className="lg:col-span-4 lg:border-l lg:border-sand-300 lg:pl-8">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-gold-700">Lead · Television archive</p>
-            <h3 className="mt-3 font-display text-3xl uppercase leading-tight text-ink-900">The One Fashion Week, on international television.</h3>
-            <p className="mt-4 text-[15px] leading-relaxed text-ink-800">A television archive of The One Fashion Week, supplied by the Founder.</p>
-            <p className="mt-4 text-sm leading-relaxed text-ink-800">This 1 min 26 s excerpt is distinct from the 2 min 01 s TV5MONDE report listed in the Edition 4 section below.</p>
-            <p className="mt-6 border-t border-sand-300 pt-4 text-xs leading-relaxed text-ink-700">Visible broadcaster credits: TV5MONDE Afrique · France 24. Archive supplied by the Founder.</p>
-          </div>
-        </article>
+        <BroadcastFilms embedded />
 
         {/* CANAL+ feature */}
         <article id="canal-profile" className="mt-16 scroll-mt-24 border-t-2 border-ink-900 pt-8" data-testid="documentary-canal-plus">
