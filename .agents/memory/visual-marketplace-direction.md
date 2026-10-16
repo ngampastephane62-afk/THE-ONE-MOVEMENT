@@ -35,7 +35,13 @@ The agreed total TOMI sales commission is 5%, and the humanitarian contribution 
 
 **Why:** The stakeholder explicitly entered a total commission of 5 and selected “5 % du prix de vente, financés sur la commission TOMI”.
 
-**How to apply:** On a 100-unit product sale, allocate 95 to the seller and 5 to humanitarian purposes before separately agreed processing fees, taxes, shipping and refund adjustments. TOMI retains no operating margin from this commission. Payment-fee responsibility, refunds, fulfilment and authorisations must still be settled before activating real payments; do not silently subtract provider fees from the promised humanitarian 5%.
+**How to apply:** On a 100-unit product sale, allocate 95 to the seller and 5 to humanitarian purposes before processing fees, taxes, shipping and refund adjustments. TOMI retains no operating margin from this commission. Refund handling, fulfilment details and authorisations must still be settled before activating real payments; do not silently subtract provider fees from the promised humanitarian 5%.
+
+Payment-provider processing fees are paid by the seller and deducted from the seller's 95% share.
+
+**Why:** The stakeholder explicitly selected “Le vendeur, déduits de sa part de 95 %”.
+
+**How to apply:** Seller net proceeds equal the seller allocation minus actual disclosed processing fees. Do not quote a provider fee rate before verifying it, charge the buyer an invented supplement, or reduce the humanitarian allocation to cover fees.
 
 Marketplace sellers and buyers should manage transactions through their own profiles. The stakeholder wants a stylist's subscription to enable product listings, with sellers receiving proceeds in their own bank accounts and uploading a business licence to qualify.
 
