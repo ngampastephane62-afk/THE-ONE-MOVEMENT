@@ -5,6 +5,103 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+export type PressEntryInputCategory = typeof PressEntryInputCategory[keyof typeof PressEntryInputCategory];
+
+
+export const PressEntryInputCategory = {
+  movement: 'movement',
+  founder: 'founder',
+  editions: 'editions',
+  humanitarian: 'humanitarian',
+} as const;
+
+export type PressEntryInputStatus = typeof PressEntryInputStatus[keyof typeof PressEntryInputStatus];
+
+
+export const PressEntryInputStatus = {
+  draft: 'draft',
+  published: 'published',
+  archived: 'archived',
+} as const;
+
+export interface PressEntryInput {
+  /**
+     * @minLength 2
+     * @maxLength 240
+     */
+  title: string;
+  /**
+     * @minLength 2
+     * @maxLength 120
+     */
+  outlet: string;
+  /**
+     * @minLength 10
+     * @maxLength 1800
+     */
+  summary: string;
+  category: PressEntryInputCategory;
+  /** @maxLength 80 */
+  dateLabel: string;
+  /** @maxLength 2000 */
+  sourceUrl: string;
+  /**
+     * @minLength 8
+     * @maxLength 2000
+     */
+  websiteUrl: string;
+  status: PressEntryInputStatus;
+  /**
+     * @maxItems 12
+     * @items.maxLength 80
+     */
+  evidenceUploadIds: string[];
+  /**
+     * @maxItems 12
+     * @items.minimum 0
+     * @items.maximum 11
+     */
+  removeEvidenceIndexes: number[];
+  /** @maxLength 80 */
+  logoUploadId?: string;
+  removeLogo: boolean;
+  publicAssetsConsent: boolean;
+}
+
+export type PressEntryCategory = typeof PressEntryCategory[keyof typeof PressEntryCategory];
+
+
+export const PressEntryCategory = {
+  movement: 'movement',
+  founder: 'founder',
+  editions: 'editions',
+  humanitarian: 'humanitarian',
+} as const;
+
+export type PressEntryStatus = typeof PressEntryStatus[keyof typeof PressEntryStatus];
+
+
+export const PressEntryStatus = {
+  draft: 'draft',
+  published: 'published',
+  archived: 'archived',
+} as const;
+
+export interface PressEntry {
+  id: number;
+  title: string;
+  outlet: string;
+  summary: string;
+  category: PressEntryCategory;
+  dateLabel: string;
+  sourceUrl: string;
+  websiteUrl: string;
+  status: PressEntryStatus;
+  evidenceUrls: string[];
+  /** @nullable */
+  logoUrl: string | null;
+}
+
 export interface MediaInquiryInput {
   /**
      * @minLength 1

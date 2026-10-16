@@ -8,7 +8,7 @@ import { Show } from '@clerk/react';
  * JOIN THE MOVEMENT is rendered as a separated CTA button.
  * Sign In, Home, Community, Opportunities visible in mobile menu + footer.
  */
-const HEADER_NAV_SLUGS = ['/our-vision', '/ecosystem', '/programs', '/media', '/partners'];
+const HEADER_NAV_SLUGS = ['/our-vision', '/ecosystem', '/programs', '/media', '/news', '/partners'];
 
 interface LayoutProps {
   children: ReactNode;
@@ -69,13 +69,13 @@ export default function Layout({ children }: LayoutProps) {
             className="hidden lg:flex items-center gap-0"
           >
             {headerNavItems.map((item) => {
-              const isActive = location === item.path;
+              const isActive = location === item.path || (item.path === '/news' && location.startsWith('/news/'));
               return (
                 <Link
                   key={item.path}
                   href={item.path}
                   className={[
-                    'relative px-4 py-5 text-xs font-medium uppercase',
+                    'relative px-2.5 xl:px-4 py-5 text-xs font-medium uppercase',
                     'transition-colors duration-150',
                     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-1',
                     'rounded-sharp',
@@ -90,7 +90,7 @@ export default function Layout({ children }: LayoutProps) {
                   {isActive && (
                     <span
                       aria-hidden="true"
-                      className="absolute inset-x-4 bottom-0 h-[2px]"
+                      className="absolute inset-x-2.5 xl:inset-x-4 bottom-0 h-[2px]"
                       style={{ backgroundColor: 'hsl(43 80% 73%)' }}
                     />
                   )}
@@ -275,6 +275,9 @@ export default function Layout({ children }: LayoutProps) {
                   ['Ecosystem', '/ecosystem'],
                   ['Programs', '/programs'],
                   ['Media', '/media'],
+                  ['News', '/news'],
+                  ['Thanks Emirates', '/thanks-emirates'],
+                  ['The One Documentary', '/the-one-documentary'],
                 ].map(([label, href]) => (
                   <li key={label}>
                     <Link

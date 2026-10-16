@@ -44,6 +44,8 @@ import type {
   NetworkState,
   NetworkUploadInput,
   NetworkUploadTicket,
+  PressEntry,
+  PressEntryInput,
   SavedItemInput
 } from './api.schemas';
 
@@ -73,6 +75,494 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   }
   return result;
 };
+
+export const getGetNewsArchiveUrl = () => {
+
+
+
+
+  return `/api/news`
+}
+
+/**
+ * @summary Published coverage from TOMI's historical press archive
+ */
+export const getNewsArchive = async ( options?: Parameters<typeof customFetch>[1]): Promise<PressEntry[]> => {
+
+  return customFetch<PressEntry[]>(getGetNewsArchiveUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetNewsArchiveQueryKey = () => {
+    return [
+    `/api/news`
+    ] as const;
+    }
+
+
+export const getGetNewsArchiveQueryOptions = <TData = Awaited<ReturnType<typeof getNewsArchive>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getNewsArchive>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetNewsArchiveQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getNewsArchive>>> = ({ signal }) => getNewsArchive({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getNewsArchive>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetNewsArchiveQueryResult = NonNullable<Awaited<ReturnType<typeof getNewsArchive>>>
+export type GetNewsArchiveQueryError = ErrorType<unknown>
+
+
+export function useGetNewsArchive<TData = Awaited<ReturnType<typeof getNewsArchive>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getNewsArchive>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getNewsArchive>>,
+          TError,
+          Awaited<ReturnType<typeof getNewsArchive>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetNewsArchive<TData = Awaited<ReturnType<typeof getNewsArchive>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getNewsArchive>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getNewsArchive>>,
+          TError,
+          Awaited<ReturnType<typeof getNewsArchive>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetNewsArchive<TData = Awaited<ReturnType<typeof getNewsArchive>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getNewsArchive>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Published coverage from TOMI's historical press archive
+ */
+
+export function useGetNewsArchive<TData = Awaited<ReturnType<typeof getNewsArchive>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getNewsArchive>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetNewsArchiveQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getGetNewsAdminUrl = () => {
+
+
+
+
+  return `/api/news/admin`
+}
+
+/**
+ * @summary Founder-only published, draft and archived coverage
+ */
+export const getNewsAdmin = async ( options?: Parameters<typeof customFetch>[1]): Promise<PressEntry[]> => {
+
+  return customFetch<PressEntry[]>(getGetNewsAdminUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetNewsAdminQueryKey = () => {
+    return [
+    `/api/news/admin`
+    ] as const;
+    }
+
+
+export const getGetNewsAdminQueryOptions = <TData = Awaited<ReturnType<typeof getNewsAdmin>>, TError = ErrorType<void>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getNewsAdmin>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetNewsAdminQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getNewsAdmin>>> = ({ signal }) => getNewsAdmin({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getNewsAdmin>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetNewsAdminQueryResult = NonNullable<Awaited<ReturnType<typeof getNewsAdmin>>>
+export type GetNewsAdminQueryError = ErrorType<void>
+
+
+export function useGetNewsAdmin<TData = Awaited<ReturnType<typeof getNewsAdmin>>, TError = ErrorType<void>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getNewsAdmin>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getNewsAdmin>>,
+          TError,
+          Awaited<ReturnType<typeof getNewsAdmin>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetNewsAdmin<TData = Awaited<ReturnType<typeof getNewsAdmin>>, TError = ErrorType<void>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getNewsAdmin>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getNewsAdmin>>,
+          TError,
+          Awaited<ReturnType<typeof getNewsAdmin>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetNewsAdmin<TData = Awaited<ReturnType<typeof getNewsAdmin>>, TError = ErrorType<void>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getNewsAdmin>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Founder-only published, draft and archived coverage
+ */
+
+export function useGetNewsAdmin<TData = Awaited<ReturnType<typeof getNewsAdmin>>, TError = ErrorType<void>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getNewsAdmin>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetNewsAdminQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getCreateNewsEntryUrl = () => {
+
+
+
+
+  return `/api/news/admin`
+}
+
+/**
+ * @summary Founder creates coverage with explicit public image consent
+ */
+export const createNewsEntry = async (pressEntryInput: PressEntryInput, options?: Parameters<typeof customFetch>[1]): Promise<PressEntry> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<PressEntry>(getCreateNewsEntryUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(pressEntryInput)
+  }
+);}
+
+
+
+
+
+export const getCreateNewsEntryMutationKey = () => ['createNewsEntry'] as const;
+
+export const getCreateNewsEntryMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createNewsEntry>>, TError,CreateNewsEntryMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof createNewsEntry>>, TError,CreateNewsEntryMutationVariables, TContext> => {
+
+const mutationKey = getCreateNewsEntryMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createNewsEntry>>, CreateNewsEntryMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  createNewsEntry(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateNewsEntryMutationResult = NonNullable<Awaited<ReturnType<typeof createNewsEntry>>>
+    export type CreateNewsEntryMutationBody = BodyType<PressEntryInput>
+    export type CreateNewsEntryMutationError = ErrorType<void>
+    export type CreateNewsEntryMutationVariables = {data: BodyType<PressEntryInput>}
+
+    /**
+ * @summary Founder creates coverage with explicit public image consent
+ */
+export const useCreateNewsEntry = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createNewsEntry>>, TError,CreateNewsEntryMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createNewsEntry>>,
+        TError,
+        CreateNewsEntryMutationVariables,
+        TContext
+      > => {
+      return useMutation(getCreateNewsEntryMutationOptions(options), queryClient);
+    }
+
+export const getUpdateNewsEntryUrl = (id: number,) => {
+
+
+
+
+  return `/api/news/admin/${id}`
+}
+
+/**
+ * @summary Founder edits, publishes, unpublishes or archives coverage
+ */
+export const updateNewsEntry = async (id: number,
+    pressEntryInput: PressEntryInput, options?: Parameters<typeof customFetch>[1]): Promise<PressEntry> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<PressEntry>(getUpdateNewsEntryUrl(id),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(pressEntryInput)
+  }
+);}
+
+
+
+
+
+export const getUpdateNewsEntryMutationKey = () => ['updateNewsEntry'] as const;
+
+export const getUpdateNewsEntryMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateNewsEntry>>, TError,UpdateNewsEntryMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateNewsEntry>>, TError,UpdateNewsEntryMutationVariables, TContext> => {
+
+const mutationKey = getUpdateNewsEntryMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateNewsEntry>>, UpdateNewsEntryMutationVariables> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  updateNewsEntry(id,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateNewsEntryMutationResult = NonNullable<Awaited<ReturnType<typeof updateNewsEntry>>>
+    export type UpdateNewsEntryMutationBody = BodyType<PressEntryInput>
+    export type UpdateNewsEntryMutationError = ErrorType<void>
+    export type UpdateNewsEntryMutationVariables = {id: number;data: BodyType<PressEntryInput>}
+
+    /**
+ * @summary Founder edits, publishes, unpublishes or archives coverage
+ */
+export const useUpdateNewsEntry = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateNewsEntry>>, TError,UpdateNewsEntryMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof updateNewsEntry>>,
+        TError,
+        UpdateNewsEntryMutationVariables,
+        TContext
+      > => {
+      return useMutation(getUpdateNewsEntryMutationOptions(options), queryClient);
+    }
+
+export const getGetNewsAssetUrl = (id: number,
+    asset: string,) => {
+
+
+
+
+  return `/api/news/${id}/assets/${asset}`
+}
+
+/**
+ * @summary Public evidence or logo of a published entry, private for drafts
+ */
+export const getNewsAsset = async (id: number,
+    asset: string, options?: Parameters<typeof customFetch>[1]): Promise<Blob> => {
+
+  return customFetch<Blob>(getGetNewsAssetUrl(id,asset),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetNewsAssetQueryKey = (id: number,
+    asset: string,) => {
+    return [
+    `/api/news/${id}/assets/${asset}`
+    ] as const;
+    }
+
+
+export const getGetNewsAssetQueryOptions = <TData = Awaited<ReturnType<typeof getNewsAsset>>, TError = ErrorType<void>>(id: number,
+    asset: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getNewsAsset>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetNewsAssetQueryKey(id,asset);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getNewsAsset>>> = ({ signal }) => getNewsAsset(id,asset, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: id !== null && id !== undefined && asset !== null && asset !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getNewsAsset>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetNewsAssetQueryResult = NonNullable<Awaited<ReturnType<typeof getNewsAsset>>>
+export type GetNewsAssetQueryError = ErrorType<void>
+
+
+export function useGetNewsAsset<TData = Awaited<ReturnType<typeof getNewsAsset>>, TError = ErrorType<void>>(
+ id: number,
+    asset: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getNewsAsset>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getNewsAsset>>,
+          TError,
+          Awaited<ReturnType<typeof getNewsAsset>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetNewsAsset<TData = Awaited<ReturnType<typeof getNewsAsset>>, TError = ErrorType<void>>(
+ id: number,
+    asset: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getNewsAsset>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getNewsAsset>>,
+          TError,
+          Awaited<ReturnType<typeof getNewsAsset>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetNewsAsset<TData = Awaited<ReturnType<typeof getNewsAsset>>, TError = ErrorType<void>>(
+ id: number,
+    asset: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getNewsAsset>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Public evidence or logo of a published entry, private for drafts
+ */
+
+export function useGetNewsAsset<TData = Awaited<ReturnType<typeof getNewsAsset>>, TError = ErrorType<void>>(
+ id: number,
+    asset: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getNewsAsset>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetNewsAssetQueryOptions(id,asset,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
 
 export const getCreateMediaRequestUrl = () => {
 

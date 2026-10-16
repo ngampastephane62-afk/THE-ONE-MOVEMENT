@@ -6,6 +6,7 @@ import homeReelsRouter from "./homeReels";
 import memberRouter from "./member";
 import networkRouter from "./network";
 import mediaRequestsRouter from "./mediaRequests";
+import newsArchiveRouter from "./newsArchive";
 
 const router: IRouter = Router();
 
@@ -16,5 +17,6 @@ router.use(homeReelsRouter);
 router.use(memberRouter);
 router.use(networkRouter);
 router.use(mediaRequestsRouter);
+router.use(newsArchiveRouter);
 
 export default router;

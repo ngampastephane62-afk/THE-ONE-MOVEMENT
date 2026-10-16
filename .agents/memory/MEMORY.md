@@ -11,3 +11,4 @@
 - [Stripe connector runtime](stripe-connector-runtime.md) — proxy authentication differs from legacy secret-key examples; preserve StripeSync's installed migration directory.
 - [Project control and Tropik licensing](project-control.md) — owner approval for releases and connected-account changes; verify ownership and licensing rather than infer them.
 - [Dependency remediation](dependency-remediation.md) — remove unnecessary vulnerable chains rather than suppress advisories; verify production-only auth transport with loopback tests.
+- [Editorial boundaries](editorial-content-boundaries.md) — News press archive vs Media catalogue, documented partners, Goma donations, Thanks Emirates participation and documentary claims.

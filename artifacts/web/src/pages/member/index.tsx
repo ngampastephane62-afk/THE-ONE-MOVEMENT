@@ -4,7 +4,7 @@ import PendingInvitation from '@/components/network/PendingInvitation';
 import { Helmet } from 'react-helmet-async';
 import { Link, Redirect, Route, Switch, useLocation } from 'wouter';
 import { Show, useAuth, useUser, useClerk } from '@clerk/react';
-import { Award, Bell, UserPlus, Briefcase, HandHeart, Home, LogOut, MessageSquare, Settings, Shield, Users } from 'lucide-react';
+import { Award, Bell, Sparkles, UserPlus, Briefcase, HandHeart, Home, LogOut, MessageSquare, Settings, Shield, Users } from 'lucide-react';
 import {
   useGetMemberProfile, getGetMemberProfileQueryKey, useGetNetworkState, getGetNetworkStateQueryKey,
 } from '@workspace/api-client-react';
@@ -22,6 +22,7 @@ import Certifications from './Certifications';
 import Admin from './Admin';
 import SettingsPage from './Settings';
 import Connections from './Connections';
+import ThanksEmiratesForm from './ThanksEmirates';
 import { getPendingSector, clearPendingSector } from '@/lib/network-invitations';
 import { SECTORS } from '@/lib/sectors-data';
 
@@ -140,9 +141,15 @@ function AppShell({ me, base, children }: Ctx & { children: ReactNode }) {
           ))}
           <Link href="/member/invite" className={`flex items-center gap-3 rounded-full px-4 py-2.5 text-sm ${active('/member/invite') ? 'bg-lagoon-900 font-semibold text-gold-400' : 'text-ink-800 hover:bg-ivory-200'}`} data-testid="nav-invite"><UserPlus className="h-4 w-4" />Invite{base.growth && !me.founder && <span className="ml-auto text-[10px] text-sand-400">{base.growth.qualifiedInvites}</span>}</Link>
           <Link href="/member/settings" className={`flex items-center gap-3 rounded-full px-4 py-2.5 text-sm ${active('/member/settings') ? 'bg-lagoon-900 font-semibold text-gold-400' : 'text-ink-800 hover:bg-ivory-200'}`}><Settings className="h-4 w-4" />Settings & workspace</Link>
-          <Link href="/donate" className="mt-4 flex items-center gap-3 rounded-2xl border border-gold-500/40 bg-gold-500/10 px-4 py-3 text-sm text-ink-800 hover:border-gold-500" data-testid="link-humanitarian"><HandHeart className="h-4 w-4 text-gold-700" />Humanitarian action</Link>
+          <Link href="/member/thanks-emirates" className={`mt-4 flex items-center gap-3 rounded-2xl border border-lagoon-600/40 px-4 py-3 text-sm ${active('/member/thanks-emirates') ? 'bg-lagoon-900 text-gold-400' : 'bg-lagoon-600/5 text-ink-800 hover:border-lagoon-600'}`} data-testid="nav-thanks-emirates"><Sparkles className="h-4 w-4 text-lagoon-600" />Thanks Emirates</Link>
+          <Link href="/donate" className="mt-2 flex items-center gap-3 rounded-2xl border border-gold-500/40 bg-gold-500/10 px-4 py-3 text-sm text-ink-800 hover:border-gold-500" data-testid="link-humanitarian"><HandHeart className="h-4 w-4 text-gold-700" />Humanitarian action</Link>
         </aside>
-        <main className="min-w-0 flex-1">{me.enabled ? <PendingInvitation /> : !personalPage && <ActivationPrompt />}{!personalPage && <CompleteProfile me={me} />}{!personalPage && <PendingSector />}{children}</main>
+        <main className="min-w-0 flex-1">
+          <Link href="/member/thanks-emirates" className="mx-3 mt-4 mb-3 flex items-center justify-between gap-3 rounded-xl border border-gold-500/40 bg-lagoon-900 px-4 py-3 text-xs text-ivory-100 md:hidden" data-testid="nav-thanks-emirates-mobile">
+            <span>Thanks Emirates · Share your story</span><Sparkles className="h-4 w-4 shrink-0 text-gold-400" />
+          </Link>
+          {me.enabled ? <PendingInvitation /> : !personalPage && <ActivationPrompt />}{!personalPage && <CompleteProfile me={me} />}{!personalPage && <PendingSector />}{children}
+        </main>
       </div>
       <nav aria-label="Network" className="fixed inset-x-0 bottom-0 z-40 grid border-t border-sand-200 bg-ivory-50/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden" style={{ gridTemplateColumns: `repeat(${nav.length}, 1fr)` }}>
         {nav.map(({ href, label, icon: I, exact }) => (
@@ -197,6 +204,7 @@ function NetworkGate() {
           <Route path="/member/admin">{me.founder ? <Admin /> : <Redirect to="/member" replace />}</Route>
           <Route path="/member/invite"><div className="flex flex-col gap-4 px-3 pt-4 md:px-0 md:pt-0"><h1 className="font-display text-2xl text-ink-900">Invite your community</h1><InvitationProgress growth={state.growth} founder={me.founder} /></div></Route>
           <Route path="/member/settings" component={SettingsPage} />
+          <Route path="/member/thanks-emirates" component={ThanksEmiratesForm} />
           <Route><Redirect to="/member" replace /></Route>
         </Switch>
       </AppShell>

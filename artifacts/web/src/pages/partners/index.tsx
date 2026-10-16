@@ -1,7 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'wouter';
 import PartnerOrbitStage from '@/components/partners/PartnerOrbitStage';
-import MediaCatalogue from '@/components/partners/MediaCatalogue';
 import SectionHeading from '@/components/SectionHeading';
 import { Button } from '@/components/ui/button';
 import Reveal from '@/components/Reveal';
@@ -112,16 +111,15 @@ export default function Partners() {
         </div>
       </section>
 
-      <MediaCatalogue />
-
       {/* POLICY */}
       <section className="py-12 bg-ivory-50 border-t border-sand-200">
         <div className="mx-auto max-w-3xl px-6 text-center">
           <Reveal>
             <p className="text-[10px] font-semibold text-ink-500 tracking-[0.2em] uppercase">OUR DISPLAY POLICY</p>
             <p className="mt-3 text-sm text-ink-700 leading-relaxed">
-              Confirmed partners appear above. Organizations and individuals who enquire are reviewed before any public listing. Outlets in the media coverage catalogue are not partners, do not imply endorsement, and placement requests are reviewed by the administrator without automatic checkout or guaranteed publication.
+              Confirmed partners appear above. Organizations and individuals who enquire are reviewed before any public listing.
             </p>
+            <Link href="/media" className="mt-4 inline-block text-sm font-semibold text-lagoon-700 underline underline-offset-4">Looking for press coverage? Visit Media.</Link>
           </Reveal>
         </div>
       </section>

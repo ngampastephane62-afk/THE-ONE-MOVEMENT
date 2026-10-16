@@ -9,6 +9,185 @@ import * as zod from 'zod';
 
 
 /**
+ * @summary Published coverage from TOMI's historical press archive
+ */
+export const GetNewsArchiveResponseItem = zod.object({
+  "id": zod.number().int(),
+  "title": zod.string(),
+  "outlet": zod.string(),
+  "summary": zod.string(),
+  "category": zod.enum(['movement', 'founder', 'editions', 'humanitarian']),
+  "dateLabel": zod.string(),
+  "sourceUrl": zod.string(),
+  "websiteUrl": zod.string(),
+  "status": zod.enum(['draft', 'published', 'archived']),
+  "evidenceUrls": zod.array(zod.string()),
+  "logoUrl": zod.string().nullable()
+})
+export const GetNewsArchiveResponse = zod.array(GetNewsArchiveResponseItem)
+
+
+/**
+ * @summary Founder-only published, draft and archived coverage
+ */
+export const GetNewsAdminResponseItem = zod.object({
+  "id": zod.number().int(),
+  "title": zod.string(),
+  "outlet": zod.string(),
+  "summary": zod.string(),
+  "category": zod.enum(['movement', 'founder', 'editions', 'humanitarian']),
+  "dateLabel": zod.string(),
+  "sourceUrl": zod.string(),
+  "websiteUrl": zod.string(),
+  "status": zod.enum(['draft', 'published', 'archived']),
+  "evidenceUrls": zod.array(zod.string()),
+  "logoUrl": zod.string().nullable()
+})
+export const GetNewsAdminResponse = zod.array(GetNewsAdminResponseItem)
+
+
+/**
+ * @summary Founder creates coverage with explicit public image consent
+ */
+export const createNewsEntryBodyTitleMin = 2;
+export const createNewsEntryBodyTitleMax = 240;
+
+export const createNewsEntryBodyOutletMin = 2;
+export const createNewsEntryBodyOutletMax = 120;
+
+export const createNewsEntryBodySummaryMin = 10;
+export const createNewsEntryBodySummaryMax = 1800;
+
+export const createNewsEntryBodyDateLabelMax = 80;
+
+export const createNewsEntryBodySourceUrlMax = 2000;
+
+export const createNewsEntryBodyWebsiteUrlMin = 8;
+export const createNewsEntryBodyWebsiteUrlMax = 2000;
+
+export const createNewsEntryBodyEvidenceUploadIdsItemMax = 80;
+
+export const createNewsEntryBodyEvidenceUploadIdsMax = 12;
+
+export const createNewsEntryBodyRemoveEvidenceIndexesItemMin = 0;
+export const createNewsEntryBodyRemoveEvidenceIndexesItemMax = 11;
+
+export const createNewsEntryBodyRemoveEvidenceIndexesMax = 12;
+
+export const createNewsEntryBodyLogoUploadIdMax = 80;
+
+
+
+export const CreateNewsEntryBody = zod.object({
+  "title": zod.string().min(createNewsEntryBodyTitleMin).max(createNewsEntryBodyTitleMax),
+  "outlet": zod.string().min(createNewsEntryBodyOutletMin).max(createNewsEntryBodyOutletMax),
+  "summary": zod.string().min(createNewsEntryBodySummaryMin).max(createNewsEntryBodySummaryMax),
+  "category": zod.enum(['movement', 'founder', 'editions', 'humanitarian']),
+  "dateLabel": zod.string().max(createNewsEntryBodyDateLabelMax),
+  "sourceUrl": zod.string().max(createNewsEntryBodySourceUrlMax),
+  "websiteUrl": zod.string().min(createNewsEntryBodyWebsiteUrlMin).max(createNewsEntryBodyWebsiteUrlMax),
+  "status": zod.enum(['draft', 'published', 'archived']),
+  "evidenceUploadIds": zod.array(zod.string().max(createNewsEntryBodyEvidenceUploadIdsItemMax)).max(createNewsEntryBodyEvidenceUploadIdsMax),
+  "removeEvidenceIndexes": zod.array(zod.number().int().min(createNewsEntryBodyRemoveEvidenceIndexesItemMin).max(createNewsEntryBodyRemoveEvidenceIndexesItemMax)).max(createNewsEntryBodyRemoveEvidenceIndexesMax),
+  "logoUploadId": zod.string().max(createNewsEntryBodyLogoUploadIdMax).optional(),
+  "removeLogo": zod.boolean(),
+  "publicAssetsConsent": zod.boolean()
+})
+
+export const CreateNewsEntryResponse = zod.object({
+  "id": zod.number().int(),
+  "title": zod.string(),
+  "outlet": zod.string(),
+  "summary": zod.string(),
+  "category": zod.enum(['movement', 'founder', 'editions', 'humanitarian']),
+  "dateLabel": zod.string(),
+  "sourceUrl": zod.string(),
+  "websiteUrl": zod.string(),
+  "status": zod.enum(['draft', 'published', 'archived']),
+  "evidenceUrls": zod.array(zod.string()),
+  "logoUrl": zod.string().nullable()
+})
+
+
+/**
+ * @summary Founder edits, publishes, unpublishes or archives coverage
+ */
+export const UpdateNewsEntryParams = zod.object({
+  "id": zod.coerce.number().int()
+})
+
+export const updateNewsEntryBodyTitleMin = 2;
+export const updateNewsEntryBodyTitleMax = 240;
+
+export const updateNewsEntryBodyOutletMin = 2;
+export const updateNewsEntryBodyOutletMax = 120;
+
+export const updateNewsEntryBodySummaryMin = 10;
+export const updateNewsEntryBodySummaryMax = 1800;
+
+export const updateNewsEntryBodyDateLabelMax = 80;
+
+export const updateNewsEntryBodySourceUrlMax = 2000;
+
+export const updateNewsEntryBodyWebsiteUrlMin = 8;
+export const updateNewsEntryBodyWebsiteUrlMax = 2000;
+
+export const updateNewsEntryBodyEvidenceUploadIdsItemMax = 80;
+
+export const updateNewsEntryBodyEvidenceUploadIdsMax = 12;
+
+export const updateNewsEntryBodyRemoveEvidenceIndexesItemMin = 0;
+export const updateNewsEntryBodyRemoveEvidenceIndexesItemMax = 11;
+
+export const updateNewsEntryBodyRemoveEvidenceIndexesMax = 12;
+
+export const updateNewsEntryBodyLogoUploadIdMax = 80;
+
+
+
+export const UpdateNewsEntryBody = zod.object({
+  "title": zod.string().min(updateNewsEntryBodyTitleMin).max(updateNewsEntryBodyTitleMax),
+  "outlet": zod.string().min(updateNewsEntryBodyOutletMin).max(updateNewsEntryBodyOutletMax),
+  "summary": zod.string().min(updateNewsEntryBodySummaryMin).max(updateNewsEntryBodySummaryMax),
+  "category": zod.enum(['movement', 'founder', 'editions', 'humanitarian']),
+  "dateLabel": zod.string().max(updateNewsEntryBodyDateLabelMax),
+  "sourceUrl": zod.string().max(updateNewsEntryBodySourceUrlMax),
+  "websiteUrl": zod.string().min(updateNewsEntryBodyWebsiteUrlMin).max(updateNewsEntryBodyWebsiteUrlMax),
+  "status": zod.enum(['draft', 'published', 'archived']),
+  "evidenceUploadIds": zod.array(zod.string().max(updateNewsEntryBodyEvidenceUploadIdsItemMax)).max(updateNewsEntryBodyEvidenceUploadIdsMax),
+  "removeEvidenceIndexes": zod.array(zod.number().int().min(updateNewsEntryBodyRemoveEvidenceIndexesItemMin).max(updateNewsEntryBodyRemoveEvidenceIndexesItemMax)).max(updateNewsEntryBodyRemoveEvidenceIndexesMax),
+  "logoUploadId": zod.string().max(updateNewsEntryBodyLogoUploadIdMax).optional(),
+  "removeLogo": zod.boolean(),
+  "publicAssetsConsent": zod.boolean()
+})
+
+export const UpdateNewsEntryResponse = zod.object({
+  "id": zod.number().int(),
+  "title": zod.string(),
+  "outlet": zod.string(),
+  "summary": zod.string(),
+  "category": zod.enum(['movement', 'founder', 'editions', 'humanitarian']),
+  "dateLabel": zod.string(),
+  "sourceUrl": zod.string(),
+  "websiteUrl": zod.string(),
+  "status": zod.enum(['draft', 'published', 'archived']),
+  "evidenceUrls": zod.array(zod.string()),
+  "logoUrl": zod.string().nullable()
+})
+
+
+/**
+ * @summary Public evidence or logo of a published entry, private for drafts
+ */
+export const GetNewsAssetParams = zod.object({
+  "id": zod.coerce.number().int(),
+  "asset": zod.coerce.string()
+})
+
+export const GetNewsAssetResponse = zod.unknown()
+
+
+/**
  * @summary Request a media placement for administrator review, never checkout
  */
 export const createMediaRequestBodyOutletIdMax = 30;

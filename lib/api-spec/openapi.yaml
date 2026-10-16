@@ -11,6 +11,94 @@ tags:
   - name: health
     description: Health operations
 paths:
+  /news:
+    get:
+      operationId: getNewsArchive
+      tags: [news]
+      summary: Published coverage from TOMI's historical press archive
+      responses:
+        "200":
+          description: Published articles
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {$ref: "#/components/schemas/PressEntry"}
+  /news/admin:
+    get:
+      operationId: getNewsAdmin
+      tags: [news]
+      summary: Founder-only published, draft and archived coverage
+      responses:
+        "200":
+          description: Editorial entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {$ref: "#/components/schemas/PressEntry"}
+        "403": {description: Founder access required}
+    post:
+      operationId: createNewsEntry
+      tags: [news]
+      summary: Founder creates coverage with explicit public image consent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: "#/components/schemas/PressEntryInput"}
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/PressEntry"}
+        "400": {description: Invalid entry}
+        "403": {description: Founder access required}
+  /news/admin/{id}:
+    put:
+      operationId: updateNewsEntry
+      tags: [news]
+      summary: Founder edits, publishes, unpublishes or archives coverage
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: {type: integer}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: "#/components/schemas/PressEntryInput"}
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/PressEntry"}
+        "403": {description: Founder access required}
+        "404": {description: Entry not found}
+  /news/{id}/assets/{asset}:
+    get:
+      operationId: getNewsAsset
+      tags: [news]
+      summary: Public evidence or logo of a published entry, private for drafts
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: {type: integer}
+        - in: path
+          name: asset
+          required: true
+          schema: {type: string}
+      responses:
+        "200":
+          description: Image
+          content:
+            application/octet-stream:
+              schema: {type: string, format: binary}
+        "404": {description: Unavailable}
   /media-requests:
     post:
       operationId: createMediaRequest
@@ -256,6 +344,46 @@ paths:
                 $ref: "#/components/schemas/DetailedHealthStatus"
 components:
   schemas:
+    PressEntryInput:
+      type: object
+      required: [title, outlet, summary, category, dateLabel, sourceUrl, websiteUrl, status, evidenceUploadIds, removeEvidenceIndexes, removeLogo, publicAssetsConsent]
+      properties:
+        title: {type: string, minLength: 2, maxLength: 240}
+        outlet: {type: string, minLength: 2, maxLength: 120}
+        summary: {type: string, minLength: 10, maxLength: 1800}
+        category: {type: string, enum: [movement, founder, editions, humanitarian]}
+        dateLabel: {type: string, maxLength: 80}
+        sourceUrl: {type: string, maxLength: 2000}
+        websiteUrl: {type: string, minLength: 8, maxLength: 2000}
+        status: {type: string, enum: [draft, published, archived]}
+        evidenceUploadIds:
+          type: array
+          maxItems: 12
+          items: {type: string, maxLength: 80}
+        removeEvidenceIndexes:
+          type: array
+          maxItems: 12
+          items: {type: integer, minimum: 0, maximum: 11}
+        logoUploadId: {type: string, maxLength: 80}
+        removeLogo: {type: boolean}
+        publicAssetsConsent: {type: boolean}
+    PressEntry:
+      type: object
+      required: [id, title, outlet, summary, category, dateLabel, sourceUrl, websiteUrl, status, evidenceUrls, logoUrl]
+      properties:
+        id: {type: integer}
+        title: {type: string}
+        outlet: {type: string}
+        summary: {type: string}
+        category: {type: string, enum: [movement, founder, editions, humanitarian]}
+        dateLabel: {type: string}
+        sourceUrl: {type: string}
+        websiteUrl: {type: string}
+        status: {type: string, enum: [draft, published, archived]}
+        evidenceUrls:
+          type: array
+          items: {type: string}
+        logoUrl: {type: ["string", "null"]}
     MediaInquiryInput:
       type: object
       required: [outletId, format, contactName, email, organizationName, country, message, consentAccepted]

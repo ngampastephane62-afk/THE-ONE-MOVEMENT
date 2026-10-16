@@ -19,8 +19,11 @@ import ProgramDetail from '@/pages/programs/detail';
 import Opportunities from '@/pages/opportunities';
 import Impact from '@/pages/impact';
 import Media from '@/pages/media';
+import ThanksEmirates from '@/pages/thanks-emirates';
+import Documentary from '@/pages/documentary';
 import News from '@/pages/news';
 import NewsDetail from '@/pages/news/detail';
+import CoverageDetail from '@/pages/news/coverage';
 import Partners from '@/pages/partners';
 import PartnerDetail from '@/pages/partners/detail';
 import JoinTheMovement from '@/pages/join';
@@ -109,7 +112,10 @@ function Router() {
       <Route path="/opportunities" component={Opportunities} />
       <Route path="/impact" component={Impact} />
       <Route path="/media" component={Media} />
+      <Route path="/thanks-emirates" component={ThanksEmirates} />
+      <Route path="/the-one-documentary" component={Documentary} />
       <Route path="/news" component={News} />
+      <Route path="/news/coverage/:id" component={CoverageDetail} />
       <Route path="/news/:slug" component={NewsDetail} />
       <Route path="/partners" component={Partners} />
       <Route path="/partners/:slug" component={PartnerDetail} />

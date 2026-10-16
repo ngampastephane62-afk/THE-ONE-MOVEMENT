@@ -43,10 +43,8 @@ const FRAMES: Frame[] = [
   supplied('fashion-night', 'Culture', 'A night runway', 'Printed gowns under stage lights in the open air. An image of the celebration The One Fashion Night is designed to be.'),
   photo('summit-goma', 'Leadership', 'The One Summit, Goma', 'Leadership and business conversation held in Goma, DRC.'),
   photo('cultural-performance', 'Culture', 'Cultural performance', 'Performance shared on stage as part of the Movement\'s cultural programme.'),
-  photo('global-encounter', 'Diplomacy', 'Ambassador of Tanzania', 'An encounter with the Ambassador of Tanzania, recorded as a TOMI partner meeting.'),
   supplied('investment-forum', 'Voices', 'A speaker on stage', 'A speaker addressing a room. Supplied archive image; the occasion is not documented here.'),
   photo('casting-group', 'Fashion', 'Casting and creative community', 'Models and creatives gathered at casting, where every body and every origin is welcome.'),
-  photo('conversation', 'Partners', 'Dr Denis Mukwege', 'A conversation with Dr Denis Mukwege, listed in the archive as a TOMI partner.'),
   supplied('fashion-portrait', 'Fashion', 'Editorial portrait', 'Fashion as storytelling: an editorial portrait from the supplied archive.'),
 ];
 
