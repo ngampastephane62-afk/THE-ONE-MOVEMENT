@@ -121,6 +121,8 @@ export async function processStripeWebhook(payload: Buffer, signature: string) {
   const event = JSON.parse(payload.toString()) as Stripe.Event;
   const { processHumanitarianEvent } = await import("./humanitarianPayments");
   await processHumanitarianEvent(event);
+  const { monthlyWebhook } = await import("./monthlyMembership");
+  await monthlyWebhook(event);
   if (event.type === "checkout.session.completed" || event.type === "checkout.session.async_payment_succeeded") {
     await confirmPayment(event.data.object as Stripe.Checkout.Session);
   }

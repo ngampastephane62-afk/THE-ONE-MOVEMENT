@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation, useParams } from 'wouter';
-import { Ban, Copy, UserPlus, Flag, MessageSquare, Palette, LayoutGrid, List, FileText } from 'lucide-react';
+import { Ban, Copy, UserPlus, Flag, MessageSquare, Palette, Building2, LayoutGrid, List, FileText } from 'lucide-react';
 import type { NetworkPost } from '@workspace/api-client-react';
 import ProfileHero, { appearanceOf, onCoverBtn } from '@/components/network/ProfileHero';
 import { useGetNetworkState, getGetNetworkStateQueryKey } from '@workspace/api-client-react';
@@ -71,6 +71,7 @@ export default function ProfilePage() {
             </div>
           )}
           {sectors.length > 0 && <div className="mt-4 flex flex-wrap gap-1.5">{sectors.map((s) => <span key={s.slug} className="rounded-full bg-lagoon-900 px-2.5 py-1 text-[10px] uppercase tracking-wider text-gold-400">{s.name}</span>)}</div>}
+          <Link href={mine ? '/member/business' : `/member/business/${p.id}`} className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-lagoon-700 hover:underline" data-testid="link-business-detail"><Building2 className="h-3.5 w-3.5" />{mine ? 'My company page and attestations' : 'Company page and attestations'}</Link>
           {mine && me.isPublic && <PublicLink id={me.id} />}
           {!mine && (
             <div className="mt-4 flex gap-4 border-t border-sand-100 pt-3 text-xs text-sand-400">
@@ -138,7 +139,7 @@ function PostGrid({ posts, onOpen }: { posts: NetworkPost[]; onOpen: (id: number
         return (
           <button key={x.id} type="button" onClick={() => onOpen(x.id)} className="group relative aspect-square overflow-hidden rounded-md bg-lagoon-900 text-left sm:rounded-xl" aria-label={`Open post: ${x.text.slice(0, 60) || 'media'}`} data-testid={`tile-post-${x.id}`}>
             {img ? <img src={img.url} alt="" loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
-              : vid ? <video src={vid.url} muted playsInline preload="metadata" className="h-full w-full object-cover" />
+              : vid ? <video src={vid.url} muted playsInline preload="metadata" className="h-full w-full object-contain" />
               : <span className="flex h-full flex-col justify-between bg-[linear-gradient(150deg,hsl(187_67%_12%),hsl(189_74%_24%))] p-2.5 sm:p-4"><FileText className="h-4 w-4 text-gold-400" /><span className="line-clamp-4 font-display text-[11px] leading-snug text-ivory-100 sm:text-sm">{x.text}</span></span>}
             <span className="absolute inset-x-0 bottom-0 flex gap-3 bg-gradient-to-t from-lagoon-900/80 to-transparent px-2 pb-1.5 pt-6 text-[10px] font-semibold text-ivory-50 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">{x.likes} likes · {x.comments.length} comments</span>
           </button>

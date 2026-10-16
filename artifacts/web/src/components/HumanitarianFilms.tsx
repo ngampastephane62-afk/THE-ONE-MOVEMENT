@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { AlertTriangle, RotateCw } from 'lucide-react';
+import SocialVideo from './editorial/SocialVideo';
 
 const base = `${import.meta.env.BASE_URL}api/humanitarian-media/`;
 
@@ -54,7 +55,7 @@ function FilmPlayer({ film }: { film: Film }) {
         <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-coral-500" aria-hidden />
         <span>Content notice: this film speaks of armed conflict, violence, trauma and death. It does not play automatically — start it when you are ready.</span>
       </p>
-      <div className="relative overflow-hidden border border-gold-500/30 bg-ink-950" style={{ aspectRatio: film.aspect }}>
+      <div className="relative overflow-hidden border border-gold-500/30 bg-ink-950" style={failed ? { aspectRatio: film.aspect } : undefined}>
         {failed ? (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center" role="alert">
             <p className="text-sm text-ivory-200">This film could not be loaded.</p>
@@ -63,9 +64,11 @@ function FilmPlayer({ film }: { film: Film }) {
             </button>
           </div>
         ) : (
-          <video
+          <SocialVideo
+            videoId={film.slug === 'panzi-appeal' ? 'panzi' : 'nyota'}
+            title={film.title}
             key={attempt}
-            className="h-full w-full object-contain"
+            className="bg-ink-950"
             controls
             playsInline
             preload="none"
@@ -78,7 +81,7 @@ function FilmPlayer({ film }: { film: Film }) {
             <source src={`${base}${film.slug}.webm`} type="video/webm" />
             <source src={`${base}${film.slug}.mp4`} type="video/mp4" onError={() => setFailed(true)} />
             Your browser cannot play this video.
-          </video>
+          </SocialVideo>
         )}
       </div>
     </figure>

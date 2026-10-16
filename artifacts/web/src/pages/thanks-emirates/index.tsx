@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
-import HeroSurface from '@/components/HeroSurface';
+import EmiratesHero from '@/components/editorial/EmiratesHero';
 import GoldThread from '@/components/GoldThread';
 import Reveal from '@/components/Reveal';
 
@@ -65,10 +65,10 @@ export default function ThanksEmirates() {
         <meta property="og:title" content="Thanks Emirates — Thank You, Emirates. We Are One." />
       </Helmet>
 
-      <HeroSurface glowOrigin="behind" minHeight="86vh">
-        <div className="mx-auto w-full max-w-6xl px-6 py-section-lg">
+      <EmiratesHero>
+        <div className="mx-auto w-full max-w-6xl px-6 pt-32">
           <p className="text-eyebrow text-gold-400 animate-cinematic-1">A TOMI INITIATIVE · #THANKSEMIRATES</p>
-          <h1 className="mt-6 text-display-xl text-ivory-100" style={{ textWrap: 'balance' }}>
+          <h1 className="mt-6 font-display text-[clamp(3.25rem,11vw,8.5rem)] leading-[0.9] tracking-[-0.02em] text-ivory-100" style={{ textWrap: 'balance' }}>
             <span className="block animate-cinematic-1">THANK YOU,</span><span className="block animate-cinematic-2 text-gold-400">EMIRATES.</span>
           </h1>
           <p className="mt-6 font-display text-xl tracking-[0.2em] text-ivory-200 animate-cinematic-3">WE ARE ONE.</p>
@@ -78,7 +78,7 @@ export default function ThanksEmirates() {
             <div className="mt-10"><Link href="/member/thanks-emirates" data-testid="link-share-story"><Button size="xl">SHARE YOUR STORY</Button></Link></div>
           </div>
         </div>
-      </HeroSurface>
+      </EmiratesHero>
 
       <section className="py-section-xl">
         <div className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-12">
@@ -229,6 +229,19 @@ export default function ThanksEmirates() {
             <div><p className="font-display text-lg text-ink-900">In place</p><ul className="mt-3 space-y-2 text-sm text-ink-800"><li>Seven operating platforms</li><li>Media and creator network</li><li>Five delivered editions</li><li>Member story submissions</li></ul></div>
             <div><p className="font-display text-lg text-ink-900">To build</p><ul className="mt-3 space-y-2 text-sm text-ink-800"><li>Co-created campaign identity</li><li>November recognition moment</li><li>Humanitarian and innovation alignment</li><li>Dedicated app section</li></ul></div>
           </div>
+        </div>
+      </section>
+
+      <section className="border-t border-sand-300 bg-ivory-50 py-section-lg">
+        <div className="mx-auto grid max-w-6xl gap-8 px-6 md:grid-cols-12 md:items-end">
+          <div className="md:col-span-6">
+            <p className="text-eyebrow text-gold-600">THANKS WORLD · REGIONAL DIRECTORY</p>
+            <h2 className="mt-4 text-display-md text-ink-900">The same gratitude, in other regions.</h2>
+          </div>
+          <ul className="grid gap-px bg-sand-300 sm:grid-cols-2 md:col-span-6">
+            <li><Link href="/thanks-world#africa" className="block bg-ivory-50 p-6 transition-colors hover:bg-ivory-100" data-testid="link-thanks-africa"><p className="font-display text-2xl text-ink-900">Thanks Africa</p><p className="mt-1 text-xs uppercase tracking-wider text-gold-600">Impact directory</p></Link></li>
+            <li><Link href="/thanks-world#usa" className="block bg-ivory-50 p-6 transition-colors hover:bg-ivory-100" data-testid="link-thanks-usa"><p className="font-display text-2xl text-ink-900">Thanks USA</p><p className="mt-1 text-xs uppercase tracking-wider text-gold-600">Impact directory</p></Link></li>
+          </ul>
         </div>
       </section>
 

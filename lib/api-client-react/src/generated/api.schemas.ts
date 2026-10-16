@@ -5,6 +5,167 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+export type ProfessionalBusinessAttestationsItem = {
+  id: number;
+  memberId: number;
+  name: string;
+  statement: string;
+};
+
+export interface ProfessionalBusiness {
+  memberId: number;
+  name: string;
+  website: string;
+  registrationReference?: string;
+  status: string;
+  attestationCount: number;
+  hasAttested: boolean;
+  decisionNote: string;
+  attestations?: ProfessionalBusinessAttestationsItem[];
+}
+
+export type ProfessionalStatePlansItemSlug = typeof ProfessionalStatePlansItemSlug[keyof typeof ProfessionalStatePlansItemSlug];
+
+
+export const ProfessionalStatePlansItemSlug = {
+  professional: 'professional',
+  business: 'business',
+} as const;
+
+export type ProfessionalStatePlansItem = {
+  slug: ProfessionalStatePlansItemSlug;
+  name: string;
+  amount: number;
+  currency: string;
+  interval: string;
+};
+
+/**
+ * @nullable
+ */
+export type ProfessionalStateMembership = {
+  tier: string;
+  status: string;
+  active: boolean;
+  cancelAtPeriodEnd: boolean;
+  /** @nullable */
+  currentPeriodEnd: string | null;
+  testMode: boolean;
+} | null;
+
+export type ProfessionalStateIntroductionsItem = {
+  id: number;
+  targetSlug: string;
+  message: string;
+  status: string;
+  memberName?: string;
+  createdAt: string;
+};
+
+export type ProfessionalStateResourcesItem = {
+  slug: string;
+  title: string;
+  description: string;
+};
+
+export interface ProfessionalState {
+  available: boolean;
+  testMode: boolean;
+  plans: ProfessionalStatePlansItem[];
+  /** @nullable */
+  membership: ProfessionalStateMembership;
+  business: ProfessionalBusiness | null;
+  reviews: ProfessionalBusiness[];
+  introductions: ProfessionalStateIntroductionsItem[];
+  resources: ProfessionalStateResourcesItem[];
+}
+
+export type ProfessionalActionInputAction = typeof ProfessionalActionInputAction[keyof typeof ProfessionalActionInputAction];
+
+
+export const ProfessionalActionInputAction = {
+  checkout: 'checkout',
+  cancel: 'cancel',
+  portal: 'portal',
+  businesssubmit: 'business.submit',
+  businessattest: 'business.attest',
+  businesswithdraw: 'business.withdraw',
+  businessreview: 'business.review',
+  introductionstatus: 'introduction.status',
+} as const;
+
+export type ProfessionalActionInputTier = typeof ProfessionalActionInputTier[keyof typeof ProfessionalActionInputTier];
+
+
+export const ProfessionalActionInputTier = {
+  professional: 'professional',
+  business: 'business',
+} as const;
+
+export interface ProfessionalActionInput {
+  action: ProfessionalActionInputAction;
+  tier?: ProfessionalActionInputTier;
+  accepted?: boolean;
+  id?: number;
+  memberId?: number;
+  /** @maxLength 160 */
+  name?: string;
+  /** @maxLength 300 */
+  website?: string;
+  /** @maxLength 300 */
+  registrationReference?: string;
+  /** @maxLength 2000 */
+  text?: string;
+  /** @maxLength 40 */
+  status?: string;
+}
+
+export interface ProfessionalIntroductionInput {
+  /** @maxLength 90 */
+  targetSlug: string;
+  /**
+     * @minLength 20
+     * @maxLength 2000
+     */
+  message: string;
+}
+
+export type VideoEngagementInputAction = typeof VideoEngagementInputAction[keyof typeof VideoEngagementInputAction];
+
+
+export const VideoEngagementInputAction = {
+  like: 'like',
+  comment: 'comment',
+  delete: 'delete',
+  moderate: 'moderate',
+} as const;
+
+export interface VideoEngagementInput {
+  action: VideoEngagementInputAction;
+  accepted?: boolean;
+  /**
+     * @minLength 1
+     * @maxLength 1500
+     */
+  text?: string;
+  id?: number;
+}
+
+export type VideoEngagementCommentsItem = {
+  id: number;
+  author: string;
+  memberId: number;
+  text: string;
+  createdAt: string;
+  canDelete: boolean;
+};
+
+export interface VideoEngagement {
+  likes: number;
+  liked: boolean;
+  comments: VideoEngagementCommentsItem[];
+}
+
 /**
  * Use donation. Legacy documentary purchases are retired and return HTTP 410.
  */
@@ -604,6 +765,25 @@ export interface DetailedHealthStatus {
   status: string;
   database: string;
 }
+
+export type ProfessionalAction200 = {
+  url?: string;
+  id?: number;
+};
+
+export type CreateProfessionalIntroduction201 = {
+  id: number;
+};
+
+export type GetProfessionalResource200SectionsItem = {
+  heading: string;
+  text: string;
+};
+
+export type GetProfessionalResource200 = {
+  title: string;
+  sections: GetProfessionalResource200SectionsItem[];
+};
 
 export type GetHumanitarianConfig200 = {
   available: boolean;

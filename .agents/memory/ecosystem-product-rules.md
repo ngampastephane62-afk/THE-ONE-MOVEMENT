@@ -7,7 +7,7 @@ Paid membership is a monthly subscription to professional ecosystem services, in
 
 **Why:** The stakeholder clarified the business model on 2026-10-16, superseding humanitarian-film purchases.
 
-**How to apply:** Do not infer monthly prices from previous one-time or annual packages; obtain pricing approval before creating recurring billing. Distinguish paid service access, member identity verification and business legality checks.
+**How to apply:** The stakeholder approved Professional at US$29/month and Business / Sponsor at US$99/month. Preserve separate annual event packages. Distinguish paid service access, member identity verification and business legality checks.
 
 After Join the Movement, members should immediately reach an editable account/profile. Publication should require ten genuine followers who joined through invitations. CEO business verification should include ten people attesting to the business.
 
@@ -22,6 +22,12 @@ Videos should retain their native aspect ratio, support member comments and like
 **How to apply:** Avoid forced landscape crops and respect reduced-motion settings. Distinguish user-initiated sharing from automatic posting to a connected social account.
 
 The One Awards should include every officially established ambassador, with sourced biographies and official social links. Separate regional impact-leader selections (Africa, USA and eventually other regions/sectors) from TOMI ambassadors.
+
+The same peace-ambassador nominees are announced as planned Summit speakers and Fashion Week red-carpet participants, as well as participants in other activities. Use one shared profile across programmes, not separate contradictory biographies.
+
+**Why:** The stakeholder explicitly clarified these cross-programme roles. A nomination is not an award already won, and an announcement is not proof of past attendance.
+
+**How to apply:** Preserve nominee and planned-participation wording; source professional work and businesses separately from TOMI's own announcement.
 
 **Why:** The stakeholder asks for privileged ambassador profiles, collaboration enquiries and six notable figures per sector, citing Mandela, Dangote and the Obamas as editorial examples.
 

@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { Pause, Play, Volume2, VolumeX } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import VideoActions from './editorial/VideoActions';
 
 type MediaKind =
   | 'cinematic-background'
@@ -45,6 +46,9 @@ export default function ResponsiveMedia({
   const [muted, setMuted] = useState(true);
   const [playbackError, setPlaybackError] = useState('');
   const hasMedia = Boolean(videoSrc || posterSrc);
+  const socialId = videoSrc?.includes('fashion-archive') ? 'fashion-archive-reel'
+    : videoSrc?.includes('institutional-meeting') ? 'institutional-meeting'
+    : assetId === 'IMPACT-COMMUNITY' ? 'impact-community' : 'movement-reel';
 
   const togglePlayback = async () => {
     const video = videoRef.current;
@@ -70,6 +74,7 @@ export default function ResponsiveMedia({
   };
 
   return (
+    <div id={videoSrc && kind !== 'cinematic-background' ? `video-${socialId}` : undefined}>
     <div
       className={cn(
         'responsive-media group relative overflow-hidden rounded-sharp border border-gold-500/25 bg-lagoon-800',
@@ -154,6 +159,12 @@ export default function ResponsiveMedia({
         </div>
         {playbackError && <p role="alert" className="mt-3 text-sm text-white">{playbackError}</p>}
       </div>
+    </div>
+    {videoSrc && kind !== 'cinematic-background' && (
+      <div className="bg-ivory-100 p-3 text-ink-900">
+        <VideoActions videoId={socialId} title={label} />
+      </div>
+    )}
     </div>
   );
 }

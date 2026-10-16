@@ -27,6 +27,7 @@ import type {
 import type {
   CreateHumanitarianCheckout200,
   CreateHumanitarianOffer201,
+  CreateProfessionalIntroduction201,
   DetailedHealthStatus,
   DonationCampaign,
   GetDocumentaryAccess200,
@@ -37,6 +38,7 @@ import type {
   GetHumanitarianPaymentStatusParams,
   GetNetworkPaymentStatusParams,
   GetNetworkStateParams,
+  GetProfessionalResource200,
   HealthStatus,
   HumanitarianCheckoutInput,
   HumanitarianOfferInput,
@@ -56,8 +58,15 @@ import type {
   NetworkUploadTicket,
   PressEntry,
   PressEntryInput,
+  ProfessionalAction200,
+  ProfessionalActionInput,
+  ProfessionalBusiness,
+  ProfessionalIntroductionInput,
+  ProfessionalState,
   SavedItemInput,
-  UpdateHumanitarianOffer200
+  UpdateHumanitarianOffer200,
+  VideoEngagement,
+  VideoEngagementInput
 } from './api.schemas';
 
 import { customFetch } from '../custom-fetch';
@@ -86,6 +95,633 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   }
   return result;
 };
+
+export const getGetProfessionalStateUrl = () => {
+
+
+
+
+  return `/api/professional/state`
+}
+
+export const getProfessionalState = async ( options?: Parameters<typeof customFetch>[1]): Promise<ProfessionalState> => {
+
+  return customFetch<ProfessionalState>(getGetProfessionalStateUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetProfessionalStateQueryKey = () => {
+    return [
+    `/api/professional/state`
+    ] as const;
+    }
+
+
+export const getGetProfessionalStateQueryOptions = <TData = Awaited<ReturnType<typeof getProfessionalState>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfessionalState>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetProfessionalStateQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getProfessionalState>>> = ({ signal }) => getProfessionalState({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getProfessionalState>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetProfessionalStateQueryResult = NonNullable<Awaited<ReturnType<typeof getProfessionalState>>>
+export type GetProfessionalStateQueryError = ErrorType<unknown>
+
+
+export function useGetProfessionalState<TData = Awaited<ReturnType<typeof getProfessionalState>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfessionalState>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getProfessionalState>>,
+          TError,
+          Awaited<ReturnType<typeof getProfessionalState>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetProfessionalState<TData = Awaited<ReturnType<typeof getProfessionalState>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfessionalState>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getProfessionalState>>,
+          TError,
+          Awaited<ReturnType<typeof getProfessionalState>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetProfessionalState<TData = Awaited<ReturnType<typeof getProfessionalState>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfessionalState>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetProfessionalState<TData = Awaited<ReturnType<typeof getProfessionalState>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfessionalState>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetProfessionalStateQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getProfessionalActionUrl = () => {
+
+
+
+
+  return `/api/professional/actions`
+}
+
+export const professionalAction = async (professionalActionInput: ProfessionalActionInput, options?: Parameters<typeof customFetch>[1]): Promise<ProfessionalAction200> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<ProfessionalAction200>(getProfessionalActionUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(professionalActionInput)
+  }
+);}
+
+
+
+
+
+export const getProfessionalActionMutationKey = () => ['professionalAction'] as const;
+
+export const getProfessionalActionMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof professionalAction>>, TError,ProfessionalActionMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof professionalAction>>, TError,ProfessionalActionMutationVariables, TContext> => {
+
+const mutationKey = getProfessionalActionMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof professionalAction>>, ProfessionalActionMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  professionalAction(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type ProfessionalActionMutationResult = NonNullable<Awaited<ReturnType<typeof professionalAction>>>
+    export type ProfessionalActionMutationBody = BodyType<ProfessionalActionInput>
+    export type ProfessionalActionMutationError = ErrorType<unknown>
+    export type ProfessionalActionMutationVariables = {data: BodyType<ProfessionalActionInput>}
+
+    export const useProfessionalAction = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof professionalAction>>, TError,ProfessionalActionMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof professionalAction>>,
+        TError,
+        ProfessionalActionMutationVariables,
+        TContext
+      > => {
+      return useMutation(getProfessionalActionMutationOptions(options), queryClient);
+    }
+
+export const getGetProfessionalBusinessUrl = (memberId: number,) => {
+
+
+
+
+  return `/api/professional/business/${memberId}`
+}
+
+export const getProfessionalBusiness = async (memberId: number, options?: Parameters<typeof customFetch>[1]): Promise<ProfessionalBusiness> => {
+
+  return customFetch<ProfessionalBusiness>(getGetProfessionalBusinessUrl(memberId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetProfessionalBusinessQueryKey = (memberId: number,) => {
+    return [
+    `/api/professional/business/${memberId}`
+    ] as const;
+    }
+
+
+export const getGetProfessionalBusinessQueryOptions = <TData = Awaited<ReturnType<typeof getProfessionalBusiness>>, TError = ErrorType<unknown>>(memberId: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfessionalBusiness>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetProfessionalBusinessQueryKey(memberId);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getProfessionalBusiness>>> = ({ signal }) => getProfessionalBusiness(memberId, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: memberId !== null && memberId !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getProfessionalBusiness>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetProfessionalBusinessQueryResult = NonNullable<Awaited<ReturnType<typeof getProfessionalBusiness>>>
+export type GetProfessionalBusinessQueryError = ErrorType<unknown>
+
+
+export function useGetProfessionalBusiness<TData = Awaited<ReturnType<typeof getProfessionalBusiness>>, TError = ErrorType<unknown>>(
+ memberId: number, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfessionalBusiness>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getProfessionalBusiness>>,
+          TError,
+          Awaited<ReturnType<typeof getProfessionalBusiness>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetProfessionalBusiness<TData = Awaited<ReturnType<typeof getProfessionalBusiness>>, TError = ErrorType<unknown>>(
+ memberId: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfessionalBusiness>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getProfessionalBusiness>>,
+          TError,
+          Awaited<ReturnType<typeof getProfessionalBusiness>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetProfessionalBusiness<TData = Awaited<ReturnType<typeof getProfessionalBusiness>>, TError = ErrorType<unknown>>(
+ memberId: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfessionalBusiness>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetProfessionalBusiness<TData = Awaited<ReturnType<typeof getProfessionalBusiness>>, TError = ErrorType<unknown>>(
+ memberId: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfessionalBusiness>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetProfessionalBusinessQueryOptions(memberId,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getCreateProfessionalIntroductionUrl = () => {
+
+
+
+
+  return `/api/professional/introductions`
+}
+
+export const createProfessionalIntroduction = async (professionalIntroductionInput: ProfessionalIntroductionInput, options?: Parameters<typeof customFetch>[1]): Promise<CreateProfessionalIntroduction201> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<CreateProfessionalIntroduction201>(getCreateProfessionalIntroductionUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(professionalIntroductionInput)
+  }
+);}
+
+
+
+
+
+export const getCreateProfessionalIntroductionMutationKey = () => ['createProfessionalIntroduction'] as const;
+
+export const getCreateProfessionalIntroductionMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createProfessionalIntroduction>>, TError,CreateProfessionalIntroductionMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof createProfessionalIntroduction>>, TError,CreateProfessionalIntroductionMutationVariables, TContext> => {
+
+const mutationKey = getCreateProfessionalIntroductionMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createProfessionalIntroduction>>, CreateProfessionalIntroductionMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  createProfessionalIntroduction(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateProfessionalIntroductionMutationResult = NonNullable<Awaited<ReturnType<typeof createProfessionalIntroduction>>>
+    export type CreateProfessionalIntroductionMutationBody = BodyType<ProfessionalIntroductionInput>
+    export type CreateProfessionalIntroductionMutationError = ErrorType<unknown>
+    export type CreateProfessionalIntroductionMutationVariables = {data: BodyType<ProfessionalIntroductionInput>}
+
+    export const useCreateProfessionalIntroduction = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createProfessionalIntroduction>>, TError,CreateProfessionalIntroductionMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createProfessionalIntroduction>>,
+        TError,
+        CreateProfessionalIntroductionMutationVariables,
+        TContext
+      > => {
+      return useMutation(getCreateProfessionalIntroductionMutationOptions(options), queryClient);
+    }
+
+export const getGetProfessionalResourceUrl = (slug: string,) => {
+
+
+
+
+  return `/api/professional/resources/${slug}`
+}
+
+export const getProfessionalResource = async (slug: string, options?: Parameters<typeof customFetch>[1]): Promise<GetProfessionalResource200> => {
+
+  return customFetch<GetProfessionalResource200>(getGetProfessionalResourceUrl(slug),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetProfessionalResourceQueryKey = (slug: string,) => {
+    return [
+    `/api/professional/resources/${slug}`
+    ] as const;
+    }
+
+
+export const getGetProfessionalResourceQueryOptions = <TData = Awaited<ReturnType<typeof getProfessionalResource>>, TError = ErrorType<unknown>>(slug: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfessionalResource>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetProfessionalResourceQueryKey(slug);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getProfessionalResource>>> = ({ signal }) => getProfessionalResource(slug, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: slug !== null && slug !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getProfessionalResource>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetProfessionalResourceQueryResult = NonNullable<Awaited<ReturnType<typeof getProfessionalResource>>>
+export type GetProfessionalResourceQueryError = ErrorType<unknown>
+
+
+export function useGetProfessionalResource<TData = Awaited<ReturnType<typeof getProfessionalResource>>, TError = ErrorType<unknown>>(
+ slug: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfessionalResource>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getProfessionalResource>>,
+          TError,
+          Awaited<ReturnType<typeof getProfessionalResource>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetProfessionalResource<TData = Awaited<ReturnType<typeof getProfessionalResource>>, TError = ErrorType<unknown>>(
+ slug: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfessionalResource>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getProfessionalResource>>,
+          TError,
+          Awaited<ReturnType<typeof getProfessionalResource>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetProfessionalResource<TData = Awaited<ReturnType<typeof getProfessionalResource>>, TError = ErrorType<unknown>>(
+ slug: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfessionalResource>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetProfessionalResource<TData = Awaited<ReturnType<typeof getProfessionalResource>>, TError = ErrorType<unknown>>(
+ slug: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfessionalResource>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetProfessionalResourceQueryOptions(slug,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getGetVideoEngagementUrl = (videoId: string,) => {
+
+
+
+
+  return `/api/editorial/videos/${videoId}/engagement`
+}
+
+export const getVideoEngagement = async (videoId: string, options?: Parameters<typeof customFetch>[1]): Promise<VideoEngagement> => {
+
+  return customFetch<VideoEngagement>(getGetVideoEngagementUrl(videoId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetVideoEngagementQueryKey = (videoId: string,) => {
+    return [
+    `/api/editorial/videos/${videoId}/engagement`
+    ] as const;
+    }
+
+
+export const getGetVideoEngagementQueryOptions = <TData = Awaited<ReturnType<typeof getVideoEngagement>>, TError = ErrorType<unknown>>(videoId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getVideoEngagement>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetVideoEngagementQueryKey(videoId);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getVideoEngagement>>> = ({ signal }) => getVideoEngagement(videoId, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: videoId !== null && videoId !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getVideoEngagement>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetVideoEngagementQueryResult = NonNullable<Awaited<ReturnType<typeof getVideoEngagement>>>
+export type GetVideoEngagementQueryError = ErrorType<unknown>
+
+
+export function useGetVideoEngagement<TData = Awaited<ReturnType<typeof getVideoEngagement>>, TError = ErrorType<unknown>>(
+ videoId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getVideoEngagement>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getVideoEngagement>>,
+          TError,
+          Awaited<ReturnType<typeof getVideoEngagement>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetVideoEngagement<TData = Awaited<ReturnType<typeof getVideoEngagement>>, TError = ErrorType<unknown>>(
+ videoId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getVideoEngagement>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getVideoEngagement>>,
+          TError,
+          Awaited<ReturnType<typeof getVideoEngagement>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetVideoEngagement<TData = Awaited<ReturnType<typeof getVideoEngagement>>, TError = ErrorType<unknown>>(
+ videoId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getVideoEngagement>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetVideoEngagement<TData = Awaited<ReturnType<typeof getVideoEngagement>>, TError = ErrorType<unknown>>(
+ videoId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getVideoEngagement>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetVideoEngagementQueryOptions(videoId,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getUpdateVideoEngagementUrl = (videoId: string,) => {
+
+
+
+
+  return `/api/editorial/videos/${videoId}/engagement`
+}
+
+export const updateVideoEngagement = async (videoId: string,
+    videoEngagementInput: VideoEngagementInput, options?: Parameters<typeof customFetch>[1]): Promise<VideoEngagement> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<VideoEngagement>(getUpdateVideoEngagementUrl(videoId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(videoEngagementInput)
+  }
+);}
+
+
+
+
+
+export const getUpdateVideoEngagementMutationKey = () => ['updateVideoEngagement'] as const;
+
+export const getUpdateVideoEngagementMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateVideoEngagement>>, TError,UpdateVideoEngagementMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateVideoEngagement>>, TError,UpdateVideoEngagementMutationVariables, TContext> => {
+
+const mutationKey = getUpdateVideoEngagementMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateVideoEngagement>>, UpdateVideoEngagementMutationVariables> = (props) => {
+          const {videoId,data} = props ?? {};
+
+          return  updateVideoEngagement(videoId,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateVideoEngagementMutationResult = NonNullable<Awaited<ReturnType<typeof updateVideoEngagement>>>
+    export type UpdateVideoEngagementMutationBody = BodyType<VideoEngagementInput>
+    export type UpdateVideoEngagementMutationError = ErrorType<unknown>
+    export type UpdateVideoEngagementMutationVariables = {videoId: string;data: BodyType<VideoEngagementInput>}
+
+    export const useUpdateVideoEngagement = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateVideoEngagement>>, TError,UpdateVideoEngagementMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof updateVideoEngagement>>,
+        TError,
+        UpdateVideoEngagementMutationVariables,
+        TContext
+      > => {
+      return useMutation(getUpdateVideoEngagementMutationOptions(options), queryClient);
+    }
 
 export const getGetHumanitarianConfigUrl = () => {
 

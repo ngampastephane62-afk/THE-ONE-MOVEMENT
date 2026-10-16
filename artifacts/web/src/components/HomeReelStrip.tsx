@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import { ArrowLeft, ArrowRight, Pause, Play, Volume2, VolumeX } from 'lucide-react';
+import VideoActions from './editorial/VideoActions';
 
 const reels = [1, 2, 3].map((number) => ({
   number,
@@ -9,10 +10,11 @@ const reels = [1, 2, 3].map((number) => ({
 }));
 
 export default function HomeReelStrip() {
-  const [carouselRef, carousel] = useEmblaCarousel({ loop: true, align: 'center' });
+  const requested = Math.max(0, reels.findIndex(reel => `home-reel-${reel.number}` === new URLSearchParams(window.location.search).get('video')));
+  const [carouselRef, carousel] = useEmblaCarousel({ loop: true, align: 'center', startIndex: requested });
   const container = useRef<HTMLDivElement>(null);
   const videos = useRef<(HTMLVideoElement | null)[]>([]);
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(requested);
   const [visible, setVisible] = useState(false);
   const [playing, setPlaying] = useState(true);
   const [sound, setSound] = useState(false);
@@ -74,7 +76,7 @@ export default function HomeReelStrip() {
       <div ref={carouselRef} className="overflow-hidden rounded-sharp border border-gold-500/30 bg-lagoon-800 shadow-xl">
         <div className="flex touch-pan-y">
           {reels.map((reel, index) => (
-            <div key={reel.number} className="min-w-0 flex-[0_0_100%]" role="group" aria-roledescription="slide" aria-label={`Reel ${reel.number} of 3`} aria-hidden={active !== index}>
+            <div id={`video-home-reel-${reel.number}`} key={reel.number} className="min-w-0 flex-[0_0_100%]" role="group" aria-roledescription="slide" aria-label={`Reel ${reel.number} of 3`} aria-hidden={active !== index}>
               <video
                 ref={(node) => { videos.current[index] = node; }}
                 poster={reel.poster}
@@ -82,7 +84,7 @@ export default function HomeReelStrip() {
                 loop
                 playsInline
                 preload="none"
-                className="aspect-[9/16] w-full object-contain bg-ink-900"
+                className="h-auto max-h-[80vh] w-full object-contain bg-ink-900"
                 aria-label={`Movement reel ${reel.number}`}
                 onError={() => { if (active === index) setFailed(true); }}
                 onPlaying={() => { if (active === index) { setBlocked(false); setFailed(false); } }}
@@ -107,6 +109,9 @@ export default function HomeReelStrip() {
         </div>
       </div>
       <p className="mt-3 text-xs leading-relaxed text-ivory-200">The One Movement · Reel {active + 1} / 3</p>
+      <div className="mt-4 bg-ivory-100 p-3 text-ink-900">
+        <VideoActions key={active} videoId={`home-reel-${reels[active]?.number ?? 1}`} title={`The One Movement — reel ${active + 1}`} />
+      </div>
       {(blocked || failed) && <p role="status" className="mt-2 text-xs text-ivory-200">{failed ? 'This reel could not load. Try the next reel or reload the page.' : 'Tap play to start the reels.'}</p>}
     </div>
   );

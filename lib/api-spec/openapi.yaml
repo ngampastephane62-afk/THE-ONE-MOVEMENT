@@ -11,6 +11,111 @@ tags:
   - name: health
     description: Health operations
 paths:
+  /professional/state:
+    get:
+      operationId: getProfessionalState
+      tags: [professional]
+      responses:
+        "200":
+          description: Monthly services, own billing and business verification state
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/ProfessionalState"}
+  /professional/actions:
+    post:
+      operationId: professionalAction
+      tags: [professional]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: "#/components/schemas/ProfessionalActionInput"}
+      responses:
+        "200":
+          description: Persisted action or provider checkout URL
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url: {type: string}
+                  id: {type: integer}
+  /professional/business/{memberId}:
+    get:
+      operationId: getProfessionalBusiness
+      tags: [professional]
+      parameters:
+        - {name: memberId, in: path, required: true, schema: {type: integer}}
+      responses:
+        "200":
+          description: Business profile and community-attestation status
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/ProfessionalBusiness"}
+  /professional/introductions:
+    post:
+      operationId: createProfessionalIntroduction
+      tags: [professional]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: "#/components/schemas/ProfessionalIntroductionInput"}
+      responses:
+        "201":
+          description: Introduction request received by TOMI, not guaranteed contact
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [id]
+                properties:
+                  id: {type: integer}
+  /professional/resources/{slug}:
+    get:
+      operationId: getProfessionalResource
+      tags: [professional]
+      parameters:
+        - {name: slug, in: path, required: true, schema: {type: string}}
+      responses:
+        "200":
+          description: Subscription-protected professional resource
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [title, sections]
+                properties:
+                  title: {type: string}
+                  sections: {type: array, items: {type: object, required: [heading, text], properties: {heading: {type: string}, text: {type: string}}}}
+  /editorial/videos/{videoId}/engagement:
+    get:
+      operationId: getVideoEngagement
+      tags: [editorial]
+      parameters:
+        - {name: videoId, in: path, required: true, schema: {type: string}}
+      responses:
+        "200":
+          description: Public counts and comments; viewer-specific ownership when signed in
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/VideoEngagement"}
+    post:
+      operationId: updateVideoEngagement
+      tags: [editorial]
+      parameters:
+        - {name: videoId, in: path, required: true, schema: {type: string}}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: "#/components/schemas/VideoEngagementInput"}
+      responses:
+        "200":
+          description: Like, comment, deletion or moderation persisted
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/VideoEngagement"}
   /humanitarian/config:
     get:
       operationId: getHumanitarianConfig
@@ -517,6 +622,127 @@ paths:
                 $ref: "#/components/schemas/DetailedHealthStatus"
 components:
   schemas:
+    ProfessionalBusiness:
+      type: object
+      required: [memberId, name, website, status, attestationCount, hasAttested, decisionNote]
+      properties:
+        memberId: {type: integer}
+        name: {type: string}
+        website: {type: string}
+        registrationReference: {type: string}
+        status: {type: string}
+        attestationCount: {type: integer}
+        hasAttested: {type: boolean}
+        decisionNote: {type: string}
+        attestations:
+          type: array
+          items:
+            type: object
+            required: [id, memberId, name, statement]
+            properties:
+              id: {type: integer}
+              memberId: {type: integer}
+              name: {type: string}
+              statement: {type: string}
+    ProfessionalState:
+      type: object
+      required: [available, testMode, plans, membership, business, reviews, introductions, resources]
+      properties:
+        available: {type: boolean}
+        testMode: {type: boolean}
+        plans:
+          type: array
+          items:
+            type: object
+            required: [slug, name, amount, currency, interval]
+            properties:
+              slug: {type: string, enum: [professional, business]}
+              name: {type: string}
+              amount: {type: integer}
+              currency: {type: string}
+              interval: {type: string}
+        membership:
+          nullable: true
+          type: object
+          required: [tier, status, active, cancelAtPeriodEnd, currentPeriodEnd, testMode]
+          properties:
+            tier: {type: string}
+            status: {type: string}
+            active: {type: boolean}
+            cancelAtPeriodEnd: {type: boolean}
+            currentPeriodEnd: {type: string, nullable: true}
+            testMode: {type: boolean}
+        business:
+          nullable: true
+          allOf: [{$ref: "#/components/schemas/ProfessionalBusiness"}]
+        reviews: {type: array, items: {$ref: "#/components/schemas/ProfessionalBusiness"}}
+        introductions:
+          type: array
+          items:
+            type: object
+            required: [id, targetSlug, message, status, createdAt]
+            properties:
+              id: {type: integer}
+              targetSlug: {type: string}
+              message: {type: string}
+              status: {type: string}
+              memberName: {type: string}
+              createdAt: {type: string}
+        resources:
+          type: array
+          items:
+            type: object
+            required: [slug, title, description]
+            properties:
+              slug: {type: string}
+              title: {type: string}
+              description: {type: string}
+    ProfessionalActionInput:
+      type: object
+      required: [action]
+      properties:
+        action: {type: string, enum: [checkout, cancel, portal, business.submit, business.attest, business.withdraw, business.review, introduction.status]}
+        tier: {type: string, enum: [professional, business]}
+        accepted: {type: boolean}
+        id: {type: integer}
+        memberId: {type: integer}
+        name: {type: string, maxLength: 160}
+        website: {type: string, maxLength: 300}
+        registrationReference: {type: string, maxLength: 300}
+        text: {type: string, maxLength: 2000}
+        status: {type: string, maxLength: 40}
+    ProfessionalIntroductionInput:
+      type: object
+      required: [targetSlug, message]
+      properties:
+        targetSlug: {type: string, maxLength: 90}
+        message: {type: string, minLength: 20, maxLength: 2000}
+    VideoEngagementInput:
+      type: object
+      required: [action]
+      properties:
+        action: {type: string, enum: [like, comment, delete, moderate]}
+        accepted: {type: boolean}
+        text: {type: string, minLength: 1, maxLength: 1500}
+        id: {type: integer}
+    VideoEngagement:
+      type: object
+      required: [likes, liked, comments]
+      properties:
+        likes: {type: integer}
+        liked: {type: boolean}
+        comments:
+          type: array
+          items:
+            type: object
+            required: [id, author, memberId, text, createdAt, canDelete]
+            properties:
+              id: {type: integer}
+              author: {type: string}
+              memberId: {type: integer}
+              text: {type: string}
+              createdAt: {type: string}
+              canDelete: {type: boolean}
     HumanitarianCheckoutInput:
       type: object
       required: [kind, amount, currency, accepted, requestId]

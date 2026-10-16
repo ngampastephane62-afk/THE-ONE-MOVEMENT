@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'wouter';
+import { useAuth } from '@clerk/react';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import GoldThread from '@/components/GoldThread';
@@ -25,6 +26,7 @@ interface SuccessPanelProps {
  * ensures a single root element with the correct styles.
  */
 export default function SuccessPanel({ submissionStatus }: SuccessPanelProps) {
+  const { isSignedIn } = useAuth();
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
@@ -72,11 +74,25 @@ export default function SuccessPanel({ submissionStatus }: SuccessPanelProps) {
         updates as programs and future platform plans are confirmed.
       </p>
 
+      <p className="text-ink-600 text-xs leading-relaxed max-w-lg">
+        This form is not an account. {isSignedIn ? 'Your member network is ready.' : 'To join the member network, create an account and verify your email address.'}
+      </p>
+
       <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center pt-2">
+        <Link
+          href={isSignedIn ? '/member' : '/sign-up'}
+          data-testid="link-success-primary"
+          className={cn(
+            buttonVariants({ size: 'lg' }),
+            'focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-400 focus-visible:outline-offset-2',
+          )}
+        >
+          {isSignedIn ? 'OPEN MY NETWORK' : 'CREATE MY ACCOUNT'}
+        </Link>
         <Link
           href="/ecosystem"
           className={cn(
-            buttonVariants({ size: 'lg' }),
+            buttonVariants({ variant: 'outline', size: 'lg' }),
             'focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-400 focus-visible:outline-offset-2',
           )}
         >

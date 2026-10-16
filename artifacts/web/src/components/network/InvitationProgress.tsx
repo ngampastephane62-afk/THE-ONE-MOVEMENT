@@ -9,7 +9,7 @@ export default function InvitationProgress({ growth, founder, compact }: { growt
   const inputRef = useRef<HTMLInputElement>(null);
 
   if (founder) {
-    return <div className={`${card} p-4 text-sm text-ink-700`} data-testid="growth-founder"><Unlock className="mr-1 inline h-4 w-4 text-gold-700" />Every verified, active member can publish. Invitations are optional.</div>;
+    return <div className={`${card} p-4 text-sm text-ink-700`} data-testid="growth-founder"><Unlock className="mr-1 inline h-4 w-4 text-gold-700" />Founder accounts can publish without referrals.</div>;
   }
   if (!growth) {
     return <div className={`${card} p-4 text-sm text-ink-700`} data-testid="growth-unavailable">Your invitation link appears once your member profile is complete.</div>;
@@ -39,15 +39,17 @@ export default function InvitationProgress({ growth, founder, compact }: { growt
         <p className="mt-1 font-display text-xl">Invite people to connect with you</p>
         <div className="mt-4 flex items-end justify-between gap-3">
           <span className="font-display text-4xl text-gold-400" data-testid="text-growth-count">{growth.qualifiedInvites}</span>
-          <span className="text-xs text-ivory-300">recruited followers</span>
+          <span className="text-xs text-ivory-300">of {growth.requiredInvites || 10} verified referral followers</span>
         </div>
+        <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-ivory-100/15"><div className="h-full origin-left bg-gold-500" style={{ transform: `scaleX(${Math.min(1, growth.qualifiedInvites / (growth.requiredInvites || 10))})` }} /></div>
+        <p className="mt-2 text-xs text-ivory-200" data-testid="text-growth-status">{growth.canPost ? 'Ordinary posting is open for you.' : `${Math.max(0, (growth.requiredInvites || 10) - growth.qualifiedInvites)} more genuine verified followers needed before you can post.`}</p>
       </div>
       <div className="flex flex-col gap-3 p-5">
         {!compact && (
           <div className="flex flex-col gap-1.5 text-sm leading-relaxed text-ink-700">
-            <p>Every verified, active member can publish, follow, like, comment and request conversations. Invitations are optional and never required to publish.</p>
+            <p>Your account is free and editable now. Posting opens once 10 genuine, verified people join through your link and follow you. Business posts and reels also need an active <a href="/member/membership" className="font-semibold text-lagoon-700 underline">membership</a>.</p>
             <p>An invitation counts when someone opens your link, creates a new verified account (less than 24 hours old) and accepts your invitation, which makes them follow you. Each account can be credited once.</p>
-            <p>The count reflects invited members who currently follow you and are active. Changes to this count do not affect your ability to publish. Packages and events are separate.</p>
+            <p>The count reflects invited members who currently follow you and are active. Only real, currently active followers count; the number is never estimated. Packages, events, humanitarian films and donations are separate.</p>
           </div>
         )}
         <label htmlFor="invite-link" className="text-xs font-semibold text-ink-900">Your invitation link</label>

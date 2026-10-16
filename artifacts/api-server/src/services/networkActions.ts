@@ -9,7 +9,8 @@ import { and, eq, inArray, or, ne, isNull } from "drizzle-orm";
 import type { Request, Response } from "express";
 import { actor, NetworkError, requireFounder } from "./networkAuth";
 import { ownedMedia, completeUpload } from "./networkFiles";
-import { visibleMember, visiblePost, ownThread, ROLES, PROGRAMS, isBlocked } from "./networkState";
+import { visibleMember, visiblePost, ownThread, ROLES, PROGRAMS, isBlocked, qualifiedInviteCount } from "./networkState";
+import { requireMonthly } from "./monthlyMembership";
 import { checkout, PACKAGE_DEFINITIONS, customPackages } from "./networkPayments";
 
 function number(value: unknown) {
@@ -79,6 +80,8 @@ export async function networkAction(req: Request, res: Response) {
       const media = await ownedMedia(self, input.mediaIds);
       if (!content && !media.length) throw new NetworkError(400, "Write something or attach media.");
       const kind = input.kind ?? "post";
+      if (!who.founder && await qualifiedInviteCount(self) < 10) throw new NetworkError(403, "Invite ten genuine verified members who accept your invitation and follow you before publishing.");
+      if (!who.founder && (kind === "business" || kind === "reel")) await requireMonthly(self);
       if (!["post", "business", "reel"].includes(kind)) throw new NetworkError(400, "Choose post, business or reel.");
       if (kind === "reel" && !media.some(m => m.contentType.startsWith("video/"))) throw new NetworkError(400, "A reel needs an uploaded video.");
       if (input.action === "post.edit") {
@@ -149,6 +152,7 @@ export async function networkAction(req: Request, res: Response) {
       let [thread] = await db.select().from(threads).where(and(eq(threads.memberA, a), eq(threads.memberB, b)));
       if (thread?.declined) throw new NetworkError(403, "This discussion request was declined.");
       if (!thread) {
+        if (!who.founder) await requireMonthly(self);
         const initial = text(input.text, 3000);
         thread = await db.transaction(async tx => {
           const [created] = await tx.insert(threads).values({ memberA: a, memberB: b, requestedBy: self })

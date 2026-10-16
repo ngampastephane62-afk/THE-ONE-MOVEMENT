@@ -38,6 +38,12 @@ function walk(dir) {
   }
 }
 walk(root);
+for (const file of [
+  "lib/shared/src/ambassadorCatalogue.ts", "lib/shared/src/impactLeaders.ts",
+  "artifacts/api-server/src/services/monthlyMembership.ts",
+  "artifacts/api-server/src/routes/professional.ts",
+  "artifacts/api-server/src/routes/editorialEngagement.ts",
+]) visit(file);
 for (const text of [
   "Email address", "Password", "Continue", "Sign in", "Sign up", "Create your account",
   "Welcome back", "First name", "Last name", "Forgot password?", "Verify your email",

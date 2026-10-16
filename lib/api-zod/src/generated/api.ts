@@ -8,6 +8,202 @@
 import * as zod from 'zod';
 
 
+export const GetProfessionalStateResponse = zod.object({
+  "available": zod.boolean(),
+  "testMode": zod.boolean(),
+  "plans": zod.array(zod.object({
+  "slug": zod.enum(['professional', 'business']),
+  "name": zod.string(),
+  "amount": zod.number().int(),
+  "currency": zod.string(),
+  "interval": zod.string()
+})),
+  "membership": zod.object({
+  "tier": zod.string(),
+  "status": zod.string(),
+  "active": zod.boolean(),
+  "cancelAtPeriodEnd": zod.boolean(),
+  "currentPeriodEnd": zod.string().nullable(),
+  "testMode": zod.boolean()
+}).nullable(),
+  "business": zod.union([zod.object({
+  "memberId": zod.number().int(),
+  "name": zod.string(),
+  "website": zod.string(),
+  "registrationReference": zod.string().optional(),
+  "status": zod.string(),
+  "attestationCount": zod.number().int(),
+  "hasAttested": zod.boolean(),
+  "decisionNote": zod.string(),
+  "attestations": zod.array(zod.object({
+  "id": zod.number().int(),
+  "memberId": zod.number().int(),
+  "name": zod.string(),
+  "statement": zod.string()
+})).optional()
+}),zod.null()]),
+  "reviews": zod.array(zod.object({
+  "memberId": zod.number().int(),
+  "name": zod.string(),
+  "website": zod.string(),
+  "registrationReference": zod.string().optional(),
+  "status": zod.string(),
+  "attestationCount": zod.number().int(),
+  "hasAttested": zod.boolean(),
+  "decisionNote": zod.string(),
+  "attestations": zod.array(zod.object({
+  "id": zod.number().int(),
+  "memberId": zod.number().int(),
+  "name": zod.string(),
+  "statement": zod.string()
+})).optional()
+})),
+  "introductions": zod.array(zod.object({
+  "id": zod.number().int(),
+  "targetSlug": zod.string(),
+  "message": zod.string(),
+  "status": zod.string(),
+  "memberName": zod.string().optional(),
+  "createdAt": zod.string()
+})),
+  "resources": zod.array(zod.object({
+  "slug": zod.string(),
+  "title": zod.string(),
+  "description": zod.string()
+}))
+})
+
+
+export const professionalActionBodyNameMax = 160;
+
+export const professionalActionBodyWebsiteMax = 300;
+
+export const professionalActionBodyRegistrationReferenceMax = 300;
+
+export const professionalActionBodyTextMax = 2000;
+
+export const professionalActionBodyStatusMax = 40;
+
+
+
+export const ProfessionalActionBody = zod.object({
+  "action": zod.enum(['checkout', 'cancel', 'portal', 'business.submit', 'business.attest', 'business.withdraw', 'business.review', 'introduction.status']),
+  "tier": zod.enum(['professional', 'business']).optional(),
+  "accepted": zod.boolean().optional(),
+  "id": zod.number().int().optional(),
+  "memberId": zod.number().int().optional(),
+  "name": zod.string().max(professionalActionBodyNameMax).optional(),
+  "website": zod.string().max(professionalActionBodyWebsiteMax).optional(),
+  "registrationReference": zod.string().max(professionalActionBodyRegistrationReferenceMax).optional(),
+  "text": zod.string().max(professionalActionBodyTextMax).optional(),
+  "status": zod.string().max(professionalActionBodyStatusMax).optional()
+})
+
+export const ProfessionalActionResponse = zod.object({
+  "url": zod.string().optional(),
+  "id": zod.number().int().optional()
+})
+
+
+export const GetProfessionalBusinessParams = zod.object({
+  "memberId": zod.coerce.number().int()
+})
+
+export const GetProfessionalBusinessResponse = zod.object({
+  "memberId": zod.number().int(),
+  "name": zod.string(),
+  "website": zod.string(),
+  "registrationReference": zod.string().optional(),
+  "status": zod.string(),
+  "attestationCount": zod.number().int(),
+  "hasAttested": zod.boolean(),
+  "decisionNote": zod.string(),
+  "attestations": zod.array(zod.object({
+  "id": zod.number().int(),
+  "memberId": zod.number().int(),
+  "name": zod.string(),
+  "statement": zod.string()
+})).optional()
+})
+
+
+export const createProfessionalIntroductionBodyTargetSlugMax = 90;
+
+export const createProfessionalIntroductionBodyMessageMin = 20;
+export const createProfessionalIntroductionBodyMessageMax = 2000;
+
+
+
+export const CreateProfessionalIntroductionBody = zod.object({
+  "targetSlug": zod.string().max(createProfessionalIntroductionBodyTargetSlugMax),
+  "message": zod.string().min(createProfessionalIntroductionBodyMessageMin).max(createProfessionalIntroductionBodyMessageMax)
+})
+
+export const CreateProfessionalIntroductionResponse = zod.object({
+  "id": zod.number().int()
+})
+
+
+export const GetProfessionalResourceParams = zod.object({
+  "slug": zod.coerce.string()
+})
+
+export const GetProfessionalResourceResponse = zod.object({
+  "title": zod.string(),
+  "sections": zod.array(zod.object({
+  "heading": zod.string(),
+  "text": zod.string()
+}))
+})
+
+
+export const GetVideoEngagementParams = zod.object({
+  "videoId": zod.coerce.string()
+})
+
+export const GetVideoEngagementResponse = zod.object({
+  "likes": zod.number().int(),
+  "liked": zod.boolean(),
+  "comments": zod.array(zod.object({
+  "id": zod.number().int(),
+  "author": zod.string(),
+  "memberId": zod.number().int(),
+  "text": zod.string(),
+  "createdAt": zod.string(),
+  "canDelete": zod.boolean()
+}))
+})
+
+
+export const UpdateVideoEngagementParams = zod.object({
+  "videoId": zod.coerce.string()
+})
+
+export const updateVideoEngagementBodyTextMax = 1500;
+
+
+
+export const UpdateVideoEngagementBody = zod.object({
+  "action": zod.enum(['like', 'comment', 'delete', 'moderate']),
+  "accepted": zod.boolean().optional(),
+  "text": zod.string().min(1).max(updateVideoEngagementBodyTextMax).optional(),
+  "id": zod.number().int().optional()
+})
+
+export const UpdateVideoEngagementResponse = zod.object({
+  "likes": zod.number().int(),
+  "liked": zod.boolean(),
+  "comments": zod.array(zod.object({
+  "id": zod.number().int(),
+  "author": zod.string(),
+  "memberId": zod.number().int(),
+  "text": zod.string(),
+  "createdAt": zod.string(),
+  "canDelete": zod.boolean()
+}))
+})
+
+
 export const GetHumanitarianConfigResponse = zod.object({
   "available": zod.boolean(),
   "testMode": zod.boolean(),

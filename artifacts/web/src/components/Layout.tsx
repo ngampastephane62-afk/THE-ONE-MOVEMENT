@@ -281,6 +281,8 @@ export default function Layout({ children }: LayoutProps) {
                   ['News', '/news'],
                   ['Thanks Emirates', '/thanks-emirates'],
                   ['The One Documentary', '/the-one-documentary'],
+                  ['Peace ambassador nominees', '/ambassadors'],
+                  ['Thanks World', '/thanks-world'],
                 ].map(([label, href]) => (
                   <li key={label}>
                     <Link

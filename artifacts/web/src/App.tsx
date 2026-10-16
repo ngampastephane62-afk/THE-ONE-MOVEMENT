@@ -1,7 +1,8 @@
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useEffect, useRef } from 'react';
 import { QueryClient, QueryClientProvider, useQueryClient } from '@tanstack/react-query';
-import { ClerkProvider, Show, useClerk } from '@clerk/react';
+import { ClerkProvider, Show, useClerk, useAuth } from '@clerk/react';
+import { setAuthTokenGetter } from '@workspace/api-client-react';
 import { publishableKeyFromHost } from '@clerk/react/internal';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -20,6 +21,9 @@ import Opportunities from '@/pages/opportunities';
 import Impact from '@/pages/impact';
 import Media from '@/pages/media';
 import ThanksEmirates from '@/pages/thanks-emirates';
+import Ambassadors from '@/pages/ambassadors';
+import AmbassadorDetail from '@/pages/ambassadors/detail';
+import ThanksWorld from '@/pages/thanks-world';
 import Documentary from '@/pages/documentary';
 import News from '@/pages/news';
 import NewsDetail from '@/pages/news/detail';
@@ -64,6 +68,11 @@ function HomeRedirect() {
 
 function ClerkQueryClientCacheInvalidator() {
   const { addListener } = useClerk();
+  const { getToken } = useAuth();
+  useEffect(() => {
+    setAuthTokenGetter(() => getToken());
+    return () => setAuthTokenGetter(null);
+  }, [getToken]);
   const qc = useQueryClient();
   const prevUserIdRef = useRef<string | null | undefined>(undefined);
 
@@ -113,6 +122,9 @@ function Router() {
       <Route path="/impact" component={Impact} />
       <Route path="/media" component={Media} />
       <Route path="/thanks-emirates" component={ThanksEmirates} />
+      <Route path="/ambassadors/:slug" component={AmbassadorDetail} />
+      <Route path="/ambassadors" component={Ambassadors} />
+      <Route path="/thanks-world" component={ThanksWorld} />
       <Route path="/the-one-documentary" component={Documentary} />
       <Route path="/news" component={News} />
       <Route path="/news/coverage/:id" component={CoverageDetail} />

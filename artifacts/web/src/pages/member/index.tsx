@@ -4,7 +4,7 @@ import PendingInvitation from '@/components/network/PendingInvitation';
 import { Helmet } from 'react-helmet-async';
 import { Link, Redirect, Route, Switch, useLocation } from 'wouter';
 import { Show, useAuth, useUser, useClerk } from '@clerk/react';
-import { Award, Bell, Sparkles, UserPlus, Briefcase, HandHeart, Home, LogOut, MessageSquare, Settings, Shield, Users } from 'lucide-react';
+import { Award, BadgeCheck, Bell, Building2, Sparkles, UserPlus, Briefcase, HandHeart, Home, LogOut, MessageSquare, Settings, Shield, Users } from 'lucide-react';
 import {
   useGetMemberProfile, getGetMemberProfileQueryKey, useGetNetworkState, getGetNetworkStateQueryKey,
 } from '@workspace/api-client-react';
@@ -23,6 +23,9 @@ import Admin from './Admin';
 import SettingsPage from './Settings';
 import Connections from './Connections';
 import ThanksEmiratesForm from './ThanksEmirates';
+import Membership from './Membership';
+import Business, { BusinessDetail } from './Business';
+import { LanguageSwitcher } from '@/lib/locale';
 import { getPendingSector, clearPendingSector } from '@/lib/network-invitations';
 import { SECTORS } from '@/lib/sectors-data';
 
@@ -119,6 +122,8 @@ function AppShell({ me, base, children }: Ctx & { children: ReactNode }) {
             </span>
           </Link>
           <div className="flex items-center gap-1">
+            <LanguageSwitcher />
+            <Link href="/member/membership" aria-label="Membership" className="rounded-full p-2 text-ivory-300 hover:text-gold-400 md:hidden" data-testid="link-membership-mobile"><BadgeCheck className="h-4 w-4" /></Link>
             <Link href="/member/messages" className="relative rounded-full p-2 text-ivory-200 hover:text-gold-400 md:hidden" aria-label={`Messages${unread ? `, ${unread} need attention` : ''}`}>
               <Bell className="h-5 w-5" />{unread > 0 && <span className="absolute right-0.5 top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-coral-500 px-1 text-[10px] font-bold text-ink-900">{unread}</span>}
             </Link>
@@ -140,6 +145,8 @@ function AppShell({ me, base, children }: Ctx & { children: ReactNode }) {
             </Link>
           ))}
           <Link href="/member/invite" className={`flex items-center gap-3 rounded-full px-4 py-2.5 text-sm ${active('/member/invite') ? 'bg-lagoon-900 font-semibold text-gold-400' : 'text-ink-800 hover:bg-ivory-200'}`} data-testid="nav-invite"><UserPlus className="h-4 w-4" />Invite{base.growth && !me.founder && <span className="ml-auto text-[10px] text-sand-400">{base.growth.qualifiedInvites}</span>}</Link>
+          <Link href="/member/membership" className={`flex items-center gap-3 rounded-full px-4 py-2.5 text-sm ${active('/member/membership') ? 'bg-lagoon-900 font-semibold text-gold-400' : 'text-ink-800 hover:bg-ivory-200'}`} data-testid="nav-membership"><BadgeCheck className="h-4 w-4" />Membership</Link>
+          <Link href="/member/business" className={`flex items-center gap-3 rounded-full px-4 py-2.5 text-sm ${active('/member/business') ? 'bg-lagoon-900 font-semibold text-gold-400' : 'text-ink-800 hover:bg-ivory-200'}`} data-testid="nav-business"><Building2 className="h-4 w-4" />Company</Link>
           <Link href="/member/settings" className={`flex items-center gap-3 rounded-full px-4 py-2.5 text-sm ${active('/member/settings') ? 'bg-lagoon-900 font-semibold text-gold-400' : 'text-ink-800 hover:bg-ivory-200'}`}><Settings className="h-4 w-4" />Settings & workspace</Link>
           <Link href="/member/thanks-emirates" className={`mt-4 flex items-center gap-3 rounded-2xl border border-lagoon-600/40 px-4 py-3 text-sm ${active('/member/thanks-emirates') ? 'bg-lagoon-900 text-gold-400' : 'bg-lagoon-600/5 text-ink-800 hover:border-lagoon-600'}`} data-testid="nav-thanks-emirates"><Sparkles className="h-4 w-4 text-lagoon-600" />Thanks Emirates</Link>
           <Link href="/donate" className="mt-2 flex items-center gap-3 rounded-2xl border border-gold-500/40 bg-gold-500/10 px-4 py-3 text-sm text-ink-800 hover:border-gold-500" data-testid="link-humanitarian"><HandHeart className="h-4 w-4 text-gold-700" />Humanitarian action</Link>
@@ -203,6 +210,9 @@ function NetworkGate() {
           <Route path="/member/certifications" component={Certifications} />
           <Route path="/member/admin">{me.founder ? <Admin /> : <Redirect to="/member" replace />}</Route>
           <Route path="/member/invite"><div className="flex flex-col gap-4 px-3 pt-4 md:px-0 md:pt-0"><h1 className="font-display text-2xl text-ink-900">Invite your community</h1><InvitationProgress growth={state.growth} founder={me.founder} /></div></Route>
+          <Route path="/member/membership" component={Membership} />
+          <Route path="/member/business/:memberId" component={BusinessDetail} />
+          <Route path="/member/business" component={Business} />
           <Route path="/member/settings" component={SettingsPage} />
           <Route path="/member/thanks-emirates" component={ThanksEmiratesForm} />
           <Route><Redirect to="/member" replace /></Route>

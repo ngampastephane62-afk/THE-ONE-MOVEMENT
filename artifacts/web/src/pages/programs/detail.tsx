@@ -15,6 +15,7 @@ import { AwardsPreview, AwardsNominees } from '@/components/AwardsMedia';
 import { DiplomaticGalaPreview, DiplomaticGalaGallery, DiplomaticGalaSpeakers } from '@/components/DiplomaticGalaMedia';
 import FashionEditionNote from '@/components/FashionEditionNote';
 import StatusNotice from '@/components/StatusNotice';
+import ProgrammeNominees from '@/components/editorial/ProgrammeNominees';
 import { PROGRAMS, getProgramBySlug, type Program, type ProgramStatus } from '@/lib/programs-data';
 
 /* ── Page ─────────────────────────────────────────────────────────────────── */
@@ -357,6 +358,7 @@ export default function ProgramDetail() {
         </div>
       </section>
       {program.slug === 'diplomatic-gala' && <DiplomaticGalaSpeakers />}
+      {(program.slug === 'awards' || program.slug === 'summit' || program.slug === 'fashion-week') && <ProgrammeNominees programme={program.slug} />}
 
       {/* ───────────────────────────────────────────────────────────────────────
           10. PARTICIPATION — ivory

@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import SocialVideo from '@/components/editorial/SocialVideo';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
 import HeroSurface from '@/components/HeroSurface';
@@ -13,7 +14,7 @@ function GomaFilm() {
   return (
     <div data-testid="player-goma-full">
       <p className="mb-2 text-eyebrow text-lagoon-700">HUMANITARIAN FILM · FREE TO WATCH</p>
-      <video src={api('api/documentary/goma/stream')} poster={GOMA_POSTER} controls playsInline preload="metadata" className="h-auto w-full bg-ink-900 object-contain" />
+      <SocialVideo videoId="goma" title="Goma — full humanitarian film" src={api('api/documentary/goma/stream')} poster={GOMA_POSTER} className="bg-ink-900" />
       <p className="mt-3 text-sm text-ink-800">Humanitarian films are free. No donation, subscription or member account is required to watch.</p>
     </div>
   );
@@ -65,7 +66,7 @@ export default function Documentary() {
             <p className="mt-4 text-sm leading-relaxed text-ivory-300">Duration 2:09. Credit: MONUSCO / United Nations, Radio Okapi. This is not a TOMI production and is shown freely for context.</p>
           </div>
           <div className="lg:col-span-8">
-            <video src={api('api/documentary/media/radio-okapi-trailer.mp4')} poster={api('api/documentary/media/radio-okapi.webp')} controls playsInline preload="metadata" className="h-auto w-full border border-gold-500/30 bg-ink-950 object-contain" data-testid="player-radio-okapi" />
+            <SocialVideo videoId="radio-okapi" title="Radio Okapi — MONUSCO trailer" src={api('api/documentary/media/radio-okapi-trailer.mp4')} poster={api('api/documentary/media/radio-okapi.webp')} className="border border-gold-500/30 bg-ink-950" data-testid="player-radio-okapi" />
           </div>
         </div>
       </section>

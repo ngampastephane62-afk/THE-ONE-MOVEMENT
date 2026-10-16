@@ -1,6 +1,7 @@
 import winniePoster from '@/assets/media/programs/awards-winnie-harlow.webp';
 import nomineesPoster from '@/assets/media/programs/awards-nominees-poster.webp';
 import ciaraPoster from '@/assets/media/programs/awards-ciara-poster.webp';
+import SocialVideo from '@/components/editorial/SocialVideo';
 
 export function AwardsPreview({ className = '' }: { className?: string }) {
   return (
@@ -33,17 +34,17 @@ export function AwardsNominees() {
           { file: 'awards-ciara', poster: ciaraPoster, label: 'Ciara · Ambassador of Peace nominee' },
         ].map(({ file, poster, label }) => (
           <figure key={file}>
-            <video
-              controls
-              playsInline
+            <SocialVideo
+              videoId={file === 'awards-ciara' ? 'ciara-nomination' : 'nancy-isime-nomination'}
+              title={label}
               preload="none"
               poster={poster}
               aria-label={label}
-              className="aspect-[9/16] w-full bg-lagoon-900 object-contain"
+              className="bg-lagoon-900"
             >
               <source src={`${import.meta.env.BASE_URL}api/program-media/${file}.mp4`} type="video/mp4" />
               Your browser does not support video playback.
-            </video>
+            </SocialVideo>
             <figcaption className="mt-3 text-sm text-ink-700">{label}</figcaption>
           </figure>
         ))}

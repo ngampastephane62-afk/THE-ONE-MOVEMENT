@@ -8,6 +8,8 @@ import networkRouter from "./network";
 import mediaRequestsRouter from "./mediaRequests";
 import newsArchiveRouter from "./newsArchive";
 import humanitarianRouter from "./humanitarian";
+import professionalRouter from "./professional";
+import editorialEngagementRouter from "./editorialEngagement";
 
 const router: IRouter = Router();
 
@@ -20,5 +22,7 @@ router.use(networkRouter);
 router.use(mediaRequestsRouter);
 router.use(newsArchiveRouter);
 router.use(humanitarianRouter);
+router.use(professionalRouter);
+router.use(editorialEngagementRouter);
 
 export default router;
