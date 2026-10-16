@@ -21,7 +21,7 @@ The stakeholder identifies Dr Denis Mukwege as a TOMI partner and requests certi
 
 **How to apply:** Label issuer and scope of badges explicitly. Use the Nobel Committee as the source of the 2018 award.
 
-The stakeholder proposes a multi-brand marketplace for jewellery, accessories and other products, each contracted brand having its own product space, with potentially 5% of sales supporting TOMI humanitarian action.
+The stakeholder proposes a multi-brand marketplace for jewellery, accessories and other products, each contracted brand having its own product space, with 5% of sales supporting TOMI humanitarian action.
 
 **Why:** Their stated goal is to let people buy and sell while helping humanity.
 
@@ -29,7 +29,13 @@ The stakeholder has chosen TOMI's own commission as the source of the humanitari
 
 **Why:** They explicitly selected “TOMI, prélevés sur sa propre commission”.
 
-**How to apply:** The marketplace is not activated. The calculation base (5% of sales funded from TOMI's commission versus 5% of the commission itself) and total commission rate still need explicit clarification, along with refunds, fulfilment and authorisations before enabling payments or claiming transfers. Humanitarian giving stays separate from professional subscriptions.
+**How to apply:** Humanitarian giving stays separate from professional subscriptions. Do not represent contributions as transferred until they actually are.
+
+The agreed total TOMI sales commission is 5%, and the humanitarian contribution is 5% of the sale price, funded from that commission. Therefore the entire commission is humanitarian; this is not a donation of 5% of the commission.
+
+**Why:** The stakeholder explicitly entered a total commission of 5 and selected “5 % du prix de vente, financés sur la commission TOMI”.
+
+**How to apply:** On a 100-unit product sale, allocate 95 to the seller and 5 to humanitarian purposes before separately agreed processing fees, taxes, shipping and refund adjustments. TOMI retains no operating margin from this commission. Payment-fee responsibility, refunds, fulfilment and authorisations must still be settled before activating real payments; do not silently subtract provider fees from the promised humanitarian 5%.
 
 Marketplace sellers and buyers should manage transactions through their own profiles. The stakeholder wants a stylist's subscription to enable product listings, with sellers receiving proceeds in their own bank accounts and uploading a business licence to qualify.
 
