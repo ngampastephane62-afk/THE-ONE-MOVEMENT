@@ -55,9 +55,10 @@ export default function Terms() {
             media pathways. It also provides:
           </p>
           <LegalList>
-            <li>an expression-of-interest form for people who want to connect with the Movement; and</li>
+             <li>an expression-of-interest form for people who want to connect with the Movement;</li>
             <li>an institutional inquiry form for organizations and institutions to contact the Movement.</li>
-            <li>a verified-email member network with professional profiles, posts, media, follows and recipient-approved private discussions;</li>
+             <li>free editable member profiles and a verified-email network with posts, media, follows and recipient-approved private discussions, subject to the access conditions shown in the member space;</li>
+             <li>optional recurring monthly professional services, separate from annual event packages;</li>
             <li>applications for programme-specific official status and optional commercial packages, with payment after review and written agreement.</li>
           </LegalList>
           <p>
@@ -92,6 +93,17 @@ export default function Terms() {
             it does not authorize automatic renewal. Renewal, cancellations, refunds
             and any taxes are governed by the applicable written terms and mandatory law.
           </p>
+           <p>
+             Monthly professional subscriptions are optional and separate from annual
+             event packages. The price, currency, recurring billing interval and service
+             access are displayed in the member space and at checkout. By accepting a
+             recurring charge, you authorize renewal each billing period until you
+             cancel. You can stop renewal from the membership page and retain access
+             until the current paid period ends. Refund requests remain subject to the
+             applicable written terms and mandatory law. A paid membership badge
+             indicates subscription status only, not identity verification, business
+             legality, official certification or guaranteed introductions.
+           </p>
           <p>
             Founder approval and, where applicable, confirmed payment are separate
             requirements for an official commercial badge. Payment alone does not

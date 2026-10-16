@@ -15,6 +15,8 @@ export default function Partners() {
       <Helmet>
         <title>OUR PARTNERS — THE ONE MOVEMENT INTERNATIONAL</title>
         <meta name="description" content="Partnership pathways and verified relationship architecture for The One Movement International." />
+         <meta property="og:title" content="Our Partners — The One Movement International" />
+         <meta property="og:description" content="Explore the Movement's partner network and begin a conversation about institutional, cultural or programme collaboration." />
         <link rel="canonical" href="/partners" />
       </Helmet>
 

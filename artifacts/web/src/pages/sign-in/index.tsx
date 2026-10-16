@@ -9,7 +9,12 @@ export default function SignInPage() {
   if (isLoaded && isSignedIn) return <Redirect to="/member" replace />;
   return (
     <AuthShell eyebrow="MEMBER SIGN IN" title="WELCOME BACK.">
-      <Helmet><title>SIGN IN — THE ONE MOVEMENT INTERNATIONAL</title></Helmet>
+      <Helmet>
+        <title>SIGN IN — THE ONE MOVEMENT INTERNATIONAL</title>
+        <meta name="description" content="Sign in to your TOMI member space to manage your profile, saved programmes and network participation." />
+        <meta property="og:title" content="Sign in — The One Movement International" />
+        <meta property="og:description" content="Return to your member profile and ecosystem workspace." />
+      </Helmet>
       <div className="flex w-full min-w-0 max-w-[440px] flex-col items-center gap-4">
         <EmailGuidance />
         <SignIn routing="path" path={`${basePath}/sign-in`} signUpUrl={`${basePath}/sign-up`} forceRedirectUrl={`${basePath}/member`} appearance={{ options: { socialButtonsPlacement: 'bottom', socialButtonsVariant: 'blockButton' } }} />

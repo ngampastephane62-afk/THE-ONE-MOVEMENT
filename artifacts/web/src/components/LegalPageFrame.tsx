@@ -39,7 +39,7 @@ export default function LegalPageFrame({
             {intro}
           </p>
           <p className="mt-5 text-xs uppercase tracking-[0.16em] text-ivory-400">
-            Last updated 25 August 2026
+            Last updated 16 October 2026
           </p>
         </div>
       </HeroSurface>

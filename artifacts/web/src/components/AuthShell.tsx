@@ -15,7 +15,7 @@ export default function AuthShell({ eyebrow, title, children, variant }: { eyebr
           </div>
           <p className="mt-8 text-eyebrow text-gold-400">{eyebrow}</p>
           <h1 className="mt-3 text-display-lg text-ivory-100">{title}</h1>
-          <p className="mt-5 max-w-md text-ivory-200 leading-relaxed">Your private space across seventeen sectors: tailored programmes, official knowledge, saved bookmarks and an optional public profile. Sign in with a verified account. After sign-in you land straight in the feed; your profile can be completed whenever you like. No paid tiers.</p>
+           <p className="mt-5 max-w-md text-ivory-200 leading-relaxed">Your private space across seventeen sectors: tailored programmes, official knowledge, saved bookmarks and an optional public profile. After sign-in you land straight in the feed; your profile can be completed whenever you like. Your account is free. Optional professional subscriptions and annual event packages are separate.</p>
           <p className="mt-6 text-sm text-gold-400/80">WE ARE ONE · <span lang="ar">نحن واحد</span></p>
         </div>
         <div className="flex min-w-0 justify-center">{children}</div>
@@ -43,7 +43,7 @@ export function EmailGuidance({ signingUp = false }: { signingUp?: boolean }) {
 const PERKS = [
   ['A personal page', 'Your cover, your layout, your story. Not a settings form.'],
   ['Seventeen sectors', 'Creative work, business and institutions in one network.'],
-  ['Follow, post, message', 'Build real connections with verified members.'],
+  ['Explore the network', 'Discover people and review the access conditions for interactions and publishing.'],
 ] as const;
 
 function SignUpShell({ eyebrow, title, children }: { eyebrow: string; title: string; children: ReactNode }) {
@@ -57,7 +57,7 @@ function SignUpShell({ eyebrow, title, children }: { eyebrow: string; title: str
           </div>
           <p className="mt-6 text-eyebrow text-gold-400 lg:mt-8">{eyebrow}</p>
           <h1 className="mt-2 text-3xl leading-tight text-ivory-100 font-display lg:mt-3 lg:text-display-lg">{title}</h1>
-          <p className="mt-3 inline-flex items-center rounded-full border border-gold-500/50 bg-gold-500/10 px-3 py-1 text-xs font-semibold tracking-wide text-gold-400" data-testid="text-free-membership">Membership is free. No paid tiers, no card.</p>
+           <p className="mt-3 inline-flex items-center rounded-full border border-gold-500/50 bg-gold-500/10 px-3 py-1 text-xs font-semibold tracking-wide text-gold-400" data-testid="text-free-membership">Free account. No card needed to register.</p>
           <ul className="mt-5 hidden gap-3 sm:grid">
             {PERKS.map(([t, b]) => (
               <li key={t} className="flex gap-3 border-l border-gold-500/40 pl-3">
@@ -65,7 +65,7 @@ function SignUpShell({ eyebrow, title, children }: { eyebrow: string; title: str
               </li>
             ))}
           </ul>
-          <p className="mt-4 text-sm text-ivory-200/85 sm:hidden">A personal page, seventeen sectors and verified members, all free.</p>
+           <p className="mt-4 text-sm text-ivory-200/85 sm:hidden">A free personal page and seventeen sectors to explore. Optional paid services are separate.</p>
           <p className="mt-4 text-xs text-ivory-200/70">After verification you land straight in the feed. Your profile is optional and can be completed whenever you like.</p>
         </div>
         <div className="flex min-w-0 justify-center">{children}</div>

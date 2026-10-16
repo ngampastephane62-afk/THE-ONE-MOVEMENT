@@ -160,7 +160,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: 'Is membership free?',
-    a: 'A member account and the social network are free: create a profile, publish, follow peers and message members who accept your request. Separately, optional annual commercial packages (for example designer, partner or sponsor packages) are offered under a written 12-month agreement. Submitting an expression of interest is always free, and neither an account nor a package guarantees event places.',
+    a: 'Creating an account and editing your profile are free. Network interactions and publishing follow the access conditions shown in your member space. Optional monthly professional services are separate from annual commercial event packages, which require their own written agreement. Submitting an expression of interest is always free, and neither an account nor a package guarantees event places.',
   },
   {
     q: 'Can organizations join?',
@@ -172,7 +172,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: 'Can I create a member account?',
-    a: 'Yes. Create an account from Sign up, verify your email, build your profile and join the member network to post, follow and message. Your visibility on the public website is a separate choice. Official badges are granted only after a reviewed certification, never automatically.',
+    a: 'Yes. Create an account from Sign up, verify your email and build your editable profile. Review the current access conditions in your member space before using network interactions or publishing. Public directory visibility is a separate choice. A paid membership badge is not identity verification or official certification; official roles require a separate review.',
   },
 ];
 

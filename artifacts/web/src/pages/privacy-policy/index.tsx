@@ -37,9 +37,11 @@ export default function PrivacyPolicy() {
           <p>
             Creating a member account provides a personal ecosystem workspace.
             An expression-of-interest or inquiry form does not create that account.
-            Optional annual commercial packages are separate from the free account.
-            Payment is handled by Stripe after application review and confirmation of
-            written terms. There is no wallet, equity-investment checkout or active
+             Optional monthly professional subscriptions and annual event packages are
+             separate from the free account. Stripe processes payments. Annual event
+             packages require application review and confirmation of written terms;
+             monthly services require acceptance of the recurring charge shown at checkout.
+             There is no wallet, equity-investment checkout or active
             humanitarian collection until its stated readiness conditions are met.
           </p>
         </LegalSection>
@@ -221,10 +223,11 @@ export default function PrivacyPolicy() {
             visible to website visitors when you choose to publish them.
           </p>
           <p>
-            Stripe processes package payments and may receive your account email,
+             Stripe processes package and subscription payments and may receive your account email,
             billing details and transaction information. Card details are entered on
             Stripe-hosted checkout, not stored by TOMI. TOMI keeps payment-provider
-            references and payment/approval status to administer your application.
+             references, subscription and renewal/cancellation status, and payment/approval
+             status to administer the relevant service or application.
             Review Stripe’s own privacy terms before paying.
           </p>
           <p>

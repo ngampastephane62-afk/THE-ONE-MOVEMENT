@@ -9,7 +9,12 @@ export default function Impact() {
   const outreach = archiveVideo('community-outreach');
   return (
     <div>
-      <Helmet><title>COMMUNITY & IMPACT — THE ONE MOVEMENT INTERNATIONAL</title><meta name="description" content="Community and humanitarian action within The One Movement's wider ecosystem of connections." /></Helmet>
+      <Helmet>
+        <title>COMMUNITY & IMPACT — THE ONE MOVEMENT INTERNATIONAL</title>
+        <meta name="description" content="Community and humanitarian action within The One Movement's wider ecosystem of connections." />
+        <meta property="og:title" content="Community & Impact — The One Movement International" />
+        <meta property="og:description" content="Explore community outreach and ways to contribute through confirmed activities and collaboration." />
+      </Helmet>
       <HeroSurface minHeight="60vh">
         <div className="mx-auto max-w-7xl px-6 py-section-lg grid gap-10 lg:grid-cols-2 items-center">
           <div>

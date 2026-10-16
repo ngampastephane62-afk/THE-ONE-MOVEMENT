@@ -102,7 +102,7 @@ export default function JoinTheMovement() {
             >
               A growing global movement for creatives, entrepreneurs, institutions
               and changemakers. Submit an expression of interest to follow its
-              programs and future platform direction.
+               programs, connect with its ecosystem or create your free member space.
             </p>
 
             <p
@@ -177,8 +177,8 @@ export default function JoinTheMovement() {
           <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                label: 'CONNECTION',
-                 body: 'Connect your interests with an ecosystem spanning business, institutions, culture, media, innovation and community. Create a free account to join the member network, publish your work and message peers; optional annual packages are available separately.',
+                 label: 'CONNECTION',
+                  body: 'Connect your interests with an ecosystem spanning business, institutions, culture, media, innovation and community. Create a free account and editable profile. Network interactions and publishing follow the access conditions shown in your member space; optional professional services and annual event packages are separate.',
               },
               {
                 label: 'OPPORTUNITY',
@@ -227,11 +227,11 @@ export default function JoinTheMovement() {
             <div className="lg:col-span-7 lg:col-start-6">
               <ul className="space-y-5">
                 {[
-                  'The current public experience consists of this website, confirmed programs and direct enquiry pathways.',
+                   'Explore the public website, programme information and direct enquiry pathways without an account.',
                   'Submitting an expression of interest does not create an account, membership or guaranteed place.',
                   'The team may contact you with relevant official updates as plans are confirmed.',
-                  'Free member accounts and the social network are available separately from this form, via Sign up. Optional annual packages are listed inside the member space.',
-                  'Program participation and future platform access will be governed by the terms announced for each opportunity.',
+                   'Create a free editable member account separately via Sign up. Optional monthly professional services and annual event packages are listed inside the member space.',
+                   'Network access and programme participation follow the conditions displayed for each service or confirmed opportunity.',
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-4">
                     <span

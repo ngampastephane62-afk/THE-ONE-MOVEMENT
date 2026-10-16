@@ -20,3 +20,9 @@ Keep Clerk as the application's authentication provider; do not introduce the ol
 **Why:** On 2026-10-16, the user explicitly chose “Keep Clerk and leave out the older authentication task” after the two implementations conflicted.
 
 **How to apply:** Preserve the current member sign-in and identity integration when incorporating older work. Any later provider migration requires a new explicit request.
+
+Owner approval of the Privacy Policy and Terms was explicitly granted on 2026-10-16. This is owner approval, not confirmation of review by qualified legal counsel.
+
+**Why:** The owner selected “I approve the current copy as owner” after being told the policies distinguish free accounts, monthly professional subscriptions and annual event packages.
+
+**How to apply:** Do not continue treating owner sign-off on that copy as missing. Keep professional legal validation separate, and seek renewed approval for material changes to legal obligations or business terms.
