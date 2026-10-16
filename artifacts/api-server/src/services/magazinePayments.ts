@@ -6,6 +6,7 @@ import { stripeReady } from "./networkPayments";
 import { NetworkError } from "./networkAuth";
 
 export const MAGAZINE_CONSENT = "tropik-magazine-retail-2026-v1";
+export const FEATURE_PRICE = 20000;
 let cached: { expires: number; available: boolean; testMode: boolean; reason: string } | undefined;
 
 export async function magazineConfiguration() {
@@ -20,7 +21,7 @@ export async function magazineConfiguration() {
         available = !testMode;
         reason = testMode
           ? "The connected payment account is in test mode. Magazine sales are not open and no real payment can be taken."
-          : "One-time purchases in USD. Print delivery is quoted and confirmed before payment.";
+          : "One inside printed page costs USD200. Editorial approval and publication conditions are required before payment.";
       } catch {
         reason = "Payment availability could not be checked. Please retry later.";
       }
@@ -83,6 +84,16 @@ export async function refreshMagazineOrder(row: MagazineOrderRow) {
   return row;
 }
 
+export function validateFeatureCheckout(row: MagazineOrderRow, expectedTotal: number) {
+  if (row.format !== "feature") throw new NetworkError(409, "The presentation kit is free. A separate reader edition is not available for checkout.");
+  if (["paid", "refunded", "disputed"].includes(row.status)) throw new NetworkError(409, "This order cannot be paid again.");
+  if (row.shippingAmount === null || !["approved", "checkout_pending"].includes(row.status)) {
+    throw new NetworkError(409, "The Founder must approve this article and confirm publication conditions before payment.");
+  }
+  if (expectedTotal !== row.itemAmount + row.shippingAmount) throw new NetworkError(409, "The order total has changed. Refresh the proposal and accept the updated total.");
+  if (row.itemAmount !== FEATURE_PRICE || row.shippingAmount !== 0) throw new NetworkError(409, "The saved order price is not valid.");
+}
+
 export async function magazineCheckout(memberId: number, id: number, origin: string, expectedTotal: number) {
   const config = await magazineConfiguration();
   if (!config.available) throw new NetworkError(503, config.reason);
@@ -90,17 +101,7 @@ export async function magazineCheckout(memberId: number, id: number, origin: str
     await tx.execute(sql`select pg_advisory_xact_lock(hashtext(${"magazine:" + id}))`);
     const [row] = await tx.select().from(orders).where(and(eq(orders.id, id), eq(orders.memberId, memberId))).limit(1);
     if (!row) throw new NetworkError(404, "Magazine order not found.");
-    if (["paid", "refunded", "disputed"].includes(row.status)) throw new NetworkError(409, "This order cannot be paid again.");
-    if (row.shippingAmount === null || row.format === "print" && !["quoted", "checkout_pending"].includes(row.status)) {
-      throw new NetworkError(409, "Print shipping must be confirmed by the Founder before payment.");
-    }
-    if (expectedTotal !== row.itemAmount + row.shippingAmount) {
-      throw new NetworkError(409, "The order total has changed. Refresh the quote and accept the updated total.");
-    }
-    if (row.format === "digital" && (row.itemAmount !== 1000 || row.shippingAmount !== 0) ||
-        row.format === "print" && (row.itemAmount !== 2500 || row.shippingAmount < 1000 || row.shippingAmount > 3000)) {
-      throw new NetworkError(409, "The saved order price is not valid.");
-    }
+    validateFeatureCheckout(row, expectedTotal);
     const stripe = await getUncachableStripeClient();
     if (row.stripeSessionId) {
       const old = await stripe.checkout.sessions.retrieve(row.stripeSessionId);
@@ -110,17 +111,14 @@ export async function magazineCheckout(memberId: number, id: number, origin: str
     const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [{
       price_data: {
         currency: "usd", unit_amount: row.itemAmount,
-        product_data: { name: row.format === "digital" ? "Tropik Magazine 2026 — 10-page digital PDF" : "Tropik Magazine 2026 — 10-page printed copy" },
+        product_data: { name: "Tropik Magazine — one inside printed page, editorial reservation" },
       }, quantity: 1,
     }];
-    if (row.format === "print") lineItems.push({
-      price_data: { currency: "usd", unit_amount: row.shippingAmount, product_data: { name: "Confirmed magazine delivery" } }, quantity: 1,
-    });
     const session = await stripe.checkout.sessions.create({
       mode: "payment", customer_email: row.email, line_items: lineItems,
       metadata: { tomi_magazine_order: String(row.id), tomi_member: String(row.memberId) },
-      success_url: `${origin}/tropik-magazine?order=${row.id}&checkout=complete`,
-      cancel_url: `${origin}/tropik-magazine?order=${row.id}&checkout=cancelled`,
+      success_url: `${origin}/tropik-magazine/contribute?order=${row.id}&checkout=complete`,
+      cancel_url: `${origin}/tropik-magazine/contribute?order=${row.id}&checkout=cancelled`,
     }, { idempotencyKey: `magazine-${row.id}-${row.stripeSessionId ?? "initial"}` });
     if (!session.livemode || !session.url) throw new NetworkError(503, "Real magazine checkout is not available.");
     await tx.update(orders).set({ stripeSessionId: session.id, liveMode: true, status: "checkout_pending", updatedAt: new Date() }).where(eq(orders.id, row.id));

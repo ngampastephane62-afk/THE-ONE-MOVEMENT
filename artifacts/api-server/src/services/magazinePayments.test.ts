@@ -1,7 +1,8 @@
 import { test, after } from "node:test";
 import assert from "node:assert/strict";
 import { pool, type MagazineOrderRow } from "@workspace/db";
-import { magazineOrderView, magazineConfiguration } from "./magazinePayments";
+import { magazineOrderView, magazineConfiguration, validateFeatureCheckout } from "./magazinePayments";
+import { CheckoutMagazineOrderBody } from "@workspace/api-zod";
 
 function row(changes: Partial<MagazineOrderRow> = {}): MagazineOrderRow {
   return {
@@ -21,6 +22,7 @@ test("only a paid, real, unrefunded digital order receives PDF access", () => {
   for (const changes of [
     { status: "pending" }, { status: "checkout_pending" }, { status: "refunded" },
     { status: "disputed" }, { liveMode: false }, { refundedAmount: 1 }, { format: "print" as const },
+    { format: "feature" as const, itemAmount: 20000, shippingAmount: 0 },
   ]) assert.equal(magazineOrderView(row(changes)).canDownload, false, JSON.stringify(changes));
 });
 test("a print request has no payable total until delivery is quoted", () => {
@@ -33,4 +35,19 @@ test("configuration preserves owner prices and cannot open before Stripe is read
   const config = await magazineConfiguration();
   assert.deepEqual([config.digitalUsd, config.printUsd, config.shippingMinUsd, config.shippingMaxUsd, config.pageCount], [10, 25, 10, 30, 10]);
   assert.equal(config.available, false);
+});
+test("only an approved USD200 printed-page proposal may proceed to checkout", () => {
+  assert.equal(CheckoutMagazineOrderBody.safeParse({ accepted: true, expectedTotal: 20000 }).success, true);
+  assert.equal(CheckoutMagazineOrderBody.safeParse({ accepted: true, expectedTotal: 20001 }).success, false);
+  const approved = row({ format: "feature", status: "approved", itemAmount: 20000, shippingAmount: 0 });
+  assert.doesNotThrow(() => validateFeatureCheckout(approved, 20000));
+  assert.doesNotThrow(() => validateFeatureCheckout({ ...approved, status: "checkout_pending" }, 20000));
+  for (const status of ["submitted", "declined", "withdrawn", "paid", "refunded", "disputed"]) {
+    assert.throws(() => validateFeatureCheckout({ ...approved, status }, 20000), /Founder|cannot be paid again/, status);
+  }
+  assert.throws(() => validateFeatureCheckout(approved, 1000), /total has changed/);
+  assert.throws(() => validateFeatureCheckout({ ...approved, itemAmount: 19999 }, 19999), /price is not valid/);
+  assert.throws(() => validateFeatureCheckout({ ...approved, shippingAmount: 1 }, 20001), /price is not valid/);
+  assert.throws(() => validateFeatureCheckout(row({ format: "digital" }), 1000), /kit is free/);
+  assert.throws(() => validateFeatureCheckout(row({ format: "print" }), 2500), /kit is free/);
 });

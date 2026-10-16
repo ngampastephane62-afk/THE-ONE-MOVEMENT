@@ -1,15 +1,36 @@
 import { Router, type Request } from "express";
-import { and, desc, eq, sql } from "drizzle-orm";
+import { desc, eq, sql } from "drizzle-orm";
 import { db, magazineOrders as orders } from "@workspace/db";
-import { CreateMagazineOrderBody, CheckoutMagazineOrderBody, QuoteMagazineShippingBody } from "@workspace/api-zod";
+import { CheckoutMagazineOrderBody, QuoteMagazineShippingBody } from "@workspace/api-zod";
 import { actor, networkAuth, networkWrite, requireFounder, NetworkError } from "../services/networkAuth";
 import { createRateLimiter } from "../lib/inMemoryRateLimiter";
 import { objectFile } from "../services/networkFiles";
-import { magazineConfiguration, magazineOrderView, magazineCheckout, ownMagazineOrder, refreshMagazineOrder, MAGAZINE_CONSENT } from "../services/magazinePayments";
+import { magazineConfiguration, magazineOrderView, magazineCheckout, ownMagazineOrder, refreshMagazineOrder } from "../services/magazinePayments";
+import submissionRouter from "./magazineSubmissions";
 
 const router = Router();
+router.use(submissionRouter);
 const writes = createRateLimiter({ maxRequests: 15, windowMs: 60_000 });
 const downloads = createRateLimiter({ maxRequests: 20, windowMs: 60_000 });
+router.get("/magazine/kit.pdf", downloads, async (_req, res) => {
+  const folder = process.env.PRIVATE_OBJECT_DIR;
+  if (!folder) throw new NetworkError(503, "Magazine storage is unavailable.");
+  const [bytes] = await objectFile(`${folder.replace(/\/$/, "")}/magazines/tropik-2026.pdf`).download();
+  res.set({
+    "Content-Type": "application/pdf",
+    "Content-Disposition": 'attachment; filename="Tropik-Magazine-Media-Kit-2026.pdf"',
+    "Cache-Control": "public,max-age=3600", "X-Content-Type-Options": "nosniff",
+    "Content-Length": String(bytes.length),
+  }).send(bytes);
+});
+router.get("/magazine/assets/:filename", async (req, res) => {
+  const name = String(req.params.filename);
+  if (!/^(artwork-(0[1-9]|1[0-6])|kit-page-(0[1-9]|10)|heritage-0[1-4]|print-reader-01)\.webp$/.test(name)) return void res.sendStatus(404);
+  const bucket = process.env.DEFAULT_OBJECT_STORAGE_BUCKET_ID;
+  if (!bucket) throw new NetworkError(503, "Magazine storage is unavailable.");
+  const [bytes] = await objectFile(`/${bucket}/public/magazine/editorial/${name}`).download();
+  res.set({ "Content-Type": "image/webp", "Cache-Control": "public,max-age=86400", "X-Content-Type-Options": "nosniff" }).send(bytes);
+});
 function orderId(req: Request) {
   const id = Number(req.params.id);
   if (!Number.isSafeInteger(id) || id < 1) throw new NetworkError(400, "Invalid magazine order.");
@@ -29,49 +50,9 @@ router.get("/magazine/orders", networkAuth, async (_req, res) => {
   const rows = await db.select().from(orders).where(eq(orders.memberId, who.member.id)).orderBy(desc(orders.createdAt)).limit(100);
   res.json({ orders: rows.map(magazineOrderView), founder: who.founder });
 });
-router.post("/magazine/orders", networkAuth, networkWrite, writes, async (req, res) => {
-  const parsed = CreateMagazineOrderBody.strict().safeParse(req.body);
-  if (!parsed.success || !parsed.data.accepted) throw new NetworkError(400, "Check the order details and accept the purchase terms.");
-  const input = parsed.data;
-  if (input.format === "print" && !input.shipping || input.format === "digital" && input.shipping) {
-    throw new NetworkError(400, "A delivery address is required for print only.");
-  }
-  const who = actor(res, false);
-  if (input.format === "digital") {
-    const [owned] = await db.select().from(orders).where(and(
-      eq(orders.memberId, who.member.id), eq(orders.format, "digital"), eq(orders.status, "paid"),
-      eq(orders.liveMode, true), eq(orders.refundedAmount, 0),
-    )).limit(1);
-    if (owned) {
-      const checked = await refreshMagazineOrder(owned);
-      if (magazineOrderView(checked).canDownload) return void res.status(201).json(magazineOrderView(checked));
-    }
-  }
-  const shipping = input.shipping;
-  if (shipping && [shipping.fullName, shipping.address, shipping.country, shipping.phone].some(s => !s.trim())) {
-    throw new NetworkError(400, "Complete the delivery details.");
-  }
-  const requestId = `${who.member.id}:${input.requestId}`;
-  const values = {
-    memberId: who.member.id, format: input.format, status: input.format === "print" ? "quote_requested" : "pending",
-    itemAmount: input.format === "print" ? 2500 : 1000, shippingAmount: input.format === "print" ? null : 0,
-    currency: "usd", email: who.email, requestId, consentVersion: MAGAZINE_CONSENT,
-    fullName: shipping?.fullName.trim() ?? null, address: shipping?.address.trim() ?? null,
-    country: shipping?.country.trim() ?? null, phone: shipping?.phone.trim() ?? null,
-  };
-  const row = await db.transaction(async (tx) => {
-    await tx.execute(sql`select pg_advisory_xact_lock(hashtext(${requestId}))`);
-    const [old] = await tx.select().from(orders).where(eq(orders.requestId, requestId));
-    if (old) {
-      if (old.format !== values.format || old.fullName !== values.fullName || old.address !== values.address || old.country !== values.country || old.phone !== values.phone) {
-        throw new NetworkError(409, "This request changed. Start a new magazine order.");
-      }
-      return old;
-    }
-    const [created] = await tx.insert(orders).values(values).returning();
-    return created!;
-  });
-  res.status(201).json(magazineOrderView(row));
+router.post("/magazine/orders", networkAuth, networkWrite, writes, async (_req, _res) => {
+  // Reader-edition sales must never charge for the now-free presentation kit.
+  throw new NetworkError(409, "The presentation kit is free. Use the article proposal space for a USD200 printed page; separate reader editions are not yet on sale.");
 });
 router.get("/magazine/orders/:id", networkAuth, async (req, res) => {
   const row = await ownMagazineOrder(actor(res, false).member.id, orderId(req));

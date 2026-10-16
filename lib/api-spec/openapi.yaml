@@ -11,6 +11,84 @@ tags:
   - name: health
     description: Health operations
 paths:
+  /magazine/kit.pdf:
+    get:
+      operationId: downloadMagazineKit
+      responses:
+        "200":
+          description: Free public presentation/media kit, distinct from a reader edition
+          content:
+            application/pdf:
+              schema: { type: string, format: binary }
+  /magazine/submissions:
+    get:
+      operationId: getMagazineSubmissions
+      responses:
+        "200":
+          description: Own private article proposals and Founder flag
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/MagazineSubmissionList" }
+    post:
+      operationId: createMagazineSubmission
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/MagazineSubmissionInput" }
+      responses:
+        "201":
+          description: Private proposal saved at server-owned USD200 price; no charge
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/MagazineSubmission" }
+  /magazine/submissions/{id}:
+    parameters:
+      - { name: id, in: path, required: true, schema: { type: integer } }
+    patch:
+      operationId: updateMagazineSubmission
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/MagazineSubmissionInput" }
+      responses:
+        "200":
+          description: Updated own unpaid proposal, returned to editorial review
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/MagazineSubmission" }
+    delete:
+      operationId: withdrawMagazineSubmission
+      responses:
+        "204": { description: "Unpaid proposal withdrawn, audit record retained" }
+  /magazine/admin/submissions:
+    get:
+      operationId: getMagazineAdminSubmissions
+      responses:
+        "200":
+          description: Founder-only article proposals
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/MagazineSubmission" }
+  /magazine/admin/submissions/{id}:
+    patch:
+      operationId: reviewMagazineSubmission
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: integer } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/MagazineSubmissionReviewInput" }
+      responses:
+        "200":
+          description: Founder decision; approval requires publication terms and never marks a payment paid
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/MagazineSubmission" }
   /magazine/config:
     get:
       operationId: getMagazineConfig
@@ -31,14 +109,17 @@ paths:
               schema: { $ref: "#/components/schemas/MagazineOrderList" }
     post:
       operationId: createMagazineOrder
+      deprecated: true
       requestBody:
         required: true
         content:
           application/json:
             schema: { $ref: "#/components/schemas/MagazineOrderInput" }
       responses:
+        "409":
+          description: The presentation kit is free; reader-edition checkout is closed until a separate edition is supplied
         "201":
-          description: Saved digital order or print shipping request; no payment taken
+          description: Legacy reader-order response contract, retained for existing clients; new kit purchases are closed
           content:
             application/json:
               schema: { $ref: "#/components/schemas/MagazineOrder" }
@@ -718,6 +799,44 @@ paths:
                 $ref: "#/components/schemas/DetailedHealthStatus"
 components:
   schemas:
+    MagazineSubmissionInput:
+      type: object
+      required: [requestId, fullName, title, body, accepted]
+      properties:
+        requestId: { type: string, minLength: 8, maxLength: 100 }
+        fullName: { type: string, minLength: 2, maxLength: 120 }
+        title: { type: string, minLength: 5, maxLength: 180 }
+        body: { type: string, minLength: 100, maxLength: 20000 }
+        photoUrl: { type: string, maxLength: 2000 }
+        accepted: { type: boolean }
+        expectedUpdatedAt: { type: string, maxLength: 40 }
+    MagazineSubmissionReviewInput:
+      type: object
+      required: [decision, note, expectedUpdatedAt]
+      properties:
+        decision: { type: string, enum: [approved, declined] }
+        note: { type: string, minLength: 5, maxLength: 2000 }
+        expectedUpdatedAt: { type: string, minLength: 10, maxLength: 40 }
+    MagazineSubmission:
+      type: object
+      required: [id, fullName, title, body, photoUrl, reviewNote, updatedAt, order]
+      properties:
+        id: { type: integer }
+        fullName: { type: string }
+        title: { type: string }
+        body: { type: string }
+        photoUrl: { type: string }
+        reviewNote: { type: string }
+        updatedAt: { type: string }
+        order: { $ref: "#/components/schemas/MagazineOrder" }
+    MagazineSubmissionList:
+      type: object
+      required: [submissions, founder]
+      properties:
+        submissions:
+          type: array
+          items: { $ref: "#/components/schemas/MagazineSubmission" }
+        founder: { type: boolean }
     MagazineConfig:
       type: object
       required: [digitalUsd, printUsd, shippingMinUsd, shippingMaxUsd, pageCount, available, testMode, reason]
@@ -751,7 +870,7 @@ components:
       required: [accepted, expectedTotal]
       properties:
         accepted: { type: boolean }
-        expectedTotal: { type: integer, minimum: 1000, maximum: 5500 }
+        expectedTotal: { type: integer, minimum: 1000, maximum: 20000 }
     MagazineCheckoutReply:
       type: object
       required: [url]
@@ -767,7 +886,7 @@ components:
       required: [id, format, status, itemAmount, shippingAmount, totalAmount, currency, fullName, address, country, phone, email, canDownload, createdAt]
       properties:
         id: { type: integer }
-        format: { type: string, enum: [digital, print] }
+        format: { type: string, enum: [digital, print, feature] }
         status: { type: string }
         itemAmount: { type: integer }
         shippingAmount: { type: [integer, "null"] }

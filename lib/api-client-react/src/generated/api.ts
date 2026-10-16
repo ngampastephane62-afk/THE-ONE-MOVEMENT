@@ -50,6 +50,10 @@ import type {
   MagazineOrderInput,
   MagazineOrderList,
   MagazineShippingQuoteInput,
+  MagazineSubmission,
+  MagazineSubmissionInput,
+  MagazineSubmissionList,
+  MagazineSubmissionReviewInput,
   MediaInquiry,
   MediaInquiryInput,
   MediaInquiryReceipt,
@@ -102,6 +106,607 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   }
   return result;
 };
+
+export const getDownloadMagazineKitUrl = () => {
+
+
+
+
+  return `/api/magazine/kit.pdf`
+}
+
+export const downloadMagazineKit = async ( options?: Parameters<typeof customFetch>[1]): Promise<Blob> => {
+
+  return customFetch<Blob>(getDownloadMagazineKitUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getDownloadMagazineKitQueryKey = () => {
+    return [
+    `/api/magazine/kit.pdf`
+    ] as const;
+    }
+
+
+export const getDownloadMagazineKitQueryOptions = <TData = Awaited<ReturnType<typeof downloadMagazineKit>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof downloadMagazineKit>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getDownloadMagazineKitQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof downloadMagazineKit>>> = ({ signal }) => downloadMagazineKit({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof downloadMagazineKit>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type DownloadMagazineKitQueryResult = NonNullable<Awaited<ReturnType<typeof downloadMagazineKit>>>
+export type DownloadMagazineKitQueryError = ErrorType<unknown>
+
+
+export function useDownloadMagazineKit<TData = Awaited<ReturnType<typeof downloadMagazineKit>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof downloadMagazineKit>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof downloadMagazineKit>>,
+          TError,
+          Awaited<ReturnType<typeof downloadMagazineKit>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useDownloadMagazineKit<TData = Awaited<ReturnType<typeof downloadMagazineKit>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof downloadMagazineKit>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof downloadMagazineKit>>,
+          TError,
+          Awaited<ReturnType<typeof downloadMagazineKit>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useDownloadMagazineKit<TData = Awaited<ReturnType<typeof downloadMagazineKit>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof downloadMagazineKit>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useDownloadMagazineKit<TData = Awaited<ReturnType<typeof downloadMagazineKit>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof downloadMagazineKit>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getDownloadMagazineKitQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getGetMagazineSubmissionsUrl = () => {
+
+
+
+
+  return `/api/magazine/submissions`
+}
+
+export const getMagazineSubmissions = async ( options?: Parameters<typeof customFetch>[1]): Promise<MagazineSubmissionList> => {
+
+  return customFetch<MagazineSubmissionList>(getGetMagazineSubmissionsUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetMagazineSubmissionsQueryKey = () => {
+    return [
+    `/api/magazine/submissions`
+    ] as const;
+    }
+
+
+export const getGetMagazineSubmissionsQueryOptions = <TData = Awaited<ReturnType<typeof getMagazineSubmissions>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMagazineSubmissions>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMagazineSubmissionsQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMagazineSubmissions>>> = ({ signal }) => getMagazineSubmissions({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMagazineSubmissions>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMagazineSubmissionsQueryResult = NonNullable<Awaited<ReturnType<typeof getMagazineSubmissions>>>
+export type GetMagazineSubmissionsQueryError = ErrorType<unknown>
+
+
+export function useGetMagazineSubmissions<TData = Awaited<ReturnType<typeof getMagazineSubmissions>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMagazineSubmissions>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMagazineSubmissions>>,
+          TError,
+          Awaited<ReturnType<typeof getMagazineSubmissions>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMagazineSubmissions<TData = Awaited<ReturnType<typeof getMagazineSubmissions>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMagazineSubmissions>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMagazineSubmissions>>,
+          TError,
+          Awaited<ReturnType<typeof getMagazineSubmissions>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMagazineSubmissions<TData = Awaited<ReturnType<typeof getMagazineSubmissions>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMagazineSubmissions>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetMagazineSubmissions<TData = Awaited<ReturnType<typeof getMagazineSubmissions>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMagazineSubmissions>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMagazineSubmissionsQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getCreateMagazineSubmissionUrl = () => {
+
+
+
+
+  return `/api/magazine/submissions`
+}
+
+export const createMagazineSubmission = async (magazineSubmissionInput: MagazineSubmissionInput, options?: Parameters<typeof customFetch>[1]): Promise<MagazineSubmission> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<MagazineSubmission>(getCreateMagazineSubmissionUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(magazineSubmissionInput)
+  }
+);}
+
+
+
+
+
+export const getCreateMagazineSubmissionMutationKey = () => ['createMagazineSubmission'] as const;
+
+export const getCreateMagazineSubmissionMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createMagazineSubmission>>, TError,CreateMagazineSubmissionMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof createMagazineSubmission>>, TError,CreateMagazineSubmissionMutationVariables, TContext> => {
+
+const mutationKey = getCreateMagazineSubmissionMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createMagazineSubmission>>, CreateMagazineSubmissionMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  createMagazineSubmission(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateMagazineSubmissionMutationResult = NonNullable<Awaited<ReturnType<typeof createMagazineSubmission>>>
+    export type CreateMagazineSubmissionMutationBody = BodyType<MagazineSubmissionInput>
+    export type CreateMagazineSubmissionMutationError = ErrorType<unknown>
+    export type CreateMagazineSubmissionMutationVariables = {data: BodyType<MagazineSubmissionInput>}
+
+    export const useCreateMagazineSubmission = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createMagazineSubmission>>, TError,CreateMagazineSubmissionMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createMagazineSubmission>>,
+        TError,
+        CreateMagazineSubmissionMutationVariables,
+        TContext
+      > => {
+      return useMutation(getCreateMagazineSubmissionMutationOptions(options), queryClient);
+    }
+
+export const getUpdateMagazineSubmissionUrl = (id: number,) => {
+
+
+
+
+  return `/api/magazine/submissions/${id}`
+}
+
+export const updateMagazineSubmission = async (id: number,
+    magazineSubmissionInput: MagazineSubmissionInput, options?: Parameters<typeof customFetch>[1]): Promise<MagazineSubmission> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<MagazineSubmission>(getUpdateMagazineSubmissionUrl(id),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(magazineSubmissionInput)
+  }
+);}
+
+
+
+
+
+export const getUpdateMagazineSubmissionMutationKey = () => ['updateMagazineSubmission'] as const;
+
+export const getUpdateMagazineSubmissionMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateMagazineSubmission>>, TError,UpdateMagazineSubmissionMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateMagazineSubmission>>, TError,UpdateMagazineSubmissionMutationVariables, TContext> => {
+
+const mutationKey = getUpdateMagazineSubmissionMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateMagazineSubmission>>, UpdateMagazineSubmissionMutationVariables> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  updateMagazineSubmission(id,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateMagazineSubmissionMutationResult = NonNullable<Awaited<ReturnType<typeof updateMagazineSubmission>>>
+    export type UpdateMagazineSubmissionMutationBody = BodyType<MagazineSubmissionInput>
+    export type UpdateMagazineSubmissionMutationError = ErrorType<unknown>
+    export type UpdateMagazineSubmissionMutationVariables = {id: number;data: BodyType<MagazineSubmissionInput>}
+
+    export const useUpdateMagazineSubmission = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateMagazineSubmission>>, TError,UpdateMagazineSubmissionMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof updateMagazineSubmission>>,
+        TError,
+        UpdateMagazineSubmissionMutationVariables,
+        TContext
+      > => {
+      return useMutation(getUpdateMagazineSubmissionMutationOptions(options), queryClient);
+    }
+
+export const getWithdrawMagazineSubmissionUrl = (id: number,) => {
+
+
+
+
+  return `/api/magazine/submissions/${id}`
+}
+
+export const withdrawMagazineSubmission = async (id: number, options?: Parameters<typeof customFetch>[1]): Promise<void> => {
+
+  return customFetch<void>(getWithdrawMagazineSubmissionUrl(id),
+  {
+    ...options,
+    method: 'DELETE'
+
+
+  }
+);}
+
+
+
+
+
+export const getWithdrawMagazineSubmissionMutationKey = () => ['withdrawMagazineSubmission'] as const;
+
+export const getWithdrawMagazineSubmissionMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof withdrawMagazineSubmission>>, TError,WithdrawMagazineSubmissionMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof withdrawMagazineSubmission>>, TError,WithdrawMagazineSubmissionMutationVariables, TContext> => {
+
+const mutationKey = getWithdrawMagazineSubmissionMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof withdrawMagazineSubmission>>, WithdrawMagazineSubmissionMutationVariables> = (props) => {
+          const {id} = props ?? {};
+
+          return  withdrawMagazineSubmission(id,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type WithdrawMagazineSubmissionMutationResult = NonNullable<Awaited<ReturnType<typeof withdrawMagazineSubmission>>>
+
+    export type WithdrawMagazineSubmissionMutationError = ErrorType<unknown>
+    export type WithdrawMagazineSubmissionMutationVariables = {id: number}
+
+    export const useWithdrawMagazineSubmission = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof withdrawMagazineSubmission>>, TError,WithdrawMagazineSubmissionMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof withdrawMagazineSubmission>>,
+        TError,
+        WithdrawMagazineSubmissionMutationVariables,
+        TContext
+      > => {
+      return useMutation(getWithdrawMagazineSubmissionMutationOptions(options), queryClient);
+    }
+
+export const getGetMagazineAdminSubmissionsUrl = () => {
+
+
+
+
+  return `/api/magazine/admin/submissions`
+}
+
+export const getMagazineAdminSubmissions = async ( options?: Parameters<typeof customFetch>[1]): Promise<MagazineSubmission[]> => {
+
+  return customFetch<MagazineSubmission[]>(getGetMagazineAdminSubmissionsUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetMagazineAdminSubmissionsQueryKey = () => {
+    return [
+    `/api/magazine/admin/submissions`
+    ] as const;
+    }
+
+
+export const getGetMagazineAdminSubmissionsQueryOptions = <TData = Awaited<ReturnType<typeof getMagazineAdminSubmissions>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMagazineAdminSubmissions>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMagazineAdminSubmissionsQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMagazineAdminSubmissions>>> = ({ signal }) => getMagazineAdminSubmissions({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMagazineAdminSubmissions>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMagazineAdminSubmissionsQueryResult = NonNullable<Awaited<ReturnType<typeof getMagazineAdminSubmissions>>>
+export type GetMagazineAdminSubmissionsQueryError = ErrorType<unknown>
+
+
+export function useGetMagazineAdminSubmissions<TData = Awaited<ReturnType<typeof getMagazineAdminSubmissions>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMagazineAdminSubmissions>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMagazineAdminSubmissions>>,
+          TError,
+          Awaited<ReturnType<typeof getMagazineAdminSubmissions>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMagazineAdminSubmissions<TData = Awaited<ReturnType<typeof getMagazineAdminSubmissions>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMagazineAdminSubmissions>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMagazineAdminSubmissions>>,
+          TError,
+          Awaited<ReturnType<typeof getMagazineAdminSubmissions>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMagazineAdminSubmissions<TData = Awaited<ReturnType<typeof getMagazineAdminSubmissions>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMagazineAdminSubmissions>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetMagazineAdminSubmissions<TData = Awaited<ReturnType<typeof getMagazineAdminSubmissions>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMagazineAdminSubmissions>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMagazineAdminSubmissionsQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getReviewMagazineSubmissionUrl = (id: number,) => {
+
+
+
+
+  return `/api/magazine/admin/submissions/${id}`
+}
+
+export const reviewMagazineSubmission = async (id: number,
+    magazineSubmissionReviewInput: MagazineSubmissionReviewInput, options?: Parameters<typeof customFetch>[1]): Promise<MagazineSubmission> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<MagazineSubmission>(getReviewMagazineSubmissionUrl(id),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(magazineSubmissionReviewInput)
+  }
+);}
+
+
+
+
+
+export const getReviewMagazineSubmissionMutationKey = () => ['reviewMagazineSubmission'] as const;
+
+export const getReviewMagazineSubmissionMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof reviewMagazineSubmission>>, TError,ReviewMagazineSubmissionMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof reviewMagazineSubmission>>, TError,ReviewMagazineSubmissionMutationVariables, TContext> => {
+
+const mutationKey = getReviewMagazineSubmissionMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof reviewMagazineSubmission>>, ReviewMagazineSubmissionMutationVariables> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  reviewMagazineSubmission(id,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type ReviewMagazineSubmissionMutationResult = NonNullable<Awaited<ReturnType<typeof reviewMagazineSubmission>>>
+    export type ReviewMagazineSubmissionMutationBody = BodyType<MagazineSubmissionReviewInput>
+    export type ReviewMagazineSubmissionMutationError = ErrorType<unknown>
+    export type ReviewMagazineSubmissionMutationVariables = {id: number;data: BodyType<MagazineSubmissionReviewInput>}
+
+    export const useReviewMagazineSubmission = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof reviewMagazineSubmission>>, TError,ReviewMagazineSubmissionMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof reviewMagazineSubmission>>,
+        TError,
+        ReviewMagazineSubmissionMutationVariables,
+        TContext
+      > => {
+      return useMutation(getReviewMagazineSubmissionMutationOptions(options), queryClient);
+    }
 
 export const getGetMagazineConfigUrl = () => {
 
@@ -301,6 +906,9 @@ export const getCreateMagazineOrderUrl = () => {
   return `/api/magazine/orders`
 }
 
+/**
+ * @deprecated
+ */
 export const createMagazineOrder = async (magazineOrderInput: MagazineOrderInput, options?: Parameters<typeof customFetch>[1]): Promise<MagazineOrder> => {
 
     const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
@@ -332,7 +940,7 @@ return customFetch<MagazineOrder>(getCreateMagazineOrderUrl(),
 
 export const getCreateMagazineOrderMutationKey = () => ['createMagazineOrder'] as const;
 
-export const getCreateMagazineOrderMutationOptions = <TError = ErrorType<unknown>,
+export const getCreateMagazineOrderMutationOptions = <TError = ErrorType<void>,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createMagazineOrder>>, TError,CreateMagazineOrderMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
 ): UseMutationOptions<Awaited<ReturnType<typeof createMagazineOrder>>, TError,CreateMagazineOrderMutationVariables, TContext> => {
 
@@ -361,10 +969,13 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
 
     export type CreateMagazineOrderMutationResult = NonNullable<Awaited<ReturnType<typeof createMagazineOrder>>>
     export type CreateMagazineOrderMutationBody = BodyType<MagazineOrderInput>
-    export type CreateMagazineOrderMutationError = ErrorType<unknown>
+    export type CreateMagazineOrderMutationError = ErrorType<void>
     export type CreateMagazineOrderMutationVariables = {data: BodyType<MagazineOrderInput>}
 
-    export const useCreateMagazineOrder = <TError = ErrorType<unknown>,
+    /**
+ * @deprecated
+ */
+export const useCreateMagazineOrder = <TError = ErrorType<void>,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createMagazineOrder>>, TError,CreateMagazineOrderMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof createMagazineOrder>>,

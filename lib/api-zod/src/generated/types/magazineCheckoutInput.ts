@@ -10,7 +10,7 @@ export interface MagazineCheckoutInput {
   accepted: boolean;
   /**
      * @minimum 1000
-     * @maximum 5500
+     * @maximum 20000
      */
   expectedTotal: number;
 }

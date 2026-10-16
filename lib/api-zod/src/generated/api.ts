@@ -8,6 +8,233 @@
 import * as zod from 'zod';
 
 
+export const DownloadMagazineKitResponse = zod.unknown()
+
+
+export const GetMagazineSubmissionsResponse = zod.object({
+  "submissions": zod.array(zod.object({
+  "id": zod.number().int(),
+  "fullName": zod.string(),
+  "title": zod.string(),
+  "body": zod.string(),
+  "photoUrl": zod.string(),
+  "reviewNote": zod.string(),
+  "updatedAt": zod.string(),
+  "order": zod.object({
+  "id": zod.number().int(),
+  "format": zod.enum(['digital', 'print', 'feature']),
+  "status": zod.string(),
+  "itemAmount": zod.number().int(),
+  "shippingAmount": zod.number().int().nullable(),
+  "totalAmount": zod.number().int().nullable(),
+  "currency": zod.string(),
+  "fullName": zod.string().nullable(),
+  "address": zod.string().nullable(),
+  "country": zod.string().nullable(),
+  "phone": zod.string().nullable(),
+  "email": zod.string(),
+  "canDownload": zod.boolean(),
+  "createdAt": zod.string()
+})
+})),
+  "founder": zod.boolean()
+})
+
+
+export const createMagazineSubmissionBodyRequestIdMin = 8;
+export const createMagazineSubmissionBodyRequestIdMax = 100;
+
+export const createMagazineSubmissionBodyFullNameMin = 2;
+export const createMagazineSubmissionBodyFullNameMax = 120;
+
+export const createMagazineSubmissionBodyTitleMin = 5;
+export const createMagazineSubmissionBodyTitleMax = 180;
+
+export const createMagazineSubmissionBodyBodyMin = 100;
+export const createMagazineSubmissionBodyBodyMax = 20000;
+
+export const createMagazineSubmissionBodyPhotoUrlMax = 2000;
+
+export const createMagazineSubmissionBodyExpectedUpdatedAtMax = 40;
+
+
+
+export const CreateMagazineSubmissionBody = zod.object({
+  "requestId": zod.string().min(createMagazineSubmissionBodyRequestIdMin).max(createMagazineSubmissionBodyRequestIdMax),
+  "fullName": zod.string().min(createMagazineSubmissionBodyFullNameMin).max(createMagazineSubmissionBodyFullNameMax),
+  "title": zod.string().min(createMagazineSubmissionBodyTitleMin).max(createMagazineSubmissionBodyTitleMax),
+  "body": zod.string().min(createMagazineSubmissionBodyBodyMin).max(createMagazineSubmissionBodyBodyMax),
+  "photoUrl": zod.string().max(createMagazineSubmissionBodyPhotoUrlMax).optional(),
+  "accepted": zod.boolean(),
+  "expectedUpdatedAt": zod.string().max(createMagazineSubmissionBodyExpectedUpdatedAtMax).optional()
+})
+
+export const CreateMagazineSubmissionResponse = zod.object({
+  "id": zod.number().int(),
+  "fullName": zod.string(),
+  "title": zod.string(),
+  "body": zod.string(),
+  "photoUrl": zod.string(),
+  "reviewNote": zod.string(),
+  "updatedAt": zod.string(),
+  "order": zod.object({
+  "id": zod.number().int(),
+  "format": zod.enum(['digital', 'print', 'feature']),
+  "status": zod.string(),
+  "itemAmount": zod.number().int(),
+  "shippingAmount": zod.number().int().nullable(),
+  "totalAmount": zod.number().int().nullable(),
+  "currency": zod.string(),
+  "fullName": zod.string().nullable(),
+  "address": zod.string().nullable(),
+  "country": zod.string().nullable(),
+  "phone": zod.string().nullable(),
+  "email": zod.string(),
+  "canDownload": zod.boolean(),
+  "createdAt": zod.string()
+})
+})
+
+
+export const UpdateMagazineSubmissionParams = zod.object({
+  "id": zod.coerce.number().int()
+})
+
+export const updateMagazineSubmissionBodyRequestIdMin = 8;
+export const updateMagazineSubmissionBodyRequestIdMax = 100;
+
+export const updateMagazineSubmissionBodyFullNameMin = 2;
+export const updateMagazineSubmissionBodyFullNameMax = 120;
+
+export const updateMagazineSubmissionBodyTitleMin = 5;
+export const updateMagazineSubmissionBodyTitleMax = 180;
+
+export const updateMagazineSubmissionBodyBodyMin = 100;
+export const updateMagazineSubmissionBodyBodyMax = 20000;
+
+export const updateMagazineSubmissionBodyPhotoUrlMax = 2000;
+
+export const updateMagazineSubmissionBodyExpectedUpdatedAtMax = 40;
+
+
+
+export const UpdateMagazineSubmissionBody = zod.object({
+  "requestId": zod.string().min(updateMagazineSubmissionBodyRequestIdMin).max(updateMagazineSubmissionBodyRequestIdMax),
+  "fullName": zod.string().min(updateMagazineSubmissionBodyFullNameMin).max(updateMagazineSubmissionBodyFullNameMax),
+  "title": zod.string().min(updateMagazineSubmissionBodyTitleMin).max(updateMagazineSubmissionBodyTitleMax),
+  "body": zod.string().min(updateMagazineSubmissionBodyBodyMin).max(updateMagazineSubmissionBodyBodyMax),
+  "photoUrl": zod.string().max(updateMagazineSubmissionBodyPhotoUrlMax).optional(),
+  "accepted": zod.boolean(),
+  "expectedUpdatedAt": zod.string().max(updateMagazineSubmissionBodyExpectedUpdatedAtMax).optional()
+})
+
+export const UpdateMagazineSubmissionResponse = zod.object({
+  "id": zod.number().int(),
+  "fullName": zod.string(),
+  "title": zod.string(),
+  "body": zod.string(),
+  "photoUrl": zod.string(),
+  "reviewNote": zod.string(),
+  "updatedAt": zod.string(),
+  "order": zod.object({
+  "id": zod.number().int(),
+  "format": zod.enum(['digital', 'print', 'feature']),
+  "status": zod.string(),
+  "itemAmount": zod.number().int(),
+  "shippingAmount": zod.number().int().nullable(),
+  "totalAmount": zod.number().int().nullable(),
+  "currency": zod.string(),
+  "fullName": zod.string().nullable(),
+  "address": zod.string().nullable(),
+  "country": zod.string().nullable(),
+  "phone": zod.string().nullable(),
+  "email": zod.string(),
+  "canDownload": zod.boolean(),
+  "createdAt": zod.string()
+})
+})
+
+
+export const WithdrawMagazineSubmissionParams = zod.object({
+  "id": zod.coerce.number().int()
+})
+
+export const WithdrawMagazineSubmissionResponse = zod.void()
+
+
+export const GetMagazineAdminSubmissionsResponseItem = zod.object({
+  "id": zod.number().int(),
+  "fullName": zod.string(),
+  "title": zod.string(),
+  "body": zod.string(),
+  "photoUrl": zod.string(),
+  "reviewNote": zod.string(),
+  "updatedAt": zod.string(),
+  "order": zod.object({
+  "id": zod.number().int(),
+  "format": zod.enum(['digital', 'print', 'feature']),
+  "status": zod.string(),
+  "itemAmount": zod.number().int(),
+  "shippingAmount": zod.number().int().nullable(),
+  "totalAmount": zod.number().int().nullable(),
+  "currency": zod.string(),
+  "fullName": zod.string().nullable(),
+  "address": zod.string().nullable(),
+  "country": zod.string().nullable(),
+  "phone": zod.string().nullable(),
+  "email": zod.string(),
+  "canDownload": zod.boolean(),
+  "createdAt": zod.string()
+})
+})
+export const GetMagazineAdminSubmissionsResponse = zod.array(GetMagazineAdminSubmissionsResponseItem)
+
+
+export const ReviewMagazineSubmissionParams = zod.object({
+  "id": zod.coerce.number().int()
+})
+
+export const reviewMagazineSubmissionBodyNoteMin = 5;
+export const reviewMagazineSubmissionBodyNoteMax = 2000;
+
+export const reviewMagazineSubmissionBodyExpectedUpdatedAtMin = 10;
+export const reviewMagazineSubmissionBodyExpectedUpdatedAtMax = 40;
+
+
+
+export const ReviewMagazineSubmissionBody = zod.object({
+  "decision": zod.enum(['approved', 'declined']),
+  "note": zod.string().min(reviewMagazineSubmissionBodyNoteMin).max(reviewMagazineSubmissionBodyNoteMax),
+  "expectedUpdatedAt": zod.string().min(reviewMagazineSubmissionBodyExpectedUpdatedAtMin).max(reviewMagazineSubmissionBodyExpectedUpdatedAtMax)
+})
+
+export const ReviewMagazineSubmissionResponse = zod.object({
+  "id": zod.number().int(),
+  "fullName": zod.string(),
+  "title": zod.string(),
+  "body": zod.string(),
+  "photoUrl": zod.string(),
+  "reviewNote": zod.string(),
+  "updatedAt": zod.string(),
+  "order": zod.object({
+  "id": zod.number().int(),
+  "format": zod.enum(['digital', 'print', 'feature']),
+  "status": zod.string(),
+  "itemAmount": zod.number().int(),
+  "shippingAmount": zod.number().int().nullable(),
+  "totalAmount": zod.number().int().nullable(),
+  "currency": zod.string(),
+  "fullName": zod.string().nullable(),
+  "address": zod.string().nullable(),
+  "country": zod.string().nullable(),
+  "phone": zod.string().nullable(),
+  "email": zod.string(),
+  "canDownload": zod.boolean(),
+  "createdAt": zod.string()
+})
+})
+
+
 export const GetMagazineConfigResponse = zod.object({
   "digitalUsd": zod.number().int(),
   "printUsd": zod.number().int(),
@@ -23,7 +250,7 @@ export const GetMagazineConfigResponse = zod.object({
 export const GetMagazineOrdersResponse = zod.object({
   "orders": zod.array(zod.object({
   "id": zod.number().int(),
-  "format": zod.enum(['digital', 'print']),
+  "format": zod.enum(['digital', 'print', 'feature']),
   "status": zod.string(),
   "itemAmount": zod.number().int(),
   "shippingAmount": zod.number().int().nullable(),
@@ -41,6 +268,9 @@ export const GetMagazineOrdersResponse = zod.object({
 })
 
 
+/**
+ * @deprecated
+ */
 export const createMagazineOrderBodyRequestIdMin = 16;
 export const createMagazineOrderBodyRequestIdMax = 80;
 
@@ -74,7 +304,7 @@ export const CreateMagazineOrderBody = zod.object({
 
 export const CreateMagazineOrderResponse = zod.object({
   "id": zod.number().int(),
-  "format": zod.enum(['digital', 'print']),
+  "format": zod.enum(['digital', 'print', 'feature']),
   "status": zod.string(),
   "itemAmount": zod.number().int(),
   "shippingAmount": zod.number().int().nullable(),
@@ -96,7 +326,7 @@ export const GetMagazineOrderParams = zod.object({
 
 export const GetMagazineOrderResponse = zod.object({
   "id": zod.number().int(),
-  "format": zod.enum(['digital', 'print']),
+  "format": zod.enum(['digital', 'print', 'feature']),
   "status": zod.string(),
   "itemAmount": zod.number().int(),
   "shippingAmount": zod.number().int().nullable(),
@@ -117,7 +347,7 @@ export const CheckoutMagazineOrderParams = zod.object({
 })
 
 export const checkoutMagazineOrderBodyExpectedTotalMin = 1000;
-export const checkoutMagazineOrderBodyExpectedTotalMax = 5500;
+export const checkoutMagazineOrderBodyExpectedTotalMax = 20000;
 
 
 
@@ -140,7 +370,7 @@ export const DownloadMagazineOrderResponse = zod.unknown()
 
 export const GetMagazineAdminOrdersResponseItem = zod.object({
   "id": zod.number().int(),
-  "format": zod.enum(['digital', 'print']),
+  "format": zod.enum(['digital', 'print', 'feature']),
   "status": zod.string(),
   "itemAmount": zod.number().int(),
   "shippingAmount": zod.number().int().nullable(),
@@ -172,7 +402,7 @@ export const QuoteMagazineShippingBody = zod.object({
 
 export const QuoteMagazineShippingResponse = zod.object({
   "id": zod.number().int(),
-  "format": zod.enum(['digital', 'print']),
+  "format": zod.enum(['digital', 'print', 'feature']),
   "status": zod.string(),
   "itemAmount": zod.number().int(),
   "shippingAmount": zod.number().int().nullable(),

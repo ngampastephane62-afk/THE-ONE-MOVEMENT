@@ -12,4 +12,5 @@ export type MagazineOrderFormat = typeof MagazineOrderFormat[keyof typeof Magazi
 export const MagazineOrderFormat = {
   digital: 'digital',
   print: 'print',
+  feature: 'feature',
 } as const;

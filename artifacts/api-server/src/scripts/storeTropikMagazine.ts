@@ -16,7 +16,7 @@ try {
   await objectFile(`/${bucket}/public/magazine/tropik-2026-cover.webp`).save(cover, {
     resumable: false, metadata: { contentType: "image/webp", cacheControl: "public,max-age=86400" },
   });
-  logger.info("Stored the paid magazine privately and its cover separately");
+  logger.info("Stored the presentation kit and its cover; the free-kit route controls public download access");
 } finally {
   await pool.end();
 }

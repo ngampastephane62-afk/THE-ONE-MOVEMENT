@@ -93,7 +93,7 @@ export default function Admin() {
   return (
     <div className="flex flex-col gap-4 px-3 pt-4 md:px-0 md:pt-0">
       <header>
-        <div className="flex flex-wrap items-baseline justify-between gap-2"><h1 className="font-display text-2xl text-ink-900">Founder administration</h1><Link href="~/tropik-magazine#magazine-orders" className="text-xs font-semibold text-lagoon-700 underline underline-offset-4" data-testid="link-admin-magazine-orders">Magazine store</Link></div>
+        <div className="flex flex-wrap items-baseline justify-between gap-2"><h1 className="font-display text-2xl text-ink-900">Founder administration</h1><Link href="~/tropik-magazine/contribute#founder-review" className="text-xs font-semibold text-lagoon-700 underline underline-offset-4" data-testid="link-admin-magazine-proposals">Magazine proposals</Link></div>
         <p className="mt-1 flex items-start gap-1.5 text-sm text-ink-700"><AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-gold-600" />Approval applies to one role and programme. Non-commercial roles activate on approval; commercial roles (partner, sponsor, designer, exhibitor or any package) need a signed agreement, and the badge activates only once payment is confirmed. Payment alone never grants a badge.</p>
       </header>
       <div className="flex gap-1 overflow-x-auto rounded-full bg-ivory-200 p-1" role="tablist">

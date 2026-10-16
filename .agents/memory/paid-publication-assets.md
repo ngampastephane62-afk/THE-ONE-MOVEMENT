@@ -5,6 +5,8 @@ description: Protect paid originals in development as well as in the deployed ap
 
 Keep the complete paid publication in private App Storage, with only a separately rendered cover public. Paid download access must follow a verified real payment owned by the signed-in reader; test sessions, print purchases and return-URL parameters do not grant the digital file.
 
+This rule applies to actual paid reader editions, not the supplied ten-page Tropik presentation/media kit. The Founder subsequently explicitly authorized that kit to be a free public download. A US$200 inside-page publication reservation is also not a purchase of a reader PDF.
+
 **Why:** The magazine is sold independently of free humanitarian films. A successful browser redirect is not proof of payment, and the connected payment account was in test mode during development.
 
 **How to apply:** Preserve server-owned prices, exact-total confirmation, idempotent order creation, owner-scoped access and refund/dispute revocation. Never make a test checkout a free path to the paid PDF.

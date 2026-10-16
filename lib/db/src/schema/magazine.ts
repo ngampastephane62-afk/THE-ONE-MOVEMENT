@@ -4,7 +4,7 @@ import { ecosystemMembersTable } from "./ecosystemMembers";
 export const magazineOrders = pgTable("magazine_orders", {
   id: serial("id").primaryKey(),
   memberId: integer("member_id").notNull().references(() => ecosystemMembersTable.id),
-  format: text("format").$type<"digital" | "print">().notNull(),
+  format: text("format").$type<"digital" | "print" | "feature">().notNull(),
   status: text("status").notNull(),
   itemAmount: integer("item_amount").notNull(),
   shippingAmount: integer("shipping_amount"),
@@ -26,3 +26,13 @@ export const magazineOrders = pgTable("magazine_orders", {
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 }, (t) => [index("magazine_orders_member_idx").on(t.memberId, t.createdAt)]);
 export type MagazineOrderRow = typeof magazineOrders.$inferSelect;
+
+export const magazineSubmissions = pgTable("magazine_submissions", {
+  id: serial("id").primaryKey(),
+  orderId: integer("order_id").notNull().unique().references(() => magazineOrders.id),
+  title: text("title").notNull(),
+  body: text("body").notNull(),
+  photoUrl: text("photo_url").notNull().default(""),
+  reviewNote: text("review_note").notNull().default(""),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});

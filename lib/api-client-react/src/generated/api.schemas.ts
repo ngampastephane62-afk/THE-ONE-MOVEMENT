@@ -5,6 +5,104 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+export interface MagazineSubmissionInput {
+  /**
+     * @minLength 8
+     * @maxLength 100
+     */
+  requestId: string;
+  /**
+     * @minLength 2
+     * @maxLength 120
+     */
+  fullName: string;
+  /**
+     * @minLength 5
+     * @maxLength 180
+     */
+  title: string;
+  /**
+     * @minLength 100
+     * @maxLength 20000
+     */
+  body: string;
+  /** @maxLength 2000 */
+  photoUrl?: string;
+  accepted: boolean;
+  /** @maxLength 40 */
+  expectedUpdatedAt?: string;
+}
+
+export type MagazineSubmissionReviewInputDecision = typeof MagazineSubmissionReviewInputDecision[keyof typeof MagazineSubmissionReviewInputDecision];
+
+
+export const MagazineSubmissionReviewInputDecision = {
+  approved: 'approved',
+  declined: 'declined',
+} as const;
+
+export interface MagazineSubmissionReviewInput {
+  decision: MagazineSubmissionReviewInputDecision;
+  /**
+     * @minLength 5
+     * @maxLength 2000
+     */
+  note: string;
+  /**
+     * @minLength 10
+     * @maxLength 40
+     */
+  expectedUpdatedAt: string;
+}
+
+export type MagazineOrderFormat = typeof MagazineOrderFormat[keyof typeof MagazineOrderFormat];
+
+
+export const MagazineOrderFormat = {
+  digital: 'digital',
+  print: 'print',
+  feature: 'feature',
+} as const;
+
+export interface MagazineOrder {
+  id: number;
+  format: MagazineOrderFormat;
+  status: string;
+  itemAmount: number;
+  /** @nullable */
+  shippingAmount: number | null;
+  /** @nullable */
+  totalAmount: number | null;
+  currency: string;
+  /** @nullable */
+  fullName: string | null;
+  /** @nullable */
+  address: string | null;
+  /** @nullable */
+  country: string | null;
+  /** @nullable */
+  phone: string | null;
+  email: string;
+  canDownload: boolean;
+  createdAt: string;
+}
+
+export interface MagazineSubmission {
+  id: number;
+  fullName: string;
+  title: string;
+  body: string;
+  photoUrl: string;
+  reviewNote: string;
+  updatedAt: string;
+  order: MagazineOrder;
+}
+
+export interface MagazineSubmissionList {
+  submissions: MagazineSubmission[];
+  founder: boolean;
+}
+
 export interface MagazineConfig {
   digitalUsd: number;
   printUsd: number;
@@ -63,7 +161,7 @@ export interface MagazineCheckoutInput {
   accepted: boolean;
   /**
      * @minimum 1000
-     * @maximum 5500
+     * @maximum 20000
      */
   expectedTotal: number;
 }
@@ -78,37 +176,6 @@ export interface MagazineShippingQuoteInput {
      * @maximum 3000
      */
   shippingAmount: number;
-}
-
-export type MagazineOrderFormat = typeof MagazineOrderFormat[keyof typeof MagazineOrderFormat];
-
-
-export const MagazineOrderFormat = {
-  digital: 'digital',
-  print: 'print',
-} as const;
-
-export interface MagazineOrder {
-  id: number;
-  format: MagazineOrderFormat;
-  status: string;
-  itemAmount: number;
-  /** @nullable */
-  shippingAmount: number | null;
-  /** @nullable */
-  totalAmount: number | null;
-  currency: string;
-  /** @nullable */
-  fullName: string | null;
-  /** @nullable */
-  address: string | null;
-  /** @nullable */
-  country: string | null;
-  /** @nullable */
-  phone: string | null;
-  email: string;
-  canDownload: boolean;
-  createdAt: string;
 }
 
 export interface MagazineOrderList {
