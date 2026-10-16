@@ -14,3 +14,9 @@ The stakeholder identifies Tropik Agency as the creator and copyright holder of 
 **Why:** This is the stakeholder's explicit declaration of the business relationship and intended rights holder, not independently verified legal evidence or a transfer of technical account ownership.
 
 **How to apply:** Use Tropik Agency as the declared rights-holder context, but obtain exact legal details and licence terms before changing legal notices or merchant identity. A branding or footer edit does not transfer account ownership, payment proceeds, or legal rights. If work is still hosted in another developer's workspace, establish stakeholder-controlled hosting and billing before promising independent control or spending.
+
+Keep Clerk as the application's authentication provider; do not introduce the older parallel custom-password/session system.
+
+**Why:** On 2026-10-16, the user explicitly chose “Keep Clerk and leave out the older authentication task” after the two implementations conflicted.
+
+**How to apply:** Preserve the current member sign-in and identity integration when incorporating older work. Any later provider migration requires a new explicit request.
