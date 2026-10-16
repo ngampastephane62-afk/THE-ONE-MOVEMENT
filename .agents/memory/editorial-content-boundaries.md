@@ -32,3 +32,9 @@ The stakeholder wants a Dubai documentary announcement and links to CANAL+. The 
 **Why:** A previous broadcast or media relationship does not establish acquisition or a scheduled broadcast of the Dubai production.
 
 **How to apply:** Clearly distinguish announced development and intended distribution from confirmed commissioning or scheduling. Broadcaster-wide audience statistics must have a dated official source and must never be presented as views of TOMI's interview.
+
+The documentary section must represent TOMI's ongoing documentary history, with Goma first and Kinshasa subsequently, not only a future Dubai film. The stakeholder also identifies a supplied trailer as produced by MONUSCO through Radio Okapi.
+
+**Why:** The stakeholder states they have made documentary videos since the beginning and wants highlights leading to longer exclusive content.
+
+**How to apply:** Distinguish TOMI productions, externally produced trailers and the future Dubai project. Credit MONUSCO/Radio Okapi accurately; do not assume permission to place third-party footage behind a paid-access restriction merely because it was supplied.

@@ -67,10 +67,16 @@ The Founder identifies The One Movement International as the collecting organiza
 
 **Why:** This is the Founder's answer about the donation recipient and collaborators; the beneficiary varies by emergency.
 
-**How to apply:** Define the beneficiary for each actual campaign, not a blanket promise that every named organization receives every donation. Merchant eligibility and legal fundraising requirements still need to be satisfied before payment activation.
+**How to apply:** The stakeholder subsequently clarified that TOMI receives donations and decides their allocation according to urgency; do not force every donation into a named external beneficiary. Explain this discretionary allocation clearly, without promising that every named organization receives funds. Merchant eligibility and legal fundraising requirements still need to be satisfied before payment activation.
 
-The Founder provided a Panzi Foundation fundraising film and a humanitarian story produced with “Fauna Rev” (the film credits identify FONAREV). The Panzi appeal may lead directly to Panzi's own page after their approval.
+The Founder provided a Panzi Foundation fundraising film and a humanitarian story produced with “Fauna Rev” (the film credits identify FONAREV). An earlier request allowed a separate Panzi direct appeal, but the subsequent donation-page direction is a TOMI-collected fund.
 
-**Why:** The Founder explicitly distinguishes Panzi's direct fundraising pathway from collecting money through TOMI, and supplied both films to support the humanitarian story.
+**Why:** The stakeholder corrected the confusing split between an external Panzi collection and TOMI's collection. A film mentioning an external fundraiser is not the site's donation-routing instruction.
 
-**How to apply:** Keep authorship separate and use the on-film FONAREV credit. Do not activate a Panzi fundraising destination until their approval and the official URL are confirmed. A direct Panzi donation is received through Panzi's own service, not TOMI's Stripe checkout.
+**How to apply:** Keep authorship separate and use the on-film FONAREV credit. Do not reinstate an external Panzi donation pathway on the main humanitarian appeal without a new explicit instruction.
+
+The humanitarian scope includes Gaza, Goma, Bukavu, Ukraine and other places where people suffer. The current stated priority is building schools and children's centres for education, supporting people displaced by war, orphans, people with disabilities, people with albinism and women who have survived rape. Contributions should include money, goods, equipment and logistics.
+
+**Why:** The stakeholder explicitly broadened the geographic scope and specified these priority communities and forms of support.
+
+**How to apply:** Separate official sources describing a crisis from evidence of TOMI's own activities. Describe school and children's-centre construction as a fundraising priority, not completed infrastructure or a guaranteed outcome.
