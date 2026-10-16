@@ -4,6 +4,8 @@ import PhotoSlot from './PhotoSlot';
 interface PhotoMosaicProps {
   /** Ordered list of filenames — missing files render as elegant fallbacks */
   filenames: string[];
+  /** Neutral descriptions of the supplied photographs, in filename order. */
+  alts?: string[];
   /** Optional matching editorial briefs for missing Founder archive images */
   briefs?: Array<{
     subject: string;
@@ -30,6 +32,7 @@ interface PhotoMosaicProps {
  */
 export default function PhotoMosaic({
   filenames,
+  alts = [],
   briefs = [],
   className,
 }: PhotoMosaicProps) {
@@ -43,7 +46,7 @@ export default function PhotoMosaic({
       <div className={cn('w-full', className)}>
         <PhotoSlot
           filename={primary}
-          alt=""
+          alt={alts[0] ?? ''}
           imageType={briefs[0]?.subject ?? 'Founder image required'}
           purpose={briefs[0]?.purpose}
           aspectRatio="4:3"
@@ -59,32 +62,33 @@ export default function PhotoMosaic({
     <div
       className={cn('grid gap-2', className)}
       style={{ gridTemplateColumns: '3fr 2fr' }}
+      data-testid="photo-mosaic"
     >
       {/* Primary — tall portrait */}
       <PhotoSlot
         filename={primary}
-        alt=""
+        alt={alts[0] ?? ''}
         imageType={briefs[0]?.subject ?? 'Founder image required'}
         purpose={briefs[0]?.purpose}
         aspectRatio="2:3"
         desktopCrop={briefs[0]?.desktopCrop}
         mobileCrop={briefs[0]?.mobileCrop}
-        className="w-full aspect-[2/3]"
+        className="w-full h-full min-h-0"
       />
 
       {/* Secondary column — square thumbnails */}
-      <div className="flex flex-col gap-2">
+      <div className={cn('grid gap-2 auto-rows-fr', secondarySlice.length > 2 ? 'grid-cols-2' : 'grid-cols-1')}>
         {secondarySlice.map((filename, i) => (
           <PhotoSlot
             key={i}
             filename={filename}
-            alt=""
+            alt={alts[i + 1] ?? ''}
             imageType={briefs[i + 1]?.subject ?? 'Founder image required'}
             purpose={briefs[i + 1]?.purpose}
             aspectRatio="1:1"
             desktopCrop={briefs[i + 1]?.desktopCrop}
             mobileCrop={briefs[i + 1]?.mobileCrop}
-            className="w-full aspect-square"
+            className="w-full h-full min-h-0 aspect-square"
           />
         ))}
       </div>

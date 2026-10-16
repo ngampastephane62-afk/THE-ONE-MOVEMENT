@@ -505,6 +505,9 @@ function ProgramHeroMedia({ slug, name, tagline }: { slug: string; name: string;
   if (slug === 'fashion-week') {
     return <ProgrammeCover programme="fashion-week" className="tomi-program-detail-media mx-auto w-full max-w-md" />;
   }
+  if (slug === 'fashion-night' || slug === 'investment-forum') {
+    return <ProgramSuppliedImage slug={slug} className="tomi-program-detail-media mx-auto w-full max-w-md" frameClassName="aspect-[3/4] w-full" captionClassName="text-ivory-300" />;
+  }
   return <ProgramVision name={name} tagline={tagline} className="tomi-program-detail-media w-full aspect-[3/4]" />;
 }
 

@@ -7,6 +7,7 @@ import GoldThread from '@/components/GoldThread';
 import SectionHeading from '@/components/SectionHeading';
 import EditorialFilm from '@/components/EditorialFilm';
 import Reveal from '@/components/Reveal';
+import PhotoSlot from '@/components/PhotoSlot';
 
 const PILLARS = [
   { n: '01', t: 'Humanitarian', d: 'Standing beside people in moments of hardship, and turning gatherings into concrete gestures of care.' },
@@ -41,6 +42,7 @@ export default function OurVision() {
               peace and opportunity. It is not a single event. It is a movement that travels.
             </p>
           </div>
+          <PhotoSlot filename="vision-hero.jpg" alt="Creative community gathered for a casting" className="mt-12 aspect-[21/9] w-full" priority />
         </div>
       </HeroSurface>
 
@@ -61,6 +63,20 @@ export default function OurVision() {
               What remains after each gathering matters most: new relationships, new collaborations, and the
               quiet conviction that our differences can become a common strength.
             </p>
+          </Reveal>
+          <Reveal className="lg:col-span-12">
+            <div className="grid items-start gap-6 sm:grid-cols-3">
+              {[
+                { filename: 'vision-bukavu.jpg', alt: 'Fashion Week runway', caption: 'Fashion Week archive · a movement born in Bukavu' },
+                { filename: 'vision-culture-peace.jpg', alt: 'Cultural performance', caption: 'Cultural expression · Founder archive' },
+                { filename: 'vision-global-community.jpg', alt: 'Community outreach', caption: 'Community outreach · Founder archive' },
+              ].map((photo) => (
+                <figure key={photo.filename}>
+                  <PhotoSlot filename={photo.filename} alt={photo.alt} className="aspect-[4/5] w-full" objectPosition="center 25%" />
+                  <figcaption className="mt-3 text-xs leading-relaxed text-ink-700">{photo.caption}</figcaption>
+                </figure>
+              ))}
+            </div>
           </Reveal>
         </div>
       </section>

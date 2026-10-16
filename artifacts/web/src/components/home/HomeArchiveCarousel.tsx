@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 import catalog from '@/assets/media/founder/catalog.json';
 import runwayGroup from '@/assets/media/programs/fashion-night-runway-group.webp';
 import fashionPortrait from '@/assets/media/programs/fashion-portrait.webp';
+import PhotoMosaic from '@/components/PhotoMosaic';
 import './home-experience.css';
 
 type PhotoId = keyof typeof catalog.photos;
@@ -85,6 +86,7 @@ export default function HomeArchiveCarousel() {
 
   return (
     <div
+      id="movement-archive"
       ref={rootRef}
       className="tomi-archive-carousel"
       role="region"
@@ -112,7 +114,13 @@ export default function HomeArchiveCarousel() {
               data-testid={`slide-archive-${s.key}`}
             >
               <div className="tomi-archive-frame">
-                <img
+                {i === 0 ? (
+                  <PhotoMosaic
+                    filenames={['photo-02.jpg', 'photo-03.jpg', 'photo-04.jpg', 'photo-05.jpg', 'photo-06.jpg']}
+                    alts={['Fashion Week runway', 'Designer portrait', 'Audience and event atmosphere', 'Cultural performance', 'Casting and creative community']}
+                    className="h-full w-full"
+                  />
+                ) : <img
                   src={s.src}
                   srcSet={s.srcSet}
                   sizes="(min-width: 1024px) 70vw, 92vw"
@@ -120,9 +128,9 @@ export default function HomeArchiveCarousel() {
                   loading={i < 2 ? 'eager' : 'lazy'}
                   decoding="async"
                   draggable={false}
-                />
+                />}
               </div>
-              <figcaption className="mt-3 text-[11px] leading-relaxed tracking-wide text-ivory-300">{s.caption}</figcaption>
+              <figcaption className="mt-3 text-[11px] leading-relaxed tracking-wide text-ivory-300">{i === 0 ? 'Fashion, creators and community · Founder archive' : s.caption}</figcaption>
             </figure>
           ))}
         </div>

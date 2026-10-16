@@ -129,7 +129,7 @@ export default function PhotoSlot({
         />
       )}
       <img
-        src={`/brand-photos/${filename}`}
+        src={`${import.meta.env.BASE_URL}brand-photos/${filename}`}
         alt={alt}
         loading={priority ? 'eager' : 'lazy'}
         fetchPriority={priority ? 'high' : 'auto'}
