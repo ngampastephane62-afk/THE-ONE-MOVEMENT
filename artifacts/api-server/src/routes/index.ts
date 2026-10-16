@@ -11,6 +11,7 @@ import humanitarianRouter from "./humanitarian";
 import professionalRouter from "./professional";
 import editorialEngagementRouter from "./editorialEngagement";
 import officialMeetingsRouter from "./officialMeetings";
+import magazineRouter from "./magazine";
 
 const router: IRouter = Router();
 
@@ -26,5 +27,6 @@ router.use(humanitarianRouter);
 router.use(professionalRouter);
 router.use(editorialEngagementRouter);
 router.use(officialMeetingsRouter);
+router.use(magazineRouter);
 
 export default router;

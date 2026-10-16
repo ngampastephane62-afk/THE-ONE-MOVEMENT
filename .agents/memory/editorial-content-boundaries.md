@@ -99,8 +99,8 @@ The Founder explicitly confirms that the previously supplied brands and institut
 
 **How to apply:** Audit nested archive folders before asking for reuploads. Describe the collection as historical signed partnerships per the Founder, without implying that every contract is currently active. An individual logo does not establish a start year or a specific deliverable; leave those unstated until supplied.
 
-Tropik Magazine is intended to be sold in both digital and printed versions.
+Tropik Magazine is intended to be sold in both digital and printed versions: US$10 for the PDF, US$25 for a printed copy, and US$10–30 for delivery.
 
 **Why:** The Founder explicitly states that readers must buy the magazine, in electronic or printed form. This is separate from the free humanitarian films and professional ecosystem subscriptions. After being told that the supplied PDF is a ten-page media kit rather than a full reader issue, the Founder explicitly confirmed selling that PDF as-is.
 
-**How to apply:** Do not expose the paid PDF as a free public download. Use the supplied document as confirmed, describing its actual contents and length honestly rather than asking for a replacement issue again. Confirm retail prices and print-fulfilment terms before opening sales. Editorial-partnership or paid-feature prices in a media kit are not magazine retail prices.
+**How to apply:** Do not expose the paid PDF as a free public download. Use the supplied document as confirmed, describing its actual contents and length honestly rather than asking for a replacement issue again. The Founder supplied the retail prices and delivery range but no destination-based tariff or shipping countries: require an exact delivery quote accepted before charging a print order; do not choose arbitrary fees or promise worldwide delivery. Editorial-partnership or paid-feature prices in the document are not magazine retail prices. Keep real sales closed while the connected Stripe account is in test mode.

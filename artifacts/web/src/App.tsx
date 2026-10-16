@@ -20,6 +20,7 @@ import ProgramDetail from '@/pages/programs/detail';
 import Opportunities from '@/pages/opportunities';
 import Impact from '@/pages/impact';
 import Media from '@/pages/media';
+import TropikMagazine from '@/pages/tropik-magazine';
 import ThanksEmirates from '@/pages/thanks-emirates';
 import Ambassadors from '@/pages/ambassadors';
 import AmbassadorDetail from '@/pages/ambassadors/detail';
@@ -121,6 +122,7 @@ function Router() {
       <Route path="/opportunities" component={Opportunities} />
       <Route path="/impact" component={Impact} />
       <Route path="/media" component={Media} />
+      <Route path="/tropik-magazine" component={TropikMagazine} />
       <Route path="/thanks-emirates" component={ThanksEmirates} />
       <Route path="/ambassadors/:slug" component={AmbassadorDetail} />
       <Route path="/ambassadors" component={Ambassadors} />

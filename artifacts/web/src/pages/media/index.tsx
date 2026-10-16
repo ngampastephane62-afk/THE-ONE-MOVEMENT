@@ -8,6 +8,7 @@ import EditorialFilm from '@/components/EditorialFilm';
 import MediaCatalogue from '@/components/partners/MediaCatalogue';
 import Reveal from '@/components/Reveal';
 import { Mail } from 'lucide-react';
+import MagazineFeature from '@/components/magazine/MagazineFeature';
 
 export default function MediaHub() {
   return (
@@ -35,6 +36,8 @@ export default function MediaHub() {
           </Reveal>
         </div>
       </HeroSurface>
+
+      <MagazineFeature />
 
       {/* INTERNATIONAL MEDIA REACH */}
       <section className="tomi-aurora-surface py-section-lg" aria-labelledby="media-reach-heading">

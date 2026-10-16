@@ -71,6 +71,7 @@ export default defineConfig({
     allowedHosts: true,
     fs: {
       strict: true,
+      deny: ['.env', '.env.*', '*.{crt,pem}', '**/.git/**', '**/Tropik_Magazine_1792157776832.pdf'],
     },
   },
   preview: {
