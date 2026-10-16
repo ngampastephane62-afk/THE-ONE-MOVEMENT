@@ -3,11 +3,13 @@ import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 import catalog from '@/assets/media/founder/catalog.json';
 import { SUPPLIED_IMAGES } from '@/components/programs/ProgramSuppliedImage';
 import './media-archive.css';
+import GalleryActions from '@/components/editorial/GalleryActions';
 
 type PhotoId = keyof typeof catalog.photos;
 interface Frame {
   key: string;
   src: string;
+  stableSource: string;
   srcSet?: string;
   alt: string;
   chapter: string;
@@ -23,6 +25,7 @@ const photo = (id: PhotoId, chapter: string, title: string, context: string): Fr
   return {
     key: id,
     src: base(p.filename),
+    stableSource: `/brand-photos/${p.filename}`,
     srcSet: p.versions.map((v) => `${base(v.filename)} ${v.width}w`).join(', '),
     alt: p.alt,
     chapter,
@@ -32,7 +35,7 @@ const photo = (id: PhotoId, chapter: string, title: string, context: string): Fr
   };
 };
 const supplied = (id: keyof typeof SUPPLIED_IMAGES, chapter: string, title: string, context: string): Frame => ({
-  key: id, src: SUPPLIED_IMAGES[id].src, alt: SUPPLIED_IMAGES[id].alt, chapter, title, context, source: 'Supplied archive',
+  key: id, src: SUPPLIED_IMAGES[id].src, stableSource: SUPPLIED_IMAGES[id].source, alt: SUPPLIED_IMAGES[id].alt, chapter, title, context, source: 'Supplied archive',
 });
 
 // Captions describe only what the archive records. No names, dates or places
@@ -87,6 +90,7 @@ export default function MediaArchiveReel() {
   return (
     <div
       ref={rootRef}
+      data-gallery-root
       className="media-archive grid gap-6 lg:grid-cols-12"
       data-running={running ? 'true' : 'false'}
       role="region"
@@ -141,6 +145,7 @@ export default function MediaArchiveReel() {
             </button>
           )}
         </div>
+        <GalleryActions items={FRAMES.map((fr) => ({ source: fr.stableSource, title: fr.title }))} index={index} onSelect={(i) => { setIndex(i); setPaused(true); }} onInteract={() => setPaused(true)} tone="dark" className="mt-5" />
         <ol className="mt-5 grid grid-cols-5 gap-2 lg:grid-cols-2 lg:gap-3" aria-label="Choose a photograph">
           {FRAMES.map((fr, i) => (
             <li key={fr.key}>

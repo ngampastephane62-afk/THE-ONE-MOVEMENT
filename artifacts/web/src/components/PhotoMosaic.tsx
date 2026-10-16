@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils';
 import PhotoSlot from './PhotoSlot';
+import { BrandPhotoSetActions } from './editorial/BrandPhotoActions';
 
 interface PhotoMosaicProps {
   /** Ordered list of filenames — missing files render as elegant fallbacks */
@@ -14,6 +15,9 @@ interface PhotoMosaicProps {
     mobileCrop?: string;
   }>;
   className?: string;
+  /** Reactions for the photos that actually exist (default on). Off inside carousels that render their own. */
+  actions?: boolean;
+  tone?: 'light' | 'dark';
 }
 
 /**
@@ -35,8 +39,11 @@ export default function PhotoMosaic({
   alts = [],
   briefs = [],
   className,
+  actions = true,
+  tone = 'light',
 }: PhotoMosaicProps) {
   if (filenames.length === 0) return null;
+  const strip = actions ? <BrandPhotoSetActions filenames={filenames.slice(0, 5)} alts={filenames.slice(0, 5).map((_, i) => alts[i] || briefs[i]?.subject || '')} tone={tone} /> : null;
 
   const [primary, ...secondary] = filenames;
   const secondarySlice = secondary.slice(0, 4);
@@ -54,13 +61,15 @@ export default function PhotoMosaic({
           mobileCrop={briefs[0]?.mobileCrop}
           className="w-full aspect-[4/3]"
         />
+        {strip}
       </div>
     );
   }
 
   return (
+    <div className={cn('flex flex-col', className)}>
     <div
-      className={cn('grid gap-2', className)}
+      className="grid min-h-0 flex-1 gap-2"
       style={{ gridTemplateColumns: '3fr 2fr' }}
       data-testid="photo-mosaic"
     >
@@ -92,6 +101,8 @@ export default function PhotoMosaic({
           />
         ))}
       </div>
+    </div>
+    {strip}
     </div>
   );
 }

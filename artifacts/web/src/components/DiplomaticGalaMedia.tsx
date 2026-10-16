@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import GalleryActions from '@/components/editorial/GalleryActions';
+import PhotoActions from '@/components/editorial/PhotoActions';
+import { programAssetSource } from '@/lib/media-share';
 import founderSpeaking from '@/assets/media/programs/gala-founder-speaking.webp';
 import privateOffice from '@/assets/media/programs/gala-private-office.webp';
 import diplomaticHandshake from '@/assets/media/programs/gala-diplomatic-handshake.webp';
@@ -10,16 +13,17 @@ import mediaDialogue from '@/assets/media/programs/gala-media-dialogue.webp';
 import ambassador from '@/assets/media/programs/gala-ambassador.webp';
 
 const slides = [
-  { image: ambassador, caption: 'Meeting with the Ambassador · Founder diplomatic archive' },
-  { image: privateOffice, caption: 'Private office partnership · Founder diplomatic archive' },
-  { image: diplomaticHandshake, caption: 'Diplomatic partner exchange · Founder diplomatic archive' },
-  { image: partnerMeeting, caption: 'Institutional partner meeting · Founder diplomatic archive' },
-  { image: partnerHandshake, caption: 'Building diplomatic connections · Founder diplomatic archive' },
-  { image: mediaDialogue, caption: 'Media and institutional dialogue · Founder archive' },
+  { image: ambassador, file: 'gala-ambassador.webp', caption: 'Meeting with the Ambassador · Founder diplomatic archive' },
+  { image: privateOffice, file: 'gala-private-office.webp', caption: 'Private office partnership · Founder diplomatic archive' },
+  { image: diplomaticHandshake, file: 'gala-diplomatic-handshake.webp', caption: 'Diplomatic partner exchange · Founder diplomatic archive' },
+  { image: partnerMeeting, file: 'gala-partner-meeting.webp', caption: 'Institutional partner meeting · Founder diplomatic archive' },
+  { image: partnerHandshake, file: 'gala-partner-handshake.webp', caption: 'Building diplomatic connections · Founder diplomatic archive' },
+  { image: mediaDialogue, file: 'gala-media-dialogue.webp', caption: 'Media and institutional dialogue · Founder archive' },
 ];
 
-export function DiplomaticGalaPreview({ className = '' }: { className?: string }) {
+export function DiplomaticGalaPreview({ className = '', actions = true, tone = 'light' }: { className?: string; actions?: boolean; tone?: 'light' | 'dark' }) {
   return (
+    <div>
     <div className={`overflow-hidden bg-lagoon-900 ${className}`}>
       <img
         src={founderSpeaking}
@@ -27,6 +31,8 @@ export function DiplomaticGalaPreview({ className = '' }: { className?: string }
         loading="lazy"
         className="h-full w-full object-cover object-[center_35%]"
       />
+    </div>
+    {actions && <PhotoActions source={programAssetSource('gala-founder-speaking.webp')} title="The Founder speaking · institutional engagement archive" tone={tone} />}
     </div>
   );
 }
@@ -48,7 +54,7 @@ export function DiplomaticGalaGallery() {
   }, [carousel]);
 
   return (
-    <div role="region" aria-roledescription="carousel" aria-label="Founder diplomatic meetings">
+    <div role="region" aria-roledescription="carousel" aria-label="Founder diplomatic meetings" data-gallery-root>
       <p className="mb-6 max-w-3xl text-ink-800">
         Meetings with ambassadors and diplomatic, institutional and private office partners.
         These photographs document the Founder’s network and exchanges, not a completed edition of the Gala.
@@ -78,6 +84,7 @@ export function DiplomaticGalaGallery() {
           ))}
         </div>
       </div>
+      <GalleryActions items={slides.map((s) => ({ source: programAssetSource(s.file), title: s.caption }))} index={selected} onSelect={(i) => carousel?.scrollTo(i, true)} className="mt-5" />
     </div>
   );
 }

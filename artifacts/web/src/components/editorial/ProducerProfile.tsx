@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { producerFilms, producerPortrait } from './producer-credits';
+import PhotoActions from './PhotoActions';
 
 const services = ['Development', 'Casting', 'Location management', 'Production', 'Post-production'];
 
@@ -41,6 +42,7 @@ export default function ProducerProfile() {
               <span aria-hidden className="pointer-events-none absolute -bottom-3 -right-3 h-16 w-16 border-b border-r border-gold-400" />
             </div>
             <figcaption className="mt-5 text-xs uppercase tracking-[0.18em] text-ivory-300">Qais Qandil · Founder, CEO & Producer</figcaption>
+            <PhotoActions source={producerPortrait} title="Portrait: Qais Qandil" tone="dark" />
           </figure>
           <div className="lg:col-span-7">
             <p className="text-eyebrow text-gold-400">PRODUCTION PARTNER · PER THE FOUNDER</p>
@@ -83,6 +85,7 @@ export default function ProducerProfile() {
                         <Portrait src={c.portrait} name={c.name} className="aspect-[3/4]" />
                       </div>
                       <p className="mt-2 text-sm text-ivory-100 transition-colors group-hover:text-gold-400">{c.name}</p>
+                      <PhotoActions source={c.portrait} title={`Portrait: ${c.name}`} tone="dark" />
                     </li>
                   ))}
                 </ul>

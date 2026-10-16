@@ -1,7 +1,7 @@
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useEffect, useRef } from 'react';
 import { QueryClient, QueryClientProvider, useQueryClient } from '@tanstack/react-query';
-import { ClerkProvider, Show, useClerk, useAuth } from '@clerk/react';
+import { ClerkProvider, useClerk, useAuth } from '@clerk/react';
 import { setAuthTokenGetter } from '@workspace/api-client-react';
 import { publishableKeyFromHost } from '@clerk/react/internal';
 import { Toaster } from '@/components/ui/toaster';
@@ -30,6 +30,7 @@ import Documentary from '@/pages/documentary';
 import News from '@/pages/news';
 import NewsDetail from '@/pages/news/detail';
 import CoverageDetail from '@/pages/news/coverage';
+import PinkOctoberNews from '@/pages/news/pink-october';
 import Partners from '@/pages/partners';
 import PartnerDetail from '@/pages/partners/detail';
 import JoinTheMovement from '@/pages/join';
@@ -53,19 +54,6 @@ const clerkProxyUrl = import.meta.env.VITE_CLERK_PROXY_URL;
 
 if (!clerkPubKey) {
   throw new Error('Missing VITE_CLERK_PUBLISHABLE_KEY in .env file');
-}
-
-function HomeRedirect() {
-  return (
-    <>
-      <Show when="signed-in">
-        <Redirect to="/member" />
-      </Show>
-      <Show when="signed-out">
-        <Home />
-      </Show>
-    </>
-  );
 }
 
 function ClerkQueryClientCacheInvalidator() {
@@ -112,7 +100,7 @@ function SiteMetadata() {
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={HomeRedirect} />
+      <Route path="/" component={Home} />
       <Route path="/our-vision" component={OurVision} />
       <Route path="/ecosystem" component={Ecosystem} />
       <Route path="/community" component={Community} />
@@ -132,6 +120,7 @@ function Router() {
       <Route path="/the-one-documentary" component={Documentary} />
       <Route path="/news" component={News} />
       <Route path="/news/coverage/:id" component={CoverageDetail} />
+      <Route path="/news/pink-october-burj-khalifa" component={PinkOctoberNews} />
       <Route path="/news/:slug" component={NewsDetail} />
       <Route path="/partners" component={Partners} />
       <Route path="/partners/:slug" component={PartnerDetail} />

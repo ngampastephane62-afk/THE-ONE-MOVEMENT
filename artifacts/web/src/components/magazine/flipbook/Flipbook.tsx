@@ -2,6 +2,9 @@ import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } fro
 import { animate, motion, useMotionValue, useReducedMotion, useTransform } from 'framer-motion';
 import { ChevronLeft, ChevronRight, BookOpen } from 'lucide-react';
 import { buildPages, CHAPTER_TITLES, type MagPage } from './pages';
+import { ART } from '../editorial-data';
+import MediaActions from '@/components/editorial/MediaActions';
+import { canonicalMediaSource } from '@/lib/media-share';
 
 const EASE = [0.65, 0.02, 0.25, 1] as const;
 
@@ -149,6 +152,15 @@ export default function Flipbook({ onRead }: { onRead: (chapterId: string) => vo
             <button key={c} type="button" onClick={() => onRead(c)} className="inline-flex items-center gap-2 border border-ivory-50/25 px-4 py-2 text-xs text-ivory-100 transition hover:border-gold-400 hover:text-gold-400" data-testid={`button-read-${c}`}>
               <BookOpen className="h-3.5 w-3.5" aria-hidden="true" />Read as text: <span translate="no">{CHAPTER_TITLES[c]}</span>
             </button>
+          ))}
+        </div>
+        {/* Reactions for the artwork currently open; same identity as the article reader. */}
+        <div className="grid w-full max-w-4xl gap-4 px-2 sm:grid-cols-2">
+          {visible.filter((v) => v.art).map((v) => (
+            <div key={v.key} className="min-w-0">
+              <p className="mb-1 truncate text-[11px] uppercase tracking-[0.16em] text-ivory-300">{v.label}</p>
+              <MediaActions source={canonicalMediaSource(ART(v.art!))} title={`Tropik Magazine · ${v.label}`} tone="dark" compact />
+            </div>
           ))}
         </div>
       </div>

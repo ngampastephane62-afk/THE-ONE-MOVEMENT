@@ -3,6 +3,8 @@ import { animate, motion, useInView, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { OVERVIEW, INSTAGRAM_60, WEEK, REELS, REELS_NOTE, AUDIENCE_PROFILE, TOP_CITIES, SOURCE_ACCOUNT, type Snapshot } from './audience-data';
 import { KIT_FIGURES, KIT_FIGURES_SOURCE } from './social-sources';
+import PhotoActions from '@/components/editorial/PhotoActions';
+
 
 const fmt = (n: number) => n.toLocaleString('en-US');
 
@@ -40,6 +42,7 @@ function Evidence({ s, dark }: { s: Snapshot; dark?: boolean }) {
     <details className={`group mt-5 text-xs ${dark ? 'text-ivory-300' : 'text-ink-700'}`}>
       <summary className="cursor-pointer list-none uppercase tracking-[0.2em] underline-offset-4 hover:underline">View the source extract</summary>
       <img src={s.proof} alt={s.proofAlt} loading="lazy" onError={() => setOk(false)} className="mt-3 w-full max-w-sm rounded-sm opacity-90 ring-1 ring-black/10" />
+      <PhotoActions source={s.proof} title={`${s.platform} · source extract`} tone={dark ? 'dark' : 'light'} />
     </details>
   );
 }
@@ -75,6 +78,7 @@ function Reel({ r, i }: { r: (typeof REELS)[number]; i: number }) {
           <span className="mt-1 block text-[9px] uppercase tracking-[0.25em] text-ivory-200">views · Reel</span>
         </figcaption>
       </figure>
+      {ok && <PhotoActions source={r.src} title={`Tropik Reel ${i + 1} · still`} />}
       <span className="absolute -left-1 -top-3 font-display text-sm italic text-gold-600" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
     </motion.li>
   );

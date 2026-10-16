@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react';
 import { ART, ARTICLES, COVERS } from '../editorial-data';
 
-export type MagPage = { key: string; label: string; section: string; chapter?: string; node: ReactNode };
+export type MagPage = { key: string; label: string; section: string; chapter?: string; art?: number; node: ReactNode };
 
 function PageImg({ n, alt }: { n: number; alt: string }) {
   const [ok, setOk] = useState(true);
@@ -73,7 +73,7 @@ function BackCover() {
 
 export function buildPages(go: (page: number) => void): MagPage[] {
   const [carine, rozina, reischca] = ARTICLES;
-  const art = (key: string, n: number, alt: string, section: string, chapter?: string): MagPage => ({ key, label: alt, section, chapter, node: <PageImg n={n} alt={alt} /> });
+  const art = (key: string, n: number, alt: string, section: string, chapter?: string): MagPage => ({ key, label: alt, section, chapter, art: n, node: <PageImg n={n} alt={alt} /> });
   const ch = (a: typeof carine, i: number) => a.chapters[i];
   return [
     art('cover', 12, 'Cover: Carine Nanikian, October Pink 2026', 'Cover'),

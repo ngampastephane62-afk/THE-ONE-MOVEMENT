@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { BrandPhotoSetActions } from '@/components/editorial/BrandPhotoActions';
 import useEmblaCarousel from 'embla-carousel-react';
 import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 import catalog from '@/assets/media/founder/catalog.json';
@@ -6,9 +7,11 @@ import runwayGroup from '@/assets/media/programs/fashion-night-runway-group.webp
 import fashionPortrait from '@/assets/media/programs/fashion-portrait.webp';
 import PhotoMosaic from '@/components/PhotoMosaic';
 import './home-experience.css';
+import GalleryActions from '@/components/editorial/GalleryActions';
+import { programAssetSource } from '@/lib/media-share';
 
 type PhotoId = keyof typeof catalog.photos;
-interface Slide { key: string; src: string; srcSet?: string; alt: string; caption: string }
+interface Slide { key: string; source: string; src: string; srcSet?: string; alt: string; caption: string }
 
 const base = (p: string) => `${import.meta.env.BASE_URL}brand-photos/${p}`;
 const fromCatalog = (id: PhotoId, caption?: string): Slide => {
@@ -16,6 +19,7 @@ const fromCatalog = (id: PhotoId, caption?: string): Slide => {
   return {
     key: id,
     src: base(p.filename),
+    source: `/brand-photos/${p.filename}`,
     srcSet: p.versions.map((v) => `${base(v.filename)} ${v.width}w`).join(', '),
     alt: p.alt,
     caption: caption ?? p.caption,
@@ -26,17 +30,19 @@ const fromCatalog = (id: PhotoId, caption?: string): Slide => {
 // Leadership encounters remain on program pages; this strip leads with people.
 const SLIDES: Slide[] = [
   fromCatalog('community-outreach', 'Community & impact'),
-  { key: 'runway-group', src: runwayGroup, alt: 'Models in printed gowns on an open-air night runway', caption: 'Night runway · supplied archive' },
+  { key: 'runway-group', source: programAssetSource('fashion-night-runway-group.webp'), src: runwayGroup, alt: 'Models in printed gowns on an open-air night runway', caption: 'Night runway · supplied archive' },
   fromCatalog('cultural-performance'),
   fromCatalog('institutional-dialogue'),
   fromCatalog('casting-group'),
   fromCatalog('global-encounter'),
-  { key: 'fashion-portrait', src: fashionPortrait, alt: 'Editorial fashion portrait at dusk', caption: 'Editorial fashion portrait · supplied archive' },
+  { key: 'fashion-portrait', source: programAssetSource('fashion-portrait.webp'), src: fashionPortrait, alt: 'Editorial fashion portrait at dusk', caption: 'Editorial fashion portrait · supplied archive' },
   fromCatalog('conversation'),
   fromCatalog('human-connection'),
 ];
 
 const INTERVAL = 6000;
+const MOSAIC_FILES = ['photo-02.jpg', 'photo-03.jpg', 'photo-04.jpg', 'photo-05.jpg', 'photo-06.jpg'];
+const MOSAIC_ALTS = ['Fashion Week runway', 'Designer portrait', 'Audience and event atmosphere', 'Cultural performance', 'Casting and creative community'];
 
 export default function HomeArchiveCarousel() {
   const [viewportRef, embla] = useEmblaCarousel({ loop: true, align: 'center' });
@@ -88,6 +94,7 @@ export default function HomeArchiveCarousel() {
     <div
       id="movement-archive"
       ref={rootRef}
+      data-gallery-root
       className="tomi-archive-carousel"
       role="region"
       aria-roledescription="carousel"
@@ -116,9 +123,10 @@ export default function HomeArchiveCarousel() {
               <div className="tomi-archive-frame">
                 {i === 0 ? (
                   <PhotoMosaic
-                    filenames={['photo-02.jpg', 'photo-03.jpg', 'photo-04.jpg', 'photo-05.jpg', 'photo-06.jpg']}
-                    alts={['Fashion Week runway', 'Designer portrait', 'Audience and event atmosphere', 'Cultural performance', 'Casting and creative community']}
+                    filenames={MOSAIC_FILES}
+                    alts={MOSAIC_ALTS}
                     className="h-full w-full"
+                    actions={false}
                   />
                 ) : <img
                   src={s.src}
@@ -136,6 +144,8 @@ export default function HomeArchiveCarousel() {
         </div>
       </div>
 
+      {selected === 0 && <BrandPhotoSetActions filenames={MOSAIC_FILES} alts={MOSAIC_ALTS} tone="dark" className="px-1" onInteract={() => setUserPaused(true)} />}
+      <GalleryActions items={SLIDES.map((s, i) => (i === 0 ? null : { source: s.source, title: s.caption }))} index={selected} onSelect={(i) => { setUserPaused(true); embla?.scrollTo(i, true); }} onInteract={() => setUserPaused(true)} tone="dark" className="mt-4 px-1" />
       <div className="tomi-archive-controls">
         <div className="flex items-center gap-2">
           <button type="button" onClick={prev} aria-label="Previous photo" className="tomi-archive-btn" data-testid="button-archive-prev"><ChevronLeft size={18} /></button>

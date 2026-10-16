@@ -3,6 +3,12 @@ name: Member social network and official certifications
 description: Founder requirements for the member universe, event-specific status, humanitarian donations and programme packages.
 ---
 
+Members must be able to leave their personal space, explore the whole public ecosystem while remaining signed in, and receive relevant ecosystem news inside their personal space.
+
+**Why:** The owner explicitly described the member area as feeling closed off from the wider ecosystem and asked for news to reach members in their accounts.
+
+**How to apply:** Keep public navigation independent of authentication. Signing in may land in the member area, but visiting the public homepage must not redirect signed-in users back there. Provide visible public discovery links on mobile and a clear account-return link on public pages. Surface published ecosystem news in the personal space without implying push delivery or private personalization that does not exist.
+
 The Founder wants signing in after membership to open a distinct social-network universe, similar to LinkedIn, not merely a profile-and-bookmarks page. Members should upload business media, publish posts and reels, follow each other, discover profiles inside and outside their sectors, see likes and views, and start private discussions.
 
 **Why:** The Founder explicitly described the existing member workspace as insufficient for launching a community where people subscribe, post and generate traffic.

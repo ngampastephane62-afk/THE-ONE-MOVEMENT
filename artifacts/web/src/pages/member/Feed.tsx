@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'wouter';
 import { Briefcase, Clapperboard, Loader2, Newspaper } from 'lucide-react';
 import { useGetNetworkState, getGetNetworkStateQueryKey, type GetNetworkStateFeed, type NetworkPost } from '@workspace/api-client-react';
+import EcosystemNews from '@/components/network/EcosystemNews';
 import PostCard from '@/components/network/PostCard';
 import ReportDialog, { type ReportTarget } from '@/components/network/ReportDialog';
 import { Avatar, Empty, ErrorBox, Skeleton, UploadTray, btn, btnGhost, card, field, useAct, useUploads } from '@/components/network/kit';
@@ -67,6 +68,7 @@ export default function Feed() {
   return (
     <div className="flex flex-col gap-4 px-3 pt-4 md:px-0 md:pt-0 lg:flex-row lg:items-start">
       <div className="flex min-w-0 flex-1 flex-col gap-4">
+        <EcosystemNews limit={1} />
         {me.founder || base.growth?.canPost ? <Composer /> : (
           <div className={`${card} flex flex-wrap items-center justify-between gap-2 p-3 text-sm`}>
             <p className="text-ink-700">Explore the feed freely. Activate your verified membership to publish. No invitations are required.</p>
@@ -91,7 +93,7 @@ export default function Feed() {
           </>
         )}
       </div>
-      <aside className="flex flex-col gap-4 lg:sticky lg:top-20 lg:w-72">
+      <aside className="flex flex-col gap-4 lg:sticky lg:top-24 lg:w-72">
         {me.followers + me.following === 0 && (
           <div className="rounded-2xl bg-lagoon-900 p-5 text-ivory-100">
             <p className="text-eyebrow text-gold-400">GETTING STARTED</p>

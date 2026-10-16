@@ -3,10 +3,12 @@ import { ArrowUpRight } from 'lucide-react';
 import type { AmbassadorProfile } from '@workspace/shared';
 import { posterFor } from './posters';
 import { WEALTH_ESTIMATES } from '@/lib/wealth-data';
+import PhotoActions from './PhotoActions';
 
 export default function NomineeCard({ person, index, dark = false }: { person: AmbassadorProfile; index: number; dark?: boolean }) {
   const poster = posterFor(person.poster);
   return (
+    <div>
     <Link
       href={`/ambassadors/${person.slug}`}
       className="group block"
@@ -36,5 +38,7 @@ export default function NomineeCard({ person, index, dark = false }: { person: A
         View profile <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
       </p>
     </Link>
+    {poster?.src && poster.source && <PhotoActions source={poster.source} title={`${person.name} · official TOMI nominee poster`} tone={dark ? 'dark' : 'light'} />}
+    </div>
   );
 }

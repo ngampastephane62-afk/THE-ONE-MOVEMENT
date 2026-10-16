@@ -3,6 +3,7 @@ import { Link } from 'wouter';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ART, HERITAGE, KIT_PDF_URL } from './editorial-data';
 import { SOCIAL } from './social-sources';
+import PhotoSetActions from '@/components/editorial/PhotoSetActions';
 
 export default function MagazineFeature() {
   const reduce = useReducedMotion();
@@ -33,6 +34,11 @@ export default function MagazineFeature() {
             <a href={KIT_PDF_URL} download className="inline-flex items-center justify-center border border-ivory-50/30 px-6 py-4 text-xs font-semibold uppercase tracking-[0.2em] hover:border-gold-400" data-testid="link-magazine-kit">Media kit PDF · Free</a>
           </div>
           <p className="mt-5 text-sm text-ivory-300">Your story in the News, on Tropik social pages and in print: <Link href="/tropik-magazine/contribute" className="font-semibold text-gold-400 underline underline-offset-4" data-testid="link-magazine-contribute">propose an article</Link>.{ig && <> Follow <a href={ig.url!} target="_blank" rel="noreferrer noopener" className="underline underline-offset-4" translate="no" data-testid="link-magazine-instagram">{ig.handle}</a>.</>}</p>
+          <div className="mt-8 border-t border-ivory-50/15 pt-2"><PhotoSetActions tone="dark" label="Choose a magazine page to react to" items={[
+            { src: ART(12), title: 'Tropik Magazine cover · Carine Nanikian' },
+            { src: ART(7), title: 'Tropik Magazine page · Her Story' },
+            { src: HERITAGE(2), title: 'Printed cover of The One Fashion Week magazine' },
+          ]} /></div>
         </div>
       </div>
     </section>

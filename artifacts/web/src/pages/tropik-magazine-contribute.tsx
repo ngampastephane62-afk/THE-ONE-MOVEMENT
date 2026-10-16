@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import PhotoActions from '@/components/editorial/PhotoActions';
 import { Helmet } from 'react-helmet-async';
 import { Link, useSearch } from 'wouter';
 import { useGetMagazineConfig, useGetMagazineSubmissions, useGetMagazineOrders, getGetMagazineOrdersQueryKey, getGetMagazineConfigQueryKey, type MagazineSubmission } from '@workspace/api-client-react';
@@ -46,7 +47,7 @@ export default function TropikMagazineContribute() {
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-800">Propose an article for one inside page of the printed magazine. This is a curated editorial review — not a marketplace and not self-publishing. Nothing you write appears on the public magazine page.</p>
             <p className="mt-4 max-w-xl leading-relaxed text-ink-700" data-testid="text-editorial-offer">Tropik tells stories across three places: an editorial article in the ecosystem News, a relay on the Tropik Instagram and Facebook pages, and the printed magazine. Accepted stories are considered for all three by the editorial team; the USD 200 reservation covers the one inside printed page only, and no audience figure is promised per article.</p>
           </div>
-          <div className="hidden md:col-span-4 md:block"><img src={ART(13)} alt="Tropik Magazine cover featuring Reischca Kazumba" className="aspect-[3/4] w-full object-cover shadow-[0_24px_50px_-24px_hsl(187_67%_12%/0.55)]" /></div>
+          <div className="hidden md:col-span-4 md:block"><img src={ART(13)} alt="Tropik Magazine cover featuring Reischca Kazumba" className="aspect-[3/4] w-full object-cover shadow-[0_24px_50px_-24px_hsl(187_67%_12%/0.55)]" /><PhotoActions source={ART(13)} title="Tropik Magazine cover · Reischca Kazumba" /></div>
         </div>
         <ol className="mx-auto grid max-w-6xl gap-px bg-ink-900/15 px-0 md:grid-cols-4">
           {STEPS.map(([t, d], i) => <li key={t} className="bg-ivory-100 p-5"><span className="font-display text-3xl text-gold-500">{i + 1}</span><p className="mt-1 text-sm font-semibold uppercase tracking-[0.15em]">{t}</p><p className="mt-1 text-sm leading-relaxed text-ink-700">{d}</p></li>)}

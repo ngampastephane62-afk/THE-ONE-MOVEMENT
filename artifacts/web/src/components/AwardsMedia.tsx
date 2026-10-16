@@ -3,9 +3,11 @@ import nomineesPoster from '@/assets/media/programs/awards-nominees-poster.webp'
 import ciaraPoster from '@/assets/media/programs/awards-ciara-poster.webp';
 import SocialVideo from '@/components/editorial/SocialVideo';
 import ProgrammeCover from '@/components/programs/ProgrammeCover';
+import PhotoActions from '@/components/editorial/PhotoActions';
+import { programAssetSource } from '@/lib/media-share';
 
-export function AwardsPreview({ className = '' }: { className?: string }) {
-  return <ProgrammeCover programme="awards" className={className} />;
+export function AwardsPreview({ className = '', actions = true, tone = 'light' }: { className?: string; actions?: boolean; tone?: 'light' | 'dark' }) {
+  return <ProgrammeCover programme="awards" className={className} actions={actions} tone={tone} />;
 }
 
 export function AwardsNominees() {
@@ -19,6 +21,7 @@ export function AwardsNominees() {
         <figure>
           <img src={winniePoster} alt="Winnie Harlow · official TOMI nomination poster" width={1200} height={848} className="block h-auto w-full" loading="lazy" />
           <figcaption className="mt-3 text-sm text-ink-700">Winnie Harlow · Ambassador of Peace nominee</figcaption>
+          <PhotoActions source={programAssetSource('awards-winnie-harlow.webp')} title="Winnie Harlow · official TOMI nomination poster" />
         </figure>
         {[
           { file: 'awards-nominees', poster: nomineesPoster, label: 'Celebrity nominees · Ambassador of Peace' },

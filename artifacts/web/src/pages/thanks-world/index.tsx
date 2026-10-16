@@ -12,7 +12,7 @@ import {
 } from '@workspace/shared';
 import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
-import PersonPortrait, { PortraitCredit } from '@/components/editorial/PersonPortrait';
+import PersonPortrait, { PortraitActions, PortraitCredit } from '@/components/editorial/PersonPortrait';
 import WealthLabel from '@/components/editorial/WealthLabel';
 import RegionBackdrop from '@/components/RegionBackdrop';
 
@@ -114,7 +114,8 @@ function RegionSection({ region, label, country, sector, alt }: { region: Impact
 function LeaderCard({ person }: { person: ImpactLeader }) {
   return (
     <li className="flex flex-col bg-ivory-100 p-6" data-testid={`card-leader-${person.slug}`}>
-      <PersonPortrait slug={person.slug} name={person.name} className="mb-5 aspect-[4/5] overflow-hidden bg-lagoon-900" />
+      <PersonPortrait slug={person.slug} name={person.name} className="aspect-[4/5] overflow-hidden bg-lagoon-900" />
+      <div className="mb-5"><PortraitActions slug={person.slug} name={person.name} /></div>
       <div className="flex items-start gap-4">
         <div>
           <p className="font-display text-xl leading-tight text-ink-900">{person.name}</p>

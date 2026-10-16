@@ -27,6 +27,7 @@ import type {
 import type {
   CreateHumanitarianCheckout200,
   CreateHumanitarianOffer201,
+  CreatePartnerIntroduction201,
   CreateProfessionalIntroduction201,
   DetailedHealthStatus,
   DonationCampaign,
@@ -36,6 +37,7 @@ import type {
   GetHumanitarianOffers200Item,
   GetHumanitarianPaymentStatus200,
   GetHumanitarianPaymentStatusParams,
+  GetMediaEngagementParams,
   GetNetworkPaymentStatusParams,
   GetNetworkStateParams,
   GetProfessionalResource200,
@@ -67,6 +69,9 @@ import type {
   NetworkState,
   NetworkUploadInput,
   NetworkUploadTicket,
+  PartnerIntroduction,
+  PartnerIntroductionInput,
+  PartnerIntroductionStatusInput,
   PressEntry,
   PressEntryInput,
   ProfessionalAction200,
@@ -76,6 +81,7 @@ import type {
   ProfessionalState,
   SavedItemInput,
   UpdateHumanitarianOffer200,
+  UpdateMediaEngagementParams,
   VideoEngagement,
   VideoEngagementInput
 } from './api.schemas';
@@ -106,6 +112,458 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   }
   return result;
 };
+
+export const getCreatePartnerIntroductionUrl = () => {
+
+
+
+
+  return `/api/partner-introductions`
+}
+
+export const createPartnerIntroduction = async (partnerIntroductionInput: PartnerIntroductionInput, options?: Parameters<typeof customFetch>[1]): Promise<CreatePartnerIntroduction201> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<CreatePartnerIntroduction201>(getCreatePartnerIntroductionUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(partnerIntroductionInput)
+  }
+);}
+
+
+
+
+
+export const getCreatePartnerIntroductionMutationKey = () => ['createPartnerIntroduction'] as const;
+
+export const getCreatePartnerIntroductionMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createPartnerIntroduction>>, TError,CreatePartnerIntroductionMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof createPartnerIntroduction>>, TError,CreatePartnerIntroductionMutationVariables, TContext> => {
+
+const mutationKey = getCreatePartnerIntroductionMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createPartnerIntroduction>>, CreatePartnerIntroductionMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  createPartnerIntroduction(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreatePartnerIntroductionMutationResult = NonNullable<Awaited<ReturnType<typeof createPartnerIntroduction>>>
+    export type CreatePartnerIntroductionMutationBody = BodyType<PartnerIntroductionInput>
+    export type CreatePartnerIntroductionMutationError = ErrorType<void>
+    export type CreatePartnerIntroductionMutationVariables = {data: BodyType<PartnerIntroductionInput>}
+
+    export const useCreatePartnerIntroduction = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createPartnerIntroduction>>, TError,CreatePartnerIntroductionMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createPartnerIntroduction>>,
+        TError,
+        CreatePartnerIntroductionMutationVariables,
+        TContext
+      > => {
+      return useMutation(getCreatePartnerIntroductionMutationOptions(options), queryClient);
+    }
+
+export const getGetPartnerIntroductionsUrl = () => {
+
+
+
+
+  return `/api/partner-introductions`
+}
+
+export const getPartnerIntroductions = async ( options?: Parameters<typeof customFetch>[1]): Promise<PartnerIntroduction[]> => {
+
+  return customFetch<PartnerIntroduction[]>(getGetPartnerIntroductionsUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetPartnerIntroductionsQueryKey = () => {
+    return [
+    `/api/partner-introductions`
+    ] as const;
+    }
+
+
+export const getGetPartnerIntroductionsQueryOptions = <TData = Awaited<ReturnType<typeof getPartnerIntroductions>>, TError = ErrorType<void>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPartnerIntroductions>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetPartnerIntroductionsQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getPartnerIntroductions>>> = ({ signal }) => getPartnerIntroductions({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getPartnerIntroductions>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetPartnerIntroductionsQueryResult = NonNullable<Awaited<ReturnType<typeof getPartnerIntroductions>>>
+export type GetPartnerIntroductionsQueryError = ErrorType<void>
+
+
+export function useGetPartnerIntroductions<TData = Awaited<ReturnType<typeof getPartnerIntroductions>>, TError = ErrorType<void>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPartnerIntroductions>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getPartnerIntroductions>>,
+          TError,
+          Awaited<ReturnType<typeof getPartnerIntroductions>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetPartnerIntroductions<TData = Awaited<ReturnType<typeof getPartnerIntroductions>>, TError = ErrorType<void>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPartnerIntroductions>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getPartnerIntroductions>>,
+          TError,
+          Awaited<ReturnType<typeof getPartnerIntroductions>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetPartnerIntroductions<TData = Awaited<ReturnType<typeof getPartnerIntroductions>>, TError = ErrorType<void>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPartnerIntroductions>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetPartnerIntroductions<TData = Awaited<ReturnType<typeof getPartnerIntroductions>>, TError = ErrorType<void>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPartnerIntroductions>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetPartnerIntroductionsQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getUpdatePartnerIntroductionUrl = (id: number,) => {
+
+
+
+
+  return `/api/partner-introductions/${id}`
+}
+
+export const updatePartnerIntroduction = async (id: number,
+    partnerIntroductionStatusInput: PartnerIntroductionStatusInput, options?: Parameters<typeof customFetch>[1]): Promise<PartnerIntroduction> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<PartnerIntroduction>(getUpdatePartnerIntroductionUrl(id),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(partnerIntroductionStatusInput)
+  }
+);}
+
+
+
+
+
+export const getUpdatePartnerIntroductionMutationKey = () => ['updatePartnerIntroduction'] as const;
+
+export const getUpdatePartnerIntroductionMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updatePartnerIntroduction>>, TError,UpdatePartnerIntroductionMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof updatePartnerIntroduction>>, TError,UpdatePartnerIntroductionMutationVariables, TContext> => {
+
+const mutationKey = getUpdatePartnerIntroductionMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updatePartnerIntroduction>>, UpdatePartnerIntroductionMutationVariables> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  updatePartnerIntroduction(id,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdatePartnerIntroductionMutationResult = NonNullable<Awaited<ReturnType<typeof updatePartnerIntroduction>>>
+    export type UpdatePartnerIntroductionMutationBody = BodyType<PartnerIntroductionStatusInput>
+    export type UpdatePartnerIntroductionMutationError = ErrorType<void>
+    export type UpdatePartnerIntroductionMutationVariables = {id: number;data: BodyType<PartnerIntroductionStatusInput>}
+
+    export const useUpdatePartnerIntroduction = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updatePartnerIntroduction>>, TError,UpdatePartnerIntroductionMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof updatePartnerIntroduction>>,
+        TError,
+        UpdatePartnerIntroductionMutationVariables,
+        TContext
+      > => {
+      return useMutation(getUpdatePartnerIntroductionMutationOptions(options), queryClient);
+    }
+
+export const getGetMediaEngagementUrl = (params: GetMediaEngagementParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/editorial/media/engagement?${stringifiedParams}` : `/api/editorial/media/engagement`
+}
+
+export const getMediaEngagement = async (params: GetMediaEngagementParams, options?: Parameters<typeof customFetch>[1]): Promise<VideoEngagement> => {
+
+  return customFetch<VideoEngagement>(getGetMediaEngagementUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetMediaEngagementQueryKey = (params?: GetMediaEngagementParams,) => {
+    return [
+    `/api/editorial/media/engagement`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getGetMediaEngagementQueryOptions = <TData = Awaited<ReturnType<typeof getMediaEngagement>>, TError = ErrorType<void>>(params: GetMediaEngagementParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMediaEngagement>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMediaEngagementQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMediaEngagement>>> = ({ signal }) => getMediaEngagement(params, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMediaEngagement>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMediaEngagementQueryResult = NonNullable<Awaited<ReturnType<typeof getMediaEngagement>>>
+export type GetMediaEngagementQueryError = ErrorType<void>
+
+
+export function useGetMediaEngagement<TData = Awaited<ReturnType<typeof getMediaEngagement>>, TError = ErrorType<void>>(
+ params: GetMediaEngagementParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMediaEngagement>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMediaEngagement>>,
+          TError,
+          Awaited<ReturnType<typeof getMediaEngagement>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMediaEngagement<TData = Awaited<ReturnType<typeof getMediaEngagement>>, TError = ErrorType<void>>(
+ params: GetMediaEngagementParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMediaEngagement>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMediaEngagement>>,
+          TError,
+          Awaited<ReturnType<typeof getMediaEngagement>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMediaEngagement<TData = Awaited<ReturnType<typeof getMediaEngagement>>, TError = ErrorType<void>>(
+ params: GetMediaEngagementParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMediaEngagement>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetMediaEngagement<TData = Awaited<ReturnType<typeof getMediaEngagement>>, TError = ErrorType<void>>(
+ params: GetMediaEngagementParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMediaEngagement>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMediaEngagementQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getUpdateMediaEngagementUrl = (params: UpdateMediaEngagementParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/editorial/media/engagement?${stringifiedParams}` : `/api/editorial/media/engagement`
+}
+
+export const updateMediaEngagement = async (videoEngagementInput: VideoEngagementInput,
+    params: UpdateMediaEngagementParams, options?: Parameters<typeof customFetch>[1]): Promise<VideoEngagement> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<VideoEngagement>(getUpdateMediaEngagementUrl(params),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(videoEngagementInput)
+  }
+);}
+
+
+
+
+
+export const getUpdateMediaEngagementMutationKey = () => ['updateMediaEngagement'] as const;
+
+export const getUpdateMediaEngagementMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateMediaEngagement>>, TError,UpdateMediaEngagementMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateMediaEngagement>>, TError,UpdateMediaEngagementMutationVariables, TContext> => {
+
+const mutationKey = getUpdateMediaEngagementMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateMediaEngagement>>, UpdateMediaEngagementMutationVariables> = (props) => {
+          const {data,params} = props ?? {};
+
+          return  updateMediaEngagement(data,params,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateMediaEngagementMutationResult = NonNullable<Awaited<ReturnType<typeof updateMediaEngagement>>>
+    export type UpdateMediaEngagementMutationBody = BodyType<VideoEngagementInput>
+    export type UpdateMediaEngagementMutationError = ErrorType<void>
+    export type UpdateMediaEngagementMutationVariables = {data: BodyType<VideoEngagementInput>;params: UpdateMediaEngagementParams}
+
+    export const useUpdateMediaEngagement = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateMediaEngagement>>, TError,UpdateMediaEngagementMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof updateMediaEngagement>>,
+        TError,
+        UpdateMediaEngagementMutationVariables,
+        TContext
+      > => {
+      return useMutation(getUpdateMediaEngagementMutationOptions(options), queryClient);
+    }
 
 export const getDownloadMagazineKitUrl = () => {
 

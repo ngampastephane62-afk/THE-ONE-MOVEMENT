@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { UAE_RULERS, UAE_CABINET, UAE_BILLIONAIRES, type EmiratesPerson } from '@/lib/emirates-directory';
-import PersonPortrait, { PortraitCredit } from './PersonPortrait';
+import PersonPortrait, { PortraitActions, PortraitCredit } from './PersonPortrait';
 
 function Official({ person, president = false }: { person: EmiratesPerson; president?: boolean }) {
   return <li className={`border border-gold-500/25 bg-ivory-100 p-5 ${president ? 'sm:col-span-2 lg:col-span-2' : ''}`} data-testid={`emirates-person-${person.slug}`}>
@@ -12,6 +12,7 @@ function Official({ person, president = false }: { person: EmiratesPerson; presi
       {person.wealth && <div className="mt-4 border-y border-gold-500/30 py-3"><p className="text-[10px] uppercase tracking-widest text-gold-600">Estimated net worth · 2026 list</p><p className="mt-1 font-display text-3xl text-lagoon-900" data-no-translate>US${person.wealth} billion</p><p className="mt-1 text-[11px] text-ink-700">{person.family ? 'Family estimate' : 'Estimate'} · unaudited</p></div>}
       <a href={person.source} target="_blank" rel="noopener noreferrer" className="mt-4 inline-block text-xs text-lagoon-700 underline">{person.wealth ? 'Forbes Middle East · 2026 edition' : 'UAE Government · official source'}</a>
       <PortraitCredit slug={person.slug} />
+      <PortraitActions slug={person.slug} name={person.name} />
     </div>
   </li>;
 }

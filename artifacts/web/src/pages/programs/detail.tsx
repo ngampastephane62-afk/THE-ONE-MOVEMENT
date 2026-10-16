@@ -494,16 +494,16 @@ function StatusBadge({ status }: { status: ProgramStatus }) {
 
 function ProgramHeroMedia({ slug, name, tagline }: { slug: string; name: string; tagline: string }) {
   if (slug === 'diplomatic-gala') {
-    return <DiplomaticGalaPreview className="tomi-program-detail-media mx-auto w-full max-w-md aspect-[3/4]" />;
+    return <DiplomaticGalaPreview tone="dark" className="tomi-program-detail-media mx-auto w-full max-w-md aspect-[3/4]" />;
   }
   if (slug === 'awards') {
-    return <AwardsPreview className="tomi-program-detail-media w-full" />;
+    return <AwardsPreview tone="dark" className="tomi-program-detail-media w-full" />;
   }
   if (slug === 'summit') {
     return <ArchivePhoto id="summit-goma" caption sizes="(min-width: 1024px) 38vw, 92vw" className="tomi-program-detail-media mx-auto max-w-md" captionClassName="text-ivory-300" />;
   }
   if (slug === 'fashion-week') {
-    return <ProgrammeCover programme="fashion-week" className="tomi-program-detail-media mx-auto w-full max-w-md" />;
+    return <ProgrammeCover programme="fashion-week" tone="dark" className="tomi-program-detail-media mx-auto w-full max-w-md" />;
   }
   if (slug === 'fashion-night' || slug === 'investment-forum') {
     return <ProgramSuppliedImage slug={slug} className="tomi-program-detail-media mx-auto w-full max-w-md" frameClassName="aspect-[3/4] w-full" captionClassName="text-ivory-300" />;

@@ -1,0 +1,86 @@
+/**
+ * Editorial media + Pink October story dictionary, following the locale.tsx
+ * text-node pattern: keys are the EXACT English strings rendered in the DOM,
+ * values are translations. Counter labels are rendered as separate text nodes
+ * ("3", "likes") so the singular/plural words translate on their own.
+ * Main merges this into the locale catalogue.
+ */
+export const EDITORIAL_MEDIA_COPY: Record<string, Record<string, string>> = {
+  fr: {
+    // Reaction strip
+    'like': 'mention j’aime',
+    'likes': 'mentions j’aime',
+    'comment': 'commentaire',
+    'comments': 'commentaires',
+    'Share': 'Partager',
+    'Facebook': 'Facebook',
+    'Copy link': 'Copier le lien',
+    'Instagram / TikTok': 'Instagram / TikTok',
+    'More ways to share': 'Autres façons de partager',
+    '(opens in a new tab)': '(s’ouvre dans un nouvel onglet)',
+    'Link copied.': 'Lien copié.',
+    'Link copied. Paste it into your Instagram or TikTok story or bio; we never post for you.': 'Lien copié. Collez-le dans votre story ou votre bio Instagram ou TikTok ; nous ne publions jamais à votre place.',
+    'Sign in': 'Connectez-vous',
+    'as an approved member to like or comment. Anyone can read comments and share.': 'en tant que membre approuvé pour aimer ou commenter. Tout le monde peut lire les commentaires et partager.',
+    'Reactions unavailable. Retry': 'Réactions indisponibles. Réessayer',
+    'Comments did not load. Retry': 'Les commentaires n’ont pas pu être chargés. Réessayer',
+    'Loading comments...': 'Chargement des commentaires...',
+    'No comments yet.': 'Aucun commentaire pour le moment.',
+    'Add a comment': 'Ajouter un commentaire',
+    'Post comment': 'Publier le commentaire',
+    'Posting...': 'Publication...',
+    'Hide comment': 'Masquer le commentaire',
+    'Your session has ended. Sign in again to continue.': 'Votre session a expiré. Reconnectez-vous pour continuer.',
+    'Liking and commenting are open to verified, approved members.': 'Les mentions j’aime et les commentaires sont réservés aux membres vérifiés et approuvés.',
+    'This media is not open for reactions yet.': 'Ce média n’est pas encore ouvert aux réactions.',
+    'Too many actions in a short time. Wait a moment and try again.': 'Trop d’actions en peu de temps. Patientez un instant puis réessayez.',
+    'That did not go through. Try again.': 'L’action n’a pas abouti. Réessayez.',
+    'Reactions for photo': 'Réactions pour la photo',
+    'of': 'sur',
+    'Choose a photo to react to': 'Choisissez une photo pour réagir',
+    'Choose a magazine page to react to': 'Choisissez une page du magazine pour réagir',
+    'Choose a capture to react to': 'Choisissez une capture pour réagir',
+    // Video controls
+    'Watch ·': 'Regarder ·',
+    'Play': 'Lecture',
+    'Pause': 'Pause',
+    'Sound on': 'Son activé',
+    'Sound off': 'Son coupé',
+    'This video could not be loaded right now.': 'Cette vidéo ne peut pas être chargée pour le moment.',
+    'The video could not start. Try again.': 'La vidéo n’a pas pu démarrer. Réessayez.',
+    'Reload': 'Recharger',
+    // External announcements remain attributed to their original publisher.
+    'News & announcements': 'Actualités et annonces',
+    'View announcement': 'Voir l’annonce',
+    'All news': 'Toutes les actualités',
+    'EMAAR · Announcement': 'EMAAR · Annonce',
+    'The Burj Khalifa lights up in pink for Pink October. An announcement from EMAAR, available on its official page.':
+      'Le Burj Khalifa s’illumine en rose pour Octobre rose. Une annonce d’EMAAR à retrouver sur sa page officielle.',
+    'Source:': 'Source :',
+    'Source: EMAAR': 'Source : EMAAR',
+    'Shared on': 'Relayée le',
+    'EMAAR presents a pink-light showcase at the Burj Khalifa for Pink October, featuring the breast-cancer awareness ribbon on the tower.':
+      'EMAAR présente une illumination rose du Burj Khalifa pour Octobre rose, avec le ruban de sensibilisation au cancer du sein projeté sur la tour.',
+    'This announcement is shared for information. Visit EMAAR’s official page to see its updates.':
+      'Cette annonce est relayée à titre informatif. Retrouvez les publications d’EMAAR sur sa page officielle.',
+    'View EMAAR’s official page': 'Voir la page officielle d’EMAAR',
+    // Member space: ecosystem news panel + public navigation
+    'Ecosystem news': 'Actualités de l’écosystème',
+    'See all news': 'Toutes les actualités',
+    'Announcements': 'Annonces',
+    'No announcements published yet.': 'Aucune annonce publiée pour le moment.',
+    'Press archive': 'Archives de presse',
+    'Past coverage, dated by its original publication.': 'Couverture passée, datée selon sa publication d’origine.',
+    'The press archive did not load.': 'Les archives de presse n’ont pas pu être chargées.',
+    'Retry': 'Réessayer',
+    'No press coverage published yet.': 'Aucun article de presse publié pour le moment.',
+    'Explore ecosystem': 'Explorer l’écosystème',
+    'Explore': 'Explorer',
+    'News': 'Actualités',
+    'Home': 'Accueil',
+    'My space': 'Mon espace',
+    'Public site navigation': 'Navigation du site public',
+    'Sign out': 'Se déconnecter',
+    'You stay signed in while exploring.': 'Vous restez connecté pendant l’exploration.',
+  },
+};

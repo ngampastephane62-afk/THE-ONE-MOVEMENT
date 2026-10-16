@@ -11,6 +11,82 @@ tags:
   - name: health
     description: Health operations
 paths:
+  /partner-introductions:
+    post:
+      operationId: createPartnerIntroduction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: "#/components/schemas/PartnerIntroductionInput"}
+      responses:
+        "201":
+          description: Recorded for TOMI, not sent to the partner
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [id, status, message]
+                properties:
+                  id: {type: integer}
+                  status: {type: string}
+                  message: {type: string}
+        "400": {description: Invalid request}
+        "429": {description: Request limit reached}
+    get:
+      operationId: getPartnerIntroductions
+      responses:
+        "200":
+          description: Founder-only introduction inbox
+          content:
+            application/json:
+              schema: {type: array, items: {$ref: "#/components/schemas/PartnerIntroduction"}}
+        "403": {description: Founder access required}
+  /partner-introductions/{id}:
+    patch:
+      operationId: updatePartnerIntroduction
+      parameters:
+        - {name: id, in: path, required: true, schema: {type: integer}}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: "#/components/schemas/PartnerIntroductionStatusInput"}
+      responses:
+        "200":
+          description: Updated review status
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/PartnerIntroduction"}
+        "403": {description: Founder access required}
+  /editorial/media/engagement:
+    get:
+      operationId: getMediaEngagement
+      parameters:
+        - {name: source, in: query, required: true, schema: {type: string}}
+      responses:
+        "200":
+          description: Public photograph likes and visible comments
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/VideoEngagement"}
+        "404": {description: Photograph is not a registered public resource}
+    post:
+      operationId: updateMediaEngagement
+      parameters:
+        - {name: source, in: query, required: true, schema: {type: string}}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: "#/components/schemas/VideoEngagementInput"}
+      responses:
+        "200":
+          description: Persisted photograph action; authenticated eligible member required
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/VideoEngagement"}
+        "403": {description: Membership or same-origin permission required}
   /magazine/kit.pdf:
     get:
       operationId: downloadMagazineKit
@@ -799,6 +875,39 @@ paths:
                 $ref: "#/components/schemas/DetailedHealthStatus"
 components:
   schemas:
+    PartnerIntroductionInput:
+      type: object
+      required: [partnerId, contactName, organizationName, country, email, message, consentAccepted]
+      properties:
+        partnerId: {type: integer, minimum: 1, maximum: 44}
+        contactName: {type: string, minLength: 1, maxLength: 120}
+        organizationName: {type: string, minLength: 1, maxLength: 160}
+        country: {type: string, minLength: 1, maxLength: 90}
+        email: {type: string, minLength: 3, maxLength: 254}
+        message: {type: string, minLength: 10, maxLength: 800}
+        consentAccepted: {type: boolean}
+        website: {type: string, maxLength: 200}
+    PartnerIntroductionStatusInput:
+      type: object
+      required: [status]
+      properties:
+        status: {type: string, enum: [new, reviewing, replied, closed]}
+    PartnerIntroduction:
+      type: object
+      required: [id, partnerId, partnerName, leaderName, leaderRole, contactName, email, organizationName, country, message, status, createdAt]
+      properties:
+        id: {type: integer}
+        partnerId: {type: integer}
+        partnerName: {type: string}
+        leaderName: {type: [string, "null"]}
+        leaderRole: {type: [string, "null"]}
+        contactName: {type: string}
+        email: {type: string}
+        organizationName: {type: string}
+        country: {type: string}
+        message: {type: string}
+        status: {type: string, enum: [new, reviewing, replied, closed]}
+        createdAt: {type: string}
     MagazineSubmissionInput:
       type: object
       required: [requestId, fullName, title, body, accepted]

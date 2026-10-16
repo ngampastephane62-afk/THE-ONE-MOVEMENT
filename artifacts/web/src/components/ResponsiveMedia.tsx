@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { Pause, Play, Volume2, VolumeX } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import VideoActions from './editorial/VideoActions';
+import { useDeepLinkFocus } from '@/lib/media-share';
 
 type MediaKind =
   | 'cinematic-background'
@@ -49,6 +50,8 @@ export default function ResponsiveMedia({
   const socialId = videoSrc?.includes('fashion-archive') ? 'fashion-archive-reel'
     : videoSrc?.includes('institutional-meeting') ? 'institutional-meeting'
     : assetId === 'IMPACT-COMMUNITY' ? 'impact-community' : 'movement-reel';
+  const shareable = Boolean(videoSrc && kind !== 'cinematic-background');
+  const anchorRef = useDeepLinkFocus<HTMLDivElement>({ videoId: shareable ? socialId : undefined });
 
   const togglePlayback = async () => {
     const video = videoRef.current;
@@ -74,7 +77,7 @@ export default function ResponsiveMedia({
   };
 
   return (
-    <div id={videoSrc && kind !== 'cinematic-background' ? `video-${socialId}` : undefined}>
+    <div ref={anchorRef} tabIndex={shareable ? -1 : undefined} className="scroll-mt-28 outline-none data-[deeplinked=true]:ring-2 data-[deeplinked=true]:ring-gold-400" id={shareable ? `video-${socialId}` : undefined}>
     <div
       className={cn(
         'responsive-media group relative overflow-hidden rounded-sharp border border-gold-500/25 bg-lagoon-800',

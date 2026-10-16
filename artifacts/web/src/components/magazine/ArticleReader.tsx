@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { ART, ARTICLES, COVERS, type Article, type Block, type Chapter } from './editorial-data';
+import PhotoActions from '@/components/editorial/PhotoActions';
+import MediaActions from '@/components/editorial/MediaActions';
+import { canonicalMediaSource } from '@/lib/media-share';
 
 const ACCENT = {
   pink: { text: 'text-[hsl(338_70%_42%)]', rule: 'bg-[hsl(338_70%_52%)]', soft: 'bg-[hsl(338_60%_96%)]', border: 'border-[hsl(338_70%_52%)]', band: 'bg-[hsl(338_45%_93%)]' },
@@ -51,6 +54,7 @@ function ChapterView({ c, tone, index, total }: { c: Chapter; tone: Tone; index:
               <span className="mt-3 flex items-center justify-between text-[11px] font-semibold uppercase tracking-[0.2em] text-ink-700"><span>Original page {c.page !== '—' ? c.page : ''}</span><span className="underline underline-offset-4 group-hover:text-lagoon-700">View full page</span></span>
             </button>
             {c.caption?.map((t) => <p key={t} className="mt-3 border-l border-ink-900/20 pl-3 text-xs italic leading-relaxed text-ink-700">{t}</p>)}
+            <PhotoActions source={ART(c.art)} title={`Tropik Magazine page: ${c.title}`} />
           </div>
         </div>
         <div className="lg:col-span-7">
@@ -64,7 +68,10 @@ function ChapterView({ c, tone, index, total }: { c: Chapter; tone: Tone; index:
       {open && (
         <div role="dialog" aria-modal="true" aria-label={c.title} className="fixed inset-0 z-[90] flex items-center justify-center bg-ink-900/90 p-3" onClick={() => setOpen(false)}>
           <button type="button" className="absolute right-4 top-4 border border-ivory-200/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-ivory-50" onClick={() => setOpen(false)} data-testid="button-close-page">Close</button>
-          <img src={ART(c.art)} alt={c.artAlt} className="max-h-[92dvh] w-auto max-w-full object-contain" />
+          <img src={ART(c.art)} alt={c.artAlt} className="max-h-[70dvh] w-auto max-w-full object-contain sm:max-h-[78dvh]" onClick={(e) => e.stopPropagation()} />
+          <div className="absolute inset-x-0 bottom-0 max-h-[30dvh] overflow-y-auto border-t border-ivory-100/15 bg-ink-900/95 px-4 py-3" onClick={(e) => e.stopPropagation()}>
+            <MediaActions source={canonicalMediaSource(ART(c.art))} title={`Tropik Magazine page: ${c.title}`} tone="dark" compact />
+          </div>
         </div>
       )}
     </section>
@@ -92,7 +99,7 @@ function ArticleView({ a, n }: { a: Article; n: number }) {
       {a.slug === 'carine-nanikian' && (
         <div className="mx-auto max-w-7xl px-6 pt-10">
           <figure className="grid items-end gap-6 md:grid-cols-12">
-            <Art n={10} alt="Tropik Magazine opening page: Carine Nanikian in a treatment chair, captioned I am not my cancer. I am Carine." className="md:col-span-5" />
+            <div className="md:col-span-5"><Art n={10} alt="Tropik Magazine opening page: Carine Nanikian in a treatment chair, captioned I am not my cancer. I am Carine." /><PhotoActions source={ART(10)} title="Tropik Magazine opening page · Carine Nanikian" /></div>
             <figcaption className="md:col-span-7 md:pb-6">
               <p className="font-display text-4xl italic leading-tight text-ink-900 md:text-5xl">“I am not my cancer. <span className={tone.text}>I am Carine.</span>”</p>
               <p className="mt-4 text-[11px] uppercase tracking-[0.24em] text-ink-700">Real stories · Stronger women</p>
@@ -152,6 +159,7 @@ export function CoverWall() {
             <Art n={c.n} alt={`Tropik Magazine cover featuring ${c.name}`} className="aspect-[3/4]" />
             <p className="mt-3 font-display text-lg" translate="no">{c.name}</p>
             <p className="text-[10px] uppercase tracking-[0.22em] text-gold-400">{c.note}</p>
+            <PhotoActions source={ART(c.n)} title={`Tropik Magazine cover · ${c.name}`} tone="dark" />
           </li>
         ))}
       </ul>

@@ -4,7 +4,7 @@ import PendingInvitation from '@/components/network/PendingInvitation';
 import { Helmet } from 'react-helmet-async';
 import { Link, Redirect, Route, Switch, useLocation } from 'wouter';
 import { Show, useAuth, useUser, useClerk } from '@clerk/react';
-import { Award, BadgeCheck, Bell, Building2, Sparkles, UserPlus, Briefcase, HandHeart, Home, LogOut, MessageSquare, Settings, Shield, Users } from 'lucide-react';
+import { Award, BadgeCheck, Bell, Building2, Sparkles, UserPlus, Briefcase, Compass, HandHeart, Home, Newspaper, LogOut, MessageSquare, Settings, Shield, Users } from 'lucide-react';
 import {
   useGetMemberProfile, getGetMemberProfileQueryKey, useGetNetworkState, getGetNetworkStateQueryKey,
 } from '@workspace/api-client-react';
@@ -54,7 +54,7 @@ function Onboard({ title, eyebrow, children }: { title: string; eyebrow: string;
       <div className="relative h-44 overflow-hidden bg-lagoon-900 sm:h-56">
         <img src={universe} alt="" className="h-full w-full object-cover opacity-60" />
         <div className="absolute inset-0 bg-gradient-to-t from-lagoon-900 to-transparent" />
-        <Link href="/member/ecosystem" aria-label="The One Movement International — Ecosystem" className="absolute left-5 top-5 rounded focus-visible:ring-2 focus-visible:ring-gold-500">
+        <Link href="/" aria-label="The One Movement International — Home" className="absolute left-5 top-5 rounded focus-visible:ring-2 focus-visible:ring-gold-500">
           <img src={tomiLogo} alt="The One Movement International" width={640} height={336} className="h-14 w-auto" />
         </Link>
       </div>
@@ -118,27 +118,37 @@ function AppShell({ me, base, children }: Ctx & { children: ReactNode }) {
     <Frame>
       <header className="fixed inset-x-0 top-0 z-40 border-b border-gold-500/25 bg-lagoon-900/95 backdrop-blur" data-testid="network-header">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-2 px-3 sm:px-4">
-          <Link href="/member/ecosystem" className="flex shrink-0 items-center rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500" aria-label="The One Movement International — Ecosystem" data-testid="link-network-home">
+          <Link href="/" className="flex shrink-0 items-center rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500" aria-label="The One Movement International — Home" data-testid="link-network-home">
             <img src={tomiLogo} alt="The One Movement International" width={640} height={336} className="h-auto w-[72px] object-contain sm:w-24" data-testid="img-network-logo" />
           </Link>
           <div className="flex items-center gap-1">
             <LanguageSwitcher />
-            <Link href="/member/membership" aria-label="Membership" className="rounded-full p-2 text-ivory-300 hover:text-gold-400 md:hidden" data-testid="link-membership-mobile"><BadgeCheck className="h-4 w-4" /></Link>
-            <Link href="/member/messages" className="relative rounded-full p-2 text-ivory-200 hover:text-gold-400 md:hidden" aria-label={`Messages${unread ? `, ${unread} need attention` : ''}`}>
+                        <Link href="/member/messages" className="relative rounded-full p-2 text-ivory-200 hover:text-gold-400 md:hidden" aria-label={`Messages${unread ? `, ${unread} need attention` : ''}`}>
               <Bell className="h-5 w-5" />{unread > 0 && <span className="absolute right-0.5 top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-coral-500 px-1 text-[10px] font-bold text-ink-900">{unread}</span>}
             </Link>
-            <Link href="/" className="hidden rounded-full px-3 py-1.5 text-xs text-ivory-300 hover:text-gold-400 sm:inline-flex" data-testid="link-public-site">Public site</Link>
+            <Link href="/" className="hidden rounded-full px-3 py-2 text-xs text-ivory-300 hover:text-gold-400 md:inline-flex" data-testid="link-public-site">Home</Link>
+            <Link href="/ecosystem" className="hidden rounded-full px-3 py-2 text-xs text-ivory-300 hover:text-gold-400 md:inline-flex" data-testid="link-public-explore">Explore</Link>
+            <Link href="/news" className="hidden rounded-full px-3 py-2 text-xs text-ivory-300 hover:text-gold-400 md:inline-flex" data-testid="link-public-news">News</Link>
             <Link href="/member/settings" aria-label="Settings and edit profile" className="rounded-full p-2 text-ivory-300 hover:text-gold-400" data-testid="link-settings"><Settings className="h-4 w-4" /></Link>
             <Link href={`/member/profile/${me.id}`} aria-label="My profile" className="flex items-center gap-1.5 rounded-full p-1 pr-1 sm:pr-3 text-xs text-ivory-200 hover:text-gold-400" data-testid="link-header-profile"><Avatar m={me} size={32} /><span className="hidden sm:inline">My profile</span></Link>
-            <button type="button" onClick={() => signOut({ redirectUrl: basePath || '/' })} aria-label="Sign out" className="rounded-full p-2 text-ivory-300 hover:text-gold-400" data-testid="button-signout"><LogOut className="h-4 w-4" /></button>
+            <button type="button" onClick={() => signOut({ redirectUrl: basePath || '/' })} aria-label="Sign out" title="Sign out" className="inline-flex min-h-[40px] items-center gap-1.5 rounded-full p-2 text-xs text-ivory-300 hover:text-coral-500" data-testid="button-signout"><LogOut className="h-4 w-4" /><span className="hidden lg:inline">Sign out</span></button>
           </div>
         </div>
+        <nav aria-label="Public site navigation" className="border-t border-gold-500/20 bg-lagoon-800 md:hidden" data-testid="nav-public-mobile">
+          <div className="grid h-11 grid-cols-4 text-xs font-semibold text-ivory-100">
+            <Link href="/" className="flex items-center justify-center gap-1.5 hover:text-gold-400" data-testid="link-mobile-home"><Home className="h-3.5 w-3.5 text-gold-400" />Home</Link>
+            <Link href="/member/ecosystem" className="flex items-center justify-center gap-1.5 border-l border-gold-500/20 hover:text-gold-400" data-testid="link-mobile-space"><BadgeCheck className="h-3.5 w-3.5 text-gold-400" />My space</Link>
+            <Link href="/ecosystem" className="flex items-center justify-center gap-1.5 border-x border-gold-500/20 hover:text-gold-400" data-testid="link-mobile-explore"><Compass className="h-3.5 w-3.5 text-gold-400" />Explore</Link>
+            <Link href="/news" className="flex items-center justify-center gap-1.5 hover:text-gold-400" data-testid="link-mobile-news"><Newspaper className="h-3.5 w-3.5 text-gold-400" />News</Link>
+          </div>
+        </nav>
       </header>
-      <div className="mx-auto flex max-w-6xl gap-6 px-0 pb-24 pt-16 sm:px-4 md:pb-10 md:pt-24">
+      <div className="mx-auto flex max-w-6xl gap-6 px-0 pb-24 pt-[6.75rem] sm:px-4 md:pb-10 md:pt-24">
         <aside className="sticky top-24 hidden h-fit w-56 shrink-0 flex-col gap-1 md:flex">
           <Link href={`/member/profile/${me.id}`} className="mb-3 flex items-center gap-3 rounded-2xl border border-sand-200 bg-ivory-50 p-3" data-testid="link-my-profile">
             <Avatar m={me} size={40} /><span className="min-w-0"><span className="block truncate text-sm font-semibold text-ink-900">{me.fullName}</span><span className="block text-xs text-sand-400">{me.followers} followers · {me.following} following</span></span>
           </Link>
+          <Link href="/member/ecosystem" className={`flex items-center gap-3 rounded-full px-4 py-2.5 text-sm ${active('/member/ecosystem') ? 'bg-lagoon-900 font-semibold text-gold-400' : 'text-ink-800 hover:bg-ivory-200'}`} data-testid="nav-my-space"><Compass className="h-4 w-4" />My space</Link>
           {nav.map(({ href, label, icon: I, exact }) => (
             <Link key={href} href={href} className={`flex items-center gap-3 rounded-full px-4 py-2.5 text-sm ${active(href, exact) ? 'bg-lagoon-900 font-semibold text-gold-400' : 'text-ink-800 hover:bg-ivory-200'}`} data-testid={`nav-${label.toLowerCase()}`}>
               <I className="h-4 w-4" />{label}{label === 'Messages' && unread > 0 && <span className="ml-auto rounded-full bg-coral-500 px-1.5 text-[10px] font-bold text-ink-900">{unread}</span>}

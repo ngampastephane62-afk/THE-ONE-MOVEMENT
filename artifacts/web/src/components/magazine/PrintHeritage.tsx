@@ -2,6 +2,8 @@ import { Link } from 'wouter';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { HERITAGE, PRINT_READER } from './editorial-data';
+import PhotoActions from '@/components/editorial/PhotoActions';
+
 
 function Photo({ src, alt, className = '' }: { src: string; alt: string; className?: string }) {
   const [ok, setOk] = useState(true);
@@ -31,23 +33,27 @@ export default function PrintHeritage() {
             <motion.figure style={{ y: y1 }} className="col-span-4">
               <Photo src={HERITAGE(3)} alt="A printed spread from The One Fashion Week magazine" className="aspect-[4/3]" />
               <figcaption className="mt-2 text-[10px] uppercase tracking-[0.22em] text-ivory-300">The One Fashion Week magazine · printed spread</figcaption>
+              <PhotoActions source={HERITAGE(3)} title="The One Fashion Week magazine · printed spread" tone="dark" />
             </motion.figure>
             <motion.figure style={{ y: y2 }} className="col-span-2 self-end">
               <Photo src={HERITAGE(2)} alt="The printed cover of The One Fashion Week magazine on a glass table" className="aspect-[3/4]" />
               <figcaption className="mt-2 text-[10px] uppercase tracking-[0.22em] text-ivory-300">Printed cover</figcaption>
+              <PhotoActions source={HERITAGE(2)} title="Printed cover" tone="dark" />
             </motion.figure>
             <figure className="col-span-3">
               <Photo src={HERITAGE(1)} alt="A reader holding a printed copy of The One Fashion Week magazine" className="aspect-[4/5]" />
               <figcaption className="mt-2 text-[10px] uppercase tracking-[0.22em] text-ivory-300">A reader with The One Fashion Week</figcaption>
+              <PhotoActions source={HERITAGE(1)} title="A reader with The One Fashion Week" tone="dark" />
             </figure>
             <figure className="col-span-3 pt-10">
               <Photo src={HERITAGE(4)} alt="A stack of printed The One Fashion Week magazines" className="aspect-[4/5]" />
               <figcaption className="mt-2 text-[10px] uppercase tracking-[0.22em] text-ivory-300">The print run</figcaption>
+              <PhotoActions source={HERITAGE(4)} title="The print run" tone="dark" />
             </figure>
           </div>
         </div>
         <figure className="mt-20 grid items-center gap-8 border-t border-ivory-50/10 pt-14 md:grid-cols-12">
-          <div className="md:col-span-5"><Photo src={PRINT_READER} alt="Illustration of a reader holding a red Tropik Magazine cover" className="aspect-[4/5]" /></div>
+          <div className="md:col-span-5"><Photo src={PRINT_READER} alt="Illustration of a reader holding a red Tropik Magazine cover" className="aspect-[4/5]" /><PhotoActions source={PRINT_READER} title="Illustration of a reader holding Tropik Magazine" tone="dark" /></div>
           <figcaption className="md:col-span-7">
             <p className="font-display text-[clamp(2rem,4.5vw,3.6rem)] italic leading-tight">A page that is read slowly, by someone who chose to pick it up.</p>
             <p className="mt-4 text-[10px] uppercase tracking-[0.25em] text-ivory-300">Tropik Magazine · visual</p>

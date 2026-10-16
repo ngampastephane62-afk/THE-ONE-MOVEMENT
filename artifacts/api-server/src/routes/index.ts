@@ -10,6 +10,7 @@ import newsArchiveRouter from "./newsArchive";
 import humanitarianRouter from "./humanitarian";
 import professionalRouter from "./professional";
 import editorialEngagementRouter from "./editorialEngagement";
+import partnerIntroductionsRouter from "./partnerIntroductions";
 import officialMeetingsRouter from "./officialMeetings";
 import magazineRouter from "./magazine";
 
@@ -26,6 +27,7 @@ router.use(newsArchiveRouter);
 router.use(humanitarianRouter);
 router.use(professionalRouter);
 router.use(editorialEngagementRouter);
+router.use(partnerIntroductionsRouter);
 router.use(officialMeetingsRouter);
 router.use(magazineRouter);
 

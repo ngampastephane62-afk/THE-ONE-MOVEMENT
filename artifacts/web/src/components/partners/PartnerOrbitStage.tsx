@@ -3,6 +3,7 @@ import { Pause, Play, ChevronLeft, ChevronRight } from 'lucide-react';
 import catalog from '@/assets/media/founder/catalog.json';
 import { usePrefersReducedMotion } from './util';
 import { DRC_AMBASSADOR_SOURCE, OFFICIAL_MEETINGS, meetingImageUrl } from './official-meetings';
+import GalleryActions from '../editorial/GalleryActions';
 
 type PhotoId = keyof typeof catalog.photos;
 
@@ -18,6 +19,10 @@ const SLIDES: Slide[] = [
 const DURATION = 3000;
 const srcOf = (sl: Slide) => sl.filename ? meetingImageUrl(sl.filename)
   : `${import.meta.env.BASE_URL}brand-photos/${catalog.photos[sl.id!].filename}`;
+const galleryItems = SLIDES.map(sl => ({
+  source: sl.filename ? `/api/official-meetings/photos/${sl.filename}` : `/brand-photos/${catalog.photos[sl.id!].filename}`,
+  title: `${sl.people} · ${sl.caption ?? (sl.id ? catalog.photos[sl.id].caption : 'Founder archive')}`,
+}));
 
 export default function PartnerOrbitStage() {
   const reduced = usePrefersReducedMotion();
@@ -172,6 +177,13 @@ export default function PartnerOrbitStage() {
           </div>
         </div>
       </div>
+      {hasVisiblePhoto && (
+        <div className="relative z-10 mx-auto max-w-7xl px-6 pb-10"
+          onPointerDownCapture={() => setPaused(true)} onFocusCapture={() => setPaused(true)}>
+          <GalleryActions items={galleryItems} index={i} tone="dark"
+            onSelect={n => { setTarget(n); setPaused(true); }} />
+        </div>
+      )}
     </section>
   );
 }

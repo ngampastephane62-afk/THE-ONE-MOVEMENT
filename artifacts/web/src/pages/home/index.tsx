@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import BrandPhotoActions from '@/components/editorial/BrandPhotoActions';
 import { type CSSProperties, useState } from 'react';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
@@ -211,6 +212,7 @@ function LegacyHome() {
                 className="w-full aspect-[4/5] max-w-sm lg:ms-auto"
                 duotone
               />
+              <BrandPhotoActions filename="photo-01.jpg" title="Founder archive · global connection" tone="dark" className="w-full max-w-sm lg:ms-auto" />
               <div
                 className="border-t pt-6"
                 style={{ borderColor: 'hsl(188 46% 24%)' }}
@@ -266,6 +268,7 @@ function LegacyHome() {
                 variant="rounded"
                 duotone={false}
               />
+              <BrandPhotoActions filename="photo-07.jpg" title="Founder archive · people in conversation across cultures" />
             </div>
 
             {/* Definition + contrast strip */}

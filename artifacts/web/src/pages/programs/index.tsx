@@ -1,4 +1,6 @@
 import { Helmet } from 'react-helmet-async';
+import PhotoActions from '@/components/editorial/PhotoActions';
+import { programCardMedia } from '@/lib/cover-media';
 import ProgrammeCover from '@/components/programs/ProgrammeCover';
 import { useState } from 'react';
 import { Link } from 'wouter';
@@ -267,12 +269,14 @@ function ProgramCard({
   desc: string;
 }) {
   const [hovered, setHovered] = useState(false);
+  const media = programCardMedia(slug);
 
   return (
+    <div className="flex h-full flex-col">
     <Link
       href={`/programs/${slug}`}
       aria-label={name}
-      className="block h-full focus:outline-none"
+      className="block flex-1 focus:outline-none"
       style={{
         // Gold focus ring via box-shadow (works across all browsers without Tailwind ring utilities)
         boxShadow: 'none',
@@ -296,13 +300,13 @@ function ProgramCard({
       >
         <div className="relative overflow-hidden">
           {slug === 'summit' ? (
-            <ArchivePhoto id="summit-goma" frameClassName="w-full aspect-[4/3]" objectPosition="center 30%" sizes="(min-width: 1024px) 30vw, 92vw" />
+            <ArchivePhoto id="summit-goma" actions={false} frameClassName="w-full aspect-[4/3]" objectPosition="center 30%" sizes="(min-width: 1024px) 30vw, 92vw" />
           ) : slug === 'fashion-week' ? (
-            <ProgrammeCover programme="fashion-week" className="w-full" />
+            <ProgrammeCover programme="fashion-week" actions={false} className="w-full" />
           ) : slug === 'awards' ? (
-            <AwardsPreview className="w-full" />
+            <AwardsPreview actions={false} className="w-full" />
           ) : slug === 'diplomatic-gala' ? (
-            <DiplomaticGalaPreview className="w-full aspect-[4/3]" />
+            <DiplomaticGalaPreview actions={false} className="w-full aspect-[4/3]" />
           ) : slug === 'fashion-night' || slug === 'investment-forum' ? (
             <ProgramSuppliedImage slug={slug} compact frameClassName="w-full aspect-[4/3]" />
           ) : (
@@ -353,5 +357,8 @@ function ProgramCard({
         </div>
       </article>
     </Link>
+    {/* Reactions sit outside the card link so no control is nested in an anchor. */}
+    {media && <div className="px-1"><PhotoActions source={media.source} title={media.title} tone="light" /></div>}
+    </div>
   );
 }

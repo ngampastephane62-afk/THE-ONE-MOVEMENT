@@ -3,6 +3,7 @@ import { Link } from 'wouter';
 import { AlertTriangle } from 'lucide-react';
 import { useGetNetworkState, getGetNetworkStateQueryKey, type NetworkCertification, type NetworkReport } from '@workspace/api-client-react';
 import MediaRequestsAdmin from '@/components/partners/MediaRequestsAdmin';
+import PartnerIntroductionsAdmin from '@/components/partners/PartnerIntroductionsAdmin';
 import NewsArchiveAdmin from '@/components/news/NewsArchiveAdmin';
 import OffersAdmin from '@/components/humanitarian/OffersAdmin';
 import { Empty, ErrorBox, MediaView, PersonLine, Skeleton, btn, btnGhost, card, field, label, useAct } from '@/components/network/kit';
@@ -80,7 +81,7 @@ function ReportRow({ r }: { r: NetworkReport }) {
 }
 
 export default function Admin() {
-  const [tab, setTab] = useState<'certs' | 'reports' | 'members' | 'media' | 'news' | 'offers'>('certs');
+  const [tab, setTab] = useState<'certs' | 'reports' | 'members' | 'media' | 'intros' | 'news' | 'offers'>('certs');
   const q = useGetNetworkState({}, { query: { queryKey: getGetNetworkStateQueryKey({}) } });
   const { run, pending } = useAct();
   if (q.isLoading) return <div className="p-3 md:p-0"><Skeleton /></div>;
@@ -97,7 +98,7 @@ export default function Admin() {
         <p className="mt-1 flex items-start gap-1.5 text-sm text-ink-700"><AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-gold-600" />Approval applies to one role and programme. Non-commercial roles activate on approval; commercial roles (partner, sponsor, designer, exhibitor or any package) need a signed agreement, and the badge activates only once payment is confirmed. Payment alone never grants a badge.</p>
       </header>
       <div className="flex gap-1 overflow-x-auto rounded-full bg-ivory-200 p-1" role="tablist">
-        {([['certs', `Certifications (${pendingCerts.length})`], ['reports', `Reports (${open.length})`], ['members', `Suspended (${suspended.length})`], ['media', 'Media requests'], ['news', 'News'], ['offers', 'Humanitarian offers']] as const).map(([id, l]) => (
+        {([['certs', `Certifications (${pendingCerts.length})`], ['reports', `Reports (${open.length})`], ['members', `Suspended (${suspended.length})`], ['media', 'Media requests'], ['intros', 'Introductions'], ['news', 'News'], ['offers', 'Humanitarian offers']] as const).map(([id, l]) => (
           <button key={id} role="tab" aria-selected={tab === id} onClick={() => setTab(id)} className={`flex-1 whitespace-nowrap rounded-full px-3 py-1.5 text-xs ${tab === id ? 'bg-ivory-50 font-semibold text-lagoon-900 shadow-sm' : 'text-ink-700'}`}>{l}</button>
         ))}
       </div>
@@ -106,6 +107,7 @@ export default function Admin() {
       {tab === 'reports' && (reports.length === 0 ? <Empty title="No reports" body="Member reports will appear here." /> :
         <ul className="flex flex-col gap-3">{[...open, ...reports.filter((r) => r.resolved)].map((r) => <ReportRow key={r.id} r={r} />)}</ul>)}
       {tab === 'media' && <MediaRequestsAdmin />}
+      {tab === 'intros' && <PartnerIntroductionsAdmin />}
       {tab === 'news' && <NewsArchiveAdmin />}
       {tab === 'offers' && <OffersAdmin />}
       {tab === 'members' && (suspended.length === 0 ? <Empty title="No suspended members" body="Members suspended through moderation are listed here." /> :

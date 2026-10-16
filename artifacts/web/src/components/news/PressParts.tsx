@@ -3,6 +3,22 @@ import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ChevronLeft, ChevronRight, X, Maximize2 } from 'lucide-react';
 import { assetUrl, initials } from '@/lib/press';
 import { cn } from '@/lib/utils';
+import MediaActions from '@/components/editorial/MediaActions';
+import { canonicalMediaSource, deepLinkedIndex } from '@/lib/media-share';
+
+/** Stable engagement identity of a published capture (/api/news/<id>/assets/<n>). */
+export const captureSource = (src: string) => canonicalMediaSource(assetUrl(src));
+
+/** Opens the viewer at the capture named by a ?media= share link, once. */
+export function useCaptureDeepLink(images: string[], open: (i: number) => void) {
+  const key = images.join('|');
+  useEffect(() => {
+    if (!key) return;
+    const k = deepLinkedIndex(key.split('|').map(captureSource));
+    if (k >= 0) open(k);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
+}
 
 /** Publisher logo plate — ivory card so dark and light logos both read. */
 export function PublisherMark({ outlet, logoUrl, size = 'md', className }: { outlet: string; logoUrl: string | null; size?: 'sm' | 'md' | 'lg'; className?: string }) {
@@ -90,6 +106,11 @@ export function EvidenceViewer({ images, outlet, title, index, onIndex, onClose 
                   <img src={assetUrl(src)} alt="" className="h-full w-full object-contain" loading="lazy" />
                 </button>
               ))}
+            </div>
+          )}
+          {index !== null && images[index] && (
+            <div className="mx-auto w-full max-w-3xl border-t border-gold-500/20 px-4 py-3" onKeyDown={(e) => e.stopPropagation()}>
+              <MediaActions key={images[index]} source={captureSource(images[index])} title={`${outlet} — ${title}, capture ${index + 1}`} tone="dark" compact />
             </div>
           )}
           <p className="px-4 pb-3 text-center text-[11px] text-ivory-300/80">Use the arrow keys to move between captures. Any social counts visible are a dated snapshot, not overall reach.</p>

@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Handshake } from 'lucide-react';
+import LeaderLine from './LeaderLine';
+import IntroductionDialog from './IntroductionDialog';
 import { historyLogo, type HistoryPartner } from '@/lib/partner-history';
 
 function usePerPage() {
@@ -15,8 +17,10 @@ function usePerPage() {
 
 export function LogoTile({ p, tone = 'light', large = false }: { p: HistoryPartner; tone?: 'light' | 'dark'; large?: boolean }) {
   const [failed, setFailed] = useState(p.logo === false);
+  const [intro, setIntro] = useState(false);
+  const dark = tone === 'dark';
   return (
-    <figure id={p.slug} className="flex h-full scroll-mt-28 flex-col" data-testid={`history-partner-${p.id}`}>
+    <figure id={p.slug} className="flex h-full w-full scroll-mt-28 flex-col" data-testid={`history-partner-${p.id}`}>
       <div className={`relative flex w-full shrink-0 ${large ? 'aspect-[16/9]' : 'aspect-[4/3]'} items-center justify-center overflow-hidden rounded-md ${tone === 'dark' ? 'bg-ivory-50' : 'bg-white/70 ring-1 ring-sand-200'} shadow-[0_18px_40px_-28px_hsl(187_40%_12%/0.45)]`}>
         {failed ? (
           <span className="absolute inset-0 flex items-center justify-center p-[10%] text-center font-display text-xl uppercase leading-tight tracking-wide text-ink-900 sm:text-2xl" data-testid={`text-history-name-${p.id}`}>{p.name}</span>
@@ -25,11 +29,20 @@ export function LogoTile({ p, tone = 'light', large = false }: { p: HistoryPartn
             className="absolute inset-0 h-full w-full object-contain p-[12%]" data-testid={`img-history-logo-${p.id}`} />
         )}
       </div>
-      <figcaption className={`mt-3 text-xs font-medium leading-snug ${tone === 'dark' ? 'text-ivory-200' : 'text-ink-800'}`}>
+      <figcaption className={`mt-3 text-xs font-medium leading-snug ${dark ? 'text-ivory-200' : 'text-ink-800'}`}>
         {p.name}
         {p.description && <span className="mt-1 block font-normal opacity-80">{p.description}</span>}
         {p.sourceUrl && <a href={p.sourceUrl} target="_blank" rel="noreferrer" className="mt-1 inline-flex min-h-11 items-center font-semibold underline underline-offset-4">{p.linkLabel}</a>}
       </figcaption>
+      <div className={`mt-3 flex flex-1 flex-col border-t pt-3 ${dark ? 'border-ivory-100/15' : 'border-sand-300'}`}>
+        <LeaderLine partnerId={p.id} tone={tone} />
+        <button type="button" onClick={() => setIntro(true)} aria-haspopup="dialog"
+          className={`mt-auto inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border px-3 text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 ${dark ? 'border-gold-400/60 text-gold-400 hover:bg-gold-400 hover:text-ink-900' : 'border-lagoon-900/30 text-lagoon-900 hover:bg-lagoon-900 hover:text-ivory-50'}`}
+          data-testid={`button-intro-${p.id}`}>
+          <Handshake className="h-3.5 w-3.5" aria-hidden /><span>Request an introduction</span><span className="sr-only" translate="no">{` · ${p.name}`}</span>
+        </button>
+      </div>
+      {intro && <IntroductionDialog partner={p} open={intro} onOpenChange={setIntro} />}
     </figure>
   );
 }
@@ -58,7 +71,7 @@ export default function LogoCarousel({ items, label, tone = 'light' }: { items: 
             <ul key={pi} aria-hidden={pi !== page} inert={pi !== page ? true : undefined}
               aria-label={label}
               className="grid w-full shrink-0 gap-4 sm:gap-6" style={{ gridTemplateColumns: `repeat(${per}, minmax(0,1fr))` }}>
-              {items.slice(pi * per, pi * per + per).map((p) => <li key={p.id}><LogoTile p={p} tone={tone} /></li>)}
+              {items.slice(pi * per, pi * per + per).map((p) => <li key={p.id} className="flex"><LogoTile p={p} tone={tone} /></li>)}
             </ul>
           ))}
         </div>

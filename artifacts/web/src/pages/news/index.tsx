@@ -9,8 +9,11 @@ import SectionHeading from '@/components/SectionHeading';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { getPublishedArticles } from '@/lib/news-data';
-import { PRESS_CATEGORY_LABELS, captureCount, outboundLink } from '@/lib/press';
-import { CaptureStack, EvidenceViewer, PublisherMark } from '@/components/news/PressParts';
+import { PRESS_CATEGORY_LABELS, assetUrl, captureCount, outboundLink } from '@/lib/press';
+import { CaptureStack, EvidenceViewer, PublisherMark, useCaptureDeepLink } from '@/components/news/PressParts';
+import PhotoSetActions from '@/components/editorial/PhotoSetActions';
+import NewsVideo from '@/components/editorial/NewsVideo';
+import { EDITORIAL_VIDEO_NEWS, formatNewsDate } from '@/lib/editorial-news';
 
 const TITLE = 'In the Press — Ten Years of Coverage | The One Movement International';
 const DESC = 'The historical press archive of The One Movement International: publisher coverage of the Movement, its Founder and CEO, and its programmes, with the original captures preserved.';
@@ -20,6 +23,7 @@ const focusRing = 'focus-visible:outline-none focus-visible:ring-2 focus-visible
 function LedgerEntry({ e, n }: { e: PressEntry; n: number }) {
   const [idx, setIdx] = useState<number | null>(null);
   const link = outboundLink(e);
+  useCaptureDeepLink(e.evidenceUrls, setIdx);
   return (
     <li className="reveal-safe grid grid-cols-1 gap-8 border-t border-gold-500/20 py-12 md:grid-cols-[11rem_1fr_15rem] md:gap-10" data-testid={`card-coverage-${e.id}`}>
       <div className="flex items-start gap-4 md:flex-col">
@@ -46,6 +50,7 @@ function LedgerEntry({ e, n }: { e: PressEntry; n: number }) {
       </div>
       <div>
         <CaptureStack images={e.evidenceUrls} outlet={e.outlet} onOpen={setIdx} testId={`button-open-captures-${e.id}`} />
+        {e.evidenceUrls.length > 0 && <PhotoSetActions tone="dark" label="Choose a capture to react to" items={e.evidenceUrls.map((src, i) => ({ src: assetUrl(src), title: `${e.outlet} — ${e.title}, capture ${i + 1}` }))} />}
       </div>
       <EvidenceViewer images={e.evidenceUrls} outlet={e.outlet} title={e.title} index={idx} onIndex={setIdx} onClose={() => setIdx(null)} />
     </li>
@@ -105,6 +110,33 @@ export default function News() {
           )}
         </div>
       </HeroSurface>
+
+      <section className="w-full bg-[hsl(30_40%_97%)] py-section-md" aria-labelledby="latest-heading">
+        <div className="mx-auto max-w-7xl px-6">
+          <p id="latest-heading" className="text-eyebrow text-gold-600">News & announcements</p>
+          {EDITORIAL_VIDEO_NEWS.map((n) => (
+            <article key={n.slug} className="mt-8 grid gap-10 border-t border-gold-500/30 pt-10 md:grid-cols-[18rem_1fr] md:items-center lg:gap-16" data-testid={`card-news-${n.slug}`}>
+              <NewsVideo item={n} compact />
+              <div className="min-w-0">
+                <p className="text-eyebrow text-[hsl(338_55%_40%)]">{n.kicker} · <span>Shared on</span> <time dateTime={n.publishedAt}>{formatNewsDate(n.publishedAt)}</time></p>
+                <h2 className="mt-4 text-3xl leading-tight text-lagoon-900 sm:text-4xl" style={{ fontFamily: 'var(--font-display)' }}>
+                  <Link href={`/news/${n.slug}`} className={cn('rounded-sharp hover:text-[hsl(338_55%_40%)] transition-colors', focusRing)} data-testid={`link-news-${n.slug}`}>{n.title}</Link>
+                </h2>
+                <p className="mt-5 max-w-2xl text-lg leading-relaxed text-lagoon-800">{n.standfirst}</p>
+                <div className="mt-8 flex flex-wrap items-center gap-5">
+                  <a href={n.source.url} target="_blank" rel="noopener noreferrer"
+                    className={cn(buttonVariants({ size: 'lg' }), 'max-w-full whitespace-normal text-center', focusRing)}
+                    data-testid={`link-source-${n.slug}`}>
+                    <span>View EMAAR’s official page</span><ArrowUpRight className="ml-2 h-4 w-4 shrink-0" aria-hidden />
+                    <span className="sr-only">(opens in a new tab)</span>
+                  </a>
+                  <Link href={`/news/${n.slug}`} className={cn('text-sm font-semibold text-lagoon-800 underline underline-offset-4', focusRing)} data-testid={`link-read-${n.slug}`}>View announcement</Link>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
 
       <section className="w-full bg-ivory-50 py-section-md">
         <div className="mx-auto grid max-w-7xl gap-10 px-6 md:grid-cols-3">

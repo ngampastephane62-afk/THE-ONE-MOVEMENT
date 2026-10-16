@@ -3,6 +3,7 @@ import { Link } from 'wouter';
 import { ArrowUpRight, BadgeCheck, BookOpen, Building2, Compass, Handshake, Lock, MessageSquare, Newspaper, Users } from 'lucide-react';
 import { useGetProfessionalState, getGetProfessionalStateQueryKey } from '@workspace/api-client-react';
 import { ErrorBox, Skeleton, card } from '@/components/network/kit';
+import EcosystemNews from '@/components/network/EcosystemNews';
 import { useMe } from './ctx';
 
 type Need = 'free' | 'paid' | 'business';
@@ -47,8 +48,8 @@ export default function Ecosystem() {
   const status = founder ? t('Founder access', 'Accès fondateur') : active ? (m!.tier === 'business' ? 'Business / Sponsor' : 'Professional') : t('Free member', 'Membre gratuit');
 
   return (
-    <div translate="no" className="flex flex-col gap-5 px-3 pt-4 md:px-0 md:pt-0" data-testid="page-ecosystem">
-      <header className="flex flex-wrap items-end justify-between gap-3">
+    <div className="flex flex-col gap-5 px-3 pt-4 md:px-0 md:pt-0" data-testid="page-ecosystem">
+      <header translate="no" className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="text-eyebrow text-gold-700">{t('TOMI ECOSYSTEM', 'ÉCOSYSTÈME TOMI')}</p>
           <h1 className="font-display text-2xl text-ink-900">{t('Everything open to you', 'Tout ce qui vous est ouvert')}</h1>
@@ -58,7 +59,9 @@ export default function Ecosystem() {
         </span>
       </header>
 
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <EcosystemNews limit={2} />
+      <Link translate="no" href="/ecosystem" className="inline-flex min-h-[44px] items-center gap-2 self-start rounded-full bg-lagoon-900 px-4 text-xs font-semibold text-gold-400" data-testid="link-explore-public">{t('Explore the public ecosystem — you stay signed in', 'Explorer l’écosystème public — vous restez connecté')}<ArrowUpRight className="h-3.5 w-3.5" /></Link>
+      <div translate="no" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {SERVICES.map((s) => {
           const ok = open(s.need);
           const [title, body] = fr ? s.fr : s.en;
@@ -80,7 +83,7 @@ export default function Ecosystem() {
         })}
       </div>
 
-      <p className="rounded-xl border border-sand-300 p-3 text-xs leading-relaxed text-ink-700" data-testid="text-ecosystem-rules">
+      <p translate="no" className="rounded-xl border border-sand-300 p-3 text-xs leading-relaxed text-ink-700" data-testid="text-ecosystem-rules">
         {t('A paid membership unlocks services only. It does not replace the 10 verified referral followers required to publish, licence approval, or identity certification.', 'Une adhésion payante débloque uniquement des services. Elle ne remplace ni les 10 abonnés parrainés vérifiés requis pour publier, ni l’approbation de licence, ni la certification d’identité.')}
       </p>
     </div>

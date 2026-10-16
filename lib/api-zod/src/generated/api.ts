@@ -8,6 +8,130 @@
 import * as zod from 'zod';
 
 
+export const createPartnerIntroductionBodyPartnerIdMax = 44;
+
+export const createPartnerIntroductionBodyContactNameMax = 120;
+
+export const createPartnerIntroductionBodyOrganizationNameMax = 160;
+
+export const createPartnerIntroductionBodyCountryMax = 90;
+
+export const createPartnerIntroductionBodyEmailMin = 3;
+export const createPartnerIntroductionBodyEmailMax = 254;
+
+export const createPartnerIntroductionBodyMessageMin = 10;
+export const createPartnerIntroductionBodyMessageMax = 800;
+
+export const createPartnerIntroductionBodyWebsiteMax = 200;
+
+
+
+export const CreatePartnerIntroductionBody = zod.object({
+  "partnerId": zod.number().int().min(1).max(createPartnerIntroductionBodyPartnerIdMax),
+  "contactName": zod.string().min(1).max(createPartnerIntroductionBodyContactNameMax),
+  "organizationName": zod.string().min(1).max(createPartnerIntroductionBodyOrganizationNameMax),
+  "country": zod.string().min(1).max(createPartnerIntroductionBodyCountryMax),
+  "email": zod.string().min(createPartnerIntroductionBodyEmailMin).max(createPartnerIntroductionBodyEmailMax),
+  "message": zod.string().min(createPartnerIntroductionBodyMessageMin).max(createPartnerIntroductionBodyMessageMax),
+  "consentAccepted": zod.boolean(),
+  "website": zod.string().max(createPartnerIntroductionBodyWebsiteMax).optional()
+})
+
+export const CreatePartnerIntroductionResponse = zod.object({
+  "id": zod.number().int(),
+  "status": zod.string(),
+  "message": zod.string()
+})
+
+
+export const GetPartnerIntroductionsResponseItem = zod.object({
+  "id": zod.number().int(),
+  "partnerId": zod.number().int(),
+  "partnerName": zod.string(),
+  "leaderName": zod.string().nullable(),
+  "leaderRole": zod.string().nullable(),
+  "contactName": zod.string(),
+  "email": zod.string(),
+  "organizationName": zod.string(),
+  "country": zod.string(),
+  "message": zod.string(),
+  "status": zod.enum(['new', 'reviewing', 'replied', 'closed']),
+  "createdAt": zod.string()
+})
+export const GetPartnerIntroductionsResponse = zod.array(GetPartnerIntroductionsResponseItem)
+
+
+export const UpdatePartnerIntroductionParams = zod.object({
+  "id": zod.coerce.number().int()
+})
+
+export const UpdatePartnerIntroductionBody = zod.object({
+  "status": zod.enum(['new', 'reviewing', 'replied', 'closed'])
+})
+
+export const UpdatePartnerIntroductionResponse = zod.object({
+  "id": zod.number().int(),
+  "partnerId": zod.number().int(),
+  "partnerName": zod.string(),
+  "leaderName": zod.string().nullable(),
+  "leaderRole": zod.string().nullable(),
+  "contactName": zod.string(),
+  "email": zod.string(),
+  "organizationName": zod.string(),
+  "country": zod.string(),
+  "message": zod.string(),
+  "status": zod.enum(['new', 'reviewing', 'replied', 'closed']),
+  "createdAt": zod.string()
+})
+
+
+export const GetMediaEngagementQueryParams = zod.object({
+  "source": zod.coerce.string()
+})
+
+export const GetMediaEngagementResponse = zod.object({
+  "likes": zod.number().int(),
+  "liked": zod.boolean(),
+  "comments": zod.array(zod.object({
+  "id": zod.number().int(),
+  "author": zod.string(),
+  "memberId": zod.number().int(),
+  "text": zod.string(),
+  "createdAt": zod.string(),
+  "canDelete": zod.boolean()
+}))
+})
+
+
+export const UpdateMediaEngagementQueryParams = zod.object({
+  "source": zod.coerce.string()
+})
+
+export const updateMediaEngagementBodyTextMax = 1500;
+
+
+
+export const UpdateMediaEngagementBody = zod.object({
+  "action": zod.enum(['like', 'comment', 'delete', 'moderate']),
+  "accepted": zod.boolean().optional(),
+  "text": zod.string().min(1).max(updateMediaEngagementBodyTextMax).optional(),
+  "id": zod.number().int().optional()
+})
+
+export const UpdateMediaEngagementResponse = zod.object({
+  "likes": zod.number().int(),
+  "liked": zod.boolean(),
+  "comments": zod.array(zod.object({
+  "id": zod.number().int(),
+  "author": zod.string(),
+  "memberId": zod.number().int(),
+  "text": zod.string(),
+  "createdAt": zod.string(),
+  "canDelete": zod.boolean()
+}))
+})
+
+
 export const DownloadMagazineKitResponse = zod.unknown()
 
 

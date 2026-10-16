@@ -16,7 +16,8 @@ export default function HomeReelStrip() {
   const videos = useRef<(HTMLVideoElement | null)[]>([]);
   const [active, setActive] = useState(requested);
   const [visible, setVisible] = useState(false);
-  const [playing, setPlaying] = useState(true);
+  // A shared reel link opens paused so the visitor lands on that reel.
+  const [playing, setPlaying] = useState(() => !new URLSearchParams(window.location.search).get('video')?.startsWith('home-reel-'));
   const [sound, setSound] = useState(false);
   const [blocked, setBlocked] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -32,6 +33,9 @@ export default function HomeReelStrip() {
     };
     updateMotion();
     motion.addEventListener('change', updateMotion);
+    if (new URLSearchParams(window.location.search).get('video')?.startsWith('home-reel-') || window.location.hash.startsWith('#video-home-reel-')) {
+      window.setTimeout(() => node.scrollIntoView({ block: 'center', behavior: motion.matches ? 'auto' : 'smooth' }), 120);
+    }
     const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), { threshold: 0.1 });
     observer.observe(node);
     return () => { observer.disconnect(); motion.removeEventListener('change', updateMotion); };
@@ -72,7 +76,7 @@ export default function HomeReelStrip() {
   const controlClass = 'flex h-10 w-10 items-center justify-center rounded-full border border-gold-500/50 bg-lagoon-900/90 text-gold-400 hover:bg-lagoon-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-400 focus-visible:outline-offset-2';
 
   return (
-    <div ref={container} className="w-full max-w-sm" data-testid="home-reel-strip" role="region" aria-roledescription="carousel" aria-label="The One Movement — three reels">
+    <div ref={container} id={`video-home-reel-${reels[active]?.number ?? 1}`} className="w-full max-w-sm scroll-mt-28" data-testid="home-reel-strip" role="region" aria-roledescription="carousel" aria-label="The One Movement — three reels">
       <div ref={carouselRef} className="overflow-hidden rounded-sharp border border-gold-500/30 bg-lagoon-800 shadow-xl">
         <div className="flex touch-pan-y">
           {reels.map((reel, index) => (
@@ -109,7 +113,8 @@ export default function HomeReelStrip() {
         </div>
       </div>
       <p className="mt-3 text-xs leading-relaxed text-ivory-200">The One Movement · Reel {active + 1} / 3</p>
-      <div className="mt-4 bg-ivory-100 p-3 text-ink-900">
+      {/* Any interaction with reactions stops auto-advance so a comment draft never moves to another reel. */}
+      <div className="mt-4 bg-ivory-100 p-3 text-ink-900" onFocusCapture={() => setPlaying(false)} onPointerDownCapture={() => setPlaying(false)}>
         <VideoActions key={active} videoId={`home-reel-${reels[active]?.number ?? 1}`} title={`The One Movement — reel ${active + 1}`} />
       </div>
       {(blocked || failed) && <p role="status" className="mt-2 text-xs text-ivory-200">{failed ? 'This reel could not load. Try the next reel or reload the page.' : 'Tap play to start the reels.'}</p>}

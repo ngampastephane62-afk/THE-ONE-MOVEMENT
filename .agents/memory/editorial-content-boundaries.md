@@ -9,6 +9,18 @@ Keep Tropik's media distribution catalogue in Media and partner profiles in Part
 
 **How to apply:** Short conceptual descriptions and links are appropriate elsewhere, but do not duplicate the media catalogue, partner galleries or entire report sections.
 
+Published editorial photographs and videos throughout the platform must support persistent likes, comments and media-specific sharing. Existing member posts keep their own post reactions; logos, interface icons, decorative backgrounds and unpublished private proposals are not public editorial media.
+
+**Why:** The owner explicitly requested commenting, liking and sharing on all platform photos and videos, rather than only the social feed.
+
+**How to apply:** Cover individual images inside galleries and readers as well as standalone players. Keep stable, approved media identities across different presentations and share links. Pause automatic slideshows while visitors interact or write comments so drafts cannot disappear or change target.
+
+External announcements are information relays, not TOMI concepts or programmes. The Burj Khalifa pink-lighting announcement belongs to EMAAR and is titled “EMAAR October Rose Showcase.”
+
+**Why:** The owner corrected the previous TOMI association: “c’est juste une annonce que nous prenons d’Imar” and “ce n’est pas le concept de The One Movement.”
+
+**How to apply:** Use short source-labelled announcements with a direct link to the original publisher’s official page. Do not give external campaigns a TOMI byline, claim TOMI supplied or owns their footage, or add TOMI initiatives, medical recommendations or fundraising narratives. Distinguish the date shared here from an unknown filming or original publication date.
+
 The Founder explicitly requires the uploaded MONUSCO campaign film, CANAL+ teaser and TV5MONDE video to appear directly with their respective subjects on the same page, in one consecutive video collection.
 
 **Why:** The Founder repeated this requirement after screenshots showed “video pending” notices and broadcaster descriptions without the uploaded clips. Having a video somewhere else on the site does not satisfy it.

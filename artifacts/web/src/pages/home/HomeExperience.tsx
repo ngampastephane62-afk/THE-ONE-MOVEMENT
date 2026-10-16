@@ -1,4 +1,6 @@
 import { Helmet } from 'react-helmet-async';
+import PhotoActions from '@/components/editorial/PhotoActions';
+import { programCardMedia } from '@/lib/cover-media';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
 import GoldThread from '@/components/GoldThread';
@@ -160,14 +162,15 @@ export default function HomeExperience() {
               <Reveal key={program.slug} delay={index * 90}>
                 <article className="tomi-editorial-card group overflow-hidden rounded-sharp border border-sand-200 bg-ivory-100">
                   {program.slug === 'summit' ? (
-                    <ArchivePhoto id="summit-goma" frameClassName="aspect-[4/3] w-full" objectPosition="center 30%" sizes="(min-width: 768px) 30vw, 92vw" />
+                    <ArchivePhoto id="summit-goma" actions={false} frameClassName="aspect-[4/3] w-full" objectPosition="center 30%" sizes="(min-width: 768px) 30vw, 92vw" />
                   ) : program.slug === 'awards' ? (
-                    <AwardsPreview className="aspect-[4/3] w-full" />
+                    <AwardsPreview actions={false} className="aspect-[4/3] w-full" />
                   ) : program.slug === 'diplomatic-gala' ? (
-                    <DiplomaticGalaPreview className="aspect-[4/3] w-full" />
+                    <DiplomaticGalaPreview actions={false} className="aspect-[4/3] w-full" />
                   ) : (
                     <ProgramVision name={program.name} className="aspect-[4/3] w-full" />
                   )}
+                  {programCardMedia(program.slug) && <div className="px-6"><PhotoActions source={programCardMedia(program.slug)!.source} title={programCardMedia(program.slug)!.title} /></div>}
                   <div className="p-6">
                     <h3 className="font-display text-lg text-ink-900">{program.name}</h3>
                     <p className="mt-3 text-sm leading-relaxed text-ink-700">{program.description}</p>

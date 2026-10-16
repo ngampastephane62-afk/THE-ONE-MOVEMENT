@@ -7,7 +7,7 @@
 - [Browser media verification](browser-media-verification.md) — test Chromium may lack H.264/AAC; check codec support before treating a valid MP4 as broken.
 - [Curated reel storage](curated-reel-storage.md) — avoid cancelling cloud SDK streams before their HTTP response; aborted video requests can crash the server.
 - [API code generation](api-codegen-schemas.md) — named request schemas prevent export collisions; check generated string formats against the installed Zod major.
-- [Member social network](member-social-network.md) — member posts, follows and messaging; CEO-approved event certifications, programme packages and eastern DRC donations.
+- [Member social network](member-social-network.md) — connected public discovery and personal news; social connections, official certifications, programme packages and eastern DRC donations.
 - [Stripe connector runtime](stripe-connector-runtime.md) — proxy authentication differs from legacy secret-key examples; preserve StripeSync's installed migration directory.
 - [Project control and Tropik licensing](project-control.md) — owner approval for releases and connected-account changes; verify ownership and licensing rather than infer them.
 - [Dependency remediation](dependency-remediation.md) — remove unnecessary vulnerable chains rather than suppress advisories; verify production-only auth transport with loopback tests.

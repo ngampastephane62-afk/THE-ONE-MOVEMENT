@@ -7,7 +7,8 @@ import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
 import { cn } from '@/lib/utils';
 import { PRESS_CATEGORY_LABELS, assetUrl, captureCount, hostOf, outboundLink } from '@/lib/press';
-import { EvidenceViewer, PublisherMark } from '@/components/news/PressParts';
+import { EvidenceViewer, PublisherMark, useCaptureDeepLink } from '@/components/news/PressParts';
+import PhotoActions from '@/components/editorial/PhotoActions';
 
 const focusRing = 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2';
 
@@ -16,6 +17,7 @@ export default function CoverageDetail() {
   const q = useGetNewsArchive({ query: { queryKey: getGetNewsArchiveQueryKey(), staleTime: 30000, refetchOnMount: true } });
   const [idx, setIdx] = useState<number | null>(null);
   const e = q.data?.find((x) => String(x.id) === id);
+  useCaptureDeepLink(e?.evidenceUrls ?? [], setIdx);
 
   if (q.isLoading) {
     return <div className="mx-auto max-w-5xl px-6 py-section-lg" aria-busy="true"><div className="h-6 w-48 animate-pulse bg-sand-100" /><div className="mt-6 h-14 w-3/4 animate-pulse bg-sand-100" /><div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3">{[0, 1, 2].map((i) => <div key={i} className="aspect-[3/4] animate-pulse bg-sand-100" />)}</div></div>;
@@ -104,6 +106,7 @@ export default function CoverageDetail() {
                     <span className="block aspect-[3/4] overflow-hidden"><img src={assetUrl(src)} alt={`${e.outlet} coverage, capture ${i + 1}`} loading="lazy" className="h-full w-full object-contain" /></span>
                     <span className="mt-2 block text-left text-[11px] uppercase tracking-wider text-lagoon-800">Screen {i + 1} of {e.evidenceUrls.length}</span>
                   </button>
+                  <PhotoActions source={assetUrl(src)} title={`${e.outlet} — ${e.title}, capture ${i + 1}`} tone="dark" />
                 </li>
               ))}
             </ol>

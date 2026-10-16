@@ -5,6 +5,83 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+export interface PartnerIntroductionInput {
+  /**
+     * @minimum 1
+     * @maximum 44
+     */
+  partnerId: number;
+  /**
+     * @minLength 1
+     * @maxLength 120
+     */
+  contactName: string;
+  /**
+     * @minLength 1
+     * @maxLength 160
+     */
+  organizationName: string;
+  /**
+     * @minLength 1
+     * @maxLength 90
+     */
+  country: string;
+  /**
+     * @minLength 3
+     * @maxLength 254
+     */
+  email: string;
+  /**
+     * @minLength 10
+     * @maxLength 800
+     */
+  message: string;
+  consentAccepted: boolean;
+  /** @maxLength 200 */
+  website?: string;
+}
+
+export type PartnerIntroductionStatusInputStatus = typeof PartnerIntroductionStatusInputStatus[keyof typeof PartnerIntroductionStatusInputStatus];
+
+
+export const PartnerIntroductionStatusInputStatus = {
+  new: 'new',
+  reviewing: 'reviewing',
+  replied: 'replied',
+  closed: 'closed',
+} as const;
+
+export interface PartnerIntroductionStatusInput {
+  status: PartnerIntroductionStatusInputStatus;
+}
+
+export type PartnerIntroductionStatus = typeof PartnerIntroductionStatus[keyof typeof PartnerIntroductionStatus];
+
+
+export const PartnerIntroductionStatus = {
+  new: 'new',
+  reviewing: 'reviewing',
+  replied: 'replied',
+  closed: 'closed',
+} as const;
+
+export interface PartnerIntroduction {
+  id: number;
+  partnerId: number;
+  partnerName: string;
+  /** @nullable */
+  leaderName: string | null;
+  /** @nullable */
+  leaderRole: string | null;
+  contactName: string;
+  email: string;
+  organizationName: string;
+  country: string;
+  message: string;
+  status: PartnerIntroductionStatus;
+  createdAt: string;
+}
+
 export interface MagazineSubmissionInput {
   /**
      * @minLength 8
@@ -963,6 +1040,20 @@ export interface DetailedHealthStatus {
   status: string;
   database: string;
 }
+
+export type CreatePartnerIntroduction201 = {
+  id: number;
+  status: string;
+  message: string;
+};
+
+export type GetMediaEngagementParams = {
+source: string;
+};
+
+export type UpdateMediaEngagementParams = {
+source: string;
+};
 
 export type ProfessionalAction200 = {
   url?: string;

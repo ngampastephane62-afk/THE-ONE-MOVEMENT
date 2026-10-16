@@ -4,6 +4,9 @@ import { db, editorialLikes as likes, editorialComments as comments, ecosystemMe
 import { and, desc, eq, sql } from "drizzle-orm";
 import { UpdateVideoEngagementBody } from "@workspace/api-zod";
 import { actor, networkAuth, networkWrite, requireFounder, NetworkError } from "../services/networkAuth";
+import { editorialPhotoId } from "../services/editorialMedia";
+import { objectFile } from "../services/networkFiles";
+import { sendBufferedVideo } from "../services/bufferedVideo";
 const router = Router();
 // Stable editorial IDs; no unbounded arbitrary-comment namespaces.
 export const EDITORIAL_VIDEO_IDS = new Set([
@@ -13,6 +16,9 @@ export const EDITORIAL_VIDEO_IDS = new Set([
   "movement-reel", "fashion-week-reel", "awards-reel",
   "goma-donation", "previous-editions", "home-reel-1", "home-reel-2", "home-reel-3",
   "fashion-archive-reel", "institutional-meeting", "impact-community",
+  "pink-october-burj-khalifa",
+  "documentary-teaser-01", "documentary-teaser-02", "documentary-teaser-03", "documentary-teaser-04",
+  "fashion-week-tv5",
 ]);
 function videoId(value: unknown) {
   const id = String(value);
@@ -29,18 +35,20 @@ async function engagement(id: string, memberId?: number, founder = false) {
     .orderBy(desc(comments.id)).limit(100);
   return { likes: counts?.count ?? 0, liked: own.length > 0, comments: rows.reverse().map(row => ({ ...row, createdAt: row.createdAt.toISOString(), canDelete: founder || row.memberId === memberId })) };
 }
-router.get("/editorial/videos/:videoId/engagement", async (req, res, next) => {
+router.get(["/editorial/videos/:videoId/engagement", "/editorial/media/engagement"], async (req, res, next) => {
   const complete = async () => {
     try {
       const who = res.locals.actor;
-      res.set("Cache-Control", "no-store").json(await engagement(videoId(req.params.videoId), who?.member?.id, who?.founder));
+      const id = req.params.videoId ? videoId(req.params.videoId) : await editorialPhotoId(req.query.source, req);
+      res.set("Cache-Control", "no-store").json(await engagement(id, who?.member?.id, who?.founder));
     } catch (error) { next(error); }
   };
   if (getAuth(req).userId) return void networkAuth(req, res, complete);
   await complete();
 });
-router.post("/editorial/videos/:videoId/engagement", networkAuth, networkWrite, async (req, res) => {
-  const id = videoId(req.params.videoId), who = actor(res, false);
+router.post(["/editorial/videos/:videoId/engagement", "/editorial/media/engagement"], networkAuth, networkWrite, async (req, res) => {
+  const id = req.params.videoId ? videoId(req.params.videoId) : await editorialPhotoId(req.query.source, req);
+  const who = actor(res, false);
   const parsed = UpdateVideoEngagementBody.strict().safeParse(req.body);
   if (!parsed.success) throw new NetworkError(400, "Invalid video action.");
   const input = parsed.data;
@@ -60,5 +68,19 @@ router.post("/editorial/videos/:videoId/engagement", networkAuth, networkWrite, 
     await db.update(comments).set({ hidden: true }).where(eq(comments.id, row.id));
   }
   res.json(await engagement(id, who.member.id, who.founder));
+});
+const campaignAssets = new Map<string, Promise<Buffer>>();
+router.get("/editorial/assets/:filename", async (req, res) => {
+  const filename = String(req.params.filename);
+  if (!/^pink-october-burj-khalifa\.(mp4|webp)$/.test(filename)) return void res.sendStatus(404);
+  const bucket = process.env.DEFAULT_OBJECT_STORAGE_BUCKET_ID;
+  if (!bucket) throw new NetworkError(503, "Editorial media is unavailable.");
+  let pending = campaignAssets.get(filename);
+  if (!pending) {
+    pending = objectFile(`/${bucket}/public/editorial/assets/${filename}`).download()
+      .then(([bytes]) => bytes).catch(error => { campaignAssets.delete(filename); throw error; });
+    campaignAssets.set(filename, pending);
+  }
+  sendBufferedVideo(req, res, await pending, filename.endsWith(".mp4") ? "video/mp4" : "image/webp");
 });
 export default router;

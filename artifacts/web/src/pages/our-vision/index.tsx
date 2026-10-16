@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import BrandPhotoActions from '@/components/editorial/BrandPhotoActions';
 import { Link } from 'wouter';
 import { ArrowUpRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -43,6 +44,7 @@ export default function OurVision() {
             </p>
           </div>
           <PhotoSlot filename="vision-hero.jpg" alt="Creative community gathered for a casting" className="mt-12 aspect-[21/9] w-full" priority />
+          <BrandPhotoActions filename="vision-hero.jpg" title="Creative community gathered for a casting" tone="dark" />
         </div>
       </HeroSurface>
 
@@ -74,6 +76,7 @@ export default function OurVision() {
                 <figure key={photo.filename}>
                   <PhotoSlot filename={photo.filename} alt={photo.alt} className="aspect-[4/5] w-full" objectPosition="center 25%" />
                   <figcaption className="mt-3 text-xs leading-relaxed text-ink-700">{photo.caption}</figcaption>
+                  <BrandPhotoActions filename={photo.filename} title={photo.caption} />
                 </figure>
               ))}
             </div>

@@ -28,6 +28,7 @@
  */
 
 import { useEffect } from 'react';
+import BrandPhotoActions from '@/components/editorial/BrandPhotoActions';
 import { useParams, useLocation, Link } from 'wouter';
 import { Helmet } from 'react-helmet-async';
 import HeroSurface from '@/components/HeroSurface';
@@ -178,6 +179,7 @@ function BlockRenderer({ block }: { block: BodyBlock }) {
               {block.caption}
             </figcaption>
           )}
+          <BrandPhotoActions filename={block.mediaSlot} title={block.caption || block.altText} />
         </figure>
       );
 
@@ -277,6 +279,7 @@ function ArticleRenderer({ article }: { article: NewsArticle }) {
               variant="sharp"
               duotone
             />
+            <BrandPhotoActions filename={article.heroMediaSlot} title={article.title} tone="dark" />
           </div>
         </div>
       )}

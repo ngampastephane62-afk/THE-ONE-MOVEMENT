@@ -1,10 +1,21 @@
 import media from '@/lib/person-media.json';
+import PhotoActions from './PhotoActions';
 
 type Portrait = { path: string; credit: string; source: string; width: number; height: number };
 export const PERSON_MEDIA = media as Record<string, Portrait>;
 export function personImage(slug: string) {
   const image = PERSON_MEDIA[slug];
   return image ? `${import.meta.env.BASE_URL}api/editorial-portraits/${image.path.replace(/^people\//, '')}` : undefined;
+}
+/** Canonical engagement source for a published portrait. */
+export function portraitSource(slug: string) {
+  const image = PERSON_MEDIA[slug];
+  return image ? `/api/editorial-portraits/${image.path.replace(/^people\//, '')}` : undefined;
+}
+/** Like / comment / share for a portrait; renders nothing for initials-only fallbacks. */
+export function PortraitActions({ slug, name, tone = 'light' }: { slug: string; name: string; tone?: 'light' | 'dark' }) {
+  const source = portraitSource(slug);
+  return source ? <PhotoActions source={source} title={`Portrait: ${name}`} tone={tone} /> : null;
 }
 export default function PersonPortrait({ slug, name, className = '', contain = false }: { slug: string; name: string; className?: string; contain?: boolean }) {
   const image = PERSON_MEDIA[slug];

@@ -8,6 +8,7 @@ import CollaborationRequest from '@/components/editorial/CollaborationRequest';
 import { posterFor } from '@/components/editorial/posters';
 import WealthLabel from '@/components/editorial/WealthLabel';
 import NomineeFilm from '@/components/editorial/NomineeFilm';
+import PhotoActions from '@/components/editorial/PhotoActions';
 
 const PROGRAMME_HREF: Record<string, string> = { awards: '/programs/awards', summit: '/programs/summit', 'fashion-week': '/programs/fashion-week' };
 
@@ -43,6 +44,7 @@ export default function AmbassadorDetail() {
           </div>
           <figure className="lg:col-span-5 lg:col-start-8">
             {poster && <img src={poster.src} alt={`Official TOMI poster: ${person.name}, Ambassador of Peace nominee`} width={poster.width} height={poster.height} className="block h-auto w-full shadow-[0_30px_60px_-30px_hsl(187_67%_5%)]" />}
+            {poster?.src && poster.source && <PhotoActions source={poster.source} title={`Official TOMI poster: ${person.name}`} tone="dark" />}
           </figure>
         </div>
       </section>

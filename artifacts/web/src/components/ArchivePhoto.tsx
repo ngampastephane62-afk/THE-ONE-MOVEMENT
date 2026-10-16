@@ -1,5 +1,7 @@
 import { cn } from '@/lib/utils';
 import catalog from '@/assets/media/founder/catalog.json';
+import MediaActions from '@/components/editorial/MediaActions';
+import { mediaAnchorId, useDeepLinkFocus } from '@/lib/media-share';
 
 type PhotoId = keyof typeof catalog.photos;
 
@@ -20,6 +22,15 @@ interface ArchivePhotoProps {
   /** Override alt (defaults to catalog neutral alt). */
   alt?: string;
   captionClassName?: string;
+  /** Like / comment / share strip below the photo (default on). */
+  actions?: boolean;
+  /** Surface the strip sits on; inferred from an ivory caption colour. */
+  tone?: 'light' | 'dark';
+}
+
+/** Canonical engagement source for an archive photo. */
+export function archivePhotoSource(id: PhotoId) {
+  return `/brand-photos/${catalog.photos[id].filename}`;
 }
 
 /**
@@ -37,12 +48,17 @@ export default function ArchivePhoto({
   priority = false,
   alt,
   captionClassName,
+  actions = true,
+  tone,
 }: ArchivePhotoProps) {
   const p = catalog.photos[id];
   const text = typeof caption === 'string' ? caption : p.caption;
   const cropped = Boolean(frameClassName);
+  const source = archivePhotoSource(id);
+  const ref = useDeepLinkFocus<HTMLElement>({ source });
+  const surface = tone ?? (captionClassName?.includes('ivory') ? 'dark' : 'light');
   return (
-    <figure className={cn('m-0', className)}>
+    <figure ref={ref} id={mediaAnchorId(source)} tabIndex={-1} className={cn('m-0 scroll-mt-28 outline-none data-[deeplinked=true]:ring-2 data-[deeplinked=true]:ring-gold-400 data-[deeplinked=true]:ring-offset-4', className)}>
       <div className={cn('relative overflow-hidden rounded-sharp bg-lagoon-800', frameClassName)}>
         <img
           src={assetUrl(`/brand-photos/${p.filename}`)}
@@ -64,6 +80,7 @@ export default function ArchivePhoto({
           {text}
         </figcaption>
       )}
+      {actions && <MediaActions source={source} title={text || p.alt} tone={surface} compact className="mt-3" />}
     </figure>
   );
 }

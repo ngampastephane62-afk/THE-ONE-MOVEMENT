@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import NativeVideo from '@/components/editorial/NativeVideo';
+import VideoActions from '@/components/editorial/VideoActions';
 
 const media = (name: string) => `${import.meta.env.BASE_URL}api/documentary/media/${name}`;
 
@@ -15,6 +16,14 @@ export default function DocumentaryTeasers() {
 
   useEffect(() => {
     const go = () => {
+      const shared = new URLSearchParams(window.location.search).get('video');
+      if (shared && TEASERS.some(t => shared === `documentary-teaser-${t.no}`)) {
+        requestAnimationFrame(() => {
+          const target = root.current?.querySelector<HTMLElement>(`[data-shared-video="${shared}"]`);
+          target?.scrollIntoView({ block: 'center' }); target?.focus({ preventScroll: true });
+        });
+        return;
+      }
       if (window.location.hash === '#documentary-teasers') {
         requestAnimationFrame(() => root.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
       }
@@ -63,6 +72,9 @@ export default function DocumentaryTeasers() {
                 </div>
               </div>
               <p className="mt-2 text-[11px] uppercase tracking-[0.14em] text-ink-500">The One Documentaire · excerpt</p>
+              <div data-shared-video={`documentary-teaser-${t.no}`} tabIndex={-1} className="scroll-mt-28 outline-none">
+                <VideoActions videoId={`documentary-teaser-${t.no}`} title={`The One Documentaire · Teaser ${t.no}`} />
+              </div>
             </li>
           ))}
         </ol>

@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import NativeVideo from './NativeVideo';
+import VideoActions from './VideoActions';
+
+const engagementId = (film: { id: string; file: string }) =>
+  film.id === 'radio-okapi' ? 'radio-okapi' : film.file.replace(/\.mp4$/, '');
 
 const media = (name: string) => `${import.meta.env.BASE_URL}api/documentary/media/${name}`;
 const FILMS = [
@@ -55,6 +59,14 @@ export default function BroadcastFilms({ embedded = false }: { embedded?: boolea
   useEffect(() => {
     const go = () => {
       const id = window.location.hash.slice(1);
+      const shared = new URLSearchParams(window.location.search).get('video');
+      if (shared && FILMS.some(f => engagementId(f) === shared)) {
+        requestAnimationFrame(() => {
+          const target = document.getElementById(`video-${shared}`);
+          target?.scrollIntoView({ block: 'center' }); target?.focus({ preventScroll: true });
+        });
+        return;
+      }
       if (id === 'broadcast-films' || FILMS.some(f => id === `broadcast-film-${f.id}`)) {
         requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ block: 'start' }));
       }
@@ -103,7 +115,7 @@ export default function BroadcastFilms({ embedded = false }: { embedded?: boolea
               <p className="text-eyebrow text-gold-700">{film.name} · {film.duration}</p>
               <h3 className="mt-2 font-display text-2xl uppercase sm:text-3xl">{film.title}</h3>
               <p className="mt-3 max-w-3xl text-sm leading-relaxed text-ink-700">{film.description}</p>
-              <figure className="mt-5">
+              <figure className="mt-5 scroll-mt-24 outline-none" id={`video-${engagementId(film)}`} tabIndex={-1}>
                 <div className="border border-ink-900 bg-ink-900">
                   <NativeVideo src={media(film.file)} poster={media(film.poster)}
                     width={film.id === 'archive-01' ? 480 : film.id === 'archive-04' ? 720 : 1280}
@@ -118,6 +130,7 @@ export default function BroadcastFilms({ embedded = false }: { embedded?: boolea
                   />
                 </div>
                 <figcaption className="mt-3 border-b border-sand-300 pb-3 text-xs leading-relaxed text-ink-700">{film.credit}</figcaption>
+                <VideoActions videoId={engagementId(film)} title={film.title} />
               </figure>
             </article>
           ))}

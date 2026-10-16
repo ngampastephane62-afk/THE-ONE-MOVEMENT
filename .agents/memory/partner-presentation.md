@@ -20,3 +20,9 @@ Public broadcaster audience figures describe the publisher’s overall scale, no
 **Why:** The owner requests figures for every media partner, but the available sources use incompatible measures: subscribers, weekly contacts, viewers and distribution households.
 
 **How to apply:** Label each metric and source period separately and never sum them. An unavailable channel-specific figure is not zero. Do not reuse Africa24 TV’s distribution footprint for Africa24 Infinity.
+
+Partner leadership introductions must use a TOMI-handled form only; never expose executives’ email addresses or route visitors directly to them.
+
+**Why:** The owner explicitly chose “Aucune adresse : uniquement le formulaire de mise en relation” and wants enquiries to arrive with TOMI.
+
+**How to apply:** Keep the partner target separate from the requester’s own organisation. Make requests accessible to the Founder, explain that receipt does not guarantee an introduction, and use verified public names and correct institutional roles. Mark unknown leadership honestly; distinguish parent-group executives from individual brand or local management.
