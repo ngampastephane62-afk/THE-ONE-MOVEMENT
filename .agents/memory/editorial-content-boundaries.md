@@ -101,6 +101,6 @@ The Founder explicitly confirms that the previously supplied brands and institut
 
 Tropik Magazine is intended to be sold in both digital and printed versions.
 
-**Why:** The Founder explicitly states that readers must buy the magazine, in electronic or printed form. This is separate from the free humanitarian films and professional ecosystem subscriptions.
+**Why:** The Founder explicitly states that readers must buy the magazine, in electronic or printed form. This is separate from the free humanitarian films and professional ecosystem subscriptions. After being told that the supplied PDF is a ten-page media kit rather than a full reader issue, the Founder explicitly confirmed selling that PDF as-is.
 
-**How to apply:** Do not expose a full paid issue as a free public PDF. Confirm the actual retail issue, prices and print-fulfilment terms before opening sales. Editorial-partnership or paid-feature prices in a media kit are not magazine retail prices.
+**How to apply:** Do not expose the paid PDF as a free public download. Use the supplied document as confirmed, describing its actual contents and length honestly rather than asking for a replacement issue again. Confirm retail prices and print-fulfilment terms before opening sales. Editorial-partnership or paid-feature prices in a media kit are not magazine retail prices.
