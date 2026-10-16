@@ -3,17 +3,20 @@ import { Pause, Play, ChevronLeft, ChevronRight } from 'lucide-react';
 import ArchivePhoto from '@/components/ArchivePhoto';
 import catalog from '@/assets/media/founder/catalog.json';
 import { usePrefersReducedMotion } from './util';
+import { DRC_AMBASSADOR_SOURCE, OFFICIAL_MEETINGS, meetingImageUrl } from './official-meetings';
 
 type PhotoId = keyof typeof catalog.photos;
 
-const SLIDES: { id: PhotoId; word: string; region: string; people: string; position?: string }[] = [
+type Slide = { id?: PhotoId; filename?: string; word: string; region: string; people: string; caption?: string; position?: string; source?: string };
+const SLIDES: Slide[] = [
+  ...OFFICIAL_MEETINGS,
   { id: 'office-encounter', word: 'TRUST', region: 'UAE', people: 'Yuston Nessy · Private Office of Sheikh Saeed bin Ahmed Al Maktoum' },
   { id: 'institutional-dialogue', word: 'DIALOGUE', region: 'Institutions', people: 'Yuston Nessy · Institutional meeting' },
-  { id: 'diplomatic-encounter', word: 'DIPLOMACY', region: 'Abu Dhabi · UAE', people: 'Yuston Nessy · Ambassador of the DRC to the UAE', position: 'center 40%' },
+  { id: 'diplomatic-encounter', word: 'DIPLOMACY', region: 'Abu Dhabi · UAE', people: 'Yuston Nessy · Marie Ndjeka Opombo', position: 'center 40%', source: DRC_AMBASSADOR_SOURCE },
   { id: 'global-encounter', word: 'ACCESS', region: 'International', people: 'Yuston Nessy · Ambassador of Tanzania' },
   { id: 'conversation', word: 'CONVERSATION', region: 'Culture & business', people: 'Yuston Nessy · Dr Denis Mukwege' },
 ];
-const DURATION = 6500;
+const DURATION = 1000;
 
 export default function PartnerOrbitStage() {
   const reduced = usePrefersReducedMotion();
@@ -31,7 +34,17 @@ export default function PartnerOrbitStage() {
 
   const go = (d: number) => setI((n) => (n + d + SLIDES.length) % SLIDES.length);
   const s = SLIDES[i];
-  const p = catalog.photos[s.id];
+  const caption = s.id ? catalog.photos[s.id].caption : s.caption!;
+
+  useEffect(() => {
+    // Prime the next images so the one-second cadence does not reveal empty frames.
+    for (let offset = 1; offset <= 2; offset++) {
+      const slide = SLIDES[(i + offset) % SLIDES.length];
+      const image = new Image();
+      image.src = slide.filename ? meetingImageUrl(slide.filename)
+        : `${import.meta.env.BASE_URL}brand-photos/${catalog.photos[slide.id!].filename}`;
+    }
+  }, [i]);
 
   return (
     <section
@@ -52,8 +65,8 @@ export default function PartnerOrbitStage() {
         .tomi-arc { animation: tomi-spin 38s linear infinite; }
         .tomi-arc-slow { animation: tomi-spin 70s linear infinite reverse; }
         .tomi-stage[data-still="true"] .tomi-arc, .tomi-stage[data-still="true"] .tomi-arc-slow { animation-play-state: paused; }
-        .tomi-rise { animation: tomi-rise .9s cubic-bezier(.2,.7,.1,1) both; }
-        .tomi-in { animation: tomi-in 1.1s cubic-bezier(.2,.7,.1,1) both; }
+        .tomi-rise { animation: tomi-rise .18s ease-out both; }
+        .tomi-in { animation: tomi-in .18s ease-out both; }
         .tomi-bar { transform-origin: left; animation: tomi-progress ${DURATION}ms linear both; }
         @media (prefers-reduced-motion: reduce) {
           .tomi-arc, .tomi-arc-slow, .tomi-rise, .tomi-in, .tomi-bar { animation: none !important; }
@@ -81,7 +94,7 @@ export default function PartnerOrbitStage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-gold-400">
               {String(i + 1).padStart(2, '0')} / {String(SLIDES.length).padStart(2, '0')} · {s.region}
             </p>
-            <p className="mt-2 text-lg text-ivory-100" data-testid="text-partner-caption">{p.caption}</p>
+            <p className="mt-2 text-lg text-ivory-100" data-testid="text-partner-caption">{caption}</p>
             <p className="mt-1 text-xs text-ivory-300">Founder archive photograph</p>
           </div>
 
@@ -106,13 +119,15 @@ export default function PartnerOrbitStage() {
             <div aria-hidden className="absolute inset-[14%] rounded-full bg-[radial-gradient(circle,hsl(40_70%_55%/0.22),transparent_70%)]" />
              <div className="absolute inset-[9%] overflow-hidden rounded-full shadow-[0_40px_80px_-30px_hsl(187_60%_2%/0.9)]">
                <div key={`p-${i}`} className="tomi-in h-full w-full">
-                 <ArchivePhoto id={s.id} priority={i === 0} frameClassName="aspect-square" objectPosition={s.position ?? 'center 30%'} sizes="(min-width: 1024px) 34vw, 72vw" alt={`${s.people} — ${p.caption}`} />
+                 {s.id ? <ArchivePhoto id={s.id} priority={i === 0} frameClassName="aspect-square" objectPosition={s.position ?? 'center 30%'} sizes="(min-width: 1024px) 34vw, 72vw" alt={`${s.people} — ${caption}`} />
+                   : <img src={meetingImageUrl(s.filename!)} width={1000} height={1000} alt={`${s.people} — ${caption}`} decoding="async" fetchPriority={i === 0 ? 'high' : 'auto'} className="h-full w-full object-cover" style={{ objectPosition: s.position }} data-testid={`img-official-meeting-${s.filename}`} />}
               </div>
             </div>
           </div>
            <div className="mt-4 max-w-md text-center" aria-live={running ? 'off' : 'polite'} data-testid="text-partner-people">
              <p className="text-sm font-semibold leading-relaxed text-gold-400">{s.people}</p>
-             <p className="mt-1 text-xs leading-relaxed text-ivory-200">{p.caption}</p>
+             <p className="mt-1 text-xs leading-relaxed text-ivory-200">{caption}</p>
+             {s.source && <a href={s.source} target="_blank" rel="noreferrer" className="mt-2 inline-block text-xs text-gold-400 underline">Official source · Embassy of the DRC</a>}
            </div>
           <div className="mt-4 flex items-center justify-center gap-3">
             <button type="button" onClick={() => go(-1)} aria-label="Previous partner" data-testid="button-stage-prev" className="grid h-11 w-11 place-items-center rounded-full border border-ivory-100/25 hover:border-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400"><ChevronLeft className="h-4 w-4" /></button>
@@ -123,9 +138,9 @@ export default function PartnerOrbitStage() {
               </button>
             )}
           </div>
-          <div className="mt-4 flex w-full max-w-xs gap-2" role="tablist" aria-label="Choose partner photograph">
+          <div className="mt-4 flex w-full max-w-xs gap-1" role="tablist" aria-label="Choose partner photograph">
             {SLIDES.map((sl, n) => (
-              <button key={sl.id} role="tab" aria-selected={n === i} aria-label={catalog.photos[sl.id].caption} onClick={() => setI(n)} data-testid={`button-stage-dot-${n}`} className="relative h-6 flex-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400">
+              <button key={sl.id ?? sl.filename} role="tab" aria-selected={n === i} aria-label={`${n + 1}. ${sl.people} — ${sl.id ? catalog.photos[sl.id].caption : sl.caption}`} onClick={() => setI(n)} data-testid={`button-stage-dot-${n}`} className="relative h-11 flex-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400">
                 <span className="absolute inset-x-0 top-1/2 h-px bg-ivory-100/25" />
                 {n === i && <span key={`b-${i}-${running}`} className={`absolute inset-x-0 top-1/2 h-px bg-gold-400 ${running ? 'tomi-bar' : ''}`} />}
               </button>

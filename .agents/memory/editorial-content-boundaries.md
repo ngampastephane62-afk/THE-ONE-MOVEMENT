@@ -63,8 +63,14 @@ The international-language scope covers the existing site, not only Thanks Emira
 
 **How to apply:** Keep the selector persistent across navigation and translate shared UI and form instructions. Preserve user-authored content, names, source attribution and exact monetary terms; do not send visitor content to a live translation service.
 
-The Founder describes a documentary about edition 4 of The One Movement International as having been broadcast on TV5MONDE. They want documentary videos to play in sequence and official-meeting photographs presented in circular frames with participants named.
+The Founder describes a documentary about edition 4 of The One Movement International as having been broadcast on TV5MONDE. They want documentary videos to play in sequence and official-meeting photographs presented in circular frames with participants named, one second per photo and a pause control.
 
 **Why:** These are explicit editorial directions supplied on 2026-10-16, including the description of the DRC ambassador meeting as an official encounter in Abu Dhabi.
 
-**How to apply:** Keep the edition-4 broadcast claim attributed to the Founder until a source is supplied. Do not assume an existing film is that documentary, invent identities from faces, or treat a screenshot as the original photo or video. Request missing full names and authorised media sources.
+**How to apply:** The supplied TV5MONDE report confirms coverage of The One Fashion Week in Goma; it does not itself establish the edition number. Keep that association attributed to the Founder. Do not assume an existing film is that documentary, invent identities from faces, or treat a screenshot as an original photo or video.
+
+TV5MONDE's published embed URL can still reject cross-site framing with `X-Frame-Options: SAMEORIGIN`.
+
+**Why:** The supplied report's structured metadata offered an embed URL, but that endpoint returned SAMEORIGIN when checked. Metadata alone did not establish that a working embedded player was available.
+
+**How to apply:** Verify framing headers before embedding; use an honest link to the official report when framing is blocked. Do not mirror the broadcaster's video or silently substitute a direct media URL to bypass the official player.

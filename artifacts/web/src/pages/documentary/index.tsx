@@ -49,7 +49,17 @@ export default function Documentary() {
         <div className="mx-auto max-w-6xl px-6">
           <p className="text-eyebrow text-gold-400">THE ONE MOVEMENT INTERNATIONAL · EDITION 4</p>
           <h2 className="mt-3 text-display-md">The fourth-edition documentary.</h2>
-          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-ivory-200">Broadcast on TV5MONDE, according to the Founder. The video will join this collection once the authorised file or playback link is supplied.</p>
+          <article className="mt-6 max-w-3xl border border-gold-500/40 bg-lagoon-800 p-6 sm:p-8" data-testid="documentary-tv5-report">
+            <p className="text-eyebrow text-gold-400">TV5MONDE · REPORTAGE</p>
+            <h3 className="mt-3 font-display text-xl sm:text-2xl">RD Congo : The One Fashion week, le rendez-vous Peace and Mode</h3>
+            <p className="mt-3 text-sm text-ivory-200"><time dateTime="2024-02-06">6 February 2024</time> · 2 min 01 s</p>
+            <p className="mt-4 text-sm leading-relaxed text-ivory-200">A TV5MONDE report about designers from 12 countries gathering in Goma for fashion, peace and peaceful coexistence. Source supplied by the Founder for the fourth-edition archive.</p>
+            <p className="mt-3 text-xs leading-relaxed text-ivory-300">Credit: TV5MONDE · N’daricaling Loppy / Amani Alimasi Joseph. Playback opens on the broadcaster’s website; it is not part of automatic playback on TOMI.</p>
+            <a href="https://information.tv5monde.com/afrique/video/rd-congo-one-fashion-week-le-rendez-vous-peace-and-mode-2708092"
+              target="_blank" rel="noreferrer" className="mt-6 inline-flex min-h-11 items-center justify-center bg-gold-500 px-6 py-3 text-sm font-semibold text-ink-900 hover:bg-gold-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-400" data-testid="link-documentary-tv5">
+              Watch the report on TV5MONDE
+            </a>
+          </article>
         </div>
       </section>
 

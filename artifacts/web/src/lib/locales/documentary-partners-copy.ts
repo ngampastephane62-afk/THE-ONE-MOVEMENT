@@ -1,5 +1,14 @@
 export const documentaryPartnersCopy: Record<string, Record<string, string>> = {
   fr: {
+    'Official meetings': 'Rencontres officielles',
+    'Official meeting · Founder archive': 'Rencontre officielle · Archives du fondateur',
+    'Official handshake · Founder archive': 'Poignée de main officielle · Archives du fondateur',
+    'Official source · Embassy of the DRC': 'Source officielle · Ambassade de la RDC',
+    'TV5MONDE · REPORTAGE': 'TV5MONDE · REPORTAGE',
+    '6 February 2024': '6 février 2024',
+    'A TV5MONDE report about designers from 12 countries gathering in Goma for fashion, peace and peaceful coexistence. Source supplied by the Founder for the fourth-edition archive.': 'Un reportage TV5MONDE sur la rencontre à Goma de stylistes venus de 12 pays, autour de la mode, de la paix et de la cohabitation pacifique. Source fournie par le fondateur pour les archives de la quatrième édition.',
+    'Credit: TV5MONDE · N’daricaling Loppy / Amani Alimasi Joseph. Playback opens on the broadcaster’s website; it is not part of automatic playback on TOMI.': 'Crédits : TV5MONDE · N’daricaling Loppy / Amani Alimasi Joseph. La lecture s’ouvre sur le site du diffuseur ; elle ne fait pas partie de la lecture automatique sur TOMI.',
+    'Watch the report on TV5MONDE': 'Voir le reportage sur TV5MONDE',
     'Real subscriptions are not enabled yet. Test checkout is closed. Your free account remains available.': 'Les souscriptions réelles ne sont pas encore activées. Le paiement de test est fermé. Votre compte gratuit reste accessible.',
     'Real contributions are not enabled yet. Test checkout is closed. No money has been collected.': 'Les contributions réelles ne sont pas encore activées. Le paiement de test est fermé. Aucun argent n’a été encaissé.',
     'Play the next video automatically': 'Lire automatiquement la vidéo suivante',
