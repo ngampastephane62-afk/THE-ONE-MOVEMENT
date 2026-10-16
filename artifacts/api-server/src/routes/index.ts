@@ -7,6 +7,7 @@ import memberRouter from "./member";
 import networkRouter from "./network";
 import mediaRequestsRouter from "./mediaRequests";
 import newsArchiveRouter from "./newsArchive";
+import humanitarianRouter from "./humanitarian";
 
 const router: IRouter = Router();
 
@@ -18,5 +19,6 @@ router.use(memberRouter);
 router.use(networkRouter);
 router.use(mediaRequestsRouter);
 router.use(newsArchiveRouter);
+router.use(humanitarianRouter);
 
 export default router;

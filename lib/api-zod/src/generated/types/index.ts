@@ -6,14 +6,29 @@
  * OpenAPI spec version: 0.1.0
  */
 
+export * from './createHumanitarianCheckout200';
+export * from './createHumanitarianOffer201';
 export * from './detailedHealthStatus';
 export * from './donationCampaign';
+export * from './getDocumentaryAccess200';
 export * from './getEcosystemMembers200';
+export * from './getHumanitarianConfig200';
+export * from './getHumanitarianOffers200Item';
+export * from './getHumanitarianPaymentStatus200';
+export * from './getHumanitarianPaymentStatus200Status';
+export * from './getHumanitarianPaymentStatusParams';
 export * from './getNetworkPaymentStatusParams';
 export * from './getNetworkStateConnections';
 export * from './getNetworkStateFeed';
 export * from './getNetworkStateParams';
 export * from './healthStatus';
+export * from './humanitarianCheckoutInput';
+export * from './humanitarianCheckoutInputCurrency';
+export * from './humanitarianCheckoutInputKind';
+export * from './humanitarianOfferInput';
+export * from './humanitarianOfferInputKind';
+export * from './humanitarianOfferStatusInput';
+export * from './humanitarianOfferStatusInputStatus';
 export * from './mediaInquiry';
 export * from './mediaInquiryInput';
 export * from './mediaInquiryReceipt';
@@ -53,3 +68,4 @@ export * from './pressEntryInputStatus';
 export * from './pressEntryStatus';
 export * from './publicMember';
 export * from './savedItemInput';
+export * from './updateHumanitarianOffer200';

@@ -1,0 +1,1 @@
+ALTER TABLE "humanitarian_payments" ADD COLUMN "live_mode" boolean DEFAULT false NOT NULL;

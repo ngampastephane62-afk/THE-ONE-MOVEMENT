@@ -5,6 +5,90 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+/**
+ * Use donation. Legacy documentary purchases are retired and return HTTP 410.
+ */
+export type HumanitarianCheckoutInputKind = typeof HumanitarianCheckoutInputKind[keyof typeof HumanitarianCheckoutInputKind];
+
+
+export const HumanitarianCheckoutInputKind = {
+  donation: 'donation',
+  documentary: 'documentary',
+} as const;
+
+export type HumanitarianCheckoutInputCurrency = typeof HumanitarianCheckoutInputCurrency[keyof typeof HumanitarianCheckoutInputCurrency];
+
+
+export const HumanitarianCheckoutInputCurrency = {
+  usd: 'usd',
+  aed: 'aed',
+} as const;
+
+export interface HumanitarianCheckoutInput {
+  /** Use donation. Legacy documentary purchases are retired and return HTTP 410. */
+  kind: HumanitarianCheckoutInputKind;
+  /** @minimum 100 */
+  amount: number;
+  currency: HumanitarianCheckoutInputCurrency;
+  accepted: boolean;
+  /**
+     * @minLength 16
+     * @maxLength 80
+     */
+  requestId: string;
+}
+
+export type HumanitarianOfferInputKind = typeof HumanitarianOfferInputKind[keyof typeof HumanitarianOfferInputKind];
+
+
+export const HumanitarianOfferInputKind = {
+  goods: 'goods',
+  equipment: 'equipment',
+  logistics: 'logistics',
+  financial: 'financial',
+} as const;
+
+export interface HumanitarianOfferInput {
+  kind: HumanitarianOfferInputKind;
+  /**
+     * @minLength 2
+     * @maxLength 120
+     */
+  fullName: string;
+  /**
+     * @minLength 3
+     * @maxLength 254
+     */
+  email: string;
+  /**
+     * @minLength 2
+     * @maxLength 90
+     */
+  country: string;
+  /**
+     * @minLength 20
+     * @maxLength 3000
+     */
+  description: string;
+  accepted: boolean;
+  /** @maxLength 200 */
+  website?: string;
+}
+
+export type HumanitarianOfferStatusInputStatus = typeof HumanitarianOfferStatusInputStatus[keyof typeof HumanitarianOfferStatusInputStatus];
+
+
+export const HumanitarianOfferStatusInputStatus = {
+  new: 'new',
+  contacted: 'contacted',
+  arranged: 'arranged',
+  closed: 'closed',
+} as const;
+
+export interface HumanitarianOfferStatusInput {
+  status: HumanitarianOfferStatusInputStatus;
+}
+
 export type PressEntryInputCategory = typeof PressEntryInputCategory[keyof typeof PressEntryInputCategory];
 
 
@@ -520,6 +604,67 @@ export interface DetailedHealthStatus {
   status: string;
   database: string;
 }
+
+export type GetHumanitarianConfig200 = {
+  available: boolean;
+  testMode: boolean;
+  reason: string;
+  collector: string;
+  minimumUsd: number;
+  minimumAed: number;
+  /** Legacy field, always zero. Humanitarian films are free and separate from professional subscriptions. */
+  documentaryUsd: number;
+};
+
+export type CreateHumanitarianCheckout200 = {
+  url: string;
+};
+
+export type GetHumanitarianPaymentStatusParams = {
+session_id: string;
+};
+
+export type GetHumanitarianPaymentStatus200Status = typeof GetHumanitarianPaymentStatus200Status[keyof typeof GetHumanitarianPaymentStatus200Status];
+
+
+export const GetHumanitarianPaymentStatus200Status = {
+  pending: 'pending',
+  paid: 'paid',
+  refunded: 'refunded',
+  expired: 'expired',
+} as const;
+
+export type GetHumanitarianPaymentStatus200 = {
+  status: GetHumanitarianPaymentStatus200Status;
+  archiveAccess: boolean;
+};
+
+export type CreateHumanitarianOffer201 = {
+  id: number;
+  status: string;
+};
+
+export type GetHumanitarianOffers200Item = {
+  id: number;
+  kind: string;
+  fullName: string;
+  email: string;
+  country: string;
+  description: string;
+  status: string;
+  createdAt: string;
+};
+
+export type UpdateHumanitarianOffer200 = {
+  id: number;
+  status: string;
+};
+
+export type GetDocumentaryAccess200 = {
+  hasAccess: boolean;
+  /** @nullable */
+  streamUrl: string | null;
+};
 
 export type GetNetworkStateParams = {
 /**

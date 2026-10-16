@@ -119,6 +119,8 @@ export async function processStripeWebhook(payload: Buffer, signature: string) {
   await (await getStripeSync()).processWebhook(payload, signature);
   // processWebhook verifies the Stripe signature before any app-specific side effects.
   const event = JSON.parse(payload.toString()) as Stripe.Event;
+  const { processHumanitarianEvent } = await import("./humanitarianPayments");
+  await processHumanitarianEvent(event);
   if (event.type === "checkout.session.completed" || event.type === "checkout.session.async_payment_succeeded") {
     await confirmPayment(event.data.object as Stripe.Checkout.Session);
   }

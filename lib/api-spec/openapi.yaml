@@ -11,6 +11,179 @@ tags:
   - name: health
     description: Health operations
 paths:
+  /humanitarian/config:
+    get:
+      operationId: getHumanitarianConfig
+      tags: [humanitarian]
+      responses:
+        "200":
+          description: Collection configuration
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [available, testMode, reason, collector, minimumUsd, minimumAed, documentaryUsd]
+                properties:
+                  available: {type: boolean}
+                  testMode: {type: boolean}
+                  reason: {type: string}
+                  collector: {type: string}
+                  minimumUsd: {type: integer}
+                  minimumAed: {type: integer}
+                  documentaryUsd: {type: integer, description: "Legacy field, always zero. Humanitarian films are free and separate from professional subscriptions."}
+  /humanitarian/checkout:
+    post:
+      operationId: createHumanitarianCheckout
+      tags: [humanitarian]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: "#/components/schemas/HumanitarianCheckoutInput"}
+      responses:
+        "200":
+          description: One-time hosted checkout
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [url]
+                properties:
+                  url: {type: string}
+        "400": {description: Invalid payment}
+        "401": {description: Sign in for archive access}
+        "503": {description: Collection is unavailable}
+  /humanitarian/payment-status:
+    get:
+      operationId: getHumanitarianPaymentStatus
+      tags: [humanitarian]
+      parameters:
+        - in: query
+          name: session_id
+          required: true
+          schema: {type: string}
+      responses:
+        "200":
+          description: Verified processor status, never a client-side entitlement
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status, archiveAccess]
+                properties:
+                  status: {type: string, enum: [pending, paid, refunded, expired]}
+                  archiveAccess: {type: boolean}
+        "404": {description: Payment not found}
+  /humanitarian/offers:
+    post:
+      operationId: createHumanitarianOffer
+      tags: [humanitarian]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: "#/components/schemas/HumanitarianOfferInput"}
+      responses:
+        "201":
+          description: Offer received, no delivery promised
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [id, status]
+                properties:
+                  id: {type: integer}
+                  status: {type: string}
+  /humanitarian/offers/admin:
+    get:
+      operationId: getHumanitarianOffers
+      tags: [humanitarian]
+      responses:
+        "200":
+          description: Founder-only contribution offers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required: [id, kind, fullName, email, country, description, status, createdAt]
+                  properties:
+                    id: {type: integer}
+                    kind: {type: string}
+                    fullName: {type: string}
+                    email: {type: string}
+                    country: {type: string}
+                    description: {type: string}
+                    status: {type: string}
+                    createdAt: {type: string}
+  /humanitarian/offers/admin/{id}:
+    patch:
+      operationId: updateHumanitarianOffer
+      tags: [humanitarian]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: {type: integer}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: "#/components/schemas/HumanitarianOfferStatusInput"}
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [id, status]
+                properties:
+                  id: {type: integer}
+                  status: {type: string}
+  /documentary/access:
+    get:
+      operationId: getDocumentaryAccess
+      tags: [humanitarian]
+      responses:
+        "200":
+          description: Authenticated member's server-verified access
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [hasAccess, streamUrl]
+                properties:
+                  hasAccess: {type: boolean}
+                  streamUrl: {type: ["string", "null"]}
+        "401": {description: Sign in}
+  /documentary/goma/stream:
+    get:
+      operationId: streamGomaDocumentary
+      tags: [humanitarian]
+      responses:
+        "200":
+          description: Protected complete film; byte ranges supported
+          content:
+            video/mp4:
+              schema: {type: string, format: binary}
+        "403": {description: Archive access required}
+  /documentary/media/{filename}:
+    get:
+      operationId: getDocumentaryPreview
+      tags: [humanitarian]
+      parameters:
+        - in: path
+          name: filename
+          required: true
+          schema: {type: string}
+      responses:
+        "200":
+          description: Public preview, trailer or poster, never the protected film
+          content:
+            application/octet-stream:
+              schema: {type: string, format: binary}
   /news:
     get:
       operationId: getNewsArchive
@@ -344,6 +517,31 @@ paths:
                 $ref: "#/components/schemas/DetailedHealthStatus"
 components:
   schemas:
+    HumanitarianCheckoutInput:
+      type: object
+      required: [kind, amount, currency, accepted, requestId]
+      properties:
+        kind: {type: string, enum: [donation, documentary], description: "Use donation. Legacy documentary purchases are retired and return HTTP 410."}
+        amount: {type: integer, minimum: 100}
+        currency: {type: string, enum: [usd, aed]}
+        accepted: {type: boolean}
+        requestId: {type: string, minLength: 16, maxLength: 80}
+    HumanitarianOfferInput:
+      type: object
+      required: [kind, fullName, email, country, description, accepted]
+      properties:
+        kind: {type: string, enum: [goods, equipment, logistics, financial]}
+        fullName: {type: string, minLength: 2, maxLength: 120}
+        email: {type: string, minLength: 3, maxLength: 254}
+        country: {type: string, minLength: 2, maxLength: 90}
+        description: {type: string, minLength: 20, maxLength: 3000}
+        accepted: {type: boolean}
+        website: {type: string, maxLength: 200}
+    HumanitarianOfferStatusInput:
+      type: object
+      required: [status]
+      properties:
+        status: {type: string, enum: [new, contacted, arranged, closed]}
     PressEntryInput:
       type: object
       required: [title, outlet, summary, category, dateLabel, sourceUrl, websiteUrl, status, evidenceUploadIds, removeEvidenceIndexes, removeLogo, publicAssetsConsent]

@@ -8,6 +8,122 @@
 import * as zod from 'zod';
 
 
+export const GetHumanitarianConfigResponse = zod.object({
+  "available": zod.boolean(),
+  "testMode": zod.boolean(),
+  "reason": zod.string(),
+  "collector": zod.string(),
+  "minimumUsd": zod.number().int(),
+  "minimumAed": zod.number().int(),
+  "documentaryUsd": zod.number().int().describe('Legacy field, always zero. Humanitarian films are free and separate from professional subscriptions.')
+})
+
+
+export const createHumanitarianCheckoutBodyAmountMin = 100;
+
+export const createHumanitarianCheckoutBodyRequestIdMin = 16;
+export const createHumanitarianCheckoutBodyRequestIdMax = 80;
+
+
+
+export const CreateHumanitarianCheckoutBody = zod.object({
+  "kind": zod.enum(['donation', 'documentary']).describe('Use donation. Legacy documentary purchases are retired and return HTTP 410.'),
+  "amount": zod.number().int().min(createHumanitarianCheckoutBodyAmountMin),
+  "currency": zod.enum(['usd', 'aed']),
+  "accepted": zod.boolean(),
+  "requestId": zod.string().min(createHumanitarianCheckoutBodyRequestIdMin).max(createHumanitarianCheckoutBodyRequestIdMax)
+})
+
+export const CreateHumanitarianCheckoutResponse = zod.object({
+  "url": zod.string()
+})
+
+
+export const GetHumanitarianPaymentStatusQueryParams = zod.object({
+  "session_id": zod.coerce.string()
+})
+
+export const GetHumanitarianPaymentStatusResponse = zod.object({
+  "status": zod.enum(['pending', 'paid', 'refunded', 'expired']),
+  "archiveAccess": zod.boolean()
+})
+
+
+export const createHumanitarianOfferBodyFullNameMin = 2;
+export const createHumanitarianOfferBodyFullNameMax = 120;
+
+export const createHumanitarianOfferBodyEmailMin = 3;
+export const createHumanitarianOfferBodyEmailMax = 254;
+
+export const createHumanitarianOfferBodyCountryMin = 2;
+export const createHumanitarianOfferBodyCountryMax = 90;
+
+export const createHumanitarianOfferBodyDescriptionMin = 20;
+export const createHumanitarianOfferBodyDescriptionMax = 3000;
+
+export const createHumanitarianOfferBodyWebsiteMax = 200;
+
+
+
+export const CreateHumanitarianOfferBody = zod.object({
+  "kind": zod.enum(['goods', 'equipment', 'logistics', 'financial']),
+  "fullName": zod.string().min(createHumanitarianOfferBodyFullNameMin).max(createHumanitarianOfferBodyFullNameMax),
+  "email": zod.string().min(createHumanitarianOfferBodyEmailMin).max(createHumanitarianOfferBodyEmailMax),
+  "country": zod.string().min(createHumanitarianOfferBodyCountryMin).max(createHumanitarianOfferBodyCountryMax),
+  "description": zod.string().min(createHumanitarianOfferBodyDescriptionMin).max(createHumanitarianOfferBodyDescriptionMax),
+  "accepted": zod.boolean(),
+  "website": zod.string().max(createHumanitarianOfferBodyWebsiteMax).optional()
+})
+
+export const CreateHumanitarianOfferResponse = zod.object({
+  "id": zod.number().int(),
+  "status": zod.string()
+})
+
+
+export const GetHumanitarianOffersResponseItem = zod.object({
+  "id": zod.number().int(),
+  "kind": zod.string(),
+  "fullName": zod.string(),
+  "email": zod.string(),
+  "country": zod.string(),
+  "description": zod.string(),
+  "status": zod.string(),
+  "createdAt": zod.string()
+})
+export const GetHumanitarianOffersResponse = zod.array(GetHumanitarianOffersResponseItem)
+
+
+export const UpdateHumanitarianOfferParams = zod.object({
+  "id": zod.coerce.number().int()
+})
+
+export const UpdateHumanitarianOfferBody = zod.object({
+  "status": zod.enum(['new', 'contacted', 'arranged', 'closed'])
+})
+
+export const UpdateHumanitarianOfferResponse = zod.object({
+  "id": zod.number().int(),
+  "status": zod.string()
+})
+
+
+export const GetDocumentaryAccessResponse = zod.object({
+  "hasAccess": zod.boolean(),
+  "streamUrl": zod.string().nullable()
+})
+
+
+export const StreamGomaDocumentaryResponse = zod.unknown()
+
+
+export const GetDocumentaryPreviewParams = zod.object({
+  "filename": zod.coerce.string()
+})
+
+export const GetDocumentaryPreviewResponse = zod.unknown()
+
+
 /**
  * @summary Published coverage from TOMI's historical press archive
  */

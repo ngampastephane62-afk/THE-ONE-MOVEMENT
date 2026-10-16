@@ -25,12 +25,22 @@ import type {
 } from '@tanstack/react-query';
 
 import type {
+  CreateHumanitarianCheckout200,
+  CreateHumanitarianOffer201,
   DetailedHealthStatus,
   DonationCampaign,
+  GetDocumentaryAccess200,
   GetEcosystemMembers200,
+  GetHumanitarianConfig200,
+  GetHumanitarianOffers200Item,
+  GetHumanitarianPaymentStatus200,
+  GetHumanitarianPaymentStatusParams,
   GetNetworkPaymentStatusParams,
   GetNetworkStateParams,
   HealthStatus,
+  HumanitarianCheckoutInput,
+  HumanitarianOfferInput,
+  HumanitarianOfferStatusInput,
   MediaInquiry,
   MediaInquiryInput,
   MediaInquiryReceipt,
@@ -46,7 +56,8 @@ import type {
   NetworkUploadTicket,
   PressEntry,
   PressEntryInput,
-  SavedItemInput
+  SavedItemInput,
+  UpdateHumanitarianOffer200
 } from './api.schemas';
 
 import { customFetch } from '../custom-fetch';
@@ -75,6 +86,830 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   }
   return result;
 };
+
+export const getGetHumanitarianConfigUrl = () => {
+
+
+
+
+  return `/api/humanitarian/config`
+}
+
+export const getHumanitarianConfig = async ( options?: Parameters<typeof customFetch>[1]): Promise<GetHumanitarianConfig200> => {
+
+  return customFetch<GetHumanitarianConfig200>(getGetHumanitarianConfigUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetHumanitarianConfigQueryKey = () => {
+    return [
+    `/api/humanitarian/config`
+    ] as const;
+    }
+
+
+export const getGetHumanitarianConfigQueryOptions = <TData = Awaited<ReturnType<typeof getHumanitarianConfig>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHumanitarianConfig>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetHumanitarianConfigQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getHumanitarianConfig>>> = ({ signal }) => getHumanitarianConfig({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getHumanitarianConfig>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetHumanitarianConfigQueryResult = NonNullable<Awaited<ReturnType<typeof getHumanitarianConfig>>>
+export type GetHumanitarianConfigQueryError = ErrorType<unknown>
+
+
+export function useGetHumanitarianConfig<TData = Awaited<ReturnType<typeof getHumanitarianConfig>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHumanitarianConfig>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getHumanitarianConfig>>,
+          TError,
+          Awaited<ReturnType<typeof getHumanitarianConfig>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetHumanitarianConfig<TData = Awaited<ReturnType<typeof getHumanitarianConfig>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHumanitarianConfig>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getHumanitarianConfig>>,
+          TError,
+          Awaited<ReturnType<typeof getHumanitarianConfig>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetHumanitarianConfig<TData = Awaited<ReturnType<typeof getHumanitarianConfig>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHumanitarianConfig>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetHumanitarianConfig<TData = Awaited<ReturnType<typeof getHumanitarianConfig>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHumanitarianConfig>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetHumanitarianConfigQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getCreateHumanitarianCheckoutUrl = () => {
+
+
+
+
+  return `/api/humanitarian/checkout`
+}
+
+export const createHumanitarianCheckout = async (humanitarianCheckoutInput: HumanitarianCheckoutInput, options?: Parameters<typeof customFetch>[1]): Promise<CreateHumanitarianCheckout200> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<CreateHumanitarianCheckout200>(getCreateHumanitarianCheckoutUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(humanitarianCheckoutInput)
+  }
+);}
+
+
+
+
+
+export const getCreateHumanitarianCheckoutMutationKey = () => ['createHumanitarianCheckout'] as const;
+
+export const getCreateHumanitarianCheckoutMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createHumanitarianCheckout>>, TError,CreateHumanitarianCheckoutMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof createHumanitarianCheckout>>, TError,CreateHumanitarianCheckoutMutationVariables, TContext> => {
+
+const mutationKey = getCreateHumanitarianCheckoutMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createHumanitarianCheckout>>, CreateHumanitarianCheckoutMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  createHumanitarianCheckout(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateHumanitarianCheckoutMutationResult = NonNullable<Awaited<ReturnType<typeof createHumanitarianCheckout>>>
+    export type CreateHumanitarianCheckoutMutationBody = BodyType<HumanitarianCheckoutInput>
+    export type CreateHumanitarianCheckoutMutationError = ErrorType<void>
+    export type CreateHumanitarianCheckoutMutationVariables = {data: BodyType<HumanitarianCheckoutInput>}
+
+    export const useCreateHumanitarianCheckout = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createHumanitarianCheckout>>, TError,CreateHumanitarianCheckoutMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createHumanitarianCheckout>>,
+        TError,
+        CreateHumanitarianCheckoutMutationVariables,
+        TContext
+      > => {
+      return useMutation(getCreateHumanitarianCheckoutMutationOptions(options), queryClient);
+    }
+
+export const getGetHumanitarianPaymentStatusUrl = (params: GetHumanitarianPaymentStatusParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/humanitarian/payment-status?${stringifiedParams}` : `/api/humanitarian/payment-status`
+}
+
+export const getHumanitarianPaymentStatus = async (params: GetHumanitarianPaymentStatusParams, options?: Parameters<typeof customFetch>[1]): Promise<GetHumanitarianPaymentStatus200> => {
+
+  return customFetch<GetHumanitarianPaymentStatus200>(getGetHumanitarianPaymentStatusUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetHumanitarianPaymentStatusQueryKey = (params?: GetHumanitarianPaymentStatusParams,) => {
+    return [
+    `/api/humanitarian/payment-status`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getGetHumanitarianPaymentStatusQueryOptions = <TData = Awaited<ReturnType<typeof getHumanitarianPaymentStatus>>, TError = ErrorType<void>>(params: GetHumanitarianPaymentStatusParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHumanitarianPaymentStatus>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetHumanitarianPaymentStatusQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getHumanitarianPaymentStatus>>> = ({ signal }) => getHumanitarianPaymentStatus(params, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getHumanitarianPaymentStatus>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetHumanitarianPaymentStatusQueryResult = NonNullable<Awaited<ReturnType<typeof getHumanitarianPaymentStatus>>>
+export type GetHumanitarianPaymentStatusQueryError = ErrorType<void>
+
+
+export function useGetHumanitarianPaymentStatus<TData = Awaited<ReturnType<typeof getHumanitarianPaymentStatus>>, TError = ErrorType<void>>(
+ params: GetHumanitarianPaymentStatusParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHumanitarianPaymentStatus>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getHumanitarianPaymentStatus>>,
+          TError,
+          Awaited<ReturnType<typeof getHumanitarianPaymentStatus>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetHumanitarianPaymentStatus<TData = Awaited<ReturnType<typeof getHumanitarianPaymentStatus>>, TError = ErrorType<void>>(
+ params: GetHumanitarianPaymentStatusParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHumanitarianPaymentStatus>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getHumanitarianPaymentStatus>>,
+          TError,
+          Awaited<ReturnType<typeof getHumanitarianPaymentStatus>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetHumanitarianPaymentStatus<TData = Awaited<ReturnType<typeof getHumanitarianPaymentStatus>>, TError = ErrorType<void>>(
+ params: GetHumanitarianPaymentStatusParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHumanitarianPaymentStatus>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetHumanitarianPaymentStatus<TData = Awaited<ReturnType<typeof getHumanitarianPaymentStatus>>, TError = ErrorType<void>>(
+ params: GetHumanitarianPaymentStatusParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHumanitarianPaymentStatus>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetHumanitarianPaymentStatusQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getCreateHumanitarianOfferUrl = () => {
+
+
+
+
+  return `/api/humanitarian/offers`
+}
+
+export const createHumanitarianOffer = async (humanitarianOfferInput: HumanitarianOfferInput, options?: Parameters<typeof customFetch>[1]): Promise<CreateHumanitarianOffer201> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<CreateHumanitarianOffer201>(getCreateHumanitarianOfferUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(humanitarianOfferInput)
+  }
+);}
+
+
+
+
+
+export const getCreateHumanitarianOfferMutationKey = () => ['createHumanitarianOffer'] as const;
+
+export const getCreateHumanitarianOfferMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createHumanitarianOffer>>, TError,CreateHumanitarianOfferMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof createHumanitarianOffer>>, TError,CreateHumanitarianOfferMutationVariables, TContext> => {
+
+const mutationKey = getCreateHumanitarianOfferMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createHumanitarianOffer>>, CreateHumanitarianOfferMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  createHumanitarianOffer(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateHumanitarianOfferMutationResult = NonNullable<Awaited<ReturnType<typeof createHumanitarianOffer>>>
+    export type CreateHumanitarianOfferMutationBody = BodyType<HumanitarianOfferInput>
+    export type CreateHumanitarianOfferMutationError = ErrorType<unknown>
+    export type CreateHumanitarianOfferMutationVariables = {data: BodyType<HumanitarianOfferInput>}
+
+    export const useCreateHumanitarianOffer = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createHumanitarianOffer>>, TError,CreateHumanitarianOfferMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createHumanitarianOffer>>,
+        TError,
+        CreateHumanitarianOfferMutationVariables,
+        TContext
+      > => {
+      return useMutation(getCreateHumanitarianOfferMutationOptions(options), queryClient);
+    }
+
+export const getGetHumanitarianOffersUrl = () => {
+
+
+
+
+  return `/api/humanitarian/offers/admin`
+}
+
+export const getHumanitarianOffers = async ( options?: Parameters<typeof customFetch>[1]): Promise<GetHumanitarianOffers200Item[]> => {
+
+  return customFetch<GetHumanitarianOffers200Item[]>(getGetHumanitarianOffersUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetHumanitarianOffersQueryKey = () => {
+    return [
+    `/api/humanitarian/offers/admin`
+    ] as const;
+    }
+
+
+export const getGetHumanitarianOffersQueryOptions = <TData = Awaited<ReturnType<typeof getHumanitarianOffers>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHumanitarianOffers>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetHumanitarianOffersQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getHumanitarianOffers>>> = ({ signal }) => getHumanitarianOffers({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getHumanitarianOffers>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetHumanitarianOffersQueryResult = NonNullable<Awaited<ReturnType<typeof getHumanitarianOffers>>>
+export type GetHumanitarianOffersQueryError = ErrorType<unknown>
+
+
+export function useGetHumanitarianOffers<TData = Awaited<ReturnType<typeof getHumanitarianOffers>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHumanitarianOffers>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getHumanitarianOffers>>,
+          TError,
+          Awaited<ReturnType<typeof getHumanitarianOffers>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetHumanitarianOffers<TData = Awaited<ReturnType<typeof getHumanitarianOffers>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHumanitarianOffers>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getHumanitarianOffers>>,
+          TError,
+          Awaited<ReturnType<typeof getHumanitarianOffers>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetHumanitarianOffers<TData = Awaited<ReturnType<typeof getHumanitarianOffers>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHumanitarianOffers>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetHumanitarianOffers<TData = Awaited<ReturnType<typeof getHumanitarianOffers>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHumanitarianOffers>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetHumanitarianOffersQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getUpdateHumanitarianOfferUrl = (id: number,) => {
+
+
+
+
+  return `/api/humanitarian/offers/admin/${id}`
+}
+
+export const updateHumanitarianOffer = async (id: number,
+    humanitarianOfferStatusInput: HumanitarianOfferStatusInput, options?: Parameters<typeof customFetch>[1]): Promise<UpdateHumanitarianOffer200> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<UpdateHumanitarianOffer200>(getUpdateHumanitarianOfferUrl(id),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(humanitarianOfferStatusInput)
+  }
+);}
+
+
+
+
+
+export const getUpdateHumanitarianOfferMutationKey = () => ['updateHumanitarianOffer'] as const;
+
+export const getUpdateHumanitarianOfferMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateHumanitarianOffer>>, TError,UpdateHumanitarianOfferMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateHumanitarianOffer>>, TError,UpdateHumanitarianOfferMutationVariables, TContext> => {
+
+const mutationKey = getUpdateHumanitarianOfferMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateHumanitarianOffer>>, UpdateHumanitarianOfferMutationVariables> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  updateHumanitarianOffer(id,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateHumanitarianOfferMutationResult = NonNullable<Awaited<ReturnType<typeof updateHumanitarianOffer>>>
+    export type UpdateHumanitarianOfferMutationBody = BodyType<HumanitarianOfferStatusInput>
+    export type UpdateHumanitarianOfferMutationError = ErrorType<unknown>
+    export type UpdateHumanitarianOfferMutationVariables = {id: number;data: BodyType<HumanitarianOfferStatusInput>}
+
+    export const useUpdateHumanitarianOffer = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateHumanitarianOffer>>, TError,UpdateHumanitarianOfferMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof updateHumanitarianOffer>>,
+        TError,
+        UpdateHumanitarianOfferMutationVariables,
+        TContext
+      > => {
+      return useMutation(getUpdateHumanitarianOfferMutationOptions(options), queryClient);
+    }
+
+export const getGetDocumentaryAccessUrl = () => {
+
+
+
+
+  return `/api/documentary/access`
+}
+
+export const getDocumentaryAccess = async ( options?: Parameters<typeof customFetch>[1]): Promise<GetDocumentaryAccess200> => {
+
+  return customFetch<GetDocumentaryAccess200>(getGetDocumentaryAccessUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetDocumentaryAccessQueryKey = () => {
+    return [
+    `/api/documentary/access`
+    ] as const;
+    }
+
+
+export const getGetDocumentaryAccessQueryOptions = <TData = Awaited<ReturnType<typeof getDocumentaryAccess>>, TError = ErrorType<void>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDocumentaryAccess>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetDocumentaryAccessQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getDocumentaryAccess>>> = ({ signal }) => getDocumentaryAccess({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getDocumentaryAccess>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetDocumentaryAccessQueryResult = NonNullable<Awaited<ReturnType<typeof getDocumentaryAccess>>>
+export type GetDocumentaryAccessQueryError = ErrorType<void>
+
+
+export function useGetDocumentaryAccess<TData = Awaited<ReturnType<typeof getDocumentaryAccess>>, TError = ErrorType<void>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDocumentaryAccess>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getDocumentaryAccess>>,
+          TError,
+          Awaited<ReturnType<typeof getDocumentaryAccess>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetDocumentaryAccess<TData = Awaited<ReturnType<typeof getDocumentaryAccess>>, TError = ErrorType<void>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDocumentaryAccess>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getDocumentaryAccess>>,
+          TError,
+          Awaited<ReturnType<typeof getDocumentaryAccess>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetDocumentaryAccess<TData = Awaited<ReturnType<typeof getDocumentaryAccess>>, TError = ErrorType<void>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDocumentaryAccess>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetDocumentaryAccess<TData = Awaited<ReturnType<typeof getDocumentaryAccess>>, TError = ErrorType<void>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDocumentaryAccess>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetDocumentaryAccessQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getStreamGomaDocumentaryUrl = () => {
+
+
+
+
+  return `/api/documentary/goma/stream`
+}
+
+export const streamGomaDocumentary = async ( options?: Parameters<typeof customFetch>[1]): Promise<Blob> => {
+
+  return customFetch<Blob>(getStreamGomaDocumentaryUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getStreamGomaDocumentaryQueryKey = () => {
+    return [
+    `/api/documentary/goma/stream`
+    ] as const;
+    }
+
+
+export const getStreamGomaDocumentaryQueryOptions = <TData = Awaited<ReturnType<typeof streamGomaDocumentary>>, TError = ErrorType<void>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof streamGomaDocumentary>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getStreamGomaDocumentaryQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof streamGomaDocumentary>>> = ({ signal }) => streamGomaDocumentary({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof streamGomaDocumentary>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type StreamGomaDocumentaryQueryResult = NonNullable<Awaited<ReturnType<typeof streamGomaDocumentary>>>
+export type StreamGomaDocumentaryQueryError = ErrorType<void>
+
+
+export function useStreamGomaDocumentary<TData = Awaited<ReturnType<typeof streamGomaDocumentary>>, TError = ErrorType<void>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof streamGomaDocumentary>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof streamGomaDocumentary>>,
+          TError,
+          Awaited<ReturnType<typeof streamGomaDocumentary>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useStreamGomaDocumentary<TData = Awaited<ReturnType<typeof streamGomaDocumentary>>, TError = ErrorType<void>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof streamGomaDocumentary>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof streamGomaDocumentary>>,
+          TError,
+          Awaited<ReturnType<typeof streamGomaDocumentary>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useStreamGomaDocumentary<TData = Awaited<ReturnType<typeof streamGomaDocumentary>>, TError = ErrorType<void>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof streamGomaDocumentary>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useStreamGomaDocumentary<TData = Awaited<ReturnType<typeof streamGomaDocumentary>>, TError = ErrorType<void>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof streamGomaDocumentary>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getStreamGomaDocumentaryQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getGetDocumentaryPreviewUrl = (filename: string,) => {
+
+
+
+
+  return `/api/documentary/media/${filename}`
+}
+
+export const getDocumentaryPreview = async (filename: string, options?: Parameters<typeof customFetch>[1]): Promise<Blob> => {
+
+  return customFetch<Blob>(getGetDocumentaryPreviewUrl(filename),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetDocumentaryPreviewQueryKey = (filename: string,) => {
+    return [
+    `/api/documentary/media/${filename}`
+    ] as const;
+    }
+
+
+export const getGetDocumentaryPreviewQueryOptions = <TData = Awaited<ReturnType<typeof getDocumentaryPreview>>, TError = ErrorType<unknown>>(filename: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDocumentaryPreview>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetDocumentaryPreviewQueryKey(filename);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getDocumentaryPreview>>> = ({ signal }) => getDocumentaryPreview(filename, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: filename !== null && filename !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getDocumentaryPreview>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetDocumentaryPreviewQueryResult = NonNullable<Awaited<ReturnType<typeof getDocumentaryPreview>>>
+export type GetDocumentaryPreviewQueryError = ErrorType<unknown>
+
+
+export function useGetDocumentaryPreview<TData = Awaited<ReturnType<typeof getDocumentaryPreview>>, TError = ErrorType<unknown>>(
+ filename: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDocumentaryPreview>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getDocumentaryPreview>>,
+          TError,
+          Awaited<ReturnType<typeof getDocumentaryPreview>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetDocumentaryPreview<TData = Awaited<ReturnType<typeof getDocumentaryPreview>>, TError = ErrorType<unknown>>(
+ filename: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDocumentaryPreview>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getDocumentaryPreview>>,
+          TError,
+          Awaited<ReturnType<typeof getDocumentaryPreview>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetDocumentaryPreview<TData = Awaited<ReturnType<typeof getDocumentaryPreview>>, TError = ErrorType<unknown>>(
+ filename: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDocumentaryPreview>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetDocumentaryPreview<TData = Awaited<ReturnType<typeof getDocumentaryPreview>>, TError = ErrorType<unknown>>(
+ filename: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDocumentaryPreview>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetDocumentaryPreviewQueryOptions(filename,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
 
 export const getGetNewsArchiveUrl = () => {
 

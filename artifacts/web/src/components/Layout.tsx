@@ -1,4 +1,5 @@
 import { type ReactNode, useState } from 'react';
+import { LanguageSwitcher } from '@/lib/locale';
 import { Link, useLocation } from 'wouter';
 import { navItems } from '@/lib/navigation';
 import { Show } from '@clerk/react';
@@ -44,29 +45,30 @@ export default function Layout({ children }: LayoutProps) {
         className="sticky top-0 z-50 border-b backdrop-blur-md"
         role="banner"
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6">
+        <div className="mx-auto flex max-w-[96rem] items-center justify-between gap-3 px-4 sm:px-6">
           {/* Wordmark */}
           <Link
             href="/"
-            className="min-w-0 shrink py-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2 rounded-sharp"
+            className="shrink-0 py-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2 rounded-sharp"
             aria-label="The One Movement International — Home"
           >
             <span
-              className="block truncate text-xs font-semibold uppercase sm:text-sm"
+              className="block whitespace-nowrap text-xs font-semibold uppercase sm:text-sm"
               style={{
                 fontFamily: 'var(--font-display)',
                 color: 'hsl(38 57% 94%)',
                 letterSpacing: '0.16em',
               }}
             >
-              THE ONE MOVEMENT
+              <span className="sm:hidden" translate="no">THE ONE</span>
+              <span className="hidden sm:inline" translate="no">THE ONE MOVEMENT</span>
             </span>
           </Link>
 
           {/* Desktop nav links — core pages only; JOIN THE MOVEMENT is the primary CTA */}
           <nav
             aria-label="Primary navigation"
-            className="hidden lg:flex items-center gap-0"
+            className="hidden min-[1440px]:flex items-center gap-0"
           >
             {headerNavItems.map((item) => {
               const isActive = location === item.path || (item.path === '/news' && location.startsWith('/news/'));
@@ -100,19 +102,20 @@ export default function Layout({ children }: LayoutProps) {
           </nav>
 
           {/* Right: JOIN THE MOVEMENT primary CTA + hamburger */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-3">
+            <LanguageSwitcher />
             <Show when="signed-in">
               <Link href="/member" data-testid="link-nav-member" className="inline-flex shrink-0 bg-gold-500 px-3 py-2 text-xs font-semibold uppercase text-ink-900 hover:bg-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 rounded-sharp" style={{ letterSpacing: '0.1em' }}>My space</Link>
             </Show>
             <Show when="signed-out">
-              <Link href="/sign-in" data-testid="link-nav-signin" className="hidden lg:inline-flex px-3 py-2 text-xs font-medium uppercase text-ivory-300 hover:text-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 rounded-sharp" style={{ letterSpacing: '0.1em' }}>Sign in</Link>
+              <Link href="/sign-in" data-testid="link-nav-signin" className="hidden shrink-0 whitespace-nowrap lg:inline-flex px-3 py-2 text-xs font-medium uppercase text-ivory-300 hover:text-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 rounded-sharp" style={{ letterSpacing: '0.1em' }}>Sign in</Link>
             </Show>
             {/* Desktop CTA — separated as primary action */}
             <Show when="signed-out">
             <Link
               href="/join"
               className={[
-                'hidden lg:inline-flex items-center gap-2 px-5 py-2 text-xs font-semibold uppercase rounded-sharp',
+                'hidden shrink-0 whitespace-nowrap lg:inline-flex items-center gap-2 px-5 py-2 text-xs font-semibold uppercase rounded-sharp',
                 'transition-colors duration-150',
                 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2',
                 location === '/join' ? 'opacity-90' : '',
@@ -131,7 +134,7 @@ export default function Layout({ children }: LayoutProps) {
             <button
               type="button"
               className={[
-                'lg:hidden p-2 rounded-sharp',
+                'min-[1440px]:hidden p-2 rounded-sharp',
                 'text-ivory-300 hover:text-ivory-100',
                 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400',
                 'transition-colors duration-150',
@@ -164,7 +167,7 @@ export default function Layout({ children }: LayoutProps) {
           <nav
             id="mobile-nav"
             aria-label="Mobile navigation"
-            className="max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-t shadow-lg lg:hidden"
+            className="max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-t shadow-lg min-[1440px]:hidden"
             style={{
               backgroundColor: 'hsl(188 66% 16%)',
               borderColor: 'hsl(188 46% 20%)',

@@ -4,53 +4,84 @@ import { Button } from '@/components/ui/button';
 import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
 import Reveal from '@/components/Reveal';
+import { PaymentReturn, useReturnParams } from '@/components/humanitarian/shared';
+
+const api = (p: string) => `${import.meta.env.BASE_URL}${p.replace(/^\//, '')}`;
+const GOMA_POSTER = api('api/documentary/media/goma.webp');
+
+function GomaFilm() {
+  return (
+    <div data-testid="player-goma-full">
+      <p className="mb-2 text-eyebrow text-lagoon-700">HUMANITARIAN FILM · FREE TO WATCH</p>
+      <video src={api('api/documentary/goma/stream')} poster={GOMA_POSTER} controls playsInline preload="metadata" className="h-auto w-full bg-ink-900 object-contain" />
+      <p className="mt-3 text-sm text-ink-800">Humanitarian films are free. No donation, subscription or member account is required to watch.</p>
+    </div>
+  );
+}
 
 export default function Documentary() {
+  const { sessionId, cancelled } = useReturnParams();
   return (
     <div className="bg-ivory-100">
       <Helmet>
-        <title>The One Documentary — People, cultures, journeys | TOMI</title>
-        <meta name="description" content="A documentary following the people, cultures, stories and encounters of The One Movement. A Dubai production is in development." />
-        <meta property="og:title" content="The One Documentary" />
-        <meta property="og:description" content="People, cultures, journeys and encounters. Dubai production in development." />
+        <title>The One Documentary — Films and archive | TOMI</title>
+        <meta name="description" content="TOMI's documentary collection: the historical Goma film, a public Radio Okapi trailer, and a Dubai project in development." />
       </Helmet>
+      <PaymentReturn sessionId={sessionId} cancelled={cancelled} />
 
-      <HeroSurface glowOrigin="bottom-center" minHeight="80vh">
+      <HeroSurface glowOrigin="bottom-center" minHeight="70vh">
         <div className="mx-auto w-full max-w-6xl px-6 py-section-lg">
-          <p className="text-eyebrow text-gold-400 animate-cinematic-1">DOCUMENTARY</p>
-          <h1 className="mt-6 text-display-xl text-ivory-100">
-            <span className="block animate-cinematic-1">THE ONE</span>
-            <span className="block animate-cinematic-2 text-gold-400">DOCUMENTARY</span>
-          </h1>
+          <p className="text-eyebrow text-gold-400 animate-cinematic-1">DOCUMENTARY COLLECTION</p>
+          <h1 className="mt-6 text-display-xl text-ivory-100"><span className="block animate-cinematic-1">THE ONE</span><span className="block animate-cinematic-2 text-gold-400">DOCUMENTARY</span></h1>
           <div className="animate-cinematic-3">
             <GoldThread className="mt-10" length="240px" node />
-            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-ivory-200">
-              A film that follows people, cultures, stories and journeys: the encounters that happen when different worlds meet.
-            </p>
+            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-ivory-200">An archive of moments from the Movement's path: Goma first, Kinshasa next, Dubai in development. Supporting it supports the TOMI humanitarian fund.</p>
           </div>
         </div>
       </HeroSurface>
 
-      <section className="py-section-xl">
+      <section className="py-section-lg">
         <div className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-12">
-          <Reveal className="lg:col-span-6">
-            <p className="text-eyebrow text-gold-600">NEW PROJECT · DUBAI</p>
-            <h2 className="mt-4 text-display-md text-ink-900">A DUBAI PRODUCTION, IN DEVELOPMENT.</h2>
-            <p className="mt-6 inline-block border border-lagoon-600/40 bg-lagoon-600/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-lagoon-700" data-testid="status-documentary">
-              In development — planned CANAL+ distribution subject to confirmation
-            </p>
-            <p className="mt-6 text-lg leading-relaxed text-ink-800">
-              The next documentary is announced as a Dubai production, following the people and encounters behind the Movement.
-              Distribution arrangements and broadcast dates will be announced once confirmed.
-            </p>
+          <Reveal className="lg:col-span-7">
+            <p className="text-eyebrow text-gold-600">CHAPTER 01 · GOMA · HISTORICAL FILM</p>
+            <h2 className="mt-3 text-display-md text-ink-900">Goma.</h2>
+            <p className="mt-3 text-sm text-ink-700">Full film: 59 seconds. Available to everyone.</p>
+            <div className="mt-6"><GomaFilm /></div>
           </Reveal>
-          <Reveal delay={120} className="lg:col-span-5 lg:col-start-8 border-l border-sand-300 pl-8">
-            <p className="text-eyebrow text-gold-600">PREVIOUS DOCUMENTARY</p>
-            <p className="mt-4 leading-relaxed text-ink-800">A previous documentary about the Movement was broadcast via CANAL+ and TV5MONDE. Any distribution of the future project remains subject to confirmation.</p>
-            <div className="mt-6 flex flex-col gap-2 text-sm font-semibold">
-              <a href="https://www.canalplus.com/" target="_blank" rel="noreferrer" className="text-lagoon-600 underline underline-offset-4" data-testid="link-canalplus">canalplus.com</a>
-              <Link href="/media" className="text-lagoon-600 underline underline-offset-4" data-testid="link-media-coverage">Previous coverage context on Media</Link>
-            </div>
+          <div className="lg:col-span-5">
+            <p className="text-eyebrow text-gold-700">WATCH FREELY · SUPPORT VOLUNTARILY</p>
+            <h2 className="mt-4 font-display text-3xl text-ink-900">Humanitarian action is not a subscription.</h2>
+            <p className="mt-5 text-sm leading-relaxed text-ink-800">A donation supports humanitarian needs, not a badge, publication rights or access to people. Professional ecosystem services are separate.</p>
+            <Link href="/donate" className="mt-6 inline-block font-semibold text-lagoon-700 underline" data-testid="link-donate">Make a voluntary contribution</Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-lagoon-900 py-section-lg text-ivory-100">
+        <div className="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <p className="text-eyebrow text-gold-400">PUBLIC · OUTSIDE THE ARCHIVE</p>
+            <h2 className="mt-3 text-display-md">Radio Okapi trailer</h2>
+            <p className="mt-4 text-sm leading-relaxed text-ivory-300">Duration 2:09. Credit: MONUSCO / United Nations, Radio Okapi. This is not a TOMI production and is shown freely for context.</p>
+          </div>
+          <div className="lg:col-span-8">
+            <video src={api('api/documentary/media/radio-okapi-trailer.mp4')} poster={api('api/documentary/media/radio-okapi.webp')} controls playsInline preload="metadata" className="h-auto w-full border border-gold-500/30 bg-ink-950 object-contain" data-testid="player-radio-okapi" />
+          </div>
+        </div>
+      </section>
+
+      <section className="py-section-lg">
+        <div className="mx-auto grid max-w-6xl gap-px bg-sand-300 px-0 md:grid-cols-2">
+          <Reveal className="bg-ivory-100 p-8">
+            <p className="text-eyebrow text-gold-600">CHAPTER 02 · KINSHASA</p>
+            <h3 className="mt-3 font-display text-2xl text-ink-900">Next in the collection.</h3>
+            <p className="mt-3 text-sm leading-relaxed text-ink-800">Kinshasa is the next chapter planned for the archive. No film is published yet and no date is announced.</p>
+          </Reveal>
+          <Reveal delay={100} className="bg-ivory-100 p-8">
+            <p className="text-eyebrow text-gold-600">SEPARATE PROJECT · DUBAI</p>
+            <h3 className="mt-3 font-display text-2xl text-ink-900">A Dubai production, in development.</h3>
+            <p className="mt-3 text-sm leading-relaxed text-ink-800">A distinct future project. Planned distribution is unconfirmed and no broadcaster acquisition is claimed. A previous documentary about the Movement was broadcast via CANAL+ and TV5MONDE.</p>
+            <Link href="/media" className="mt-4 inline-block text-sm font-semibold text-lagoon-700 underline underline-offset-4" data-testid="link-media-coverage">Previous coverage on Media</Link>
           </Reveal>
         </div>
       </section>

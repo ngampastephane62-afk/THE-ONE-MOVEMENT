@@ -50,6 +50,20 @@
       "when": 1792031361669,
       "tag": "0006_peaceful_zuras",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1792118272022,
+      "tag": "0007_fine_paladin",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1792119566709,
+      "tag": "0008_yummy_agent_brand",
+      "breakpoints": true
     }
   ]
 }

@@ -12,3 +12,5 @@
 - [Project control and Tropik licensing](project-control.md) — owner approval for releases and connected-account changes; verify ownership and licensing rather than infer them.
 - [Dependency remediation](dependency-remediation.md) — remove unnecessary vulnerable chains rather than suppress advisories; verify production-only auth transport with loopback tests.
 - [Editorial boundaries](editorial-content-boundaries.md) — News press archive vs Media catalogue, documented partners, Goma donations, Thanks Emirates participation and documentary claims.
+- [Localization transformations](localization-transforms.md) — bounded indexed translation rows prevent missing-phrase misalignment; use simple schemas with explicit coverage checks.
+- [Ecosystem product rules](ecosystem-product-rules.md) — monthly professional services separate from free humanitarian media; ten-person rules, native video, UAE and regional leaders.

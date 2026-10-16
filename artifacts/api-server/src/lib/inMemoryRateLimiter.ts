@@ -36,12 +36,14 @@ interface Bucket {
 const WINDOW_MS = 10 * 60 * 1000; // 10 minutes
 const MAX_REQUESTS = 5;
 
-export function createRateLimiter(): (
+export function createRateLimiter(options: { maxRequests?: number; windowMs?: number } = {}): (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => void {
   const buckets = new Map<string, Bucket>();
+  const maxRequests = options.maxRequests ?? MAX_REQUESTS;
+  const windowMs = options.windowMs ?? WINDOW_MS;
 
   return (req: Request, res: Response, next: NextFunction): void => {
     // req.ip is reliable only after trust proxy is set in app.ts
@@ -50,14 +52,14 @@ export function createRateLimiter(): (
 
     const existing = buckets.get(ip);
 
-    if (!existing || now - existing.windowStart > WINDOW_MS) {
+    if (!existing || now - existing.windowStart > windowMs) {
       // New window
       buckets.set(ip, { count: 1, windowStart: now });
       next();
       return;
     }
 
-    if (existing.count >= MAX_REQUESTS) {
+    if (existing.count >= maxRequests) {
       sendError(
         res,
         429,

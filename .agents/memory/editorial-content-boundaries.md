@@ -38,3 +38,27 @@ The documentary section must represent TOMI's ongoing documentary history, with 
 **Why:** The stakeholder states they have made documentary videos since the beginning and wants highlights leading to longer exclusive content.
 
 **How to apply:** Distinguish TOMI productions, externally produced trailers and the future Dubai project. Credit MONUSCO/Radio Okapi accurately; do not assume permission to place third-party footage behind a paid-access restriction merely because it was supplied.
+
+Humanitarian contributions are received by The One Movement International, which chooses allocation according to urgency. Do not restore a confusing Panzi-direct/TOMI donation split or promise a fixed earmark. The stakeholder names Gaza, Goma, Bukavu, Ukraine and people suffering anywhere.
+
+**Why:** The stakeholder explicitly corrected the beneficiary and allocation policy. Their priority is funding schools and children's education centres for displaced people, orphans, people with disabilities, people with albinism and rape survivors; these are funding goals, not completed construction.
+
+**How to apply:** Separate official crisis information from TOMI's documented actions. Accept offers of goods, equipment and logistics through coordinated contact, not unsolicited shipment. Payment integration is not evidence of fundraising authorization: real collection still requires explicit approval and eligibility checks.
+
+Humanitarian actions and films are free to access, with voluntary contributions entirely separate from professional ecosystem subscriptions. Do not restore the earlier US$10 humanitarian-film purchase.
+
+**Why:** On 2026-10-16 the stakeholder clarified that the paid product is a monthly professional/social ecosystem subscription, not humanitarian action, superseding the earlier film-price instruction. They supplied distinct TOMI Goma and MONUSCO/Radio Okapi files.
+
+**How to apply:** Keep both supplied humanitarian films public. Goma is about 59 seconds, not feature-length. Kinshasa footage has not been supplied; Dubai is a separate future project. Never describe test contributions as real fundraising.
+
+There is no TOMI fundraising ceiling; the stakeholder explicitly gives a US$1 million contribution as an example.
+
+**Why:** The stakeholder rejected an application-imposed maximum because emergencies can require substantial funds.
+
+**How to apply:** Separate processor/card limits from willingness to accept contributions. Route major gifts into persisted financial offers for eligibility, due diligence and coordinated payment arrangements; an offer is not money received. Do not invent bank details or bypass fundraising authorization.
+
+The international-language scope covers the existing site, not only Thanks Emirates or the donation page: English, French, Arabic, Spanish, Portuguese, Swahili and simplified Chinese, with Arabic right-to-left layout.
+
+**Why:** The stakeholder requested “langues internationales” for the whole site; these seven languages were the committed scope.
+
+**How to apply:** Keep the selector persistent across navigation and translate shared UI and form instructions. Preserve user-authored content, names, source attribution and exact monetary terms; do not send visitor content to a live translation service.
