@@ -15,6 +15,7 @@ import ArchivePhoto from '@/components/ArchivePhoto';
 import PathCard from './PathCard';
 import InterestForm from './InterestForm';
 import InquiryForm, { type InquiryIntent } from './InquiryForm';
+import { getInquiryDefinition, isGeneralInquiryIntent } from './inquiry-intents';
 import {
   PATH_DEFINITIONS,
   JOURNEY_STEPS,
@@ -41,7 +42,8 @@ export default function JoinTheMovement() {
     ? getProgrammeServiceOffer(search.get('program') ?? '', search.get('service') ?? '')
     : undefined;
   const inquiryIntent: InquiryIntent = serviceOffer ? 'programme-service'
-    : !privacyRequest && (requestedIntent === 'investment' || requestedIntent === 'partnership') ? requestedIntent : undefined;
+    : !privacyRequest && isGeneralInquiryIntent(requestedIntent) ? requestedIntent : undefined;
+  const inquiryDefinition = getInquiryDefinition(inquiryIntent);
 
   const formSectionRef = useRef<HTMLElement>(null);
   const inquirySectionRef = useRef<HTMLElement>(null);
@@ -433,8 +435,8 @@ export default function JoinTheMovement() {
             {/* Left */}
             <div className="lg:col-span-4">
               <SectionHeading
-                eyebrow={privacyRequest ? 'PRIVACY & DATA RIGHTS' : serviceOffer ? 'PROGRAMME PARTICIPATION SERVICES' : inquiryIntent ? 'INVESTMENT & PARTNERSHIPS' : 'INSTITUTIONAL PATHWAY'}
-                heading={privacyRequest ? 'PRIVACY REQUEST' : serviceOffer ? `${serviceOffer.name.toUpperCase()} · ${serviceOffer.programmeName.toUpperCase()}` : inquiryIntent === 'investment' ? 'INVEST IN THE ONE MOVEMENT MULTINATIONAL' : inquiryIntent === 'partnership' ? 'BECOME A PARTNER' : 'INSTITUTIONAL INQUIRY'}
+                eyebrow={privacyRequest ? 'PRIVACY & DATA RIGHTS' : serviceOffer ? 'PROGRAMME PARTICIPATION SERVICES' : inquiryDefinition?.eyebrow ?? 'INSTITUTIONAL PATHWAY'}
+                heading={privacyRequest ? 'PRIVACY REQUEST' : serviceOffer ? `${serviceOffer.name.toUpperCase()} · ${serviceOffer.programmeName.toUpperCase()}` : inquiryDefinition?.heading ?? 'INSTITUTIONAL INQUIRY'}
                 size="md"
                 surface="dark"
                 thread
@@ -443,9 +445,7 @@ export default function JoinTheMovement() {
                 <p className="mt-5 border-s-2 border-gold-500 px-4 text-sm leading-relaxed text-ivory-200" role="note">
                   {serviceOffer
                     ? 'Choose a professional service for this activity without buying a sponsorship package. Describe your objectives so the team can confirm selection, scope and deliverables. Existing sponsors can request a check of their agreed inclusions before any additional fee.'
-                    : inquiryIntent === 'investment'
-                    ? 'Discuss the project, its funding needs and development milestones directly with TOMI. This enquiry is not an investment commitment. Read the public investment presentation on the Partners page.'
-                    : 'Tell TOMI about your visibility objectives, outdoor marketing needs, preferred locations, timing and budget. Package scope and availability are agreed with the team; this enquiry does not activate a partnership.'}
+                    : inquiryDefinition?.note}
                 </p>
               )}
               {privacyRequest && (
@@ -464,10 +464,10 @@ export default function JoinTheMovement() {
               <p className="mt-4 text-ivory-200 text-sm leading-relaxed">
                 {privacyRequest
                   ? 'Provide enough information for the operator to locate and review your request. The form remains the existing institutional inquiry pathway and does not create a new request type.'
-                  : serviceOffer ? 'Apply as an independent professional or on behalf of an organisation. This enquiry is sent to TOMI for review; it does not reserve a place or charge a fee.'
+                  : serviceOffer || inquiryDefinition?.professional ? 'Apply as an independent professional or on behalf of an organisation. This enquiry is sent to TOMI for review; it does not reserve a place or charge a fee.'
                   : "Embassies, governments, international organizations, universities, NGOs, sponsors, partners and media organizations engage through this pathway. Provide your organization's information and our team will contact you directly."}
               </p>
-              {!privacyRequest && !serviceOffer && <div className="mt-8 space-y-4">
+              {!privacyRequest && !serviceOffer && !inquiryDefinition?.professional && <div className="mt-8 space-y-4">
                 {[
                   'Embassy or diplomatic mission',
                   'Government or ministry',
@@ -501,6 +501,7 @@ export default function JoinTheMovement() {
                   key={privacyRequest ? 'privacy' : serviceOffer ? `${serviceOffer.programme}-${serviceOffer.role}-${search.get('coverage') ?? ''}` : inquiryIntent ?? 'institutional'}
                   privacyRequest={privacyRequest} intent={inquiryIntent} serviceOffer={serviceOffer}
                   existingSponsor={search.get('coverage') === 'existing-sponsor'}
+                  participationCategory={search.get('category') ?? undefined}
                 />
               </div>
             </div>

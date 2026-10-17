@@ -1,0 +1,407 @@
+PROJECT: THE ONE MOVEMENT INTERNATIONAL
+PROGRAMME: THE ONE SUMMIT
+
+STRATEGIC REPOSITIONING — AN ECOSYSTEM, NOT JUST AN EVENT
+
+IMPORTANT:
+The current The One Summit page is too text-heavy and presents
+a conventional conference programme.
+
+We need to rethink its presentation and information architecture.
+
+Do not merely rewrite existing paragraphs or change the hero image.
+
+The One Summit is intended to be the annual physical gathering
+of a wider, year-round professional and knowledge ecosystem.
+
+The ecosystem connects:
+- Entrepreneurs and startups
+- Investors and business leaders
+- Technology and artificial intelligence professionals
+- Real estate and infrastructure sectors
+- Governance and institutional leadership
+- Environmental and climate initiatives
+- Agriculture and industry
+- Education and professional development
+- Media and creative industries
+- Humanitarian and social-impact organisations
+- Experts, consultants and service providers
+
+CORE POSITIONING
+
+THE ONE SUMMIT
+
+WHERE IDEAS BECOME OPPORTUNITIES.
+
+An international ecosystem connecting business, knowledge,
+innovation, professional communities and impact.
+
+The platform must communicate that members can discover,
+learn, sell, share expertise, build relationships, showcase
+solutions and explore collaboration throughout the year.
+
+The annual Summit is the physical meeting point of this ecosystem.
+It is not the ecosystem's only activity.
+
+PRESERVE THE EXISTING APPLICATION
+
+Before changing anything:
+1. Inspect the existing application architecture.
+2. Identify the current Summit route and its components.
+3. Identify the existing authentication and user profiles.
+4. Inspect the database schema and available data.
+5. Identify existing forms, contact routes and membership functionality.
+6. Identify reusable media assets and design components.
+
+Preserve existing functionality and production data.
+Do not rebuild the entire application.
+Do not delete unrelated routes or user records.
+Do not introduce duplicate tables or duplicate authentication systems.
+Reuse existing infrastructure wherever appropriate.
+
+BRAND DIRECTION
+
+Retain the existing premium deep-teal, emerald, champagne-gold
+and ivory visual identity.
+
+Maintain the existing official logo and branding.
+
+The design should feel like a premium international business,
+innovation and knowledge platform.
+
+Use:
+- Large editorial headlines
+- High-quality, relevant photography
+- Strong visual storytelling
+- Carefully composed card layouts
+- Clear navigation
+- Elegant spacing
+- Refined typography
+- Subtle animations
+- Responsive mobile-first layouts
+
+Avoid:
+- Long uninterrupted paragraphs
+- Repetitive descriptions
+- Generic conference-template design
+- Excessive empty sections
+- Repeated fee notices
+- Unrelated or low-quality images
+- Non-functional buttons
+- Fake member profiles or fabricated business listings
+
+SECTION 1 — HERO
+
+Headline:
+THE ONE SUMMIT
+
+Primary statement:
+WHERE IDEAS BECOME OPPORTUNITIES.
+
+Supporting copy:
+An international ecosystem connecting business, knowledge,
+innovation, professional communities and impact.
+
+Primary CTA:
+EXPLORE THE ECOSYSTEM
+
+Secondary CTA:
+JOIN THE NETWORK
+
+Use a compelling visual representing the intersection of business,
+technology, knowledge, infrastructure and international collaboration.
+
+The hero must communicate that this is more than a conference.
+
+SECTION 2 — EXPLORE THE ECOSYSTEM
+
+Create six visually distinctive feature cards.
+
+1. THE ONE MARKETPLACE
+Discover products, businesses, professional services and expertise.
+
+2. THE ONE KNOWLEDGE HUB
+Access educational resources, practical guides, expert insights,
+training materials and knowledge-sharing opportunities.
+
+3. THE ONE NETWORK
+Discover professionals, entrepreneurs, experts and potential partners.
+
+4. THE ONE SUMMIT & EXCHANGE
+Explore the annual physical gathering, exhibitions, demonstrations,
+workshops and professional networking opportunities.
+
+5. THE ONE MEDIA
+Discover interviews, business stories, expert discussions,
+innovation reports and educational content.
+
+6. THE ONE IMPACT
+Explore initiatives related to governance, sustainability,
+climate, infrastructure, education and social impact.
+
+Each card must have a clear description and a functional action.
+
+Only link to routes that exist or are intentionally implemented.
+Do not create fake destinations.
+
+If a feature is not yet operational, clearly label it as
+"COMING SOON" or "EARLY ACCESS" where appropriate.
+
+SECTION 3 — EXPLORE THE SECTORS
+
+Create an attractive visual sector directory covering:
+
+- Business & Entrepreneurship
+- Technology & Artificial Intelligence
+- Real Estate & Infrastructure
+- Governance & Public Leadership
+- Environment, Climate & Sustainability
+- Finance & Investment
+- Agriculture & Industry
+- Media & Creative Industries
+- Education & Professional Development
+- Humanitarian & Social Impact
+
+Each sector should have a concise explanation.
+
+Where practical, allow the sector to become a filter for relevant
+marketplace listings, knowledge resources, events and member profiles.
+
+Do not create artificial listings just to populate the page.
+
+SECTION 4 — THE ONE MARKETPLACE
+
+Present The One Marketplace as a place where members can showcase
+products, services, expertise, solutions and professional offerings.
+
+Support the existing platform's capabilities, including where available:
+- Business profiles
+- Professional service listings
+- Product listings
+- Company descriptions
+- Sector classification
+- Portfolio and media
+- Professional contact enquiries
+- Calls for collaboration
+
+Create a prominent CTA:
+LIST YOUR BUSINESS
+
+Create another CTA:
+EXPLORE THE MARKETPLACE
+
+Inspect the existing data model before implementing any functionality.
+
+Do not claim that payments, booking, transactions or verification
+are available unless they are actually implemented and tested.
+
+Do not invent real businesses, customer testimonials, products
+or member statistics.
+
+SECTION 5 — THE ONE KNOWLEDGE HUB
+
+Introduce a knowledge library organised by sector and topic.
+
+Potential content categories include:
+- Entrepreneurship
+- Technology and AI
+- Investment and Finance
+- Real Estate and Infrastructure
+- Governance
+- Environment and Climate
+- Agriculture and Industry
+- Diplomacy and Cooperation
+- Media and Marketing
+- Education and Professional Development
+
+Support content types such as articles, guides, videos, reports,
+case studies, expert interviews and training materials where feasible.
+
+Reuse existing content-management functionality if available.
+
+If the library is not implemented yet, build an honest, visually
+compelling introduction and a functional enquiry or early-access form.
+
+Do not generate fake reports or claim that non-existent resources
+are available.
+
+SECTION 6 — THE ONE NETWORK
+
+Present the professional community.
+
+Members should be able to discover professionals and potential
+partners according to their sector, expertise and interests,
+subject to existing platform capabilities.
+
+Potential profile information:
+- Name or professional display name
+- Organisation
+- Sector
+- Expertise
+- Country or market served
+- Professional introduction
+- Collaboration interests
+- Portfolio
+- Contact or connection action
+
+Respect existing privacy settings and authentication rules.
+
+Do not expose private contact information or account data publicly.
+
+Do not build a second authentication system.
+
+SECTION 7 — THE ANNUAL SUMMIT EXPERIENCE
+
+Show that the physical event includes much more than keynote speeches.
+
+Create a visually rich presentation of the proposed event zones:
+
+A. BUSINESS MARKETPLACE
+Businesses showcase products, services and professional solutions.
+
+B. INNOVATION & TECHNOLOGY
+Technology demonstrations, startups, AI solutions and innovation.
+
+C. INFRASTRUCTURE & REAL ESTATE
+Infrastructure, construction, real estate and development opportunities.
+
+D. SUSTAINABILITY & CLIMATE
+Pollution reduction, waste management, energy, water and climate solutions.
+
+E. KNOWLEDGE & SKILLS
+Workshops, practical demonstrations, training and expert learning.
+
+F. MEDIA & CONTENT
+Interviews, reports, live discussions and business storytelling.
+
+G. PARTNERSHIP LOUNGE
+Professional meetings and potential business or institutional collaborations.
+
+Make clear that specific activities depend on the confirmed event programme.
+
+Do not invent exhibitors, sponsors, speakers or confirmed partners.
+
+Include appropriate calls to action:
+EXHIBIT AT THE SUMMIT
+SHARE YOUR EXPERTISE
+EXPLORE PARTNERSHIPS
+
+Connect these buttons to working enquiry forms or existing routes.
+
+SECTION 8 — THE ONE MEDIA
+
+Introduce a year-round editorial and educational content platform.
+
+Potential content:
+- Founder interviews
+- Business stories
+- Innovation reports
+- Expert conversations
+- Podcasts
+- Educational videos
+- Sector insights
+- Sustainability and social-impact stories
+
+Use real existing media assets where possible.
+
+Do not fabricate editorial coverage or imply that payment guarantees
+independent editorial coverage.
+
+SECTION 9 — THE ONE IMPACT
+
+Present a practical approach to cross-sector collaboration.
+
+Focus on:
+- Governance and accountability
+- Environmental protection
+- Pollution and waste management
+- Climate solutions
+- Education and skills
+- Youth entrepreneurship
+- Sustainable infrastructure
+- Community innovation
+
+Emphasise learning, collaboration and project development.
+
+Do not claim that proposed projects have already been funded
+or implemented unless evidence exists.
+
+SECTION 10 — MEMBERSHIP AND PARTICIPATION
+
+Create clear pathways for:
+- Individual professionals
+- Entrepreneurs and businesses
+- Experts and educators
+- Investors and partners
+- Institutions and organisations
+- Exhibitors and event participants
+
+Reuse existing membership and authentication systems.
+
+Do not invent prices or benefits.
+
+If pricing is not configured, provide a clear enquiry action instead.
+
+Explain the next steps transparently.
+
+SECTION 11 — FINAL CALL TO ACTION
+
+Headline:
+YOUR KNOWLEDGE HAS VALUE.
+YOUR BUSINESS HAS POTENTIAL.
+YOUR IDEAS DESERVE A PLATFORM.
+
+Supporting text:
+Join a community built around learning, collaboration,
+opportunity and impact.
+
+Buttons:
+BECOME A MEMBER
+LIST YOUR BUSINESS
+SHARE YOUR EXPERTISE
+BECOME A PARTNER
+
+FUNCTIONAL REQUIREMENTS
+
+- Preserve existing authentication.
+- Preserve existing user records.
+- Reuse the existing database schema where appropriate.
+- Make all implemented buttons functional.
+- Ensure all forms have validation and clear success/error states.
+- Protect private member information.
+- Ensure responsive mobile and desktop layouts.
+- Optimise images and loading performance.
+- Check keyboard accessibility and contrast.
+- Test navigation and all new interactions.
+- Check browser console errors.
+- Do not publish automatically.
+
+IMPLEMENTATION PRIORITY
+
+First: improve the Summit page and its visual storytelling.
+
+Second: create clear navigation between the six ecosystem pillars.
+
+Third: implement only the features that can be completed safely
+with the current architecture.
+
+Fourth: clearly identify future features that are not operational.
+
+Do not attempt to build a complete marketplace, learning-management
+system, social network and payment platform in a single uncontrolled
+change.
+
+Build a coherent foundation that can be expanded in phases.
+
+FINAL REPORT
+
+After implementation, explain:
+1. What changed visually.
+2. What functionality is operational.
+3. Which routes and components were modified.
+4. What was tested.
+5. Which features remain future development.
+6. Whether any database or configuration changes were required.
+
+The result should feel like the entry point to a living international
+ecosystem, not a conventional event landing page.

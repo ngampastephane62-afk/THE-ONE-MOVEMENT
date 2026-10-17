@@ -21,3 +21,4 @@
 - [Editorial asset storage](editorial-asset-storage.md) — standalone media jobs should avoid app DB/auth imports; malformed sidecar field names can resemble stream failures.
 - [Dubai programme announcements](dubai-programme-announcements.md) — confirmed December 2026/January 2027 dates; Fashion Week networking, supporting voices and Awards speaker framing.
 - [Magazine measurement](magazine-measurement.md) — library/book reading, genuine digital-session statistics separate from social reach, and raw aggregate timestamp decoding.
+- [Summit and Gala positioning](summit-gala-positioning.md) — year-round professional ecosystem versus a community-centred national and cultural Gala; expand in controlled phases.

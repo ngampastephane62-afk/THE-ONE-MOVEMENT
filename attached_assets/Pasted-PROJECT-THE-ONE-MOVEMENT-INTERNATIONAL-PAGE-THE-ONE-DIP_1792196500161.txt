@@ -1,0 +1,322 @@
+PROJECT: THE ONE MOVEMENT INTERNATIONAL
+PAGE: THE ONE DIPLOMATIC GALA
+
+OBJECTIVE
+
+Transform the existing The One Diplomatic Gala page into a premium,
+immersive, visually compelling international event experience.
+
+The current page is too text-heavy, repetitive and visually static.
+It reads like an informational article rather than an exceptional
+international event that visitors would want to attend.
+
+We need a carefully art-directed event website that communicates
+prestige, international relevance, cultural diversity, diplomacy,
+business, humanitarian action and innovation.
+
+IMPORTANT PROJECT SAFEGUARDS
+
+Inspect the existing application before making changes.
+
+Preserve the existing architecture, routes, database, authentication,
+user records, existing functionality and unrelated pages.
+
+Do not rebuild the application from scratch.
+Do not delete production data.
+Do not change unrelated sections of the website.
+Do not replace real assets with fabricated claims or misleading imagery.
+
+Retain the existing brand identity:
+- Deep emerald and dark teal.
+- Champagne gold.
+- Warm ivory.
+- Elegant editorial typography.
+- Refined African geometric motifs.
+- Premium spacing and subtle transitions.
+
+BRAND CONCEPT
+
+The One Movement International is a global platform connecting
+diplomacy, culture, business, investment, humanitarian action,
+technology, artificial intelligence, education and the arts.
+
+The One Diplomatic Gala is one expression of this broader movement.
+
+It is conceived as an international gathering where diplomats,
+governments, institutions, NGOs, humanitarian organisations,
+private offices, business leaders, investors, artists and innovators
+can meet, exchange perspectives and explore opportunities for
+collaboration.
+
+Do not position the event as merely a gala dinner.
+Communicate the idea of a premium international gathering with
+a broader purpose.
+
+SECTION 1: HERO
+
+Create a full-width, cinematic hero section.
+
+Use a high-quality existing image or a suitable, properly licensed
+visual showing an elegant international gala, a sophisticated
+diplomatic gathering or a premium international event.
+
+If suitable existing assets are available, reuse them.
+Do not fabricate photographs of specific real public figures.
+
+Use a subtle dark teal overlay, refined gold accents and restrained
+animation.
+
+Text:
+
+THE ONE MOVEMENT INTERNATIONAL PRESENTS
+
+THE ONE DIPLOMATIC GALA
+
+Where Diplomacy Meets Culture, Business & Humanity.
+
+Bringing nations, institutions and influential minds together to
+build bridges, inspire collaboration and advance peace.
+
+Buttons:
+DISCOVER THE GALA
+EXPLORE PARTNERSHIP OPPORTUNITIES
+
+Supporting line:
+DIPLOMACY · CULTURE · BUSINESS · HUMANITY
+
+Make the hero visually impressive on both desktop and mobile.
+
+SECTION 2: THE VISION
+
+Heading:
+A NEW KIND OF GLOBAL GATHERING
+
+Lead:
+Diplomacy is more than dialogue between governments.
+It is the art of building relationships across differences.
+
+Explain concisely that the Gala brings together people and
+institutions working across international relations, humanitarian
+action, business, investment, culture, technology and innovation.
+
+Emphasise dialogue, mutual understanding and the exploration of
+meaningful cooperation.
+
+Use a premium editorial layout with a strong photograph and
+short text blocks.
+
+Avoid long uninterrupted paragraphs.
+
+SECTION 3: THE SIX WORLDS
+
+Heading:
+ONE MOVEMENT. MANY WORLDS.
+
+Create six visually distinct image cards:
+
+1. DIPLOMACY & INTERNATIONAL RELATIONS
+Building bridges between nations, institutions and communities.
+
+2. BUSINESS & INVESTMENT
+Connecting entrepreneurs, investors and decision-makers.
+
+3. CULTURE & ARTS
+Using creativity and cultural exchange to bring people together.
+
+4. HUMANITARIAN ACTION
+Encouraging solidarity and initiatives with positive social impact.
+
+5. TECHNOLOGY & ARTIFICIAL INTELLIGENCE
+Exploring how innovation can contribute to a more connected future.
+
+6. EDUCATION & YOUTH LEADERSHIP
+Supporting ideas, talent and the next generation of global leaders.
+
+Each card should have:
+- A suitable image.
+- A clear title.
+- A concise description.
+- A refined hover or reveal effect where appropriate.
+
+Avoid excessive decorative effects.
+
+SECTION 4: THE EXPERIENCE
+
+Heading:
+AN EVENING DESIGNED TO CONNECT THE WORLD
+
+Present five experience cards:
+
+DIPLOMATIC DIALOGUE
+Conversations on international cooperation, peace and shared priorities.
+
+LEADERSHIP CONVERSATIONS
+Perspectives from public institutions, business, investment and
+civil society.
+
+CULTURAL EXPRESSIONS
+Music, artistic performances and cultural experiences celebrating
+the diversity that connects us.
+
+HUMANITARIAN PERSPECTIVES
+An opportunity to highlight humanitarian priorities and initiatives
+seeking positive impact.
+
+STRATEGIC NETWORKING
+A setting designed to encourage connections and explore future
+cooperation.
+
+RECOGNITION & SHARED VISION
+Recognition of contributions to peace, culture, leadership and
+international collaboration, where included in the confirmed programme.
+
+Use immersive imagery and short descriptions.
+
+Do not state that any activity, speaker or performance is confirmed
+unless the project data or approved content explicitly confirms it.
+
+SECTION 5: WHO WE BRING TOGETHER
+
+Heading:
+A GLOBAL COMMUNITY. A SHARED PURPOSE.
+
+Create a premium grid for:
+
+- Diplomatic Missions & Ambassadors
+- Governments & Public Institutions
+- International Organisations
+- NGOs & Humanitarian Organisations
+- Private Offices & Royal Establishments
+- Business Leaders & Investors
+- Cultural Leaders & Artists
+- Media & Technology Innovators
+
+Each item should have a suitable visual, short description and
+accessible layout.
+
+Do not imply confirmed attendance or endorsement by any organisation
+that has not formally confirmed participation.
+
+SECTION 6: PARTNERSHIPS
+
+Heading:
+PARTNER WITH THE MOVEMENT
+
+Lead:
+Help build a platform where diplomacy, culture, business and
+humanitarian action come together.
+
+Present these potential partnership areas:
+
+- Institutional Partnerships
+- Strategic Partnerships
+- Corporate Partnerships
+- Cultural Partnerships
+- Humanitarian Initiatives
+- Media Partnerships
+- Technology & Innovation Partnerships
+
+Buttons:
+EXPLORE PARTNERSHIPS
+CONTACT OUR TEAM
+
+Use the existing contact or partnership form if one exists.
+Ensure every button leads to a valid destination.
+
+Do not invent sponsorship prices, benefits, confirmed partners
+or contractual commitments.
+
+SECTION 7: FOUNDER & VISION
+
+Heading:
+A VISION BEYOND BORDERS
+
+Text:
+The One Movement International was conceived around a simple idea:
+the world's diversity should become a source of connection,
+collaboration and progress.
+
+Through initiatives spanning diplomacy, culture, business, fashion,
+technology and humanitarian engagement, the Movement seeks to create
+opportunities for people and organisations from different backgrounds
+to meet, exchange ideas and explore common ground.
+
+The One Diplomatic Gala is one expression of this broader vision.
+
+Use existing, approved founder imagery where available.
+Do not invent titles, endorsements or institutional affiliations.
+
+Existing photographs of diplomatic meetings may be presented as
+documentary images of the Founder's engagements, with accurate captions.
+Do not present preparatory meetings as photographs from a completed Gala.
+
+SECTION 8: FINAL CALL TO ACTION
+
+Create an elegant, cinematic closing section.
+
+Heading:
+THE FUTURE IS BUILT TOGETHER.
+
+Text:
+A world of different cultures, ideas and ambitions can still share
+one purpose.
+
+Join the conversation. Build connections. Be part of the movement.
+
+Signature:
+WE ARE ONE.
+
+Buttons:
+JOIN THE MOVEMENT
+DISCUSS A PARTNERSHIP
+
+If the event date, venue or participation details are not confirmed,
+do not invent them. Invite visitors to express interest instead.
+
+VISUAL DESIGN REQUIREMENTS
+
+- Use the existing deep teal, emerald, gold and ivory palette.
+- Use premium, high-quality imagery.
+- Establish clear visual hierarchy.
+- Avoid excessive paragraphs.
+- Avoid repeating the same text.
+- Use generous whitespace.
+- Alternate dark and light sections for rhythm.
+- Use refined transitions and subtle motion.
+- Maintain excellent readability and contrast.
+- Keep the design responsive and mobile-first.
+- Optimise image sizes and loading performance.
+- Preserve existing logos and brand assets.
+- Do not introduce generic template styling.
+- Make the experience feel bespoke, diplomatic, elegant and
+  internationally relevant.
+
+FUNCTIONAL REQUIREMENTS
+
+Inspect the current routes, components, assets and forms.
+
+Reuse existing components and functionality where appropriate.
+
+Verify that:
+- Navigation remains functional.
+- All buttons lead to valid destinations.
+- Existing forms continue to work.
+- Existing authentication remains intact.
+- Images have suitable alt text.
+- The mobile layout is polished.
+- No unrelated pages are broken.
+- No new unsupported claims have been introduced.
+
+IMPLEMENTATION AND REPORT
+
+First inspect the existing page and its assets.
+Then implement the redesign in the current project.
+
+After implementation, test the page at mobile and desktop sizes.
+Check links, console errors, asset loading and existing functionality.
+
+Report what was changed, what was tested, and what remains dependent
+on event information or assets that have not yet been supplied.
+
+Do not publish automatically.
+Wait for review before recommending production republication.

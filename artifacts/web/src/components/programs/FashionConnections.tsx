@@ -3,6 +3,7 @@ import { Link } from 'wouter';
 import { useAuth } from '@clerk/react';
 import { RotateCw } from 'lucide-react';
 import { useGetEcosystemMembers, type PublicMember } from '@workspace/api-client-react';
+import { CONTINENTS, countryToContinent } from '@/lib/member-continents';
 
 /** Bilingual keyword sets matched against the member's own public profile text. */
 const ROLES = [
@@ -21,15 +22,19 @@ export default function FashionConnections() {
   const { isSignedIn } = useAuth();
   const { data, isLoading, isError, refetch, isFetching } = useGetEcosystemMembers();
   const [role, setRole] = useState<RoleId>('stylists');
+  const [continent, setContinent] = useState('');
   const [shown, setShown] = useState(9);
   const members = data?.members;
   const active = ROLES.find((r) => r.id === role)!;
 
   const matches = useMemo(() => {
     const list = members ?? [];
-    if (!active.keys.length) return list;
-    return list.filter((m) => { const t = text(m); return active.keys.some((k) => t.includes(k)); });
-  }, [members, active]);
+    return list.filter((m) => {
+      const t = text(m);
+      return (!active.keys.length || active.keys.some((k) => t.includes(k)))
+        && (!continent || countryToContinent(m.country) === continent);
+    });
+  }, [members, active, continent]);
 
   const peopleHref = `/member/people${active.q ? `?q=${encodeURIComponent(active.q)}` : ''}`;
 
@@ -37,12 +42,20 @@ export default function FashionConnections() {
     <section className="bg-ivory-100 py-section-lg" style={{ borderTop: '1px solid hsl(36 26% 84%)' }} aria-labelledby="fashion-connections-heading">
       <div className="mx-auto max-w-7xl px-6">
         <p className="text-eyebrow text-gold-600">FASHION WEEK CONNECTIONS</p>
-        <h2 id="fashion-connections-heading" className="mt-3 text-display-lg text-ink-900" style={{ fontFamily: 'var(--font-display)' }}>FIND THE PEOPLE WHO MAKE A RUNWAY.</h2>
+        <h2 id="fashion-connections-heading" className="mt-3 text-display-lg text-ink-900" style={{ fontFamily: 'var(--font-display)' }}>DISCOVER CREATORS.<br />LEARN ACROSS CONTINENTS.</h2>
         <p className="mt-5 max-w-2xl leading-relaxed text-ink-800">
           Stylists, designers, models, photographers and influencers from the public member directory. Every profile here was made public by its member; appearing here does not mean participation in the 22 December 2026 edition.
         </p>
 
-        <div className="mt-8 flex flex-wrap gap-2" role="tablist" aria-label="Filter by profession">
+        <div className="mt-8 max-w-md">
+          <label htmlFor="fashion-continent" className="block text-xs font-semibold uppercase tracking-wider text-ink-700">Explore by continent</label>
+          <select id="fashion-continent" value={continent} onChange={(e) => { setContinent(e.target.value); setShown(9); }} data-testid="select-fashion-continent" className="mt-2 min-h-11 w-full border border-sand-300 bg-ivory-50 px-3 text-sm text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500">
+            <option value="">All continents</option>
+            {CONTINENTS.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
+          </select>
+          <p className="mt-2 text-xs text-ink-700">Grouped by the country a member chose to share, not nationality or verified location. Profiles with an unrecognised country remain visible under All continents.</p>
+        </div>
+        <div className="mt-6 flex flex-wrap gap-2" role="group" aria-label="Filter by profession">
           {ROLES.map((r) => (
             <button key={r.id} type="button" role="tab" aria-selected={role === r.id} onClick={() => setRole(r.id)} data-testid={`chip-role-${r.id}`}
               className={`min-h-11 rounded-sharp border px-4 text-xs uppercase tracking-[0.14em] transition-colors ${role === r.id ? 'border-lagoon-900 bg-lagoon-900 text-gold-400' : 'border-sand-300 bg-ivory-50 text-ink-800 hover:border-gold-500'}`}>
@@ -65,7 +78,7 @@ export default function FashionConnections() {
             </div>
           ) : matches.length === 0 ? (
             <div className="border border-dashed border-gold-500/50 p-8">
-              <p className="font-display text-lg text-ink-900">No public profile matches this profession yet.</p>
+              <p className="font-display text-lg text-ink-900">No public profile matches these filters yet.</p>
               <p className="mt-1 text-sm text-ink-700">The directory grows only when members choose to be found. Describe your craft in your profile and make it public.</p>
             </div>
           ) : (

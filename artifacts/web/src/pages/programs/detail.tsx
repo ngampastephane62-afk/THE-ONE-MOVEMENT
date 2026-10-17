@@ -20,6 +20,10 @@ import ProgrammeCover from '@/components/programs/ProgrammeCover';
 import ProgrammeFilm from "@/components/programs/ProgrammeFilm";
 import PeaceVoices from "@/components/programs/PeaceVoices";
 import FashionConnections from "@/components/programs/FashionConnections";
+import SummitEcosystem from './SummitEcosystem';
+import DiplomaticGala from './gala';
+import FashionWeekPage from './fashion';
+import EverydayEcosystem from '@/components/programs/EverydayEcosystem';
 import { PROGRAMS, getProgramBySlug, type Program, type ProgramStatus } from '@/lib/programs-data';
 
 /* ── Page ─────────────────────────────────────────────────────────────────── */
@@ -34,6 +38,9 @@ export default function ProgramDetail() {
   }, [program, navigate]);
 
   if (!program) return null;
+  if (program.slug === 'summit') return <SummitEcosystem />;
+  if (program.slug === 'diplomatic-gala') return <DiplomaticGala />;
+  if (program.slug === 'fashion-week') return <FashionWeekPage />;
 
   return (
     <div>
@@ -112,6 +119,7 @@ export default function ProgramDetail() {
         </div>
       </HeroSurface>
 
+      <EverydayEcosystem key={program.slug} programmeSlug={program.slug} />
       <ProgrammeServiceOffers programme={program.slug} />
 
       {/* Transition: lagoon → ivory */}

@@ -1,12 +1,17 @@
 import { SignIn, useAuth } from '@clerk/react';
-import { Redirect } from 'wouter';
+import { Redirect, useSearch } from 'wouter';
 import { Helmet } from 'react-helmet-async';
 import AuthShell, { EmailGuidance } from '@/components/AuthShell';
 import { basePath } from '@/lib/clerk';
+import { getDesignerApplicationPath } from '@/lib/fashion-participation';
 
 export default function SignInPage() {
   const { isLoaded, isSignedIn } = useAuth();
-  if (isLoaded && isSignedIn) return <Redirect to="/member" replace />;
+  const packageSlug = new URLSearchParams(useSearch()).get('fashionPackage');
+  const applicationPath = getDesignerApplicationPath(packageSlug);
+  const destination = applicationPath ?? '/member';
+  const packageQuery = applicationPath ? `?fashionPackage=${encodeURIComponent(packageSlug!)}` : '';
+  if (isLoaded && isSignedIn) return <Redirect to={destination} replace />;
   return (
     <AuthShell eyebrow="MEMBER SIGN IN" title="WELCOME BACK.">
       <Helmet>
@@ -17,7 +22,7 @@ export default function SignInPage() {
       </Helmet>
       <div className="flex w-full min-w-0 max-w-[440px] flex-col items-center gap-4">
         <EmailGuidance />
-        <SignIn routing="path" path={`${basePath}/sign-in`} signUpUrl={`${basePath}/sign-up`} forceRedirectUrl={`${basePath}/member`} appearance={{ options: { socialButtonsPlacement: 'bottom', socialButtonsVariant: 'blockButton' } }} />
+        <SignIn routing="path" path={`${basePath}/sign-in`} signUpUrl={`${basePath}/sign-up${packageQuery}`} forceRedirectUrl={`${basePath}${destination}`} appearance={{ options: { socialButtonsPlacement: 'bottom', socialButtonsVariant: 'blockButton' } }} />
       </div>
     </AuthShell>
   );

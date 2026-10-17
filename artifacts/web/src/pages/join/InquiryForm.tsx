@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { ProgrammeServiceOffer } from '@workspace/shared';
 import { CONSENT_TEXT, ORG_TYPE_OPTIONS } from './join-data';
+import { GALA_PARTICIPATION_CATEGORIES, getGalaCategory, getGalaInquiryContext, getInquiryDefinition, type InquiryIntent } from './inquiry-intents';
+import { FASHION_CATEGORIES, getFashionCategory, getFashionInquiryContext } from '@/lib/fashion-participation';
+export type { InquiryIntent } from './inquiry-intents';
 
 /* ── Types ────────────────────────────────────────────────────────────────── */
 
@@ -127,27 +130,34 @@ function Field({
 
 /* ── Component ────────────────────────────────────────────────────────────── */
 
-export type InquiryIntent = 'investment' | 'partnership' | 'programme-service' | undefined;
-
-const INTENT_MESSAGES = {
-  investment: 'Investment enquiry — The One Movement Multinational\n\nI would like to discuss the project, its funding requirements, budget and development milestones.\nMy investment interests and indicative budget:\n',
-  partnership: 'Partnership enquiry — The One Movement\n\nI would like to discuss a visibility package, outdoor marketing, media or programme collaboration.\nMy objectives, preferred locations, timing and indicative budget:\n',
-};
-
-export default function InquiryForm({ privacyRequest = false, intent, serviceOffer, existingSponsor = false }: {
+export default function InquiryForm({ privacyRequest = false, intent, serviceOffer, existingSponsor = false, participationCategory, onParticipationCategoryChange }: {
   privacyRequest?: boolean; intent?: InquiryIntent; serviceOffer?: ProgrammeServiceOffer; existingSponsor?: boolean;
+  participationCategory?: string;
+  onParticipationCategoryChange?: (value: string) => void;
 }) {
+  const inquiryDefinition = privacyRequest ? undefined : getInquiryDefinition(intent);
+  const isProfessional = Boolean(serviceOffer || inquiryDefinition?.professional);
+  const isGala = !privacyRequest && intent === 'diplomatic-gala';
+  const isFashion = !privacyRequest && intent === 'fashion-week';
+  const participationCategories = isFashion ? FASHION_CATEGORIES : GALA_PARTICIPATION_CATEGORIES;
+  const categoryOf = isFashion ? getFashionCategory : getGalaCategory;
+  const [category, setCategory] = useState<string>(() => categoryOf(participationCategory)?.value ?? '');
+  useEffect(() => {
+    setCategory(categoryOf(participationCategory)?.value ?? '');
+  }, [participationCategory, categoryOf]);
   const [fields, setFields] = useState<InquiryState>(() => ({
     ...INITIAL,
     message: serviceOffer
       ? 'My professional background, objectives and preferred participation:\n'
-      : !privacyRequest && intent && intent !== 'programme-service' ? INTENT_MESSAGES[intent] : '',
-    organizationType: serviceOffer || (!privacyRequest && intent === 'partnership') ? 'partner' : '',
-    contactRole: serviceOffer?.name ?? '',
+      : inquiryDefinition?.message ?? '',
+    organizationType: isProfessional || (!privacyRequest && intent === 'partnership') ? 'partner' : '',
+    contactRole: serviceOffer?.name ?? (isGala ? 'Gala participation contact' : isFashion ? 'Fashion Week participation contact' : ''),
   }));
   const [sponsorReview, setSponsorReview] = useState(existingSponsor);
   const serviceContext = serviceOffer
     ? `Professional service enquiry\nProgramme: ${serviceOffer.programmeName}\nRole: ${serviceOffer.name}\nNon-sponsor fee: ${serviceOffer.priceUsd === null ? 'Tailored quote' : `USD ${serviceOffer.priceUsd.toLocaleString('en-US')}`}; subject to agreed scope.\nExisting sponsor inclusion review: ${sponsorReview ? 'Requested — check agreed benefits before any extra charge' : 'Not requested'}\n\n`
+    : isGala ? getGalaInquiryContext(category)
+    : isFashion ? getFashionInquiryContext(category)
     : '';
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -163,6 +173,14 @@ export default function InquiryForm({ privacyRequest = false, intent, serviceOff
     setApiMessage('');
 
     const newErrors = validate(fields);
+    if ((isGala || isFashion) && !categoryOf(category)) {
+      newErrors.participationCategory = 'Please select a proposed participation category.';
+    }
+    if (isProfessional && newErrors.organizationName) {
+      newErrors.organizationName = fields.organizationName.trim()
+        ? 'Professional or organisation name is too long.'
+        : 'Professional or organisation name is required.';
+    }
     if ((serviceContext + fields.message.trim()).length > MAX_LEN.message) {
       newErrors.message = `Please shorten your message to ${MAX_LEN.message - serviceContext.length} characters.`;
     }
@@ -245,6 +263,8 @@ export default function InquiryForm({ privacyRequest = false, intent, serviceOff
         <p className="text-ivory-200 leading-relaxed max-w-md">
           Our team will contact you directly.
         </p>
+        {isGala && <p className="max-w-md text-sm text-ivory-200">Your proposal is awaiting review. This is not a confirmed pavilion booking or official national representation.</p>}
+        {isFashion && <p className="max-w-md text-sm text-ivory-200">Your proposal is awaiting review. This does not confirm participation, casting, accreditation or a paid package.</p>}
       </div>
     );
   }
@@ -253,7 +273,8 @@ export default function InquiryForm({ privacyRequest = false, intent, serviceOff
   const isSubmitting = status === 'submitting';
 
   return (
-    <form onSubmit={handleSubmit} noValidate aria-label={serviceOffer ? 'Programme service enquiry form' : 'Institutional inquiry form'}>
+    <form onSubmit={handleSubmit} noValidate aria-label={isGala ? 'Diplomatic Gala expression-of-interest form' : isFashion ? 'Fashion Week participation form' : serviceOffer ? 'Programme service enquiry form' : inquiryDefinition?.professional ? 'Ecosystem early-access enquiry form' : 'Institutional inquiry form'}>
+      {(isGala || isFashion) && <p className="mb-6 border-s-2 border-gold-500 ps-4 text-sm leading-relaxed text-ivory-200">{inquiryDefinition?.note}</p>}
       {serviceOffer && (
         <div className="mb-8 border-s-2 border-gold-500 bg-lagoon-800/50 px-4 py-4" role="note">
           <p className="text-eyebrow text-gold-400">{serviceOffer.programmeName} · {serviceOffer.name}</p>
@@ -310,10 +331,10 @@ export default function InquiryForm({ privacyRequest = false, intent, serviceOff
         {/* Organization */}
         <fieldset className="space-y-5">
           <legend className="text-xs font-semibold text-ivory-300 uppercase tracking-widest mb-4 pb-2 border-b border-lagoon-700/50 w-full">
-            {serviceOffer ? 'Professional or organisation' : 'Organization'}
+            {isGala ? 'Organisation or community' : isProfessional ? 'Professional or organisation' : 'Organization'}
           </legend>
 
-          <Field id="inq-orgName" label={serviceOffer ? 'Organisation or professional name' : 'Organization Name'} error={errors.organizationName} required>
+          <Field id="inq-orgName" label={isGala ? 'Organisation or community' : isProfessional ? 'Organisation or professional name' : 'Organization Name'} error={errors.organizationName} required>
             <input
               id="inq-orgName"
               type="text"
@@ -328,7 +349,7 @@ export default function InquiryForm({ privacyRequest = false, intent, serviceOff
             />
           </Field>
 
-          {!serviceOffer && <Field id="inq-orgType" label="Organization Type" error={errors.organizationType} required>
+          {!isProfessional && <Field id="inq-orgType" label="Organization Type" error={errors.organizationType} required>
             <select
               id="inq-orgType"
               value={fields.organizationType}
@@ -417,7 +438,7 @@ export default function InquiryForm({ privacyRequest = false, intent, serviceOff
               />
             </Field>
 
-            <Field id="inq-contactRole" label="Role / Title" error={errors.contactRole} required>
+          {!isGala && !isFashion && <Field id="inq-contactRole" label="Role / Title" error={errors.contactRole} required>
               <input
                 id="inq-contactRole"
                 type="text"
@@ -430,7 +451,7 @@ export default function InquiryForm({ privacyRequest = false, intent, serviceOff
                 className={`${inputBase} ${errors.contactRole ? inputError : inputNormal}`}
                 placeholder="Position or title"
               />
-            </Field>
+            </Field>}
           </div>
 
           <Field id="inq-email" label="Email Address" error={errors.email} required>
@@ -449,10 +470,31 @@ export default function InquiryForm({ privacyRequest = false, intent, serviceOff
           </Field>
         </fieldset>
 
+        {(isGala || isFashion) && (
+          <Field id="inq-participationCategory" label="Proposed participation category" error={errors.participationCategory} required>
+            <select
+              id="inq-participationCategory"
+              value={category}
+              onChange={(e) => {
+                setCategory(e.target.value);
+                onParticipationCategoryChange?.(e.target.value);
+                setErrors((previous) => ({ ...previous, participationCategory: '' }));
+              }}
+              aria-required="true"
+              aria-invalid={!!errors.participationCategory}
+              aria-describedby="inq-participationCategory-error"
+              className={`${inputBase} ${errors.participationCategory ? inputError : inputNormal}`}
+            >
+              <option value="">Select your proposed participation</option>
+              {participationCategories.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
+            </select>
+          </Field>
+        )}
+
         {/* Message */}
         <Field
           id="inq-message"
-          label={`${privacyRequest ? 'Privacy / data-rights request details' : 'Message'} (${fields.message.length} / ${MAX_LEN.message - serviceContext.length})`}
+          label={`${privacyRequest ? 'Privacy / data-rights request details' : isGala || isFashion ? 'Proposed contribution' : 'Message'} (${fields.message.length} / ${MAX_LEN.message - serviceContext.length})`}
           error={errors.message}
           required
         >

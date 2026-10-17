@@ -1,0 +1,212 @@
+PROJECT: THE ONE MOVEMENT INTERNATIONAL
+WEBSITE: THE ONE FASHION WEEK INTERNATIONAL PARTICIPATION PAGE
+
+OBJECTIVE
+
+Audit and completely improve the existing participation page for
+The One Fashion Week International.
+
+The current page contains vague descriptions such as "Media Participation",
+"Designer / Stylist", "Model", "Hair Stylist", "Tailored Fee on Enquiry",
+and repeated "Enquire" buttons.
+
+This content does not adequately communicate our business model.
+
+We need a premium international participation and subscription platform
+where professionals and organisations can understand the event, explore
+their category, compare available packages, and apply or subscribe
+according to the applicable terms.
+
+IMPORTANT:
+Preserve the existing project architecture, visual identity, database,
+authentication system, existing functionality and unrelated pages.
+Do not rebuild the application from scratch.
+Do not delete existing user records or production data.
+Do not change unrelated functionality.
+Inspect the existing code before making modifications.
+
+BRAND POSITIONING
+
+The One Fashion Week International is an international fashion platform
+connecting fashion, culture, creativity, business and international
+collaboration.
+
+The website must communicate a premium, professional, international
+experience.
+
+Use the existing brand identity, including its dark teal, cream and
+gold palette, elegant typography, premium spacing and refined editorial
+aesthetic.
+
+Keep the design responsive and optimise it for mobile devices.
+
+PAGE INTRODUCTION
+
+Title:
+THE ONE FASHION WEEK INTERNATIONAL
+
+Headline:
+BE PART OF THE GLOBAL FASHION MOVEMENT.
+
+Introduction:
+More than a runway. A platform for fashion, culture, creativity,
+business and international connections.
+
+Body:
+The One Fashion Week International brings together designers, models,
+stylists, accessory creators, fashion professionals, media organisations,
+production teams, brands and industry partners on an international
+platform dedicated to fashion, culture, innovation and collaboration.
+
+Our platform creates opportunities for professionals and organisations
+to present their work, connect with industry stakeholders, build
+strategic relationships and participate in an international fashion
+experience.
+
+Whether you are an established brand, an emerging designer, a professional
+model, a media organisation or a member of a production team, there is a
+place for you within our ecosystem.
+
+Call to action:
+CHOOSE YOUR CATEGORY. SELECT YOUR PARTICIPATION PACKAGE.
+BECOME PART OF THE MOVEMENT.
+
+Create a clear participation-category section containing:
+
+1. Fashion Designers & Fashion Brands
+2. Models & Talent
+3. Accessory Designers & Creators
+4. Stylists & Creative Directors
+5. Hair & Makeup Professionals
+6. Backstage Managers & Event Coordinators
+7. Media Partners & Press
+8. Photographers & Videographers
+9. Technical & Production Teams
+10. Logistics & Event Operations
+11. Brands, Sponsors & Commercial Partners
+
+Each category must have:
+- A professional title.
+- A concise, accurate description.
+- Relevant potential participation benefits.
+- A dedicated category page or category-specific section.
+- A clear button leading to the relevant package list or application form.
+
+Do not use generic descriptions repeated across all categories.
+
+PACKAGE AND SUBSCRIPTION SYSTEM
+
+Design the page around structured participation packages.
+
+For each category, display the packages that actually exist in the
+application or that have been explicitly configured.
+
+Each package should support:
+- Package name.
+- Price and currency.
+- Duration, where applicable.
+- Included benefits.
+- Eligibility or selection conditions.
+- Application or subscription action.
+- Payment status, if payment integration exists.
+
+Do not invent prices, benefits, payment links, or package availability.
+
+For designers, the previously proposed annual membership structure is:
+Silver: USD 2,000
+Gold: USD 5,000
+Gold Premium: USD 6,000
+Diamond: USD 10,000
+Platinum: USD 20,000
+
+Before displaying these as purchasable offers, inspect the existing
+application and confirm how these packages are currently represented.
+Preserve existing data and avoid creating duplicate packages.
+
+Do not automatically apply designer prices to other categories.
+
+If a category has no configured package, display a professional
+"Registration of Interest" or "Apply for Participation" option.
+Do not display "Tailored Fee on Enquiry" repeatedly throughout the page.
+
+APPLICATION AND SUBSCRIPTION FLOW
+
+Inspect the existing authentication, forms, database and payment systems.
+
+Reuse existing components and database structures where appropriate.
+
+The desired flow is:
+1. Select a professional category.
+2. Review available packages.
+3. Compare benefits and terms.
+4. Select a package or apply for participation.
+5. Complete the required form.
+6. Complete payment only if the relevant payment integration is
+   properly configured.
+7. Receive an appropriate confirmation.
+
+Distinguish between a paid subscription and an application that requires
+review or approval.
+
+For models, make clear that payment or membership does not guarantee
+casting, runway selection or a specific assignment.
+
+For media, make clear that accreditation, interviews, publication,
+broadcasting and access to restricted areas require the applicable
+approval and agreements.
+
+For technical and logistics partners, explain that participation
+depends on the event's requirements, scope of work and contractual terms.
+
+FUNCTIONAL REQUIREMENTS
+
+- Ensure every category button leads to the correct destination.
+- Do not create dead links or non-functional buttons.
+- Preserve existing authentication and user data.
+- Validate all forms.
+- Provide clear success and error messages.
+- Ensure mobile responsiveness and accessibility.
+- Do not activate payments unless the existing payment configuration
+  is valid and the necessary account is connected.
+- Do not expose secret keys or sensitive configuration in frontend code.
+
+COPYEDITING REQUIREMENTS
+
+Review the entire participation page for:
+- Grammar.
+- Spelling.
+- Punctuation.
+- Consistent British or international English.
+- Consistent terminology.
+- Clear calls to action.
+- Professional fashion-industry language.
+- Consistent capitalisation.
+- Removal of vague, repetitive and unfinished text.
+
+Use "The One Fashion Week International" consistently.
+Do not confuse the event with The One Movement International,
+which is the wider platform.
+
+IMPLEMENTATION PROCESS
+
+First inspect the current page, routes, components, data models and
+existing package structures.
+
+Then implement the necessary changes without deleting existing data.
+
+After implementation:
+1. Test every category link.
+2. Test every package button.
+3. Test the forms.
+4. Verify the mobile layout.
+5. Check the browser console and server logs for errors.
+6. Confirm that existing authentication still works.
+7. Report which features work, which require configuration, and which
+   require additional business decisions.
+
+Do not claim that payment, subscriptions or database operations work
+unless they have actually been tested.
+
+The goal is to turn the existing page into a polished, coherent,
+professional participation and subscription experience for
+The One Fashion Week International.

@@ -1,0 +1,284 @@
+PROJECT: THE ONE MOVEMENT INTERNATIONAL
+PAGE: THE ONE DIPLOMATIC GALA
+
+STRATEGIC CONCEPT UPDATE
+
+We are refining the concept of The One Diplomatic Gala.
+
+The current page does not adequately communicate the actual vision.
+Do not simply shorten the existing text or improve its grammar.
+
+The Gala is intended to be an international, community-centred
+experience where participating countries can present their cultures,
+communities, businesses, creative talent, traditions and innovations.
+
+The central concept is:
+
+THE WORLD, UNDER ONE ROOF.
+
+MANY NATIONS. MANY CULTURES. ONE SHARED FUTURE.
+
+This event must be visually and conceptually distinct from
+The One Fashion Week International.
+
+The One Fashion Week focuses on fashion, designers, collections,
+models and the fashion industry.
+
+The One Diplomatic Gala focuses on national representation,
+cultural exchange, communities, diplomacy, business, innovation,
+humanitarian engagement and international collaboration.
+
+PRESERVE THE EXISTING PROJECT
+
+Inspect the current implementation before editing.
+
+Preserve the existing application architecture, routes, database,
+authentication, user records and unrelated functionality.
+
+Do not rebuild the application from scratch.
+Do not delete production data.
+Do not modify unrelated pages.
+
+BRAND IDENTITY
+
+Keep the existing deep teal, emerald, champagne gold and ivory palette.
+
+Retain the existing logo and brand identity.
+
+Create a visually distinctive premium international experience
+using elegant typography, strong photography, generous spacing,
+subtle animation and refined African geometric details.
+
+Avoid long paragraphs, repetitive text and generic template cards.
+
+SECTION 1: HERO
+
+Headline:
+THE ONE DIPLOMATIC GALA
+
+Main statement:
+THE WORLD, UNDER ONE ROOF.
+
+Supporting text:
+A global gathering of nations, cultures, communities and opportunities.
+
+Description:
+An international experience bringing countries together through
+culture, diplomacy, business, innovation and shared opportunity.
+
+Buttons:
+DISCOVER THE EXPERIENCE
+REPRESENT YOUR COUNTRY
+
+Use a cinematic, premium visual showing an international cultural
+gathering or elegant global event.
+
+Do not fabricate photographs of real public figures.
+
+SECTION 2: OUR VISION
+
+Heading:
+EVERY NATION HAS A STORY TO SHARE.
+
+Explain briefly that every country has its own cultural heritage,
+creative talent, businesses, traditions and innovations.
+
+The Gala creates a shared space where countries and communities
+can present their identity, discover other cultures, build
+relationships and explore collaboration.
+
+Use a visual editorial layout with strong imagery and concise copy.
+
+SECTION 3: NATIONAL PAVILIONS
+
+This must be one of the most important sections of the page.
+
+Heading:
+THE WORLD PAVILIONS
+
+Supporting statement:
+Your country. Your culture. Your story.
+
+Explain that participating countries may have the opportunity
+to present national pavilions showcasing their culture, creative
+industries, businesses, technology, traditions and community initiatives.
+
+Potential pavilion themes include:
+- Culture & Heritage
+- Arts, Music & Dance
+- Fashion & Design
+- Business & Investment
+- Technology & Innovation
+- Tourism & Gastronomy
+- Education & Community Initiatives
+
+Create a visually rich pavilion gallery.
+
+Each pavilion card should support:
+- Country name
+- Official flag asset, where available
+- Suitable country-related imagery
+- Concise description
+- Explore Pavilion action
+- Participation status where relevant
+
+Do not invent confirmed participating countries.
+
+Do not imply that a country is officially represented by its embassy
+unless the relevant participation has been confirmed.
+
+If no country list has been configured, use clearly labelled concept
+cards or neutral sample visuals that do not imply confirmed attendance.
+
+SECTION 4: THREE CORE EXPERIENCES
+
+Create three large visual sections.
+
+A. THE WORLD PAVILIONS
+Discover cultures, traditions, businesses, creative talent and innovation.
+
+B. THE DIPLOMATIC & BUSINESS FORUM
+Encourage dialogue, networking and potential collaboration between
+institutions, organisations, entrepreneurs and business leaders.
+
+C. THE GRAND CULTURAL GALA
+Celebrate cultural diversity through music, dance, artistic expression
+and performances, subject to the confirmed programme.
+
+Use distinct imagery and visual treatments for each experience.
+
+SECTION 5: WHO CAN PARTICIPATE?
+
+Create visually distinct categories for:
+
+- Diplomatic Missions & Embassies
+- Governments & Public Institutions
+- Cultural Associations & Communities
+- Artists & Performers
+- Businesses & Entrepreneurs
+- Fashion & Creative Industries
+- Technology & Innovation Companies
+- Tourism & Hospitality Organisations
+- NGOs & Humanitarian Organisations
+- Media & Communication Partners
+
+Each category should have a short, relevant description and a
+functional action leading to the appropriate application or contact form.
+
+SECTION 6: REPRESENT YOUR COUNTRY
+
+Heading:
+BRING YOUR COUNTRY TO THE GALA.
+
+Supporting text:
+Bring your nation's culture, talent, businesses and ideas to a shared
+international stage.
+
+Provide a functional expression-of-interest form with appropriate fields:
+- Country
+- Organisation or community
+- Contact person
+- Email
+- Proposed participation category
+- Brief description of the proposed contribution
+
+Reuse the existing form infrastructure where possible.
+
+Validate inputs and provide clear success and error messages.
+
+Do not create duplicate database structures without inspecting
+the existing schema.
+
+A submitted enquiry must not be treated as a confirmed pavilion booking.
+
+SECTION 7: THE CULTURAL EXPERIENCE
+
+Present the potential experience through visual storytelling:
+- Traditional and contemporary performances
+- Music and dance
+- Cultural exhibitions
+- Fashion and design
+- Art and craftsmanship
+- Technology and innovation
+- Business and investment showcases
+- Community and humanitarian initiatives
+
+Clearly distinguish potential activities from activities already confirmed.
+
+SECTION 8: PARTNERSHIPS
+
+Heading:
+BUILD BRIDGES WITH US.
+
+Present potential collaboration areas:
+- Institutional partnerships
+- National pavilion participation
+- Cultural partnerships
+- Business and investment partnerships
+- Technology and innovation partnerships
+- Humanitarian partnerships
+- Media partnerships
+- Sponsorship opportunities
+
+Use existing contact forms and routes where available.
+
+Do not invent prices, sponsorship benefits, confirmed partners
+or guaranteed outcomes.
+
+SECTION 9: CLOSING STATEMENT
+
+Headline:
+MANY NATIONS. MANY CULTURES. ONE SHARED FUTURE.
+
+Supporting text:
+A place to discover one another, celebrate our differences and
+explore what we can build together.
+
+Signature:
+THE ONE MOVEMENT INTERNATIONAL
+WE ARE ONE.
+
+DESIGN REQUIREMENTS
+
+The page must feel like a premium international cultural experience,
+not a long informational article.
+
+Use:
+- Immersive hero imagery
+- Large editorial headlines
+- Strong visual storytelling
+- National pavilion visuals
+- Elegant section transitions
+- Carefully selected photography
+- Clear participation calls to action
+- Refined spacing and visual hierarchy
+- Mobile-first responsive layouts
+
+Avoid:
+- Long uninterrupted paragraphs
+- Repeated generic descriptions
+- Excessive empty sections
+- Repeated "Tailored Fee on Enquiry" text
+- Non-functional buttons
+- Fake partner logos
+- Unconfirmed attendee names
+- Fabricated event photographs
+- Claims that imply official national participation without confirmation
+
+Keep The One Diplomatic Gala clearly distinct from The One Fashion Week.
+
+TESTING
+
+Inspect the current routes, assets, components and forms first.
+
+Implement the redesign within the existing project.
+
+Test mobile and desktop layouts, navigation, all buttons, form validation,
+image loading and existing authentication.
+
+Check for console errors and broken links.
+
+Do not publish automatically.
+
+After implementation, report what changed, what was tested and
+which business details still require confirmation.
