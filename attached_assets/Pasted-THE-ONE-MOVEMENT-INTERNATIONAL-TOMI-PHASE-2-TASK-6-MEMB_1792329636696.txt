@@ -1,0 +1,263 @@
+THE ONE MOVEMENT INTERNATIONAL (TOMI)
+PHASE 2 — TASK 6
+
+MEMBER WELCOME & PERSONALIZED DISCOVERY
+
+FOUNDER AUTHORIZATION:
+READ-ONLY ANALYSIS AND IMPLEMENTATION PLANNING
+
+IMPLEMENTATION: NOT AUTHORIZED
+
+==================================================
+1. STRATEGIC CONTEXT
+==================================================
+
+TOMI is a global universe built on:
+
+- Peace
+- Unity
+- Humanity
+- Tolerance
+- Diversity
+- Inclusion
+- Community development
+- Personal growth
+- International opportunities
+
+Our philosophy:
+
+"YOU DON'T JUST JOIN A PLATFORM.
+YOU BECOME PART OF A GLOBAL MISSION."
+
+Membership must remain free and accessible.
+
+Members should feel that they belong to a
+meaningful international community.
+
+The platform should help them discover
+relevant people, knowledge and opportunities.
+
+==================================================
+2. OBJECTIVE
+==================================================
+
+Analyze the existing member experience
+from registration to daily participation.
+
+Identify how TOMI can progressively offer
+a more personalized discovery experience.
+
+Do not redesign the website.
+
+Do not implement new features.
+
+==================================================
+3. MEMBER JOURNEY AUDIT
+==================================================
+
+Inspect the existing:
+
+- Registration
+- Authentication
+- Welcome experience
+- Profile creation
+- Sector selection
+- Network activation
+- My Space
+- Member dashboard
+- Community discovery
+- Content feed
+- Member search
+- Invitations
+- Notifications
+
+Identify:
+
+- Existing functionality
+- Missing steps
+- Unnecessary friction
+- Confusing messages
+- Reusable components
+- Opportunities for improvement
+
+Do not modify the existing journey.
+
+==================================================
+4. SECTOR-BASED DISCOVERY
+==================================================
+
+TOMI has 17 official sectors.
+
+Investigate how existing sector preferences
+could support personalized discovery.
+
+Examples:
+
+EDUCATION:
+Knowledge, educators, institutions,
+learning opportunities and projects.
+
+FASHION:
+Designers, collections, fashion events,
+creative collaborations and opportunities.
+
+INVESTMENT:
+Relevant businesses, projects,
+professional connections and discussions.
+
+HUMANITARIAN ACTION:
+Community initiatives, humanitarian
+projects and opportunities to contribute.
+
+Members must remain free to explore
+all sectors.
+
+Personalization should not isolate members
+inside a single category.
+
+Do not implement recommendation algorithms.
+
+==================================================
+5. WELCOME EXPERIENCE
+==================================================
+
+Analyze how TOMI could communicate:
+
+I BELONG.
+I CAN CONNECT.
+I CAN CONTRIBUTE.
+I CAN GROW.
+
+Investigate whether existing components
+can support a clearer welcome experience.
+
+The experience should help members:
+
+- Understand the movement
+- Complete their profiles
+- Select interests
+- Discover relevant people
+- Explore sectors
+- Understand available activities
+- Begin participating
+
+Do not create new pages yet.
+
+==================================================
+6. CONTENT DISCOVERY
+==================================================
+
+Investigate how the member experience
+could eventually display:
+
+- Relevant news
+- Documentaries
+- Reels
+- Sector updates
+- Featured personalities
+- Community projects
+- Events
+- Educational content
+- Professional opportunities
+- Humanitarian initiatives
+
+Distinguish:
+
+A. Existing content
+B. Existing filtering
+C. Missing editorial capabilities
+D. Future personalization features
+
+Do not create or publish content.
+
+==================================================
+7. MEMBERSHIP & ENGAGEMENT
+==================================================
+
+Preserve the Founder's approved decisions:
+
+- Permanent free membership
+- Ordinary publication without
+  mandatory invitations
+- Voluntary network activation
+- Invitations as optional engagement
+- Paid services as additional value
+- Official certification separate
+  from commercial promotion
+
+Do not modify subscriptions.
+
+Do not create points or rewards.
+
+Do not modify the invitation correction.
+
+==================================================
+8. FOUNDER CONTROL & AUTONOMY
+==================================================
+
+Analyze how the member experience
+could operate without requiring the
+Founder's approval for routine activities.
+
+Identify:
+
+- Existing automated workflows
+- Actions requiring moderation
+- Actions requiring strategic approval
+- Opportunities for future delegation
+- Necessary safeguards
+
+Do not implement automation.
+
+==================================================
+9. ARCHITECTURE PROTECTION
+==================================================
+
+ABSOLUTE RESTRICTIONS:
+
+- No application file modifications
+- No database modifications
+- No server restart
+- No deployment
+- No migrations
+- No Stripe operations
+- No dependency installation
+- No production member data access
+- No authentication changes
+- No visual redesign
+- No interference with other agents
+
+STATIC READ-ONLY ANALYSIS ONLY.
+
+==================================================
+10. REQUIRED REPORT
+==================================================
+
+Return:
+
+1. Existing registration journey
+2. Existing welcome experience
+3. Existing sector preference system
+4. Current member dashboard capabilities
+5. Current discovery and feed behavior
+6. Opportunities for personalization
+7. Existing components to reuse
+8. Missing capabilities
+9. Proposed member journey improvements
+10. Recommended implementation order
+11. Architecture preservation risks
+12. Decisions requiring Founder approval
+
+For each recommendation identify:
+
+- What already exists
+- What can be reused
+- What is missing
+- Risks
+- Dependencies
+- Whether database changes are required
+
+Do not implement anything.
+
+Return the report and wait for
+the Founder's next authorization.
