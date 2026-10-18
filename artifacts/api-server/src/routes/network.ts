@@ -11,6 +11,7 @@ import { networkState, activeBadge, visibleMember } from "../services/networkSta
 import { requestUpload, objectFile } from "../services/networkFiles";
 import { DOCUMENTS, paymentStatus } from "../services/networkPayments";
 import type { Request, Response, NextFunction } from "express";
+import { projectPublicNetworkProfile } from "../services/profileProjection";
 
 const router = Router();
 router.get("/community/profiles/:id", async (req, res) => {
@@ -32,18 +33,14 @@ router.get("/community/profiles/:id", async (req, res) => {
     .where(and(eq(uploads.id, p.avatarId), eq(uploads.ownerId, id), eq(uploads.ready, true))).limit(1) : [];
   const cover = m.publicMedia && p?.enabled && p.coverId ? await db.select({ id: uploads.id }).from(uploads)
     .where(and(eq(uploads.id, p.coverId), eq(uploads.ownerId, id), eq(uploads.ready, true))).limit(1) : [];
-  res.set("Cache-Control", "no-store").json({ profile: {
-    id, fullName: m.fullName, profession: m.profession, organization: m.organization, country: m.country,
-    bio: m.bio, offering: m.offering, lookingFor: m.lookingFor, website: m.website, sectors: m.sectors,
-    instagramUrl: m.instagramUrl, facebookUrl: m.facebookUrl, tiktokUrl: m.tiktokUrl, linkedinUrl: m.linkedinUrl,
-    isPublic: true, enabled: !!p?.enabled, founder: !!p?.founder, suspended: false,
-    profileLayout: m.profileLayout, coverPosition: m.coverPosition, postsLayout: m.postsLayout,
+  res.set("Cache-Control", "no-store").json({ profile: projectPublicNetworkProfile(m, {
+    enabled: !!p?.enabled, founder: !!p?.founder, suspended: false,
     avatarUrl: avatar.length ? `/api/community/media/${avatar[0]!.id}` : null,
     coverUrl: cover.length ? `/api/community/media/${cover[0]!.id}` : null,
     followers: p?.enabled ? counts[0]?.followers ?? 0 : 0, following: p?.enabled ? counts[0]?.following ?? 0 : 0,
     followed: false, blocked: false,
     badges: certs.filter(activeBadge).map(c => ({ role: c.role, program: c.program, expiresAt: c.expiresAt?.toISOString() ?? null })),
-  } });
+  }) });
 });
 router.get("/community/media/:id", async (req, res) => {
   const [upload] = await db.select().from(uploads)

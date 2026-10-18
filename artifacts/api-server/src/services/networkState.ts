@@ -10,6 +10,7 @@ import type { NetworkMember, NetworkPost, NetworkState } from "@workspace/api-zo
 import { type NetworkActor, NetworkError } from "./networkAuth";
 import { catalog, DOCUMENTS, stripeReady } from "./networkPayments";
 import { mediaDto } from "./networkFiles";
+import { projectNetworkMember } from "./profileProjection";
 
 export const ROLES = new Set(["business", "partner", "sponsor", "media-partner", "official-model", "exhibitor", "speaker", "designer", "investor"]);
 export const PROGRAMS = new Set(["ecosystem", "diplomatic-gala", "summit", "fashion-week", "awards", "fashion-night", "investment-forum"]);
@@ -101,18 +102,14 @@ export async function networkState(context: NetworkActor, query: Record<string, 
     const badges = certs.filter(c => c.memberId === m.id && activeBadge(c)).map(c => ({
       role: c.role, program: c.program, expiresAt: c.expiresAt?.toISOString() ?? null,
     }));
-    dto.set(m.id, {
-      id: m.id, fullName: m.fullName, profession: m.profession, organization: m.organization,
-      country: m.country, bio: m.bio, offering: m.offering, lookingFor: m.lookingFor, website: m.website,
-      instagramUrl: m.instagramUrl, facebookUrl: m.facebookUrl, tiktokUrl: m.tiktokUrl, linkedinUrl: m.linkedinUrl,
-      sectors: m.sectors as NetworkMember["sectors"], isPublic: m.isPublic, enabled: p.enabled, founder: p.founder,
+    dto.set(m.id, projectNetworkMember(m, {
+      enabled: p.enabled, founder: p.founder,
       avatarUrl: p.avatarId ? media.get(p.avatarId)?.url ?? null : null,
       coverUrl: p.coverId ? media.get(p.coverId)?.url ?? null : null,
-      profileLayout: m.profileLayout, coverPosition: m.coverPosition, postsLayout: m.postsLayout,
       followers: allFollows.filter(f => f.followingId === m.id).length,
       following: allFollows.filter(f => f.followerId === m.id).length,
       followed: followedIds.includes(m.id), blocked: myBlocks.has(m.id), badges, suspended: p.suspended,
-    });
+    }));
   }
   const me = dto.get(self.id)!;
   if (!me) return empty;

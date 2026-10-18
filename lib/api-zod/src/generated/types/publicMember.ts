@@ -5,10 +5,12 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
-import type { MemberProfileInput } from './memberProfileInput';
+import type { ProfileDisplayFields } from './profileDisplayFields';
 
-export type PublicMember = MemberProfileInput & ({
+export type PublicMember = ProfileDisplayFields & ({
   id: number;
+  /** Optional legacy response property; actual media exposure remains server-controlled. */
+  publicMedia?: boolean;
   /**
      * Public profile photo only when the member explicitly permits public media.
      * @nullable

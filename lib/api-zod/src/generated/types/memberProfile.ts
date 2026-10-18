@@ -5,9 +5,17 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
-import type { PublicMember } from './publicMember';
+import type { ProfileDisplayFields } from './profileDisplayFields';
 
-export type MemberProfile = PublicMember & {
+export type MemberProfile = ProfileDisplayFields & ({
+  id: number;
+  /**
+     * Optional legacy response property; owner photos use the existing network media flow.
+     * @nullable
+     */
+  avatarUrl?: string | null;
+  /** Optional legacy response property; profile editing never activates the network. */
+  enabled?: boolean;
   publicMedia: boolean;
   savedItems: string[];
-};
+});

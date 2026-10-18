@@ -51,7 +51,20 @@ export async function synchronizeProfile(qc: QueryClient, profile: MemberProfile
     if (!state) return state;
     // Patch only the owner's view. Lists/public representations retain their
     // own server-side visibility rules and are refetched instead.
-    return { ...state, me: state.me?.id === profile.id ? { ...state.me, ...fields } : state.me };
+    return { ...state, me: state.me?.id === profile.id ? {
+      ...state.me,
+      // Explicit network-cache allowlist, independent of future owner inputs.
+      fullName: fields.fullName, profession: fields.profession,
+      organization: fields.organization, country: fields.country, bio: fields.bio,
+      offering: fields.offering, lookingFor: fields.lookingFor, website: fields.website,
+      instagramUrl: fields.instagramUrl, facebookUrl: fields.facebookUrl,
+      tiktokUrl: fields.tiktokUrl, linkedinUrl: fields.linkedinUrl,
+      sectors: fields.sectors, isPublic: fields.isPublic,
+      // Preserve the existing owner-only `me` cache behavior, not public data.
+      publicMedia: fields.publicMedia,
+      profileLayout: fields.profileLayout, coverPosition: fields.coverPosition,
+      postsLayout: fields.postsLayout,
+    } : state.me };
   });
   for (const queryKey of keys.slice(1)) void qc.invalidateQueries({ queryKey });
 }

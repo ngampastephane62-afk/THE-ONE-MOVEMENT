@@ -267,6 +267,36 @@ test('own state updates immediately; media, activation, restrictions and other m
   assert.equal(f.qc.getQueryData(publicKey(7)).profile.avatarUrl, null);
 });
 
+test('owner-only and unexpected saved values never enter public or network profile projections', async () => {
+  const f = fixture();
+  const other = { id: 8, fullName: 'Other member' };
+  f.qc.setQueryData([...stateKey, { view: 'privacy' }], {
+    me: { id: 7, fullName: 'Old name', enabled: false, avatarUrl: '/private-photo' },
+    members: [other], person: other,
+  });
+  const directory = { members: [{ id: 7, fullName: 'Old public name' }] };
+  const publicView = { profile: { id: 7, fullName: 'Old public name' } };
+  f.qc.setQueryData(directoryKey, directory);
+  f.qc.setQueryData(publicKey(7), publicView);
+  await f.helpers.synchronizeProfile(f.qc, {
+    ...f.profile, fullName: 'Confirmed owner name', savedItems: ['resource:sdgs'],
+    clerkId: 'private identity', privateSentinel: 'future private data',
+  });
+  const state = f.qc.getQueryData([...stateKey, { view: 'privacy' }]);
+  for (const key of ['savedItems', 'clerkId', 'privateSentinel']) {
+    assert.equal(Object.hasOwn(state.me, key), false);
+    assert.equal(JSON.stringify(f.qc.getQueryData(publicKey(7))).includes(key), false);
+    assert.equal(JSON.stringify(f.qc.getQueryData(directoryKey)).includes(key), false);
+  }
+  assert.equal(state.me.fullName, 'Confirmed owner name');
+  assert.equal(state.me.enabled, false);
+  assert.equal(state.me.avatarUrl, '/private-photo');
+  assert.equal(state.members[0], other);
+  assert.equal(f.qc.getQueryData(publicKey(7)), publicView);
+  assert.equal(f.qc.getQueryData(directoryKey), directory);
+  assert.equal(f.qc.getQueryData(ownKey).profile.privateSentinel, 'future private data');
+});
+
 test('a pending older profile read is cancelled before the saved result is cached', async () => {
   const f = fixture();
   let resolveOld;

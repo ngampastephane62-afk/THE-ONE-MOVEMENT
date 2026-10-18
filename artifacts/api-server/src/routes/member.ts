@@ -5,6 +5,7 @@ import { SaveMemberProfileBody, ToggleMemberSavedItemBody } from "@workspace/api
 import { desc, eq, sql, and, or, isNull } from "drizzle-orm";
 import { getClerkProxyHost } from "../middlewares/clerkProxyMiddleware";
 import { SOCIAL_PROFILES, normalizeSocialProfile } from "@workspace/shared";
+import { projectOwnerProfile, projectPublicProfile } from "../services/profileProjection";
 
 const router = Router();
 const savedIds = new Set([
@@ -51,33 +52,6 @@ function memberWrite(req: Request, res: Response, next: NextFunction) {
   next();
 }
 
-function publicProfile(row: typeof members.$inferSelect) {
-  return {
-    id: row.id,
-    fullName: row.fullName,
-    profession: row.profession,
-    organization: row.organization,
-    country: row.country,
-    bio: row.bio,
-    offering: row.offering,
-    lookingFor: row.lookingFor,
-    website: row.website,
-    instagramUrl: row.instagramUrl,
-    facebookUrl: row.facebookUrl,
-    tiktokUrl: row.tiktokUrl,
-    linkedinUrl: row.linkedinUrl,
-    sectors: row.sectors,
-    isPublic: row.isPublic,
-    profileLayout: row.profileLayout,
-    coverPosition: row.coverPosition,
-    postsLayout: row.postsLayout,
-  };
-}
-
-function privateProfile(row: typeof members.$inferSelect) {
-  return { ...publicProfile(row), savedItems: row.savedItems, publicMedia: row.publicMedia };
-}
-
 router.get("/ecosystem/members", async (_req, res) => {
   res.set("Cache-Control", "no-store");
   const rows = await db.select({ member: members, avatarId: networkUploads.id, enabled: networkProfiles.enabled }).from(members)
@@ -92,7 +66,7 @@ router.get("/ecosystem/members", async (_req, res) => {
     .where(and(eq(members.isPublic, true), or(eq(networkProfiles.suspended, false), isNull(networkProfiles.memberId))))
     .orderBy(desc(members.updatedAt)).limit(100);
   res.json({ members: rows.map(row => ({
-    ...publicProfile(row.member),
+    ...projectPublicProfile(row.member),
     avatarUrl: row.avatarId ? `/api/community/media/${row.avatarId}` : null,
     enabled: row.enabled === true,
   })) });
@@ -100,7 +74,7 @@ router.get("/ecosystem/members", async (_req, res) => {
 
 router.get("/member/profile", memberAuth, async (req, res) => {
   const [row] = await db.select().from(members).where(eq(members.clerkId, getAuth(req).userId!)).limit(1);
-  res.json({ profile: row ? privateProfile(row) : null });
+  res.json({ profile: row ? projectOwnerProfile(row) : null });
 });
 
 router.put("/member/profile", memberAuth, memberWrite, async (req, res) => {
@@ -151,7 +125,7 @@ router.put("/member/profile", memberAuth, memberWrite, async (req, res) => {
       target: members.clerkId,
       set: { ...data, updatedAt: new Date() },
     }).returning();
-  res.json({ profile: privateProfile(row!) });
+  res.json({ profile: projectOwnerProfile(row!) });
 });
 
 router.post("/member/saved", memberAuth, memberWrite, async (req, res) => {
@@ -171,7 +145,7 @@ router.post("/member/saved", memberAuth, memberWrite, async (req, res) => {
     res.status(409).json({ error: "Complete your member profile before saving items." });
     return;
   }
-  res.json({ profile: privateProfile(row) });
+  res.json({ profile: projectOwnerProfile(row) });
 });
 
 export default router;

@@ -1344,10 +1344,14 @@ components:
         expiresAt: {type: [string, "null"]}
     NetworkMember:
       allOf:
-        - {$ref: "#/components/schemas/PublicMember"}
+        - {$ref: "#/components/schemas/ProfileDisplayFields"}
         - type: object
-          required: [enabled, founder, avatarUrl, coverUrl, followers, following, followed, blocked, badges, suspended]
+          required: [id, enabled, founder, avatarUrl, coverUrl, followers, following, followed, blocked, badges, suspended]
           properties:
+            id: {type: integer}
+            publicMedia:
+              type: boolean
+              description: Optional legacy response property; not authorization to serve media.
             enabled: {type: boolean}
             founder: {type: boolean}
             avatarUrl: {type: [string, "null"]}
@@ -1574,14 +1578,81 @@ components:
         postsLayout:
           type: string
           enum: [grid, list]
+    ProfileDisplayFields:
+      type: object
+      description: Explicit shared display allowlist. Never add owner-only or private input fields here. Independent of MemberProfileInput.
+      required: [fullName, profession, organization, country, bio, offering, lookingFor, website, sectors, isPublic]
+      properties:
+        fullName:
+          type: string
+          minLength: 2
+          maxLength: 100
+        profession:
+          type: string
+          maxLength: 100
+        organization:
+          type: string
+          maxLength: 150
+        country:
+          type: string
+          maxLength: 100
+        bio:
+          type: string
+          maxLength: 1000
+        offering:
+          type: string
+          maxLength: 500
+        lookingFor:
+          type: string
+          maxLength: 500
+        website:
+          type: string
+          maxLength: 500
+        instagramUrl:
+          type: string
+          maxLength: 500
+          description: Optional Instagram profile link; not an OAuth connection.
+        facebookUrl:
+          type: string
+          maxLength: 500
+          description: Optional Facebook profile or page link.
+        tiktokUrl:
+          type: string
+          maxLength: 500
+          description: Optional TikTok profile link.
+        linkedinUrl:
+          type: string
+          maxLength: 500
+          description: Optional LinkedIn profile or company link.
+        sectors:
+          type: array
+          maxItems: 8
+          items:
+            type: string
+            enum: [fashion, music, dance, film, art, business, investment, tourism, diplomacy, innovation, technology, ngos, media, education, humanitarian-action, real-estate, health-care]
+        isPublic:
+          type: boolean
+        profileLayout:
+          type: string
+          enum: [immersive, centered, editorial]
+        coverPosition:
+          type: integer
+          minimum: 0
+          maximum: 100
+        postsLayout:
+          type: string
+          enum: [grid, list]
     PublicMember:
       allOf:
-        - $ref: "#/components/schemas/MemberProfileInput"
+        - $ref: "#/components/schemas/ProfileDisplayFields"
         - type: object
           required: [id]
           properties:
             id:
               type: integer
+            publicMedia:
+              type: boolean
+              description: Optional legacy response property; actual media exposure remains server-controlled.
             avatarUrl:
               type: ["string", "null"]
               description: Public profile photo only when the member explicitly permits public media.
@@ -1590,10 +1661,18 @@ components:
               description: Whether this public member has joined the signed-in social network.
     MemberProfile:
       allOf:
-        - $ref: "#/components/schemas/PublicMember"
+        - $ref: "#/components/schemas/ProfileDisplayFields"
         - type: object
-          required: [savedItems, publicMedia]
+          required: [id, savedItems, publicMedia]
           properties:
+            id:
+              type: integer
+            avatarUrl:
+              type: ["string", "null"]
+              description: Optional legacy response property; owner photos use the existing network media flow.
+            enabled:
+              type: boolean
+              description: Optional legacy response property; profile editing never activates the network.
             publicMedia:
               type: boolean
             savedItems:

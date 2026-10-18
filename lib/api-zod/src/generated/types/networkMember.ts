@@ -6,9 +6,12 @@
  * OpenAPI spec version: 0.1.0
  */
 import type { NetworkBadge } from './networkBadge';
-import type { PublicMember } from './publicMember';
+import type { ProfileDisplayFields } from './profileDisplayFields';
 
-export type NetworkMember = PublicMember & ({
+export type NetworkMember = ProfileDisplayFields & ({
+  id: number;
+  /** Optional legacy response property; not authorization to serve media. */
+  publicMedia?: boolean;
   enabled: boolean;
   founder: boolean;
   /** @nullable */

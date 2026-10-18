@@ -1,0 +1,184 @@
+THE ONE MOVEMENT INTERNATIONAL (TOMI)
+PHASE 2 — TASK 13
+
+PROFILE PRIVACY FOUNDATION
+SAFE API CONTRACT SEPARATION
+
+FOUNDER AUTHORIZATION:
+LIMITED IMPLEMENTATION
+
+MISSION
+
+Prepare the existing TOMI profile architecture
+for future international identity fields.
+
+The objective is to separate owner data,
+member-visible data and public data safely.
+
+Do not introduce international identity
+fields in this task.
+
+==================================================
+1. EXISTING PROFILE CONTRACTS
+==================================================
+
+Inspect the current OpenAPI contracts:
+
+- MemberProfileInput
+- MemberProfile
+- PublicMember
+- NetworkMember
+
+Identify unsafe inheritance relationships
+that could expose future private fields.
+
+Refactor only what is necessary to
+establish explicit data boundaries.
+
+Preserve existing API compatibility.
+
+Do not silently remove currently supported
+fields or change existing permissions.
+
+==================================================
+2. SERVER-SIDE PROFILE PROJECTION
+==================================================
+
+Introduce or consolidate reusable
+server-side profile projection functions.
+
+Separate:
+
+- Owner profile representation
+- Authorized network member representation
+- Public profile representation
+
+Use explicit allowlists.
+
+Never return a complete database record
+and rely on the frontend to hide fields.
+
+Do not add new private fields yet.
+
+==================================================
+3. EXISTING ENDPOINTS
+==================================================
+
+Inspect and protect the existing profile
+representations returned through:
+
+- /api/member/profile
+- /api/ecosystem/members
+- /api/community/profiles/:id
+- /api/network/state
+
+Include nested member representations
+inside network responses where applicable.
+
+Preserve existing behavior and
+authorization rules.
+
+If changing a representation requires
+a breaking API change, STOP and report
+the dependency instead of proceeding.
+
+==================================================
+4. PRIVACY PRESERVATION
+==================================================
+
+Preserve:
+
+- Clerk ownership checks
+- Explicit network activation
+- Suspension restrictions
+- Blocking rules
+- Existing public profile settings
+- Existing public media permissions
+- Existing profile editing
+- Existing photo storage
+- Existing member discovery
+
+Do not introduce administrative access
+to private member information.
+
+Do not alter messaging or subscriptions.
+
+==================================================
+5. CACHE SAFETY
+==================================================
+
+Review existing React Query cache handling.
+
+Ensure owner-only profile information
+cannot be reused as public profile data.
+
+Preserve the Task 10 synchronization behavior.
+
+Add targeted invalidation where necessary.
+
+Avoid unnecessary cache restructuring.
+
+==================================================
+6. TESTING
+==================================================
+
+Add isolated tests for:
+
+- Owner profile projection
+- Member-visible projection
+- Public projection
+- Nested profile representations
+- Existing public visibility settings
+- Existing media visibility settings
+- Blocked and suspended member behavior
+- No accidental private account fields
+- Existing profile editing compatibility
+- Task 10 synchronization preservation
+- No messaging regression
+
+Run safe static checks and isolated tests.
+
+Do not start application servers.
+
+==================================================
+7. ABSOLUTE RESTRICTIONS
+==================================================
+
+No database schema changes.
+No migrations.
+No nationality fields.
+No residence fields.
+No city fields.
+No language fields.
+No new pages.
+No homepage redesign.
+No Clerk authentication changes.
+No messaging permission changes.
+No Stripe or subscription changes.
+No dependency installation.
+No production data access.
+No server startup or restart.
+No deployment.
+
+Do not interfere with other agents.
+
+==================================================
+8. REQUIRED REPORT
+==================================================
+
+Return:
+
+1. Exact files modified
+2. Contract separation changes
+3. Server-side projection architecture
+4. Existing endpoints covered
+5. Nested profile handling
+6. Cache safety changes
+7. Tests performed and results
+8. Compatibility risks
+9. Remaining runtime verification
+10. Readiness for future identity fields
+
+Do not begin Task 14.
+
+Wait for the Founder's next authorization.

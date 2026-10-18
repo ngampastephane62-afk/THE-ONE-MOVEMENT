@@ -803,10 +803,10 @@ export interface NetworkBadge {
   expiresAt: string | null;
 }
 
-export type MemberProfileInputSectorsItem = typeof MemberProfileInputSectorsItem[keyof typeof MemberProfileInputSectorsItem];
+export type ProfileDisplayFieldsSectorsItem = typeof ProfileDisplayFieldsSectorsItem[keyof typeof ProfileDisplayFieldsSectorsItem];
 
 
-export const MemberProfileInputSectorsItem = {
+export const ProfileDisplayFieldsSectorsItem = {
   fashion: 'fashion',
   music: 'music',
   dance: 'dance',
@@ -826,24 +826,27 @@ export const MemberProfileInputSectorsItem = {
   'health-care': 'health-care',
 } as const;
 
-export type MemberProfileInputProfileLayout = typeof MemberProfileInputProfileLayout[keyof typeof MemberProfileInputProfileLayout];
+export type ProfileDisplayFieldsProfileLayout = typeof ProfileDisplayFieldsProfileLayout[keyof typeof ProfileDisplayFieldsProfileLayout];
 
 
-export const MemberProfileInputProfileLayout = {
+export const ProfileDisplayFieldsProfileLayout = {
   immersive: 'immersive',
   centered: 'centered',
   editorial: 'editorial',
 } as const;
 
-export type MemberProfileInputPostsLayout = typeof MemberProfileInputPostsLayout[keyof typeof MemberProfileInputPostsLayout];
+export type ProfileDisplayFieldsPostsLayout = typeof ProfileDisplayFieldsPostsLayout[keyof typeof ProfileDisplayFieldsPostsLayout];
 
 
-export const MemberProfileInputPostsLayout = {
+export const ProfileDisplayFieldsPostsLayout = {
   grid: 'grid',
   list: 'list',
 } as const;
 
-export interface MemberProfileInput {
+/**
+ * Explicit shared display allowlist. Never add owner-only or private input fields here. Independent of MemberProfileInput.
+ */
+export interface ProfileDisplayFields {
   /**
      * @minLength 2
      * @maxLength 100
@@ -884,30 +887,21 @@ export interface MemberProfileInput {
      */
   linkedinUrl?: string;
   /** @maxItems 8 */
-  sectors: MemberProfileInputSectorsItem[];
+  sectors: ProfileDisplayFieldsSectorsItem[];
   isPublic: boolean;
-  publicMedia?: boolean;
-  profileLayout?: MemberProfileInputProfileLayout;
+  profileLayout?: ProfileDisplayFieldsProfileLayout;
   /**
      * @minimum 0
      * @maximum 100
      */
   coverPosition?: number;
-  postsLayout?: MemberProfileInputPostsLayout;
+  postsLayout?: ProfileDisplayFieldsPostsLayout;
 }
 
-export type PublicMember = MemberProfileInput & ({
+export type NetworkMember = ProfileDisplayFields & ({
   id: number;
-  /**
-     * Public profile photo only when the member explicitly permits public media.
-     * @nullable
-     */
-  avatarUrl?: string | null;
-  /** Whether this public member has joined the signed-in social network. */
-  enabled?: boolean;
-});
-
-export type NetworkMember = PublicMember & ({
+  /** Optional legacy response property; not authorization to serve media. */
+  publicMedia?: boolean;
   enabled: boolean;
   founder: boolean;
   /** @nullable */
@@ -1061,10 +1055,124 @@ export interface SavedItemInput {
   saved: boolean;
 }
 
-export type MemberProfile = PublicMember & {
+export type MemberProfileInputSectorsItem = typeof MemberProfileInputSectorsItem[keyof typeof MemberProfileInputSectorsItem];
+
+
+export const MemberProfileInputSectorsItem = {
+  fashion: 'fashion',
+  music: 'music',
+  dance: 'dance',
+  film: 'film',
+  art: 'art',
+  business: 'business',
+  investment: 'investment',
+  tourism: 'tourism',
+  diplomacy: 'diplomacy',
+  innovation: 'innovation',
+  technology: 'technology',
+  ngos: 'ngos',
+  media: 'media',
+  education: 'education',
+  'humanitarian-action': 'humanitarian-action',
+  'real-estate': 'real-estate',
+  'health-care': 'health-care',
+} as const;
+
+export type MemberProfileInputProfileLayout = typeof MemberProfileInputProfileLayout[keyof typeof MemberProfileInputProfileLayout];
+
+
+export const MemberProfileInputProfileLayout = {
+  immersive: 'immersive',
+  centered: 'centered',
+  editorial: 'editorial',
+} as const;
+
+export type MemberProfileInputPostsLayout = typeof MemberProfileInputPostsLayout[keyof typeof MemberProfileInputPostsLayout];
+
+
+export const MemberProfileInputPostsLayout = {
+  grid: 'grid',
+  list: 'list',
+} as const;
+
+export interface MemberProfileInput {
+  /**
+     * @minLength 2
+     * @maxLength 100
+     */
+  fullName: string;
+  /** @maxLength 100 */
+  profession: string;
+  /** @maxLength 150 */
+  organization: string;
+  /** @maxLength 100 */
+  country: string;
+  /** @maxLength 1000 */
+  bio: string;
+  /** @maxLength 500 */
+  offering: string;
+  /** @maxLength 500 */
+  lookingFor: string;
+  /** @maxLength 500 */
+  website: string;
+  /**
+     * Optional Instagram profile link; not an OAuth connection.
+     * @maxLength 500
+     */
+  instagramUrl?: string;
+  /**
+     * Optional Facebook profile or page link.
+     * @maxLength 500
+     */
+  facebookUrl?: string;
+  /**
+     * Optional TikTok profile link.
+     * @maxLength 500
+     */
+  tiktokUrl?: string;
+  /**
+     * Optional LinkedIn profile or company link.
+     * @maxLength 500
+     */
+  linkedinUrl?: string;
+  /** @maxItems 8 */
+  sectors: MemberProfileInputSectorsItem[];
+  isPublic: boolean;
+  publicMedia?: boolean;
+  profileLayout?: MemberProfileInputProfileLayout;
+  /**
+     * @minimum 0
+     * @maximum 100
+     */
+  coverPosition?: number;
+  postsLayout?: MemberProfileInputPostsLayout;
+}
+
+export type PublicMember = ProfileDisplayFields & ({
+  id: number;
+  /** Optional legacy response property; actual media exposure remains server-controlled. */
+  publicMedia?: boolean;
+  /**
+     * Public profile photo only when the member explicitly permits public media.
+     * @nullable
+     */
+  avatarUrl?: string | null;
+  /** Whether this public member has joined the signed-in social network. */
+  enabled?: boolean;
+});
+
+export type MemberProfile = ProfileDisplayFields & ({
+  id: number;
+  /**
+     * Optional legacy response property; owner photos use the existing network media flow.
+     * @nullable
+     */
+  avatarUrl?: string | null;
+  /** Optional legacy response property; profile editing never activates the network. */
+  enabled?: boolean;
   publicMedia: boolean;
   savedItems: string[];
-};
+});
 
 export interface MemberProfileResponse {
   profile: MemberProfile | null;
