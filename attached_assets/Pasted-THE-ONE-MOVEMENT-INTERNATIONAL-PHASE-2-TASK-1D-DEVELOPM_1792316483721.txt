@@ -1,0 +1,77 @@
+THE ONE MOVEMENT INTERNATIONAL
+PHASE 2 — TASK 1D
+DEVELOPMENT ENVIRONMENT ISOLATION REVIEW
+
+FOUNDER'S DECISION
+
+The static investigation is accepted.
+
+The correction enabled: false must remain unchanged.
+
+The Founder has NOT authorized implementation of the runtime launcher, external service connections, database access, account creation, or any writes.
+
+CURRENT MANDATE:
+READ-ONLY CONFIGURATION AND ISOLATION REVIEW.
+
+STRICTLY PROHIBITED:
+- No file modifications.
+- No server start, restart, or stop.
+- No compilation or rebuild.
+- No test execution.
+- No database connections.
+- No Clerk API calls.
+- No Stripe initialization or API calls.
+- No migrations.
+- No account creation.
+- No external storage access.
+- No secret values displayed, copied into reports, or transmitted.
+- No production access or deployment.
+
+TASK 1 — CLERK
+
+Identify, from existing configuration and documentation only:
+- How the application selects its Clerk publishable key.
+- How the server selects its Clerk secret key.
+- Whether development and production credentials are distinguishable without revealing their values.
+- Whether a configured proxy could route authentication to production.
+- What non-sensitive evidence would establish that a dedicated development Clerk instance is being used.
+
+Do not print keys, tokens, environment dumps, or secret-derived values.
+
+TASK 2 — POSTGRESQL
+
+Identify, without connecting:
+- How DATABASE_URL is selected.
+- Whether configuration overrides or fallback connections exist.
+- What evidence would establish that a database is exclusively reserved for testing.
+- Whether a dedicated test database and restricted database role already exist.
+- Whether any proposed check could accidentally invoke migrations or write data.
+
+Do not print connection strings, usernames, passwords, hostnames, or other potentially sensitive connection details.
+
+TASK 3 — TESTING ALTERNATIVES
+
+Compare the safest options:
+A. Continue with existing isolated tests using simulated dependencies.
+B. Add tests that verify launcher safety without connecting to external services.
+C. Use an existing dedicated development environment, if its isolation can be established.
+D. Defer runtime verification until a dedicated environment is explicitly approved.
+
+For each option, explain what it proves, what it does not prove, and what authorization would be required.
+
+TASK 4 — MINIMAL RECOMMENDATION
+
+Recommend the safest next step that does not require external connections or writes.
+
+Do not create the launcher.
+Do not execute any proposed checks.
+Do not alter the application or its startup process.
+
+Return a concise report with:
+- Verified facts.
+- Unverified assumptions.
+- Evidence still needed.
+- Risks.
+- The exact next decision required from the Founder.
+
+STOP if isolation cannot be established from existing evidence.
