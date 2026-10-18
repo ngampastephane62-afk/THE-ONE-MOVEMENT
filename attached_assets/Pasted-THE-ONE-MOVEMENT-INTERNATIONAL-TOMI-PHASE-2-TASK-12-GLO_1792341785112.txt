@@ -1,0 +1,208 @@
+THE ONE MOVEMENT INTERNATIONAL (TOMI)
+PHASE 2 — TASK 12
+
+GLOBAL MEMBER IDENTITY
+PROFILE DATA & PRIVACY ARCHITECTURE
+
+FOUNDER AUTHORIZATION:
+READ-ONLY TECHNICAL DESIGN
+
+IMPLEMENTATION: NOT AUTHORIZED
+
+MISSION
+
+TOMI is a global movement connecting people
+across nations, cultures and professions.
+
+Members should be able to present their
+international identity while maintaining
+control over their personal information.
+
+Design a safe extension of the existing
+member profile architecture.
+
+==================================================
+1. EXISTING IDENTITY ARCHITECTURE
+==================================================
+
+Inspect:
+
+- Clerk authentication
+- ecosystem_members
+- network_profiles
+- Existing profile forms
+- Existing member profile displays
+- Existing privacy controls
+- Public profile API responses
+
+Preserve the existing identity model.
+
+Do not create another member table.
+
+==================================================
+2. GLOBAL IDENTITY FIELDS
+==================================================
+
+Design support for:
+
+A. NATIONALITIES
+
+- Multiple nationalities per member.
+- Explicit member selection.
+- Standardized country identifiers.
+- No nationality inference.
+- Optional disclosure.
+
+B. COUNTRY OF RESIDENCE
+
+- Separate from nationality.
+- Explicitly selected.
+- Optional.
+- Preserve existing ambiguous
+  country values until confirmed.
+
+C. CITY
+
+- Optional text field.
+- No automatic geolocation.
+
+D. LANGUAGES
+
+- Multiple languages.
+- Explicit member selection.
+- Optional.
+
+==================================================
+3. PRIVACY
+==================================================
+
+Design independent visibility controls
+for nationality and residence.
+
+Evaluate appropriate visibility controls
+for city and languages as well.
+
+Possible levels:
+
+- Only me
+- TOMI members
+- Public
+
+Default new fields to private.
+
+Privacy must be enforced server-side.
+
+Do not expose private fields through
+API responses, caches or search results.
+
+==================================================
+4. PROFILE EXPERIENCE
+==================================================
+
+Reuse the existing profile editor.
+
+Members should be able to:
+
+- Add or remove nationalities.
+- Update their country of residence.
+- Add their city.
+- Select languages.
+- Control visibility.
+- Save changes.
+- See confirmed saved values.
+
+Profile completion remains optional.
+
+Do not automatically activate the network.
+
+==================================================
+5. INTERNATIONAL DISCOVERY
+==================================================
+
+Evaluate future discovery features:
+
+- Discover members by nationality.
+- Discover members by residence.
+- Discover members by language.
+- Explore members across sectors.
+
+Do not implement search filters yet.
+
+Explain how privacy restrictions
+would apply to future discovery.
+
+==================================================
+6. DATABASE DESIGN
+==================================================
+
+Provide the smallest additive schema
+extension compatible with the current
+PostgreSQL and Drizzle architecture.
+
+Explain:
+
+- Proposed fields
+- Data types
+- Defaults
+- Validation
+- Migration approach
+- Existing data preservation
+- Index requirements
+- Rollback considerations
+
+Do not run migrations.
+
+==================================================
+7. SECURITY & DATA RIGHTS
+==================================================
+
+Review:
+
+- Member ownership
+- Public profile exposure
+- Authenticated member exposure
+- Visibility changes
+- Cache invalidation
+- Account deletion dependencies
+- Sensitive information minimization
+
+Do not access production member data.
+
+==================================================
+8. REQUIRED REPORT
+==================================================
+
+Return:
+
+1. Existing architecture
+2. Proposed data model
+3. Proposed privacy model
+4. Profile editor changes
+5. Profile display changes
+6. Public API filtering requirements
+7. Discovery implications
+8. Migration requirements
+9. Security risks
+10. Tests required
+11. Smallest safe implementation plan
+12. Decisions requiring Founder approval
+
+==================================================
+9. ABSOLUTE RESTRICTIONS
+==================================================
+
+READ-ONLY ANALYSIS ONLY.
+
+No code modifications.
+No database modifications.
+No migrations.
+No server restarts.
+No deployment.
+No Stripe operations.
+No dependency installation.
+No production data access.
+No interference with other agents.
+
+Do not begin another task.
+
+Wait for the Founder's authorization.

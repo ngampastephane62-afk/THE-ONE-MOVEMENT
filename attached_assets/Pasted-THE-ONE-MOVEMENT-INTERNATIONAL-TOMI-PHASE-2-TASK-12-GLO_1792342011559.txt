@@ -1,0 +1,239 @@
+THE ONE MOVEMENT INTERNATIONAL (TOMI)
+PHASE 2 — TASK 12
+
+GLOBAL MEMBER IDENTITY
+INTERNATIONAL PROFILE ARCHITECTURE
+
+FOUNDER AUTHORIZATION:
+READ-ONLY TECHNICAL AUDIT AND DESIGN
+
+IMPLEMENTATION IS NOT AUTHORIZED YET.
+
+MISSION
+
+Transform the existing TOMI member profile
+into a meaningful global identity experience.
+
+TOMI connects people across nations,
+cultures, professions and generations.
+
+Every member should be able to express
+who they are, where they come from,
+where they live, what they do,
+and which languages they speak.
+
+Preserve the existing member architecture.
+
+Do not create a new identity system.
+
+========================================
+1. EXISTING ARCHITECTURE
+========================================
+
+Inspect the existing:
+
+- Clerk authentication
+- ecosystem_members
+- network_profiles
+- ProfileForm
+- Settings
+- Member Profile
+- Public profile endpoints
+- Privacy controls
+- Member discovery
+
+Identify reusable functionality.
+
+========================================
+2. GLOBAL MEMBER IDENTITY
+========================================
+
+Design support for:
+
+A. NATIONALITIES
+
+Allow members to select multiple nationalities.
+
+Nationality must be explicitly provided.
+
+Never infer nationality from IP address,
+name, language, location or ethnicity.
+
+B. COUNTRY OF RESIDENCE
+
+Separate residence from nationality.
+
+Preserve existing country values until
+the member confirms their meaning.
+
+C. CITY
+
+Optional and manually entered.
+
+D. LANGUAGES
+
+Allow members to select multiple languages.
+
+E. EXISTING PROFILE INFORMATION
+
+Preserve:
+
+- Profile photo
+- Display name
+- Profession
+- Biography
+- Organization
+- Sectors
+- Professional links
+
+========================================
+3. PRIVACY AND MEMBER CONTROL
+========================================
+
+Design visibility settings:
+
+- Only me
+- TOMI members
+- Public
+
+New nationality, residence, city
+and language fields must be private
+by default.
+
+Members must explicitly choose
+what they want to share.
+
+Enforce privacy on the server,
+not only in the interface.
+
+Never expose private phone numbers,
+private email addresses or account data.
+
+========================================
+4. PROFILE EXPERIENCE
+========================================
+
+Reuse existing profile editing components.
+
+Design an intuitive experience where
+members can:
+
+- Complete their international identity
+- Add or remove nationalities
+- Update residence
+- Enter city
+- Select languages
+- Control visibility
+- Save changes
+- See their updated profile
+
+All fields must remain optional.
+
+Do not require full profile completion
+to explore TOMI.
+
+Do not automatically activate
+network participation.
+
+========================================
+5. GLOBAL DISCOVERY
+========================================
+
+Evaluate future member discovery by:
+
+- Nationality
+- Country of residence
+- Language
+- Profession
+- Sector
+
+Explain how to prevent private
+information from appearing in
+search results or filters.
+
+Do not implement discovery filters yet.
+
+========================================
+6. DATABASE DESIGN
+========================================
+
+Propose the smallest safe extension
+of the existing PostgreSQL and
+Drizzle architecture.
+
+Explain:
+
+- New fields required
+- Recommended data types
+- Default values
+- Validation
+- Migration requirements
+- Existing data preservation
+- Privacy enforcement
+- Rollback strategy
+
+Do not execute migrations.
+
+Do not modify schemas.
+
+========================================
+7. SECURITY
+========================================
+
+Review:
+
+- Member ownership
+- Authenticated profile access
+- Public profile exposure
+- Privacy filtering
+- Cache invalidation
+- Account deletion implications
+- Protection of personal information
+
+Do not access production member data.
+
+========================================
+8. REQUIRED REPORT
+========================================
+
+Return:
+
+1. Existing profile architecture
+2. Fields already available
+3. Missing international identity fields
+4. Proposed database extension
+5. Privacy architecture
+6. Profile editor changes
+7. Member profile display changes
+8. Public API filtering requirements
+9. International discovery possibilities
+10. Migration risks
+11. Required tests
+12. Recommended implementation phases
+13. Decisions requiring Founder approval
+
+========================================
+9. STRICT RESTRICTIONS
+========================================
+
+READ-ONLY ANALYSIS ONLY.
+
+DO NOT:
+
+- Modify application code
+- Modify database schemas
+- Run migrations
+- Start or restart servers
+- Deploy
+- Change Clerk authentication
+- Change messaging permissions
+- Change subscriptions or Stripe
+- Install dependencies
+- Access production member data
+- Create new pages
+- Redesign the homepage
+- Interfere with other agents
+
+Return the technical report.
+
+Wait for the Founder's next authorization.
