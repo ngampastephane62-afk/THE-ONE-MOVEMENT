@@ -1,14 +1,9 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
-import { appearanceOf } from '@/components/network/ProfileHero';
 import AppearanceControls from './AppearanceControls';
-import { STATE_PREFIX } from '@/components/network/kit';
 import { useQueryClient } from '@tanstack/react-query';
 import { Loader2 } from 'lucide-react';
 import {
   useSaveMemberProfile,
-  getGetMemberProfileQueryKey,
-  getGetEcosystemMembersQueryKey,
-  getGetPublicNetworkProfileQueryKey,
   type MemberProfile,
   type MemberProfileInput,
   type MemberProfileInputSectorsItem,
@@ -17,11 +12,12 @@ import { SECTORS } from '@/lib/sectors-data';
 import { useAuth } from '@clerk/react';
 import { getPendingSector, clearPendingSector } from '@/lib/network-invitations';
 import { SOCIAL_PROFILES, normalizeSocialProfile } from '@workspace/shared';
+import { profileInput, reconcileProfile, synchronizeProfile } from './profile-sync';
 
 interface Props {
   initial: MemberProfile | null;
   defaultName: string;
-  onDone?: () => void;
+  onDone?: (hasNewerEdits: boolean) => void;
   onCancel?: () => void;
   appearance?: boolean;
   onDraft?: (v: MemberProfileInput) => void;
@@ -53,28 +49,21 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
   const [pendingSector] = useState(() => getPendingSector(userId));
   const qc = useQueryClient();
   const save = useSaveMemberProfile();
-  const [v, setV] = useState<MemberProfileInput>(() => ({
-    fullName: initial?.fullName ?? defaultName,
-    profession: initial?.profession ?? '',
-    organization: initial?.organization ?? '',
-    country: initial?.country ?? '',
-    bio: initial?.bio ?? '',
-    offering: initial?.offering ?? '',
-    lookingFor: initial?.lookingFor ?? '',
-    website: initial?.website ?? '',
-    instagramUrl: initial?.instagramUrl ?? '',
-    facebookUrl: initial?.facebookUrl ?? '',
-    tiktokUrl: initial?.tiktokUrl ?? '',
-    linkedinUrl: initial?.linkedinUrl ?? '',
+  const [v, setValues] = useState<MemberProfileInput>(() => ({
+    ...profileInput(initial, defaultName),
     sectors: pendingSector && !(initial?.sectors ?? []).includes(pendingSector as MemberProfileInputSectorsItem) && (initial?.sectors.length ?? 0) < 8
       ? [...(initial?.sectors ?? []), pendingSector as MemberProfileInputSectorsItem]
       : initial?.sectors ?? [],
-    isPublic: initial?.isPublic ?? false,
-    publicMedia: initial?.publicMedia ?? false,
-    profileLayout: appearanceOf(initial).layout,
-    coverPosition: appearanceOf(initial).pos,
-    postsLayout: appearanceOf(initial).posts,
   }));
+  const latest = useRef(v);
+  const saving = useRef(false);
+  const [synchronizing, setSynchronizing] = useState(false);
+  const [syncError, setSyncError] = useState(false);
+  const setV = (update: (previous: MemberProfileInput) => MemberProfileInput) => {
+    const next = update(latest.current);
+    latest.current = next;
+    setValues(next);
+  };
   const draftRef = useRef(onDraft);
   draftRef.current = onDraft;
   useEffect(() => { draftRef.current?.(v); }, [v]);
@@ -86,24 +75,38 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
 
   function submit(ev: FormEvent) {
     ev.preventDefault();
+    if (saving.current) return;
+    const submitted = latest.current;
     const payload: MemberProfileInput = {
-      ...v,
-      fullName: v.fullName.trim(), profession: v.profession.trim(), organization: v.organization.trim(),
-      country: v.country.trim(), bio: v.bio.trim(), offering: v.offering.trim(), lookingFor: v.lookingFor.trim(), website: v.website.trim(),
+      ...submitted,
+      fullName: submitted.fullName.trim(), profession: submitted.profession.trim(), organization: submitted.organization.trim(),
+      country: submitted.country.trim(), bio: submitted.bio.trim(), offering: submitted.offering.trim(), lookingFor: submitted.lookingFor.trim(), website: submitted.website.trim(),
     };
     const e = validate(payload);
     setErrors(e);
     if (Object.keys(e).length) return;
+    saving.current = true;
+    setSynchronizing(true);
+    setSyncError(false);
     save.mutate({ data: payload }, {
-      onSuccess: (res) => {
-        clearPendingSector();
-        qc.setQueryData(getGetMemberProfileQueryKey(), res);
-        qc.invalidateQueries({ queryKey: getGetEcosystemMembersQueryKey() });
-        qc.invalidateQueries({ queryKey: STATE_PREFIX });
-        const id = res.profile?.id ?? initial?.id;
-        if (id) qc.invalidateQueries({ queryKey: getGetPublicNetworkProfileQueryKey(id) });
-        onDone?.();
+      onSuccess: async (res) => {
+        try {
+          if (!res.profile) throw new Error('Missing confirmed profile');
+          await synchronizeProfile(qc, res.profile);
+          const confirmed = profileInput(res.profile);
+          const next = reconcileProfile(latest.current, submitted, confirmed);
+          setV(() => next);
+          draftRef.current?.(next);
+          clearPendingSector();
+          onDone?.(JSON.stringify(next) !== JSON.stringify(confirmed));
+        } catch {
+          setSyncError(true);
+        } finally {
+          saving.current = false;
+          setSynchronizing(false);
+        }
       },
+      onError: () => { saving.current = false; setSynchronizing(false); },
     });
   }
 
@@ -111,11 +114,13 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
 
   return (
     <form onSubmit={submit} noValidate className="flex flex-col gap-8" data-testid="form-member-profile">
+      <p className="text-sm leading-relaxed text-ink-700" data-testid="text-profile-completion-guidance">Build your profile at your own pace: confirm your display name, add a photo from Settings, describe your profession, select sectors and write a short biography. These steps are optional for exploring TOMI; you can come back later. Saving never activates the network; visibility changes only if you choose those settings.</p>
       {appearance && <AppearanceControls v={v} set={set} />}
       <fieldset className="grid gap-5 sm:grid-cols-2">
         <legend className="mb-4 text-eyebrow text-gold-700">THE ESSENTIALS</legend>
-        <label className="text-sm text-ink-900">Full name *
+        <label className="text-sm text-ink-900">Display name *
           <input className={`${fieldCls} mt-1`} value={v.fullName} maxLength={100} onChange={(e) => set('fullName', e.target.value)} data-testid="input-fullName" />{err('fullName')}
+          <span className="mt-1 block text-xs text-ink-700">Confirm the name you want members to see, or edit it here. Your chosen name is kept until you change it.</span>
         </label>
         <label className="text-sm text-ink-900">Profession or role <span className="text-sand-400">(optional)</span>
           <input className={`${fieldCls} mt-1`} value={v.profession} maxLength={100} placeholder="e.g. Textile designer" onChange={(e) => set('profession', e.target.value)} data-testid="input-profession" />{err('profession')}
@@ -196,14 +201,15 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
           <button type="submit" className="text-xs font-semibold uppercase tracking-wider text-crimson-700 underline" data-testid="button-retry-save">Retry</button>
         </div>
       )}
+      {syncError && <p role="alert" className="text-sm text-crimson-700">We could not confirm the updated profile view. Your draft is still here; please retry saving.</p>}
 
       <div className="flex flex-wrap gap-3">
-        <button type="submit" disabled={save.isPending} data-testid="button-save-profile"
+        <button type="submit" disabled={save.isPending || synchronizing} data-testid="button-save-profile"
           className="inline-flex items-center gap-2 bg-lagoon-900 px-6 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-ivory-100 hover:bg-lagoon-800 disabled:opacity-60">
-          {save.isPending && <Loader2 className="h-4 w-4 animate-spin" />} {initial ? 'Save changes' : 'Save profile'}
+          {(save.isPending || synchronizing) && <Loader2 className="h-4 w-4 animate-spin" />} {initial ? 'Save changes' : 'Save profile'}
         </button>
         {onCancel && (
-          <button type="button" onClick={onCancel} data-testid="button-cancel-edit" className="px-4 py-3 text-xs uppercase tracking-wider text-ink-700 hover:text-ink-900">Cancel</button>
+          <button type="button" disabled={save.isPending || synchronizing} onClick={onCancel} data-testid="button-cancel-edit" className="px-4 py-3 text-xs uppercase tracking-wider text-ink-700 hover:text-ink-900 disabled:opacity-60">Cancel</button>
         )}
       </div>
     </form>

@@ -188,7 +188,9 @@ test('direct URL and reload open the existing Workspace; no second page or ident
     const f = fixture({ search: 'tab=workspace' });
     const html = f.component('Settings');
     assert.ok(html.includes('text-discovery-basis'));
-    assert.ok(!html.includes('isolated-profile-form'));
+    // Keep the editor mounted but hidden so switching tabs cannot discard a
+    // failed-save draft or detach an in-flight save callback.
+    assert.match(html, /<div(?=[^>]* hidden="")(?=[^>]* data-testid="panel-profile-editor")/);
     assert.equal(f.writes.length, 0);
   }
 });

@@ -1,0 +1,180 @@
+THE ONE MOVEMENT INTERNATIONAL (TOMI)
+PHASE 2 — TASK 10
+
+MEMBER PROFILE COMPLETION
+& INSTANT PROFILE SYNCHRONIZATION
+
+FOUNDER AUTHORIZATION:
+LIMITED IMPLEMENTATION APPROVED
+
+MISSION
+
+Improve the existing member profile experience
+without creating a new identity system.
+
+TOMI members should be encouraged to build
+a meaningful professional and community identity.
+
+Their saved information should appear correctly
+on their profiles.
+
+==================================================
+1. PROFILE COMPLETION
+==================================================
+
+Reuse the existing:
+
+- Clerk identity
+- ecosystem_members
+- network_profiles
+- ProfileForm
+- Settings
+- Existing photo upload system
+- Existing member welcome components
+
+Improve the existing profile completion guidance.
+
+Invite members to:
+
+- Confirm their display name
+- Add a profile photo
+- Complete their profession
+- Select their sectors
+- Add a biography
+
+These actions must remain optional.
+
+Members must be able to explore TOMI
+without completing every profile field.
+
+Do not automatically activate the network.
+
+==================================================
+2. AUTOMATIC NAME INITIALIZATION
+==================================================
+
+Preserve the existing initial name
+prefill from Clerk.
+
+If the initial name is generic or incomplete,
+invite the member to confirm or edit it.
+
+Never overwrite a name already chosen
+by the member.
+
+Do not create a second identity record.
+
+==================================================
+3. PROFILE PHOTO
+==================================================
+
+Reuse the existing TOMI photo upload system.
+
+Make the existing photo action easier
+to discover during profile completion.
+
+Explain that profile photos are saved
+independently from other profile fields.
+
+Do not automatically import Clerk photos.
+
+Do not change upload security or storage.
+
+Do not publish private photos automatically.
+
+==================================================
+4. INSTANT PROFILE SYNCHRONIZATION
+==================================================
+
+Inspect the existing profile save flow.
+
+After a successful server response:
+
+- Display the confirmed saved values.
+- Refresh relevant profile views.
+- Preserve unsaved drafts when saving fails.
+- Avoid showing stale information.
+- Do not overwrite newer user edits.
+- Preserve existing visibility permissions.
+
+Use the existing data-fetching and
+cache-management mechanisms.
+
+Do not create a parallel profile store.
+
+==================================================
+5. PROFILE PRIVACY
+==================================================
+
+Preserve:
+
+- Member ownership
+- Public profile settings
+- Public media settings
+- Explicit network activation
+- Existing privacy restrictions
+
+Do not add nationality, residence,
+city or language fields in this task.
+
+Those require separate authorization.
+
+Do not expose private contact information.
+
+==================================================
+6. ARCHITECTURE PROTECTION
+==================================================
+
+No database changes.
+No migrations.
+No authentication changes.
+No subscription changes.
+No Stripe operations.
+No messaging permission changes.
+No new pages.
+No homepage redesign.
+No navigation restructuring.
+No deployment.
+No server restart.
+No dependency installation.
+No production member data access.
+
+Do not interfere with other agents.
+
+==================================================
+7. VERIFICATION
+==================================================
+
+Add isolated tests covering:
+
+- Existing name preservation
+- Optional profile completion
+- Successful save synchronization
+- Failed save and draft preservation
+- Server-normalized values
+- Photo upload independence
+- Profile visibility preservation
+- Explicit network activation
+
+Run only safe isolated tests
+and static checks.
+
+Do not start application servers.
+
+==================================================
+8. REQUIRED REPORT
+==================================================
+
+Return:
+
+1. Exact files modified
+2. Profile guidance improvements
+3. Synchronization changes
+4. Existing photo experience improvements
+5. Tests performed
+6. Remaining unverified behavior
+7. Architecture preservation confirmation
+
+Do not begin another task.
+
+Wait for the Founder's authorization.
