@@ -1,0 +1,67 @@
+THE ONE MOVEMENT INTERNATIONAL
+PHASE 2 — TASK 1C
+PREPARE A SAFE, ISOLATED VERIFICATION ENVIRONMENT
+
+FOUNDER'S DECISION:
+You are authorized to investigate and prepare the smallest safe verification procedure for the network activation correction.
+
+The source correction must remain:
+- New network profiles default to enabled: false.
+- Explicit member activation is required.
+- Existing activation states remain unchanged.
+- Public profile visibility remains independent of network activation.
+
+THIS IS A PREPARATION-ONLY MANDATE.
+
+You may inspect the code and propose a minimal implementation plan.
+
+You are NOT authorized to implement the launcher yet.
+
+STRICT RESTRICTIONS:
+- Do not modify any files.
+- Do not compile or rebuild the application.
+- Do not start, restart, or stop any server.
+- Do not create Clerk accounts.
+- Do not write to any database.
+- Do not run tests that may access DATABASE_URL.
+- Do not run migrations.
+- Do not initialize, synchronize, or modify Stripe.
+- Do not access production data.
+- Do not modify environment variables or secrets.
+- Do not deploy.
+- Do not change the existing application startup process.
+
+INVESTIGATION TASKS:
+
+1. Identify every import and initialization path that could indirectly trigger Stripe, database writes, migrations, or other external side effects when importing src/app.ts.
+
+2. Identify the exact environment variables and configuration checks needed to establish that Clerk and PostgreSQL are exclusively using development resources. Never reveal secret values.
+
+3. Determine whether the existing development database already has the schema required for the verification, without connecting to or modifying any database.
+
+4. Propose a minimal isolated verification launcher that:
+   - Imports the corrected source application.
+   - Cannot invoke Stripe initialization or synchronization.
+   - Cannot run migrations.
+   - Cannot write to production services.
+   - Does not alter the standard production or development startup scripts.
+
+5. Specify how to test the following without affecting existing members:
+   - A new network profile starts disabled.
+   - The profile remains disabled after a page reload.
+   - Explicit member confirmation activates the profile.
+   - Public profile visibility remains independent.
+   - Unauthorized activation is rejected.
+   - Existing member activation states are not modified.
+
+6. List every file that would need to be added or modified, explaining why each change is necessary.
+
+7. Provide the exact proposed commands, expected outcomes, risks, and rollback procedure.
+
+8. Clearly distinguish what can be verified statically from what requires a running server, Clerk, or PostgreSQL.
+
+STOP if any required isolation cannot be established from existing configuration.
+
+Do not execute the proposed commands or implement the launcher.
+
+Return the findings and wait for the Founder's explicit approval.
