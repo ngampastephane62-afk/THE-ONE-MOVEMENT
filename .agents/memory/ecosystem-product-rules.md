@@ -15,11 +15,11 @@ Each event has its own income-generating professional participation services; pa
 
 **How to apply:** Keep programme-specific services separate from annual sponsorship, monthly subscriptions and capital investment. Existing sponsors should have their written inclusions checked before an additional fee is proposed. Do not invent role prices, promise editorial coverage or assume all sponsor levels guarantee a speaking slot.
 
-Ordinary member-to-member messaging must be free as a confirmed product principle. Accepted conversations must not have daily message quotas; anti-spam limits should target new unsolicited requests. Five new requests per rolling 24 hours and ten pending outgoing requests are proposed thresholds, not approved implementation. TOMI-organized professional introductions remain separate.
+Ordinary member-to-member messaging must be free. Accepted conversations must not have daily message quotas; anti-spam limits target genuinely new unsolicited requests. The Founder approved five new requests per rolling 24 hours and ten pending outgoing requests. Opening existing threads, replying and accepting requests do not consume these quotas. TOMI-organized professional introductions remain separate.
 
-**Why:** The Founder confirmed free ordinary communication while explicitly withholding implementation authorization.
+**Why:** The Founder authorized limited free-messaging implementation with these exact first-contact protections, without migrations or new persistent infrastructure.
 
-**How to apply:** Do not treat the existing conversation paywall as the intended long-term policy, but do not remove it without a separate implementation mandate. Preserve authentication, verification, explicit activation, consent, blocking, moderation and account restrictions.
+**How to apply:** Preserve authentication, verification, explicit activation, consent, blocking, moderation and account restrictions. Only ordinary first-contact creation loses its subscription gate; specialized commercial gates remain separate. If reliable counting and concurrent-creation protection cannot be preserved, stop rather than opening unprotected first contact. Source implementation approval does not authorize runtime verification or deployment.
 
 Nationality must be supplied explicitly by the member, never inferred from IP address, device location, residence, language, name or ethnicity. Nationality and residence need distinct meanings and clear visibility controls; private account contact details must never be published automatically.
 

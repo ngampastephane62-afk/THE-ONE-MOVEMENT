@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'wouter';
-import { ArrowLeft, Check, Clock, Flag, Loader2, Send, X } from 'lucide-react';
+import { ArrowLeft, Ban, Check, Clock, Flag, Loader2, Send, X } from 'lucide-react';
 import { useGetNetworkState, getGetNetworkStateQueryKey } from '@workspace/api-client-react';
 import ReportDialog, { type ReportTarget } from '@/components/network/ReportDialog';
 import { Avatar, Badges, Empty, ErrorBox, Skeleton, ago, btn, btnGhost, card, field, useAct } from '@/components/network/kit';
 import { useMe } from './ctx';
+import { errMsg } from './proHooks';
 
 export default function Messages() {
   const { id } = useParams<{ id?: string }>();
@@ -14,11 +15,13 @@ export default function Messages() {
   const [text, setText] = useState('');
   const [err, setErr] = useState('');
   const [report, setReport] = useState<ReportTarget | null>(null);
+  const [blocked, setBlocked] = useState<{ threadId: number; memberId: number } | null>(null);
+  const blockedHere = blocked?.threadId === tid;
   const params = tid ? { thread: tid } : {};
-  const q = useGetNetworkState(params, { query: { queryKey: getGetNetworkStateQueryKey(params), refetchInterval: 15000 } });
+  const q = useGetNetworkState(params, { query: { queryKey: getGetNetworkStateQueryKey(params), enabled: !blockedHere, refetchInterval: 15000 } });
   const threads = q.data?.threads ?? [];
-  const t = threads.find((x) => x.id === tid);
-  const msgs = q.data?.messages ?? [];
+  const t = blockedHere ? undefined : threads.find((x) => x.id === tid);
+  const msgs = blockedHere ? [] : q.data?.messages ?? [];
   const endRef = useRef<HTMLDivElement>(null);
   const readFor = useRef<string>('');
 
@@ -34,7 +37,7 @@ export default function Messages() {
 
   const incoming = threads.filter((x) => !x.accepted && !x.requestedByMe && !x.declined);
   const rest = threads.filter((x) => !incoming.includes(x));
-  const doAct = (p: Promise<unknown>, ok?: () => void) => { setErr(''); p.then(() => ok?.()).catch(() => setErr('Not sent. Your text is kept — try again.')); };
+  const doAct = (p: Promise<unknown>, ok?: () => void) => { setErr(''); p.then(() => ok?.()).catch((error) => setErr(errMsg(error, 'The action failed. Your text is kept — try again.'))); };
 
   const Row = ({ x }: { x: (typeof threads)[number] }) => (
     <Link href={`/member/messages/${x.id}`} className={`flex items-center gap-3 rounded-xl px-3 py-3 ${x.id === tid ? 'bg-lagoon-900/10' : 'hover:bg-ivory-200'}`} data-testid={`thread-${x.id}`}>
@@ -53,7 +56,7 @@ export default function Messages() {
     <div className="flex gap-4 md:h-[calc(100dvh-7rem)]">
       <aside className={`${tid ? 'hidden md:flex' : 'flex'} w-full flex-col gap-2 overflow-y-auto px-2 pt-4 md:w-80 md:shrink-0 md:px-0 md:pt-0`}>
         <h1 className="px-2 font-display text-2xl text-ink-900">Messages</h1>
-        <p className="px-2 text-xs text-sand-400">Private between participants. A conversation opens only after the recipient accepts.</p>
+        <p className="px-2 text-xs text-ink-700" data-testid="text-free-messaging">Ordinary conversations are free and private between participants. First contacts require acceptance, with up to 5 new requests per rolling 24 hours and 10 pending outgoing requests to prevent spam. Accepted conversations have no daily message quota. Short-term security limits still apply. TOMI-organized professional introductions remain a separate service.</p>
         {q.isLoading ? <Skeleton rows={3} /> : q.isError ? <ErrorBox onRetry={() => q.refetch()} /> : threads.length === 0 ? (
           <Empty title="No conversations yet" body="Visit a member profile and send a request to message. They choose whether to accept."><Link href="/member/people" className={btnGhost}>Find people</Link></Empty>
         ) : (<>
@@ -64,6 +67,11 @@ export default function Messages() {
 
       <section className={`${tid ? 'flex' : 'hidden md:flex'} ${card} min-h-[calc(100dvh-8.5rem)] flex-1 flex-col overflow-hidden rounded-none md:min-h-0 md:rounded-2xl`}>
         {!tid ? <div className="m-auto max-w-xs p-6 text-center text-sm text-sand-400">Select a conversation.</div>
+          : blockedHere && blocked ? <div className="m-auto flex flex-col items-start gap-3 p-6" data-testid="status-thread-blocked">
+            <p className="text-sm text-ink-800">Member blocked. Communication remains disabled. You can still report this member without unblocking them.</p>
+            <button type="button" className={btnGhost} onClick={() => setReport({ memberId: blocked.memberId })} data-testid="button-report-blocked-member"><Flag className="h-4 w-4" />Report member</button>
+            <Link href="/member/messages" className={btnGhost}>Back to inbox</Link>
+          </div>
           : q.isLoading ? <div className="p-4"><Skeleton rows={2} /></div>
           : !t ? <div className="m-auto p-6"><Empty title="Conversation not found" body="It may have been declined or the member blocked contact."><Link href="/member/messages" className={btnGhost}>Back to inbox</Link></Empty></div>
           : (<>
@@ -71,6 +79,12 @@ export default function Messages() {
               <Link href="/member/messages" className="rounded-full p-1.5 md:hidden" aria-label="Back to inbox"><ArrowLeft className="h-5 w-5" /></Link>
               <Link href={`/member/profile/${t.other.id}`} className="flex min-w-0 flex-1 items-center gap-2"><Avatar m={t.other} size={36} /><span className="min-w-0"><span className="block truncate text-sm font-semibold text-ink-900">{t.other.fullName}</span><Badges m={t.other} compact /></span></Link>
               <button onClick={() => setReport({ memberId: t.other.id })} className="rounded-full p-2 text-sand-400 hover:text-crimson-700" aria-label="Report member" data-testid="button-report-thread"><Flag className="h-4 w-4" /></button>
+              <button type="button" disabled={pending} onClick={() => {
+                if (confirm(`Block ${t.other.fullName}? Communication will stop. You can still report this member.`)) {
+                  const target = { threadId: t.id, memberId: t.other.id };
+                  doAct(run({ action: 'block', targetId: target.memberId, accepted: true }), () => { setBlocked(target); setText(''); });
+                }
+              }} className="rounded-full p-2 text-sand-400 hover:text-crimson-700 disabled:opacity-50" aria-label="Block member" data-testid="button-block-thread"><Ban className="h-4 w-4" /></button>
             </header>
             <div className="flex flex-1 flex-col gap-2 overflow-y-auto bg-ivory-100/60 p-4" aria-live="polite">
               {msgs.length === 0 && <p className="m-auto text-xs text-sand-400">No messages yet.</p>}

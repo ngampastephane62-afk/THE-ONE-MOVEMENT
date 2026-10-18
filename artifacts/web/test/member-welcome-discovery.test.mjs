@@ -109,7 +109,7 @@ test('welcome gives three existing destinations without activation or writes', (
   const f = fixture();
   const html = f.component('MemberWelcome');
   for (const href of ['/member/settings?tab=workspace', '/member/people', '/ecosystem']) assert.ok(html.includes(`href="${href}"`));
-  for (const phrase of ['I belong.', 'I can connect.', 'I can contribute.', 'I can grow.', 'membership is free', 'profile is optional', 'explicit activation', 'does not require ten invitations', 'certification is separate', 'paid promotion does not grant official recognition', 'messaging features']) assert.ok(html.includes(phrase), phrase);
+  for (const phrase of ['I belong.', 'I can connect.', 'I can contribute.', 'I can grow.', 'membership is free', 'profile is optional', 'explicit activation', 'does not require ten invitations', 'certification is separate', 'paid promotion does not grant official recognition', 'Ordinary conversations are free', 'professional introductions']) assert.ok(html.includes(phrase), phrase);
   assert.equal(f.writes.length, 0);
 });
 

@@ -1,0 +1,226 @@
+THE ONE MOVEMENT INTERNATIONAL (TOMI)
+PHASE 2 — TASK 11
+
+FREE COMMUNITY MESSAGING
+SAFE & CONTROLLED IMPLEMENTATION
+
+FOUNDER AUTHORIZATION:
+LIMITED IMPLEMENTATION APPROVED
+
+MISSION
+
+TOMI connects people across nations,
+cultures, professions and communities.
+
+Ordinary human communication must be free.
+
+Implement free ordinary member-to-member
+messaging while preserving consent,
+privacy, security and moderation.
+
+Do not redesign the messaging system.
+
+==================================================
+1. FREE ORDINARY CONVERSATION REQUESTS
+==================================================
+
+Remove the monthly subscription requirement
+ONLY from the creation of ordinary
+member-to-member conversation requests.
+
+Eligible members must:
+
+- Be authenticated through Clerk.
+- Have a verified primary email address.
+- Have explicitly activated network participation.
+- Not be suspended.
+- Respect existing blocking rules.
+
+Preserve all other existing checks.
+
+Do not modify:
+
+- Professional introductions
+- Business publishing
+- Reels
+- Subscription records
+- Stripe
+- Founder privileges
+
+==================================================
+2. FREE ACCEPTED CONVERSATIONS
+==================================================
+
+Once a conversation request is accepted,
+members must be able to exchange
+ordinary text messages freely.
+
+No daily message quota.
+
+No monthly subscription requirement.
+
+Preserve existing short-term technical
+rate limiting for security.
+
+Do not introduce attachments.
+
+==================================================
+3. FIRST-CONTACT SAFETY LIMITS
+==================================================
+
+Apply the following initial limits:
+
+- Maximum 5 newly created conversation
+  requests per rolling 24-hour period.
+
+- Maximum 10 pending outgoing
+  conversation requests per member.
+
+Count only genuinely new requests.
+
+Do not count:
+
+- Accepted conversation messages
+- Replies to incoming requests
+- Opening an existing conversation
+- Repeated requests to an existing thread
+
+Enforce limits server-side.
+
+Use a reliable creation timestamp.
+
+Do not use network_threads.updatedAt
+as a creation timestamp.
+
+You may evaluate the existing initial
+message timestamp if reliable.
+
+The count and creation must be protected
+against concurrent requests.
+
+If these protections cannot be implemented
+reliably without a database migration
+or new persistent infrastructure:
+
+STOP.
+
+Do not remove the subscription gate.
+
+Report the dependency and await
+separate Founder authorization.
+
+==================================================
+4. CONSENT & MEMBER SAFETY
+==================================================
+
+Preserve:
+
+- Explicit conversation acceptance
+- One required initial note
+- No additional messages before acceptance
+- Declined request restrictions
+- Bidirectional blocking
+- Suspension restrictions
+- Existing reporting and moderation
+
+Allow reporting a member after blocking,
+without restoring communication.
+
+Make the existing block action accessible
+from the conversation interface.
+
+Do not expose private message contents
+to administrators.
+
+==================================================
+5. INTERFACE CLARITY
+==================================================
+
+Update only affected interface text.
+
+Explain:
+
+- Ordinary conversations are free.
+- First contacts require acceptance.
+- New contact requests are limited
+  to prevent spam.
+- Accepted conversations have no
+  daily message quota.
+- Professional introductions
+  remain a separate service.
+
+Ensure the initial note is clearly
+marked as required.
+
+Use existing components and visual styles.
+
+==================================================
+6. ARCHITECTURE PROTECTION
+==================================================
+
+No new pages.
+No new messaging system.
+No database migration.
+No schema changes.
+No subscription modifications.
+No Stripe operations.
+No authentication changes.
+No homepage redesign.
+No navigation restructuring.
+No dependency installation.
+No production member data access.
+No deployment.
+No server restart.
+
+Do not interfere with other agents.
+
+==================================================
+7. VERIFICATION
+==================================================
+
+Add isolated tests covering:
+
+- Free new conversation requests
+- Authentication and email verification
+- Explicit network activation
+- Suspended members
+- Blocking and declined requests
+- Rolling 24-hour request limits
+- Maximum pending requests
+- Concurrent request attempts
+- No duplicate counting
+- Free accepted conversations
+- No daily message quota
+- Reporting after blocking
+- Professional introduction isolation
+- Business and Reels isolation
+- No Stripe calls from ordinary messaging
+
+Run safe static checks and isolated tests.
+
+Do not start application servers.
+
+==================================================
+8. REQUIRED REPORT
+==================================================
+
+Return:
+
+1. Exact files modified
+2. Free messaging implementation
+3. Reliable request-counting mechanism
+4. Concurrency protection
+5. Consent and blocking preservation
+6. Reporting changes
+7. Frontend changes
+8. Tests and results
+9. Remaining runtime verification
+10. Any blocked dependency
+
+If a required safety guarantee
+cannot be met, stop implementation
+before opening free first contact.
+
+Do not begin another task.
+
+Wait for the Founder's next authorization.

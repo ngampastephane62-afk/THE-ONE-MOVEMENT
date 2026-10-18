@@ -16,7 +16,7 @@ export default function MemberWelcome() {
         <Link href="/ecosystem" className={btnGhost} data-testid="link-welcome-sectors">Explore all 17 sectors</Link>
       </div>
       <p className="mt-3 text-xs leading-relaxed text-ink-700">Confirm your display name, add a photo, profession, sectors and a short biography whenever you are ready. You can skip these steps and keep exploring.</p>
-      <p className="mt-3 text-xs leading-relaxed text-ink-700">Ordinary publishing does not require ten invitations. Official certification is separate from ordinary membership, and paid promotion does not grant official recognition. Specialized services, including some messaging features, have separate eligibility requirements.</p>
+      <p className="mt-3 text-xs leading-relaxed text-ink-700">Ordinary publishing does not require ten invitations. Official certification is separate from ordinary membership, and paid promotion does not grant official recognition. Ordinary conversations are free, with acceptance and first-contact anti-spam limits. Specialized services, including professional introductions, have separate eligibility requirements.</p>
     </section>
   );
 }

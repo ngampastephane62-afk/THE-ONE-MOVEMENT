@@ -11,6 +11,7 @@ export const state = {
   members: [], profiles: [], posts: [], follows: [], blocks: [], uploads: [],
   comments: [], likes: [], views: [], threads: [], messages: [], certifications: [],
   reports: [], audit: [], identities: new Map(), paid: new Set(), paidCalls: [],
+  clock: new Map(), failures: new Set(), transactionCalls: [],
 };
 function table(name) {
   return new Proxy({ table: name }, { get: (obj, key) =>
@@ -34,8 +35,9 @@ export const inArray = (a, list) => c => list.includes(value(a, c));
 export const isNull = a => c => value(a, c) == null;
 export const and = (...args) => c => args.filter(Boolean).every(p => p(c));
 export const or = (...args) => c => args.filter(Boolean).some(p => p(c));
-export const sql = () => ({ count: true });
+export const sql = (strings, ...values) => ({ count: true, strings: strings.join(" "), values });
 export const desc = column => column;
+const rowLocks = new Map();
 function mutation(execute) {
   let result;
   const run = () => result ??= execute();
@@ -67,25 +69,30 @@ export const db = {
     };
     return query;
   } }),
-  insert: table => ({ values: values => {
+  insert(table) { const undo = this.undo; return { values: values => {
     const execute = conflict => {
+      if (state.failures.has(table.table + ".insert")) throw Error("Isolated insert failure");
       const rows = state[table.table];
       const existing = rows.find(row => table.table === "profiles"
         ? row.memberId === values.memberId : table.table === "members"
         ? row.clerkId === values.clerkId : table.table === "follows"
         ? row.followerId === values.followerId && row.followingId === values.followingId
+        : table.table === "threads" ? row.memberA === values.memberA && row.memberB === values.memberB
+        : table.table === "blocks" ? row.blockerId === values.blockerId && row.blockedId === values.blockedId
         : false);
       if (existing) { if (conflict?.set) Object.assign(existing, conflict.set); return []; }
-      const now = new Date();
-      const row = { id: rows.length + 1, hidden: false, createdAt: now, updatedAt: now, ...values };
+      const now = new Date(state.clock.get("now") ?? Date.now());
+      const row = { id: rows.length + 1, hidden: false, accepted: false, declined: false, createdAt: now, updatedAt: now, ...values };
+      if (row.createdAt?.strings?.includes("clock_timestamp()")) row.createdAt = now;
       rows.push(row);
+      undo?.push(() => { const index = rows.indexOf(row); if (index >= 0) rows.splice(index, 1); });
       return [row];
     };
     return Object.assign(mutation(() => execute()), {
       onConflictDoNothing: () => mutation(() => execute()),
       onConflictDoUpdate: conflict => mutation(() => execute(conflict)),
     });
-  } }),
+  } }; },
   update: table => ({ set: changes => ({ where: condition => mutation(() => {
     const rows = state[table.table].filter(row => condition({ [table.table]: row }));
     rows.forEach(row => Object.assign(row, changes));
@@ -95,7 +102,38 @@ export const db = {
     state[table.table] = state[table.table].filter(row => !condition({ [table.table]: row }));
     return [];
   }) }),
-  transaction: async run => run(db),
+  transaction: async (run, options) => {
+    state.transactionCalls.push(options);
+    const releases = [], undo = [];
+    const tx = { ...db, undo, execute: async query => {
+      const ids = query.values.filter(value => typeof value === "number");
+      if (query.strings.includes("FOR UPDATE")) {
+        for (const id of [...new Set(ids)].sort((a, b) => a - b)) {
+          const previous = rowLocks.get(id) ?? Promise.resolve();
+          let release;
+          const current = new Promise(resolve => { release = resolve; });
+          rowLocks.set(id, current);
+          await previous;
+          releases.push(() => { release(); if (rowLocks.get(id) === current) rowLocks.delete(id); });
+        }
+        return { rows: state.profiles.filter(p => ids.includes(p.memberId)).map(p => ({ member_id: p.memberId })) };
+      }
+      if (!query.strings.includes("LEFT JOIN LATERAL")) throw Error("Unexpected SQL in isolated fixture");
+      const self = ids.at(-1), now = state.clock.get("now") ?? Date.now();
+      let recent = 0, pending = 0, invalid = 0;
+      for (const thread of state.threads.filter(t => t.requestedBy === self)) {
+        const first = state.messages.filter(m => m.threadId === thread.id).sort((a, b) => a.id - b.id)[0];
+        const at = first?.createdAt?.getTime();
+        if (!first || first.senderId !== self || !Number.isFinite(at) || at > now) invalid++;
+        if (at > now - 24 * 60 * 60 * 1000) recent++;
+        if (!thread.accepted && !thread.declined) pending++;
+      }
+      return { rows: [{ recent, pending, invalid }] };
+    } };
+    try { return await run(tx); }
+    catch (error) { for (const revert of undo.reverse()) revert(); throw error; }
+    finally { for (const release of releases.reverse()) release(); }
+  },
 };
 export const getAuth = req => ({ userId: req.identity ?? null });
 export const clerkClient = { users: { getUser: async id => {

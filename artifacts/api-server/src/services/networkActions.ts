@@ -11,6 +11,7 @@ import { actor, NetworkError, requireFounder } from "./networkAuth";
 import { ownedMedia, completeUpload } from "./networkFiles";
 import { visibleMember, visiblePost, ownThread, ROLES, PROGRAMS, isBlocked, qualifiedInviteCount } from "./networkState";
 import { requireMonthly } from "./monthlyMembership";
+import { startOrdinaryThread } from "./ordinaryMessaging";
 import { checkout, PACKAGE_DEFINITIONS, customPackages } from "./networkPayments";
 
 function number(value: unknown) {
@@ -148,23 +149,7 @@ export async function networkAction(req: Request, res: Response) {
       const other = target();
       if (other === self) throw new NetworkError(400, "Choose another member.");
       await visibleMember(other, self);
-      const a = Math.min(self, other), b = Math.max(self, other);
-      let [thread] = await db.select().from(threads).where(and(eq(threads.memberA, a), eq(threads.memberB, b)));
-      if (thread?.declined) throw new NetworkError(403, "This discussion request was declined.");
-      if (!thread) {
-        if (!who.founder) await requireMonthly(self);
-        const initial = text(input.text, 3000);
-        thread = await db.transaction(async tx => {
-          const [created] = await tx.insert(threads).values({ memberA: a, memberB: b, requestedBy: self })
-            .onConflictDoNothing().returning();
-          if (!created) {
-            const [existing] = await tx.select().from(threads).where(and(eq(threads.memberA, a), eq(threads.memberB, b)));
-            return existing!;
-          }
-          await tx.insert(messages).values({ threadId: created.id, senderId: self, text: initial });
-          return created;
-        });
-      }
+      const thread = await startOrdinaryThread(self, other, () => text(input.text, 3000));
       resultId = thread.id;
       break;
     }
@@ -236,7 +221,13 @@ export async function networkAction(req: Request, res: Response) {
       const memberId = input.targetId ? number(input.targetId) : null;
       if (!postId && !memberId) throw new NetworkError(400, "Choose a publication or member to report.");
       if (postId) await visiblePost(postId, self);
-      if (memberId) await visibleMember(memberId, self);
+      if (memberId) {
+        // Reporting is not communication. Retain target eligibility without
+        // applying the block filter used for discovery and conversations.
+        const [reportable] = await db.select({ memberId: profiles.memberId }).from(profiles)
+          .where(and(eq(profiles.memberId, memberId), eq(profiles.enabled, true), eq(profiles.suspended, false))).limit(1);
+        if (!reportable) throw new NetworkError(404, "This profile is not available.");
+      }
       await db.insert(reports).values({ reporterId: self, postId, memberId, reason });
       break;
     }

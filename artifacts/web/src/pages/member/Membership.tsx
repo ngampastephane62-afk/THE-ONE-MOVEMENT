@@ -72,6 +72,7 @@ export default function Membership() {
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-ink-700">
           <li>Ordinary posts are free after explicit network activation. No invitations or subscription are required. <Link href="/member/invite" className="font-semibold text-lagoon-700 underline">Invite friends voluntarily</Link></li>
           <li>Business posts and reels retain their existing requirement for an active subscription and 10 verified referral followers.</li>
+          <li>Ordinary conversations are free after explicit network activation and recipient acceptance. New contact requests are limited to prevent spam; accepted conversations have no daily message quota. Professional introductions remain a separate service.</li>
           <li>Company review badge: Business tier, 10 unique member attestations and founder review. <Link href="/member/business" className="font-semibold text-lagoon-700 underline">Company page</Link></li>
         </ul>
       </section>

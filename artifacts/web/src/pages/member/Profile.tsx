@@ -11,6 +11,7 @@ import { Empty, ErrorBox, Skeleton, btn, btnGhost, card, field, useAct } from '@
 import { useMe } from './ctx';
 import { publicProfileUrl } from '@/lib/network-invitations';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import { errMsg } from './proHooks';
 
 export default function ProfilePage() {
   const { id } = useParams<{ id: string }>();
@@ -85,12 +86,13 @@ export default function ProfilePage() {
       {asking && (
         <form className={`${card} mx-3 p-4 md:mx-0`} onSubmit={(e) => {
           e.preventDefault(); setErr('');
-          run({ action: 'thread.start', targetId: p.id, text: intro.trim() || undefined }).then((r) => nav(r.id ? `/member/messages/${r.id}` : '/member/messages')).catch(() => setErr('The request could not be sent.'));
+          if (!intro.trim()) { setErr('An initial note is required.'); return; }
+          run({ action: 'thread.start', targetId: p.id, text: intro.trim() }).then((r) => nav(r.id ? `/member/messages/${r.id}` : '/member/messages')).catch((error) => setErr(errMsg(error, 'The request could not be sent. Your note is kept.')));
         }}>
-          <label htmlFor="intro" className="text-sm font-semibold text-ink-900">Introduce yourself to {p.fullName.split(' ')[0]}</label>
-          <p className="text-xs text-sand-400">They must accept before a conversation opens. You can send only this first note until then.</p>
-          <textarea id="intro" className={`${field} mt-2 min-h-24`} maxLength={1000} value={intro} onChange={(e) => setIntro(e.target.value)} placeholder="Why you would like to connect" data-testid="input-intro" />
-          <div className="mt-3 flex gap-2"><button className={btn} disabled={pending} data-testid="button-send-request">Send request</button><button type="button" className={btnGhost} onClick={() => setAsking(false)}>Cancel</button></div>
+          <label htmlFor="intro" className="text-sm font-semibold text-ink-900">Introduce yourself to {p.fullName.split(' ')[0]} — initial note required</label>
+          <p className="text-xs text-ink-700" data-testid="text-request-safety">Ordinary conversations are free. They must accept before you can send more than this initial note. To prevent spam: up to 5 new requests per rolling 24 hours and 10 pending outgoing requests. Accepted conversations have no daily message quota. TOMI-organized professional introductions remain a separate service.</p>
+          <textarea id="intro" required className={`${field} mt-2 min-h-24`} maxLength={1000} value={intro} onChange={(e) => setIntro(e.target.value)} placeholder="Why you would like to connect" data-testid="input-intro" />
+          <div className="mt-3 flex gap-2"><button className={btn} disabled={pending || !intro.trim()} data-testid="button-send-request">Send request</button><button type="button" className={btnGhost} onClick={() => setAsking(false)}>Cancel</button></div>
         </form>
       )}
 
