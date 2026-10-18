@@ -15,6 +15,18 @@ Each event has its own income-generating professional participation services; pa
 
 **How to apply:** Keep programme-specific services separate from annual sponsorship, monthly subscriptions and capital investment. Existing sponsors should have their written inclusions checked before an additional fee is proposed. Do not invent role prices, promise editorial coverage or assume all sponsor levels guarantee a speaking slot.
 
+Ordinary member-to-member messaging must be free as a confirmed product principle. Accepted conversations must not have daily message quotas; anti-spam limits should target new unsolicited requests. Five new requests per rolling 24 hours and ten pending outgoing requests are proposed thresholds, not approved implementation. TOMI-organized professional introductions remain separate.
+
+**Why:** The Founder confirmed free ordinary communication while explicitly withholding implementation authorization.
+
+**How to apply:** Do not treat the existing conversation paywall as the intended long-term policy, but do not remove it without a separate implementation mandate. Preserve authentication, verification, explicit activation, consent, blocking, moderation and account restrictions.
+
+Nationality must be supplied explicitly by the member, never inferred from IP address, device location, residence, language, name or ethnicity. Nationality and residence need distinct meanings and clear visibility controls; private account contact details must never be published automatically.
+
+**Why:** The Founder explicitly requires voluntary identity information, data minimization and protection against accidental phone-number exposure.
+
+**How to apply:** Reuse the existing member identity rather than creating duplicate profile tables. Do not reinterpret an ambiguous country field as nationality, copy private contacts into public profiles, or automatically activate the network during profile initialization.
+
 Earlier requests to enable real monthly subscriptions do not authorize launching that model under the newer free-membership mandate.
 
 **Why:** The Founder now explicitly separates free belonging from optional paid services and rejects the existing monthly prices as approved pricing.

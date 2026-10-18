@@ -1,0 +1,243 @@
+THE ONE MOVEMENT INTERNATIONAL (TOMI)
+PHASE 2 — TASK 9
+
+FREE COMMUNITY COMMUNICATION
+& AUTOMATED MEMBER PROFILE EXPERIENCE
+
+FOUNDER AUTHORIZATION:
+READ-ONLY TECHNICAL AUDIT AND IMPLEMENTATION PLAN
+
+IMPLEMENTATION: NOT AUTHORIZED
+
+MISSION
+
+TOMI must connect people across countries,
+cultures, professions and generations.
+
+Members must be able to communicate freely
+and build meaningful professional and
+community identities.
+
+Analyze the existing architecture and prepare
+a safe, incremental implementation plan.
+
+==================================================
+1. FREE COMMUNITY COMMUNICATION
+==================================================
+
+The Founder confirms the principle:
+
+Ordinary member-to-member messaging
+must be free.
+
+Members should be able to:
+
+- Send conversation requests.
+- Accept or decline requests.
+- Communicate freely after acceptance.
+- Block and report abusive members.
+
+Do not impose daily message limits
+on accepted conversations.
+
+Anti-spam limits should focus on
+new unsolicited conversation requests.
+
+Preserve consent, authentication,
+verification, activation, blocking,
+moderation and account restrictions.
+
+Review the proposed limits:
+
+- 5 new conversation requests per 24 hours.
+- 10 pending outgoing requests maximum.
+
+These are proposed initial thresholds.
+
+Professional introductions organized by TOMI
+remain a separate service.
+
+Do not modify messaging access yet.
+
+==================================================
+2. MEMBER IDENTITY
+==================================================
+
+Inspect the existing Clerk identity,
+member profile and network profile systems.
+
+Identify which fields already exist for:
+
+- Display name
+- Profile photo
+- Nationality
+- Country of residence
+- City
+- Profession
+- Biography
+- Sectors
+- Languages
+- Professional links
+- Profile visibility
+
+Do not create duplicate profile tables.
+
+Do not create a second identity system.
+
+==================================================
+3. AUTOMATIC PROFILE INITIALIZATION
+==================================================
+
+Analyze how TOMI currently creates
+a minimal member profile after registration.
+
+Propose safe automatic pre-filling using
+information already provided voluntarily
+through Clerk or existing member records.
+
+Examples:
+
+- Existing display name
+- Existing profile photo, when available
+
+IMPORTANT:
+
+Never infer nationality from IP address,
+device location or country of residence.
+
+Never assume nationality from language,
+name or ethnicity.
+
+Nationality must be provided explicitly
+by the member.
+
+==================================================
+4. PROFILE COMPLETION EXPERIENCE
+==================================================
+
+Propose an improved experience within
+existing member pages.
+
+After registration, members should be
+invited to:
+
+- Add or update a profile photo.
+- Confirm their display name.
+- Select nationality.
+- Select country of residence.
+- Add their profession.
+- Select their sectors.
+- Write a short biography.
+
+Members must be able to skip optional
+steps and complete their profiles later.
+
+Do not make profile completion mandatory
+for ordinary exploration.
+
+Do not automatically activate the network.
+
+==================================================
+5. PROFILE DISPLAY
+==================================================
+
+Analyze how saved profile information
+is currently displayed.
+
+Identify missing connections between
+profile editing and profile presentation.
+
+Propose how saved information can appear
+on the member's profile immediately
+after successful persistence.
+
+Respect:
+
+- Privacy settings
+- Public versus member-only visibility
+- Member ownership
+- Data minimization
+- Account deletion rights
+
+Nationality and location should have
+clear visibility controls.
+
+Private contact information must never
+be displayed automatically.
+
+==================================================
+6. PHONE NUMBER PRIVACY
+==================================================
+
+Inspect existing phone-number fields
+and any public profile exposure.
+
+Ensure the future design distinguishes:
+
+- Private account contact information
+- Public professional contact information
+- Information voluntarily shared in messages
+
+Recommend safeguards against accidental
+exposure of private phone numbers.
+
+Do not automatically publish contact details.
+
+Do not inspect production member data.
+
+==================================================
+7. ARCHITECTURE PROTECTION
+==================================================
+
+READ-ONLY ANALYSIS ONLY.
+
+Do not:
+
+- Modify application files
+- Modify database schemas
+- Change authentication
+- Change messaging permissions
+- Change Stripe or subscriptions
+- Create new pages
+- Redesign the website
+- Start or restart servers
+- Deploy
+- Run migrations
+- Install dependencies
+- Access production member data
+- Interfere with other agents
+
+==================================================
+8. REQUIRED REPORT
+==================================================
+
+Return:
+
+1. Current member identity architecture
+2. Existing profile fields
+3. Missing profile fields
+4. Existing photo upload capabilities
+5. Current profile initialization process
+6. Safe automatic pre-fill opportunities
+7. Nationality and residence requirements
+8. Existing profile visibility controls
+9. Privacy and phone-number exposure risks
+10. Smallest safe profile UX improvements
+11. Database changes required, if any
+12. Messaging implementation dependencies
+13. Recommended incremental implementation order
+14. Tests required
+15. Decisions requiring Founder approval
+
+For each recommendation distinguish:
+
+- Existing functionality
+- Missing functionality
+- Proposed change
+- Technical risk
+- Database impact
+
+Do not implement anything.
+
+Return the complete report and wait
+for the Founder's next authorization.
