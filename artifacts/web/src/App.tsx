@@ -9,6 +9,7 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { Route, Switch, Router as WouterRouter, useLocation, Redirect } from 'wouter';
 import { basePath, stripBase, clerkAppearance, clerkLocalization } from '@/lib/clerk';
 import Layout from '@/components/Layout';
+import NavigationScroll from '@/components/NavigationScroll';
 import Home from '@/pages/home';
 import OurVision from '@/pages/our-vision';
 import Ecosystem from '@/pages/ecosystem';
@@ -183,6 +184,7 @@ function App() {
   return (
     <HelmetProvider>
       <WouterRouter base={basePath}>
+        <NavigationScroll />
         <ClerkProviderWithRoutes />
       </WouterRouter>
     </HelmetProvider>
