@@ -1,0 +1,404 @@
+THE ONE MOVEMENT INTERNATIONAL (TOMI)
+PHASE 2 — TASK 2
+GLOBAL ECOSYSTEM LAUNCH READINESS AUDIT
+
+FOUNDER AUTHORIZATION: APPROVED
+MODE: READ-ONLY AUDIT
+IMPLEMENTATION: NOT AUTHORIZED
+
+MISSION
+
+The Founder has approved the strategic vision of TOMI as a living, intelligent, interconnected international ecosystem operating 24/7.
+
+Our technical collaboration model is:
+
+1. FOUNDER — Vision, strategic decisions and final authority.
+2. CHATGPT — Strategic architecture, functional planning and review.
+3. REPLIT AI — Technical investigation and implementation only when explicitly authorized.
+
+This collaboration model does not grant ChatGPT or Replit independent authority to make strategic decisions, modify production, or approve sensitive operations.
+
+The Founder wants TOMI to function continuously without requiring personal approval for every routine action.
+
+IMPORTANT:
+This is an audit mandate, NOT permission to implement changes.
+
+--------------------------------------------------
+1. PROTECT THE EXISTING WEBSITE
+--------------------------------------------------
+
+Preserve the existing:
+
+- Architecture
+- Homepage
+- Design and visual identity
+- Menus and navigation
+- Animations
+- Images and videos
+- Existing pages and routes
+- Authentication
+- Database structures
+- Member information
+- Working features
+- Integrations
+
+DO NOT:
+- Modify any file
+- Change any configuration
+- Restart servers
+- Run migrations
+- Modify Stripe
+- Access production member data
+- Deploy
+- Install dependencies
+- Create accounts
+- Execute external API calls
+
+Do not interfere with other agents' work.
+
+--------------------------------------------------
+2. AUDIT THE EXISTING ECOSYSTEM
+--------------------------------------------------
+
+Examine the current implementation of:
+
+- The 17 official sectors
+- The 6 official programs
+- Registration and authentication
+- My Space
+- Member profiles
+- Social network
+- News and articles
+- Documentaries
+- Reels and videos
+- Homepage featured content
+- Events
+- Organizations
+- Partnerships
+- Subscriptions
+- Founder/admin tools
+- Content management
+
+For each module, identify:
+
+- Existing routes and components
+- Existing database structures
+- Existing management interfaces
+- Permissions and authorization
+- Dependencies
+- Missing capabilities
+- Risks and limitations
+
+Classify each capability as:
+
+VERIFIED
+IMPLEMENTED-UNTESTED
+PARTIAL
+MISSING
+BLOCKED
+PROPOSED
+
+Do not describe a feature as operational simply because code exists.
+
+--------------------------------------------------
+3. SECTOR CEOs
+--------------------------------------------------
+
+The Founder wants the 17 official sectors to eventually support dedicated Sector CEOs.
+
+Investigate how the existing platform could support:
+
+- Sector CEO profiles
+- Sector dashboards
+- Sector communities
+- Content management
+- Opportunities
+- Events
+- Member engagement
+- Cross-sector collaboration
+- Performance reporting
+- Delegated permissions
+
+Sector CEOs should eventually manage routine activities without requiring the Founder to approve every action.
+
+Strategic, institutional, financial and sensitive decisions remain under Founder authority.
+
+Do not create roles or modify permissions.
+
+--------------------------------------------------
+4. AUTONOMOUS 24/7 OPERATIONS
+--------------------------------------------------
+
+Investigate how TOMI could operate continuously through approved rules and delegated permissions.
+
+Analyze:
+
+- Automatic onboarding
+- Subscription benefit activation
+- Routine publications
+- Member interactions
+- Notifications
+- Content scheduling
+- Operational approvals
+- Community management
+- Opportunity discovery
+
+Propose three future authorization levels:
+
+LEVEL 1 — Routine actions allowed automatically.
+
+LEVEL 2 — Actions managed by authorized Sector CEOs or delegated administrators.
+
+LEVEL 3 — Sensitive decisions requiring Founder approval.
+
+The exact rules require Founder approval.
+
+Do not implement automation.
+
+--------------------------------------------------
+5. AI EXECUTIVE ASSISTANT
+--------------------------------------------------
+
+Investigate the feasibility of an AI Executive Assistant connected to the future Founder Command Center.
+
+Potential responsibilities:
+
+- Organize incoming requests
+- Categorize tasks
+- Detect similar requests
+- Recommend decisions
+- Summarize pending approvals
+- Prioritize urgent matters
+- Prepare responses
+- Identify recurring workflows
+- Recommend automation opportunities
+- Escalate sensitive cases
+
+Future automatic actions must require explicit, predefined authorization policies.
+
+Similarity to a previously approved request is NOT sufficient authorization.
+
+Require:
+- Server-side permissions
+- Audit logs
+- Human override
+- Revocable delegation
+- Clear escalation rules
+
+Do not implement or connect an AI agent.
+
+--------------------------------------------------
+6. CONTENT MANAGEMENT
+--------------------------------------------------
+
+The Founder wants a continuously evolving platform.
+
+Audit existing capabilities to:
+
+- Publish News
+- Edit articles
+- Add documentaries
+- Add and replace Reels
+- Upload videos
+- Embed external videos
+- Feature personalities
+- Highlight premium members
+- Publish events
+- Manage sector content
+- Schedule publications
+- Review and approve content
+- Archive outdated publications
+
+The Founder must eventually be able to manage these activities without developer intervention.
+
+Preserve the existing homepage design.
+
+Do not create a CMS yet.
+
+--------------------------------------------------
+7. SOCIAL MEDIA CONNECTIVITY
+--------------------------------------------------
+
+Investigate the feasibility of:
+
+- Instagram account connections
+- Facebook account/Page connections
+- YouTube channel connections
+- External video embeds
+- Authorized content sharing
+- Collaboration invitations
+- Mutual consent workflows
+- Cross-platform visibility
+- Revoking permissions
+
+Distinguish:
+- Existing capabilities
+- Standard embeds
+- Official API integrations
+- Features requiring external platform approval
+- Unsupported or restricted functionality
+
+Do not connect accounts or request access tokens.
+
+--------------------------------------------------
+8. SMART HOMEPAGE DISCOVERY
+--------------------------------------------------
+
+The Founder wants the homepage to become a daily discovery experience.
+
+Explore how existing components could dynamically feature:
+
+- New personalities
+- Artists
+- Entrepreneurs
+- Innovations
+- Fashion
+- Culture
+- Technology
+- Investment
+- News
+- Reels
+- Documentaries
+- Events
+- Humanitarian initiatives
+- Sector highlights
+
+Investigate:
+
+- Content rotation
+- Editorial scheduling
+- Trending content
+- Sector-based discovery
+- Freshness rules
+- Featured member rotation
+- Personalized recommendations
+
+Do not redesign the homepage.
+
+--------------------------------------------------
+9. EXTERNAL NEWS DISCOVERY
+--------------------------------------------------
+
+Investigate how TOMI could eventually identify relevant public news about its members.
+
+Potential workflow:
+
+1. A public article mentions a TOMI member.
+2. TOMI identifies a possible match.
+3. The system checks for duplicates and identity ambiguity.
+4. The member receives a notification.
+5. The member can review the article.
+6. Authorized content may be linked to the profile.
+
+Require source attribution, consent, identity verification and editorial safeguards.
+
+Do not scrape websites or automatically publish third-party content.
+
+--------------------------------------------------
+10. SUBSCRIPTIONS AND BENEFITS
+--------------------------------------------------
+
+Audit existing subscription and entitlement capabilities.
+
+Determine whether different subscription levels can automatically provide different approved benefits.
+
+Do not invent:
+- Prices
+- Membership packages
+- Commissions
+- Payment terms
+- Premium placement privileges
+
+Do not modify Stripe.
+
+--------------------------------------------------
+11. FOUNDER COMMAND CENTER
+--------------------------------------------------
+
+Inventory existing Founder/admin capabilities.
+
+Investigate how they could eventually support:
+
+- Sector CEO oversight
+- Program management
+- Content publishing
+- Editorial approvals
+- Member management
+- Organization management
+- Subscription oversight
+- AI assistant recommendations
+- Automated routine workflows
+- Pending strategic decisions
+- Audit logs
+- Operational alerts
+
+The Founder should oversee the ecosystem without becoming a bottleneck.
+
+Do not implement or redesign the dashboard.
+
+--------------------------------------------------
+12. LAUNCH PRIORITIES
+--------------------------------------------------
+
+Classify findings into:
+
+A. ESSENTIAL BEFORE LAUNCH
+B. CORRECTIONS REQUIRED
+C. POST-LAUNCH DEVELOPMENT
+
+Prioritize a safe initial launch.
+
+Do not make launch dependent on implementing every future capability.
+
+Preserve existing working features.
+
+--------------------------------------------------
+13. REQUIRED REPORT
+--------------------------------------------------
+
+Return:
+
+1. Current platform inventory
+2. Existing CMS and publishing capabilities
+3. Sector CEO feasibility
+4. Autonomous operations feasibility
+5. AI Executive Assistant feasibility
+6. Subscription and benefit findings
+7. Social media integration feasibility
+8. Homepage discovery findings
+9. External news discovery feasibility
+10. Founder Command Center inventory
+11. Launch-critical gaps
+12. Architecture preservation risks
+13. Incremental implementation roadmap
+14. Strategic questions for the Founder
+
+For every major recommendation, specify:
+
+- What already exists
+- What can be reused
+- What is missing
+- Potential technical dependencies
+- Risks to existing functionality
+- Whether database changes may be required
+- Decisions requiring Founder approval
+
+IMPORTANT:
+
+The previous network activation correction remains:
+
+IMPLEMENTED — ISOLATED TESTS PASSED — RUNTIME UNVERIFIED.
+
+Do not restart or deploy it.
+Do not modify it.
+Do not treat it as production-verified.
+
+FINAL INSTRUCTION:
+
+READ-ONLY AUDIT ONLY.
+
+Do not implement anything.
+Do not modify any files.
+Do not start another task.
+
+Return your findings and wait for the Founder's next authorization.
