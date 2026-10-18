@@ -1,0 +1,193 @@
+THE ONE MOVEMENT INTERNATIONAL (TOMI)
+PHASE 2 — TASK 8
+
+COMMUNITY MESSAGING ACCESS
+FREE CONNECTION & MEMBER SAFETY AUDIT
+
+FOUNDER AUTHORIZATION:
+READ-ONLY TECHNICAL AND PRODUCT AUDIT
+
+IMPLEMENTATION: NOT AUTHORIZED
+
+==================================================
+1. FOUNDER'S VISION
+==================================================
+
+TOMI exists to connect people, cultures,
+communities, institutions and opportunities.
+
+Membership is permanently free.
+
+Ordinary human connection should not depend
+on purchasing a monthly subscription.
+
+The Founder is considering making ordinary
+member-to-member messaging freely accessible,
+subject to appropriate safety protections.
+
+This is a proposed policy requiring final
+Founder approval before implementation.
+
+==================================================
+2. AUDIT OBJECTIVE
+==================================================
+
+Inspect the existing messaging architecture.
+
+Identify exactly where subscriptions,
+membership status and other eligibility
+conditions affect:
+
+- Starting a conversation
+- Accepting conversation requests
+- Replying to messages
+- Viewing existing conversations
+- Sending attachments
+- Blocking members
+- Reporting abuse
+- Professional or business messaging
+
+Do not modify any access rules.
+
+==================================================
+3. EXISTING COMMUNICATION FLOW
+==================================================
+
+Document the current journey:
+
+1. Discover a member.
+2. Open their profile.
+3. Request a conversation.
+4. Accept or reject the request.
+5. Exchange messages.
+6. Block or report another member.
+
+For each step identify:
+
+- Frontend components
+- Backend handlers
+- Database dependencies
+- Existing permission checks
+- Subscription requirements
+- Safety controls
+
+Distinguish code behavior from
+runtime-verified behavior.
+
+==================================================
+4. PROPOSED FREE COMMUNITY MESSAGING
+==================================================
+
+Evaluate a possible future model:
+
+A. Free ordinary member messaging
+
+Eligible members can communicate
+without a paid subscription.
+
+B. Consent-based first contact
+
+Where appropriate, new contacts begin
+with a conversation request.
+
+C. Member protection
+
+Preserve:
+
+- Authentication
+- Explicit network activation
+- Account verification
+- Blocking
+- Reporting
+- Suspension restrictions
+- Rate limits
+- Anti-spam controls
+- Privacy settings
+
+D. Specialized commercial messaging
+
+Future advanced professional messaging,
+promotional campaigns or mass outreach
+may remain separate paid services.
+
+Do not create those services.
+
+==================================================
+5. SAFETY AND ABUSE ANALYSIS
+==================================================
+
+Assess risks involving:
+
+- Spam
+- Harassment
+- Unsolicited commercial messages
+- Fake accounts
+- Repeated rejected requests
+- Mass outreach
+- Privacy violations
+- Suspended members
+
+Identify protections already present
+and protections that are missing.
+
+Do not weaken existing protections.
+
+==================================================
+6. SUBSCRIPTION DEPENDENCIES
+==================================================
+
+Locate every subscription requirement
+directly connected to messaging.
+
+Explain whether removing the ordinary
+conversation paywall would affect:
+
+- Other network features
+- Business publications
+- Reels
+- Professional services
+- Stripe
+- Existing subscription records
+
+Do not modify subscriptions or Stripe.
+
+==================================================
+7. REQUIRED DELIVERABLE
+==================================================
+
+Return:
+
+1. Current messaging architecture
+2. Exact subscription gates
+3. Existing safety controls
+4. Missing safety protections
+5. Recommended free messaging policy
+6. Smallest safe implementation scope
+7. Frontend files potentially affected
+8. Backend files potentially affected
+9. Database changes, if any
+10. Tests required
+11. Risks and dependencies
+12. Decisions requiring Founder approval
+
+==================================================
+8. ABSOLUTE RESTRICTIONS
+==================================================
+
+- No application modifications
+- No database modifications
+- No server restart
+- No deployment
+- No migrations
+- No Stripe operations
+- No dependency installation
+- No production member data access
+- No authentication changes
+- No interference with other agents
+
+READ-ONLY STATIC ANALYSIS ONLY.
+
+Do not begin another task.
+
+Return the report and wait for
+the Founder's authorization.
