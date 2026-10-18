@@ -15,6 +15,7 @@ import ProgramSuppliedImage from '@/components/programs/ProgramSuppliedImage';
 import { ProgrammeFilmPoster } from '@/components/programs/ProgrammeFilm';
 import { DiplomaticGalaPreview } from '@/components/DiplomaticGalaMedia';
 import StatBlock from '@/components/StatBlock';
+import '@/styles/universe.css';
 
 /* ── Program cards data ─────────────────────────────────────────────────── */
 
@@ -61,6 +62,8 @@ const PROGRAMS: {
     desc: "Connecting investors with founders, projects and opportunities from across the Movement's global community — where capital meets creativity and conviction.",
   },
 ];
+
+const NUMERALS = ['I', 'II', 'III', 'IV', 'V', 'VI'];
 
 /* ── Page ─────────────────────────────────────────────────────────────────── */
 
@@ -190,7 +193,7 @@ export default function Programs() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-6">
             <StatBlock value="6"  label="Official Programs"     surface="dark" />
             <StatBlock value="5"  label="Fashion Week Editions" surface="dark" />
-            <StatBlock value="15" label="Sectors Connected"     surface="dark" />
+            <StatBlock value="17" label="Sectors Connected"     surface="dark" />
             <StatBlock value="1"  label="Global Movement"       surface="dark" />
           </div>
         </div>
@@ -292,14 +295,16 @@ function ProgramCard({
       onMouseLeave={() => setHovered(false)}
     >
       <article
-        className="tomi-program-editorial-card flex flex-col h-full cursor-pointer"
+        className="tomi-program-editorial-card tomi-programme flex flex-col h-full cursor-pointer"
+        data-program={slug}
         style={{
-          borderTop: '2px solid hsl(39 52% 54%)',
+          borderTop: '2px solid hsl(var(--pg))',
           backgroundColor: hovered ? 'hsl(188 66% 16%)' : 'hsl(187 67% 12%)',
           transition: 'background-color 200ms ease',
         }}
       >
         <div className="relative overflow-hidden">
+          <span className="tomi-programme-numeral" aria-hidden="true">{NUMERALS[PROGRAMS.findIndex((p) => p.slug === slug)]}</span>
           {slug === 'summit' ? (
             <ArchivePhoto id="summit-goma" actions={false} frameClassName="w-full aspect-[4/3]" objectPosition="center 30%" sizes="(min-width: 1024px) 30vw, 92vw" />
           ) : slug === 'fashion-week' ? (
@@ -315,8 +320,10 @@ function ProgramCard({
           )}
         </div>
 
+        <div className="tomi-programme-motif" aria-hidden="true" />
         {/* Text body */}
-        <div className="px-6 pt-6 pb-8 flex flex-col gap-3 flex-1">
+        <div className="tomi-weave-dark px-6 pt-6 pb-8 flex flex-col gap-3 flex-1">
+          <p className="font-mono text-[10px] tracking-[0.22em]" style={{ color: 'hsl(var(--pg))' }}>OFFICIAL PROGRAMME {NUMERALS[PROGRAMS.findIndex((p) => p.slug === slug)]} OF VI</p>
           {/* Program name — Cinzel, ivory, prominent */}
           <h3
             style={{

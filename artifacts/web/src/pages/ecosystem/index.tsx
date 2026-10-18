@@ -1,18 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSearch } from 'wouter';
 import { Helmet } from 'react-helmet-async';
 import EcosystemHero from '@/components/ecosystem/EcosystemHero';
 import SectorExplorer from '@/components/ecosystem/SectorExplorer';
 import MemberDirectory from '@/components/ecosystem/MemberDirectory';
 import JoinPaths from '@/components/ecosystem/JoinPaths';
-import { SECTORS } from '@/lib/sectors-data';
+import { sectorFromSearch } from '@/components/ecosystem/sector-location';
 
 function prefersReduced() {
   return typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 }
 
 export default function Ecosystem() {
+  const search = useSearch();
   const [paused, setPaused] = useState<boolean>(prefersReduced());
-  const [sector, setSector] = useState<string>(SECTORS[0].slug);
+  const [sector, setSector] = useState<string>(() => sectorFromSearch(search));
+  useEffect(() => { setSector(sectorFromSearch(search)); }, [search]);
   return (
     <div className={paused ? 'eco-paused' : ''}>
       <Helmet>

@@ -67,6 +67,8 @@ function fixture({ sectors = [], search = '', savedItems = [], isPublic = false 
       URLSearchParams,
       module, exports: module.exports,
       require: (id) => {
+        if (id.endsWith('.css')) return {};
+        if (id === '@/lib/utils') return { cn: (...values) => values.filter(Boolean).join(' ') };
         if (id in mocks) return mocks[id];
         if (id.startsWith('@/') || id.startsWith('.')) {
           const base = id.startsWith('@/') ? resolve(root, id.slice(2)) : resolve(dirname(filename), id);

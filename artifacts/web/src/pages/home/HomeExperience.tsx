@@ -10,6 +10,8 @@ import { DiplomaticGalaPreview } from '@/components/DiplomaticGalaMedia';
 import ResponsiveMedia from '@/components/ResponsiveMedia';
 import HomeReelStrip from '@/components/HomeReelStrip';
 import Reveal from '@/components/Reveal';
+import MovementAtlas from '@/components/home/MovementAtlas';
+import MovementPaths from '@/components/home/MovementPaths';
 import TomiConstellation from '@/components/TomiConstellation';
 import FashionEditionNote from '@/components/FashionEditionNote';
 import ProgrammeFilm from "@/components/programs/ProgrammeFilm";
@@ -100,6 +102,19 @@ export default function HomeExperience() {
             <Link href="/ecosystem">
               <Button variant="gold-outline" size="lg">EXPLORE THE ECOSYSTEM</Button>
             </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 03b — The global universe: illustrative atlas of sectors and programmes. */}
+      <section id="global-universe" className="tomi-aurora-surface py-section-lg scroll-mt-24" aria-labelledby="atlas-heading">
+        <div className="mx-auto max-w-7xl px-6">
+          <Reveal>
+            <p className="text-eyebrow text-gold-400">THE GLOBAL UNIVERSE</p>
+            <h2 id="atlas-heading" className="mt-4 max-w-3xl text-display-lg text-ivory-100">YOU DON&apos;T JUST JOIN A PLATFORM. YOU BECOME PART OF A GLOBAL MISSION.</h2>
+          </Reveal>
+          <Reveal delay={90} className="mt-10">
+            <MovementAtlas />
           </Reveal>
         </div>
       </section>
@@ -211,7 +226,9 @@ export default function HomeExperience() {
         </div>
       </section>
 
-      {/* 07 — Single-purpose conversion ending. */}
+      <MovementPaths />
+
+      {/* Single-purpose conversion ending. */}
       <section className="tomi-final-join relative overflow-hidden py-section-xl text-center">
         <div className="tomi-surface-grid pointer-events-none absolute inset-0" aria-hidden="true" />
         <Reveal className="relative z-10 mx-auto max-w-4xl px-6">
@@ -221,6 +238,7 @@ export default function HomeExperience() {
           </h2>
           <GoldThread className="mx-auto mt-8" length="240px" node />
           <p className="mx-auto mt-7 max-w-xl leading-relaxed text-ivory-200">
+            You don&apos;t just join a platform. You become part of a global mission.
             The public website introduces TOMI. Participation begins with an expression of interest and a real conversation.
           </p>
           <Link href="/join" className="mt-9 inline-block">

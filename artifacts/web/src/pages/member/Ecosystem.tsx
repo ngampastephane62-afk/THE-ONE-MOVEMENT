@@ -5,6 +5,7 @@ import { useGetProfessionalState, getGetProfessionalStateQueryKey } from '@works
 import { ErrorBox, Skeleton, card } from '@/components/network/kit';
 import EcosystemNews from '@/components/network/EcosystemNews';
 import { useMe } from './ctx';
+import Chapter from '@/components/editorial/Chapter';
 
 type Need = 'free' | 'paid' | 'business';
 type Svc = { id: string; href: string; need: Need; icon: typeof Users; en: [string, string]; fr: [string, string] };
@@ -49,15 +50,13 @@ export default function Ecosystem() {
 
   return (
     <div className="flex flex-col gap-5 px-3 pt-4 md:px-0 md:pt-0" data-testid="page-ecosystem">
-      <header translate="no" className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <p className="text-eyebrow text-gold-700">{t('TOMI ECOSYSTEM', 'ÉCOSYSTÈME TOMI')}</p>
-          <h1 className="font-display text-2xl text-ink-900">{t('Everything open to you', 'Tout ce qui vous est ouvert')}</h1>
-        </div>
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-lagoon-900 px-3 py-1.5 text-xs font-semibold text-ivory-100" data-testid="status-ecosystem-tier">
-          <BadgeCheck className="h-3.5 w-3.5 text-gold-400" />{status}{m && !active && !founder ? ` · ${m.status}` : ''}
-        </span>
-      </header>
+      <div translate="no">
+        <Chapter eyebrow={t('TOMI ECOSYSTEM', 'ÉCOSYSTÈME TOMI')}
+          title={t('Everything open to you', 'Tout ce qui vous est ouvert')}
+          aside={<span className="inline-flex items-center gap-1.5 rounded-full bg-lagoon-900 px-3 py-1.5 text-xs font-semibold text-ivory-100" data-testid="status-ecosystem-tier">
+            <BadgeCheck className="h-3.5 w-3.5 text-gold-400" />{status}{m && !active && !founder ? ` · ${m.status}` : ''}
+          </span>} />
+      </div>
 
       <EcosystemNews limit={2} />
       <Link translate="no" href="/ecosystem" className="inline-flex min-h-[44px] items-center gap-2 self-start rounded-full bg-lagoon-900 px-4 text-xs font-semibold text-gold-400" data-testid="link-explore-public">{t('Explore the public ecosystem — you stay signed in', 'Explorer l’écosystème public — vous restez connecté')}<ArrowUpRight className="h-3.5 w-3.5" /></Link>
@@ -68,7 +67,7 @@ export default function Ecosystem() {
           const Icon = s.icon;
           const tag = s.need === 'free' ? t('Free', 'Gratuit') : s.need === 'paid' ? 'Professional · Business' : 'Business';
           return (
-            <Link key={s.id} href={ok ? s.href : '/member/membership'} className={`${card} group flex flex-col gap-2 p-4 transition-transform hover:-translate-y-0.5 ${ok ? '' : 'opacity-80'}`} data-testid={`link-service-${s.id}`}>
+            <Link key={s.id} href={ok ? s.href : '/member/membership'} className={`${card} tomi-service group flex flex-col gap-2 p-4 ${ok ? '' : 'opacity-80'}`} data-testid={`link-service-${s.id}`}>
               <div className="flex items-center justify-between">
                 <Icon className={`h-5 w-5 ${ok ? 'text-lagoon-700' : 'text-sand-400'}`} />
                 <span className="text-[10px] uppercase tracking-wider text-sand-400">{tag}</span>

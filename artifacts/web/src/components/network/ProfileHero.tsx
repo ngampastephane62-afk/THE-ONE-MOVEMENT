@@ -3,6 +3,7 @@ import { ExternalLink, MapPin } from 'lucide-react';
 import type { NetworkMember } from '@workspace/api-client-react';
 import { Avatar, Badges } from './kit';
 import { SOCIAL_PROFILES, normalizeSocialProfile, type SocialProfileField } from '@workspace/shared';
+import '@/styles/universe.css';
 
 export type ProfileLayout = 'immersive' | 'centered' | 'editorial';
 export type PostsLayout = 'grid' | 'list';
@@ -76,7 +77,9 @@ export default function ProfileHero({ m, layout, coverPosition, actions, stats, 
           <div className="w-full max-w-md rounded-[28px] border border-ivory-50/40 bg-ivory-50/85 p-6 text-center shadow-2xl backdrop-blur-md">
             <div className="mx-auto -mt-1 w-fit rounded-full bg-ivory-50 p-1 ring-2 ring-gold-500/60"><Avatar m={m} size={av} /></div>
             {avatarTools && <div className="mt-2 flex justify-center">{avatarTools}</div>}
-            <h1 className="mt-3 font-display text-2xl text-ink-900 sm:text-3xl" data-testid="text-profile-name">{m.fullName}</h1>
+            <p className="mt-3 text-eyebrow text-gold-700">TOMI MEMBER</p>
+            <h1 className="mt-1 font-display text-2xl tracking-[0.03em] text-ink-900 sm:text-3xl" data-testid="text-profile-name">{m.fullName}</h1>
+            <div className="mx-auto mt-2 h-px w-14 bg-gold-500" aria-hidden />
             <div className="flex flex-col items-center"><Meta m={m} dark={false} /></div>
             {stats && <div className="mt-3 flex justify-center gap-5 text-sm text-ink-700">{stats}</div>}
             {actions && <div className="mt-4 flex flex-wrap justify-center gap-2">{actions}</div>}
@@ -94,7 +97,7 @@ export default function ProfileHero({ m, layout, coverPosition, actions, stats, 
             <div className="absolute inset-0 bg-gradient-to-t from-ivory-50 via-transparent to-transparent md:bg-gradient-to-r md:from-ivory-50 md:via-ivory-50/10" aria-hidden />
             {coverTools && <div className="absolute right-3 top-3 z-10">{coverTools}</div>}
           </div>
-          <div className={`relative order-2 flex flex-col justify-end px-5 pb-6 md:order-1 md:px-8 ${compact ? 'pt-2 md:py-6' : 'pt-2 md:py-10'}`}>
+          <div className={`tomi-weave relative order-2 flex flex-col justify-end px-5 pb-6 md:order-1 md:px-8 ${compact ? 'pt-2 md:py-6' : 'pt-2 md:py-10'}`}>
             <p className="text-eyebrow text-gold-700">TOMI MEMBER</p>
             <div className="mt-3 flex items-end gap-3">
               <div className="rounded-2xl bg-ivory-50 p-1 shadow-md"><Avatar m={m} size={compact ? 60 : 76} /></div>
@@ -120,7 +123,9 @@ export default function ProfileHero({ m, layout, coverPosition, actions, stats, 
           <div className="rounded-full bg-ivory-50/90 p-1 ring-2 ring-gold-500/70"><Avatar m={m} size={av} /></div>
           {avatarTools}
         </div>
-        <h1 className={`mt-4 font-display text-ivory-50 drop-shadow ${compact ? 'text-3xl' : 'text-3xl sm:text-5xl'}`} data-testid="text-profile-name">{m.fullName}</h1>
+        <p className="mt-4 text-eyebrow text-gold-400">TOMI MEMBER</p>
+        <h1 className={`mt-2 font-display leading-[1.02] tracking-[0.03em] text-ivory-50 drop-shadow ${compact ? 'text-3xl' : 'text-3xl sm:text-5xl lg:text-6xl'}`} data-testid="text-profile-name">{m.fullName}</h1>
+        <div className="mt-3 h-px w-20 bg-gold-400" aria-hidden />
         <Meta m={m} dark />
         {stats && <div className="mt-3 flex gap-5 text-sm text-ivory-200 [&_b]:text-ivory-50">{stats}</div>}
         {actions && <div className="mt-5 flex flex-wrap gap-2">{actions}</div>}

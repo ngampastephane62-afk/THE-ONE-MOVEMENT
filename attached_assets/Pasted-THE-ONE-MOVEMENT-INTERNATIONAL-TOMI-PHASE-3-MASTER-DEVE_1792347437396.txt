@@ -1,0 +1,594 @@
+THE ONE MOVEMENT INTERNATIONAL (TOMI)
+
+PHASE 3 — MASTER DEVELOPMENT MANDATE
+
+PROJECT:
+THE GLOBAL UNIVERSE EXPERIENCE
+
+FOUNDER DIRECTIVE:
+BUILD THE EXPERIENCE, NOT JUST THE INTERFACE.
+
+AUTHORIZATION:
+COMPREHENSIVE FRONTEND DESIGN
+AND USER EXPERIENCE IMPLEMENTATION.
+
+NO PRODUCTION DEPLOYMENT AUTHORIZED.
+
+====================================================
+I. UNDERSTAND THE VISION
+====================================================
+
+THE ONE MOVEMENT INTERNATIONAL is not
+an ordinary website.
+
+It is not simply a social network.
+
+It is not a subscription platform.
+
+It is a GLOBAL UNIVERSE connecting
+humanity through:
+
+PEACE
+UNITY
+CULTURE
+CREATIVITY
+DIVERSITY
+TOLERANCE
+INCLUSION
+INNOVATION
+OPPORTUNITY
+HUMANITARIAN IMPACT
+
+The platform represents people from
+different nations, cultures, languages,
+professions and generations.
+
+Artists, designers, musicians, filmmakers,
+entrepreneurs, investors, diplomats,
+humanitarian leaders, innovators,
+creators and peace ambassadors
+belong to the same global movement.
+
+THE CORE MESSAGE:
+
+"YOU DON'T JUST JOIN A PLATFORM.
+YOU BECOME PART OF A GLOBAL MISSION."
+
+The experience must communicate this
+vision immediately.
+
+====================================================
+II. THE CREATIVE DIRECTION
+====================================================
+
+DESIGN PHILOSOPHY:
+
+GLOBAL.
+CULTURAL.
+IMMERSIVE.
+ARTISTIC.
+HUMAN.
+FUTURISTIC.
+PREMIUM.
+ELEGANT.
+
+The website must feel like a living
+international cultural universe.
+
+NOT a generic SaaS dashboard.
+
+NOT a standard social media clone.
+
+NOT a conventional corporate website.
+
+NOT a collection of repetitive cards.
+
+Create a distinctive visual language.
+
+The result should feel comparable in
+craftsmanship to a premium digital
+cultural exhibition or international
+creative institution.
+
+Preserve TOMI's existing brand identity
+and recognizable visual assets.
+
+Do not arbitrarily replace existing
+logos, colors, fonts or imagery.
+
+Build upon the established identity.
+
+====================================================
+III. IMMERSIVE VISUAL LANGUAGE
+====================================================
+
+Create a coherent visual system using:
+
+- Sophisticated typography
+- Cinematic composition
+- Carefully controlled motion
+- Elegant transitions
+- Layered imagery
+- Cultural motifs
+- Artistic textures
+- Depth and atmospheric lighting
+- Editorial storytelling
+- Responsive visual compositions
+- Refined interactive details
+
+Introduce cultural patterns and
+artistic motifs inspired by the
+diversity of world cultures.
+
+IMPORTANT:
+
+Do not reduce Africa or any other
+region to stereotypes.
+
+Avoid generic tribal patterns,
+random flags and superficial
+cultural decorations.
+
+Cultural inspiration must be
+respectful, contemporary and
+international.
+
+Use authentic imagery and
+existing licensed assets.
+
+If a visual asset is unavailable,
+create a clearly identified
+replaceable visual placeholder.
+
+Do not invent real ambassadors,
+partnerships, institutions or events.
+
+====================================================
+IV. THE GLOBAL WORLD EXPERIENCE
+====================================================
+
+Design an immersive visual concept
+representing global connection.
+
+Possible elements:
+
+- A sophisticated animated globe
+- Interconnected cultural regions
+- Elegant light trails
+- International creative networks
+- Moving geographic compositions
+- Human-centered imagery
+- Subtle atmospheric particles
+- Visual representations of unity
+
+The globe must be meaningful,
+not merely decorative.
+
+It should represent connection
+between people and cultures.
+
+Do not imply that real members
+are located in particular places
+unless verified public data exists.
+
+Use illustrative visualizations
+when real data is unavailable.
+
+Avoid heavy animations that damage
+mobile performance.
+
+====================================================
+V. HOMEPAGE EXPERIENCE
+====================================================
+
+Inspect the existing active homepage
+and its components before editing.
+
+Preserve its routes, content,
+identity and functioning sections.
+
+Elevate the homepage into an
+immersive editorial journey.
+
+The experience should communicate:
+
+1. THE MOVEMENT
+
+Why TOMI exists.
+
+Peace, unity, tolerance,
+humanity and cultural connection.
+
+2. THE GLOBAL UNIVERSE
+
+A world of cultures, creativity,
+people and possibilities.
+
+3. THE 17 SECTORS
+
+The different dimensions
+of the ecosystem.
+
+4. THE PEOPLE
+
+Members, artists, creators,
+professionals and peace ambassadors.
+
+5. THE SIX OFFICIAL PROGRAMS
+
+The institutional and cultural
+programs of TOMI.
+
+6. THE OPPORTUNITIES
+
+Meaningful ways to connect,
+contribute, collaborate and grow.
+
+7. THE INVITATION
+
+Become part of a global mission.
+
+The homepage must remain
+MISSION-FIRST, not SALES-FIRST.
+
+====================================================
+VI. THE 17 SECTORS
+====================================================
+
+The ecosystem includes:
+
+1. Fashion
+2. Music
+3. Dance
+4. Film
+5. Art
+6. Business
+7. Investment
+8. Tourism
+9. Diplomacy
+10. Innovation
+11. Technology
+12. NGOs
+13. Media
+14. Education
+15. Real Estate
+16. Health & Care
+17. Humanitarian Action
+
+Create a distinctive visual
+presentation for these sectors.
+
+Each sector should feel like
+a gateway to a creative world.
+
+Use appropriate:
+
+- Imagery
+- Typography
+- Motion
+- Visual accents
+- Editorial layouts
+- Cultural references
+
+Maintain a coherent global
+design system.
+
+Do not create 17 disconnected
+mini-websites.
+
+Do not invent sector-specific
+functionality that does not exist.
+
+Preserve existing sector routes
+and navigation.
+
+====================================================
+VII. SIX OFFICIAL PROGRAMS
+====================================================
+
+Preserve exactly these six
+official TOMI programs:
+
+THE ONE DIPLOMATIC GALA
+
+THE ONE SUMMIT
+
+THE ONE FASHION WEEK INTERNATIONAL
+
+THE ONE AWARDS
+
+THE ONE FASHION NIGHT
+
+THE ONE INVESTMENT FORUM
+
+Design a premium presentation
+that gives each program its
+own visual personality.
+
+The programs should feel
+prestigious, international,
+cultural and institutional.
+
+Do not create a seventh program.
+
+Do not invent confirmed guests,
+sponsors, speakers or schedules.
+
+====================================================
+VIII. MEMBER UNIVERSE
+====================================================
+
+Improve the visual experience
+of the existing member ecosystem.
+
+Focus on:
+
+- Member welcome
+- Member discovery
+- People
+- Profiles
+- Workspace
+- Community feed
+- Programs
+- Resources
+- Messaging presentation
+
+The member experience should
+feel like entering a global
+creative community.
+
+Use the philosophy:
+
+BELONG.
+DISCOVER.
+CONNECT.
+CONTRIBUTE.
+GROW.
+
+Do not make members feel
+they have entered a banking
+dashboard or enterprise CRM.
+
+Preserve all existing features,
+permissions and workflows.
+
+Ordinary community belonging
+and communication remain free.
+
+Do not introduce new paywalls.
+
+====================================================
+IX. MEMBER PROFILES
+====================================================
+
+Improve the visual presentation
+of existing profile information.
+
+Create a more elegant
+international editorial layout.
+
+Highlight, when available
+and permitted:
+
+- Profile image
+- Display name
+- Profession
+- Biography
+- Sectors
+- Organization
+- Public professional links
+
+Do not invent missing profile data.
+
+Do not implement new nationality,
+residence, city or language fields
+without a separate database mandate.
+
+Prepare visual components that
+could accommodate those fields later.
+
+Preserve privacy and visibility.
+
+====================================================
+X. MOTION AND SCROLL EXPERIENCE
+====================================================
+
+Motion is a core part of
+the TOMI digital identity.
+
+Create tasteful animations:
+
+- Scroll-based reveals
+- Layered transitions
+- Text reveals
+- Image transitions
+- Cinematic section entrances
+- Hover interactions
+- Smooth visual continuity
+- Subtle depth effects
+
+Motion must enhance storytelling.
+
+Avoid excessive movement,
+unnecessary loading screens,
+or animations that obstruct content.
+
+Respect prefers-reduced-motion.
+
+Do not break the existing
+navigation and scroll fixes.
+
+Preserve browser back/forward
+behavior and anchor navigation.
+
+====================================================
+XI. MOBILE EXPERIENCE
+====================================================
+
+Mobile is a first-class priority.
+
+The experience must be
+visually impressive on:
+
+- iPhone
+- Android
+- Tablets
+- Desktop
+
+Optimize:
+
+- Responsive typography
+- Touch interactions
+- Navigation
+- Media loading
+- Animation performance
+- Layout stability
+- Readability
+- Accessibility
+
+Avoid large videos or WebGL
+effects that make mobile
+devices slow or unstable.
+
+Provide elegant static
+fallbacks where appropriate.
+
+====================================================
+XII. PERFORMANCE AND ACCESSIBILITY
+====================================================
+
+Maintain:
+
+- Semantic HTML
+- Keyboard navigation
+- Sufficient contrast
+- Accessible controls
+- Responsive images
+- Lazy loading
+- Reduced-motion support
+- Efficient rendering
+
+Avoid unnecessary dependencies.
+
+Prefer existing project tools
+and design libraries.
+
+Do not add large animation
+frameworks unless strictly necessary.
+
+Do not sacrifice usability
+for visual spectacle.
+
+====================================================
+XIII. IMPLEMENTATION METHOD
+====================================================
+
+You are authorized to implement
+the visual improvements described
+in this mandate.
+
+Do not stop after producing
+a conceptual report.
+
+Proceed through these stages:
+
+STAGE 1:
+Inspect existing design architecture,
+active routes, assets and components.
+
+STAGE 2:
+Define a coherent visual direction
+based on the existing TOMI identity.
+
+STAGE 3:
+Implement reusable visual components
+and design primitives.
+
+STAGE 4:
+Elevate the homepage experience.
+
+STAGE 5:
+Improve sector and program presentation.
+
+STAGE 6:
+Improve member-facing visual hierarchy.
+
+STAGE 7:
+Refine mobile responsiveness,
+motion and accessibility.
+
+STAGE 8:
+Run safe isolated tests,
+TypeScript checks and static validation.
+
+Complete as much of this mandate
+as safely possible without requesting
+approval for every individual component.
+
+Do not change backend behavior.
+
+Do not alter business logic.
+
+Do not rewrite working systems.
+
+If a stage requires a forbidden
+operation, skip that stage,
+document the dependency,
+and continue with independent
+authorized frontend work.
+
+====================================================
+XIV. ABSOLUTE RESTRICTIONS
+====================================================
+
+DO NOT:
+
+- Modify PostgreSQL schemas
+- Execute migrations
+- Change Clerk authentication
+- Change messaging permissions
+- Change Stripe or subscriptions
+- Change member entitlements
+- Modify production data
+- Start or restart backend servers
+- Trigger startup migrations
+- Deploy to production
+- Replace the existing brand identity
+- Delete working features
+- Introduce new paywalls
+- Invent institutional endorsements
+- Interfere with other agents
+
+No database or production operations
+are authorized.
+
+====================================================
+XV. REQUIRED FINAL DELIVERY
+====================================================
+
+Return:
+
+1. Visual direction implemented
+2. Existing pages improved
+3. Reusable components created
+4. Motion and animation improvements
+5. Cultural visual elements introduced
+6. Mobile experience improvements
+7. Accessibility and performance measures
+8. Exact files modified
+9. Tests and static checks performed
+10. Remaining unverified functionality
+11. Missing visual assets
+12. Recommended next visual priorities
+
+Clearly distinguish:
+
+IMPLEMENTED
+TESTED IN ISOLATION
+NOT YET VERIFIED IN BROWSER
+
+Do not claim production readiness.
+
+Do not begin unrelated backend tasks.
+
+Wait for the Founder's next direction.

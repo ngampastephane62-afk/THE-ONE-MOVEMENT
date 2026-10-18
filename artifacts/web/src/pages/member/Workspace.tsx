@@ -14,6 +14,7 @@ import {
 } from '@/lib/ecosystem-match';
 import ProgrammeLink from '@/components/ecosystem/ProgrammeLink';
 import ResourceCard from '@/components/ecosystem/ResourceCard';
+import '@/styles/universe.css';
 
 export default function Workspace({ profile, onEdit }: { profile: MemberProfile; onEdit: () => void }) {
   const qc = useQueryClient();
@@ -34,7 +35,7 @@ export default function Workspace({ profile, onEdit }: { profile: MemberProfile;
 
   return (
     <div className="flex flex-col gap-12">
-      <header className="grid gap-6 border-b border-sand-200 pb-10 lg:grid-cols-[1fr_auto] lg:items-end">
+      <header className="tomi-chapter tomi-weave grid gap-6 rounded-t-2xl px-1 pb-10 pt-2 lg:grid-cols-[1fr_auto] lg:items-end">
         <div>
           <p className="text-eyebrow text-gold-700">DISCOVERY & BOOKMARKS</p>
           <h1 className="mt-2 text-display-lg text-ink-900" data-testid="text-member-name">{profile.fullName}</h1>

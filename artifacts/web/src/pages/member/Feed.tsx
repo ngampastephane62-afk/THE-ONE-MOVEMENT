@@ -7,6 +7,7 @@ import PostCard from '@/components/network/PostCard';
 import ReportDialog, { type ReportTarget } from '@/components/network/ReportDialog';
 import { Avatar, Empty, ErrorBox, Skeleton, UploadTray, btn, btnGhost, card, field, useAct, useUploads } from '@/components/network/kit';
 import { useMe } from './ctx';
+import Chapter from '@/components/editorial/Chapter';
 
 const TABS: { id: GetNetworkStateFeed; label: string }[] = [
   { id: 'all', label: 'For you' }, { id: 'following', label: 'Following' }, { id: 'business', label: 'Business' }, { id: 'reel', label: 'Reels' },
@@ -68,6 +69,7 @@ export default function Feed() {
   return (
     <div className="flex flex-col gap-4 px-3 pt-4 md:px-0 md:pt-0 lg:flex-row lg:items-start">
       <div className="flex min-w-0 flex-1 flex-col gap-4">
+        <Chapter index="01" eyebrow="CONTRIBUTE" title="Community feed" lede="Stories, projects and offers shared by members of the movement." />
         <EcosystemNews limit={1} />
         {me.founder || base.growth?.canPost ? <Composer /> : (
           <div className={`${card} flex flex-wrap items-center justify-between gap-2 p-3 text-sm`}>
@@ -95,7 +97,7 @@ export default function Feed() {
       </div>
       <aside className="flex flex-col gap-4 lg:sticky lg:top-24 lg:w-72">
         {me.followers + me.following === 0 && (
-          <div className="rounded-2xl bg-lagoon-900 p-5 text-ivory-100">
+          <div className="tomi-welcome rounded-2xl p-5">
             <p className="text-eyebrow text-gold-400">GETTING STARTED</p>
             <ol className="mt-3 flex flex-col gap-2 text-sm">
               <li><Link href="/member/settings" className="underline-offset-2 hover:underline">1 · Add a photo and cover</Link></li>

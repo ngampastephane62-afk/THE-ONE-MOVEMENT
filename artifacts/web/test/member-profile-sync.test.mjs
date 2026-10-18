@@ -102,6 +102,8 @@ function fixture({ initial = {}, defaultName = 'Clerk initial name' } = {}) {
     runInNewContext(output, {
       module, exports: module.exports, URLSearchParams, URL,
       require: id => {
+        if (id.endsWith('.css')) return {};
+        if (id === '@/lib/utils') return { cn: (...values) => values.filter(Boolean).join(' ') };
         if (id in mocks) return mocks[id];
         if (id === 'lucide-react') return new Proxy({}, { get: (_o, key) => String(key) });
         if (id.startsWith('.') || id.startsWith('@/')) {

@@ -6,6 +6,7 @@ import ReportDialog, { type ReportTarget } from '@/components/network/ReportDial
 import { Avatar, Badges, Empty, ErrorBox, Skeleton, ago, btn, btnGhost, card, field, useAct } from '@/components/network/kit';
 import { useMe } from './ctx';
 import { errMsg } from './proHooks';
+import Chapter from '@/components/editorial/Chapter';
 
 export default function Messages() {
   const { id } = useParams<{ id?: string }>();
@@ -55,7 +56,7 @@ export default function Messages() {
   return (
     <div className="flex gap-4 md:h-[calc(100dvh-7rem)]">
       <aside className={`${tid ? 'hidden md:flex' : 'flex'} w-full flex-col gap-2 overflow-y-auto px-2 pt-4 md:w-80 md:shrink-0 md:px-0 md:pt-0`}>
-        <h1 className="px-2 font-display text-2xl text-ink-900">Messages</h1>
+        <Chapter index="03" eyebrow="CONNECT" title="Messages" className="mx-2" />
         <p className="px-2 text-xs text-ink-700" data-testid="text-free-messaging">Ordinary conversations are free and private between participants. First contacts require acceptance, with up to 5 new requests per rolling 24 hours and 10 pending outgoing requests to prevent spam. Accepted conversations have no daily message quota. Short-term security limits still apply. TOMI-organized professional introductions remain a separate service.</p>
         {q.isLoading ? <Skeleton rows={3} /> : q.isError ? <ErrorBox onRetry={() => q.refetch()} /> : threads.length === 0 ? (
           <Empty title="No conversations yet" body="Visit a member profile and send a request to message. They choose whether to accept."><Link href="/member/people" className={btnGhost}>Find people</Link></Empty>
@@ -66,7 +67,7 @@ export default function Messages() {
       </aside>
 
       <section className={`${tid ? 'flex' : 'hidden md:flex'} ${card} min-h-[calc(100dvh-8.5rem)] flex-1 flex-col overflow-hidden rounded-none md:min-h-0 md:rounded-2xl`}>
-        {!tid ? <div className="m-auto max-w-xs p-6 text-center text-sm text-sand-400">Select a conversation.</div>
+        {!tid ? <div className="tomi-weave flex flex-1 items-center justify-center p-6"><div className="max-w-xs text-center"><p className="font-display text-lg tracking-[0.06em] text-ink-900">Every conversation begins with consent.</p><div className="mx-auto my-3 h-px w-12 bg-gold-500" aria-hidden="true" /><p className="text-sm text-sand-400">Select a conversation.</p></div></div>
           : blockedHere && blocked ? <div className="m-auto flex flex-col items-start gap-3 p-6" data-testid="status-thread-blocked">
             <p className="text-sm text-ink-800">Member blocked. Communication remains disabled. You can still report this member without unblocking them.</p>
             <button type="button" className={btnGhost} onClick={() => setReport({ memberId: blocked.memberId })} data-testid="button-report-blocked-member"><Flag className="h-4 w-4" />Report member</button>

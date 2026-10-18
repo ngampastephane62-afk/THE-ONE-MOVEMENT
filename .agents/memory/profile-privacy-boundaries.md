@@ -14,3 +14,9 @@ Owner save responses must not be spread into public/directory caches or network 
 **Why:** The owner response has a different privacy boundary from every representation viewed by another person. Input fields will expand as international identity is introduced.
 
 **How to apply:** Preserve confirmed saves, failed drafts, newer edits, independent photos and cancellation of stale reads. Adding future owner fields requires reviewing the cache allowlist rather than copying an expanding input object.
+
+Connection graphics must be explicitly illustrative when verified public geography is unavailable. Never position real members on a globe or infer nationality, residence, city or language from their existing profile information.
+
+**Why:** The Founder’s Global Universe mandate asks for cultural connection without invented member locations, and requires a separate database mandate before introducing international identity fields.
+
+**How to apply:** Use symbolic connections and existing authorized profile information only. Prepare adaptable layouts without exposing empty private-field slots, adding inferred values or expanding any display contract.

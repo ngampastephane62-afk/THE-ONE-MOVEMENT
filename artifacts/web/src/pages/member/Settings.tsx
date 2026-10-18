@@ -7,6 +7,7 @@ import { useGetMemberProfile, getGetMemberProfileQueryKey, type MemberProfileInp
 import { ACCEPT_IMG, ErrorBox, Skeleton, btn, card, useAct, useUploads } from '@/components/network/kit';
 import ProfileForm from './ProfileForm';
 import Workspace from './Workspace';
+import Chapter from '@/components/editorial/Chapter';
 import { useMe } from './ctx';
 import { profileInput } from './profile-sync';
 
@@ -60,14 +61,13 @@ export default function SettingsPage() {
 
   return (
     <div className="flex flex-col gap-4 px-3 pt-4 md:px-0 md:pt-0">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <p className="text-eyebrow text-gold-700">SETTINGS</p>
-          <h1 className="font-display text-2xl text-ink-900">{tab === 'workspace' ? 'Discover programmes & resources' : 'Customize your page'}</h1>
-          <p className="mt-1 text-sm text-ink-700">{tab === 'workspace' ? 'Explore existing sector links and keep bookmarks for later. No sector selection is required.' : 'Free for every member. Changes preview live below and apply once you save.'}</p>
-        </div>
-        <Link href={`/member/profile/${me.id}`} className={btn} data-testid="link-view-my-profile"><Eye className="h-3.5 w-3.5" />View my profile</Link>
-      </div>
+      <Chapter
+        index={tab === 'workspace' ? '04' : '05'}
+        eyebrow={tab === 'workspace' ? 'SETTINGS · GROW' : 'SETTINGS · BELONG'}
+        title={tab === 'workspace' ? 'Discover programmes & resources' : 'Customize your page'}
+        lede={tab === 'workspace' ? 'Explore existing sector links and keep bookmarks for later. No sector selection is required.' : 'Free for every member. Changes preview live below and apply once you save.'}
+        aside={<Link href={`/member/profile/${me.id}`} className={btn} data-testid="link-view-my-profile"><Eye className="h-3.5 w-3.5" />View my profile</Link>}
+      />
       <div className="relative">
         <p className="mb-2 flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] text-sand-400"><span className={`h-1.5 w-1.5 rounded-full ${dirty ? 'bg-coral-500' : 'bg-lagoon-600'}`} />{dirty ? 'Preview, unsaved changes' : 'Preview of your page'}</p>
         <div className="overflow-hidden rounded-3xl ring-1 ring-sand-200">

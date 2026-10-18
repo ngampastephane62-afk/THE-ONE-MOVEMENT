@@ -59,6 +59,9 @@ function fixture(page = 'Messages', { accepted = true, requestedByMe = true } = 
     runInNewContext(output, {
       module, exports: module.exports, confirm: () => confirmBlock,
       require: id => {
+        if (id === '@/components/editorial/Chapter') return load(resolve(root, '../../components/editorial/Chapter.tsx'));
+        if (id.endsWith('.css')) return {};
+        if (id === '@/lib/utils') return { cn: (...values) => values.filter(Boolean).join(' ') };
         if (id in mocks) return mocks[id];
         if (id === 'lucide-react') return new Proxy({}, { get: (_o, k) => String(k) });
         if (id === './proHooks') return load(resolve(root, 'proHooks.ts'));

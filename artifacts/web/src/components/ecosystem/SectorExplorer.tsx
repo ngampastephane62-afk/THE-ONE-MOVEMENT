@@ -1,9 +1,11 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type CSSProperties } from 'react';
+import '@/styles/universe.css';
 import { Search } from 'lucide-react';
 import { SECTORS } from '@/lib/sectors-data';
 import { ECOSYSTEM_PERSONAS } from '@/lib/ecosystem-resources';
 import PersonaPicker from './PersonaPicker';
 import SectorDetail from './SectorDetail';
+import SectorEmblem from './SectorEmblem';
 
 interface Props {
   selected?: string;
@@ -40,7 +42,7 @@ export default function SectorExplorer({ selected: controlled, onSelect }: Props
           <div className="mt-7"><PersonaPicker value={persona} onChange={setPersona} /></div>
         </div>
       </div>
-      <div className="bg-lagoon-900 py-16">
+      <div className="tomi-weave-dark bg-lagoon-900 py-16">
         <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <label htmlFor="sector-search" className="text-eyebrow text-gold-400">STEP TWO · FIND YOUR SECTOR</label>
@@ -61,6 +63,7 @@ export default function SectorExplorer({ selected: controlled, onSelect }: Props
               <ul className="mt-4 grid grid-cols-2 gap-2" aria-label="Sectors">
                 {visible.map((s) => {
                   const on = active?.slug === s.slug;
+                  const n = SECTORS.findIndex((x) => x.slug === s.slug) + 1;
                   return (
                     <li key={s.slug}>
                       <button
@@ -68,10 +71,13 @@ export default function SectorExplorer({ selected: controlled, onSelect }: Props
                         onClick={() => setSelected(s.slug)}
                         aria-pressed={on}
                         data-testid={`button-sector-${s.slug}`}
-                        className={`w-full border px-3 py-3 text-left transition-colors ${on ? 'border-gold-400 bg-gold-500/15' : 'border-lagoon-600/60 hover:border-gold-500/60'}`}
+                        className="tomi-gateway"
+                        style={{ '--gw-turn': `${n * 21}deg` } as CSSProperties}
                       >
-                        <span className={`block font-display text-xs tracking-[0.12em] ${on ? 'text-gold-400' : 'text-ivory-100'}`}>{s.name.toUpperCase()}</span>
-                        <span className="mt-0.5 block text-[11px] leading-snug text-ivory-300 line-clamp-2">{s.descriptor}</span>
+                        <SectorEmblem slug={s.slug} />
+                        <span className="tomi-gateway-num" aria-hidden="true">{String(n).padStart(2, '0')} / {SECTORS.length}</span>
+                        <span className={`mt-2 block font-display text-xs tracking-[0.12em] ${on ? 'text-gold-400' : 'text-ivory-100'}`}>{s.name.toUpperCase()}</span>
+                        <span className="mt-1 block text-[11px] leading-snug text-ivory-300 line-clamp-2">{s.descriptor}</span>
                       </button>
                     </li>
                   );
@@ -85,6 +91,7 @@ export default function SectorExplorer({ selected: controlled, onSelect }: Props
             )}
           </div>
           <div className="lg:col-span-7 lg:border-l lg:border-lagoon-600/50 lg:pl-10" aria-live="polite">
+            {active && <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.22em] text-gold-400" data-testid="text-sector-gateway-index">Gateway {String(SECTORS.findIndex((x) => x.slug === active.slug) + 1).padStart(2, '0')} of {SECTORS.length}</p>}
             {active ? <SectorDetail sector={active} /> : <p className="text-ivory-300">Choose a sector to see its programmes and resources.</p>}
           </div>
         </div>

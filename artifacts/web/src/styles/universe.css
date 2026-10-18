@@ -1,0 +1,66 @@
+/* Phase 3 — shared editorial primitives for sectors, programmes and the member universe.
+   Uses existing brand tokens only (lagoon / ivory / gold, Cinzel + IBM Plex). */
+
+.tomi-chapter { position: relative; padding-bottom: 1.25rem; border-bottom: 1px solid hsl(36 26% 74% / 0.7); }
+.tomi-chapter::after { content: ''; position: absolute; left: 0; bottom: -1px; width: 4.5rem; height: 2px; background: hsl(39 52% 54%); }
+.tomi-chapter[data-tone='dark'] { border-bottom-color: hsl(43 80% 73% / 0.18); }
+.tomi-chapter-index { font-family: var(--font-mono); font-size: 0.625rem; letter-spacing: 0.2em; color: hsl(37 55% 40%); }
+.tomi-chapter[data-tone='dark'] .tomi-chapter-index { color: hsl(43 80% 73%); }
+.tomi-chapter-title { font-family: var(--font-display); font-size: clamp(1.6rem, 4.2vw, 2.4rem); line-height: 1.05; letter-spacing: 0.04em; }
+.tomi-chapter-anim { animation: chapterIn 600ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes chapterIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* Woven motif — original geometric line work (diagonal lattice), not a copied textile. */
+.tomi-weave {
+  background-image:
+    repeating-linear-gradient(45deg, hsl(39 52% 54% / 0.09) 0 1px, transparent 1px 14px),
+    repeating-linear-gradient(-45deg, hsl(39 52% 54% / 0.09) 0 1px, transparent 1px 14px);
+}
+.tomi-weave-dark {
+  background-image:
+    repeating-linear-gradient(45deg, hsl(43 80% 73% / 0.06) 0 1px, transparent 1px 16px),
+    repeating-linear-gradient(-45deg, hsl(43 80% 73% / 0.06) 0 1px, transparent 1px 16px);
+}
+
+/* Sector gateways */
+.tomi-gateway { position: relative; display: flex; flex-direction: column; width: 100%; min-height: 6.5rem; padding: 0.85rem 0.9rem; text-align: left; border: 1px solid hsl(189 78% 24% / 0.6); background: hsl(187 67% 10% / 0.6); overflow: hidden; transition: border-color 200ms ease, background-color 200ms ease, transform 250ms cubic-bezier(0.22, 1, 0.36, 1); }
+.tomi-gateway::before { content: ''; position: absolute; right: -1.6rem; top: -1.6rem; width: 4.5rem; height: 4.5rem; border-radius: 50%; border: 1px solid hsl(43 80% 73% / 0.22); box-shadow: 0 0 0 0.6rem hsl(43 80% 73% / 0.05); transform: rotate(var(--gw-turn, 0deg)); transition: transform 400ms ease; }
+.tomi-gateway:hover { border-color: hsl(39 52% 54% / 0.7); transform: translateY(-2px); }
+.tomi-gateway:hover::before { transform: rotate(var(--gw-turn, 0deg)) scale(1.15); }
+.tomi-gateway:focus-visible { outline: 2px solid hsl(43 80% 73%); outline-offset: 2px; }
+.tomi-gateway[aria-pressed='true'] { border-color: hsl(43 80% 73%); background: linear-gradient(135deg, hsl(39 52% 54% / 0.2), hsl(187 67% 10% / 0.6)); }
+.tomi-gateway-num { font-family: var(--font-mono); font-size: 0.625rem; letter-spacing: 0.18em; color: hsl(39 52% 54%); }
+.tomi-gateway-emblem { position: absolute; top: 0.7rem; right: 0.7rem; width: 1.4rem; height: 1.4rem; color: hsl(43 80% 73% / 0.7); }
+.tomi-gateway-num { padding-right: 1.75rem; }
+
+/* Programme personalities */
+.tomi-programme { --pg: 39 52% 54%; position: relative; }
+.tomi-programme-numeral { position: absolute; z-index: 2; left: 1rem; top: 0.75rem; padding: 0.25rem 0.45rem; border: 1px solid hsl(var(--pg) / 0.6); background: hsl(187 67% 6% / 0.9); font-family: var(--font-display); font-size: 2.25rem; line-height: 1; color: hsl(var(--pg)); pointer-events: none; }
+.tomi-programme-motif { height: 3px; background: linear-gradient(90deg, hsl(var(--pg)), hsl(var(--pg) / 0.15) 70%, transparent); }
+.tomi-programme[data-program='diplomatic-gala'] { --pg: 43 80% 73%; }
+.tomi-programme[data-program='summit'] { --pg: 189 62% 45%; }
+.tomi-programme[data-program='fashion-week'] { --pg: 39 52% 54%; }
+.tomi-programme[data-program='awards'] { --pg: 43 70% 62%; }
+.tomi-programme[data-program='fashion-night'] { --pg: 19 72% 60%; }
+.tomi-programme[data-program='investment-forum'] { --pg: 38 44% 87%; }
+.tomi-programme-link { border-inline-start-width: 3px; border-inline-start-color: hsl(var(--pg)); }
+.tomi-knowledge-card { border-block-start: 2px solid hsl(39 52% 54% / 0.6); }
+.tomi-service { border-block-start: 2px solid hsl(39 52% 54% / 0.5); transition: border-color 180ms ease; }
+.tomi-service:hover { border-color: hsl(39 52% 54%); }
+.tomi-service:focus-visible { outline: 2px solid hsl(189 78% 24%); outline-offset: 3px; }
+
+/* Existing cover/portrait layouts remain adaptable without adding any fields. */
+[data-testid^='profile-hero-'] h1,
+[data-testid^='profile-hero-'] a { overflow-wrap: anywhere; }
+
+/* Member universe */
+.tomi-member-card { border: 1px solid hsl(36 26% 74% / 0.8); background: hsl(40 71% 98%); transition: border-color 200ms ease, transform 250ms cubic-bezier(0.22, 1, 0.36, 1); }
+.tomi-member-card:hover { border-color: hsl(39 52% 54% / 0.7); transform: translateY(-2px); }
+.tomi-welcome { position: relative; overflow: hidden; background: radial-gradient(ellipse 70% 90% at 100% 0%, hsl(39 52% 54% / 0.22), transparent 60%), linear-gradient(140deg, hsl(187 67% 10%), hsl(188 66% 16%)); color: hsl(38 57% 94%); }
+
+@media (prefers-reduced-motion: reduce) {
+  .tomi-chapter-anim { animation: none; }
+  .tomi-gateway, .tomi-gateway::before, .tomi-member-card, .tomi-service { transition: none; }
+  .tomi-gateway:hover, .tomi-member-card:hover, .tomi-programme-link .group-hover\:-translate-y-0\.5,
+  .tomi-programme-link .group-hover\:translate-x-0\.5 { transform: none; }
+}

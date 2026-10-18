@@ -1,21 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
 import { Show, useAuth } from '@clerk/react';
-import {
-  ArrowRight, Briefcase, Building2, Clapperboard, Cpu, Footprints, GraduationCap, HandHeart,
-  HeartHandshake, Landmark, Lightbulb, Music, Newspaper, Palette, Plane, Shirt, Stethoscope, TrendingUp,
-  type LucideIcon,
-} from 'lucide-react';
+import { ArrowRight, Lightbulb } from 'lucide-react';
 import { SECTORS } from '@/lib/sectors-data';
 import { storePendingSector } from '@/lib/network-invitations';
-
-const ICONS: Record<string, LucideIcon> = {
-  fashion: Shirt, music: Music, dance: Footprints, film: Clapperboard, art: Palette,
-  business: Briefcase, investment: TrendingUp, tourism: Plane, diplomacy: Landmark,
-  innovation: Lightbulb, technology: Cpu, ngos: HandHeart, media: Newspaper,
-  education: GraduationCap, 'real-estate': Building2, 'health-care': Stethoscope,
-  'humanitarian-action': HeartHandshake,
-};
+import { SECTOR_ICONS } from './SectorEmblem';
 
 interface Props {
   selected: string;
@@ -36,7 +25,8 @@ export default function SectorUniverse({ selected, onPick }: Props) {
 
   const explore = (slug: string) => {
     onPick(slug);
-    document.getElementById('explore')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    document.getElementById('explore')?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
   };
 
   return (
@@ -72,7 +62,7 @@ export default function SectorUniverse({ selected, onPick }: Props) {
         <ul className="absolute inset-0" aria-label="All seventeen sectors">
           {SECTORS.map((s, i) => {
             const a = (i / n) * Math.PI * 2 - Math.PI / 2;
-            const Icon = ICONS[s.slug] ?? Lightbulb;
+            const Icon = SECTOR_ICONS[s.slug] ?? Lightbulb;
             const on = s.slug === selected;
             const lit = s.slug === focusSlug;
             return (

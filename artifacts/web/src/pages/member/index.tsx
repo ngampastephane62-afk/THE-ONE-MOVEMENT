@@ -166,6 +166,7 @@ function AppShell({ me, base, children }: Ctx & { children: ReactNode }) {
           <Link href="/member/thanks-emirates" className="mx-3 mt-4 mb-3 flex items-center justify-between gap-3 rounded-xl border border-gold-500/40 bg-lagoon-900 px-4 py-3 text-xs text-ivory-100 md:hidden" data-testid="nav-thanks-emirates-mobile">
             <span>Thanks Emirates · Share your story</span><Sparkles className="h-4 w-4 shrink-0 text-gold-400" />
           </Link>
+          <div className="tomi-member-path mx-3 mb-4 md:mx-0" aria-label="Belong, discover, connect, contribute, grow" data-testid="member-path"><span>Belong</span><span>Discover</span><span>Connect</span><span>Contribute</span><span>Grow</span></div>
           {(loc === '/member' || loc === '/member/') && <MemberWelcome />}
           {me.enabled ? <PendingInvitation /> : !personalPage && <ActivationPrompt />}{!personalPage && <CompleteProfile me={me} />}{!personalPage && <PendingSector />}{children}
         </main>
