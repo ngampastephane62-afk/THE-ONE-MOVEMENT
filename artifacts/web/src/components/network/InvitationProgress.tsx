@@ -39,15 +39,14 @@ export default function InvitationProgress({ growth, founder, compact }: { growt
         <p className="mt-1 font-display text-xl">Invite people to connect with you</p>
         <div className="mt-4 flex items-end justify-between gap-3">
           <span className="font-display text-4xl text-gold-400" data-testid="text-growth-count">{growth.qualifiedInvites}</span>
-          <span className="text-xs text-ivory-300">of {growth.requiredInvites || 10} verified referral followers</span>
+          <span className="text-xs text-ivory-300">verified referral followers · invitations are optional</span>
         </div>
-        <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-ivory-100/15"><div className="h-full origin-left bg-gold-500" style={{ transform: `scaleX(${Math.min(1, growth.qualifiedInvites / (growth.requiredInvites || 10))})` }} /></div>
-        <p className="mt-2 text-xs text-ivory-200" data-testid="text-growth-status">{growth.canPost ? 'Ordinary posting is open for you.' : `${Math.max(0, (growth.requiredInvites || 10) - growth.qualifiedInvites)} more genuine verified followers needed before you can post.`}</p>
+        <p className="mt-2 text-xs text-ivory-200" data-testid="text-growth-status">{growth.canPost ? 'Ordinary posting is open for you. No invitations are required.' : 'Activate your verified membership to publish ordinary posts. No invitations are required.'}</p>
       </div>
       <div className="flex flex-col gap-3 p-5">
         {!compact && (
           <div className="flex flex-col gap-1.5 text-sm leading-relaxed text-ink-700">
-            <p>Your account is free and editable now. Posting opens once 10 genuine, verified people join through your link and follow you. Business posts and reels also need an active <a href="/member/membership" className="font-semibold text-lagoon-700 underline">membership</a>.</p>
+            <p>Your account is free and editable now. Ordinary posts do not require invitations or a subscription. Business posts and reels retain their existing ten-referral requirement and need an active <a href="/member/membership" className="font-semibold text-lagoon-700 underline">membership</a>.</p>
             <p>An invitation counts when someone opens your link, creates a new verified account (less than 24 hours old) and accepts your invitation, which makes them follow you. Each account can be credited once.</p>
             <p>The count reflects invited members who currently follow you and are active. Only real, currently active followers count; the number is never estimated. Packages, events, humanitarian films and donations are separate.</p>
           </div>

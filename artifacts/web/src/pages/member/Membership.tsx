@@ -70,8 +70,8 @@ export default function Membership() {
       <section className={`${card} p-5`}>
         <p className="text-eyebrow text-gold-700">PUBLISHING RULES</p>
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-ink-700">
-          <li>Ordinary posts open once 10 genuine, verified referral followers join through your link. <Link href="/member/invite" className="font-semibold text-lagoon-700 underline">See your progress</Link></li>
-          <li>Business posts and reels need an active subscription and the same 10 followers.</li>
+          <li>Ordinary posts are free after explicit network activation. No invitations or subscription are required. <Link href="/member/invite" className="font-semibold text-lagoon-700 underline">Invite friends voluntarily</Link></li>
+          <li>Business posts and reels retain their existing requirement for an active subscription and 10 verified referral followers.</li>
           <li>Company review badge: Business tier, 10 unique member attestations and founder review. <Link href="/member/business" className="font-semibold text-lagoon-700 underline">Company page</Link></li>
         </ul>
       </section>

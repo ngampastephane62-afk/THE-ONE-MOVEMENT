@@ -1,0 +1,134 @@
+THE ONE MOVEMENT INTERNATIONAL (TOMI)
+PHASE 2 — TASK 5
+
+REMOVE MANDATORY INVITATION GATING
+PRESERVE FREE MEMBERSHIP
+
+FOUNDER AUTHORIZATION:
+LIMITED IMPLEMENTATION APPROVED
+
+STRATEGIC DECISION
+
+TOMI is a global movement built on belonging,
+peace, unity, inclusion and community participation.
+
+Joining the movement must remain free.
+
+Inviting friends is encouraged but must not be
+mandatory for ordinary community participation.
+
+The Founder has decided that the existing
+requirement for ten qualified invitations
+must no longer block ordinary member publishing.
+
+OBJECTIVE
+
+Remove the mandatory ten-invitation condition
+from ordinary network publication.
+
+Preserve all other existing eligibility,
+security and moderation controls.
+
+SCOPE
+
+1. Identify every active server-side enforcement
+   of the ten-invitation publication requirement.
+
+2. Identify related frontend restrictions,
+   eligibility messages and disabled buttons.
+
+3. Remove only the mandatory invitation condition
+   for ordinary member publication.
+
+4. Ensure that a member with zero invitations
+   can publish if all other applicable
+   requirements are satisfied.
+
+5. Preserve:
+
+   - Authentication
+   - Explicit network activation
+   - Member ownership checks
+   - Visibility preferences
+   - Existing moderation controls
+   - Suspension and blocking rules
+   - Rate limits
+   - Media restrictions
+   - Subscription requirements for genuinely
+     paid or specialized features
+
+6. Preserve invitation tracking and existing
+   invitation records.
+
+Invitations may support a future voluntary
+goals and rewards system.
+
+Do not implement rewards or points.
+
+IMPORTANT
+
+Do not remove subscription restrictions
+from specialized commercial functionality.
+
+Do not modify prices.
+
+Do not activate trials.
+
+Do not modify Stripe.
+
+Do not change the membership business model
+beyond the specific invitation requirement.
+
+TEST REQUIREMENTS
+
+Add or update isolated tests confirming:
+
+- Zero invitations do not block ordinary publishing.
+- Other eligibility requirements still apply.
+- Suspended members remain restricted.
+- Unauthorized users remain restricted.
+- Invitation tracking remains intact.
+- Specialized paid features remain governed
+  by their existing access controls.
+
+Run only safe isolated tests and static checks.
+
+Do not start servers.
+
+Do not connect to production services.
+
+Do not deploy.
+
+Do not run database migrations.
+
+Do not interfere with other agents' work.
+
+ARCHITECTURE PRESERVATION
+
+Preserve:
+
+- Existing website design
+- Navigation
+- Homepage
+- Member profiles
+- Social network architecture
+- Authentication
+- Database structures
+- Existing content
+- Media
+- Working functionality
+
+DELIVERABLE
+
+Return:
+
+1. Exact files modified
+2. Existing invitation restriction identified
+3. Description of the correction
+4. Tests performed and results
+5. Remaining unverified behavior
+6. Confirmation of architecture preservation
+
+Do not begin another task.
+
+Wait for the Founder's next authorization.

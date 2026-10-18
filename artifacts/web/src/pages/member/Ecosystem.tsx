@@ -10,7 +10,7 @@ type Need = 'free' | 'paid' | 'business';
 type Svc = { id: string; href: string; need: Need; icon: typeof Users; en: [string, string]; fr: [string, string] };
 
 const SERVICES: Svc[] = [
-  { id: 'feed', href: '/member', need: 'free', icon: Newspaper, en: ['Member feed', 'Read the network. Posting opens with 10 verified referral followers.'], fr: ['Fil des membres', 'Lisez le réseau. La publication s’ouvre avec 10 abonnés parrainés vérifiés.'] },
+  { id: 'feed', href: '/member', need: 'free', icon: Newspaper, en: ['Member feed', 'Read the network. Activate your membership to publish ordinary posts, with no invitations required.'], fr: ['Fil des membres', 'Lisez le réseau. Activez votre participation pour publier normalement, sans invitation obligatoire.'] },
   { id: 'people', href: '/member/people', need: 'free', icon: Users, en: ['People', 'Find and follow members across the network.'], fr: ['Membres', 'Trouvez et suivez les membres du réseau.'] },
   { id: 'messages', href: '/member/messages', need: 'free', icon: MessageSquare, en: ['Messages', 'Private conversations with members.'], fr: ['Messages', 'Conversations privées avec les membres.'] },
   { id: 'sectors', href: '/ecosystem', need: 'free', icon: Compass, en: ['Sector discovery', 'Public map of the TOMI ecosystem sectors.'], fr: ['Découverte des secteurs', 'Carte publique des secteurs de l’écosystème TOMI.'] },
@@ -84,7 +84,7 @@ export default function Ecosystem() {
       </div>
 
       <p translate="no" className="rounded-xl border border-sand-300 p-3 text-xs leading-relaxed text-ink-700" data-testid="text-ecosystem-rules">
-        {t('A paid membership unlocks services only. It does not replace the 10 verified referral followers required to publish, licence approval, or identity certification.', 'Une adhésion payante débloque uniquement des services. Elle ne remplace ni les 10 abonnés parrainés vérifiés requis pour publier, ni l’approbation de licence, ni la certification d’identité.')}
+        {t('Ordinary posts require no invitations or subscription. Specialized paid services retain their existing access controls, including referral requirements for Business posts and reels. Payment does not replace licence approval or identity certification.', 'Les publications ordinaires ne nécessitent ni invitation ni abonnement. Les services payants spécialisés conservent leurs contrôles d’accès, dont le parrainage pour les publications Business et les Reels. Le paiement ne remplace ni l’approbation de licence ni la certification d’identité.')}
       </p>
     </div>
   );

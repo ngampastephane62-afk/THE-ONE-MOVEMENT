@@ -25,7 +25,7 @@ After Join the Movement, members should immediately reach an editable account/pr
 
 **Why:** The Founder's newer mandate explicitly rejects mandatory invitations for ordinary publication and requests optional meaningful contribution and recognition instead.
 
-**How to apply:** Treat remaining mandatory-publication gates as discrepancies to report, not authority to edit under a read-only mandate. Prevent fake accounts and artificial engagement without tying ordinary publication to recruitment. Attestations remain supporting evidence, not proof of legal registration.
+**How to apply:** Ordinary publication must not depend on recruitment. Keep invitation tracking and records; do not introduce rewards without separate approval. Removing the ordinary-publication invitation condition does not authorize weakening existing specialized commercial access controls, changing prices, activating trials or modifying Stripe. Prevent fake accounts and artificial engagement. Attestations remain supporting evidence, not proof of legal registration.
 
 Videos should retain their native aspect ratio, support member comments and likes, and offer sharing to social networks. Thanks Emirates should use a UAE flag, classical animation and revised typography, featuring multiple emirates including Abu Dhabi rather than Dubai alone.
 

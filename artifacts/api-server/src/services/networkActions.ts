@@ -80,7 +80,7 @@ export async function networkAction(req: Request, res: Response) {
       const media = await ownedMedia(self, input.mediaIds);
       if (!content && !media.length) throw new NetworkError(400, "Write something or attach media.");
       const kind = input.kind ?? "post";
-      if (!who.founder && await qualifiedInviteCount(self) < 10) throw new NetworkError(403, "Invite ten genuine verified members who accept your invitation and follow you before publishing.");
+      if (!who.founder && (kind === "business" || kind === "reel") && await qualifiedInviteCount(self) < 10) throw new NetworkError(403, "Business posts and reels require ten genuine verified referral followers.");
       if (!who.founder && (kind === "business" || kind === "reel")) await requireMonthly(self);
       if (!["post", "business", "reel"].includes(kind)) throw new NetworkError(400, "Choose post, business or reel.");
       if (kind === "reel" && !media.some(m => m.contentType.startsWith("video/"))) throw new NetworkError(400, "A reel needs an uploaded video.");

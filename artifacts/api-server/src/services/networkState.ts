@@ -118,8 +118,8 @@ export async function networkState(context: NetworkActor, query: Record<string, 
   if (!me) return empty;
   const qualifiedInvites = await qualifiedInviteCount(self.id);
   const growth = {
-    inviteCode: myProfile!.inviteCode, qualifiedInvites, requiredInvites: 10,
-    canPost: me.enabled && (context.founder || qualifiedInvites >= 10),
+    inviteCode: myProfile!.inviteCode, qualifiedInvites, requiredInvites: 0,
+    canPost: me.enabled,
   };
   const q = String(query.q ?? "").trim().slice(0, 100).toLowerCase();
   const roleTerms: Record<string, string[]> = {
