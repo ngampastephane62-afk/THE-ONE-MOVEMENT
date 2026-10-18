@@ -1,0 +1,417 @@
+THE ONE MOVEMENT INTERNATIONAL (TOMI)
+PHASE 2 — TASK 3
+
+GLOBAL UNIVERSE EXPERIENCE
+HOMEPAGE STRATEGY & MEMBERSHIP MODEL
+
+FOUNDER AUTHORIZATION: APPROVED
+MISSION: READ-ONLY STRATEGIC & TECHNICAL AUDIT
+IMPLEMENTATION: NOT AUTHORIZED
+
+==================================================
+1. FOUNDER'S VISION
+==================================================
+
+THE ONE MOVEMENT INTERNATIONAL is not simply
+a website, a social network or a membership platform.
+
+IT IS A GLOBAL UNIVERSE.
+
+An international ecosystem connecting people,
+cultures, industries, institutions, businesses,
+creators and communities.
+
+Its fundamental values are:
+
+- Peace
+- Unity
+- Humanity
+- Tolerance
+- Diversity
+- Inclusion
+- Community development
+- Personal growth
+- Opportunities
+- Responsibility toward future generations
+
+Our philosophy:
+
+"YOU DON'T JUST JOIN A PLATFORM.
+YOU BECOME PART OF A GLOBAL MISSION."
+
+TOMI must create a strong sense of belonging.
+
+Members should feel that they are part of
+something meaningful, international and lasting.
+
+==================================================
+2. FUNDAMENTAL MEMBERSHIP PRINCIPLE
+==================================================
+
+WE DO NOT SELL BELONGING.
+
+Joining TOMI should be free and accessible.
+
+Members should be able to:
+
+- Create their identity
+- Discover the ecosystem
+- Explore the 17 sectors
+- Connect with people
+- Participate in communities
+- Access public knowledge
+- Discover opportunities
+- Contribute to the movement
+
+Membership must not require a monthly payment.
+
+Members must retain control over their
+accounts and their ability to leave.
+
+The previously discussed 10-day trial should
+apply only to selected optional premium tools,
+if approved later.
+
+It must not limit permanent free membership.
+
+==================================================
+3. ECONOMIC MODEL
+==================================================
+
+The Founder wants TOMI to generate revenue
+primarily through valuable optional services,
+not compulsory membership subscriptions.
+
+Investigate a future model based on:
+
+- Promotional campaigns
+- Content boosting
+- Professional visibility
+- Business promotion
+- Media coverage
+- Advertising
+- Featured opportunities
+- Event participation
+- Exhibitions
+- Marketplace services
+- Professional services
+- Optional premium tools
+- Sponsorship agreements
+
+Members should pay for specific additional
+services when they need them.
+
+Example:
+
+A fashion designer joins TOMI for free.
+
+They build their profile and connect with
+other members.
+
+When launching a collection, they may
+purchase an optional promotional campaign.
+
+A business may similarly pay to promote
+a product or service.
+
+IMPORTANT:
+
+Paid promotion must not automatically grant
+official certification, institutional credibility,
+or guaranteed participation in official programs.
+
+Sponsored visibility must be clearly identified.
+
+The existing $29 and $99 monthly prices
+are NOT approved commercial pricing.
+
+Do not change pricing or Stripe.
+
+==================================================
+4. THE THREE DIMENSIONS OF TOMI
+==================================================
+
+Analyze how the existing website communicates
+these three interconnected dimensions:
+
+A. THE MOVEMENT
+
+Peace, unity, belonging, tolerance,
+humanitarian engagement and shared values.
+
+B. THE ECOSYSTEM
+
+17 sectors, six official programs,
+communities, members, opportunities,
+knowledge, events and collaborations.
+
+C. THE OPPORTUNITY ECONOMY
+
+Professional development, visibility,
+media, campaigns, exhibitions,
+commerce and marketplace opportunities.
+
+Identify where the existing content
+communicates these ideas successfully
+and where the message is unclear.
+
+==================================================
+5. HOMEPAGE CONTENT RESTRUCTURING
+==================================================
+
+The Founder wants to improve the homepage
+information hierarchy.
+
+Do not redesign the website.
+
+Do not remove existing components.
+
+Do not change the visual identity.
+
+Audit the CURRENT ACTIVE homepage,
+not unused or legacy components.
+
+Evaluate whether the existing content
+clearly explains:
+
+- What TOMI is
+- Why the movement exists
+- Who can join
+- Its global mission
+- Its 17 sectors
+- Its six official programs
+- What members can discover
+- How members connect
+- How members contribute
+- How members grow
+- What optional services are available
+
+Propose a better editorial hierarchy
+using the existing design wherever possible.
+
+Suggested experience framework:
+
+BELONG
+DISCOVER
+CONNECT
+CONTRIBUTE
+GROW
+
+These are experience principles,
+not automatically five new navigation menus.
+
+The homepage should communicate
+the movement's mission before
+presenting commercial services.
+
+==================================================
+6. A LIVING GLOBAL UNIVERSE
+==================================================
+
+The Founder wants people to return to TOMI
+throughout the day because the platform
+provides meaningful value.
+
+Investigate how existing components could
+eventually display continuously refreshed:
+
+- News
+- Documentaries
+- Reels
+- Interviews
+- Personalities
+- Member achievements
+- Sector discoveries
+- Educational content
+- Innovations
+- Events
+- Humanitarian initiatives
+- Opportunities
+- Community projects
+
+Content priorities should evolve according
+to current events and official programs.
+
+For example:
+
+Before THE ONE SUMMIT, relevant summit
+content may receive editorial priority.
+
+Before THE ONE FASHION WEEK INTERNATIONAL,
+relevant fashion and cultural content
+may receive greater visibility.
+
+The platform must still represent
+all 17 sectors.
+
+Do not implement content scheduling yet.
+
+==================================================
+7. PERSONALIZED DISCOVERY
+==================================================
+
+The experience should become relevant
+to each member's interests.
+
+For example:
+
+Education members should discover
+educational opportunities and knowledge.
+
+Fashion members should discover designers,
+collections and creative opportunities.
+
+Investment members should discover
+relevant projects and discussions.
+
+Members should also be encouraged to
+explore other sectors.
+
+Investigate existing member preferences,
+sector classifications and content filters.
+
+Propose a privacy-conscious incremental
+personalization strategy.
+
+Do not implement recommendation algorithms.
+
+==================================================
+8. GOALS, CONTRIBUTIONS AND RECOGNITION
+==================================================
+
+The Founder wants members to grow
+through meaningful participation.
+
+Inviting ten people must NOT be a mandatory
+requirement for ordinary publication.
+
+Instead, investigate a future optional
+goals and recognition system.
+
+Potential contributions include:
+
+- Inviting genuine members
+- Helping other members
+- Sharing knowledge
+- Participating in community initiatives
+- Contributing to sector activities
+- Supporting approved projects
+- Participating in events
+
+Rewards and benefits require separate
+Founder approval.
+
+Prevent spam, fake accounts,
+artificial engagement and abuse.
+
+Do not implement points or rewards.
+
+==================================================
+9. MEMBER IDENTITY AND RECOGNITION
+==================================================
+
+Investigate how TOMI can communicate
+a member's identity, contribution,
+professional achievements and involvement.
+
+Distinguish clearly between:
+
+- Membership
+- Professional profile
+- Contribution recognition
+- Official certification
+- Program participation
+- Sponsorship
+- Paid promotion
+
+These statuses must never be confused.
+
+Payment alone must not purchase
+official recognition or credibility.
+
+==================================================
+10. NAVIGATION EXPERIENCE
+==================================================
+
+The Founder reports that some links
+open destination pages at the middle
+or bottom instead of the beginning.
+
+Audit existing navigation and scroll behavior.
+
+Distinguish:
+
+- New page navigation
+- Anchor navigation
+- Browser history restoration
+- In-page scrolling
+
+Identify the cause and propose
+the smallest safe correction.
+
+Also evaluate how to maintain reading
+continuity and relevant content discovery
+without distracting visitors.
+
+Do not modify navigation code.
+
+==================================================
+11. ARCHITECTURE PROTECTION
+==================================================
+
+ABSOLUTE RESTRICTIONS:
+
+- Do not modify application files
+- Do not modify the database
+- Do not restart servers
+- Do not deploy
+- Do not run migrations
+- Do not initialize Stripe
+- Do not install dependencies
+- Do not access production member data
+- Do not change authentication
+- Do not redesign pages
+- Do not remove existing content
+- Do not interfere with other agents
+
+READ-ONLY STATIC ANALYSIS ONLY.
+
+==================================================
+12. REQUIRED DELIVERABLE
+==================================================
+
+Return a clear strategic and technical report:
+
+1. Current homepage content hierarchy
+2. Existing components to preserve
+3. Proposed homepage editorial hierarchy
+4. Movement identity and messaging improvements
+5. Permanent free membership analysis
+6. Optional paid visibility and services model
+7. Existing subscription dependencies and risks
+8. Personalized discovery opportunities
+9. Content renewal and editorial management
+10. Goals and recognition feasibility
+11. Member identity and certification distinctions
+12. Navigation and scroll issues
+13. Architecture preservation requirements
+14. Recommended incremental development order
+15. Decisions requiring Founder approval
+
+For each recommendation, explain:
+
+- What exists
+- What can be reused
+- What is missing
+- What should change eventually
+- Technical risks
+- Whether database changes are required
+
+Do not implement anything.
+
+Do not modify the website.
+
+Do not create a new task.
+
+Return the complete report and wait
+for the Founder's next authorization.

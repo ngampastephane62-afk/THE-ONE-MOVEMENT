@@ -3,11 +3,11 @@ name: Ecosystem membership and editorial regions
 description: Stakeholder's monthly professional-network, verification, media and regional tribute requirements.
 ---
 
-Paid membership is a monthly subscription to professional ecosystem services, inspired by LinkedIn and Instagram: sponsor publication, professional content and permission-based connections between investors and other sectors. Humanitarian giving is separate and must not buy certification or access privileges.
+Permanent TOMI membership is free. The Founder says “WE DO NOT SELL BELONGING.” Revenue should primarily come from optional services, not compulsory membership subscriptions. Humanitarian giving remains separate.
 
-**Why:** The stakeholder clarified the business model on 2026-10-16, superseding humanitarian-film purchases.
+**Why:** The Founder's Global Universe Experience mandate supersedes the earlier monthly-membership direction.
 
-**How to apply:** The stakeholder approved Professional at US$29/month and Business / Sponsor at US$99/month. Preserve separate annual event packages. Distinguish paid service access, member identity verification and business legality checks.
+**How to apply:** The existing US$29 and US$99 monthly prices are NOT approved commercial pricing. Do not change pricing or Stripe without separate authorization. A possible ten-day trial concerns selected optional premium tools only, subject to later approval; it must not limit permanent free membership. Paid promotion must be labelled and cannot buy certification, institutional credibility or guaranteed programme participation.
 
 Each event has its own income-generating professional participation services; participants need not buy a sponsor package. The owner sets the non-sponsor Summit speaker fee at US$10,000. Designers/stylists, models, hair stylists and makeup artists also need distinct service offers, but their fees have not been provided.
 
@@ -15,17 +15,17 @@ Each event has its own income-generating professional participation services; pa
 
 **How to apply:** Keep programme-specific services separate from annual sponsorship, monthly subscriptions and capital investment. Existing sponsors should have their written inclusions checked before an additional fee is proposed. Do not invent role prices, promise editorial coverage or assume all sponsor levels guarantee a speaking slot.
 
-The stakeholder intends members to begin paying real monthly subscriptions, not enter a sandbox checkout.
+Earlier requests to enable real monthly subscriptions do not authorize launching that model under the newer free-membership mandate.
 
-**Why:** They explicitly corrected the “test payment confirmed” experience on 2026-10-16 and said members would start subscribing and paying.
+**Why:** The Founder now explicitly separates free belonging from optional paid services and rejects the existing monthly prices as approved pricing.
 
-**How to apply:** Do not treat sandbox payments as launch readiness or relabel historical test receipts as real money. Verify the production Stripe connection and collection readiness separately from free-account access and humanitarian fundraising approval.
+**How to apply:** Wait for separate commercial and implementation approval. Never treat sandbox payments as real money or proof of launch readiness.
 
-After Join the Movement, members should immediately reach an editable account/profile. Publication should require ten genuine followers who joined through invitations. CEO business verification should include ten people attesting to the business.
+After Join the Movement, members should immediately reach an editable account/profile. Inviting ten people must NOT be mandatory for ordinary publication. Invitations may form part of future optional contribution goals; rewards require separate Founder approval. The earlier ten-person business-attestation rule is a distinct requirement, not silently repealed.
 
-**Why:** The stakeholder explicitly requested immediate account access and these two distinct ten-person conditions.
+**Why:** The Founder's newer mandate explicitly rejects mandatory invitations for ordinary publication and requests optional meaningful contribution and recognition instead.
 
-**How to apply:** Invitations sent are not followers acquired. Attestations are supporting evidence, not proof of legal registration. Show exactly what a badge verifies.
+**How to apply:** Treat remaining mandatory-publication gates as discrepancies to report, not authority to edit under a read-only mandate. Prevent fake accounts and artificial engagement without tying ordinary publication to recruitment. Attestations remain supporting evidence, not proof of legal registration.
 
 Videos should retain their native aspect ratio, support member comments and likes, and offer sharing to social networks. Thanks Emirates should use a UAE flag, classical animation and revised typography, featuring multiple emirates including Abu Dhabi rather than Dubai alone.
 
