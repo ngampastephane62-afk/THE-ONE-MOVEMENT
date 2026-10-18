@@ -2,6 +2,8 @@ import type { Sector } from '@/lib/sectors-data';
 import { programsForSector, resourcesForSector } from '@/lib/ecosystem-match';
 import ProgrammeLink from './ProgrammeLink';
 import ResourceCard from './ResourceCard';
+import SectorShare from './SectorShare';
+import '@/styles/sector-world.css';
 
 export default function SectorDetail({ sector }: { sector: Sector }) {
   const programs = programsForSector(sector);
@@ -46,6 +48,7 @@ export default function SectorDetail({ sector }: { sector: Sector }) {
           Curated links to official public pages, reviewed by hand rather than a live feed. Listing a resource does not mean the publishing organization partners with TOMI.
         </p>
       </div>
+      <SectorShare sector={sector} />
     </div>
   );
 }

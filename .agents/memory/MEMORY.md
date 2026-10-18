@@ -23,3 +23,4 @@
 - [Dubai programme announcements](dubai-programme-announcements.md) — confirmed December 2026/January 2027 dates; Fashion Week networking, supporting voices and Awards speaker framing.
 - [Magazine measurement](magazine-measurement.md) — library/book reading, genuine digital-session statistics separate from social reach, and raw aggregate timestamp decoding.
 - [Summit and Gala positioning](summit-gala-positioning.md) — year-round professional ecosystem versus a community-centred national and cultural Gala; expand in controlled phases.
+- [Sector worlds mandate](sector-world-mandate.md) — Real Estate is the first pilot; other worlds, profile-sharing expansion and Creative Studio remain proposals pending separate authorization.

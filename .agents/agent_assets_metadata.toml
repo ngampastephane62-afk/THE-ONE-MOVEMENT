@@ -14,3 +14,17 @@ mtime_ms = 1792155195159
 storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/5fb0fdab-15b0-44c3-bdc6-cbda354b7db8/386a4453-e4a6-435b-9a1c-718e625ebc6c"
 storage_version_token = "1792155285861910"
 content_type = "image/jpeg"
+
+[[outputs]]
+id = "UEFn7lDaOI3gpyzeCtCUM"
+uri = "file://docs/17-WORLDS-ARCHITECTURE.md"
+type = "text"
+title = "TOMI — 17 Worlds : architecture et bilan"
+description = "Pilote Immobilier, concepts des 17 secteurs, propositions Creative Studio et profils partageables, fichiers livrés et limites de vérification."
+logical_id = "5f591719-cbb0-40bd-b3dd-120f4006ce88"
+content_hash = "sha256:a2c3e480012ff50cd4068f52c8ce4cd8b4b810cd13e60993c912b9660b267874"
+size = 20741
+mtime_ms = 1792354244535
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/5f591719-cbb0-40bd-b3dd-120f4006ce88/acf3c187-0dc9-4a73-a675-ff64d9118796"
+storage_version_token = "1792354264659087"
+content_type = "text/markdown"

@@ -1,0 +1,430 @@
+THE ONE MOVEMENT INTERNATIONAL (TOMI)
+
+PHASE 3 — MASTER TASK 1
+
+PROJECT:
+17 WORLDS — IMMERSIVE SECTOR EXPERIENCE
+
+FOUNDER AUTHORIZATION:
+FRONTEND VISUAL IMPLEMENTATION
+AND ARCHITECTURAL DESIGN.
+
+NO BACKEND OR DATABASE MODIFICATIONS.
+
+====================================================
+OUR VISION
+====================================================
+
+THE ONE MOVEMENT INTERNATIONAL is a global
+ecosystem connecting humanity through
+17 professional and cultural sectors.
+
+We are not building ordinary website pages.
+
+We are building 17 interconnected worlds.
+
+Each world must visually represent its
+industry, culture, professionals,
+knowledge and opportunities.
+
+CORE CONCEPT:
+
+ONE MOVEMENT.
+17 WORLDS.
+INFINITE OPPORTUNITIES.
+
+====================================================
+1. INSPECT THE EXISTING PLATFORM
+====================================================
+
+Before implementing anything:
+
+Inspect all existing sector pages,
+routes, components, assets and layouts.
+
+Identify:
+
+- Existing sector navigation
+- Existing sector content
+- Existing member interactions
+- Existing visual assets
+- Existing reusable components
+- Existing mobile layouts
+- Existing sharing functionality
+
+Preserve all working functionality.
+
+Do not duplicate existing systems.
+
+====================================================
+2. GLOBAL VISUAL ARCHITECTURE
+====================================================
+
+Design a coherent premium visual system
+for all 17 TOMI sectors.
+
+Each sector should have:
+
+- Distinctive hero composition
+- Industry-specific visual identity
+- Cinematic imagery
+- Relevant artistic motifs
+- Elegant motion
+- Editorial storytelling
+- Professional discovery
+- Clear participation pathways
+- Consistent TOMI navigation
+
+The sectors must feel different
+while remaining part of one universe.
+
+Preserve TOMI's existing brand identity.
+
+====================================================
+3. REAL ESTATE — FIRST PILOT WORLD
+====================================================
+
+Build a premium immersive experience
+for the existing Real Estate sector.
+
+Visual inspiration:
+
+- Iconic world architecture
+- Contemporary skyscrapers
+- Architectural masterpieces
+- Luxury residential developments
+- Sustainable architecture
+- Global cities
+- Architectural design studios
+
+Use only appropriately licensed
+or existing visual assets.
+
+Do not imply endorsement by the
+owners of featured buildings.
+
+The visual experience should feel
+like entering a world of architecture,
+property and investment.
+
+====================================================
+4. REAL ESTATE CONTENT STRUCTURE
+====================================================
+
+Create an elegant frontend experience
+with sections such as:
+
+DISCOVER REAL ESTATE
+
+Explore architecture, properties,
+cities and global opportunities.
+
+MEET THE PROFESSIONALS
+
+Architects
+Real estate agents
+Brokers
+Developers
+Investors
+Property consultants
+
+LEARN & GROW
+
+Architecture
+Real estate careers
+Brokerage
+Property investment
+Market knowledge
+
+SHOWCASE YOUR WORK
+
+Professional portfolios
+Architectural projects
+Property presentations
+
+JOIN REAL ESTATE WORLD
+
+Free access to the TOMI community.
+
+Do not invent real listings,
+investment returns, certifications,
+courses or professional partners.
+
+If supporting backend functionality
+does not exist, use clearly labeled
+editorial sections or existing routes.
+
+Do not create fake working buttons.
+
+====================================================
+5. SECTOR PARTICIPATION
+====================================================
+
+Design participation pathways for:
+
+- Professionals
+- Creators
+- Students
+- Entrepreneurs
+- Investors
+- Organizations
+
+Reuse existing member profiles
+and registration routes.
+
+Ordinary membership remains free.
+
+Do not introduce subscription gates.
+
+Do not automatically grant ambassador,
+professional or verified status.
+
+====================================================
+6. SECTOR SHARING
+====================================================
+
+Inspect existing sector URLs.
+
+Implement a simple frontend
+"Share Sector" action when safe.
+
+Use the existing canonical route.
+
+Support copying the sector link.
+
+Where available, use the native
+device sharing interface.
+
+Do not create a new invitation
+database or tracking system.
+
+Do not modify authentication.
+
+Do not make invitations mandatory.
+
+====================================================
+7. PROFILE SHARING — DESIGN
+====================================================
+
+Review existing public profile routes
+and sharing capabilities.
+
+Prepare a proposal for shareable
+professional profiles.
+
+Consider:
+
+- Profile previews
+- Professional portfolios
+- Sector associations
+- Public visibility controls
+- Existing follow and interaction features
+
+Do not expose private profiles.
+
+Do not invent likes, comments or
+social functionality that is missing.
+
+Do not implement new backend features.
+
+====================================================
+8. FUTURE CREATIVE STUDIO
+====================================================
+
+Prepare an architectural proposal for:
+
+THE ONE CREATIVE STUDIO
+
+A future Founder and administrator
+visual page editor.
+
+The Founder should eventually be able to:
+
+- Edit page text
+- Replace images
+- Configure animations
+- Add approved content blocks
+- Add or edit links
+- Reorder sections
+- Preview changes
+- Publish approved versions
+
+The editor must support:
+
+- Role-based permissions
+- Drafts
+- Version history
+- Explicit publication
+- Safe asset management
+
+Do not implement this editor yet.
+
+Do not grant new admin permissions.
+
+Do not introduce database changes.
+
+====================================================
+9. ALL 17 SECTORS
+====================================================
+
+Prepare a coherent visual direction
+for the existing 17 sectors:
+
+Fashion
+Music
+Dance
+Film
+Art
+Business
+Investment
+Tourism
+Diplomacy
+Innovation
+Technology
+NGOs
+Media
+Education
+Real Estate
+Health & Care
+Humanitarian Action
+
+Define a visual concept for each.
+
+Use Real Estate as the first
+implemented pilot.
+
+Do not redesign all 17 sectors
+independently in this task.
+
+Build reusable components that
+can support future sector designs.
+
+====================================================
+10. MOTION AND IMMERSION
+====================================================
+
+Use elegant visual techniques:
+
+- Scroll reveals
+- Cinematic section transitions
+- Subtle parallax
+- Editorial image transitions
+- Refined typography
+- Atmospheric depth
+- Interactive visual elements
+
+Respect reduced-motion settings.
+
+Optimize mobile performance.
+
+Avoid heavy animation dependencies
+unless already available.
+
+====================================================
+11. MOBILE EXPERIENCE
+====================================================
+
+Ensure excellent presentation on:
+
+- iPhone
+- Android
+- Tablet
+- Desktop
+
+Preserve:
+
+- Responsive navigation
+- Touch interactions
+- Readability
+- Accessibility
+- Performance
+- Existing scroll behavior
+
+====================================================
+12. IMPLEMENTATION
+====================================================
+
+Proceed autonomously within this mandate.
+
+STAGE 1:
+Inspect the existing sector architecture.
+
+STAGE 2:
+Create reusable sector visual components.
+
+STAGE 3:
+Implement the Real Estate pilot.
+
+STAGE 4:
+Add safe sector sharing.
+
+STAGE 5:
+Refine responsive behavior and motion.
+
+STAGE 6:
+Prepare visual concepts for
+the remaining 16 sectors.
+
+STAGE 7:
+Document the future Creative Studio
+and profile-sharing architecture.
+
+STAGE 8:
+Run safe isolated tests and
+static TypeScript checks.
+
+Do not stop after the audit.
+
+Produce visible frontend improvements.
+
+====================================================
+13. STRICT RESTRICTIONS
+====================================================
+
+DO NOT:
+
+- Modify PostgreSQL schemas
+- Run migrations
+- Change Clerk authentication
+- Change messaging permissions
+- Change subscriptions
+- Change Stripe
+- Change member entitlements
+- Access production member data
+- Start or restart backend servers
+- Deploy to production
+- Create fake professional listings
+- Invent partnerships
+- Introduce new paywalls
+- Modify Founder privileges
+- Implement the visual editor
+- Interfere with other agents
+
+====================================================
+14. FINAL DELIVERY
+====================================================
+
+Return:
+
+1. Existing sector architecture findings
+2. Real Estate pilot implementation
+3. Reusable visual components
+4. Sector sharing implementation
+5. Mobile and motion improvements
+6. Visual concepts for all 17 sectors
+7. Creative Studio architecture proposal
+8. Shareable profile recommendations
+9. Exact files modified
+10. Tests and static checks
+11. Missing visual assets
+12. Remaining runtime verification
+
+Distinguish clearly:
+
+IMPLEMENTED
+TESTED IN ISOLATION
+NOT VERIFIED IN BROWSER
+
+Do not begin unrelated tasks.
+
+Wait for the Founder's next direction.

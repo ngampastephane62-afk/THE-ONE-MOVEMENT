@@ -6,6 +6,7 @@ import { ECOSYSTEM_PERSONAS } from '@/lib/ecosystem-resources';
 import PersonaPicker from './PersonaPicker';
 import SectorDetail from './SectorDetail';
 import SectorEmblem from './SectorEmblem';
+import RealEstateWorld from './RealEstateWorld';
 
 interface Props {
   selected?: string;
@@ -95,6 +96,7 @@ export default function SectorExplorer({ selected: controlled, onSelect }: Props
             {active ? <SectorDetail sector={active} /> : <p className="text-ivory-300">Choose a sector to see its programmes and resources.</p>}
           </div>
         </div>
+        {active?.slug === 'real-estate' && <div className="mx-auto max-w-7xl px-6"><RealEstateWorld /></div>}
       </div>
     </section>
   );
