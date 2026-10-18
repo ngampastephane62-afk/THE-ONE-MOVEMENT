@@ -52,7 +52,7 @@ export async function networkAuth(req: Request, res: Response, next: NextFunctio
     if (!member) [member] = await db.select().from(members).where(eq(members.clerkId, clerkId)).limit(1);
   }
   if (member) {
-    await db.insert(networkProfiles).values({ memberId: member.id, founder, enabled: true })
+    await db.insert(networkProfiles).values({ memberId: member.id, founder, enabled: false })
       .onConflictDoUpdate({ target: networkProfiles.memberId, set: { founder } });
     const [profile] = await db.select().from(networkProfiles).where(eq(networkProfiles.memberId, member.id));
     if (profile?.suspended && !founder) return void res.status(403).json({ error: "This network account is suspended. Contact TOMI through the inquiry pathway." });

@@ -1,0 +1,94 @@
+THE ONE MOVEMENT INTERNATIONAL (TOMI)
+PHASE 2 — TASK 1: EXPLICIT NETWORK ACTIVATION
+
+FOUNDER APPROVAL
+
+The Founder has explicitly approved the following principles:
+
+1. Members can create an account for free.
+2. Network participation must require an explicit action from the member.
+3. Public profile visibility must remain separate from network participation.
+4. The Founder retains final authority over strategic and sensitive decisions.
+5. TOMI will progressively support a marketplace, subject to a separately approved implementation plan.
+6. The existing website, design, menus, images, illustrations, routes, database, authentication and working features must be preserved unless a specific change is approved.
+
+YOUR MANDATE
+
+Implement ONLY the approved correction to network activation, after inspecting the relevant existing code and checking for conflicts with ongoing work.
+
+KNOWN ISSUE
+
+The Phase 0 audit reported that networkAuth.ts creates new profiles with enabled: true, although the interface describes network participation as voluntary.
+
+OBJECTIVE
+
+Ensure that a newly registered member does not become an active network participant until they explicitly choose to activate their participation.
+
+BEFORE MODIFYING ANYTHING
+
+1. Inspect the relevant profile creation, network activation, authentication and authorization code.
+2. Identify the exact files and functions that would need modification.
+3. Check the existing Join flow and any ongoing work that could overlap with this task.
+4. Confirm that the proposed change will not unintentionally disable account creation, free member access, or unrelated features.
+5. If the current code differs from the audit or the safe implementation is unclear, STOP and report the discrepancy before making changes.
+
+APPROVED IMPLEMENTATION SCOPE
+
+If the existing code confirms the reported issue and the implementation is safe:
+
+- Change the default activation state for newly created network profiles so participation is not activated automatically.
+- Ensure activation requires an explicit member action.
+- Enforce the activation rule on the server, not only in the user interface.
+- Preserve the distinction between network participation and public profile visibility.
+- Preserve existing members' activation states. Do not bulk-update existing records.
+- Preserve existing suspension, blocking, verification and Founder permission rules.
+- Make only the minimum necessary interface changes to explain how a member activates participation.
+- Reuse existing components and patterns wherever possible.
+- Do not introduce a new membership tier or paid requirement.
+
+STRICTLY OUT OF SCOPE
+
+Do not modify:
+- Stripe, payment settings, subscriptions, prices or refunds.
+- Humanitarian contributions or donations.
+- Marketplace or commission functionality.
+- The 17 official sectors or six official programs.
+- The invitation qualification threshold.
+- Existing navigation menus, branding, images or illustrations, except for a minimal approved activation message if required.
+- Database schemas or migrations unless absolutely necessary. If a migration appears necessary, STOP and request separate approval.
+- Production configuration, environment variables, secrets or deployment settings.
+
+TESTING
+
+After implementation, run only appropriate, non-destructive tests that are available and safe in the current development environment.
+
+Verify:
+1. A new member is not automatically activated.
+2. A member can activate participation through an explicit action.
+3. The server rejects unauthorized activation attempts.
+4. A member cannot activate another member's profile.
+5. Public profile visibility remains independently controlled.
+6. Existing active members retain their current state.
+7. Suspended members cannot bypass suspension by activating their profiles.
+8. Free account registration and login remain functional.
+9. Founder permissions remain intact.
+10. Relevant existing tests continue to pass.
+
+Do not use real payments, modify production data, run migrations, or deploy.
+
+REPORTING REQUIREMENTS
+
+When finished, report:
+- Files changed.
+- Exact behavioral change.
+- Tests executed and their actual results.
+- Any tests not executed and why.
+- Security or compatibility concerns.
+- Any remaining work.
+- How the change can be rolled back.
+
+Do not expand the task or implement unrelated improvements.
+
+If any action outside this mandate becomes necessary, stop and request the Founder's approval.
+
+The Founder will review the results before authorizing the next task.

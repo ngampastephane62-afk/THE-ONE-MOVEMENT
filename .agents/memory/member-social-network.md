@@ -27,6 +27,12 @@ New members may join, publish, follow people, like and comment after their email
 
 **How to apply:** Keep server-side verified-identity, active-membership and suspension checks. Do not gate posts or reels on invitation counts, follower totals or programme purchases. Invitation statistics may remain as optional community-growth information.
 
+Creating a free account must not itself activate network participation. A correction to new-profile activation defaults must preserve existing members' activation choices, independently of public visibility.
+
+**Why:** The Founder explicitly approved voluntary activation and prohibited bulk changes to existing activation states.
+
+**How to apply:** Require the member's explicit activation action; do not retrospectively treat existing activation as missing consent or change existing accounts without separate approval.
+
 Verified users must be able to explore the feed immediately after signing in, before filling in their profile. Profession, sectors, biography and other details can be completed later. Members should easily open their followers and following lists.
 
 **Why:** The Founder relayed user feedback that the compulsory profile form caused visitors to leave before seeing the platform.
