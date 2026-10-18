@@ -48,8 +48,8 @@ export default function PendingInvitation() {
         <div className="flex items-start gap-3">
           <UserPlus className="mt-0.5 h-5 w-5 shrink-0 text-gold-700" />
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-semibold text-ink-900">You opened a member invitation</p>
-            <p className="mt-1 text-xs leading-relaxed text-ink-700">Accepting makes you follow the member who invited you and credits their invitation. It only works for new accounts created within the last 24 hours, and each account can be credited once. You can unfollow later.</p>
+            <p className="text-sm font-semibold text-ink-900">A member invited you — accepting is optional</p>
+            <p className="mt-1 text-xs leading-relaxed text-ink-700">You do not need invitations for ordinary publishing. Accepting makes you follow the member who invited you and credits their invitation. It only works for new accounts created within the last 24 hours, and each account can be credited once. You can unfollow later.</p>
             {err && <p className="mt-2 text-xs text-crimson-700" role="alert" data-testid="text-invite-error">{err.msg}</p>}
             <div className="mt-3 flex flex-wrap gap-2">
               {!err?.fatal && (

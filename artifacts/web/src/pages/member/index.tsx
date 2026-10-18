@@ -22,6 +22,7 @@ import Packages from './Packages';
 import Certifications from './Certifications';
 import Admin from './Admin';
 import SettingsPage from './Settings';
+import MemberWelcome from './MemberWelcome';
 import Connections from './Connections';
 import ThanksEmiratesForm from './ThanksEmirates';
 import Membership from './Membership';
@@ -37,7 +38,7 @@ function PendingSector() {
   const sector = SECTORS.find(s => s.slug === getPendingSector(userId));
   if (!sector || dismissed) return null;
   return <div className="mx-3 mb-4 flex flex-wrap items-center gap-3 rounded-2xl border border-gold-500/40 bg-ivory-50 p-4 md:mx-0" data-testid="pending-sector">
-    <p className="flex-1 text-sm text-ink-800">You selected {sector.name}. Review your profile to add this sector. Nothing is saved until you confirm.</p>
+    <p className="flex-1 text-sm text-ink-800">You explored {sector.name}. Adding it to your profile is optional. Nothing is saved until you confirm; you can still explore every sector.</p>
     <Link href="/member/settings" className={btn}>Review my profile</Link>
     <button type="button" className="text-xs text-ink-700 underline" onClick={() => { clearPendingSector(); setDismissed(true); }}>Dismiss</button>
   </div>;
@@ -74,11 +75,11 @@ function ActivationPrompt() {
   const [err, setErr] = useState(false);
   return (
     <section className="mx-3 mb-4 rounded-2xl border border-gold-500/40 bg-lagoon-900 p-4 text-ivory-100 md:mx-0" data-testid="panel-activate">
-      <p className="text-eyebrow text-gold-400">YOU ARE BROWSING</p>
-      <p className="mt-1 text-sm leading-relaxed text-ivory-200">Read the feed and explore people freely. To follow, like, comment or message, activate your membership. Activate makes your name and network profile visible to signed-in TOMI members only, not to the public internet. Your public directory setting does not change.</p>
+      <p className="text-eyebrow text-gold-400">YOU BELONG — NETWORK ACTIVATION IS YOUR CHOICE</p>
+      <p className="mt-1 text-sm leading-relaxed text-ivory-200">Your membership is free, even while browsing. Read the feed, discover people and explore programmes without activating. To participate, explicitly activate your network profile. Activation makes your name and network profile visible to signed-in TOMI members only, not to the public internet. Your public directory setting does not change. Activation alone does not unlock every specialized service or messaging feature.</p>
       {err && <p className="mt-2 text-xs text-coral-500" role="alert">Activation failed. Please try again.</p>}
       <div className="mt-3 flex flex-wrap gap-2">
-        <button className="inline-flex items-center rounded-full bg-gold-500 px-4 py-2 text-xs font-semibold text-ink-900 hover:bg-gold-400 disabled:opacity-50" disabled={pending} onClick={() => { setErr(false); run({ action: 'join', accepted: true }).catch(() => setErr(true)); }} data-testid="button-activate">Activate membership</button>
+        <button className="inline-flex items-center rounded-full bg-gold-500 px-4 py-2 text-xs font-semibold text-ink-900 hover:bg-gold-400 disabled:opacity-50" disabled={pending} onClick={() => { setErr(false); run({ action: 'join', accepted: true }).catch(() => setErr(true)); }} data-testid="button-activate">Activate my network profile</button>
         <Link href="/member/settings" className="inline-flex items-center rounded-full border border-ivory-200/40 px-4 py-2 text-xs font-semibold text-ivory-100 hover:border-gold-400" data-testid="link-edit-before-activate">Edit my profile first</Link>
       </div>
     </section>
@@ -92,7 +93,7 @@ function CompleteProfile({ me }: { me: Ctx['me'] }) {
   return (
     <div className="mx-3 mb-4 flex flex-wrap items-center gap-3 rounded-2xl border border-sand-200 bg-ivory-50 p-3 md:mx-0" data-testid="panel-complete-profile">
       <Avatar m={me} size={36} />
-      <p className="min-w-0 flex-1 text-sm text-ink-800">Help members find you: add your role, sectors, photo and a short description. Optional, any time.</p>
+      <p className="min-w-0 flex-1 text-sm text-ink-800">Complete your profile only if you wish: add your role, sectors, photo and a short description. Your saved sectors also help you find related programmes and resources in Workspace. You can explore without completing your profile.</p>
       <Link href="/member/settings" className={btn} data-testid="link-complete-profile">Complete profile</Link>
       <button type="button" className="text-xs text-sand-400 hover:text-ink-800" onClick={() => { try { localStorage.setItem(key, '1'); } catch { /* ignore */ } setHidden(true); }} data-testid="button-dismiss-complete">Later</button>
     </div>
@@ -165,6 +166,7 @@ function AppShell({ me, base, children }: Ctx & { children: ReactNode }) {
           <Link href="/member/thanks-emirates" className="mx-3 mt-4 mb-3 flex items-center justify-between gap-3 rounded-xl border border-gold-500/40 bg-lagoon-900 px-4 py-3 text-xs text-ivory-100 md:hidden" data-testid="nav-thanks-emirates-mobile">
             <span>Thanks Emirates · Share your story</span><Sparkles className="h-4 w-4 shrink-0 text-gold-400" />
           </Link>
+          {(loc === '/member' || loc === '/member/') && <MemberWelcome />}
           {me.enabled ? <PendingInvitation /> : !personalPage && <ActivationPrompt />}{!personalPage && <CompleteProfile me={me} />}{!personalPage && <PendingSector />}{children}
         </main>
       </div>
@@ -200,7 +202,7 @@ function NetworkGate() {
   if (!state.me) {
     return (
       <Onboard eyebrow="WELCOME" title="Create your member profile">
-        <p className="mb-6 text-sm text-ink-700">Your name is enough to begin. Everything else is optional and can be edited later.</p>
+        <p className="mb-6 text-sm text-ink-700">Membership is free. Your name is enough to begin; completing the rest of your profile is optional. Creating a profile does not activate network participation or grant official certification.</p>
         <ProfileForm initial={profileQ.data?.profile ?? null} defaultName={user?.fullName ?? ''} onDone={() => stateQ.refetch()} />
       </Onboard>
     );

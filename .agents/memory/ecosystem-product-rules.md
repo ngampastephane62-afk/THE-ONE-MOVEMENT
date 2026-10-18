@@ -39,6 +39,12 @@ Members should be able to list Instagram, Facebook, TikTok and LinkedIn profiles
 
 **How to apply:** Treat a profile URL, an authorised account connection and a replicated post as separate capabilities. Preserve member choice and TOMI publishing eligibility; never describe an entered URL as a connected account or automatically copy content without authorisation.
 
+Member discovery should use explicit saved sector choices, while keeping all 17 official sectors accessible. With no chosen sector, preserve general discovery. Profile completion is optional; discovery must not introduce mandatory onboarding or expose private preferences.
+
+**Why:** The Founder authorized targeted welcome and discovery improvements, not inferred-interest personalization, a recommendation algorithm or a second member identity.
+
+**How to apply:** Reuse existing programmes, resources and people discovery. Do not imply that the “For You” feed is algorithmically personalized, bookmarks register participation, programme links guarantee admission, or activation unlocks all messaging. Subscription and messaging eligibility changes require separate authorization.
+
 The One Awards should include every officially established ambassador, with sourced biographies and official social links. Separate regional impact-leader selections (Africa, USA and eventually other regions/sectors) from TOMI ambassadors.
 
 The same peace-ambassador nominees are announced as planned Summit speakers and Fashion Week red-carpet participants, as well as participants in other activities. Use one shared profile across programmes, not separate contradictory biographies.

@@ -27,8 +27,8 @@ export default function Workspace({ profile, onEdit }: { profile: MemberProfile;
   }
 
   const sectors = SECTORS.filter((s) => profile.sectors.includes(s.slug as MemberProfile['sectors'][number]));
-  const programs = programsForSectors(profile.sectors);
-  const resources = resourcesForSectors(profile.sectors);
+  const programs = sectors.length ? programsForSectors(profile.sectors) : PROGRAMS;
+  const resources = sectors.length ? resourcesForSectors(profile.sectors) : ECOSYSTEM_RESOURCES;
   const savedPrograms = PROGRAMS.filter((p) => saved.has(programItemId(p.slug)));
   const savedResources = ECOSYSTEM_RESOURCES.filter((r) => saved.has(resourceItemId(r.id)));
 
@@ -36,12 +36,14 @@ export default function Workspace({ profile, onEdit }: { profile: MemberProfile;
     <div className="flex flex-col gap-12">
       <header className="grid gap-6 border-b border-sand-200 pb-10 lg:grid-cols-[1fr_auto] lg:items-end">
         <div>
-          <p className="text-eyebrow text-gold-700">YOUR MEMBER SPACE</p>
+          <p className="text-eyebrow text-gold-700">DISCOVERY & BOOKMARKS</p>
           <h1 className="mt-2 text-display-lg text-ink-900" data-testid="text-member-name">{profile.fullName}</h1>
           <p className="mt-2 text-ink-700">{[profile.profession, profile.organization, profile.country].filter(Boolean).join(' · ')}</p>
           <div className="mt-4 flex flex-wrap gap-1.5">
             {sectors.map((s) => <span key={s.slug} className="bg-lagoon-900 px-2.5 py-1 text-[10px] uppercase tracking-wider text-gold-400">{s.name}</span>)}
           </div>
+          <p className="mt-3 text-sm text-ink-700" data-testid="text-discovery-basis">{sectors.length ? 'These links use only the sectors you saved in your profile, not your browsing activity. They do not limit what you can explore.' : 'No sectors selected. Browse the general programme and resource catalogue below, or explore all 17 sectors. Adding sectors to your profile is optional.'}</p>
+          <Link href="/member/people" className="mt-3 inline-flex text-sm font-semibold text-lagoon-700 underline" data-testid="link-workspace-people">Discover people</Link>
         </div>
         <div className="flex flex-col items-start gap-3 lg:items-end">
           <span className={`inline-flex items-center gap-1.5 text-xs ${profile.isPublic ? 'text-lagoon-600' : 'text-sand-400'}`} data-testid="status-visibility">
@@ -86,8 +88,8 @@ export default function Workspace({ profile, onEdit }: { profile: MemberProfile;
       </section>
 
       <section aria-labelledby="rec-prog-title">
-        <h2 id="rec-prog-title" className="font-display text-xl text-ink-900">Programmes connected to your sectors</h2>
-        <p className="mt-1 text-xs text-sand-400">Suggestions only. Saving a programme does not register you or guarantee a place.</p>
+        <h2 id="rec-prog-title" className="font-display text-xl text-ink-900">{sectors.length ? 'Programmes connected to your sectors' : 'Explore programmes'}</h2>
+        <p className="mt-1 text-xs text-sand-400">Existing programme information, not an admission offer. Saving a programme does not register you or guarantee a place.</p>
         <div className="mt-4 grid gap-2 md:grid-cols-2">
           {programs.map((p) => (
             <ProgrammeLink key={p.slug} program={p} saved={saved.has(programItemId(p.slug))} saving={toggle.isPending} onToggleSave={() => flip(programItemId(p.slug))} />
@@ -96,7 +98,7 @@ export default function Workspace({ profile, onEdit }: { profile: MemberProfile;
       </section>
 
       <section aria-labelledby="rec-res-title">
-        <h2 id="rec-res-title" className="font-display text-xl text-ink-900">Official knowledge for you</h2>
+        <h2 id="rec-res-title" className="font-display text-xl text-ink-900">{sectors.length ? 'Resources connected to your sectors' : 'Explore public knowledge resources'}</h2>
         <p className="mt-1 text-xs text-sand-400">Curated official public pages. Listing does not imply partnership with TOMI.</p>
         {resources.length ? (
           <div className="mt-4 grid gap-4 md:grid-cols-2">
@@ -104,12 +106,12 @@ export default function Workspace({ profile, onEdit }: { profile: MemberProfile;
               <ResourceCard key={r.id} resource={r} saved={saved.has(resourceItemId(r.id))} saving={toggle.isPending} onToggleSave={() => flip(resourceItemId(r.id))} />
             ))}
           </div>
-        ) : <p className="mt-3 text-sm text-ink-700">No curated resources match your sectors yet.</p>}
+        ) : <p className="mt-3 text-sm text-ink-700">No curated resources match your sectors yet. You can still explore every sector below.</p>}
       </section>
 
       <section className="grid gap-4 border-t border-sand-200 pt-8 sm:grid-cols-2">
         <Link href="/ecosystem" className="border border-sand-200 bg-ivory-50 p-5 hover:border-gold-500" data-testid="link-workspace-ecosystem">
-          <p className="font-display text-ink-900">Explore all sectors</p><p className="mt-1 text-sm text-ink-700">Browse the community directory and the full ecosystem.</p>
+          <p className="font-display text-ink-900">Explore all 17 sectors</p><p className="mt-1 text-sm text-ink-700">Browse the community directory and the full ecosystem, beyond your saved sectors.</p>
         </Link>
         <Link href="/join" className="border border-sand-200 bg-ivory-50 p-5 hover:border-gold-500" data-testid="link-workspace-join">
           <p className="font-display text-ink-900">Representing an organization?</p><p className="mt-1 text-sm text-ink-700">Use the institutional enquiry pathway.</p>

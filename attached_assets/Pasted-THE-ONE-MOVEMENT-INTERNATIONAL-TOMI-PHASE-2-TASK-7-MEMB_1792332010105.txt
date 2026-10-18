@@ -1,0 +1,190 @@
+THE ONE MOVEMENT INTERNATIONAL (TOMI)
+PHASE 2 — TASK 7
+
+MEMBER WELCOME & DISCOVERY ACCESS
+TARGETED UX IMPROVEMENT
+
+FOUNDER AUTHORIZATION:
+LIMITED IMPLEMENTATION APPROVED
+
+OBJECTIVE
+
+Improve the existing member welcome experience
+and make existing sector-based discovery
+features easier to access.
+
+TOMI must feel like a global universe,
+not simply a social media feed.
+
+IMPORTANT:
+
+Preserve the existing architecture,
+visual identity, navigation system,
+authentication, database and working features.
+
+Do not create a new dashboard.
+
+Do not redesign My Space.
+
+Do not create new pages.
+
+--------------------------------------------------
+1. WELCOME EXPERIENCE
+--------------------------------------------------
+
+Inspect the existing member entry experience.
+
+Reuse existing components:
+
+- ActivationPrompt
+- CompleteProfile
+- PendingSector
+- PendingInvitation
+- Workspace
+- ProgrammeLink
+- ResourceCard
+
+Improve the clarity and hierarchy of
+existing welcome messages.
+
+Communicate:
+
+I BELONG.
+I CAN CONNECT.
+I CAN CONTRIBUTE.
+I CAN GROW.
+
+Explain that:
+
+- Membership is free.
+- Profile completion is optional.
+- Network participation requires
+  explicit activation.
+- Ordinary publishing does not
+  require ten invitations.
+- Official certification is separate
+  from ordinary membership.
+- Some specialized services have
+  separate eligibility requirements.
+
+Do not introduce mandatory onboarding steps.
+
+--------------------------------------------------
+2. DISCOVERY ACCESS
+--------------------------------------------------
+
+The existing Workspace contains useful
+sector-related programs and resources,
+but is not prominently accessible.
+
+Improve access to existing discovery
+features from the current member experience.
+
+Prefer reusing existing components
+and navigation destinations.
+
+Do not duplicate Workspace.
+
+Do not introduce a second member identity.
+
+Do not create new discovery databases.
+
+--------------------------------------------------
+3. SECTOR DISCOVERY
+--------------------------------------------------
+
+Use the existing 17 official sectors
+and existing explicit sector preferences.
+
+Members should be able to:
+
+- Discover relevant existing resources.
+- Explore programs associated with sectors.
+- Access people discovery.
+- Explore all sectors.
+
+If no sector is selected, preserve access
+to general discovery.
+
+Do not implement recommendation algorithms.
+
+Do not create artificial recommendations.
+
+Do not expose private preferences.
+
+--------------------------------------------------
+4. ACCURATE PRODUCT LANGUAGE
+--------------------------------------------------
+
+Review only the welcome and discovery
+messages directly affected by this task.
+
+Avoid implying that:
+
+- All messaging is free.
+- Every member is officially certified.
+- Suggested programs guarantee admission.
+- Bookmarks represent registrations.
+- Paid promotion grants official recognition.
+- "For You" is already algorithmically
+  personalized.
+
+Do not modify subscription rules.
+
+Do not modify messaging access.
+
+--------------------------------------------------
+5. PROTECT EXISTING FUNCTIONALITY
+--------------------------------------------------
+
+Preserve:
+
+- Clerk authentication
+- Network activation
+- Member profile ownership
+- Visibility settings
+- Publication permissions
+- Invitations
+- Existing feed
+- Messaging
+- Subscriptions
+- Founder permissions
+- Navigation scroll correction
+
+No database changes.
+No migrations.
+No Stripe operations.
+No server restart.
+No deployment.
+No production member data access.
+No dependency installation.
+
+Do not interfere with other agents.
+
+--------------------------------------------------
+6. VERIFICATION
+--------------------------------------------------
+
+Perform safe isolated checks and
+frontend static verification only.
+
+If runtime verification requires
+unsafe operations, stop and report.
+
+--------------------------------------------------
+7. REQUIRED REPORT
+--------------------------------------------------
+
+Return:
+
+1. Exact files modified
+2. Welcome messages improved
+3. Existing discovery features exposed
+4. Navigation changes, if any
+5. Verification results
+6. Remaining unverified behavior
+7. Confirmation of architecture preservation
+
+Do not begin another task.
+
+Wait for the Founder's next authorization.

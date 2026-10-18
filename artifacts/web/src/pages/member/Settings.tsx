@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useUser } from '@clerk/react';
-import { Link } from 'wouter';
+import { Link, useLocation, useSearch } from 'wouter';
 import { Camera, Eye, ImageIcon, Loader2 } from 'lucide-react';
 import ProfileHero, { appearanceOf } from '@/components/network/ProfileHero';
 import { useGetMemberProfile, getGetMemberProfileQueryKey, type MemberProfileInput } from '@workspace/api-client-react';
@@ -38,7 +38,16 @@ function MediaPicker({ kind }: { kind: 'avatar' | 'cover' }) {
 export default function SettingsPage() {
   const { me } = useMe();
   const { user } = useUser();
-  const [tab, setTab] = useState<'profile' | 'workspace'>('profile');
+  const search = useSearch();
+  const [, navigate] = useLocation();
+  const tab = new URLSearchParams(search).get('tab') === 'workspace' ? 'workspace' : 'profile';
+  function setTab(next: 'profile' | 'workspace') {
+    const params = new URLSearchParams(search);
+    if (next === 'workspace') params.set('tab', next);
+    else params.delete('tab');
+    const query = params.toString();
+    navigate(`/member/settings${query ? `?${query}` : ''}`);
+  }
   const [saved, setSaved] = useState(false);
   const [draft, setDraft] = useState<MemberProfileInput | null>(null);
   const [formKey, setFormKey] = useState(0);
@@ -53,8 +62,8 @@ export default function SettingsPage() {
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="text-eyebrow text-gold-700">SETTINGS</p>
-          <h1 className="font-display text-2xl text-ink-900">Customize your page</h1>
-          <p className="mt-1 text-sm text-ink-700">Free for every member. Changes preview live below and apply once you save.</p>
+          <h1 className="font-display text-2xl text-ink-900">{tab === 'workspace' ? 'Discover programmes & resources' : 'Customize your page'}</h1>
+          <p className="mt-1 text-sm text-ink-700">{tab === 'workspace' ? 'Explore existing sector links and keep bookmarks for later. No sector selection is required.' : 'Free for every member. Changes preview live below and apply once you save.'}</p>
         </div>
         <Link href={`/member/profile/${me.id}`} className={btn} data-testid="link-view-my-profile"><Eye className="h-3.5 w-3.5" />View my profile</Link>
       </div>
@@ -67,7 +76,7 @@ export default function SettingsPage() {
         <p className="mt-2 text-xs text-sand-400">Photo and cover save as soon as they finish uploading. Use the focal point slider to choose which part of your cover stays visible.</p>
       </div>
       <div className="flex gap-1 rounded-full bg-ivory-200 p-1" role="tablist">
-        {([['profile', 'Page & visibility'], ['workspace', 'Workspace bookmarks']] as const).map(([id, l]) => (
+        {([['profile', 'Page & visibility'], ['workspace', 'Discovery & bookmarks']] as const).map(([id, l]) => (
           <button key={id} role="tab" aria-selected={tab === id} onClick={() => setTab(id)} className={`flex-1 rounded-full px-3 py-1.5 text-xs ${tab === id ? 'bg-ivory-50 font-semibold text-lagoon-900 shadow-sm' : 'text-ink-700'}`} data-testid={`tab-settings-${id}`}>{l}</button>
         ))}
       </div>
