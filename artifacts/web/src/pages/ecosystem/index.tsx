@@ -4,6 +4,8 @@ import { Helmet } from 'react-helmet-async';
 import EcosystemHero from '@/components/ecosystem/EcosystemHero';
 import SectorExplorer from '@/components/ecosystem/SectorExplorer';
 import MemberDirectory from '@/components/ecosystem/MemberDirectory';
+import GlobalDiscovery from '@/components/discovery/GlobalDiscovery';
+import EcosystemConcepts from '@/components/ecosystem/EcosystemConcepts';
 import JoinPaths from '@/components/ecosystem/JoinPaths';
 import { sectorFromSearch } from '@/components/ecosystem/sector-location';
 
@@ -23,8 +25,10 @@ export default function Ecosystem() {
         <meta name="description" content="Find your sector, the TOMI programmes connected to it, curated official knowledge and the opt-in community directory." />
       </Helmet>
       <EcosystemHero paused={paused} onTogglePause={() => setPaused((p) => !p)} selected={sector} onPickSector={setSector} />
+      <GlobalDiscovery />
       <SectorExplorer selected={sector} onSelect={setSector} />
       <MemberDirectory />
+      <EcosystemConcepts />
       <JoinPaths />
     </div>
   );

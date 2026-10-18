@@ -12,6 +12,7 @@ import { useMe } from './ctx';
 import { publicProfileUrl } from '@/lib/network-invitations';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { errMsg } from './proHooks';
+import MemberIdentityStrip from '@/components/network/MemberIdentityStrip';
 
 export default function ProfilePage() {
   const { id } = useParams<{ id: string }>();
@@ -58,6 +59,7 @@ export default function ProfilePage() {
 
   return (
     <div className="flex flex-col gap-4">
+      <MemberIdentityStrip label="Profile" />
       <ProfileHero m={p} layout={ap.layout} coverPosition={ap.pos} actions={actions} stats={stats} />
       <section className={`${card} mx-3 p-5 sm:p-6 md:mx-0`}>
           <section aria-label="Member description">

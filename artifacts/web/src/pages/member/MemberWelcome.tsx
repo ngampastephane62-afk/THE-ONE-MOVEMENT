@@ -1,12 +1,15 @@
 import { Link } from 'wouter';
 import { btn } from '@/components/network/kit';
 import '@/styles/universe.css';
+import MemberIdentityStrip from '@/components/network/MemberIdentityStrip';
 
 const ghostDark = 'inline-flex items-center justify-center gap-1.5 rounded-full border border-ivory-100/30 px-4 py-2 text-xs font-semibold text-ivory-100 hover:border-gold-400 hover:text-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400';
 
 /** Orientation only: no activation, profile writes or inferred preferences. */
 export default function MemberWelcome() {
   return (
+    <>
+    <MemberIdentityStrip label="Welcome" />
     <section aria-labelledby="member-welcome-title" className="tomi-welcome mx-3 mb-4 rounded-2xl p-5 sm:p-7 md:mx-0" data-testid="panel-member-welcome">
       <div className="tomi-weave-dark pointer-events-none absolute inset-0" aria-hidden="true" />
       <div className="relative">
@@ -25,5 +28,6 @@ export default function MemberWelcome() {
         <p className="mt-3 border-t border-ivory-100/15 pt-3 text-xs leading-relaxed text-ivory-300">Ordinary publishing does not require ten invitations. Official certification is separate from ordinary membership, and paid promotion does not grant official recognition. Ordinary conversations are free, with acceptance and first-contact anti-spam limits. Specialized services, including professional introductions, have separate eligibility requirements.</p>
       </div>
     </section>
+    </>
   );
 }

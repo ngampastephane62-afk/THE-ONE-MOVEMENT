@@ -5,13 +5,18 @@ import '@/styles/sector-world.css';
 import ArchitectureSkyline from './ArchitectureSkyline';
 import Chapter from './SectorWorldChapter';
 import { SECTORS } from '@/lib/sectors-data';
+import { DirectoryButton, WorldOpportunities, WorldShareChapter } from './worlds/SectorWorld';
+
+const RE = SECTORS.find((s) => s.slug === 'real-estate')!;
 
 const CHAPTERS = [
   { id: 're-discover', label: 'Discover' },
+  { id: 're-opportunities', label: 'Opportunities' },
   { id: 're-professions', label: 'Professions' },
   { id: 're-learn', label: 'Learn & grow' },
   { id: 're-showcase', label: 'Showcase' },
   { id: 're-join', label: 'Join' },
+  { id: 're-share', label: 'Share' },
 ];
 
 const DISCOVER = [
@@ -96,7 +101,9 @@ export default function RealEstateWorld() {
         </div>
       </Chapter>
 
-      <Chapter id="re-professions" n="02" eyebrow="Meet the professions" title="Six roles that build a city">
+      <WorldOpportunities sector={RE} id="re-opportunities" n="02" />
+
+      <Chapter id="re-professions" n="03" eyebrow="Meet the professions" title="Six roles that build a city">
         <p className="-mt-2 mb-5 max-w-2xl text-sm text-ivory-300">Descriptions of the roles, not member profiles. To meet real members who chose to be listed, use the community directory below.</p>
         <ul className="sw-roles">
           {ROLES.map(({ icon: Icon, r, d }) => (
@@ -109,9 +116,10 @@ export default function RealEstateWorld() {
             </li>
           ))}
         </ul>
+        <DirectoryButton sector={RE} />
       </Chapter>
 
-      <Chapter id="re-learn" n="03" eyebrow="Learn & grow" title="Five threads of knowledge" light>
+      <Chapter id="re-learn" n="04" eyebrow="Learn & grow" title="Five threads of knowledge" light>
         <p className="-mt-2 mb-5 max-w-2xl text-sm text-ink-700">Editorial orientation topics, not courses or certifications. The curated official resources above are the place to go deeper.</p>
         <ol className="sw-learn">
           {LEARN.map((l, i) => (
@@ -126,7 +134,7 @@ export default function RealEstateWorld() {
         </ol>
       </Chapter>
 
-      <Chapter id="re-showcase" n="04" eyebrow="Showcase your work" title="Your portfolio, in your words">
+      <Chapter id="re-showcase" n="05" eyebrow="Showcase your work" title="Your portfolio, in your words">
         <div className="sw-showcase">
           <ul className="space-y-3 text-sm text-ivory-200">
             <li className="sw-tick">Professional portfolios</li>
@@ -142,7 +150,7 @@ export default function RealEstateWorld() {
         </div>
       </Chapter>
 
-      <Chapter id="re-join" n="05" eyebrow="Join the Real Estate world" title="Six ways in. All free.">
+      <Chapter id="re-join" n="06" eyebrow="Join the Real Estate world" title="Six ways in. All free.">
         <ul className="sw-audiences">
           {AUDIENCES.map(({ icon: Icon, a, d, href, cta }) => (
             <li key={a} className="sw-audience">
@@ -159,6 +167,7 @@ export default function RealEstateWorld() {
           <Link href="/join" className="sw-cta" data-testid="link-join-real-estate">Join TOMI free</Link>
         </div>
       </Chapter>
+      <WorldShareChapter sector={RE} id="re-share" n="07" />
     </div>
   );
 }

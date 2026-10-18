@@ -15,6 +15,7 @@ import {
 import ProgrammeLink from '@/components/ecosystem/ProgrammeLink';
 import ResourceCard from '@/components/ecosystem/ResourceCard';
 import '@/styles/universe.css';
+import MemberIdentityStrip from '@/components/network/MemberIdentityStrip';
 
 export default function Workspace({ profile, onEdit }: { profile: MemberProfile; onEdit: () => void }) {
   const qc = useQueryClient();
@@ -35,6 +36,7 @@ export default function Workspace({ profile, onEdit }: { profile: MemberProfile;
 
   return (
     <div className="flex flex-col gap-12">
+      <MemberIdentityStrip label="Workspace" />
       <header className="tomi-chapter tomi-weave grid gap-6 rounded-t-2xl px-1 pb-10 pt-2 lg:grid-cols-[1fr_auto] lg:items-end">
         <div>
           <p className="text-eyebrow text-gold-700">DISCOVERY & BOOKMARKS</p>

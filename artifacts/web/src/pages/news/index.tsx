@@ -14,6 +14,7 @@ import { CaptureStack, EvidenceViewer, PublisherMark, useCaptureDeepLink } from 
 import PhotoSetActions from '@/components/editorial/PhotoSetActions';
 import NewsVideo from '@/components/editorial/NewsVideo';
 import { EDITORIAL_VIDEO_NEWS, formatNewsDate } from '@/lib/editorial-news';
+import PlacementLabel from '@/components/editorial/PlacementLabel';
 
 const TITLE = 'In the Press — Ten Years of Coverage | The One Movement International';
 const DESC = 'The historical press archive of The One Movement International: publisher coverage of the Movement, its Founder and CEO, and its programmes, with the original captures preserved.';
@@ -31,7 +32,8 @@ function LedgerEntry({ e, n }: { e: PressEntry; n: number }) {
         <PublisherMark outlet={e.outlet} logoUrl={e.logoUrl} />
       </div>
       <div className="min-w-0">
-        <p className="text-eyebrow text-gold-400">{e.outlet} · {e.dateLabel}</p>
+        <PlacementLabel kind="editorial" tone="dark" />
+        <p className="mt-2 text-eyebrow text-gold-400">{e.outlet} · {e.dateLabel}</p>
         <h3 className="mt-3 text-2xl leading-tight text-ivory-100 sm:text-3xl" style={{ fontFamily: 'var(--font-display)' }}>
           <Link href={`/news/coverage/${e.id}`} className={cn('rounded-sharp hover:text-gold-400 transition-colors', focusRing)} data-testid={`link-coverage-${e.id}`}>{e.title}</Link>
         </h3>
@@ -118,7 +120,8 @@ export default function News() {
             <article key={n.slug} className="mt-8 grid gap-10 border-t border-gold-500/30 pt-10 md:grid-cols-[18rem_1fr] md:items-center lg:gap-16" data-testid={`card-news-${n.slug}`}>
               <NewsVideo item={n} compact />
               <div className="min-w-0">
-                <p className="text-eyebrow text-[hsl(338_55%_40%)]">{n.kicker} · <span>Shared on</span> <time dateTime={n.publishedAt}>{formatNewsDate(n.publishedAt)}</time></p>
+                <PlacementLabel kind="editorial" />
+                <p className="mt-2 text-eyebrow text-[hsl(338_55%_40%)]">{n.kicker} · <span>Shared on</span> <time dateTime={n.publishedAt}>{formatNewsDate(n.publishedAt)}</time></p>
                 <h2 className="mt-4 text-3xl leading-tight text-lagoon-900 sm:text-4xl" style={{ fontFamily: 'var(--font-display)' }}>
                   <Link href={`/news/${n.slug}`} className={cn('rounded-sharp hover:text-[hsl(338_55%_40%)] transition-colors', focusRing)} data-testid={`link-news-${n.slug}`}>{n.title}</Link>
                 </h2>

@@ -1,0 +1,796 @@
+THE ONE MOVEMENT INTERNATIONAL (TOMI)
+
+MASTER BUILD DIRECTIVE
+PHASE 3 — THE LIVING GLOBAL UNIVERSE
+
+FOUNDER AUTHORIZATION:
+COMPREHENSIVE FRONTEND IMPLEMENTATION
+
+OBJECTIVE:
+BUILD A BEAUTIFUL, IMMERSIVE, FUNCTIONAL
+GLOBAL ECOSYSTEM WITH 17 LIVING WORLDS.
+
+IMPORTANT:
+DO NOT STOP AFTER WRITING AN AUDIT.
+DO NOT SPEND CREDITS ON LONG REPORTS.
+IMPLEMENT VISIBLE RESULTS.
+
+==================================================
+01 — UNDERSTAND THE PROJECT
+==================================================
+
+THE ONE MOVEMENT INTERNATIONAL is not
+an ordinary website.
+
+It is a global cultural, professional,
+humanitarian and economic ecosystem.
+
+It connects:
+
+- Artists
+- Designers
+- Entrepreneurs
+- Investors
+- Diplomats
+- Students
+- Universities
+- Governments
+- Businesses
+- Media organizations
+- Humanitarian organizations
+- Innovators
+- Professionals
+- Peace ambassadors
+
+The movement promotes:
+
+PEACE
+UNITY
+TOLERANCE
+DIVERSITY
+INCLUSION
+CULTURE
+INNOVATION
+OPPORTUNITY
+HUMANITARIAN IMPACT
+
+CORE PHILOSOPHY:
+
+"YOU DON'T JUST JOIN A PLATFORM.
+YOU BECOME PART OF A GLOBAL MISSION."
+
+We are creating a digital universe
+that can eventually expand into:
+
+- Mobile applications
+- AI assistants
+- Connected experiences
+- Smart devices
+- Digital wearables
+- Cultural installations
+
+For now, focus on the existing web platform.
+
+Do not implement hardware integrations.
+
+==================================================
+02 — PRESERVE EXISTING ARCHITECTURE
+==================================================
+
+Inspect the current React/Vite frontend
+and existing routes.
+
+Reuse existing:
+
+- Authentication
+- Member profiles
+- Sector structure
+- Program pages
+- Network features
+- Navigation
+- Existing assets
+- Existing components
+- Design tokens
+- Media libraries
+
+Preserve all working functionality.
+
+Do not rewrite the platform.
+
+Do not modify Clerk.
+
+Do not change backend permissions.
+
+Do not change database schemas.
+
+Do not execute migrations.
+
+Do not modify Stripe.
+
+Do not deploy.
+
+==================================================
+03 — THE 17 LIVING WORLDS
+==================================================
+
+Create an immersive visual experience
+for all 17 existing sectors:
+
+1. FASHION
+2. MUSIC
+3. DANCE
+4. FILM
+5. ART
+6. BUSINESS
+7. INVESTMENT
+8. TOURISM
+9. DIPLOMACY
+10. INNOVATION
+11. TECHNOLOGY
+12. NGOs
+13. MEDIA
+14. EDUCATION
+15. REAL ESTATE
+16. HEALTH & CARE
+17. HUMANITARIAN ACTION
+
+Each sector must have its own
+visual personality.
+
+Each sector should feel like
+entering a different world.
+
+However, all sectors must remain
+connected through the TOMI identity.
+
+Build a reusable sector experience
+system driven by configuration.
+
+Do not create 17 independent applications.
+
+==================================================
+04 — SECTOR VISUAL IDENTITY
+==================================================
+
+Create distinctive artistic directions.
+
+FASHION:
+Runways, textiles, designers,
+fashion photography, collections,
+creative studios.
+
+MUSIC:
+Concerts, instruments, recording studios,
+sound-inspired motion and artists.
+
+DANCE:
+Movement, performance, choreography,
+international dance cultures.
+
+FILM:
+Cinema, storytelling, filmmaking,
+cinematic compositions.
+
+ART:
+Contemporary galleries, sculpture,
+painting, digital art and exhibitions.
+
+BUSINESS:
+Entrepreneurship, companies,
+professional collaboration.
+
+INVESTMENT:
+Global markets, projects,
+economic development and opportunity.
+
+TOURISM:
+World destinations, architecture,
+landscapes and cultural discovery.
+
+DIPLOMACY:
+International dialogue,
+peace, institutions and cooperation.
+
+INNOVATION:
+Ideas, inventions, scientific discovery.
+
+TECHNOLOGY:
+Artificial intelligence, digital systems,
+advanced technology and future industries.
+
+NGOs:
+Social impact, communities,
+civil society and humanitarian missions.
+
+MEDIA:
+Journalism, podcasts, publishing,
+broadcasting and storytelling.
+
+EDUCATION:
+Universities, learning, research,
+knowledge and academic discovery.
+
+REAL ESTATE:
+Iconic architecture, skyscrapers,
+property development, design and cities.
+
+HEALTH & CARE:
+Wellness, medical innovation,
+care and human wellbeing.
+
+HUMANITARIAN ACTION:
+Human dignity, resilience,
+solidarity and community support.
+
+Use respectful, contemporary,
+international cultural representation.
+
+Avoid stereotypes.
+
+Do not invent partnerships,
+professionals or institutional endorsements.
+
+==================================================
+05 — ANIMATED SECTOR ENTRANCES
+==================================================
+
+Every sector must have:
+
+- A premium hero section
+- A distinctive background
+- Industry-specific visual motifs
+- Elegant entrance animation
+- Scroll-based visual transitions
+- Clear sector introduction
+- Discover opportunities section
+- Explore professionals section
+- Learning and knowledge section
+- Join This World action
+- Share Sector action
+
+Use existing content where available.
+
+If content is unavailable,
+display an elegant editorial empty state.
+
+Do not create fake members,
+fake partners or fake opportunities.
+
+Avoid heavy WebGL and unnecessary
+third-party animation dependencies.
+
+Respect reduced-motion preferences.
+
+==================================================
+06 — CULTURAL UNIVERSE
+==================================================
+
+The platform must celebrate
+global cultural diversity.
+
+Create reusable cultural storytelling
+components for existing sections such as:
+
+THANK YOU WORLD
+THANKS AFRICA
+SHUKRAN EMIRATES
+10 YEARS ONE RECORD
+
+Preserve existing page names
+and routes where they already exist.
+
+THANKS AFRICA:
+
+Celebrate African cultures,
+creative excellence, history,
+heritage, contemporary innovation,
+architecture and artistic expression.
+
+Give special editorial attention
+to the Democratic Republic of Congo
+as an important part of the movement's
+origin and history.
+
+Do not reduce Africa to stereotypes.
+
+SHUKRAN EMIRATES:
+
+Celebrate the UAE through:
+
+- Architecture
+- Cultural heritage
+- Arabic design traditions
+- Innovation
+- Hospitality
+- Economic development
+- International cooperation
+
+Use accurate cultural references.
+
+Do not invent government endorsement.
+
+THANK YOU WORLD:
+
+Represent global humanity,
+cultures and connection.
+
+10 YEARS ONE RECORD:
+
+Present the movement's journey
+through an elegant visual timeline.
+
+Use only verified existing
+historical information.
+
+==================================================
+07 — ONE GLOBAL DISCOVERY
+==================================================
+
+Create a prominent discovery interface:
+
+"WHAT ARE YOU LOOKING FOR IN THE WORLD?"
+
+Visitors should be able to explore
+the existing ecosystem according to
+their interests.
+
+Example searches:
+
+"I want to learn artificial intelligence."
+
+"I am a fashion designer."
+
+"I want to discover African culture."
+
+"I am looking for real estate professionals."
+
+"I want to explore humanitarian projects."
+
+For this phase, build a lightweight
+frontend discovery experience.
+
+Reuse existing routes,
+sectors and verified content.
+
+Do not invent results.
+
+Do not integrate paid AI APIs.
+
+Do not make expensive external calls.
+
+==================================================
+08 — TOMI AI
+==================================================
+
+Create the first visual interface
+for the future TOMI AI assistant.
+
+TOMI AI should eventually help people:
+
+- Discover sectors
+- Find learning opportunities
+- Navigate the ecosystem
+- Explore cultures
+- Find relevant public resources
+- Understand available services
+- Discover verified organizations
+- Prepare collaboration inquiries
+
+For now:
+
+Build a polished interface
+and connect it only to real
+existing navigation and content.
+
+Do not pretend that a full
+AI assistant exists.
+
+Clearly distinguish guided discovery
+from future AI capabilities.
+
+Do not introduce paid AI integrations.
+
+==================================================
+09 — THE ONE KEY
+==================================================
+
+Introduce the visual concept:
+
+THE ONE KEY
+
+"ONE KEY. INFINITE POSSIBILITIES."
+
+The One Key represents optional
+access to additional services,
+tools and professional experiences.
+
+IMPORTANT:
+
+Basic belonging remains free.
+
+Public information remains accessible.
+
+Ordinary community participation
+remains free.
+
+The One Key must not be required
+to explore the 17 worlds.
+
+The One Key may eventually support:
+
+- Enhanced guided experiences
+- Professional service requests
+- Optional learning experiences
+- Partner service benefits
+- Advanced professional tools
+- Clearly defined commercial services
+
+Do not promise:
+
+- Guaranteed meetings
+- Guaranteed investments
+- Guaranteed contracts
+- Government access
+- Institutional influence
+- Guaranteed media publication
+
+Create the visual presentation only.
+
+Do not activate payments.
+
+Do not invent prices.
+
+Do not introduce new paywalls.
+
+Do not change existing subscriptions.
+
+==================================================
+10 — PARTNERS AND SPONSORS
+==================================================
+
+Partners are essential to the ecosystem.
+
+Create reusable frontend components
+to showcase:
+
+- Historical supporters
+- Approved partners
+- Sponsors
+- Media collaborators
+- Featured organizations
+
+Use clear distinctions:
+
+EDITORIAL
+PARTNER
+SPONSORED
+
+Historical supporters may receive
+complimentary visibility when approved.
+
+Sponsored visibility must be labeled.
+
+A paid placement must never
+automatically imply official verification.
+
+Do not automatically display
+unverified leaders or institutions.
+
+Do not invent partnerships.
+
+Only use existing confirmed content.
+
+==================================================
+11 — MEDIA AND HISTORICAL ARTICLES
+==================================================
+
+Create an elegant editorial presentation
+for the movement's historical coverage.
+
+Possible presentation:
+
+- Media logo wall
+- Editorial article cards
+- Historical timeline
+- Featured stories
+- Press coverage gallery
+
+Avoid displaying random screenshots
+as proof of influence.
+
+Prefer beautiful editorial layouts
+using approved logos and articles.
+
+Only attribute coverage to outlets
+that actually published the material.
+
+Do not imply a media partnership
+merely because an article exists.
+
+Preserve original article attribution.
+
+==================================================
+12 — CONNECTED BRANDS
+==================================================
+
+Prepare a coherent navigation concept
+for independently recognizable brands:
+
+THE ONE MOVEMENT
+TROPIC AGENCY
+TROPIC MAGAZINE
+OYE
+
+These brands may share a digital
+ecosystem while maintaining distinct
+identities and commercial journeys.
+
+Do not merge their payment flows.
+
+Do not assume they are legally
+the same entity.
+
+Do not invent business registration
+or legal ownership information.
+
+Reuse existing approved brand assets.
+
+Do not build new checkout systems.
+
+==================================================
+13 — CREATIVE CONTRIBUTIONS
+==================================================
+
+Prepare an elegant frontend section:
+
+THE ONE CREATIVE SPACE
+
+This area should eventually allow
+artists and graphic designers to
+submit creative work representing:
+
+- Their countries
+- Their cultures
+- Their communities
+- Their artistic disciplines
+- Their personal perspectives
+
+For now:
+
+Create the presentation and
+participation concept.
+
+Reuse existing contact or submission
+routes only if suitable.
+
+Do not create a public upload backend.
+
+Do not publish submissions automatically.
+
+Future contributions must be reviewed
+and approved before editorial publication.
+
+==================================================
+14 — FOUNDER COMMAND CENTER
+==================================================
+
+Prepare a future content-management
+architecture for the Founder.
+
+The objective is to eventually allow
+authorized users to:
+
+- Replace images
+- Edit page text
+- Change approved visual motifs
+- Configure animations
+- Manage featured partners
+- Manage editorial placements
+- Preview changes
+- Publish approved content
+
+Prefer a structured content editor
+over unrestricted drag-and-drop editing.
+
+Reuse existing administration systems
+where possible.
+
+Do not implement new admin privileges.
+
+Do not modify authorization.
+
+Do not build a new backend CMS
+in this phase.
+
+==================================================
+15 — SECTOR SHARING
+==================================================
+
+Each sector must have a clear
+shareable destination.
+
+Implement safe frontend sharing
+using existing sector URLs.
+
+Support:
+
+- Copy link
+- Native mobile sharing where available
+
+Do not create referral tracking.
+
+Do not require invitations.
+
+Do not modify registration logic.
+
+==================================================
+16 — MEMBER EXPERIENCE
+==================================================
+
+Preserve the philosophy:
+
+BELONG
+DISCOVER
+CONNECT
+CONTRIBUTE
+GROW
+
+Improve visual consistency between:
+
+- Public universe
+- Sector experiences
+- Member welcome
+- People
+- Profiles
+- Workspace
+
+Do not change messaging permissions.
+
+Do not change publication permissions.
+
+Do not modify commercial entitlements.
+
+Do not create artificial barriers
+between sectors.
+
+==================================================
+17 — PERFORMANCE
+==================================================
+
+CREDIT AND PERFORMANCE OPTIMIZATION
+ARE HIGH PRIORITIES.
+
+Avoid:
+
+- Rebuilding existing components
+- Large unnecessary dependencies
+- Expensive AI API calls
+- Repeated full-project audits
+- Heavy animation libraries
+- Excessive video loading
+- Unnecessary image generation
+- Duplicated sector implementations
+
+Prefer:
+
+- Shared components
+- Configuration-driven sector design
+- Existing assets
+- Lightweight CSS animations
+- Lazy-loaded media
+- Responsive images
+- Static fallbacks
+- Existing project dependencies
+
+The result must remain usable
+on ordinary mobile devices.
+
+==================================================
+18 — EXECUTION PLAN
+==================================================
+
+You are authorized to implement
+the frontend experience described here.
+
+Do not stop after an audit.
+
+Proceed in this order:
+
+1. Inspect the active routes and assets.
+
+2. Build a reusable sector visual system.
+
+3. Apply it to all 17 sectors.
+
+4. Implement sector-specific
+   artistic identities and animations.
+
+5. Improve cultural storytelling
+   in existing global sections.
+
+6. Add lightweight global discovery.
+
+7. Build the TOMI AI guided-discovery
+   interface without external AI calls.
+
+8. Introduce The One Key concept
+   without payments.
+
+9. Add reusable partner and
+   editorial showcase components.
+
+10. Improve sector sharing.
+
+11. Prepare Creative Space and
+    Founder Command Center concepts.
+
+12. Refine mobile responsiveness
+    and accessibility.
+
+13. Run isolated tests and
+    static TypeScript checks.
+
+Do not request approval for each
+individual frontend component.
+
+If a feature requires backend changes,
+record it as a future dependency
+and continue with authorized work.
+
+==================================================
+19 — STRICT RESTRICTIONS
+==================================================
+
+DO NOT:
+
+- Modify database schemas
+- Execute migrations
+- Start or restart backend servers
+- Access production member data
+- Deploy
+- Change Clerk authentication
+- Change network permissions
+- Change Stripe
+- Activate new payments
+- Introduce subscriptions
+- Modify existing entitlements
+- Grant new admin privileges
+- Invent verified partners
+- Invent official endorsements
+- Generate fake testimonials
+- Interfere with other agents
+
+Preserve all existing functionality.
+
+==================================================
+20 — REQUIRED DELIVERY
+==================================================
+
+Return a concise implementation report.
+
+Include:
+
+1. Pages improved
+2. The 17 sector experiences
+3. Reusable components created
+4. Animations implemented
+5. Cultural storytelling improvements
+6. TOMI AI interface
+7. The One Key presentation
+8. Partner and media components
+9. Mobile improvements
+10. Exact files modified
+11. Tests performed
+12. Remaining limitations
+
+Clearly distinguish:
+
+IMPLEMENTED
+TESTED IN ISOLATION
+NOT VERIFIED IN BROWSER
+
+Do not claim production readiness.
+
+Do not begin unrelated tasks.
+
+WAIT FOR THE FOUNDER'S NEXT DIRECTION.

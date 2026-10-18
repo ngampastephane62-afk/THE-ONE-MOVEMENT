@@ -7,6 +7,7 @@ import PersonaPicker from './PersonaPicker';
 import SectorDetail from './SectorDetail';
 import SectorEmblem from './SectorEmblem';
 import RealEstateWorld from './RealEstateWorld';
+import SectorWorld from './worlds/SectorWorld';
 
 interface Props {
   selected?: string;
@@ -96,7 +97,7 @@ export default function SectorExplorer({ selected: controlled, onSelect }: Props
             {active ? <SectorDetail sector={active} /> : <p className="text-ivory-300">Choose a sector to see its programmes and resources.</p>}
           </div>
         </div>
-        {active?.slug === 'real-estate' && <div className="mx-auto max-w-7xl px-6"><RealEstateWorld /></div>}
+        {active && <div className="mx-auto max-w-7xl px-6">{active.slug === 'real-estate' ? <RealEstateWorld /> : <SectorWorld key={active.slug} slug={active.slug} />}</div>}
       </div>
     </section>
   );

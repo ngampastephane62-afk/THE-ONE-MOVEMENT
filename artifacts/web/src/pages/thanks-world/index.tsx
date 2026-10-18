@@ -15,6 +15,7 @@ import GoldThread from '@/components/GoldThread';
 import PersonPortrait, { PortraitActions, PortraitCredit } from '@/components/editorial/PersonPortrait';
 import WealthLabel from '@/components/editorial/WealthLabel';
 import RegionBackdrop from '@/components/RegionBackdrop';
+import CulturalStory from '@/components/editorial/CulturalStory';
 
 const SECTOR_LABEL = Object.fromEntries(IMPACT_SECTORS.map((s) => [s.key, s.label])) as Record<ImpactSector, string>;
 
@@ -63,6 +64,7 @@ export default function ThanksWorld() {
         <RegionSection key={r.key} region={r.key} label={r.campaign} country={r.label} sector={sector} alt={ri % 2 === 1} />
       ))}
 
+      <CulturalStory preset="world" />
       <section className="bg-lagoon-900 py-section-lg text-center text-ivory-100">
         <div className="mx-auto max-w-3xl px-6">
           <p className=" text-xs text-ivory-300">Historical figures are presented as memorial references and are not available for any programme.</p>

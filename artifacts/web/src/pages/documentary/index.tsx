@@ -8,6 +8,7 @@ import Reveal from '@/components/Reveal';
 import ProducerProfile from '@/components/editorial/ProducerProfile';
 import BroadcastOverview from '@/components/editorial/BroadcastOverview';
 import { PaymentReturn, useReturnParams } from '@/components/humanitarian/shared';
+import CulturalStory from '@/components/editorial/CulturalStory';
 
 export default function Documentary() {
   const { sessionId, cancelled } = useReturnParams();
@@ -94,6 +95,7 @@ export default function Documentary() {
 
       <ProducerProfile />
 
+      <CulturalStory preset="documentary" />
       <section className="border-t border-gold-500/20 bg-lagoon-900 py-section-lg text-center text-ivory-100">
         <Reveal className="mx-auto max-w-3xl px-6">
           <h2 className="text-display-md">PRODUCTION & DISTRIBUTION ENQUIRIES</h2>

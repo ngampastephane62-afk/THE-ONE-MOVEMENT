@@ -6,6 +6,7 @@ import { SECTORS } from '@/lib/sectors-data';
 import { Empty, ErrorBox, PersonLine, Skeleton, field, useAct } from '@/components/network/kit';
 import Chapter from '@/components/editorial/Chapter';
 import { useMe } from './ctx';
+import MemberIdentityStrip from '@/components/network/MemberIdentityStrip';
 
 export default function People() {
   const { me } = useMe();
@@ -25,6 +26,7 @@ export default function People() {
 
   return (
     <div className="flex flex-col gap-4 px-3 pt-4 md:px-0 md:pt-0">
+      <MemberIdentityStrip label="People" />
       <Chapter index="02" eyebrow="DISCOVER" title="People" lede="Verified members who joined the network. Search by name, role, organization or country." />
       <div className="relative">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-sand-400" />

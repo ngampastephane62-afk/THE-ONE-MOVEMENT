@@ -5,6 +5,7 @@ import EmiratesHero from '@/components/editorial/EmiratesHero';
 import GoldThread from '@/components/GoldThread';
 import Reveal from '@/components/Reveal';
 import EmiratesDirectory from '@/components/editorial/EmiratesDirectory';
+import CulturalStory from '@/components/editorial/CulturalStory';
 
 const PRINCIPLES = [
   ['Unity', 'Difference held together rather than dissolved.'],
@@ -247,6 +248,7 @@ export default function ThanksEmirates() {
         </div>
       </section>
 
+      <CulturalStory preset="emirates" />
       <section className="bg-lagoon-900 py-section-lg text-center text-ivory-100">
         <div className="mx-auto max-w-3xl px-6">
           <p className="font-display text-2xl leading-relaxed text-ivory-200">One story can inspire another. One person can connect another. One country can inspire the world.</p>

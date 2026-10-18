@@ -102,6 +102,10 @@ export default function HomeExperience() {
             <Link href="/ecosystem">
               <Button variant="gold-outline" size="lg">EXPLORE THE ECOSYSTEM</Button>
             </Link>
+            <Link href="/ecosystem#discover" className="mt-6 flex max-w-xl min-h-[44px] items-center gap-3 border border-gold-500/50 bg-lagoon-900/60 px-4 py-3 text-sm text-ivory-200 hover:border-gold-400" data-testid="link-home-discovery">
+              <span className="font-display tracking-[0.1em] text-gold-400">WHAT ARE YOU LOOKING FOR IN THE WORLD?</span>
+              <span className="ml-auto text-xs uppercase tracking-[0.14em]">Search</span>
+            </Link>
           </Reveal>
         </div>
       </section>

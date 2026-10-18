@@ -1,10 +1,11 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'wouter';
 import { useAuth } from '@clerk/react';
 import { Search, Globe, RotateCw } from 'lucide-react';
 import { useGetEcosystemMembers, type PublicMember } from '@workspace/api-client-react';
 import { SECTORS } from '@/lib/sectors-data';
 import { sectorName } from '@/lib/ecosystem-match';
+import { DIRECTORY_SECTOR_EVENT } from './directory-navigation';
 
 function initials(name: string) {
   return name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]?.toUpperCase()).join('');
@@ -54,6 +55,18 @@ export default function MemberDirectory() {
   const [q, setQ] = useState('');
   const [sector, setSector] = useState('');
   const members = data?.members;
+  useEffect(() => {
+    const on = (e: Event) => {
+      const slug = (e as CustomEvent<string>).detail;
+      if (!SECTORS.some((s) => s.slug === slug)) return;
+      setSector(slug);
+      const el = document.getElementById('directory');
+      el?.scrollIntoView({ behavior: window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+      el?.querySelector<HTMLElement>('select')?.focus({ preventScroll: true });
+    };
+    window.addEventListener(DIRECTORY_SECTOR_EVENT, on);
+    return () => window.removeEventListener(DIRECTORY_SECTOR_EVENT, on);
+  }, []);
 
   const filtered = useMemo(() => {
     const list = members ?? [];
@@ -66,7 +79,7 @@ export default function MemberDirectory() {
   }, [members, q, sector]);
 
   return (
-    <section className="bg-ivory-100 py-section-md border-t border-sand-200" aria-labelledby="directory-title">
+    <section id="directory" className="scroll-mt-20 bg-ivory-100 py-section-md border-t border-sand-200" aria-labelledby="directory-title">
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid gap-6 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">

@@ -4,23 +4,39 @@ description: Founder scope boundary for seventeen-world visual development and t
 ---
 
 The Founder describes TOMI as “17 interconnected worlds,” not seventeen ordinary
-website pages. Real Estate is the first implemented pilot; the remaining sixteen
-sectors receive coherent visual concepts, not independent redesigns in this mandate.
+website pages. The later “Master Build Directive — The Living Global Universe”
+supersedes the pilot-only scope and authorizes frontend experiences for all seventeen
+existing sectors, using a configuration-driven system rather than independent apps.
 
-**Why:** The Founder explicitly authorized frontend visual implementation and
-architectural design while rejecting unrelated work and duplicated systems.
+**Why:** The Founder explicitly broadened authorization beyond the Real Estate
+pilot while requiring visible implementation, preserved architecture and low cost.
 
 **How to apply:** Extend existing routes and reusable visual components, preserve
 working discovery and member interactions, and distinguish editorial roles/topics
 from real professional listings, courses, certifications or investments.
 
-The One Creative Studio and expanded professional-profile sharing are proposals
-only until separately authorized. Do not build the editor or grant permissions
-under the visual-world mandate. Ordinary membership stays free; featured buildings
-and architectural imagery must never imply owner endorsement.
+The Founder also authorizes cultural storytelling, lightweight local discovery,
+a clearly labelled TOMI AI guided-navigation interface (not real AI), The One Key
+visual concept, confirmed partner/editorial presentation, connected-brand navigation,
+Creative Space presentation and visual member consistency. Ordinary membership,
+public information and exploration of all worlds remain free.
 
-**Why:** The Founder explicitly requires architectural proposals while prohibiting
-editor implementation, new admin privileges, new paywalls and invented affiliations.
+**Why:** These are explicit additions in the comprehensive frontend directive,
+not authorization for backend services or commercial activation.
+
+**How to apply:** Use existing routes, content and assets; no paid AI calls, invented
+results, prices, fake members, partners or endorsements. Keep brand identities and
+commercial journeys distinct without inferring shared legal ownership. Creative
+contributions require future review before publication, not automatic public uploads.
+
+The Founder Command Center / One Creative Studio remain architecture proposals.
+Expanded professional-profile sharing still needs separate authorization. Do not
+build a new CMS, grant privileges, alter database/auth/network/publication/payment
+permissions, access production member data, restart backend servers or deploy.
+Featured buildings and architectural imagery must never imply owner endorsement.
+
+**Why:** Both directives require architectural proposals while prohibiting a new
+backend CMS, privilege changes, new paywalls and invented affiliations.
 
 **How to apply:** Keep future publication, asset safety, visibility and versioning
 requirements in the design proposal. Seek separate authorization before backend,

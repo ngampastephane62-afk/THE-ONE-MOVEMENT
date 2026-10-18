@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { partnerHistory, type HistoryCategory } from '@/lib/partner-history';
 import LogoCarousel, { LogoTile } from './LogoCarousel';
+import PlacementLabel from '@/components/editorial/PlacementLabel';
 
 type Sec = { key: HistoryCategory; label: string; note: string };
 
@@ -42,7 +43,7 @@ function Row({ s, n, tone = 'light' }: { s: Sec; n: string; tone?: 'light' | 'da
     <section id={`history-${s.key}`} className={`grid scroll-mt-28 gap-8 border-t py-12 lg:grid-cols-12 ${dark ? 'border-ivory-100/15' : 'border-sand-300'}`} aria-labelledby={`history-${s.key}-heading`}>
       <div className="lg:col-span-3">
         {s.key === 'private' && <span id="history-business" className="block scroll-mt-28" aria-hidden="true" />}
-        <p className={`font-mono text-xs ${dark ? 'text-gold-400' : 'text-gold-700'}`}>{n}</p>
+        <p className={`flex items-center gap-3 font-mono text-xs ${dark ? 'text-gold-400' : 'text-gold-700'}`}>{n} <PlacementLabel kind="partner" tone={dark ? 'dark' : 'light'} /></p>
         <h3 id={`history-${s.key}-heading`} className={`mt-2 font-display text-2xl uppercase leading-tight ${dark ? 'text-ivory-100' : 'text-ink-900'}`}>{s.label}</h3>
         <p className={`mt-3 text-sm leading-relaxed ${dark ? 'text-ivory-300' : 'text-ink-700'}`}>{s.note}</p>
       </div>

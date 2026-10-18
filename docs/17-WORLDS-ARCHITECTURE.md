@@ -1,5 +1,9 @@
 # TOMI — 17 Worlds: visual and future editing architecture
 
+> Historical pilot delivery. The later comprehensive frontend directive authorizes
+> all seventeen worlds; see [LIVING-GLOBAL-UNIVERSE.md](LIVING-GLOBAL-UNIVERSE.md).
+> The editor and backend restrictions below remain in force.
+
 ## Mandate and boundaries
 
 This document accompanies the Founder’s “Phase 3 — Master Task 1”.

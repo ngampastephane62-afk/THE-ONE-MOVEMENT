@@ -60,6 +60,7 @@ function fixture(page = 'Messages', { accepted = true, requestedByMe = true } = 
       module, exports: module.exports, confirm: () => confirmBlock,
       require: id => {
         if (id === '@/components/editorial/Chapter') return load(resolve(root, '../../components/editorial/Chapter.tsx'));
+        if (id === '@/components/network/MemberIdentityStrip') return load(resolve(root, '../../components/network/MemberIdentityStrip.tsx'));
         if (id.endsWith('.css')) return {};
         if (id === '@/lib/utils') return { cn: (...values) => values.filter(Boolean).join(' ') };
         if (id in mocks) return mocks[id];

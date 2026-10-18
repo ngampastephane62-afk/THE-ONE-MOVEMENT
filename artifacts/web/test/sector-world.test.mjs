@@ -219,7 +219,7 @@ test('styles preserve static reduced-motion content, responsive grids and touch-
 test('existing explorer and official detail content retain their integration boundaries', () => {
   const explorer = readFileSync(resolve(root, 'components/ecosystem/SectorExplorer.tsx'), 'utf8');
   const detail = readFileSync(resolve(root, 'components/ecosystem/SectorDetail.tsx'), 'utf8');
-  assert.match(explorer, /active\?\.slug === 'real-estate'/);
+  assert.match(explorer, /active\.slug === 'real-estate' \? <RealEstateWorld \/> : <SectorWorld/);
   for (const part of ['PersonaPicker', 'SectorDetail', 'SectorEmblem', 'input-sector-search']) assert.ok(explorer.includes(part));
   for (const part of ['ProgrammeLink', 'ResourceCard', 'programsForSector', 'resourcesForSector', 'SectorShare']) assert.ok(detail.includes(part));
   for (const file of ['SectorShare.tsx', 'RealEstateWorld.tsx', 'SectorWorldChapter.tsx']) {
