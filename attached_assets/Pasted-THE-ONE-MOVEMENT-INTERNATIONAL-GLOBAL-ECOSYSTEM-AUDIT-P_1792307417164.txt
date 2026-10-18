@@ -1,0 +1,57 @@
+THE ONE MOVEMENT INTERNATIONAL — GLOBAL ECOSYSTEM AUDIT
+PHASE 0: READ-ONLY INSPECTION
+
+You are working on the existing THE ONE MOVEMENT INTERNATIONAL project.
+
+IMPORTANT: The Founder has approved the strategic direction of a global, interconnected, cross-sector ecosystem. However, the product architecture must be assessed before any implementation begins.
+
+YOUR CURRENT MANDATE IS ANALYSIS ONLY.
+
+DO NOT:
+- Modify, create, delete, rename, or move files.
+- Change the database, schema, migrations, authentication, or user records.
+- Modify existing pages, navigation menus, images, illustrations, styling, or branding.
+- Install packages or dependencies.
+- Change Stripe settings, payment configuration, environment variables, or secrets.
+- Deploy the project or perform production operations.
+- Start a rebuild or automatically implement suggested improvements.
+
+YOUR TASK:
+
+1. Inspect the existing project structure, framework, routes, pages, components, APIs, database models, authentication, authorization, and integrations.
+
+2. Identify the existing 17 sectors and 6 official programs, if present. Report their exact names and where they are defined. Do not invent missing sectors or programs.
+
+3. Inspect the current member experience, including registration, login, profiles, My Space, permissions, subscriptions, and other existing features.
+
+4. Inspect the current Founder/admin capabilities. Identify what exists, what is incomplete, and what is missing for a Founder-controlled command center.
+
+5. Inspect the existing payment and Stripe implementation without initiating transactions, changing settings, running migrations, or exposing secrets. Clearly distinguish code that exists from functionality that has been tested.
+
+6. Identify the current marketplace, products/services, donations, commissions, partnerships, knowledge resources, events, and cross-sector interaction features. Mark each as VERIFIED, IMPLEMENTED-UNTESTED, PARTIAL, MISSING, BLOCKED, or PROPOSED, based on available evidence.
+
+7. Review security, role permissions, API errors, performance warnings, data protection, and potential launch blockers. Do not attempt to fix anything.
+
+8. Preserve the existing design, images, illustrations, visual identity, typography, and navigation. Do not recommend a complete redesign unless a specific, evidenced problem makes it necessary.
+
+9. Assess launch readiness. Identify the smallest safe set of requirements needed to launch a functional initial version while continuing to develop the wider ecosystem.
+
+10. Prepare a structured report with:
+A. Existing architecture
+B. Existing features and verified status
+C. Missing or incomplete features
+D. Security and reliability risks
+E. Founder governance and approval gaps
+F. Membership and payment readiness
+G. Recommended implementation phases
+H. Dependencies and risks
+I. Questions requiring the Founder's decision
+J. Recommended next action
+
+IMPORTANT GOVERNANCE RULE:
+
+The Founder retains final authority over the mission, official programs, sector architecture, governance, memberships, pricing, commissions, donation rules, institutional content, and production deployment.
+
+This audit grants you no authority to implement changes.
+
+Return your findings and wait for the Founder's review and explicit approval before proceeding.
