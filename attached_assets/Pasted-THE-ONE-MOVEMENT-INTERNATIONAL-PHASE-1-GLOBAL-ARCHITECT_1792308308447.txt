@@ -1,0 +1,93 @@
+THE ONE MOVEMENT INTERNATIONAL
+PHASE 1 — GLOBAL ARCHITECTURE AND LAUNCH PLAN
+
+The Founder has reviewed the Phase 0 read-only audit.
+
+We are now moving from general analysis to structured planning.
+
+IMPORTANT: This phase is still planning-only. Do not modify the code, database, configuration, Stripe, existing pages, menus, images, or deployment.
+
+OBJECTIVE
+
+Prepare a practical implementation roadmap for the complete TOMI ecosystem, preserving the existing project and preparing a safe initial launch.
+
+FOUNDER'S STRATEGIC DIRECTION
+
+TOMI is an international, interconnected, cross-sector ecosystem connecting individuals, professionals, businesses, organizations, institutions, knowledge, opportunities, commerce, events, and social impact.
+
+The existing 17 sectors and six official programs must be preserved unless the Founder explicitly approves a change.
+
+The platform must not be reduced to a social network, a marketplace, or an events website.
+
+REQUIRED WORK
+
+1. Review the Phase 0 audit and existing project architecture.
+
+2. Create a proposed global product architecture covering:
+- Public website and sector discovery
+- Six official programs
+- Member registration and My Space
+- Professional and organizational profiles
+- Community and member interactions
+- Knowledge and learning resources
+- Partnerships and opportunities
+- Events and participation
+- Marketplace and commercial services
+- Memberships and subscriptions
+- Payments and commissions
+- Humanitarian contributions and impact
+- Founder Command Center
+- Roles, permissions, approvals, and audit logs
+
+3. Explain how these components should interact without unnecessarily duplicating existing functionality.
+
+4. Create a launch-readiness plan that distinguishes:
+- Essential functionality for the initial launch
+- Existing functionality requiring verification
+- Necessary fixes
+- Features that can be added after launch
+- Features blocked by business, legal, technical, or Founder decisions
+
+5. Create a page-by-page implementation roadmap. For each page or module, specify:
+- Existing functionality to preserve
+- Missing functionality
+- Dependencies
+- Proposed changes
+- Required tests
+- Risks
+- Founder decisions required
+
+6. Prepare a decision register covering:
+- Registration and consent
+- Membership structure and entitlements
+- Existing subscription prices
+- Payment verification and refunds
+- Marketplace transactions and commissions
+- Humanitarian contributions
+- Founder authority and delegated permissions
+- The meaning of the existing "ecosystem" certification target
+
+7. Propose the architecture of the Founder Command Center, including server-side permissions, approval workflows, mandate boundaries, and audit history.
+
+8. Establish a change-control process: no implementation begins until the Founder approves the specific task and scope.
+
+9. Preserve the existing design, menus, visual identity, typography, images, illustrations, routes, authentication, database, and working features by default.
+
+10. Recommend the first concrete implementation task based on the Phase 0 findings, prioritizing launch safety and the existing member experience.
+
+DELIVERABLE
+
+Return:
+A. Global ecosystem architecture
+B. Launch-readiness checklist
+C. Page-by-page roadmap
+D. Decision register
+E. Founder Command Center specification
+F. Recommended implementation order
+G. First proposed implementation task, with exact scope and tests
+
+Do not implement anything.
+Do not create or modify files.
+Do not run tests, migrations, transactions, or deployments.
+
+Return the plan for the Founder's review and approval.
