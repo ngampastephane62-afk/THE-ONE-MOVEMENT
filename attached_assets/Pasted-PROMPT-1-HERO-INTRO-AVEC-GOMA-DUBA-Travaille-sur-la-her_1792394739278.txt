@@ -1,0 +1,86 @@
+PROMPT 1 — HERO INTRO AVEC GOMA + DUBAÏ
+
+Travaille sur la hero section / intro visuelle de la page d’accueil de The One Movement International.
+
+Objectif
+
+Créer une intro immersive, cinématographique et artistique, qui raconte visuellement :
+
+* l’origine du mouvement à l’Est de la RDC / Goma ;
+* la résilience née de la douleur, de la guerre et des volcans ;
+* la transformation vers un mouvement international, tourné vers la paix, l’unité, la diversité et l’inclusion ;
+* la connexion symbolique entre Goma et Dubaï.
+
+Direction créative
+
+L’intro doit montrer une progression visuelle :
+
+1. Origine / Résilience
+    Référence visuelle au volcan de Goma / Nyiragongo, à la terre, à la braise, à la puissance, à la résilience.
+    Ce n’est pas une scène catastrophe agressive, mais une énergie fondatrice.
+    Le volcan peut apparaître en fond, en lumière, en texture, en relief, ou comme une montée d’énergie.
+2. Transition vers l’unité
+    Cette énergie évolue progressivement vers une composition plus noble, lumineuse et internationale.
+3. Arrivée à Dubaï
+    On conserve la direction artistique sable / or / skyline / Burj Khalifa / désert / élégance.
+4. Symbole central
+    Utiliser la femme avec le globe comme figure principale de l’intro.
+    * Ne pas modifier son visage
+    * Ne pas modifier sa tenue
+    * Ne pas déformer le globe
+    * Respecter son apparence originale
+5. Éléments culturels et identitaires
+    Intégrer subtilement :
+    * les motifs Kuba / inspirations congolaises
+    * l’élégance désertique / émiratie
+    * le sentiment de mouvement global
+    * le drapeau The One Movement – We Are One
+
+Important
+
+* Ne pas retoucher les personnes
+* Ne pas changer les vêtements
+* Ne pas inventer de nouveaux visages
+* Utiliser uniquement les assets déjà disponibles sur le projet
+* Si un asset manque, signale la limite au lieu d’inventer
+
+Résultat attendu
+
+Créer un premier hero visuel / cinematic hero pour la homepage avec :
+
+* la femme au globe au premier plan
+* une ambiance de transition Goma volcan → désert → skyline Dubaï
+* le drapeau The One Movement en arrière-plan ou dans une variation subtile
+* une atmosphère premium, immersive, artistique et émotionnelle
+* une composition claire, élégante, pas surchargée
+* garder la charte graphique actuelle : or, sable, noir, lumière chaude, ambiance noble
+
+Texte / overlays
+
+Prévoir une zone de texte sobre avec cette logique :
+
+THE ONE MOVEMENT INTERNATIONAL
+We Are One
+For Peace & Unity
+
+et un bouton principal :
+Join the Movement
+
+et un bouton secondaire :
+Explore the Ecosystem
+
+Contraintes techniques
+
+* Le rendu doit être léger et performant
+* Pas d’animation trop lourde
+* L’intro doit pouvoir fonctionner sur mobile
+* Prévoir un effet visuel premium mais raisonnable : opacity layers, parallax léger, reveal doux, motion discret
+* Ne pas bloquer trop longtemps l’accès au contenu
+* L’intro doit être forte, mais pas trop lourde pour les smartphones
+
+Si nécessaire
+
+Si l’image du volcan de Goma n’est pas encore disponible dans les assets, indique clairement :
+
+* qu’il manque un asset volcan / Goma distinct,
+* et prépare la structure pour l’intégrer dès qu’il sera ajouté.

@@ -16,7 +16,8 @@ import TomiConstellation from '@/components/TomiConstellation';
 import FashionEditionNote from '@/components/FashionEditionNote';
 import ProgrammeFilm from "@/components/programs/ProgrammeFilm";
 import SectionHeading from '@/components/SectionHeading';
-import HomeBrandHero from '@/components/home/HomeBrandHero';
+// Legacy hero retained for rollback: '@/components/home/HomeBrandHero'
+import CinematicHero from '@/components/home/CinematicHero';
 import HomeArchiveCarousel from '@/components/home/HomeArchiveCarousel';
 import movementReel from '@/assets/media/home/TOMI_HOME_MOVEMENT_REEL_01.mp4';
 import movementReelFallback from '@/assets/media/home/TOMI_HOME_MOVEMENT_REEL_01.webm';
@@ -45,8 +46,8 @@ export default function HomeExperience() {
         <link rel="canonical" href="/" />
       </Helmet>
 
-      {/* 01 — Brand identity over a gently waving peace flag. */}
-      <HomeBrandHero />
+      {/* 01 — Phase-one cinematic hero (legacy HomeBrandHero kept in repo). */}
+      <CinematicHero />
 
 
       {/* 02 — Understanding: one concise explanation plus future movement video. */}

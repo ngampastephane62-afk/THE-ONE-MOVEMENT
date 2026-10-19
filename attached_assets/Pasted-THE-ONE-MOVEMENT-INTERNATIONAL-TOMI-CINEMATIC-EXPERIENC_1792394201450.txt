@@ -1,0 +1,324 @@
+THE ONE MOVEMENT INTERNATIONAL (TOMI)
+CINEMATIC EXPERIENCE — PHASE 1
+
+PROJECT:
+THE ONE GLOBAL UNIVERSE
+OFFICIAL CINEMATIC INTRODUCTION
+
+FOUNDER'S DIRECTIVE:
+START VISUAL IMPLEMENTATION NOW.
+
+==================================================
+1. THE CREATIVE VISION
+==================================================
+
+THE ONE MOVEMENT INTERNATIONAL is a global
+movement born in Eastern Democratic Republic
+of Congo, from resilience, humanitarian
+challenges, and the pursuit of peace.
+
+Today, it connects people, cultures,
+artists, businesses, institutions,
+and communities around the world.
+
+Our identity represents:
+
+PEACE
+UNITY
+DIVERSITY
+CULTURAL IDENTITY
+TOLERANCE
+INCLUSION
+HUMANITY
+INNOVATION
+GLOBAL CONNECTION
+
+Our official message:
+
+WE ARE ONE
+FOR PEACE & UNITY
+
+The website must feel like entering
+a cinematic global universe.
+
+Not a traditional corporate website.
+Not a generic social network.
+Not a collection of text-heavy sections.
+
+==================================================
+2. OFFICIAL VISUAL ASSETS
+==================================================
+
+FIRST inspect this directory:
+
+artifacts/web/public/media/tomi-intro/
+
+Identify the available official assets:
+
+- Dubai skyline background
+- Burj Khalifa
+- Female model holding the golden globe
+- Founder wearing the original leopard outfit
+- African fashion models
+- Official THE ONE MOVEMENT logos
+- Official movement flag
+- Cultural patterns and textures
+
+Use the real assets uploaded by the Founder.
+
+If an asset is missing, report it.
+
+DO NOT replace real people with
+AI-generated characters.
+
+DO NOT alter:
+
+- Faces
+- Facial expressions
+- Skin textures
+- Original clothing
+- Leopard fabric
+- Cultural patterns
+- Official logos
+
+Preserve the identity and authenticity
+of the original photographs.
+
+==================================================
+3. CINEMATIC ART DIRECTION
+==================================================
+
+VISUAL STYLE:
+
+Premium international cinema.
+African cultural excellence.
+Elegant Afro-futurism.
+Dubai luxury architecture.
+Global cultural diversity.
+
+COLOR PALETTE:
+
+Deep black
+Rich gold
+Warm desert sand
+Deep emerald green
+Dark teal
+Soft cinematic sunlight
+
+CULTURAL DETAILS:
+
+Authentic Congolese Kuba motifs.
+Original leopard clothing.
+Elegant architectural geometry.
+Subtle golden atmospheric lighting.
+
+Avoid excessive artificial effects.
+
+The result must feel photographic,
+authentic, cinematic, and sophisticated.
+
+==================================================
+4. CREATE THE FIRST CINEMATIC HERO
+==================================================
+
+Build the first visual scene for the
+existing TOMI homepage.
+
+SCENE:
+
+A magnificent golden desert landscape.
+
+Dubai's skyline appears in the distance,
+with Burj Khalifa visible.
+
+The atmosphere is cinematic,
+warm, elegant, and peaceful.
+
+In the foreground:
+
+The original female model holding
+the golden globe.
+
+She represents global unity.
+
+The globe must become the main
+visual focus of the composition.
+
+The Founder and other authentic
+characters may appear as carefully
+composed secondary elements,
+only when their original images
+can be preserved faithfully.
+
+Integrate the official movement flag
+and subtle Congolese cultural motifs.
+
+Do not overcrowd the composition.
+
+Prioritize a strong cinematic image.
+
+==================================================
+5. ANIMATION PREPARATION
+==================================================
+
+Prepare the composition so it can
+later support the full introduction:
+
+Eastern Congo volcanoes
+→ Resilience
+→ Desert
+→ Cultural horse riders
+→ Dubai
+→ Female model holding the globe
+→ Globe transition
+→ Global universe
+→ TOMI official logo
+→ Main navigation
+
+IMPORTANT:
+
+Do not build the entire 60-second
+animation in this task.
+
+First create the opening hero composition.
+
+Add only subtle lightweight effects
+where appropriate:
+
+- Atmospheric depth
+- Gentle lighting movement
+- Layered parallax
+- Soft visual transitions
+
+Avoid animating a person in ways
+that distort their original appearance.
+
+==================================================
+6. HOMEPAGE INTEGRATION
+==================================================
+
+Inspect the actual homepage entry point
+before making changes.
+
+Preserve all existing routes,
+navigation, member features,
+and homepage content.
+
+Create a reusable cinematic hero component.
+
+The cinematic hero will eventually
+transition into an interactive globe.
+
+For now, create the first visual
+composition and integrate it safely
+into the existing frontend.
+
+Do not delete the current homepage.
+
+The design must work on:
+
+Desktop
+Tablet
+iPhone
+Android
+
+Provide a lightweight mobile fallback.
+
+==================================================
+7. TEXT AND BRANDING
+==================================================
+
+Use minimal typography.
+
+Official brand:
+
+THE ONE MOVEMENT INTERNATIONAL
+
+WE ARE ONE
+FOR PEACE & UNITY
+
+Avoid long introductory paragraphs.
+
+The visual must communicate the story.
+
+Prepare space for future actions:
+
+EXPLORE THE ECOSYSTEM
+JOIN THE MOVEMENT
+
+These actions must connect only
+to existing valid routes.
+
+==================================================
+8. TECHNICAL LIMITATIONS
+==================================================
+
+Reuse existing frontend technologies.
+
+Avoid installing unnecessary dependencies.
+
+Optimize images and loading.
+
+Respect accessibility and
+reduced-motion preferences.
+
+Do not modify:
+
+Backend
+Database
+Clerk authentication
+Member permissions
+Stripe
+Subscriptions
+Payments
+Existing business logic
+
+Do not start or restart backend servers.
+
+Do not run migrations.
+
+Do not deploy to production.
+
+==================================================
+9. EXECUTE — DO NOT ONLY EXPLAIN
+==================================================
+
+IMPLEMENT THE FIRST CINEMATIC HERO.
+
+Do not stop at writing a design proposal.
+
+Create the actual frontend composition
+using available official assets.
+
+Run safe static checks.
+
+Provide a concise report covering:
+
+1. Files created or modified
+2. Official assets used
+3. Visual composition implemented
+4. Mobile adaptation
+5. Missing assets
+6. Tests and checks completed
+7. What remains unverified in browser
+
+Show the first visual result
+through the existing project preview
+if available without forbidden operations.
+
+Wait for Founder approval before
+developing the full cinematic sequence.
+
+==================================================
+
+FINAL OBJECTIVE:
+
+CREATE THE FIRST VISUAL MASTERPIECE
+OF THE ONE MOVEMENT INTERNATIONAL.
+
+A GLOBAL MOVEMENT.
+ONE HUMANITY.
+ONE WORLD.
+
+WE ARE ONE.
+FOR PEACE & UNITY.
