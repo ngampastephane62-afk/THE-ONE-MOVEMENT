@@ -24,8 +24,8 @@ function MemberCard({ m }: { m: PublicMember }) {
   const site = m.website ? safeUrl(m.website) : null;
   const profileHref = isSignedIn && m.enabled ? `/member/profile/${m.id}` : `/community/members/${m.id}`;
   return (
-    <article className="flex flex-col gap-3 border border-sand-200 bg-ivory-50 p-5" data-testid={`card-member-${m.id}`}>
-      <Link href={profileHref} className="flex items-center gap-3 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500" data-testid={`link-member-identity-${m.id}`}>
+    <article className="flex min-w-0 max-w-full flex-col gap-3 border border-sand-200 bg-ivory-50 p-5 [overflow-wrap:anywhere]" data-testid={`card-member-${m.id}`}>
+      <Link href={profileHref} className="flex min-w-0 w-full items-center gap-3 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500" data-testid={`link-member-identity-${m.id}`}>
         {m.avatarUrl && !photoFailed ? (
           <img src={`${import.meta.env.BASE_URL}${m.avatarUrl.replace(/^\//, '')}`} alt="" loading="lazy" onError={() => setPhotoFailed(true)} className="h-11 w-11 shrink-0 rounded-full object-cover" />
         ) : <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-lagoon-900 font-display text-sm text-gold-400" aria-hidden="true">{initials(m.fullName)}</span>}
@@ -125,7 +125,7 @@ export default function MemberDirectory() {
               <Link href="/member" data-testid="link-directory-create" className="inline-flex justify-center bg-gold-500 px-5 py-3 text-xs font-semibold uppercase tracking-wider text-ink-900 hover:bg-gold-400">Create your member space</Link>
             </div>
           ) : filtered.length ? (
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {filtered.map((m) => <MemberCard key={m.id} m={m} />)}
             </div>
           ) : (

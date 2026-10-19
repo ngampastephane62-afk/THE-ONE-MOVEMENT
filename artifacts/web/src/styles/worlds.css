@@ -43,10 +43,11 @@
 .eco-paused .wm-bar, .eco-paused .wm-pulse, .eco-paused .wm-drift, .eco-paused .wm-spin, .eco-paused .lw-hero-copy > * { animation: none !important; }
 
 /* Progressive enhancement: native scroll reveals, no JS or hidden fallback. */
+@keyframes wmChapter { from { transform: translateY(14px); } to { transform: none; } }
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .lw-world .sw-chapter-head, .sw-world .sw-chapter-head {
-      animation: wmIn linear both;
+      animation: wmChapter linear both;
       animation-timeline: view();
       animation-range: entry 0% entry 100%;
     }

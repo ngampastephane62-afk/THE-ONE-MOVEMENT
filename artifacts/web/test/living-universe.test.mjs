@@ -210,6 +210,23 @@ test('new motion styles support pause and reduced motion without new heavy depen
   assert.doesNotMatch(sources, /fetch\(|localStorage|@clerk|@workspace\/api|WebGL|three\/|openai|anthropic/);
 });
 
+test('mobile directory cards constrain long public text and the Real Estate pilot defines its shared accent', () => {
+  const f = fixture({ directory: [
+    { id: 99, fullName: 'An unusually long display name'.repeat(10), profession: 'A very long profession'.repeat(15), sectors: ['real-estate'], website: '', avatarUrl: null },
+  ] });
+  f.render('components/ecosystem/MemberDirectory.tsx');
+  assert.match(f.events.get('card-member-99').className, /min-w-0/);
+  assert.match(f.events.get('card-member-99').className, /overflow-wrap:anywhere/);
+  assert.match(f.events.get('link-member-identity-99').className, /min-w-0 w-full/);
+  const source = readFileSync(resolve(root, 'components/ecosystem/MemberDirectory.tsx'), 'utf8');
+  assert.match(source, /grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3/);
+  const css = readFileSync(resolve(root, 'styles/sector-world.css'), 'utf8');
+  assert.match(css, /\.sw-world \{ --w: 39 52% 54%;/);
+  const motion = readFileSync(resolve(root, 'styles/worlds.css'), 'utf8');
+  assert.match(motion, /animation: wmChapter linear both/);
+  assert.doesNotMatch(motion.match(/@keyframes wmChapter \{[^\n]+/)[0], /opacity/);
+});
+
 test('world directory navigation filters only existing public results, focuses the filter and cleans up', () => {
   const f = fixture({ directory: [
     { id: 1, fullName: 'Isolated Architect', sectors: ['real-estate'], website: '', avatarUrl: null },

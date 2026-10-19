@@ -1,5 +1,5 @@
 /* Sector world system: reusable for all 17 sectors. Motion is one-shot and disabled under reduced motion. */
-.sw-world { margin-top: 3rem; border: 1px solid hsl(189 78% 24% / 0.6); background: hsl(187 67% 9% / 0.6); }
+.sw-world { --w: 39 52% 54%; margin-top: 3rem; border: 1px solid hsl(189 78% 24% / 0.6); background: hsl(187 67% 9% / 0.6); }
 .sw-hero { display: grid; gap: 0; }
 @media (min-width: 900px) { .sw-hero { grid-template-columns: 1.15fr 1fr; } }
 .sw-hero-art { position: relative; aspect-ratio: 800 / 420; overflow: hidden; border-bottom: 1px solid hsl(189 78% 24% / 0.6); }
