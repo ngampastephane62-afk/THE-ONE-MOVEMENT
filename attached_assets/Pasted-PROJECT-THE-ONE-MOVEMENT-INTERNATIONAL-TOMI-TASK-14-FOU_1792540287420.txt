@@ -1,0 +1,290 @@
+PROJECT: THE ONE MOVEMENT INTERNATIONAL (TOMI)
+
+TASK 14 — FOUNDER WORKSPACE & CONTENT MANAGEMENT AUDIT
+
+MODE: READ-ONLY AUDIT.
+DO NOT IMPLEMENT ANY CHANGES YET.
+
+CONTEXT:
+
+THE ONE MOVEMENT INTERNATIONAL is an existing global
+digital ecosystem with a live website, member accounts,
+17 sectors, six official programs, and existing
+authentication and membership functionality.
+
+The Founder wants to finalize the website's visual
+presentation, correct content errors, improve existing
+animations, and manage website content directly from
+his personal Founder account.
+
+The Founder must not need to access Replit every time
+he wants to make a small website update.
+
+IMPORTANT:
+
+Work with the EXISTING project architecture.
+
+Do not rebuild the website.
+Do not redesign the homepage.
+Do not remove existing animations or media.
+Do not modify membership rules.
+Do not change Stripe, payments or subscriptions.
+
+==================================================
+OBJECTIVE 1 — AUDIT EXISTING FOUNDER ACCESS
+==================================================
+
+Inspect the current authentication, account roles,
+permissions, routes, dashboards and database structure.
+
+Determine:
+
+1. Does a Founder role already exist?
+2. How is the Founder identified and authorized?
+3. Is there an existing Founder dashboard?
+4. Which administrative features already exist?
+5. Can the Founder currently edit website content?
+6. Are permissions enforced on the server?
+7. Are any admin features accessible to ordinary members?
+8. Can the existing account architecture support a
+   private Founder Workspace?
+
+Do not assume that a frontend-only role check
+provides sufficient security.
+
+Identify the exact relevant files and routes.
+
+==================================================
+OBJECTIVE 2 — WEBSITE CONTENT MANAGEMENT
+==================================================
+
+Audit how the existing website manages:
+
+- Homepage text and sections
+- About / mission / vision content
+- The 17 sectors
+- The six official programs
+- News and articles
+- Events
+- Partners and sponsors
+- Logos
+- Images and videos
+- Homepage banners
+- Calls to action
+- Navigation labels
+- Footer content
+- SEO titles and descriptions
+
+For each content category, identify whether it is:
+
+A. Hardcoded in the frontend
+B. Stored in the database
+C. Managed through an existing admin interface
+D. Retrieved from an external service
+
+Explain which categories can safely become editable
+without rebuilding existing pages.
+
+==================================================
+OBJECTIVE 3 — PROPOSE THE FOUNDER WORKSPACE
+==================================================
+
+Design a practical private Founder Workspace
+accessible after login from the Founder's own account.
+
+PROPOSED MODULES:
+
+1. OVERVIEW
+
+Website status, content overview, recent updates,
+drafts and publication activity.
+
+2. PAGE MANAGER
+
+Edit approved text sections and content blocks
+on existing website pages.
+
+3. NEWS & ARTICLES
+
+Create, edit, preview, publish, unpublish
+and archive articles.
+
+4. PARTNERS & SPONSORS
+
+Add partner names, logos, descriptions,
+website links and display order.
+
+5. MEDIA LIBRARY
+
+Manage approved images, videos, banners
+and visual assets.
+
+6. PROGRAMS & EVENTS
+
+Update descriptions, dates, images and
+approved event information.
+
+7. WEBSITE BRANDING
+
+Manage approved logo placements,
+selected banners and visual assets.
+
+8. CONTENT REVIEW
+
+Preview changes before publishing.
+
+9. PUBLISHING HISTORY
+
+Record who changed what and when.
+
+10. FOUNDER SETTINGS
+
+Manage Founder-specific workspace preferences
+without exposing private credentials.
+
+IMPORTANT:
+
+The Founder Workspace must use a premium,
+modern and practical interface consistent
+with TOMI's existing visual identity.
+
+It must be easy to use on desktop and mobile.
+
+==================================================
+OBJECTIVE 4 — EDITING AND PUBLISHING SAFETY
+==================================================
+
+Propose a secure content workflow:
+
+EDIT → SAVE DRAFT → PREVIEW → PUBLISH
+
+Also evaluate:
+
+- Unpublish
+- Archive
+- Restore previous published version
+- Upload replacement media
+- Reorder approved content blocks
+- Prevent accidental deletion
+- Audit logs
+- Server-side authorization
+- Input validation
+- Media upload security
+- Protection against malicious HTML/scripts
+- Concurrent editing conflicts
+
+The Founder must be able to manage content
+without editing source code.
+
+Do not propose unrestricted editing of React,
+TypeScript, server configuration or database schemas
+from the website interface.
+
+==================================================
+OBJECTIVE 5 — EXISTING DESIGN AND ANIMATIONS
+==================================================
+
+Perform a READ-ONLY audit of the existing:
+
+- Homepage layout
+- Typography and spacing
+- Mobile responsiveness
+- Existing animations
+- Scroll interactions
+- Navigation
+- Media presentation
+- Content consistency
+- Broken or incomplete UI sections
+
+Identify issues supported by the source code.
+
+Do not claim that visual problems have been
+verified in a browser unless actual browser
+testing was performed.
+
+Do not change any design yet.
+
+The Founder wants to improve the current website,
+not replace its creative direction.
+
+==================================================
+OBJECTIVE 6 — RECOMMENDED IMPLEMENTATION ORDER
+==================================================
+
+Recommend a safe, incremental implementation plan.
+
+Prioritize:
+
+PHASE A:
+Secure Founder access and workspace foundation.
+
+PHASE B:
+Article and news management.
+
+PHASE C:
+Partners, logos and media management.
+
+PHASE D:
+Controlled page content editing.
+
+PHASE E:
+Visual refinements, responsive design
+and existing animation improvements.
+
+PHASE F:
+Testing and launch verification.
+
+Each phase must be independently reviewable.
+
+==================================================
+STRICT RESTRICTIONS
+==================================================
+
+READ-ONLY TASK.
+
+DO NOT:
+
+- Modify application code
+- Modify database schemas
+- Run database migrations
+- Start or restart backend servers
+- Trigger Stripe synchronization
+- Modify Clerk configuration
+- Modify payments or subscriptions
+- Install dependencies
+- Deploy changes
+- Access production data
+- Delete existing content
+- Replace the homepage
+- Implement a CMS yet
+
+Existing member access, network activation,
+privacy settings, messaging and payment
+functionality must remain unchanged.
+
+==================================================
+FINAL REPORT REQUIRED
+==================================================
+
+Provide:
+
+1. Existing Founder/admin architecture
+2. Relevant files, routes and database tables
+3. Current content-management capabilities
+4. Missing capabilities
+5. Security and permission risks
+6. Proposed Founder Workspace architecture
+7. Recommended content-editing model
+8. Existing design/animation audit findings
+9. Safe implementation phases
+10. Exact scope recommended for the NEXT task
+
+Clearly distinguish:
+
+VERIFIED FROM SOURCE CODE
+ASSUMPTIONS
+NOT VERIFIED AT RUNTIME
+
+Do not implement anything.
+
+Wait for Founder authorization before proceeding.
