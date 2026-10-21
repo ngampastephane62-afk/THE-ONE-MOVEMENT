@@ -67,16 +67,18 @@ restriction solely for this module. Partners, Members, Payments, page editing,
 notifications and broader redesign remain outside the current implementation
 authorization. Do not bypass the approval gate with fake persistence.
 
-The Founder has now explicitly authorized implementing the News module in
-development without replaying its approved migration. Starting or restarting a
-backend server still requires separate permission; this implementation approval
-does not include it.
+The Founder explicitly authorized implementing the News module in development
+without replaying its approved migration, then separately approved a secure
+development API restart and News verification.
 
-**Why:** The implementation was authorized after a preparation-only review, with
-the separate backend-start restriction expressly preserved.
+**Why:** Implementation and backend restart were separate approval gates. Neither
+permission authorizes production changes, payment bootstrap or identity changes.
 
 **How to apply:** Implement only News, preserve production isolation and existing
 identity, membership, payments, archive and animations. Do not rerun migrations or
 delete tables to simulate an unexecuted state. Distinguish offline validation from
 verification against the currently running API; request permission before loading
-new backend code through a restart.
+new backend code through a restart. The separately approved restart is scoped to
+these News checks, not standing permission for future backend restarts. Verify
+the existing preview-only guard before a permitted start; never fabricate an
+authenticated Founder session to complete validation.

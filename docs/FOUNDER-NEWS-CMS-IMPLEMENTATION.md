@@ -2,17 +2,22 @@
 
 ## Statut
 
-Le code du module News est implémenté. Les contrôles hors ligne décrits ci-dessous
-réussissent. **La vérification en fonctionnement n'est pas terminée.**
+Le code du module News est implémenté. Après autorisation distincte du Founder,
+l'API de développement a été redémarrée en mode protégé. Ses journaux confirment :
+`automatic Stripe initialization disabled explicitly; no payment bootstrap or retry scheduled`.
 
-Le Founder a autorisé cette implémentation sans rejouer la migration. Aucun
-démarrage/redémarrage de backend n'a été effectué. Le processus API actuellement
-en mémoire utilise donc encore l'ancien code ; les nouvelles routes répondent
-encore 404 tant qu'un redémarrage autorisé n'a pas chargé la nouvelle version.
+**Les 12 contrôles HTTP publics/anonymes réussissent. Le parcours privé Founder
+reste non vérifié**, faute de session authentifiée légitime disponible dans
+l'outil de contrôle. Aucune session n'a été fabriquée, identité modifiée ou
+autorisation contournée pour les tests.
 
-Le contrôle visuel de `/news` confirme que la page existante s'affiche ; ses
-nouveaux appels CMS échouent actuellement en 404. Cette capture n'est pas une
-validation de l'éditeur privé ou du parcours de publication.
+La nouvelle liste publique répond 200 avec zéro article publié : aucun article
+de démonstration n'a été ajouté. Le contrôle visuel de `/news` confirme
+l'affichage de la page et de ses annonces existantes, sans les précédentes
+erreurs 404 des appels CMS. Cette capture ne valide pas l'éditeur privé.
+
+Aucune migration n'a été rejouée, aucun déploiement effectué et aucune opération
+Stripe déclenchée par ce redémarrage de développement.
 
 ## 1. Architecture réutilisée
 
@@ -189,8 +194,34 @@ pas un test HTTP authentifié de Clerk.
 - génération OpenAPI et compilation des bibliothèques ;
 - vérification TypeScript de l'API ;
 - vérification TypeScript du frontend après les derniers correctifs ;
-- compilation de l'API, sans lancer le résultat ;
-- capture de la page News existante, avec constat des nouveaux appels 404.
+- compilation de l'API ;
+- redémarrage du workflow API existant après autorisation et recontrôle du
+  garde-fou, avec confirmation du mode développement sans bootstrap Stripe ;
+- capture de `/news` après redémarrage, sans erreur de ressource dans les
+  journaux du navigateur (seul avertissement Clerk sur les clés de développement).
+
+**12 contrôles HTTP réels réussis**, via le domaine de développement :
+
+| Contrôle | Résultat |
+| --- | --- |
+| Santé `/api/healthz` | 200 |
+| Liste `/api/news/articles` | 200, liste vide, `private, no-store` |
+| Pagination invalide `page=0` | 400 |
+| Article inexistant | 404 |
+| Média d'un article inexistant | 404 |
+| Liste Founder sans connexion | 401 |
+| Options Founder sans connexion | 401 |
+| Détail Founder sans connexion | 401 |
+| Média privé sans connexion | 401 |
+| Action éditoriale sans connexion | 401 |
+| Demande de téléversement sans connexion | 401 |
+| Finalisation sans connexion | 401 |
+
+Les requêtes privées refusées ne créent aucun brouillon ou téléversement. Aucune
+mutation authentifiée ou publication de contenu de test n'a été effectuée.
+Les 28 tests hors ligne, contrôles TypeScript et compilation mentionnés plus
+haut restent les résultats de l'étape d'implémentation ; aucun code applicatif
+n'a changé pendant cette vérification de redémarrage.
 
 Le contrôle global du dépôt avait précédemment signalé une erreur externe au
 module News dans `scripts/src/store-person-directory.ts` (import hors `rootDir`).
@@ -198,12 +229,11 @@ Ce script n'est pas modifié ni présenté comme corrigé dans cette livraison.
 
 ## 8. Limites et point d'arrêt
 
-Le code n'est **pas encore validé en conditions réelles** :
+Le module n'est **pas encore validé de bout en bout avec le Founder** :
 
-- l'API exécutée n'a pas été rechargée ;
 - aucun cycle réel créer/recharger/publier/dépublier n'a été exécuté ;
-- les refus HTTP anonyme/membre ordinaire et le parcours Founder authentifié
-  doivent encore être confirmés avec le nouveau code ;
+- les refus HTTP anonymes sont confirmés ; le refus d'un membre ordinaire
+  connecté et le parcours Founder authentifié restent à vérifier ;
 - les médias réels, le partage mobile et le comportement des protections de
   navigation doivent encore être vérifiés ;
 - les métadonnées SEO sont côté React ; aucun nouveau rendu serveur pour les
@@ -215,11 +245,14 @@ Le code n'est **pas encore validé en conditions réelles** :
 
 ## 9. Prochaine étape exacte
 
-Obtenir l'autorisation distincte de redémarrer **uniquement l'API de développement**,
-après recontrôle du garde-fou existant `TOMI_PREVIEW_SKIP_STRIPE_INIT`.
-Ce mode doit empêcher l'initialisation, les migrations et la synchronisation Stripe.
-Ne pas changer les marqueurs runtime ni les règles de production pour forcer le démarrage.
+L'API de développement tourne désormais avec les nouvelles routes. L'étape
+restante est une validation avec une **vraie session Founder** : créer et recharger
+un brouillon, vérifier son absence du public, publier explicitement, modifier sans
+changer la version publique, restaurer en privé, dépublier et contrôler les médias.
+Vérifier également les conflits entre onglets et le refus d'un compte ordinaire.
 
-Ensuite vérifier les nouvelles routes et les parcours modifiés. Ne pas inventer
-une session Founder ou modifier l'identité autorisée pour les tests.
+L'outil de contrôle ne dispose pas d'une telle session légitime. Ne pas inventer
+une session Founder ou modifier l'identité autorisée pour lever ce blocage.
+Conserver `TOMI_PREVIEW_SKIP_STRIPE_INIT` et les vérifications d'environnement ;
+ne pas changer les marqueurs runtime ni les règles de production.
 Ne pas rejouer la migration, publier le site ou démarrer un autre module.
