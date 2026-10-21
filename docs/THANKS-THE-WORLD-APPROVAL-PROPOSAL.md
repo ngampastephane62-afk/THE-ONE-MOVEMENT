@@ -1,10 +1,13 @@
 # Thanks the World — proposition soumise à approbation
 
-Statut : BLOQUÉ À L’APPROBATION DU FONDATEUR.
+Statut : SCHÉMA APPROUVÉ POUR PRÉPARATION ; SQL GÉNÉRÉ, NON APPLIQUÉ.
 
-Ce document décrit une proposition, pas une fonctionnalité livrée. Aucun schéma
-Drizzle, SQL de migration, compte, contenu ou fichier média n’a été modifié.
-L’inspection porte sur le code du dépôt, pas sur les données de production.
+Le Fondateur a autorisé la préparation du schéma et du SQL uniquement. Les
+définitions Drizzle et la migration sont désormais préparées dans le dépôt,
+sans application à une base. Aucun compte, contenu ou fichier média modifié.
+Voir `THANKS-THE-WORLD-MIGRATION-REVIEW.md` pour la revue et les vérifications.
+La campagne reste non implémentée ; les sections ci-dessous conservent la
+proposition approuvée et le rapport de l’inspection initiale.
 
 ## 1. Résultat de l’inspection
 
