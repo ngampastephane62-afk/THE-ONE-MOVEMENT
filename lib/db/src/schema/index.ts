@@ -19,3 +19,4 @@ export * from "./ecosystemMembers";
 export * from "./network";
 export * from "./professional";
 export * from "./magazine";
+export * from "./news";

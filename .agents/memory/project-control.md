@@ -66,3 +66,17 @@ Clerk identity, membership rules and payments.
 restriction solely for this module. Partners, Members, Payments, page editing,
 notifications and broader redesign remain outside the current implementation
 authorization. Do not bypass the approval gate with fake persistence.
+
+The latest News instruction narrows the active authorization to migration
+preparation, SQL review and static validation only. Wait for fresh explicit
+approval before further database execution or implementing the News editor.
+Starting or restarting backend servers is prohibited under this scope.
+
+**Why:** The Founder supplied a newer preparation-only directive after previously
+approving development migration execution. A newer restriction controls subsequent
+work; it does not undo operations legitimately completed before it arrived.
+
+**How to apply:** Report the actual state and distinguish prepared, executed and
+unimplemented work. Do not reapply migrations or delete tables to simulate an
+unexecuted state. Preserve existing authentication, membership, payments, content,
+animations and production isolation.

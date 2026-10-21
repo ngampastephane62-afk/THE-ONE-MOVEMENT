@@ -1,8 +1,13 @@
 # TOMI — Proposition de migration pour News & Publishing
 
-**Statut : proposition uniquement, en attente de l'accord du Founder.**
-Ce document n'est pas une migration générée et aucun SQL ci-dessous n'a été
-exécuté. Le CMS n'est pas encore implémenté.
+**Statut actualisé : architecture approuvée et migration appliquée en développement
+sur l'accord explicite précédent, avant réception de la nouvelle directive de
+préparation uniquement.** Le CMS n'est pas implémenté. Aucune autre exécution,
+implémentation applicative ou mise en route de serveur n'est autorisée à ce stade.
+Voir `docs/FOUNDER-NEWS-CMS-MIGRATION-REVIEW.md` pour le SQL généré exact,
+les contrôles statiques et la chronologie. Le présent document conserve la
+proposition initiale ; ses étapes « après approbation » ne sont pas une nouvelle
+autorisation d'exécution.
 
 ## 1. Périmètre
 
@@ -280,6 +285,8 @@ aucun effacement des journaux.
 - Régression de l'archive presse et des contenus statiques.
 - Interfaces ordinateur/mobile et navigation clavier.
 
-À ce stade, seuls les sources et les métadonnées de développement ont été
+Lors de la rédaction initiale de cette proposition, seuls les sources et les métadonnées de développement avaient été
 inspectées. Aucun test du futur CMS, aucune migration, aucun démarrage de serveur,
-aucune opération Stripe et aucun déploiement n'ont été effectués.
+aucune opération Stripe et aucun déploiement n'avaient été effectués.
+Ce constat historique ne décrit pas l'état actuel de la migration ; voir le statut
+actualisé en tête de document.

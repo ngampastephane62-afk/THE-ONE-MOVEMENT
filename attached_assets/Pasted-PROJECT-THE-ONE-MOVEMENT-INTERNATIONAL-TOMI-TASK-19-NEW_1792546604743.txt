@@ -1,0 +1,181 @@
+PROJECT: THE ONE MOVEMENT INTERNATIONAL (TOMI)
+
+TASK 19 — NEWS CMS DATABASE MIGRATION
+MODE: CONTROLLED IMPLEMENTATION — PREPARATION ONLY
+
+CONTEXT:
+
+The Founder Workspace is already accessible at:
+
+/member/founder
+
+Our objective is to make the News & Articles section fully functional.
+
+The Founder must be able to create, edit, preview and publish news directly from his account, without accessing Replit.
+
+The News system must support:
+- Articles
+- Videos
+- Official announcements
+- Partnership announcements
+- Business opportunities
+- Events
+- Humanitarian updates
+- Press releases
+
+IMPORTANT:
+
+The previous audit recommended two dedicated database tables:
+
+1. news_articles
+2. news_article_revisions
+
+The Founder approves this architecture in principle.
+
+Your current task is to PREPARE AND REVIEW the migration.
+
+DO NOT EXECUTE IT YET.
+
+========================================
+STEP 1 — DATABASE MIGRATION
+========================================
+
+Read the existing proposal:
+
+docs/FOUNDER-NEWS-CMS-MIGRATION-PROPOSAL.md
+
+Generate the Drizzle schema definitions and SQL migration for:
+
+news_articles
+news_article_revisions
+
+The system must support:
+
+- Unique article identifiers
+- Unique public slugs
+- Draft status
+- Published status
+- Archived status
+- Article categories
+- Titles and subtitles
+- Cover images
+- Videos
+- Article body
+- Additional images
+- Partner relationships
+- Programme relationships
+- SEO metadata
+- Publication dates
+- Revision history
+- Author information
+- Concurrent editing protection
+
+========================================
+STEP 2 — PUBLICATION WORKFLOW
+========================================
+
+The future CMS must support:
+
+CREATE ARTICLE
+SAVE DRAFT
+EDIT ARTICLE
+UPLOAD MEDIA
+PREVIEW ARTICLE
+PUBLISH ARTICLE
+UNPUBLISH ARTICLE
+ARCHIVE ARTICLE
+RESTORE PREVIOUS VERSION
+
+Saving a draft must never automatically publish it.
+
+Editing an already published article must not change
+the public version until the Founder explicitly
+publishes the new revision.
+
+========================================
+STEP 3 — PUBLIC NEWS INTEGRATION
+========================================
+
+The future implementation must connect articles
+to the existing TOMI News page.
+
+When the Founder publishes an article:
+
+- It appears on the public News page.
+- Its title, images and videos display correctly.
+- It has a shareable public URL.
+- It can be updated from the Founder Workspace.
+
+Existing press archive content must remain unchanged.
+
+========================================
+STEP 4 — SECURITY
+========================================
+
+Reuse existing Clerk authentication.
+
+Reuse existing server-side Founder authorization.
+
+Protect private drafts.
+
+Validate submitted content and media.
+
+Prevent unauthorized publishing.
+
+Preserve revision history and audit logging.
+
+Do not create a second Founder role.
+
+========================================
+STEP 5 — MIGRATION SAFETY
+========================================
+
+Before executing any migration:
+
+Provide:
+
+1. Exact SQL migration
+2. Drizzle schema changes
+3. Tables and indexes created
+4. Foreign key constraints
+5. Development database compatibility
+6. Potential risks
+7. Rollback strategy
+8. Files created or modified
+
+Do not execute database migrations yet.
+
+========================================
+STRICT RESTRICTIONS
+========================================
+
+DO NOT:
+
+- Modify production data
+- Execute migrations
+- Deploy the website
+- Modify Stripe
+- Trigger Stripe synchronization
+- Modify Clerk
+- Change membership permissions
+- Modify existing payment records
+- Delete existing articles
+- Remove existing animations
+- Replace the public News design
+- Start or restart backend servers
+
+========================================
+FINAL INSTRUCTION
+========================================
+
+Prepare the migration and perform static validation.
+
+Show the complete implementation report.
+
+STOP before executing the migration.
+
+Wait for explicit Founder authorization.
+
+Once approved, the next task will implement
+the functional News editor inside the existing
+Founder Workspace.

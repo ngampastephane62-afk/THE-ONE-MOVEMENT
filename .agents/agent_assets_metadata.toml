@@ -42,3 +42,17 @@ mtime_ms = 1792545526807
 storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/ed9a574c-d299-462d-a9f2-e5fb8f16d493/d3139fe5-98e4-4add-a457-75bab66cf16a"
 storage_version_token = "1792545543611083"
 content_type = "text/markdown"
+
+[[outputs]]
+id = "QUep3qZOGC9RUXio7hYwA"
+uri = "file://docs/FOUNDER-NEWS-CMS-MIGRATION-REVIEW.md"
+type = "text"
+title = "News CMS — revue complète de migration"
+description = "SQL exact, schéma Drizzle, contraintes, compatibilité, risques, retour arrière et résultats statiques. Le rapport distingue l’application antérieure en développement de la nouvelle consigne de préparation uniquement."
+logical_id = "c11a113c-21ea-4eae-a1b5-e6219f61dd26"
+content_hash = "sha256:dc3ce2569293ae3403984628ad3b79d111fed29e7dd8ea9a64abd6ebc554daa0"
+size = 17432
+mtime_ms = 1792547118610
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/c11a113c-21ea-4eae-a1b5-e6219f61dd26/f8626125-3327-4aa0-9192-d230a314d3e9"
+storage_version_token = "1792547156395099"
+content_type = "text/markdown"
