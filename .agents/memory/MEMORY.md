@@ -26,3 +26,5 @@
 - [Sector worlds mandate](sector-world-mandate.md) — all 17 frontend worlds now authorized; local discovery and future concepts allowed, but no backend/CMS/payment/permission changes or deployment.
 - [Preview environment indicators](preview-environment-markers.md) — REPLIT_ENVIRONMENT is not an authoritative app deployment selector; use documented indicators and explicit preview authorization.
 - [Global gratitude campaign](global-gratitude-campaign.md) — distinguish worldwide gratitude from UAE testimonies and public-figure directories; public stories require moderation and consent.
+- [Vision motion direction](vision-motion-direction.md) — supplied maps remain the hero artwork; decoration stays behind readable text, with original museum-inspired motion.
+- [Programs editorial motion](programs-editorial-motion.md) — animate the existing six programmes without replacing Founder photos, approved copy or real engagement controls.

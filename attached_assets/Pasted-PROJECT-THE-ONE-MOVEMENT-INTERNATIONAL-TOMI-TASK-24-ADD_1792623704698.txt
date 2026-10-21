@@ -1,0 +1,107 @@
+PROJECT: THE ONE MOVEMENT INTERNATIONAL (TOMI)
+
+TASK 24 — ADDITIONAL VISUAL INSTRUCTIONS
+
+IMPORTANT:
+This is an ADDITION to the ongoing Task 24.
+Do not restart the task or rebuild existing work.
+
+The Founder has attached:
+1. Two world-map reference images.
+2. A Museum of Ancient Art animation reference video.
+
+INSTRUCTIONS:
+
+1. OUR VISION HERO
+
+Use the first attached golden world-map image
+as the main cinematic background.
+
+Animate the world map with subtle depth,
+slow parallax, golden connections and light pulses.
+
+Follow the attached Museum of Ancient Art video
+for the STYLE OF MOTION:
+
+- Cinematic transitions
+- Layered depth
+- Elegant text reveals
+- Smooth visual movement
+- Premium editorial animations
+
+Create an original TOMI adaptation.
+
+2. THANKS THE WORLD HERO
+
+Use the second attached world-map image
+as the main background.
+
+Make "THANKS THE WORLD" large, cinematic
+and visually powerful.
+
+Animate the world connections and golden lights.
+
+Reveal the headline:
+
+EVERY COUNTRY HAS A STORY.
+EVERY VOICE MATTERS.
+
+3. CRITICAL LAYERING RULE
+
+ALL background images, animated dots,
+golden lines, flags and decorative patterns
+MUST REMAIN BEHIND THE TEXT.
+
+Text and buttons must always be clearly visible.
+
+Use proper z-index layering, readable overlays
+and pointer-events: none for decorative effects.
+
+4. SCROLL ANIMATIONS
+
+Animate major titles and supporting illustrations
+as visitors scroll.
+
+Use smooth editorial reveals inspired by
+the attached Museum reference.
+
+Avoid static sections and repetitive effects.
+
+5. PRESERVE EXISTING WORK
+
+Do not replace the Founder-provided images
+with generic stock photos.
+
+Do not modify the existing humanitarian video.
+
+Do not change the approved homepage.
+
+Do not modify Stripe, Clerk or membership rules.
+
+6. CAMPAIGN ACTIVATION
+
+Continue implementing the approved
+Thanks the World campaign activation
+and functional member text/video submissions
+as instructed in Task 24.
+
+Do not merely change the interface to say
+the campaign is open.
+
+Verify actual activation and submission
+functionality in development.
+
+Do not execute unapproved migrations
+or modify production data.
+
+FINAL INSTRUCTION:
+
+Integrate these attached visual references
+into the CURRENT Task 24 implementation.
+
+Do not create a separate project.
+
+Show the updated mobile preview and report
+what is working, incomplete or blocked.
+
+Do not deploy without Founder approval.

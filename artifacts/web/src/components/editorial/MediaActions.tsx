@@ -14,6 +14,8 @@ export type MediaActionsProps = MediaTarget & {
   compact?: boolean;
   /** Opt-in (Home only): Like / Comment / Share on one row; extra share destinations in a Share menu. Default 'default' is unchanged. */
   layout?: 'default' | 'row';
+  /** Opt-in: an additional sharing trigger below the compact action row. */
+  shareExtrasBelow?: boolean;
   className?: string;
 };
 
@@ -55,9 +57,10 @@ export default function MediaActions(props: MediaActionsProps) {
   const [menu, setMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const shareBtnRef = useRef<HTMLButtonElement>(null);
+  const extraShareRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     if (!menu) return;
-    const onDown = (ev: PointerEvent) => { if (!menuRef.current?.contains(ev.target as Node)) setMenu(false); };
+    const onDown = (ev: PointerEvent) => { if (!menuRef.current?.contains(ev.target as Node) && !extraShareRef.current?.contains(ev.target as Node)) setMenu(false); };
     const onKey = (ev: KeyboardEvent) => { if (ev.key === 'Escape') { setMenu(false); shareBtnRef.current?.focus(); } };
     document.addEventListener('pointerdown', onDown);
     document.addEventListener('keydown', onKey);
@@ -100,7 +103,7 @@ export default function MediaActions(props: MediaActionsProps) {
               <Share2 className="h-4 w-4" aria-hidden /><span className="tomi-act-l tomi-act-l--always">Share</span>
             </button>
             {menu && (
-              <div className="tomi-share-menu" role="group" aria-label={`Share ${title}`} data-testid={`menu-share-${ident}`}>
+              <div id={`share-menu-${ident}`} className="tomi-share-menu" role="group" aria-label={`Share ${title}`} data-testid={`menu-share-${ident}`}>
                 {typeof navigator !== 'undefined' && 'share' in navigator && (
                   <button type="button" onClick={() => { setMenu(false); void share(); }} data-testid={`button-native-share-${ident}`}><Share2 className="h-4 w-4" aria-hidden />Share via device</button>
                 )}
@@ -142,6 +145,13 @@ export default function MediaActions(props: MediaActionsProps) {
           <button type="button" className={cn(pill, 'border-transparent underline underline-offset-4')} onClick={() => setMore(true)} data-testid={`button-more-share-${ident}`}>More ways to share</button>
         )}
       </div>
+      )}
+      {row && props.shareExtrasBelow && (
+        <button ref={extraShareRef} type="button" className={cn('self-start min-h-10 text-xs underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 rounded-sm', muted)}
+          aria-expanded={menu} aria-controls={`share-menu-${ident}`} aria-haspopup="true"
+          onClick={() => setMenu(!menu)} data-testid={`button-more-share-${ident}`}>
+          More ways to share
+        </button>
       )}
       {note && <p className={cn('text-xs break-words', muted)} role="status">{note}</p>}
       {isLoaded && !signedIn && (

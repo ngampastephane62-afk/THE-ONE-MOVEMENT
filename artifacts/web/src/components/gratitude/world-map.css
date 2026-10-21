@@ -1,0 +1,40 @@
+/* Shared layer stack: background 0, decor 1, readability 2, content 3. Each surface is its own stacking context. */
+.tl-stack { position: relative; isolation: isolate; overflow: hidden; }
+.tl-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.tl-decor { position: absolute; inset: 0; z-index: 1; pointer-events: none; isolation: isolate; overflow: hidden; }
+.tl-decor *, .tl-decor::before, .tl-decor::after { pointer-events: none; }
+.tl-read { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.tl-content { position: relative; z-index: 3; }
+
+/* Founder world artwork. Motion translated from the Museum reference: the artwork drifts horizontally
+   (toward the right) as text enters from the left, then the composition slowly re-frames (scale/perspective). */
+.wm { position: absolute; inset: 0; overflow: hidden; perspective: 1200px; }
+.wm-pan { position: absolute; inset: -4% -8%; animation: wm-drift 40s ease-in-out 8s infinite alternate; will-change: transform; }
+.wm-art { position: absolute; inset: 0; }
+.wm-img, .wm-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.wm-img { object-fit: cover; object-position: center; }
+.wm-earth .wm-img { opacity: .9; }
+.wm-gold .wm-img { opacity: .85; }
+.wm-route { fill: none; stroke: hsl(42 70% 62% / .4); stroke-width: 1; stroke-linecap: round; }
+.wm-hub { fill: hsl(42 80% 70% / .85); transform-box: fill-box; transform-origin: center; animation: wm-pulse 5s ease-in-out infinite; animation-delay: calc(var(--i) * 410ms); }
+@keyframes wm-pulse { 0%,100% { opacity: .55; transform: scale(1); } 50% { opacity: 1; transform: scale(1.35); } }
+@keyframes wm-drift { from { transform: translateX(3%) scale(1.04); } to { transform: translateX(-3%) scale(1.07); } }
+/* Restrained outlined ring behind the composition (original TOMI arc, slow rotation) */
+.wm-ring { position: absolute; z-index: 1; right: 6%; top: 50%; width: min(62vh, 70vw); aspect-ratio: 1; border-radius: 50%; border: 1px solid hsl(42 62% 62% / .28); transform: translateY(-50%); animation: wm-ring 3s cubic-bezier(.2,.7,.2,1) 1.2s both; }
+.wm-ring::after { content: ''; position: absolute; inset: 7%; border-radius: 50%; border: 1px dashed hsl(42 62% 62% / .14); pointer-events: none; }
+@keyframes wm-ring { from { opacity: 0; transform: translateY(-50%) scale(.82) rotate(-25deg); } to { opacity: 1; transform: translateY(-50%) scale(1) rotate(0); } }
+
+/* 8s sequence: 0–2s artwork emerges from dark; 2–4s connections draw while the artwork shifts right and re-frames. */
+.wm-seq .wm-art { animation: wm-emerge 2s cubic-bezier(.2,.7,.2,1) both, wm-shift 2.4s cubic-bezier(.45,0,.2,1) 2s both; }
+.wm-seq .wm-route { stroke-dasharray: 1; stroke-dashoffset: 1; animation: wm-draw 1.4s cubic-bezier(.4,0,.2,1) forwards; animation-delay: calc(2s + var(--i) * 50ms); }
+@keyframes wm-emerge { from { opacity: 0; transform: scale(1.12); } to { opacity: 1; transform: scale(1.08); } }
+@keyframes wm-shift { from { transform: scale(1.08) translateX(-4%); } to { transform: scale(1) translateX(0) rotateY(0); } }
+@keyframes wm-draw { to { stroke-dashoffset: 0; } }
+
+.tl-paused *, .tl-paused *::before, .tl-paused *::after { animation-play-state: paused !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .wm *, .wm-seq .wm-art, .wm-seq .wm-route, .wm-ring { animation: none !important; }
+  .wm-seq .wm-route { stroke-dashoffset: 0; }
+  .tl-decor .ttw-flagfield-row { animation: none !important; }
+}

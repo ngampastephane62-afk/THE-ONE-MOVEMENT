@@ -1,0 +1,232 @@
+PROJECT: THE ONE MOVEMENT INTERNATIONAL (TOMI)
+
+TASK: UPGRADE THE “PROGRAMS” PAGE WITH IMMERSIVE CINEMATIC ANIMATIONS
+
+IMPORTANT:
+Study the two attached immersive animation reference videos and adapt their motion language to the Programs page.
+Do not copy literally. Create an original TOMI version inspired by the references.
+
+GOAL:
+Transform the Programs page into a premium immersive editorial experience.
+The page must feel cinematic, elegant, artistic, mobile-first, and alive.
+It must create a “wow” effect.
+
+GENERAL DIRECTION:
+The animations should feel like:
+- immersive museum-style presentation
+- editorial luxury motion
+- smooth reveals
+- depth, atmosphere, and elegance
+- subtle but powerful movement
+- premium visual storytelling
+
+Do NOT make it look noisy, chaotic or cheap.
+
+--------------------------------------------------
+1. HERO SECTION — OFFICIAL PROGRAMS
+--------------------------------------------------
+
+Keep the section:
+OFFICIAL PROGRAMS
+
+But redesign its animation experience inspired by the reference videos.
+
+Headline:
+THE HEARTBEAT OF THE MOVEMENT.
+
+Subtext:
+The six official programs set out the Movement’s direction across culture, business, diplomacy and celebration. Dates, applications and participation details are published only when confirmed.
+
+ANIMATION REQUIREMENTS:
+- The headline must reveal in a cinematic way:
+  - line by line
+  - word by word
+  - soft upward motion + opacity fade
+  - slight stagger between words
+- Background patterns and visual atmosphere must move subtly in depth
+- Create a premium immersive background motion behind the text
+- Add elegant parallax
+- Decorative motion must remain BEHIND the text
+- Buttons and text must always remain highly readable
+- Keep the pause motion control if useful, but style it better
+
+BACKGROUND STYLE:
+- Use TOMI’s dark teal / gold / ivory identity
+- Use African-inspired patterns subtly in the background
+- Add slow atmospheric movement, not distracting
+- If decorative lines or particles exist, keep them subtle and behind the content
+
+--------------------------------------------------
+2. TRANSITION INTO PROGRAMS LIST
+--------------------------------------------------
+
+When the user scrolls from the hero into the programs list,
+the transition must feel cinematic and immersive.
+
+Use:
+- smooth section-to-section transition
+- soft fade + translate + scale effects
+- elegant motion timing
+- mobile optimized performance
+
+Before the list starts, animate the section title:
+EVERY PROGRAM FEEDS THE ECOSYSTEM
+
+Its text must reveal beautifully and feel intentional.
+
+--------------------------------------------------
+3. PROGRAM CARDS — IMMERSIVE PRESENTATION
+--------------------------------------------------
+
+The six official programs are:
+
+I. THE ONE DIPLOMATIC GALA
+II. THE ONE SUMMIT
+III. THE ONE FASHION WEEK INTERNATIONAL
+IV. THE ONE AWARDS
+V. THE ONE FASHION NIGHT
+VI. THE ONE INVESTMENT FORUM
+
+Each program card must become more immersive and dynamic.
+
+FOR EACH PROGRAM CARD:
+- Image appears with soft cinematic reveal
+- Roman numeral badge (I, II, III, IV, V, VI) animates in elegantly
+- Title reveals with refined motion
+- Category words reveal with stagger effect
+  Example:
+  CULTURE. DIPLOMACY. ART. PEACE.
+- Description fades in after title
+- Card enters with scroll-triggered motion
+- Slight parallax or layered depth effect on image if possible
+- Keep premium editorial composition
+
+DO NOT:
+- overcrowd cards
+- add noisy effects
+- place visual particles on top of text
+- reduce readability
+
+CARD MOTION STYLE:
+- image reveal from mask / crop
+- text reveal with stagger
+- subtle zoom on image
+- light editorial slide-up motion
+- elegant easing
+- slight hover effect if useful on desktop
+- smooth static version on mobile if needed for performance
+
+--------------------------------------------------
+4. IMPORTANT IMAGE / TEXT HIERARCHY
+--------------------------------------------------
+
+Text must dominate clearly.
+
+The user must immediately read:
+- Roman numeral
+- Program title
+- Program keywords
+- Main description
+
+The animation must support the content, not compete with it.
+
+All decorative effects must remain:
+- behind the image or behind the text block
+- low opacity
+- non-obstructive
+
+--------------------------------------------------
+5. ENGAGEMENT ROW
+--------------------------------------------------
+
+For each program card:
+- keep like / comments / share on one clean row
+- keep “More ways to share” below
+- style them in a clean premium way
+- no awkward spacing
+- no broken layout on mobile
+
+--------------------------------------------------
+6. SCROLL ANIMATION SYSTEM
+--------------------------------------------------
+
+Build a coherent motion system across the full Programs page.
+
+Recommended motion behavior:
+- hero text reveals first
+- section heading reveals on scroll
+- each program card enters progressively
+- cards do NOT all appear at once
+- use stagger between cards
+- keep motion soft, cinematic, premium
+
+Use:
+- Intersection Observer or equivalent
+- performant CSS transforms
+- opacity + translate + scale
+- requestAnimationFrame only if needed
+- avoid lag on mobile Safari
+
+--------------------------------------------------
+7. VISUAL ATMOSPHERE
+--------------------------------------------------
+
+Bring more artistic atmosphere into the Programs page.
+
+Inspired by the two reference videos, create:
+- cinematic rhythm
+- immersive elegance
+- subtle sense of depth
+- premium editorial flow
+
+You may add:
+- moving texture overlays at very low opacity
+- subtle light gradients
+- refined patterned backgrounds
+- layered frame transitions
+
+But DO NOT add:
+- gimmicky neon effects
+- overly fast animations
+- distracting flashy particles
+- heavy overlays that block readability
+
+--------------------------------------------------
+8. MOBILE PRIORITY
+--------------------------------------------------
+
+This page is primarily viewed on mobile.
+Optimize for mobile first.
+
+Requirements:
+- smooth performance on iPhone Safari
+- no text overlap
+- no cut-off titles
+- no hidden content
+- no broken spacing
+- no horizontal overflow
+- no laggy heavy animation
+
+--------------------------------------------------
+9. PRESERVE CONTENT
+--------------------------------------------------
+
+Do not change the approved program names unless necessary.
+Do not remove the Founder’s selected photos.
+Do not remove existing program descriptions unless improving typography/spacing.
+
+Keep the six official programs structure.
+
+--------------------------------------------------
+10. DELIVERABLE
+--------------------------------------------------
+
+Implement the animation upgrade directly on the Programs page.
+
+Then provide:
+1. a short summary of what was changed
+2. what is working
+3. what still needs refinement
+4. updated mobile preview
+
+Do not deploy without Founder approval.

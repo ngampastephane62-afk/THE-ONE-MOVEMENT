@@ -44,6 +44,10 @@ function fixture(entry) {
     '@/components/SectionHeading': { default: ({ eyebrow, heading }) => React.createElement('header', null, eyebrow, React.createElement('h2', null, heading)) },
     '@/components/EditorialFilm': { default: props => React.createElement('figure', { 'data-testid': props.testId, 'data-film-source': props.name }, props.label, props.caption, props.credit) },
     '@/lib/gratitude': { FlagField: () => React.createElement('div', { 'aria-hidden': true }) },
+    '@/components/gratitude/WorldMap': {
+      default: () => React.createElement('div', { 'aria-hidden': true }),
+      useMotionPause: () => ({ ref: react.useRef(null), paused: false }),
+    },
     './ThanksWorldLive': { default: () => React.createElement('a', { href: '/thanks-the-world' }, 'Explore the campaign') },
   };
   function load(file) {
@@ -170,10 +174,12 @@ test('Motion has content-visible defaults, reduced-motion overrides, offscreen p
   assert.match(f.render(), /data-entered="false"/);
   const css = read('vision.css');
   assert.match(css, /prefers-reduced-motion: reduce/);
-  assert.match(css, /animation-play-state: paused/);
-  assert.match(css, /\.tv-rise-h \{ animation-delay: 4s/);
-  assert.match(css, /\.tv-rise-m \{ animation-delay: 6s/);
-  assert.doesNotMatch(css, /opacity:\s*0[;}]/);
+  assert.match(readFileSync(new URL('../src/components/gratitude/world-map.css', import.meta.url), 'utf8'), /animation-play-state: paused/);
+  assert.match(css, /\.tv-armed \.tv-mask-in/);
+  assert.match(read('index.tsx'), /'4s'/);
+  assert.match(read('index.tsx'), /'4\.6s'/);
+  assert.match(read('index.tsx'), /'6s'/);
+  assert.doesNotMatch(css, /\.tv-mask-in\s*\{[^}]*opacity:\s*0/);
   assert.match(read('VisionReveal.tsx'), /typeof IntersectionObserver === 'undefined'/);
   assert.doesNotMatch(read('index.tsx') + read('ConnectNetwork.tsx'), /from ['"](?:three|gsap|framer-motion)/);
 });

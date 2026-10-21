@@ -4,12 +4,15 @@ import { Helmet } from 'react-helmet-async';
 import AuthShell, { EmailGuidance } from '@/components/AuthShell';
 import { basePath } from '@/lib/clerk';
 import { getDesignerApplicationPath } from '@/lib/fashion-participation';
+import { gratitudeIntent, gratitudeMemberPath } from '@/lib/gratitude-intent';
 
 export default function SignInPage() {
   const { isLoaded, isSignedIn } = useAuth();
-  const packageSlug = new URLSearchParams(useSearch()).get('fashionPackage');
+  const search = useSearch();
+  const packageSlug = new URLSearchParams(search).get('fashionPackage');
+  const intent = gratitudeIntent(search, 'gratitudeIntent');
   const applicationPath = getDesignerApplicationPath(packageSlug);
-  const destination = applicationPath ?? '/member';
+  const destination = applicationPath ?? (intent ? gratitudeMemberPath(intent) : '/member');
   const packageQuery = applicationPath ? `?fashionPackage=${encodeURIComponent(packageSlug!)}` : '';
   if (isLoaded && isSignedIn) return <Redirect to={destination} replace />;
   return (

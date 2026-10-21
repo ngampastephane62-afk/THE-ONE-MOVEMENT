@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Link } from 'wouter';
-import { AlertTriangle, Archive, Eye, FilePlus2, ImagePlus, Pencil, RotateCw, Send, Trash2 } from 'lucide-react';
+import { Link, useLocation, useSearch } from 'wouter';
+import { AlertTriangle, Archive, Video, Eye, FilePlus2, ImagePlus, Pencil, RotateCw, Send, Trash2 } from 'lucide-react';
 import {
   useGetGratitudeOptions, getGetGratitudeOptionsQueryKey, useGetMyGratitudeStories, getGetMyGratitudeStoriesQueryKey,
   getMyGratitudeStories, useRequestGratitudeUpload, useCompleteGratitudeUpload, type GratitudeStory, type GratitudeOptions,
@@ -44,6 +44,13 @@ export default function ThanksTheWorldMember() {
   const [page, setPage] = useState(1);
   const [editing, setEditing] = useState<number | 'new' | null>(null);
   const polls = useRef(0);
+  // Query intent from the public CTAs (?intent=text|video). Survives the sign-in round-trip because it lives in the URL;
+  // consumed exactly once, then stripped so polling/remounts never reopen or reset the editor.
+  const search = useSearch();
+  const [location, navigate] = useLocation();
+  const urlIntent = new URLSearchParams(search).get('intent');
+  const [intent, setIntent] = useState<'text' | 'video' | null>(null);
+  const intentDone = useRef(false);
   const opts = useGetGratitudeOptions({ query: { queryKey: getGetGratitudeOptionsQueryKey() } });
   const mine = useGetMyGratitudeStories({ page }, {
     query: {
@@ -59,6 +66,14 @@ export default function ThanksTheWorldMember() {
   });
   const activeCampaigns = (opts.data?.campaigns ?? []).filter((c) => c.status === 'active');
   const lead = activeCampaigns[0];
+  const ready = !opts.isLoading && !mine.isLoading;
+  useEffect(() => {
+    if (intentDone.current || !ready || (urlIntent !== 'text' && urlIntent !== 'video')) return;
+    intentDone.current = true;
+    setIntent(urlIntent);
+    setEditing((e) => e ?? 'new');
+    navigate(location, { replace: true });
+  }, [ready, urlIntent]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (opts.isLoading || mine.isLoading) return <div className="px-3 md:px-0"><Skeleton rows={4} /></div>;
   if (opts.isError) return <div className="px-3 md:px-0"><ErrorBox onRetry={() => opts.refetch()} /></div>;
@@ -73,13 +88,14 @@ export default function ThanksTheWorldMember() {
         <h1 className="mt-2 font-display text-3xl">Your gratitude stories</h1>
         <p className="mt-2 max-w-xl text-sm leading-relaxed text-ivory-200">{lead ? `${lead.name} is open. Write a message, upload a video or add photos, preview, then send it for the Founder's review.` : 'No campaign is active yet, so stories cannot be saved or submitted. You can write in the editor to plan your words, but nothing is stored until the Founder activates a campaign.'}</p>
         <div className="mt-5 flex flex-wrap gap-2">
-          <button className="inline-flex min-h-11 items-center gap-2 rounded-full bg-gold-500 px-5 text-sm font-semibold text-ink-900 hover:bg-gold-400" onClick={() => setEditing('new')} data-testid="button-new-story"><FilePlus2 className="h-4 w-4" />Write a story</button>
+          <button className="inline-flex min-h-11 items-center gap-2 rounded-full bg-gold-500 px-5 text-sm font-semibold text-ink-900 hover:bg-gold-400" onClick={() => { setIntent('text'); setEditing('new'); }} data-testid="button-new-story"><FilePlus2 className="h-4 w-4" />Write a story</button>
+          <button className="inline-flex min-h-11 items-center gap-2 rounded-full border border-gold-400/70 px-5 text-sm font-semibold text-gold-200 hover:bg-gold-500/10" onClick={() => { setIntent('video'); setEditing((e) => e ?? 'new'); }} data-testid="button-new-video-story"><Video className="h-4 w-4" />Upload a video</button>
           <Link href="~/thanks-the-world" className="inline-flex min-h-11 items-center rounded-full border border-ivory-200/40 px-5 text-sm font-semibold hover:border-gold-400" data-testid="link-public-campaign">See public stories</Link>
         </div>
       </IdentityBand>
 
       {editing !== null && (
-        <Editor key={editing} storyId={editing === 'new' ? null : editing} listed={listed} options={opts.data!} onClose={() => setEditing(null)} onCreated={(id) => { polls.current = 0; setEditing(id); }} onActivity={() => { polls.current = 0; }} />
+        <Editor key={editing} intent={intent} storyId={editing === 'new' ? null : editing} listed={listed} options={opts.data!} onClose={() => setEditing(null)} onCreated={(id) => { polls.current = 0; setEditing(id); }} onActivity={() => { polls.current = 0; }} />
       )}
 
       {items.length === 0 ? <Empty title="No stories yet" body="Your drafts and submissions will appear here with their review status." /> : (
@@ -111,7 +127,7 @@ const fieldsOf = (s: GratitudeStory | null, fallbackCampaign?: number): Fields =
 });
 const sameFields = (a: Fields, b: Fields) => a.title === b.title && a.body === b.body && a.campaignId === b.campaignId && a.countryCode === b.countryCode && a.theme === b.theme;
 
-function Editor({ storyId, listed, options, onClose, onCreated, onActivity }: { storyId: number | null; listed: GratitudeStory | null; options: GratitudeOptions; onClose: () => void; onCreated: (id: number) => void; onActivity: () => void }) {
+function Editor({ intent, storyId, listed, options, onClose, onCreated, onActivity }: { intent: 'text' | 'video' | null; storyId: number | null; listed: GratitudeStory | null; options: GratitudeOptions; onClose: () => void; onCreated: (id: number) => void; onActivity: () => void }) {
   const { run, pending } = useGratitudeAct();
   const invalidate = useInvalidateGratitude();
   const reqUpload = useRequestGratitudeUpload();
@@ -134,6 +150,8 @@ function Editor({ storyId, listed, options, onClose, onCreated, onActivity }: { 
   const [uploads, setUploads] = useState<Pending[]>([]);
   const [alt, setAlt] = useState('');
   const fileRef = useRef<HTMLInputElement>(null);
+  const mediaRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLInputElement>(null);
   const uploadsRef = useRef<Pending[]>([]);
   uploadsRef.current = uploads;
   const xhrRef = useRef<XMLHttpRequest | null>(null);
@@ -185,6 +203,15 @@ function Editor({ storyId, listed, options, onClose, onCreated, onActivity }: { 
   }, [listed]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const story = row;
+  // Video intent: bring the upload section into view; once a draft exists, focus the file chooser (opening it needs a user gesture).
+  const storyReady = !!story && !loadingRow;
+  useEffect(() => {
+    if (intent === 'video') {
+      mediaRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (storyReady) document.getElementById('ttw-file-label')?.focus();
+      else titleRef.current?.focus({ preventScroll: true });
+    } else if (intent === 'text' && !storyReady) titleRef.current?.focus();
+  }, [intent, storyReady]);
   const media = story?.media ?? [];
   const dirty = !sameFields(f, baselineRef.current);
   const campaignActive = f.campaignId !== undefined && activeIds.has(f.campaignId);
@@ -395,7 +422,7 @@ function Editor({ storyId, listed, options, onClose, onCreated, onActivity }: { 
             </select>
           </label>
           <label className="text-xs font-semibold text-ink-800">Title
-            <input className={`${field} mt-1`} maxLength={160} value={f.title} disabled={!editable} onChange={(e) => set({ title: e.target.value })} data-testid="input-title" />
+            <input className={`${field} mt-1`} maxLength={160} value={f.title} disabled={!editable} ref={titleRef} onChange={(e) => set({ title: e.target.value })} data-testid="input-title" />
           </label>
           <label className="text-xs font-semibold text-ink-800">Your message <span className="font-normal text-sand-400">({f.body.length}/5000 · optional when you add a video)</span>
             <textarea className={`${field} mt-1 min-h-48`} maxLength={5000} value={f.body} disabled={!editable} onChange={(e) => set({ body: e.target.value })} data-testid="input-body" />
@@ -431,10 +458,10 @@ function Editor({ storyId, listed, options, onClose, onCreated, onActivity }: { 
         </div>
       )}
 
-      <div className="mt-6 border-t border-sand-200 pt-5">
+      <div ref={mediaRef} className={`mt-6 border-t pt-5 ${intent === 'video' ? 'border-gold-500' : 'border-sand-200'}`} data-testid="section-media">
         <h3 className="font-display text-lg text-ink-900">Video or photos</h3>
         <p className="mt-1 text-xs text-ink-700">One MP4, WebM or MOV video (100 MB, 3 minutes), or up to three JPEG, PNG or WebP photos (10 MB each). Choose files from your phone or computer. Recording inside the site is not available. Files upload one at a time; the server then processes them, which can take a moment.</p>
-        {!story ? <p className="mt-2 text-xs text-gold-700">Save your story first to attach media.</p> : (
+        {!story ? <p className="mt-2 text-xs text-gold-700" data-testid="text-save-before-media">{intent === 'video' ? 'To upload your video: add a title (a message is optional), choose Save private draft above, and the video chooser opens here.' : 'Save your story first to attach media.'}</p> : (
           <>
             <ul className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
               {media.map((m) => (
@@ -459,7 +486,7 @@ function Editor({ storyId, listed, options, onClose, onCreated, onActivity }: { 
                   <input className={`${field} mt-1`} maxLength={500} value={alt} onChange={(e) => setAlt(e.target.value)} data-testid="input-alt-text" />
                 </label>
                 <input ref={fileRef} type="file" className="sr-only" accept={[...VID, ...IMG].join(',')} multiple onChange={(e) => addFiles(e.target.files)} id="ttw-file" disabled={!!conflict} data-testid="input-file" />
-                <label htmlFor="ttw-file" className={`${btnGhost} min-h-11 cursor-pointer`}><ImagePlus className="h-4 w-4" />Choose video or photos</label>
+                <label htmlFor="ttw-file" id="ttw-file-label" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileRef.current?.click(); } }} className={`${btnGhost} min-h-11 cursor-pointer focus-visible:ring-2 focus-visible:ring-gold-500`}><ImagePlus className="h-4 w-4" />{intent === 'video' ? 'Choose your video' : 'Choose video or photos'}</label>
               </div>
             )}
           </>

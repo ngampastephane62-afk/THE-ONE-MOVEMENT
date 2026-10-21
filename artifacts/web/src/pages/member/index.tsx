@@ -2,13 +2,14 @@ import { useState, type ReactNode } from 'react';
 import InvitationProgress from '@/components/network/InvitationProgress';
 import PendingInvitation from '@/components/network/PendingInvitation';
 import { Helmet } from 'react-helmet-async';
-import { Link, Redirect, Route, Switch, useLocation } from 'wouter';
+import { Link, Redirect, Route, Switch, useLocation, useSearch } from 'wouter';
 import { Show, useAuth, useUser, useClerk } from '@clerk/react';
 import { Award, BadgeCheck, Bell, Building2, Sparkles, UserPlus, Briefcase, Compass, Globe2, HandHeart, Home, Newspaper, LogOut, MessageSquare, Settings, Shield, Users } from 'lucide-react';
 import {
   useGetMemberProfile, getGetMemberProfileQueryKey, useGetNetworkState, getGetNetworkStateQueryKey,
 } from '@workspace/api-client-react';
 import { basePath } from '@/lib/clerk';
+import { gratitudeIntent } from '@/lib/gratitude-intent';
 import universe from '@/assets/media/ecosystem/community-universe.webp';
 import tomiLogo from '@/assets/media/home/tomi-official-logo.png';
 import { Avatar, ErrorBox, Skeleton, btn, errStatus, useAct } from '@/components/network/kit';
@@ -257,11 +258,14 @@ function NetworkGate() {
 }
 
 export default function MemberPage() {
+  const [location] = useLocation();
+  const search = useSearch();
+  const intent = location === '/member/thanks-the-world' ? gratitudeIntent(search) : null;
   return (
     <>
       <Helmet><title>TOMI NETWORK — THE ONE MOVEMENT INTERNATIONAL</title><meta name="robots" content="noindex, nofollow" /></Helmet>
       <Show when="signed-in"><NetworkGate /></Show>
-      <Show when="signed-out"><Redirect to="/sign-in" /></Show>
+      <Show when="signed-out"><Redirect to={intent ? `/sign-in?gratitudeIntent=${intent}` : '/sign-in'} /></Show>
     </>
   );
 }

@@ -1,0 +1,121 @@
+/* Programs — "living exhibition" motion. Scoped to .pgm. Default state: everything visible. */
+.pgm { overflow-x: clip; }
+.pgm-stack { position: relative; isolation: isolate; overflow: hidden; }
+.pgm-l0 { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.pgm-l1 { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+.pgm-l1 *, .pgm-l1::before, .pgm-l1::after { pointer-events: none; }
+.pgm-l2 { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.pgm-l3 { position: relative; z-index: 3; }
+
+/* ---------- HERO ---------- */
+.pgm-hero { background: hsl(187 67% 9%); color: hsl(38 57% 94%); min-height: 78vh; min-height: 78dvh; display: flex; align-items: center; }
+.pgm-hero .pgm-l0 { background:
+  radial-gradient(ellipse 90% 55% at 50% 118%, hsl(39 52% 54% / .26), transparent 65%),
+  radial-gradient(ellipse 50% 40% at 92% 0%, hsl(12 58% 38% / .2), transparent 70%),
+  linear-gradient(180deg, hsl(187 67% 8%), hsl(187 67% 12%)); }
+/* Depth plates: two pattern planes + mist drift at different speeds (landscape-reveal reference, rendered in TOMI pattern) */
+.pgm-plate { position: absolute; inset: -12%; color: hsl(39 52% 54%); will-change: transform; }
+.pgm-plate-far { opacity: .07; background-image:
+    linear-gradient(45deg, currentColor 1px, transparent 1px 14px, currentColor 14px 15px, transparent 15px),
+    linear-gradient(-45deg, currentColor 1px, transparent 1px 14px, currentColor 14px 15px, transparent 15px);
+  background-size: 30px 30px; -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000, transparent 75%); mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000, transparent 75%);
+  animation: pgm-plate-far 44s ease-in-out infinite alternate; }
+.pgm-plate-near { opacity: .09; background-image:
+    repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 46px),
+    radial-gradient(circle at 23px 23px, currentColor 1.5px, transparent 2px);
+  background-size: 46px 46px, 46px 46px; -webkit-mask-image: linear-gradient(180deg, transparent 40%, #000 95%); mask-image: linear-gradient(180deg, transparent 40%, #000 95%);
+  animation: pgm-plate-near 30s ease-in-out infinite alternate; }
+.pgm-mist { position: absolute; left: -20%; right: -20%; height: 46%; border-radius: 50%; filter: blur(30px); will-change: transform; }
+.pgm-mist-a { bottom: -8%; background: hsl(39 52% 54% / .14); animation: pgm-mist 26s ease-in-out infinite alternate; }
+.pgm-mist-b { top: 8%; background: hsl(189 50% 40% / .12); animation: pgm-mist 34s ease-in-out infinite alternate-reverse; }
+.pgm-arc { position: absolute; left: 50%; top: 54%; width: min(120vw, 1100px); aspect-ratio: 1; border-radius: 50%; border: 1px solid hsl(39 52% 54% / .16); transform: translate(-50%, -50%); }
+.pgm-arc::after { content: ''; position: absolute; inset: 9%; border-radius: 50%; border: 1px dashed hsl(39 52% 54% / .09); }
+.pgm-hero .pgm-l2 { background: radial-gradient(ellipse 60% 55% at 50% 50%, hsl(187 67% 8% / .62), transparent 80%); }
+@keyframes pgm-plate-far { from { transform: translate3d(-1.5%, 0, 0) scale(1.06); } to { transform: translate3d(1.5%, -1%, 0) scale(1.02); } }
+@keyframes pgm-plate-near { from { transform: translate3d(2%, 1%, 0) scale(1.1); } to { transform: translate3d(-2%, -1%, 0) scale(1.04); } }
+@keyframes pgm-mist { from { transform: translate3d(-6%, 0, 0); } to { transform: translate3d(6%, -4%, 0); } }
+
+/* Hero entrance (runs once; fill keeps final state; reduced motion skips) */
+.pgm-line { display: block; }
+.pgm-word-mask { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: .04em; }
+.pgm-word-mask:not(:last-child) { margin-inline-end: .22em; }
+.pgm-word { display: inline-block; animation: pgm-word 1.1s cubic-bezier(.2,.75,.15,1) both; animation-delay: calc(.35s + var(--w) * 110ms); }
+@keyframes pgm-word { from { transform: translateY(70%); opacity: 0; } to { transform: none; opacity: 1; } }
+.pgm-hero-eyebrow { animation: pgm-fade 1s ease-out .1s both; }
+.pgm-hero-rule { display: block; height: 1px; width: 220px; margin-inline: auto; background: linear-gradient(90deg, transparent, hsl(39 52% 54%), transparent); transform-origin: center; animation: pgm-rule 1.4s cubic-bezier(.2,.7,.2,1) 1.1s both; }
+.pgm-hero-sub { animation: pgm-up 1.1s cubic-bezier(.2,.7,.2,1) 1.35s both; }
+.pgm-hero .pgm-plates-in { animation: pgm-depth 2.6s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes pgm-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pgm-up { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes pgm-rule { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes pgm-depth { from { opacity: 0; transform: scale(1.12); } to { opacity: 1; transform: none; } }
+
+.pgm-toggle { position: absolute; z-index: 4; right: 1rem; bottom: 1rem; display: inline-flex; align-items: center; gap: .45rem; min-height: 2.5rem; padding: 0 .95rem; border-radius: 999px; border: 1px solid hsl(39 52% 54% / .45); background: hsl(187 67% 8% / .7); color: hsl(43 80% 80%); font-size: .68rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); transition: border-color .2s, background-color .2s; }
+.pgm-toggle:hover { border-color: hsl(43 80% 73%); background: hsl(187 67% 12% / .85); }
+.pgm-toggle:focus-visible { outline: 2px solid hsl(43 80% 73%); outline-offset: 3px; }
+
+/* ---------- SECTION TRANSITION (hero -> list) ---------- */
+.pgm-seam { height: 72px; background: linear-gradient(180deg, hsl(187 67% 12%), hsl(38 57% 94%)); }
+
+/* ---------- SCROLL REVEALS (only when armed) ---------- */
+.pgm[data-armed='true'] [data-pgm-reveal]:not([data-in='true']) .pgm-r { opacity: 0; }
+.pgm[data-armed='true'] [data-pgm-reveal]:not([data-in='true']) .pgm-r-up { transform: translateY(26px); }
+.pgm[data-armed='true'] [data-pgm-reveal]:not([data-in='true']) .pgm-r-scale { transform: translateY(30px) scale(.965); }
+.pgm[data-armed='true'] [data-pgm-reveal]:not([data-in='true']) .pgm-crop { clip-path: inset(14% 10% 14% 10%); }
+.pgm[data-armed='true'] [data-pgm-reveal]:not([data-in='true']) .pgm-crop-img { transform: scale(1.16); }
+.pgm[data-armed='true'] [data-pgm-reveal]:not([data-in='true']) .pgm-numeral { opacity: 0; transform: translateY(-10px) scale(.86); }
+.pgm[data-armed='true'] [data-pgm-reveal]:not([data-in='true']) .pgm-word { transform: translateY(70%); opacity: 0; }
+.pgm[data-armed='true'] [data-pgm-reveal]:not([data-in='true']) .pgm-kw { opacity: 0; transform: translateY(8px); }
+.pgm[data-armed='true'] [data-pgm-reveal]:not([data-in='true']) .pgm-rule { transform: scaleX(0); }
+.pgm[data-armed='true'] [data-pgm-reveal] .pgm-word { animation: none; }
+.pgm[data-armed='true'] [data-pgm-reveal] :is(.pgm-r, .pgm-r-up, .pgm-r-scale, .pgm-numeral, .pgm-word, .pgm-kw, .pgm-rule) {
+  transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform 1.1s cubic-bezier(.2,.75,.15,1);
+  transition-delay: calc(var(--d, 0ms) + var(--w, 0) * 70ms); }
+.pgm[data-armed='true'] [data-pgm-reveal] .pgm-crop { transition: clip-path 1.3s cubic-bezier(.65,0,.2,1); transition-delay: var(--d, 0ms); }
+.pgm[data-armed='true'] [data-pgm-reveal] .pgm-crop-img { transition: transform 2.2s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0ms); }
+.pgm-rule { display: block; height: 1px; background: hsl(39 52% 54%); transform-origin: left; }
+
+/* ---------- CARDS ---------- */
+.pgm-card { display: flex; flex-direction: column; height: 100%; }
+.pgm-card-link { display: block; flex: 1; border-radius: 2px; outline: none; }
+.pgm-card-link:focus-visible { box-shadow: 0 0 0 2px hsl(39 52% 54%), 0 0 0 4px hsl(187 67% 12%); }
+.pgm-card article { transition: background-color .3s ease; }
+.pgm-card-link:hover article { background-color: hsl(188 66% 15%) !important; }
+.pgm-card-link:hover h3 { color: hsl(43 80% 73%); }
+.pgm-crop { overflow: hidden; position: relative; }
+.pgm-crop-img { transform: translate3d(0, var(--pgm-py, 0px), 0) scale(1.04); }
+.pgm-card-link:hover .pgm-crop-img { transform: translate3d(0, var(--pgm-py, 0px), 0) scale(1.07); transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+.pgm-crop::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, transparent 55%, hsl(187 67% 8% / .55)); z-index: 1; }
+.pgm .tomi-programme-numeral.pgm-numeral { z-index: 3; }
+.pgm-kws { display: flex; flex-wrap: wrap; gap: .15rem .55rem; font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; font-weight: 600; color: hsl(39 52% 54%); }
+.pgm-title { font-family: var(--font-display); font-size: 1.15rem; letter-spacing: .12em; line-height: 1.4; text-transform: uppercase; color: hsl(38 57% 94%); transition: color .25s; overflow-wrap: break-word; }
+.pgm-desc { color: hsl(189 30% 74%); }
+
+/* Engagement row: one clean line, sitting as a quiet ledger under each card */
+.pgm-actions { margin-top: .25rem; padding: .25rem .25rem 0; border-top: 1px solid hsl(39 52% 54% / .18); }
+
+/* Pausing continuous motion: user toggle, hidden tab, or offscreen owner */
+.pgm[data-still='true'] [data-pgm-loop] *, .pgm[data-hidden='true'] [data-pgm-loop] *, [data-pgm-loop][data-off='true'] *,
+.pgm[data-still='true'] .tomi-aurora-surface * { animation-play-state: paused !important; }
+.pgm[data-still='true'] .pgm-crop-img { --pgm-py: 0px; }
+.pgm[data-still='true'] :is(.pgm-word, .pgm-hero-eyebrow, .pgm-hero-sub, .pgm-hero-rule) {
+  animation: none !important; opacity: 1 !important; transform: none !important;
+}
+.pgm[data-still='true'] [data-pgm-reveal] :is(.pgm-r, .pgm-r-up, .pgm-r-scale, .pgm-numeral, .pgm-word, .pgm-kw, .pgm-rule) {
+  opacity: 1 !important; transform: none !important; transition: none !important;
+}
+.pgm[data-still='true'] [data-pgm-reveal] .pgm-crop { clip-path: none !important; transition: none !important; }
+
+@media (max-width: 767px) {
+  .pgm-crop-img { transform: scale(1.03); }
+  .pgm-mist { filter: blur(22px); }
+  .pgm-toggle { right: .75rem; bottom: .75rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pgm *, .pgm *::before, .pgm *::after { animation: none !important; transition: none !important; }
+  .pgm-crop-img { transform: none !important; }
+  .pgm[data-armed='true'] [data-pgm-reveal] :is(.pgm-r, .pgm-r-up, .pgm-r-scale, .pgm-numeral, .pgm-word, .pgm-kw, .pgm-rule) {
+    opacity: 1 !important; transform: none !important;
+  }
+  .pgm[data-armed='true'] [data-pgm-reveal] .pgm-crop { clip-path: none !important; }
+}

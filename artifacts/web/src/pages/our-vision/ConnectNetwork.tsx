@@ -11,7 +11,7 @@ export const AREAS = [
 
 const G = 'hsl(42 62% 56%)';
 /** Abstract motifs — geometric only, no cultural symbols. */
-function Motif({ i }: { i: number }) {
+function Motif({ i, on = false }: { i: number; on?: boolean }) {
   const m: ReactNode[] = [
     // Humanitarian: human-centred circles held together
     <g key="h"><circle cx="40" cy="40" r="10" /><circle cx="22" cy="52" r="7" /><circle cx="58" cy="52" r="7" /><path d="M14 64 Q40 44 66 64" /></g>,
@@ -26,7 +26,7 @@ function Motif({ i }: { i: number }) {
     // Media: flowing communication waves
     <g key="m"><path d="M8 40 Q24 20 40 40 T72 40" /><path d="M8 52 Q24 32 40 52 T72 52" opacity=".6" /><path d="M8 28 Q24 8 40 28 T72 28" opacity=".6" /></g>,
   ];
-  return <svg viewBox="0 0 80 80" aria-hidden className="h-full w-full" fill="none" stroke={G} strokeWidth="1.6"><g className={`tv-motif tv-motif-${i}`}>{m[i]}</g></svg>;
+  return <svg viewBox="0 0 80 80" aria-hidden className="h-full w-full" fill="none" stroke={G} strokeWidth="1.6"><g className={`tv-motif tv-motif-${i} ${on ? 'tv-motif-on' : ''}`}>{m[i]}</g></svg>;
 }
 
 export default function ConnectNetwork() {
@@ -50,6 +50,10 @@ export default function ConnectNetwork() {
           <g className="orbit"><circle cx="200" cy="200" r="150" fill="none" stroke="hsl(42 62% 56% / .18)" strokeDasharray="2 8" /></g>
           <circle cx="200" cy="200" r="95" fill="none" stroke="hsl(42 62% 56% / .12)" />
           {pts.map((p, i) => <line key={i} className={`spoke ${i === active ? 'on' : ''}`} x1="200" y1="200" x2={p.x} y2={p.y} />)}
+          <g key={`sel-${active}`}>
+            <line className="tv-spoke-draw" x1="200" y1="200" x2={pts[active].x} y2={pts[active].y} pathLength={1} />
+            <circle className="tv-hub-pulse" cx={pts[active].x} cy={pts[active].y} r="34" />
+          </g>
           <circle cx="200" cy="200" r="40" fill="hsl(187 60% 12%)" stroke={G} />
           <text x="200" y="205" textAnchor="middle" fill={G} fontSize="13" letterSpacing="3">TOMI</text>
         </svg>
@@ -65,7 +69,7 @@ export default function ConnectNetwork() {
             style={{ left: `${p.x / 4}%`, top: `${p.y / 4}%` }}
             data-testid={`node-area-${AREAS[i].n}`}
           >
-            <Motif i={i} />
+            <Motif key={i === active ? `on-${active}` : 'off'} i={i} on={i === active} />
           </button>
         ))}
       </div>
@@ -92,7 +96,7 @@ export default function ConnectNetwork() {
           ))}
         </div>
         <div id="tv-area-panel" role="tabpanel" aria-labelledby={`tv-tab-${a.n}`} key={a.n} tabIndex={0} className="tv-panel mt-8 flex flex-col gap-5 border-l border-gold-500/50 pl-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 sm:flex-row" aria-live="polite">
-          <div className="h-20 w-20 shrink-0"><Motif i={active} /></div>
+          <div className="h-20 w-20 shrink-0"><Motif i={active} on /></div>
           <div>
             <p className="font-mono text-xs text-gold-500">{a.n} / 06</p>
             <h3 className="mt-2 font-display text-2xl leading-tight text-ivory-100" data-testid="text-area-title">{a.t}</h3>

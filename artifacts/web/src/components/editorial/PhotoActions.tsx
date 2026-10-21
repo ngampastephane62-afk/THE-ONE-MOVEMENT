@@ -9,12 +9,12 @@ import MediaActions from './MediaActions';
  * Rendered as a sibling below the image so overflow-hidden frames never clip it.
  * Also gives the photo a deep-link anchor for ?media=<source>#media-<hash>.
  */
-export default function PhotoActions({ source, title, tone = 'light', className }: { source: string; title: string; tone?: 'light' | 'dark'; className?: string }) {
+export default function PhotoActions({ source, title, tone = 'light', className, layout, shareExtrasBelow }: { source: string; title: string; tone?: 'light' | 'dark'; className?: string; layout?: 'default' | 'row'; shareExtrasBelow?: boolean }) {
   const s = canonicalMediaSource(source);
   const ref = useDeepLinkFocus<HTMLDivElement>({ source: s });
   return (
     <div ref={ref} id={mediaAnchorId(s)} tabIndex={-1} className={cn('scroll-mt-28 pt-3 outline-none data-[deeplinked=true]:ring-2 data-[deeplinked=true]:ring-gold-400 data-[deeplinked=true]:ring-offset-4', className)}>
-      <MediaActions source={s} title={title} tone={tone} compact />
+      <MediaActions source={s} title={title} tone={tone} compact layout={layout} shareExtrasBelow={shareExtrasBelow} />
     </div>
   );
 }

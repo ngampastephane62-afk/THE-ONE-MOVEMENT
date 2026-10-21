@@ -1,0 +1,321 @@
+PROJECT: THE ONE MOVEMENT INTERNATIONAL (TOMI)
+
+TASK 24 — OUR VISION FINAL REFINEMENT
+& THANKS THE WORLD CAMPAIGN ACTIVATION
+
+MODE: CONTROLLED IMPLEMENTATION
+
+FOUNDER INSTRUCTION:
+
+Apply all corrections below in ONE coordinated task.
+
+Do not rebuild the website.
+Reuse existing components, authentication,
+member publishing, media and moderation systems.
+
+PRIORITY 1 — FIX ANIMATIONS
+
+The current golden dots and connection lines
+are moving IN FRONT OF the text.
+
+THIS IS WRONG.
+
+All decorative animations must remain BEHIND
+the content.
+
+Use a strict visual layering system:
+
+BACKGROUND: z-index 0
+PATTERNS AND ANIMATED CONNECTIONS: z-index 1
+CONTENT BACKGROUND / READABILITY LAYER: z-index 2
+HEADINGS, TEXT AND BUTTONS: z-index 3
+
+Ensure decorative elements never intercept
+clicks, block text or reduce readability.
+
+Use pointer-events: none for decorative layers.
+
+Do not use oversized glowing dots.
+
+Reduce the visual intensity.
+
+PRIORITY 2 — MUSEUM OF ANCIENT ART ANIMATION
+
+The Founder provided a 15-second Museum of
+Ancient Art reference video.
+
+Use its MOTION LANGUAGE as the reference
+for the OUR VISION opening.
+
+The reference demonstrates:
+
+- Cinematic editorial composition
+- Artwork entering and moving within the frame
+- Elegant horizontal image movement
+- Smooth transitions between visual compositions
+- Large typography revealed in stages
+- Subtle parallax and layered depth
+- Art-directed timing and premium motion
+- Text and imagery working together
+
+Implement an ORIGINAL TOMI adaptation.
+
+Do not copy the museum's assets or branding.
+
+OUR VISION opening sequence:
+
+0–2 SECONDS:
+A beautiful illuminated world map emerges
+from a dark background.
+
+2–4 SECONDS:
+Golden connections develop between continents.
+The camera-like composition moves subtly.
+
+4–6 SECONDS:
+Reveal the first headline:
+
+ONE WORLD.
+ONE HUMANITY.
+
+6–8 SECONDS:
+Reveal the final headline:
+
+ONE SHARED FUTURE.
+
+The words should animate elegantly,
+using masked text reveals and smooth movement.
+
+The world map and animated connections
+remain BEHIND the text.
+
+Keep every heading fully readable.
+
+Do not create a blocking loading screen.
+
+PRIORITY 3 — ANIMATE ALL MAJOR VISION SECTIONS
+
+Improve the existing scroll animations for:
+
+HOW WE CONNECT
+GLOBAL CONNECTION
+DIPLOMACY
+BUSINESS & INVESTMENT
+CULTURE & ENTERTAINMENT
+HUMANITARIAN ACTION
+GOVERNANCE
+MEDIA & STORYTELLING
+ONE NETWORK, A WORLD OF POSSIBILITIES
+
+Use alternating animation directions.
+
+Some elements enter from the left,
+others from the right.
+
+Headlines reveal through masks.
+Illustrations move independently.
+Background patterns appear subtly.
+
+Use meaningful animations, not random effects.
+
+Text remains readable throughout.
+
+Respect reduced-motion settings.
+
+PRIORITY 4 — DIFFERENT NATIONS
+
+In the section:
+
+DIFFERENT NATIONS.
+DIFFERENT CULTURES.
+ONE SHARED HUMANITY.
+
+Add international flags as a subtle
+animated BACKGROUND layer.
+
+Low opacity.
+Slow movement.
+No text obstruction.
+
+Represent different nations respectfully.
+
+PRIORITY 5 — THANKS THE WORLD CAMPAIGN
+
+THE CAMPAIGN MUST BE OPEN.
+
+The current screen displays:
+
+"NO CAMPAIGN IS OPEN YET."
+
+The Founder explicitly authorizes activation
+of the official THANKS THE WORLD campaign.
+
+Inspect the existing campaign management system.
+
+Create and activate the official campaign
+through the existing authorized workflow.
+
+Do not merely hide the warning message.
+
+The campaign must be genuinely active
+in the application database.
+
+Do not create duplicate campaigns.
+
+Use:
+
+NAME:
+THANKS THE WORLD
+
+TITLE:
+EVERY COUNTRY HAS A STORY.
+EVERY VOICE MATTERS.
+
+DESCRIPTION:
+
+Share your gratitude with the world.
+Celebrate your country, community,
+culture and the people who inspire you.
+
+PRIORITY 6 — MEMBER CONTRIBUTIONS
+
+Every authenticated member must be able to:
+
+- Select a country
+- View its flag
+- Select a gratitude theme
+- Write a gratitude message
+- Upload a gratitude video
+- Preview the contribution
+- Save a draft
+- Submit for Founder review
+- Track submission status
+
+Use existing member accounts.
+
+Do not create a separate registration system.
+
+Approved contributions must appear in the
+campaign feed and in eligible public
+member profiles according to privacy settings.
+
+Preserve Founder moderation before publication.
+
+Do not confuse SUBMISSION with PUBLICATION.
+
+PRIORITY 7 — CAMPAIGN DESIGN
+
+Create a cinematic THANKS THE WORLD section.
+
+Use the world-map imagery and golden global
+connections supplied by the Founder
+as visual inspiration where available.
+
+Large animated title:
+
+THANKS THE WORLD
+
+Subtitle:
+
+EVERY COUNTRY HAS A STORY.
+EVERY VOICE MATTERS.
+
+Buttons:
+
+SHARE YOUR STORY
+UPLOAD YOUR VIDEO
+EXPLORE STORIES
+
+All buttons must work.
+
+Background animation remains behind the text.
+
+Maintain TOMI's premium green and gold identity.
+
+PRIORITY 8 — CULTURAL CAMPAIGNS
+
+Preserve the broader campaign concept:
+
+THANKS EMIRATES
+THANKS AFRICA
+THANKS USA
+THANKS EUROPE
+
+Support future countries and regions.
+
+Each campaign should have its own cultural
+identity rather than reusing African
+patterns for every region.
+
+Do not activate additional campaigns
+without Founder authorization.
+
+PRIORITY 9 — MEMBER ENGAGEMENT
+
+Approved contributions may support:
+
+Views
+Likes
+Comments
+Shares
+Featured stories
+
+Reuse existing engagement functionality.
+
+Do not invent engagement statistics.
+
+Do not announce a prize or winner yet.
+
+The Founder will announce the official
+competition rules separately.
+
+PRIORITY 10 — PERFORMANCE
+
+Optimize for mobile.
+
+Animations must be smooth and lightweight.
+
+Avoid horizontal overflow.
+
+Do not autoplay multiple videos.
+
+Pause unnecessary offscreen animations.
+
+Ensure text stays visible if animations fail.
+
+IMPORTANT SAFETY RULES:
+
+Do not modify Stripe or Clerk.
+Do not change membership permissions.
+Do not deploy automatically.
+Do not modify production data without approval.
+Do not run unapproved database migrations.
+Do not fabricate functional submission results.
+
+If campaign activation or real uploads require
+a schema change, STOP at that specific approval
+gate and provide the exact migration.
+
+Continue safe independent frontend corrections.
+
+FINAL ACCEPTANCE TESTS:
+
+1. Golden dots never cover the text.
+2. Our Vision has the requested cinematic opening.
+3. Headings animate during scrolling.
+4. Background flags remain subtle.
+5. Thanks the World is ACTIVE in development.
+6. A real member can create a text submission.
+7. A real member can upload a video.
+8. The Founder can review submissions.
+9. Approved content appears in the correct feed.
+10. Everything works on mobile.
+
+Report PASS, FAIL or BLOCKED for every test.
+
+Do not call a feature complete without
+verifying it.
+
+Show the development preview.
+
+STOP BEFORE PRODUCTION DEPLOYMENT.

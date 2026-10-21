@@ -17,3 +17,13 @@
 .ttw-flagfield.is-top { align-items: flex-start; padding-top: 18%; }
 @keyframes ttw-drift { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .ttw-flagfield-row { animation: none; } }
+/* Hero: green/gold world map sits in the decor layer, behind a readability wash */
+.ttw-hero-bg { background: radial-gradient(ellipse at 70% 30%, hsl(160 45% 14%), hsl(187 62% 7%) 72%); }
+.ttw-hero-read { background: linear-gradient(0deg, hsl(187 62% 7% / .92) 0%, hsl(187 62% 7% / .55) 55%, hsl(187 62% 7% / .2) 100%); }
+.ttw-hero .ttw-flagfield { opacity: .07; }
+@media (max-width: 639px) { .ttw-ctas > * { width: 100%; } }
+.ttw-mask { display: block; overflow: hidden; padding-bottom: .05em; }
+.ttw-mask-in { display: block; }
+.ttw-motion-ready .ttw-mask-in { animation: ttw-mask-up 1.2s cubic-bezier(.2,.75,.15,1) both; animation-delay: var(--d, 0s); }
+@keyframes ttw-mask-up { from { transform: translateY(105%); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .ttw-mask-in { animation: none !important; transform: none !important; } }

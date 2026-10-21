@@ -38,3 +38,14 @@ requires distinct regional cultural identities within a worldwide campaign.
 **How to apply:** Do not seed active regional campaigns, announce winners or
 present selected countries as verified nationality. Keep unrelated regions free
 of reused African Kuba ornament.
+
+The Founder explicitly authorized the official Thanks the World campaign's
+development activation, but not activation of additional regional campaigns or
+any production change.
+
+**Why:** The Founder requires the global campaign to be genuinely open in
+development, not merely labelled open in the interface.
+
+**How to apply:** Keep activation distinct from publication: an active campaign
+accepts member submissions, but every contribution still requires review,
+consent and eligible privacy settings before becoming public.

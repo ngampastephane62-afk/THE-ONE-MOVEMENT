@@ -2,20 +2,25 @@ import { useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useLocation, useSearch } from 'wouter';
 import { useAuth } from '@clerk/react';
-import { ArrowRight, Globe2 } from 'lucide-react';
+import { ArrowRight, Globe2, PenLine, Video } from 'lucide-react';
 import {
   useGetGratitudeOptions, getGetGratitudeOptionsQueryKey, useGetGratitudeStories, getGetGratitudeStoriesQueryKey,
   useGetMemberProfile, getGetMemberProfileQueryKey, type GetGratitudeStoriesParams,
 } from '@workspace/api-client-react';
 import { ErrorBox, Skeleton, btnGhost, field } from '@/components/network/kit';
-import { IdentityBand, StoryCard, StoryDetail } from '@/components/gratitude/Story';
+import { StoryCard, StoryDetail } from '@/components/gratitude/Story';
 import { FlagField, IDENTITIES, identityOf } from '@/lib/gratitude';
 import { searchCountries, countryLabel } from '@/pages/our-vision/country-data';
+import WorldMap, { useMotionPause } from '@/components/gratitude/WorldMap';
 import './ttw.css';
 
 const SORTS = [['recent', 'Most recent'], ['featured', 'Featured'], ['likes', 'Most thanked'], ['views', 'Most viewed'], ['discussed', 'Most discussed']] as const;
 
 export default function ThanksTheWorld() {
+  const [motionReady, setMotionReady] = useState(false);
+  useEffect(() => {
+    if (!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) setMotionReady(true);
+  }, []);
   const search = useSearch();
   const [, navigate] = useLocation();
   const params = new URLSearchParams(search);
@@ -43,29 +48,41 @@ export default function ThanksTheWorld() {
 
   const lead = active.find((c) => c.id === campaign) ?? active[0];
   const idKey = identityOf(lead);
+  const heroMotion = useMotionPause<HTMLElement>();
   const openStory = (id: number) => `/thanks-the-world?story=${id}`;
 
   return (
-    <div className="ttw bg-ivory-100">
+    <div className={`ttw bg-ivory-100 ${motionReady ? 'ttw-motion-ready' : ''}`}>
       <Helmet>
         <title>Thanks the World — Stories of gratitude from TOMI members</title>
         <meta name="description" content="Personal stories of gratitude shared by TOMI members and reviewed by the Founder before publication." />
       </Helmet>
 
-      <IdentityBand id={idKey} className="ttw-hero text-ivory-100">
-        <FlagField codes={(opts.data?.countries ?? []).map((c) => c.code)} />
-        <div className="relative mx-auto flex min-h-[70vh] max-w-6xl flex-col justify-end px-5 pb-16 pt-28 sm:px-6">
+      <section className="ttw-hero tl-stack text-ivory-100" aria-labelledby="ttw-hero-h" data-identity={idKey} ref={heroMotion.ref}>
+        <div className={heroMotion.paused ? 'tl-paused' : ''}>
+          <div className="tl-bg ttw-hero-bg" aria-hidden />
+          <div className="tl-decor" aria-hidden><WorldMap art="gold" sequence ring /><FlagField codes={(opts.data?.countries ?? []).map((c) => c.code)} className="is-top" /></div>
+          <div className="tl-read ttw-hero-read" aria-hidden />
+        </div>
+        <div className="tl-content mx-auto flex min-h-[70vh] max-w-6xl flex-col justify-end px-5 pb-16 pt-28 sm:px-6">
           <p className="ttw-in ttw-in-1 text-eyebrow" style={{ color: IDENTITIES[idKey].accent }}>THE ONE MOVEMENT INTERNATIONAL</p>
-          <h1 className="ttw-in ttw-in-2 mt-4 max-w-4xl font-display text-[clamp(2.4rem,9vw,6rem)] leading-[0.95]">Thanks<br />the World.</h1>
-          <p className="ttw-in ttw-in-3 mt-5 font-display text-xl leading-snug text-ivory-100 sm:text-2xl">EVERY COUNTRY HAS A STORY.<br />EVERY VOICE MATTERS.</p>
+          <h1 id="ttw-hero-h" className="mt-4 max-w-5xl font-display text-[clamp(2.6rem,10vw,7.5rem)] uppercase leading-[0.92] tracking-[0.01em]">
+            <span className="ttw-mask"><span className="ttw-mask-in" style={{ ['--d' as string]: '.5s' }}>Thanks</span></span>
+            <span className="ttw-mask"><span className="ttw-mask-in text-gold-400" style={{ ['--d' as string]: '.85s' }}>the World.</span></span>
+          </h1>
+          <p className="mt-6 font-display text-xl leading-snug text-ivory-100 sm:text-3xl">
+            <span className="ttw-mask"><span className="ttw-mask-in" style={{ ['--d' as string]: '2.2s' }}>EVERY COUNTRY HAS A STORY.</span></span>
+            <span className="ttw-mask"><span className="ttw-mask-in" style={{ ['--d' as string]: '2.6s' }}>EVERY VOICE MATTERS.</span></span>
+          </p>
           <p className="ttw-in ttw-in-3 mt-4 text-sm uppercase tracking-[0.1em] text-gold-400">One world. Different cultures. Different nations. One humanity.</p>
           <p className="ttw-in ttw-in-3 mt-5 max-w-xl text-lg leading-relaxed text-ivory-200">Members thank the people, places and communities that shaped them. Every story is read by the Founder before anyone else sees it.</p>
-          <div className="ttw-in ttw-in-3 mt-8 flex flex-wrap gap-3">
-            <a href="#stories" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-gold-500 px-5 text-sm font-semibold text-ink-900 hover:bg-gold-400" data-testid="link-explore-stories">Explore stories <ArrowRight className="h-4 w-4" /></a>
-            <Link href="/member/thanks-the-world" className="inline-flex min-h-11 items-center rounded-full border border-ivory-200/40 px-5 text-sm font-semibold hover:border-gold-400" data-testid="link-share-story">Share your gratitude</Link>
+          <div className="ttw-in ttw-in-3 ttw-ctas mt-8 grid gap-3 sm:flex sm:flex-wrap">
+            <Link href="/member/thanks-the-world?intent=text" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-gold-500 px-6 text-sm font-semibold tracking-[0.08em] text-ink-900 hover:bg-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ivory-100" data-testid="link-share-story"><PenLine className="h-4 w-4" aria-hidden />SHARE YOUR STORY</Link>
+            <Link href="/member/thanks-the-world?intent=video" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-gold-400/70 px-6 text-sm font-semibold tracking-[0.08em] text-gold-200 hover:bg-gold-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400" data-testid="link-upload-video"><Video className="h-4 w-4" aria-hidden />UPLOAD YOUR VIDEO</Link>
+            <a href="#stories" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-ivory-200/40 px-6 text-sm font-semibold tracking-[0.08em] hover:border-ivory-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400" data-testid="link-explore-stories">EXPLORE STORIES <ArrowRight className="h-4 w-4" aria-hidden /></a>
           </div>
         </div>
-      </IdentityBand>
+      </section>
 
       {storyId > 0 && (
         <div className="mx-auto max-w-3xl px-0 py-8 sm:px-6">
@@ -81,7 +98,7 @@ export default function ThanksTheWorld() {
             <Globe2 className="mx-auto h-8 w-8 text-gold-600" aria-hidden />
             <h2 id="stories-h" className="mt-4 font-display text-2xl text-ink-900">No campaign is open yet</h2>
             <p className="mt-3 text-sm leading-relaxed text-ink-700">Thanks the World opens only when the Founder creates and activates a campaign. Until then there are no public stories here. You can write in the editor, but saving and submitting require an active campaign. Nothing is published without the Founder's review.</p>
-            <Link href="/member/thanks-the-world" className={`${btnGhost} mt-6`} data-testid="link-prepare-draft">Prepare a private draft</Link>
+            <Link href="/member/thanks-the-world?intent=text" className={`${btnGhost} mt-6`} data-testid="link-prepare-draft">Prepare a private draft</Link>
           </div>
         ) : (
           <>
@@ -116,7 +133,7 @@ export default function ThanksTheWorld() {
             </div>
             <div className="mt-8">
               {stories.isLoading ? <Skeleton rows={4} /> : stories.isError ? <ErrorBox onRetry={() => stories.refetch()} /> : stories.data!.items.length === 0 ? (
-                <div className="border border-sand-200 bg-ivory-50 p-8 text-center" data-testid="empty-stories"><p className="font-display text-xl text-ink-900">No published stories match yet.</p><p className="mt-2 text-sm text-ink-700">Stories appear here once the Founder approves them. Be among the first to share one.</p><Link href="/member/thanks-the-world" className={`${btnGhost} mt-4`}>Share your story</Link></div>
+                <div className="border border-sand-200 bg-ivory-50 p-8 text-center" data-testid="empty-stories"><p className="font-display text-xl text-ink-900">No published stories match yet.</p><p className="mt-2 text-sm text-ink-700">Stories appear here once the Founder approves them. Be among the first to share one.</p><Link href="/member/thanks-the-world?intent=text" className={`${btnGhost} mt-4`} data-testid="link-share-empty">Share your story</Link></div>
               ) : (
                 <>
                   <ul className="ttw-grid grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{stories.data!.items.map((s, i) => <li key={s.id} className="ttw-rise" style={{ ['--d' as string]: `${(i % 6) * 70}ms` }}><StoryCard s={s} href={openStory(s.id)} /></li>)}</ul>
