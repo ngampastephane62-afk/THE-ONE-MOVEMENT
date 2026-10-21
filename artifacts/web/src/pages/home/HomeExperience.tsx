@@ -8,6 +8,8 @@ import Reveal from '@/components/Reveal';
 import MovementPaths from '@/components/home/MovementPaths';
 import OneUniverse from '@/components/home/OneUniverse';
 import OfficialProgrammes from '@/components/home/OfficialProgrammes';
+import HomeReveal from '@/components/home/HomeReveal';
+import { useAmbientPatternPause } from '@/components/home/useAmbientPatternPause';
 import '@/components/home/home-patterns.css';
 import FashionEditionNote from '@/components/FashionEditionNote';
 import SectionHeading from '@/components/SectionHeading';
@@ -19,8 +21,9 @@ import movementReelFallback from '@/assets/media/home/TOMI_HOME_MOVEMENT_REEL_01
 import movementReelPoster from '@/assets/media/home/TOMI_HOME_MOVEMENT_REEL_01-poster.webp';
 
 export default function HomeExperience() {
+  const rootRef = useAmbientPatternPause<HTMLDivElement>();
   return (
-    <div className="tomi-editorial-page tomi-home-editorial">
+    <div ref={rootRef} className="tomi-editorial-page tomi-home-editorial">
       <Helmet>
         <title>THE ONE MOVEMENT INTERNATIONAL — ONE HUMANITY. ONE MOVEMENT. ONE FUTURE.</title>
         <meta
@@ -73,7 +76,7 @@ export default function HomeExperience() {
       {/* 02 — Understanding: one concise explanation plus future movement video. */}
       <section className="bg-ivory-100 py-section-lg tomi-editorial-chapter" data-chapter="THE MOVEMENT" aria-labelledby="what-heading">
         <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-12 lg:items-center">
-          <Reveal className="lg:col-span-5">
+          <HomeReveal variant="curtain" className="lg:col-span-5">
             <SectionHeading
               eyebrow="WHAT IS THE ONE MOVEMENT?"
               heading="A MOVEMENT TO JOIN. A VISION TO BUILD."
@@ -86,8 +89,8 @@ export default function HomeExperience() {
               TOMI connects people and institutions through real programs today while building
               toward a wider global collaboration ecosystem.
             </p>
-          </Reveal>
-          <Reveal delay={100} direction="right" className="lg:col-span-6 lg:col-start-7 flex justify-center lg:justify-end">
+          </HomeReveal>
+          <HomeReveal variant="mask" delay={120} className="lg:col-span-6 lg:col-start-7 flex justify-center lg:justify-end">
             <ResponsiveMedia
               kind="vertical-reel"
               label="TOMI Movement Reel"
@@ -96,16 +99,17 @@ export default function HomeExperience() {
               videoFallbackSrc={movementReelFallback}
               posterSrc={movementReelPoster}
               assetId="H02"
+              actionsLayout="row"
               className="aspect-[9/16] w-full max-w-sm shadow-2xl"
             />
-          </Reveal>
+          </HomeReveal>
         </div>
       </section>
 
       {/* 04 — Visual proof: Fashion Week receives flagship treatment. */}
       <section className="bg-ivory-100 py-section-lg tomi-editorial-chapter" data-chapter="THE ORIGIN" aria-labelledby="fashion-proof-heading">
         <div className="mx-auto max-w-7xl px-6">
-          <Reveal>
+          <HomeReveal variant="sweep">
             <SectionHeading
               eyebrow="THE MOVEMENT IN ACTION"
               heading="WHERE THE STORY BEGAN"
@@ -113,11 +117,11 @@ export default function HomeExperience() {
               size="lg"
               thread
             />
-          </Reveal>
+          </HomeReveal>
 
           <div className="tomi-fashion-editorial mt-12 grid overflow-hidden rounded-sharp border border-sand-200 bg-ivory-50 lg:grid-cols-12">
             <Reveal direction="left" className="tomi-fashion-media lg:col-span-6 flex flex-col items-center justify-center">
-              <HomeReelStrip />
+              <HomeReelStrip actionsLayout="row" />
             </Reveal>
             <Reveal delay={100} direction="right" className="flex flex-col justify-center p-7 sm:p-10 lg:col-span-6">
               <p className="text-eyebrow text-gold-600">FIVE EDITIONS COMPLETED · SIXTH IN DUBAI</p>
@@ -140,7 +144,7 @@ export default function HomeExperience() {
       {/* 06 — Founder archive composition, deliberately not a standard gallery. */}
       <section className="bg-lagoon-900 py-section-lg tomi-editorial-chapter tomi-archive-editorial" data-chapter="MOVEMENT IN ACTION" aria-labelledby="archive-heading">
         <div className="mx-auto max-w-7xl px-6">
-          <Reveal>
+          <HomeReveal variant="curtain">
             <SectionHeading
               eyebrow="MOVEMENT IN ACTION"
               heading="CONNECTIONS ACROSS WORLDS."
@@ -148,16 +152,16 @@ export default function HomeExperience() {
               size="lg"
               thread
             />
-          </Reveal>
+          </HomeReveal>
           <Reveal delay={80} className="mt-6 flex flex-col gap-4 border-b border-gold-500/25 pb-6 sm:flex-row sm:items-end sm:justify-between">
             <p className="max-w-lg text-sm leading-relaxed text-ivory-200">
               Communities, institutions and culture connected through one network, shown through the Founder archive.
             </p>
             <span className="text-[10px] uppercase tracking-[0.2em] text-gold-400">Founder archive / partner network</span>
           </Reveal>
-          <div className="mt-12">
+          <HomeReveal variant="mask" className="mt-12">
             <HomeArchiveCarousel />
-          </div>
+          </HomeReveal>
           <p id="archive-heading" className="sr-only">Founder archive media structure</p>
         </div>
       </section>

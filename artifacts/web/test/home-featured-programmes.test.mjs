@@ -18,16 +18,21 @@ function render() {
     'react/jsx-runtime': requireWeb('react/jsx-runtime'),
     wouter: { Link: ({ children, ...props }) => React.createElement('a', props, children) },
     'lucide-react': requireWeb('lucide-react'),
-    '@/components/Reveal': { default: ({ children }) => children },
+    './HomeReveal': { default: ({ children }) => children },
     '@/components/SectionHeading': { default: ({ heading }) => React.createElement('h2', {}, heading) },
-    '@/components/ArchivePhoto': { default: ({ id }) => React.createElement('figure', { 'data-approved-photo': id }) },
-    '@/components/programs/ProgrammeFilm': { default: ({ id }) => React.createElement('figure', { 'data-approved-film': id }) },
+    '@/components/ArchivePhoto': {
+      default: ({ id }) => React.createElement('figure', { 'data-approved-photo': id }),
+      archivePhotoSource: id => `/approved/${id}.webp`,
+    },
+    '@/components/editorial/MediaActions': { default: ({ source, layout }) => React.createElement('div', { 'data-social-source': source, 'data-layout': layout }) },
+    '@/components/programs/ProgrammeFilm': { default: ({ id, presentation }) => React.createElement('figure', { 'data-approved-film': id, 'data-presentation': presentation }) },
   };
   runInNewContext(ts.transpileModule(source, {
     compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
   }).outputText, {
     module, exports: module.exports,
     require(id) {
+      if (id.endsWith('.css')) return {};
       assert.ok(id in mocks, `Unexpected card dependency: ${id}`);
       return mocks[id];
     },
@@ -42,9 +47,15 @@ test('Home features exactly Awards, Summit and Fashion Week with their approved 
   assert.match(html, /data-approved-film="awards-rosina-2027"/);
   assert.match(html, /data-approved-photo="summit-goma"/);
   assert.match(html, /data-approved-film="fashion-knight-2026"/);
-  assert.match(html, />The One Awards<\/h3>/);
-  assert.match(html, />The One Summit<\/h3>/);
-  assert.match(html, />The One Fashion Week International<\/h3>/);
+  assert.match(html, />The One Awards<\/span><\/h3>/);
+  assert.match(html, />The One Summit<\/span><\/h3>/);
+  assert.match(html, />The One Fashion Week International<\/span><\/h3>/);
+  assert.equal((html.match(/data-presentation="home"/g) ?? []).length, 2);
+  assert.match(html, /data-social-source="\/approved\/summit-goma.webp" data-layout="row"/);
+  assert.match(html, />Discover The One Awards<\/span>/);
+  assert.match(html, />Discover The One Summit<\/span>/);
+  assert.match(html, />Discover The One Fashion Week<\/span>/);
+  assert.doesNotMatch(html, /UPCOMING EVENT/);
   assert.doesNotMatch(html, /diplomatic-gala|ProgramVision/);
 });
 
@@ -59,5 +70,9 @@ test('Home community patterns are decorative, restrained, motion-optional and me
   assert.match(css, /var\(--kuba-steps\)/);
   assert.match(css, /prefers-reduced-motion: reduce/);
   assert.match(css, /pointer-events: none/);
-  assert.match(css, /figure\[data-testid\^="film-"\] \{ aspect-ratio: 3 \/ 4 !important/);
+  assert.doesNotMatch(css, /aspect-ratio:\s*3\s*\/\s*4\s*!important/);
+  assert.match(css, /object-fit: contain/);
+  assert.match(css, /grid-template-columns: repeat\(3, minmax\(0, 1fr\)\)/);
+  assert.doesNotMatch(css, /tomi-act-l[^}]*position: absolute/);
+  assert.match(css, /font-size: clamp\(1\.65rem, 7\.8vw, 2rem\)/);
 });

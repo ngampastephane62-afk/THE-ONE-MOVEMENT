@@ -42,17 +42,30 @@ export function ProgrammeFilmPoster({ id, className = '' }: { id: ProgrammeFilmI
 }
 
 /** Muted looping film with play/pause and sound controls; poster-only under reduced motion. */
-export default function ProgrammeFilm({ id, className = '', actions = true, tone = 'light', caption }: { id: ProgrammeFilmId; className?: string; actions?: boolean; tone?: 'light' | 'dark'; caption?: string }) {
+export default function ProgrammeFilm({ id, className = '', actions = true, tone = 'light', caption, presentation = 'default' }: { id: ProgrammeFilmId; className?: string; actions?: boolean; tone?: 'light' | 'dark'; caption?: string; /** 'home': no autoplay, preload none, user-initiated play, pauses offscreen, one-row actions. */ presentation?: 'default' | 'home' }) {
+  const home = presentation === 'home';
   const f = PROGRAMME_FILMS[id];
   const reduced = usePrefersReducedMotion();
   const ref = useRef<HTMLVideoElement>(null);
   const anchor = useDeepLinkFocus<HTMLDivElement>({ videoId: id });
-  const [playing, setPlaying] = useState(!reduced);
+  const [playing, setPlaying] = useState(!reduced && !home);
   const [muted, setMuted] = useState(true);
   const [failed, setFailed] = useState(false);
-  const showVideo = !failed && (!reduced || playing);
+  const showVideo = !failed && (home ? playing : (!reduced || playing));
 
   useEffect(() => { if (reduced) setPlaying(false); }, [reduced]);
+  const figRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (!home || !figRef.current || typeof IntersectionObserver === 'undefined') return;
+    const io = new IntersectionObserver(([en]) => { if (!en.isIntersecting && ref.current && !ref.current.paused) ref.current.pause(); }, { threshold: 0.15 });
+    io.observe(figRef.current);
+    return () => io.disconnect();
+  }, [home]);
+  useEffect(() => {
+    if (!home || !playing) return;
+    const v = ref.current;
+    if (v && v.paused) v.play().catch(() => setPlaying(false));
+  }, [home, playing]);
 
   const toggle = () => {
     const v = ref.current;
@@ -70,7 +83,7 @@ export default function ProgrammeFilm({ id, className = '', actions = true, tone
 
   return (
     <div ref={anchor} id={`video-${id}`} tabIndex={-1} className={`scroll-mt-28 outline-none ${className}`}>
-      <figure className="relative overflow-hidden bg-lagoon-900" style={{ aspectRatio: f.ratio }} data-testid={`film-${id}`}>
+      <figure ref={figRef} className="relative overflow-hidden bg-lagoon-900" style={{ aspectRatio: f.ratio }} data-testid={`film-${id}`}>
         {showVideo ? (
           <video
             ref={ref}
@@ -80,7 +93,7 @@ export default function ProgrammeFilm({ id, className = '', actions = true, tone
             muted={muted}
             loop
             playsInline
-            preload="metadata"
+            preload={home ? 'none' : 'metadata'}
             aria-label={f.alt}
             onPlay={() => setPlaying(true)}
             onPause={() => setPlaying(false)}
@@ -90,7 +103,7 @@ export default function ProgrammeFilm({ id, className = '', actions = true, tone
             <source src={media(`${f.file}.mp4`)} type="video/mp4" />
           </video>
         ) : (
-          <img src={media(`${f.file}.webp`)} alt={f.alt} className="block h-full w-full object-contain" />
+          <img src={media(`${f.file}.webp`)} alt={f.alt} className="block h-full w-full object-contain" loading={home ? 'lazy' : undefined} decoding={home ? 'async' : undefined} />
         )}
         {!failed && (
           <div className="absolute bottom-3 right-3 flex gap-2">
@@ -108,7 +121,7 @@ export default function ProgrammeFilm({ id, className = '', actions = true, tone
         <button type="button" className="min-h-11 underline underline-offset-4" onClick={() => { setFailed(false); setPlaying(true); }}>Retry</button>
       </p>}
       {caption && <p className={`mt-2 text-[11px] leading-relaxed ${tone === 'dark' ? 'text-ivory-300' : 'text-ink-700'}`}>{caption}</p>}
-      {actions && <VideoActions videoId={id} title={f.title} tone={tone} />}
+      {actions && <VideoActions videoId={id} title={f.title} tone={tone} layout={home ? 'row' : undefined} />}
     </div>
   );
 }

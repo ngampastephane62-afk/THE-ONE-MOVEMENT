@@ -104,6 +104,8 @@ export default function HomeArchiveCarousel() {
       onFocus={() => setFocused(true)}
       onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget as Node)) setFocused(false); }}
       onKeyDown={(e) => {
+        const t = e.target as HTMLElement;
+        if (t.closest('input, textarea, select, [contenteditable="true"], [contenteditable=""]')) return;
         if (e.key === 'ArrowLeft') prev();
         if (e.key === 'ArrowRight') next();
       }}

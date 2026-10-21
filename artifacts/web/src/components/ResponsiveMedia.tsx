@@ -24,6 +24,8 @@ interface ResponsiveMediaProps {
   className?: string;
   autoPlay?: boolean;
   assetId?: string;
+  /** Opt-in compact one-row reactions (Home only). Default unchanged. */
+  actionsLayout?: 'default' | 'row';
 }
 
 /**
@@ -41,6 +43,7 @@ export default function ResponsiveMedia({
   className,
   autoPlay = false,
   assetId,
+  actionsLayout,
 }: ResponsiveMediaProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(autoPlay);
@@ -165,7 +168,7 @@ export default function ResponsiveMedia({
     </div>
     {videoSrc && kind !== 'cinematic-background' && (
       <div className="bg-ivory-100 p-3 text-ink-900">
-        <VideoActions videoId={socialId} title={label} />
+        <VideoActions videoId={socialId} title={label} layout={actionsLayout} />
       </div>
     )}
     </div>

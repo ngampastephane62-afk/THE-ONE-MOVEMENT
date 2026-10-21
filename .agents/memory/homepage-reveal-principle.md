@@ -51,3 +51,21 @@ programmes and their order.
 **How to apply:** Simplify Home only, preserve useful original footage and deeper
 content elsewhere, and seek Founder approval before modifying another page.
 No backend, CMS, database, auth, member permissions, payment changes or deployment.
+
+The Founder explicitly approved the corrected homepage and froze its cinematic
+hero, original woman, globe and official logo animations. Subsequent editorial
+work is confined to the remaining Home sections; do not reopen the hero design
+as part of event, social-control or community refinements.
+
+**Why:** The next controlled directive explicitly says the previous corrections
+are approved and forbids modifying the opening.
+
+**How to apply:** Keep Awards → Summit → Fashion Week and the original approved
+media. Treat the events as major cinematic presentations, preserve native media
+proportions and accessible playback, and never invent upcoming status or dates.
+Home reactions should have Like / Comment / Share on one compact horizontal row,
+with counts and secondary destinations behind Share, using existing engagement
+logic. Public community discovery may reuse approved curated media with swipe,
+keyboard and previous/next navigation, never invented profiles or private data.
+Respect reduced motion, visible-content fallbacks and mobile data limits; do not
+autoplay multiple videos. Other pages and the protected services remain out of scope.

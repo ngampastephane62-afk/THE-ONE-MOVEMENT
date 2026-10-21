@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'wouter';
 import { Copy, Facebook, Heart, MessageCircle, RotateCw, Share2, Trash2 } from 'lucide-react';
 import type { VideoEngagementInput } from '@workspace/api-client-react';
@@ -12,6 +12,8 @@ export type MediaActionsProps = MediaTarget & {
   tone?: 'light' | 'dark';
   /** compact: hides the Facebook / Instagram helper buttons behind Share. */
   compact?: boolean;
+  /** Opt-in (Home only): Like / Comment / Share on one row; extra share destinations in a Share menu. Default 'default' is unchanged. */
+  layout?: 'default' | 'row';
   className?: string;
 };
 
@@ -20,8 +22,11 @@ export type MediaActionsProps = MediaTarget & {
  * editorial photographs (source = canonical public path). Likes and comments
  * persist on TOMI only; nothing is ever posted to Facebook or Instagram.
  */
+const compactCount = (n: number) => n < 1000 ? String(n) : n < 1e6 ? `${(n / 1e3).toFixed(n < 1e4 ? 1 : 0).replace(/\.0$/, '')}K` : `${(n / 1e6).toFixed(1).replace(/\.0$/, '')}M`;
+
 export default function MediaActions(props: MediaActionsProps) {
-  const { title, founder, tone = 'light', compact = false, className } = props;
+  const { title, founder, tone = 'light', compact = false, layout = 'default', className } = props;
+  const row = layout === 'row';
   const target: MediaTarget = props.videoId ? { videoId: props.videoId } : { source: props.source! };
   const ident = (props.videoId ?? props.source ?? '').replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '').slice(-60);
   const { q, m, signedIn, isLoaded, founder: isFounder } = useMediaEngagement(target);
@@ -47,6 +52,18 @@ export default function MediaActions(props: MediaActionsProps) {
     else { setMore(true); void copy('Link copied.'); }
   };
 
+  const [menu, setMenu] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const shareBtnRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (!menu) return;
+    const onDown = (ev: PointerEvent) => { if (!menuRef.current?.contains(ev.target as Node)) setMenu(false); };
+    const onKey = (ev: KeyboardEvent) => { if (ev.key === 'Escape') { setMenu(false); shareBtnRef.current?.focus(); } };
+    document.addEventListener('pointerdown', onDown);
+    document.addEventListener('keydown', onKey);
+    return () => { document.removeEventListener('pointerdown', onDown); document.removeEventListener('keydown', onKey); };
+  }, [menu]);
+
   const pill = cn(
     'inline-flex min-h-9 items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-55 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400',
     dark ? 'border-ivory-100/30 text-ivory-100 hover:border-gold-400 hover:text-gold-400' : 'border-sand-300 bg-ivory-50 text-ink-800 hover:border-lagoon-600',
@@ -57,6 +74,44 @@ export default function MediaActions(props: MediaActionsProps) {
 
   return (
     <div className={cn('flex flex-col gap-3', className)} data-testid={`media-actions-${ident}`} role="group" aria-label={`Reactions and sharing for ${title}`}>
+      {row ? (
+        <div className="tomi-actions-row" data-tone={tone}>
+          {q.isLoading || !isLoaded ? (
+            <span className="tomi-actions-skel" aria-label="Loading reactions" />
+          ) : q.isError ? (
+            <button type="button" className="tomi-act tomi-act--wide" onClick={() => q.refetch()} data-testid={`button-retry-engagement-${ident}`}>
+              <RotateCw className="h-4 w-4" aria-hidden /><span>Retry reactions</span>
+            </button>
+          ) : (
+            <>
+              <button type="button" className="tomi-act" data-on={!!e?.liked}
+                disabled={!signedIn || m.isPending} onClick={() => act({ action: 'like', accepted: !e?.liked })} aria-pressed={!!e?.liked}
+                aria-label={`${e?.liked ? 'Unlike' : 'Like'} · ${likes} ${likes === 1 ? 'like' : 'likes'}`} data-testid={`button-like-${ident}`}>
+                <Heart className={cn('h-4 w-4', e?.liked && 'fill-current')} aria-hidden /><span className="tomi-act-n" aria-hidden>{compactCount(likes)}</span><span className="tomi-act-l" aria-hidden>Like</span>
+              </button>
+              <button type="button" className="tomi-act" onClick={() => setOpen(!open)} aria-expanded={open}
+                aria-label={`Comments · ${count} ${count === 1 ? 'comment' : 'comments'}`} data-testid={`button-comments-${ident}`}>
+                <MessageCircle className="h-4 w-4" aria-hidden /><span className="tomi-act-n" aria-hidden>{compactCount(count)}</span><span className="tomi-act-l" aria-hidden>Comment</span>
+              </button>
+            </>
+          )}
+          <div className="tomi-act-wrap" ref={menuRef}>
+            <button ref={shareBtnRef} type="button" className="tomi-act w-full" onClick={() => setMenu(!menu)} aria-haspopup="true" aria-expanded={menu} data-testid={`button-share-${ident}`}>
+              <Share2 className="h-4 w-4" aria-hidden /><span className="tomi-act-l tomi-act-l--always">Share</span>
+            </button>
+            {menu && (
+              <div className="tomi-share-menu" role="group" aria-label={`Share ${title}`} data-testid={`menu-share-${ident}`}>
+                {typeof navigator !== 'undefined' && 'share' in navigator && (
+                  <button type="button" onClick={() => { setMenu(false); void share(); }} data-testid={`button-native-share-${ident}`}><Share2 className="h-4 w-4" aria-hidden />Share via device</button>
+                )}
+                <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`} target="_blank" rel="noreferrer noopener" onClick={() => setMenu(false)} data-testid={`link-facebook-${ident}`}><Facebook className="h-4 w-4" aria-hidden />Facebook<span className="sr-only"> (opens in a new tab)</span></a>
+                <button type="button" onClick={() => { setMenu(false); void copy('Link copied.'); }} data-testid={`button-copy-${ident}`}><Copy className="h-4 w-4" aria-hidden />Copy link</button>
+                <button type="button" onClick={() => { setMenu(false); void copy('Link copied. Paste it into your Instagram or TikTok story or bio; we never post for you.'); }} data-testid={`button-insta-tiktok-${ident}`}><Copy className="h-4 w-4" aria-hidden />Instagram / TikTok</button>
+              </div>
+            )}
+          </div>
+        </div>
+      ) : (
       <div className="flex flex-wrap items-center gap-2">
         {q.isLoading || !isLoaded ? (
           <span className={cn('h-9 w-40 animate-pulse rounded-full', dark ? 'bg-ivory-100/15' : 'bg-sand-200')} aria-label="Loading reactions" />
@@ -87,6 +142,7 @@ export default function MediaActions(props: MediaActionsProps) {
           <button type="button" className={cn(pill, 'border-transparent underline underline-offset-4')} onClick={() => setMore(true)} data-testid={`button-more-share-${ident}`}>More ways to share</button>
         )}
       </div>
+      )}
       {note && <p className={cn('text-xs break-words', muted)} role="status">{note}</p>}
       {isLoaded && !signedIn && (
         <p className={cn('text-xs', muted)}>

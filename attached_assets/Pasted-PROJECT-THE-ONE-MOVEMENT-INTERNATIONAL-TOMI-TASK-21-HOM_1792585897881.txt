@@ -1,0 +1,581 @@
+PROJECT: THE ONE MOVEMENT INTERNATIONAL (TOMI)
+
+TASK 21 — HOMEPAGE CINEMATIC EVENTS,
+EDITORIAL ANIMATIONS & DISCOVERY EXPERIENCE
+
+MODE: CONTROLLED FRONTEND IMPLEMENTATION
+
+IMPORTANT FOUNDER INSTRUCTION:
+
+The previous homepage corrections are approved.
+
+DO NOT rebuild the homepage.
+DO NOT modify the cinematic hero.
+DO NOT change the woman, globe or logo animations.
+
+We are now refining the remaining homepage sections.
+
+The objective is to transform the existing content
+into a premium, animated, immersive discovery experience.
+
+Every major section should feel intentional,
+artistic and visually engaging.
+
+==================================================
+1. OFFICIAL PROGRAMS — CINEMATIC PRESENTATION
+==================================================
+
+The homepage currently features three programs:
+
+01 — THE ONE AWARDS
+02 — THE ONE SUMMIT
+03 — THE ONE FASHION WEEK INTERNATIONAL
+
+PRESERVE THIS EXACT ORDER.
+
+These are not ordinary content cards.
+
+They represent major international events.
+
+The Founder wants each event to receive
+a powerful cinematic presentation.
+
+Each program must include:
+
+- Large animated event title
+- Premium visual presentation
+- Existing official cover image or video
+- Short event description
+- Clear DISCOVER button
+- Elegant scroll-triggered animation
+- Appropriate African-inspired visual patterns
+
+Do not replace existing official media.
+
+Do not invent event details or dates.
+
+==================================================
+2. EVENT TITLE ANIMATIONS
+==================================================
+
+The event titles currently appear too simply.
+
+Create elegant cinematic title animations.
+
+When the visitor scrolls toward a program:
+
+1. Subtle African geometric patterns
+   appear in the background.
+
+2. The event title gradually reveals itself.
+
+3. Large typography enters with a refined
+   cinematic movement.
+
+4. A subtle golden accent or line
+   accompanies the title.
+
+5. The event image or video is revealed
+   through a smooth visual transition.
+
+The title must immediately attract attention.
+
+Avoid small, weak typography.
+
+The user must clearly understand that
+this is a major upcoming or featured event.
+
+Use an UPCOMING EVENT label only where
+the existing verified event status supports it.
+
+Do not invent dates.
+
+==================================================
+3. THE ONE AWARDS
+==================================================
+
+Keep THE ONE AWARDS as the first featured program.
+
+Preserve the existing Rosina media already
+associated with this program.
+
+Do not replace her video or visual identity.
+
+Create an elegant event reveal:
+
+THE ONE AWARDS
+
+Recognition for courage, creativity
+and positive impact.
+
+Use premium typography and subtle
+cinematic gold accents.
+
+The existing media should feel like an
+official awards presentation.
+
+The video must have accessible playback controls.
+
+Add a clear:
+
+DISCOVER THE ONE AWARDS
+
+This button must navigate to the existing
+official One Awards program destination.
+
+Do not create a duplicate page.
+
+NOTE FOR FUTURE WORK:
+
+The dedicated One Awards page will later
+be refined to showcase its nominees video
+prominently at the beginning.
+
+Do not modify that page in this task.
+
+==================================================
+4. THE ONE SUMMIT
+==================================================
+
+The second featured event is:
+
+THE ONE SUMMIT
+
+Leadership, ideas and business
+across continents.
+
+Preserve the existing official Summit
+visual and artwork.
+
+Create a different cinematic reveal
+from The One Awards.
+
+The title can enter through a refined
+horizontal movement.
+
+Use subtle graphic patterns inspired
+by African heritage and global connectivity.
+
+Create a sophisticated sense of leadership,
+international dialogue and opportunity.
+
+Include:
+
+DISCOVER THE ONE SUMMIT
+
+The button must navigate to the existing
+official Summit program destination.
+
+==================================================
+5. THE ONE FASHION WEEK INTERNATIONAL
+==================================================
+
+The third featured event is:
+
+THE ONE FASHION WEEK INTERNATIONAL
+
+This program must feel like an
+international fashion event.
+
+Use the existing official Fashion Week media.
+
+Create a fashion-editorial animation.
+
+DESIGN DIRECTION:
+
+- Large editorial typography
+- Elegant image reveal
+- Refined African textile-inspired patterns
+- Subtle gold and deep-green accents
+- Smooth cinematic transitions
+- Professional fashion campaign aesthetics
+
+The title should make a strong entrance.
+
+It must feel like an event announcement,
+not a normal website paragraph.
+
+Include:
+
+DISCOVER THE ONE FASHION WEEK
+
+Link directly to the existing
+official Fashion Week program destination.
+
+Do not alter the event's verified details.
+
+==================================================
+6. VIDEO & IMAGE PRESENTATION
+==================================================
+
+The existing video cards take up too much
+vertical space without enough visual balance.
+
+Improve the presentation.
+
+For each featured event:
+
+- Give the title clear visual priority.
+- Present media in a well-designed container.
+- Preserve important parts of the image.
+- Avoid aggressive cropping.
+- Maintain appropriate video aspect ratios.
+- Keep video controls accessible.
+- Ensure readable captions.
+- Avoid unnecessary empty spaces.
+
+Videos must not become distracting.
+
+Do not autoplay videos with sound.
+
+Respect mobile data and loading performance.
+
+==================================================
+7. LIKES, COMMENTS & SHARING
+==================================================
+
+The current social controls are visually bulky.
+
+The Founder wants:
+
+LIKE
+COMMENT
+SHARE
+
+ON ONE HORIZONTAL ROW.
+
+Place these controls beneath the
+event image or video.
+
+On mobile:
+
+- Keep the three main actions on one row.
+- Use compact buttons.
+- Preserve touch accessibility.
+- Avoid horizontal overflow.
+- Show interaction counts clearly.
+
+Additional sharing destinations such as:
+
+Facebook
+Copy Link
+Instagram / TikTok
+
+should appear only when the visitor
+opens the Share menu.
+
+Use a compact dropdown, popover or
+bottom sheet depending on screen size.
+
+Do not display all sharing destinations
+permanently beneath every program.
+
+Preserve the existing functional
+likes, comments and sharing logic.
+
+Do not modify engagement data or backend APIs.
+
+==================================================
+8. DISCOVER BUTTON POSITION
+==================================================
+
+After the media and social controls,
+display the event's discovery action.
+
+The visitor should clearly understand:
+
+VIEW EVENT
+EXPLORE PROGRAM
+DISCOVER MORE
+
+Use the existing program destination.
+
+Do not send visitors to unrelated pages.
+
+Do not create broken links.
+
+==================================================
+9. AFRICAN VISUAL PATTERN SYSTEM
+==================================================
+
+The Founder wants the homepage to develop
+a distinctive African-inspired graphic identity.
+
+Use refined patterns inspired by:
+
+- Kuba geometric textile traditions
+- African ancestral graphic symbols
+- African geometric design
+- Cultural craftsmanship
+- Contemporary luxury editorial design
+
+These patterns must appear subtly behind
+event sections and selected titles.
+
+Different programs may use different
+pattern compositions.
+
+Avoid generic random symbols.
+
+Avoid inaccurately presenting decorative
+patterns as sacred or historical symbols.
+
+Use abstract, respectful visual inspiration.
+
+PATTERN MOTION:
+
+- Slow background movement
+- Gentle horizontal reveals
+- Subtle masking transitions
+- Elegant scroll interaction
+- Refined opacity changes
+
+Keep the patterns soft and sophisticated.
+
+The content must remain readable.
+
+==================================================
+10. WHAT IS THE ONE MOVEMENT?
+==================================================
+
+Improve the animation of the existing section:
+
+WHAT IS THE ONE MOVEMENT?
+
+A MOVEMENT TO JOIN.
+A VISION TO BUILD.
+
+The main title should enter elegantly
+as the visitor scrolls.
+
+Use a cinematic text reveal.
+
+Preserve the existing approved wording.
+
+Improve the visual transition between
+the text and the following media.
+
+Do not add redundant paragraphs.
+
+==================================================
+11. THE ORIGIN / MOVEMENT IN ACTION
+==================================================
+
+Preserve the existing origin story,
+historical content and videos.
+
+Improve:
+
+- Title animations
+- Section transitions
+- Media reveals
+- Text readability
+- Spacing
+- Mobile presentation
+
+The origin story must feel like
+a cinematic documentary experience.
+
+Do not change historical facts or
+announced event dates.
+
+Do not remove existing content.
+
+==================================================
+12. COMMUNITY & DISCOVER THE VOICES
+==================================================
+
+The current community section is
+too static and text-heavy.
+
+Improve the existing sections:
+
+MEET THE COMMUNITY
+
+DISCOVER THE VOICES
+
+FIND YOUR CONTRIBUTION
+
+Give each heading a distinctive
+but consistent reveal animation.
+
+Use staggered entrance effects
+for the three discovery options.
+
+Use subtle African-inspired pattern
+backgrounds.
+
+Do not replace the existing messaging.
+
+The visitor must feel invited
+to explore the ecosystem.
+
+==================================================
+13. COMMUNITY VIDEOS & ROLES
+==================================================
+
+Review the existing community and
+member-related media on the homepage.
+
+Improve the way visitors discover
+people, voices and opportunities.
+
+Where existing authorized public media
+is available, present it using an elegant
+swipeable discovery interface.
+
+DESKTOP:
+Previous/next controls and keyboard navigation.
+
+MOBILE:
+Natural touch-friendly horizontal scrolling.
+
+The visitor should be able to move between
+the existing public profiles or media.
+
+Use only content authorized for public display.
+
+Do not expose private member information.
+
+If existing member roles or recognitions
+are shown, clearly display their accurate
+official status.
+
+Do not invent endorsements, roles,
+certifications or public member profiles.
+
+Do not duplicate existing content merely
+to fill the carousel.
+
+==================================================
+14. SCROLL DISCOVERY EXPERIENCE
+==================================================
+
+The homepage should become a continuous
+cinematic discovery experience.
+
+Every major section should have:
+
+- A clear visual entrance
+- Smooth transition
+- Readable large title
+- Relevant premium media
+- Consistent visual identity
+- Functional navigation
+
+However, do not animate every paragraph.
+
+Prioritize major titles, key visuals
+and meaningful interactions.
+
+Avoid distracting continuous movement.
+
+Respect prefers-reduced-motion.
+
+Content must remain visible if animations fail.
+
+==================================================
+15. MOBILE PERFORMANCE
+==================================================
+
+This is a critical requirement.
+
+Most visitors may discover TOMI
+through mobile devices.
+
+Optimize:
+
+- Animation performance
+- Video loading
+- Scroll responsiveness
+- Font readability
+- Touch controls
+- Image proportions
+- Section spacing
+- Navigation
+- Layout stability
+
+Do not introduce heavy animation libraries
+unless absolutely necessary.
+
+Use existing animation capabilities
+where possible.
+
+Pause offscreen animations where appropriate.
+
+Avoid autoplaying multiple videos
+simultaneously.
+
+==================================================
+16. STRICT SCOPE
+==================================================
+
+DO NOT MODIFY:
+
+- Approved homepage hero
+- Existing female character
+- Globe animation
+- Official TOMI logo
+- Membership functionality
+- Founder Workspace
+- News CMS
+- Stripe
+- Clerk
+- Database
+- Member permissions
+- Public member data
+- Existing program destinations
+- Other website pages
+
+Do not deploy automatically.
+
+Do not run migrations.
+
+Do not start unsafe backend processes.
+
+==================================================
+17. FINAL EXPECTED RESULT
+==================================================
+
+The homepage should feel like an
+international cinematic digital experience.
+
+The three official programs should
+look like major events.
+
+Titles must be more impactful.
+
+Social controls must be compact.
+
+Discover buttons must work.
+
+African-inspired patterns must become
+part of the visual identity.
+
+The community section must feel animated
+and interactive.
+
+Maintain excellent mobile performance.
+
+==================================================
+FINAL REPORT
+==================================================
+
+Provide:
+
+1. Modified homepage components
+2. Event animation improvements
+3. Program media adjustments
+4. Social control layout changes
+5. Discover link verification
+6. African pattern implementation
+7. Community animations
+8. Mobile performance measures
+9. Tests completed
+10. Remaining limitations
+
+Show the updated development preview.
+
+DO NOT DEPLOY.
+
+Wait for Founder approval.

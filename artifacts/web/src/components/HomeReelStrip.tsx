@@ -36,7 +36,7 @@ function initialReels() {
   }))];
 }
 
-export default function HomeReelStrip() {
+export default function HomeReelStrip({ actionsLayout }: { /** Opt-in compact one-row reactions (Home). */ actionsLayout?: 'default' | 'row' } = {}) {
   const [reels] = useState(initialReels);
   const requestedId = new URLSearchParams(window.location.search).get('video') || window.location.hash.replace(/^#video-/, '');
   const requested = Math.max(0, reels.findIndex(reel => reel.id === requestedId));
@@ -148,7 +148,7 @@ export default function HomeReelStrip() {
       <p className="mt-3 text-xs leading-relaxed text-ivory-200">The One Movement · Reel {active + 1} / {reels.length}</p>
       {/* Any interaction with reactions stops auto-advance so a comment draft never moves to another reel. */}
       <div className="mt-4 bg-ivory-100 p-3 text-ink-900" onFocusCapture={() => setPlaying(false)} onPointerDownCapture={() => setPlaying(false)}>
-        <VideoActions key={active} videoId={reels[active]?.id ?? NEW_REEL_ID} title={reels[active]?.title ?? 'The One Movement'} />
+        <VideoActions key={active} videoId={reels[active]?.id ?? NEW_REEL_ID} title={reels[active]?.title ?? 'The One Movement'} layout={actionsLayout} />
       </div>
       {(blocked || failed) && <p role="status" className="mt-2 text-xs text-ivory-200">{failed ? 'This reel could not load. Try the next reel or reload the page.' : 'Tap play to start the reels.'}</p>}
     </div>
