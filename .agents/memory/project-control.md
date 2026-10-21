@@ -51,3 +51,18 @@ preserved production behavior and a stop when startup safety cannot be guarantee
 **How to apply:** Do not treat preview restoration as permission to override
 ambiguous runtime environment markers, access production data, fabricate an
 authenticated Founder session, change payment rules or deploy.
+
+The Founder subsequently authorized the Command Center's News & Publishing
+module first, not the rest of the CMS roadmap. Before persistence work, inspect
+existing structures; if a migration is needed, present its exact schema,
+operations, compatibility, rollback and security implications and wait for
+approval. Completion of News also requires approval before starting another module.
+
+**Why:** The Founder explicitly requires one functional module at a time and a
+migration approval gate, while preserving the existing application, archive,
+Clerk identity, membership rules and payments.
+
+**How to apply:** News authorization supersedes the earlier foundation-only
+restriction solely for this module. Partners, Members, Payments, page editing,
+notifications and broader redesign remain outside the current implementation
+authorization. Do not bypass the approval gate with fake persistence.

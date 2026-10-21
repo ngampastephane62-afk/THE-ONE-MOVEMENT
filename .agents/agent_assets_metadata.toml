@@ -28,3 +28,17 @@ mtime_ms = 1792354244535
 storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/5f591719-cbb0-40bd-b3dd-120f4006ce88/acf3c187-0dc9-4a73-a675-ff64d9118796"
 storage_version_token = "1792354264659087"
 content_type = "text/markdown"
+
+[[outputs]]
+id = "uCfy2EnYPRooKi3-xzbeh"
+uri = "file://docs/FOUNDER-NEWS-CMS-MIGRATION-PROPOSAL.md"
+type = "text"
+title = "News CMS — schéma proposé avant migration"
+description = "Rapport pour approbation : deux tables, gestion des révisions, confidentialité, compatibilité et retour arrière. Aucun SQL exécuté."
+logical_id = "ed9a574c-d299-462d-a9f2-e5fb8f16d493"
+content_hash = "sha256:071349d84447dd94d340b9323cc15f99f660f61429d43cf93032b900fab921cf"
+size = 14087
+mtime_ms = 1792545526807
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/ed9a574c-d299-462d-a9f2-e5fb8f16d493/d3139fe5-98e4-4add-a457-75bab66cf16a"
+storage_version_token = "1792545543611083"
+content_type = "text/markdown"

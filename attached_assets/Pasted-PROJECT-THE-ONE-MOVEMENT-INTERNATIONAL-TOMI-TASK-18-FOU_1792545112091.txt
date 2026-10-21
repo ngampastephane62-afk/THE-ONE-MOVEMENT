@@ -1,0 +1,430 @@
+PROJECT: THE ONE MOVEMENT INTERNATIONAL (TOMI)
+
+TASK 18 — FOUNDER COMMAND CENTER
+FUNCTIONAL CMS IMPLEMENTATION
+
+MODE: CONTROLLED IMPLEMENTATION
+
+CONTEXT:
+
+The Founder Workspace already exists at:
+
+/member/founder
+
+The Founder has successfully accessed the
+workspace through his authenticated account.
+
+However, the current workspace contains
+mostly placeholder modules.
+
+This is not the final objective.
+
+The Founder needs a REAL operational
+management platform.
+
+The Founder must be able to manage the
+TOMI ecosystem directly from his account,
+without returning to Replit for routine
+content updates.
+
+IMPORTANT:
+
+DO NOT rebuild the existing application.
+
+DO NOT replace existing member functionality.
+
+DO NOT create another authentication system.
+
+Reuse the existing architecture, database,
+Founder authorization and design system.
+
+==================================================
+PRIMARY OBJECTIVE
+==================================================
+
+Transform the Founder Workspace into:
+
+TOMI FOUNDER COMMAND CENTER
+
+A secure, premium, functional management
+environment for the entire TOMI ecosystem.
+
+The final architecture must support:
+
+1. Dashboard
+2. News & Publishing
+3. Partners Management
+4. Members Management
+5. Certifications
+6. Payments & Subscriptions
+7. Content Moderation
+8. Page Editor
+9. Media Library
+10. Notifications
+11. Analytics
+12. Publishing History
+
+Do not implement everything simultaneously.
+
+Build and verify one functional module
+at a time.
+
+==================================================
+PHASE 1 — NEWS & PUBLISHING
+==================================================
+
+THIS IS THE FIRST IMPLEMENTATION PRIORITY.
+
+Build a REAL News publishing system.
+
+The Founder must be able to create:
+
+- News articles
+- Video news
+- Partnership announcements
+- Official announcements
+- Opportunities
+- Press releases
+- Event announcements
+- Humanitarian updates
+- Ecosystem updates
+
+ARTICLE EDITOR:
+
+Provide:
+
+- Title
+- Subtitle
+- Category
+- Cover image
+- Video attachment or approved embed
+- Article body
+- Additional images
+- Author
+- Publication date
+- Related partner
+- Related programme
+- SEO title
+- SEO description
+- Draft status
+- Preview
+- Publish
+- Unpublish
+- Archive
+
+The editor must be modern, responsive
+and easy to use.
+
+The Founder must be able to publish
+directly from his account.
+
+==================================================
+PUBLIC NEWS INTEGRATION
+==================================================
+
+Connect the CMS to the existing
+public TOMI News page.
+
+When the Founder publishes an article:
+
+1. The content is saved persistently.
+2. The article becomes publicly accessible.
+3. It appears in the News listing.
+4. Its images and videos display correctly.
+5. Its public URL works.
+6. The article can be shared.
+7. The Founder can edit it later.
+
+Drafts must remain private.
+
+Changes to published articles must be
+saved as separate drafts until published.
+
+Do not duplicate the existing press archive.
+
+==================================================
+PHASE 2 — PARTNERS MANAGEMENT
+==================================================
+
+Prepare a functional Partners CMS.
+
+The Founder must eventually be able to:
+
+- Add partners
+- Upload partner logos
+- Edit partner profiles
+- Add descriptions
+- Add approved website links
+- Select partner categories
+- Select relevant sectors
+- Set display order
+- Publish partner profiles
+- Unpublish partner profiles
+- Archive partners
+
+A published partner must appear
+on the public Partners page.
+
+The Founder must also be able to create
+a News announcement linked to that partner.
+
+Do not automatically announce partners
+without explicit Founder confirmation.
+
+==================================================
+PHASE 3 — MEMBERS MANAGEMENT
+==================================================
+
+Prepare a secure Founder-only
+Members Management interface.
+
+Required capabilities:
+
+- View registered members
+- Search members
+- Filter by membership status
+- View relevant member profiles
+- View certification requests
+- View reported publications
+- View account status
+- Access permitted activity records
+
+Use server-side pagination.
+
+Only expose information necessary for
+legitimate administration.
+
+Do not expose passwords, payment card data,
+private messages or sensitive personal data.
+
+==================================================
+PHASE 4 — MODERATION
+==================================================
+
+Reuse existing moderation infrastructure.
+
+Prepare the ability to:
+
+- Review reported posts
+- Review publication details
+- Hide violating content
+- Suspend content
+- Restore content when appropriate
+- Record moderation reasons
+- Maintain an audit trail
+
+Use existing policy and authorization rules.
+
+Do not introduce unrestricted account deletion.
+
+==================================================
+PHASE 5 — CERTIFICATIONS & PAYMENTS
+==================================================
+
+Reuse existing certification workflows.
+
+The Founder must eventually be able to:
+
+- Review certification requests
+- Approve eligible requests
+- Reject requests
+- Revoke certifications with a reason
+- View verified payment status
+- Review payment-related exceptions
+
+IMPORTANT:
+
+Do not create fake payment confirmations.
+
+Do not mark payments as completed
+without verified payment evidence.
+
+Do not grant commercial certification
+solely through a manual payment toggle.
+
+Preserve all existing Stripe integrations
+and membership requirements.
+
+==================================================
+PHASE 6 — PAGE CONTENT MANAGEMENT
+==================================================
+
+Prepare a controlled visual content editor.
+
+The Founder must eventually be able to
+modify approved content on existing pages.
+
+Examples:
+
+- Titles
+- Descriptions
+- Images
+- Videos
+- Partner sections
+- News sections
+- Banners
+- Calls to action
+- SEO descriptions
+
+Use approved structured content fields.
+
+Do not allow editing application source code,
+authentication rules or server configuration
+through the CMS.
+
+Preserve existing animations and layouts.
+
+==================================================
+PHASE 7 — NOTIFICATIONS
+==================================================
+
+Design an integrated notification system.
+
+When the Founder publishes important news,
+the system should support:
+
+- In-app notifications
+- Email notifications
+- Opportunity announcements
+- Partner announcements
+- Event announcements
+
+Email delivery must respect applicable
+consent requirements, notification preferences,
+unsubscribe controls and delivery limits.
+
+Do not send bulk emails during development.
+
+Do not assume every member has consented
+to receive promotional emails.
+
+==================================================
+PHASE 8 — PREMIUM USER INTERFACE
+==================================================
+
+Improve the Founder Workspace design.
+
+It must feel like a premium
+international executive dashboard.
+
+Maintain TOMI's existing identity:
+
+- Deep green
+- Refined gold
+- Warm neutral backgrounds
+- Elegant typography
+- Premium cards
+- Clean navigation
+- Smooth transitions
+- Responsive layout
+
+On mobile, improve horizontal navigation.
+
+Use a compact navigation system that
+makes all modules easy to access.
+
+Do not use oversized placeholder cards
+as the final interface.
+
+Functional modules should display
+real management controls.
+
+==================================================
+IMPLEMENTATION ORDER
+==================================================
+
+START WITH NEWS & PUBLISHING ONLY.
+
+Before writing persistence code:
+
+Inspect existing database structures
+and identify the smallest safe design.
+
+If a database migration is required:
+
+STOP AND REPORT:
+
+1. Exact proposed schema
+2. Why it is necessary
+3. Migration operations
+4. Compatibility with existing data
+5. Rollback strategy
+6. Security implications
+
+Wait for Founder approval before executing
+any migration.
+
+If no migration is required, implement
+the complete functional News module
+using existing approved infrastructure.
+
+Do not create fake persistence.
+
+Do not display successful publication
+unless content is actually saved.
+
+==================================================
+SECURITY
+==================================================
+
+All Founder operations must enforce
+authorization on the server.
+
+Validate all content and uploads.
+
+Protect private drafts.
+
+Prevent unauthorized publication.
+
+Maintain revision history.
+
+Preserve existing Clerk authentication.
+
+Preserve Stripe and payment functionality.
+
+==================================================
+STRICT RESTRICTIONS
+==================================================
+
+DO NOT:
+
+- Modify production data
+- Deploy automatically
+- Run unapproved migrations
+- Trigger Stripe synchronization
+- Change membership rules
+- Modify Clerk configuration
+- Change Founder identity
+- Replace existing public pages
+- Remove animations
+- Implement fake functionality
+- Generate mock production statistics
+- Activate bulk email sending
+- Start backend services that trigger
+  unsafe initialization operations
+
+==================================================
+DELIVERABLE
+==================================================
+
+First deliver a functional News CMS,
+or stop at the migration approval gate
+if new persistence structures are required.
+
+Report:
+
+1. Existing architecture reused
+2. Files created or modified
+3. Functional capabilities
+4. Public News integration
+5. Persistence implementation
+6. Security controls
+7. Tests performed
+8. Remaining limitations
+9. Exact next implementation step
+
+Do not continue automatically to Partners,
+Members, Payments or other modules.
+
+Wait for Founder approval after
+the News module is complete.
