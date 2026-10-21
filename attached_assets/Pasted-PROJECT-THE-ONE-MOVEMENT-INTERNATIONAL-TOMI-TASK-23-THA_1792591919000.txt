@@ -1,0 +1,797 @@
+PROJECT: THE ONE MOVEMENT INTERNATIONAL (TOMI)
+
+TASK 23 — THANKS THE WORLD GLOBAL CAMPAIGN
+& OUR VISION IMMERSIVE EXPERIENCE
+
+MODE: CONTROLLED IMPLEMENTATION
+
+FOUNDER INSTRUCTIONS:
+
+The Founder has reviewed the current Our Vision
+page and identified several corrections.
+
+The current Thanks the World campaign is only
+a visual presentation.
+
+THIS IS NOT SUFFICIENT.
+
+The Founder wants a REAL, FUNCTIONAL global campaign.
+
+Every registered TOMI member must be able to
+participate directly from their existing account.
+
+The campaign must allow members to publish
+gratitude messages through text and video.
+
+The campaign must also have a powerful,
+premium, globally inclusive visual identity.
+
+==================================================
+PART 1 — THANKS THE WORLD: GLOBAL CAMPAIGN
+==================================================
+
+CAMPAIGN NAME:
+
+THANKS THE WORLD
+
+MAIN HEADLINE:
+
+EVERY COUNTRY HAS A STORY.
+EVERY VOICE MATTERS.
+
+CAMPAIGN MESSAGE:
+
+"One world. Different cultures.
+Different nations. One humanity."
+
+Thanks the World is a global campaign
+celebrating gratitude, cultural identity,
+unity, resilience and human connection.
+
+People from every country should be able
+to share stories about the places,
+communities and people who have shaped
+their lives.
+
+IMPORTANT:
+
+This is an international campaign.
+
+Do not make it exclusively African.
+
+Each region must preserve its own
+cultural and visual identity.
+
+==================================================
+PART 2 — FUNCTIONAL MEMBER CONTRIBUTIONS
+==================================================
+
+REMOVE THE DISABLED CONTRIBUTION EXPERIENCE.
+
+Replace the current inactive contribution
+button with a REAL submission workflow.
+
+Every authenticated TOMI member must be
+able to create a Thanks the World contribution.
+
+SUPPORTED CONTENT:
+
+1. Written gratitude message
+2. Video gratitude message
+3. Written message with optional media
+
+MEMBER WORKFLOW:
+
+LOGIN
+→ SELECT CAMPAIGN
+→ SELECT COUNTRY
+→ CHOOSE GRATITUDE THEME
+→ CREATE MESSAGE OR UPLOAD VIDEO
+→ PREVIEW
+→ SUBMIT
+→ CONTENT REVIEW
+→ PUBLICATION
+→ MEMBER PROFILE
+
+The member must be able to manage their
+own submissions from their existing account.
+
+Reuse the current TOMI authentication,
+member profile and content infrastructure.
+
+Do not create a second membership system.
+
+==================================================
+PART 3 — COUNTRY SELECTION
+==================================================
+
+Build a searchable country selector.
+
+Members must be able to choose:
+
+- Their selected country
+- Their geographic region
+- Their continent or relevant regional grouping
+- Their gratitude theme
+
+DISPLAY:
+
+Country name
+Country flag
+Region
+Continent
+
+Support countries worldwide.
+
+Do not limit the campaign to Africa
+or the United Arab Emirates.
+
+The selected flag should appear
+on the contribution presentation.
+
+Use reliable international country data.
+
+Country selection is a creative expression
+of gratitude and must not automatically
+be treated as verified nationality.
+
+==================================================
+PART 4 — GRATITUDE THEMES
+==================================================
+
+Members should be able to express gratitude to:
+
+MY COUNTRY
+
+MY COMMUNITY
+
+MY CULTURE
+
+PEOPLE WHO INSPIRED ME
+
+PEACE & UNITY
+
+POSITIVE LEADERSHIP
+
+HUMANITARIAN ACTION
+
+MY JOURNEY
+
+Provide a simple, elegant selection interface.
+
+The member can write a story or record/upload
+a video connected to the chosen theme.
+
+==================================================
+PART 5 — VIDEO CONTRIBUTIONS
+==================================================
+
+Video contributions are essential.
+
+Allow members to upload videos from:
+
+- Mobile devices
+- Desktop computers
+
+Use the existing approved media architecture.
+
+Support appropriate common video formats.
+
+Implement:
+
+- Video validation
+- File size limits
+- Duration limits
+- Upload progress
+- Error handling
+- Video preview
+- Thumbnail generation where supported
+- Safe media processing
+- Accessible playback
+
+Do not expose private videos before approval.
+
+If direct camera recording is supported
+by the existing architecture, integrate it.
+
+Otherwise prioritize reliable video upload.
+
+Do not claim recording works if it has
+not been implemented and verified.
+
+==================================================
+PART 6 — MEMBER PROFILE INTEGRATION
+==================================================
+
+Every member's contribution must be
+associated with their existing TOMI account.
+
+After approval, the contribution should:
+
+1. Appear on the member's public profile
+   according to their privacy settings.
+
+2. Appear in the relevant campaign feed.
+
+3. Display the selected country and flag.
+
+4. Display the contribution title.
+
+5. Display the written message or video.
+
+6. Support legitimate engagement.
+
+Members should be able to view the status
+of their submitted contributions.
+
+Possible states:
+
+DRAFT
+PENDING REVIEW
+PUBLISHED
+REJECTED
+HIDDEN
+ARCHIVED
+
+Members must not be able to approve
+their own contributions.
+
+==================================================
+PART 7 — FOUNDER MODERATION
+==================================================
+
+Connect the campaign to the existing
+Founder Workspace.
+
+The Founder must be able to:
+
+- View submitted contributions
+- Review text
+- Review videos
+- Approve submissions
+- Reject submissions
+- Request corrections where supported
+- Feature selected contributions
+- Remove inappropriate content
+- Suspend contributions
+- Restore eligible contributions
+
+Use existing server-side Founder authorization.
+
+Record moderation decisions and reasons.
+
+Preserve existing member privacy rules.
+
+Do not publish contributions automatically
+without the applicable moderation approval.
+
+==================================================
+PART 8 — GLOBAL CAMPAIGN DISCOVERY
+==================================================
+
+Create a public Thanks the World
+discovery experience.
+
+Visitors should be able to explore
+approved contributions.
+
+DISCOVERY OPTIONS:
+
+BY COUNTRY
+BY CONTINENT
+BY CAMPAIGN
+MOST VIEWED
+MOST LIKED
+MOST DISCUSSED
+FEATURED STORIES
+RECENT STORIES
+
+Each contribution may include:
+
+- Country flag
+- Member public display name
+- Video or image
+- Short description
+- View count
+- Like count
+- Comment count
+- Share action
+
+All interaction counts must come from
+real verified application data.
+
+Never fabricate engagement statistics.
+
+==================================================
+PART 9 — ENGAGEMENT & FUTURE AWARDS
+==================================================
+
+The Founder plans to recognize
+outstanding campaign contributions.
+
+Engagement indicators include:
+
+- Views
+- Likes
+- Comments
+- Shares
+- Meaningful participation
+
+Create an engagement-based
+discovery and ranking system.
+
+IMPORTANT:
+
+Do not automatically declare winners.
+
+The official award, eligibility rules,
+evaluation period and prize details
+have NOT been announced yet.
+
+For now, display rankings or featured
+contributions without presenting them
+as confirmed prize winners.
+
+The Founder will announce award
+rules and prizes separately.
+
+Implement safeguards against:
+
+- Fake views
+- Repeated self-engagement
+- Automated likes
+- Artificial engagement
+- Spam comments
+- Manipulated rankings
+
+Use existing engagement infrastructure
+where appropriate.
+
+==================================================
+PART 10 — CAMPAIGN CATEGORIES
+==================================================
+
+THANKS THE WORLD is the umbrella campaign.
+
+Within this universe, introduce
+distinct campaign identities.
+
+EXAMPLES:
+
+THANKS EMIRATES
+THANKS AFRICA
+THANKS USA
+THANKS EUROPE
+
+The architecture should also support
+other countries and regions.
+
+IMPORTANT:
+
+These are not identical campaigns
+with different names.
+
+Each campaign may have:
+
+- Its own visual identity
+- Its own theme
+- Its own description
+- Its own cultural inspiration
+- Its own campaign media
+- Its own approved contribution feed
+
+Do not automatically treat every country
+or regional theme as an active official
+campaign without Founder approval.
+
+==================================================
+PART 11 — CULTURAL IDENTITY
+==================================================
+
+Cultural representation must be accurate,
+respectful and visually sophisticated.
+
+THANKS AFRICA:
+
+Use appropriate African cultural
+references and selected graphic traditions.
+
+THANKS EMIRATES:
+
+Use appropriate Emirati architecture,
+heritage and visual references.
+
+THANKS USA:
+
+Use appropriate American cultural
+and architectural references.
+
+THANKS EUROPE:
+
+Use a diverse European visual language,
+without representing Europe as one
+homogeneous culture.
+
+OTHER REGIONS:
+
+Use relevant regional identities.
+
+Do not copy African Kuba patterns
+into unrelated cultural campaigns.
+
+Each campaign should celebrate
+its own artistic and cultural identity.
+
+Avoid stereotypes and invented
+historical symbolism.
+
+==================================================
+PART 12 — THANKS THE WORLD HERO ANIMATION
+==================================================
+
+The Founder wants THANKS THE WORLD
+to have a powerful visual presence.
+
+Create a large cinematic introduction.
+
+MAIN TITLE:
+
+THANKS THE WORLD
+
+SUBTITLE:
+
+EVERY COUNTRY HAS A STORY.
+EVERY VOICE MATTERS.
+
+VISUAL CONCEPT:
+
+A global visual universe.
+
+Use:
+
+- A refined world-inspired background
+- Subtle international flags
+- Elegant geographic connections
+- Cinematic typography
+- Soft luminous transitions
+- Global cultural imagery
+- Premium motion design
+
+The flags must remain in the background
+with low opacity.
+
+They should symbolize international unity
+without overpowering the title.
+
+Avoid political favoritism in flag placement.
+
+ANIMATION:
+
+The world-inspired background appears.
+
+Subtle connections emerge.
+
+The title THANKS THE WORLD
+reveals itself prominently.
+
+The supporting statement follows.
+
+Then reveal:
+
+EXPLORE STORIES
+
+SHARE YOUR GRATITUDE
+
+Both buttons must have real,
+appropriate destinations.
+
+==================================================
+PART 13 — OUR VISION OPENING ANIMATION
+==================================================
+
+The Founder provided a Museum of Art
+animation video as a MOTION REFERENCE.
+
+Use the reference to understand:
+
+- Cinematic depth
+- Artistic transitions
+- Layered movement
+- Smooth camera-like motion
+- Typography reveals
+- Elegant pacing
+
+Apply a similar motion principle
+to the beginning of OUR VISION.
+
+Do not copy third-party branding,
+video footage or protected graphics.
+
+Create an original TOMI visual composition.
+
+The vision headline should appear
+through an elegant cinematic transition.
+
+MAIN MESSAGE:
+
+ONE WORLD.
+ONE HUMANITY.
+ONE SHARED FUTURE.
+
+The result should feel like a premium
+digital art experience.
+
+Do not add long loading screens.
+
+==================================================
+PART 14 — SCROLL ANIMATIONS
+==================================================
+
+The Founder wants the entire Our Vision
+page to feel alive.
+
+Improve the existing sections:
+
+GLOBAL CONNECTION
+
+DIPLOMACY
+
+BUSINESS & INVESTMENT
+
+HUMANITARIAN ACTION
+
+CULTURE & ENTERTAINMENT
+
+GOVERNANCE
+
+MEDIA & STORYTELLING
+
+ONE NETWORK.
+A WORLD OF POSSIBILITIES.
+
+For each major section:
+
+- Animate the heading
+- Introduce subtle moving graphic patterns
+- Reveal the supporting content
+- Use smooth directional transitions
+- Connect the visual language between sections
+
+Some elements may enter from the left.
+
+Others may enter from the right.
+
+Some may reveal through masks or
+subtle vertical motion.
+
+Avoid applying the same animation
+to every section.
+
+The visitor must experience discovery
+while scrolling.
+
+==================================================
+PART 15 — FLAGS & GLOBAL UNITY
+==================================================
+
+In the section:
+
+DIFFERENT NATIONS.
+DIFFERENT CULTURES.
+ONE HUMANITY.
+
+Introduce a subtle animated background
+of international flags.
+
+Use low opacity.
+
+Preserve text readability.
+
+The flags may move slowly through
+the background to communicate unity.
+
+Do not add oversized flag icons
+that disrupt the page composition.
+
+The visual priority remains:
+
+DIFFERENT NATIONS.
+DIFFERENT CULTURES.
+ONE HUMANITY.
+
+==================================================
+PART 16 — PRESERVE HUMANITARIAN CONTENT
+==================================================
+
+The Founder approves the current
+humanitarian impact video.
+
+DO NOT MODIFY OR REMOVE IT.
+
+Preserve the existing presentation
+unless a minor responsive correction
+is necessary.
+
+Do not change the humanitarian
+archive's historical context.
+
+==================================================
+PART 17 — FOUNDER CONTENT MANAGEMENT
+==================================================
+
+The Founder must eventually be able
+to manage the campaigns from his
+existing Founder Workspace.
+
+Prepare the integration for:
+
+- Campaign management
+- Contribution moderation
+- Featured stories
+- Approved videos
+- Campaign categories
+- Country-based discovery
+- Engagement analytics
+
+Reuse existing administration tools.
+
+Do not introduce a separate Founder login.
+
+==================================================
+PART 18 — DATABASE & BACKEND SAFETY
+==================================================
+
+Before implementing persistent
+member submissions:
+
+Inspect existing:
+
+- Member profile system
+- Member publications
+- Video uploads
+- Media storage
+- Likes
+- Comments
+- Reporting
+- Moderation
+- Network audit logs
+
+REUSE THE EXISTING ARCHITECTURE.
+
+Do not duplicate systems unnecessarily.
+
+If new database tables or migrations
+are required:
+
+STOP AND REPORT:
+
+1. Exact proposed schema
+2. Existing components to reuse
+3. Required migrations
+4. Authorization rules
+5. Media storage design
+6. Moderation workflow
+7. Compatibility risks
+8. Rollback strategy
+
+WAIT FOR EXPLICIT FOUNDER APPROVAL
+BEFORE APPLYING MIGRATIONS.
+
+Do not substitute mock data
+for real functionality.
+
+Do not claim a contribution has been
+published unless it has been saved
+and is visible in the correct approved feed.
+
+==================================================
+PART 19 — PERFORMANCE & RESPONSIVENESS
+==================================================
+
+Mobile-first implementation.
+
+Ensure:
+
+- Fast loading
+- Smooth scrolling
+- Responsive typography
+- Lightweight animations
+- Accessible controls
+- Video loading optimization
+- Functional mobile uploads
+- Reduced-motion accessibility
+- No unnecessary layout shifts
+
+Do not autoplay multiple videos at once.
+
+Preserve existing approved TOMI branding.
+
+==================================================
+STRICT RESTRICTIONS
+==================================================
+
+DO NOT:
+
+- Rebuild the entire website
+- Replace the current homepage
+- Modify Stripe
+- Modify Clerk
+- Change membership permissions
+- Modify existing subscriptions
+- Run unapproved migrations
+- Modify production data
+- Deploy automatically
+- Remove approved videos
+- Create fake submissions
+- Invent engagement numbers
+- Announce unapproved prizes
+- Start unsafe backend processes
+
+==================================================
+IMPLEMENTATION PRIORITY
+==================================================
+
+PRIORITY 1:
+
+Inspect existing member publishing,
+upload and moderation infrastructure.
+
+PRIORITY 2:
+
+Implement the real member contribution
+workflow using existing capabilities,
+if no migration is required.
+
+PRIORITY 3:
+
+Connect submissions to member profiles
+and the moderated campaign feed.
+
+PRIORITY 4:
+
+Implement the Thanks the World visual
+identity and campaign discovery interface.
+
+PRIORITY 5:
+
+Apply the requested Our Vision animations,
+including the cinematic opening and
+scroll-triggered content transitions.
+
+Do not proceed past any database,
+security or operational approval gate
+without explicit authorization.
+
+==================================================
+FINAL REPORT
+==================================================
+
+Provide:
+
+1. Implemented functionality
+2. Member contribution status
+3. Text submission status
+4. Video upload status
+5. Profile integration
+6. Founder moderation integration
+7. Public campaign feed
+8. Engagement and ranking capabilities
+9. Thanks the World visual implementation
+10. Our Vision animation changes
+11. Files modified
+12. Database changes required
+13. Tests performed
+14. Missing functionality
+15. Exact next step
+
+Clearly distinguish:
+
+WORKING
+PARTIALLY IMPLEMENTED
+BLOCKED
+NOT IMPLEMENTED
+
+Do not deploy automatically.
+
+Wait for Founder approval before proceeding
+to another major module.
