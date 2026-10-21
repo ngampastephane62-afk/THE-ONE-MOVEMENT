@@ -49,12 +49,13 @@ test("every production marker retains initialization even if the preview flag le
   assert.equal(mode({ REPLIT_ENVIRONMENT: "production" }), "initialize");
 });
 
-test("contradictory preview/production markers fail closed, not into payment initialization", () => {
-  for (const value of ["1", undefined]) {
+test("undocumented environment labels do not override explicit editor and deployment checks", () => {
+  for (const label of ["production", "development", "unknown", undefined]) {
+    assert.equal(mode({ ...preview, REPLIT_ENVIRONMENT: label }), "preview-skip");
     assert.throws(() => mode({
-      ...preview, TOMI_PREVIEW_SKIP_STRIPE_INIT: value,
-      REPLIT_ENVIRONMENT: "production",
-    }), /Conflicting.*refusing startup/);
+      ...preview, TOMI_PREVIEW_SKIP_STRIPE_INIT: undefined,
+      REPLIT_ENVIRONMENT: label,
+    }), /refusing startup/);
   }
   // Real deployment markers still take precedence and retain production behavior.
   assert.equal(mode({ ...preview, NODE_ENV: "production", REPLIT_ENVIRONMENT: "production" }), "initialize");
@@ -99,7 +100,7 @@ test("preview entrypoint opens the API but never initializes payments or schedul
 
 test("misconfigured preview refuses startup before opening a socket", () => {
   assert.throws(() => runEntry({ ...preview, TOMI_PREVIEW_SKIP_STRIPE_INIT: undefined }), /refusing startup/);
-  assert.throws(() => runEntry({ ...preview, REPLIT_ENVIRONMENT: "production" }), /Conflicting.*refusing startup/);
+  assert.throws(() => runEntry({ ...preview, REPLIT_DEPLOYMENT: "unexpected" }), /refusing startup/);
 });
 
 test("production retains the existing payment initialization and failure retry", async () => {

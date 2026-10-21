@@ -24,3 +24,4 @@
 - [Magazine measurement](magazine-measurement.md) — library/book reading, genuine digital-session statistics separate from social reach, and raw aggregate timestamp decoding.
 - [Summit and Gala positioning](summit-gala-positioning.md) — year-round professional ecosystem versus a community-centred national and cultural Gala; expand in controlled phases.
 - [Sector worlds mandate](sector-world-mandate.md) — all 17 frontend worlds now authorized; local discovery and future concepts allowed, but no backend/CMS/payment/permission changes or deployment.
+- [Preview environment indicators](preview-environment-markers.md) — REPLIT_ENVIRONMENT is not an authoritative app deployment selector; use documented indicators and explicit preview authorization.

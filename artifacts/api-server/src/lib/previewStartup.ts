@@ -11,12 +11,8 @@ export function stripeStartupMode(env: StartupEnvironment): "initialize" | "prev
   }
 
   const replitEditor = !!env.REPL_ID && !!env.REPLIT_DEV_DOMAIN && !env.REPLIT_DEPLOYMENT;
-  if (env.REPLIT_ENVIRONMENT === "production") {
-    if (replitEditor || env.TOMI_PREVIEW_SKIP_STRIPE_INIT === "1") {
-      throw new Error("Conflicting preview and production environment markers; refusing startup before payment initialization.");
-    }
-    return "initialize";
-  }
+  // REPLIT_ENVIRONMENT is not a documented app deployment indicator. It can
+  // coexist with editor markers; never use it to infer the database/deployment.
   if (env.TOMI_PREVIEW_SKIP_STRIPE_INIT === "1") {
     if (env.NODE_ENV !== "development" || !replitEditor) {
       throw new Error("Stripe preview safeguard requires NODE_ENV=development in the Replit editor; refusing startup.");
