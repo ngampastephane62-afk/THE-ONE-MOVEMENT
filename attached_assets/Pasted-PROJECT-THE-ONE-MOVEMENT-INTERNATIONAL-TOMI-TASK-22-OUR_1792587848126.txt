@@ -1,0 +1,740 @@
+PROJECT: THE ONE MOVEMENT INTERNATIONAL (TOMI)
+
+TASK 22 — OUR VISION PAGE TRANSFORMATION
+
+MODE: CONTROLLED FRONTEND IMPLEMENTATION
+
+SCOPE: OUR VISION PAGE ONLY
+
+IMPORTANT FOUNDER INSTRUCTIONS:
+
+The Founder wants to transform the current
+"Our Vision" page into a powerful expression
+of TOMI's global mission.
+
+The existing page focuses too heavily on
+fashion events and historical photographs.
+
+This must change.
+
+THE ONE MOVEMENT INTERNATIONAL is not
+a single event or a fashion organization.
+
+It is a global ecosystem bringing together
+people, cultures, businesses, institutions,
+communities and opportunities.
+
+The page must communicate:
+
+PEACE
+UNITY
+DIVERSITY
+INCLUSION
+GLOBAL CONNECTION
+HUMAN RIGHTS
+INTERNATIONAL COOPERATION
+HUMANITARIAN IMPACT
+
+Do not rebuild the website.
+
+Work with the existing TOMI architecture,
+visual identity and page components.
+
+==================================================
+1. NEW VISION HERO
+==================================================
+
+Replace the current hero messaging with
+a stronger global vision.
+
+SECTION LABEL:
+
+OUR VISION
+
+MAIN HEADLINE:
+
+ONE WORLD.
+ONE HUMANITY.
+ONE SHARED FUTURE.
+
+SUPPORTING TEXT:
+
+"To connect the world as one — beyond borders,
+cultures, backgrounds and differences."
+
+MISSION STATEMENT:
+
+"We envision a world where peace, unity,
+diversity and inclusion become the foundations
+of meaningful collaboration.
+
+We stand against discrimination, racism,
+hatred, violence, war and division.
+
+Through culture, diplomacy, business,
+innovation, media, humanitarian action
+and international cooperation, we bring
+people, communities, institutions and
+opportunities together."
+
+CLOSING MESSAGE:
+
+"Different nations. Different cultures.
+Different ambitions. One shared humanity."
+
+WE ARE ONE — FOR PEACE & UNITY.
+
+==================================================
+2. CINEMATIC VISION ANIMATION
+==================================================
+
+The hero must visually communicate
+GLOBAL INTERCONNECTION.
+
+Create an elegant motion composition
+using the existing TOMI visual system.
+
+VISUAL CONCEPT:
+
+An interconnected world.
+
+Represent different regions through
+abstract geographic connections,
+luminous pathways and cultural motifs.
+
+Animate golden lines gradually connecting
+different points of a subtle global network.
+
+As the connections develop,
+reveal the headline.
+
+ANIMATION SEQUENCE:
+
+0–2 seconds:
+The background patterns emerge softly.
+
+2–4 seconds:
+Golden connections begin appearing.
+
+4–6 seconds:
+The main headline reveals itself.
+
+6–8 seconds:
+The supporting mission statement appears.
+
+The visitor should feel that different
+parts of the world are coming together.
+
+IMPORTANT:
+
+Do not create a long loading screen.
+
+Keep the content accessible immediately.
+
+No heavy animations that delay
+reading or navigation.
+
+Respect reduced-motion settings.
+
+==================================================
+3. REMOVE EVENT-FOCUSED PHOTO GALLERY
+==================================================
+
+The current page contains several
+Fashion Week archival photographs.
+
+These images are valuable historical assets,
+but they should not dominate Our Vision.
+
+Remove the existing archival image gallery
+from this page.
+
+Do not delete the original media files.
+
+Do not remove the content from other
+existing pages.
+
+Do not erase likes, comments or
+historical media records.
+
+Preserve the original assets for
+their appropriate program/archive pages.
+
+The Vision page must focus on
+GLOBAL PURPOSE rather than event history.
+
+==================================================
+4. HOW WE CONNECT THE WORLD
+==================================================
+
+Create a major new section:
+
+HOW WE CONNECT
+
+SUBTITLE:
+
+"Different worlds. Shared possibilities."
+
+INTRODUCTION:
+
+"TOMI creates spaces where people,
+institutions, ideas and opportunities
+can connect across borders.
+
+Our approach brings together cultural,
+economic, diplomatic, humanitarian and
+social initiatives under one shared vision."
+
+IMPORTANT:
+
+These are the Movement's areas of action,
+NOT the 17 ecosystem sectors.
+
+Do not confuse them with the six official
+event programs.
+
+Create six interconnected areas:
+
+01 — HUMANITARIAN ACTION & HUMAN RIGHTS
+
+Supporting human dignity, inclusion,
+humanitarian awareness and opportunities
+for solidarity with vulnerable communities.
+
+02 — DIPLOMACY & INTERNATIONAL RELATIONS
+
+Encouraging dialogue, cultural diplomacy,
+international understanding and cooperation
+between people and institutions.
+
+03 — BUSINESS & INVESTMENT
+
+Connecting entrepreneurs, investors,
+professionals and organisations to explore
+responsible collaboration and opportunity.
+
+04 — CULTURE & ENTERTAINMENT
+
+Using fashion, music, art, film and
+creative expression to bridge cultures,
+celebrate diversity and encourage unity.
+
+05 — GOVERNANCE & CIVIC DIALOGUE
+
+Encouraging constructive dialogue,
+responsible leadership, institutional
+engagement and inclusive participation.
+
+06 — MEDIA & GLOBAL STORYTELLING
+
+Amplifying meaningful stories, promoting
+cross-cultural understanding and creating
+visibility for initiatives with positive impact.
+
+IMPORTANT:
+
+These descriptions express TOMI's mission
+and intended areas of engagement.
+
+Do not invent government mandates,
+official partnerships, human-rights
+enforcement powers or guaranteed services.
+
+==================================================
+5. INTERACTIVE CONNECTION ANIMATIONS
+==================================================
+
+Do not display the six areas as
+a long static vertical list.
+
+Create an immersive interactive
+connection experience.
+
+VISUAL DIRECTION:
+
+Place a refined central network
+or globe-inspired connection hub.
+
+Around the hub, display the six areas
+as connected animated elements.
+
+Each area should have:
+
+- Its own title
+- A distinctive abstract visual
+- A brief description
+- A subtle motion identity
+- A connection to the central hub
+
+INTERACTION:
+
+When the visitor selects an area,
+highlight its connection.
+
+Reveal the corresponding description
+through an elegant animation.
+
+EXAMPLES:
+
+DIPLOMACY:
+Connected nations and dialogue pathways.
+
+BUSINESS:
+Connecting networks and opportunity nodes.
+
+CULTURE:
+Abstract textile and artistic motifs.
+
+HUMANITARIAN:
+Human-centered visual connections.
+
+MEDIA:
+Flowing communication pathways.
+
+GOVERNANCE:
+Balanced geometric compositions.
+
+Do not introduce generic emojis
+or childish icons.
+
+Use sophisticated graphic illustrations.
+
+Do not introduce random cultural symbols
+without understanding their meaning.
+
+==================================================
+6. AFRICAN-INSPIRED GRAPHIC IDENTITY
+==================================================
+
+The Founder wants stronger visual identity
+throughout the page.
+
+Introduce refined patterns inspired by:
+
+- Kuba geometric design traditions
+- African textile geometry
+- African artistic craftsmanship
+- Contemporary African graphic design
+
+The patterns should be:
+
+Elegant
+Subtle
+Layered
+Culturally respectful
+Premium
+Modern
+
+Use controlled opacity and motion.
+
+The patterns must complement
+the text and illustrations.
+
+Do not make the page visually noisy.
+
+Maintain TOMI's existing:
+
+Deep green
+Gold
+Warm neutral
+Premium editorial typography
+
+==================================================
+7. WHAT MEMBERS CAN GAIN
+==================================================
+
+Add a section explaining the value
+of joining the TOMI ecosystem.
+
+TITLE:
+
+ONE NETWORK.
+A WORLD OF POSSIBILITIES.
+
+SUPPORTING TEXT:
+
+"Join a global community built around
+connection, visibility, collaboration
+and shared purpose."
+
+Explain possible benefits:
+
+GLOBAL CONNECTION
+
+Discover people and organisations
+across different sectors and regions.
+
+PROFESSIONAL NETWORKING
+
+Explore professional relationships
+and potential collaborations.
+
+MEDIA & VISIBILITY
+
+Discover opportunities to share
+stories, initiatives and creative work.
+
+CULTURAL EXCHANGE
+
+Connect with different communities
+and cultural perspectives.
+
+PARTICIPATION
+
+Discover TOMI programs, initiatives,
+events and participation opportunities.
+
+HUMANITARIAN ENGAGEMENT
+
+Learn about relevant humanitarian
+initiatives and ways to contribute.
+
+IMPORTANT:
+
+Do not promise guaranteed investments,
+customers, introductions, certifications,
+media coverage or financial returns.
+
+Use only capabilities that already exist
+or clearly distinguish planned features.
+
+Add a clear CTA:
+
+JOIN THE MOVEMENT
+
+Connect it to the existing registration flow.
+
+==================================================
+8. HUMANITARIAN IMPACT
+==================================================
+
+KEEP THE EXISTING HUMANITARIAN VIDEO.
+
+The current Goma humanitarian archive film
+must remain on the Vision page.
+
+Preserve:
+
+- The existing video
+- Its media source
+- Its historical context
+- Its publication rights
+- Existing engagement functionality
+
+Do not replace this video.
+
+Improve only the surrounding presentation.
+
+SECTION LABEL:
+
+HUMANITARIAN IMPACT
+
+HEADLINE:
+
+UNITY BECOMES MEANINGFUL THROUGH ACTION.
+
+SUPPORTING TEXT:
+
+"Peace and solidarity are more than words.
+They become meaningful when communities
+come together to support human dignity
+and respond to humanitarian challenges."
+
+Then display the existing archive video.
+
+Preserve historically accurate descriptions.
+
+Do not introduce unverified institutional
+endorsements or partnerships.
+
+Keep any necessary archival disclosure.
+
+==================================================
+9. THANKS THE WORLD — GLOBAL CAMPAIGN
+==================================================
+
+Introduce a new global campaign concept:
+
+THANKS THE WORLD
+
+CAMPAIGN HEADLINE:
+
+EVERY COUNTRY HAS A STORY.
+EVERY VOICE MATTERS.
+
+CAMPAIGN DESCRIPTION:
+
+"Across the world, people carry stories
+of gratitude, resilience and hope.
+
+Thanks the World is a global initiative
+inviting individuals to celebrate the
+people, communities and places that
+have positively shaped their journeys."
+
+The campaign should celebrate:
+
+Gratitude
+Unity
+Cultural diversity
+Coexistence
+Human connection
+Positive contributions
+
+==================================================
+10. COUNTRY SELECTION EXPERIENCE
+==================================================
+
+Design an interactive country selector
+for the Thanks the World campaign.
+
+The visitor should be able to:
+
+1. Select a country.
+2. See the country's flag.
+3. See its country name.
+4. See its geographic region.
+5. See its continent or appropriate
+   geographic grouping.
+6. Choose a gratitude theme.
+
+GRATITUDE THEMES:
+
+- My Country
+- My Community
+- People Who Inspired Me
+- Leadership & Positive Change
+- Culture & Heritage
+- Peace & Solidarity
+
+Countries should be searchable.
+
+Use a reliable, maintained country
+and regional classification dataset.
+
+Support accessible country names,
+flag representations and international
+audiences.
+
+Do not require nationality disclosure
+to browse the campaign.
+
+Do not assume geographic categories
+represent political endorsements.
+
+==================================================
+11. THANKS THE WORLD — USER CONTRIBUTIONS
+==================================================
+
+The future contribution experience
+should allow visitors to share
+positive stories of gratitude.
+
+PROPOSED CONTRIBUTION FIELDS:
+
+- Selected country
+- Gratitude theme
+- Message or story
+- Optional approved image
+- Publication consent
+- Privacy preferences
+
+IMPORTANT:
+
+Do not automatically publish
+user-submitted messages.
+
+Contributions require appropriate
+validation and moderation.
+
+Do not create a public political
+endorsement system.
+
+Users must not be required to praise
+governments or political leaders.
+
+Do not expose private user information.
+
+Do not build new persistence tables
+without Founder approval.
+
+If the current application does not
+support this workflow safely:
+
+Implement the approved visual
+campaign presentation and country
+selection preview only.
+
+Clearly label any unavailable
+submission capability.
+
+Report the exact backend work required.
+
+==================================================
+12. THANKS EMIRATES
+==================================================
+
+Preserve the existing:
+
+THANKS EMIRATES
+
+initiative.
+
+Do not delete or replace it.
+
+Present it as a distinct campaign
+within the broader vision of
+global gratitude and connection.
+
+Thanks Emirates remains focused on
+stories connected to the UAE.
+
+Thanks the World expands the concept
+internationally.
+
+Both campaigns should remain
+clearly distinguishable.
+
+==================================================
+13. CAMPAIGN DISCOVERY
+==================================================
+
+Create a visually coherent section:
+
+THE VISION IN MOTION
+
+Feature:
+
+THANKS THE WORLD
+Global Gratitude Campaign
+
+THANKS EMIRATES
+UAE Gratitude Campaign
+
+THE ONE DOCUMENTARY
+Documentary / storytelling initiative
+
+Each item should have:
+
+- A distinctive visual presentation
+- A short description
+- An elegant title animation
+- A clear Explore action
+
+Preserve existing destinations.
+
+Do not create broken links.
+
+If a destination does not exist,
+do not invent a working URL.
+
+==================================================
+14. MOTION DESIGN
+==================================================
+
+The entire Vision page should
+feel interconnected.
+
+Use:
+
+- Elegant scroll reveals
+- Animated headings
+- Connecting light paths
+- Subtle African-inspired patterns
+- Refined section transitions
+- Interactive illustrations
+- Controlled motion effects
+
+Avoid:
+
+- Static walls of text
+- Repetitive photo galleries
+- Excessive gold particles
+- Generic futuristic effects
+- Heavy 3D animations
+- Slow page loading
+
+The visitor must understand
+the mission while enjoying the design.
+
+Animation must support meaning.
+
+==================================================
+15. MOBILE-FIRST REQUIREMENTS
+==================================================
+
+The mobile experience is a priority.
+
+Ensure:
+
+- Large readable headlines
+- Clear short paragraphs
+- Responsive interactive graphics
+- Accessible country selector
+- Smooth scrolling
+- Correct image proportions
+- No horizontal overflow
+- Touch-friendly controls
+- Lightweight animations
+- Reduced-motion support
+
+Do not block content behind animations.
+
+==================================================
+16. IMPLEMENTATION RESTRICTIONS
+==================================================
+
+WORK ONLY ON OUR VISION.
+
+DO NOT:
+
+- Modify the homepage
+- Modify other public pages
+- Delete historical media
+- Modify News CMS
+- Modify Founder Workspace
+- Modify member permissions
+- Modify Clerk
+- Modify Stripe
+- Execute database migrations
+- Modify production data
+- Deploy automatically
+- Create fake user submissions
+- Invent official institutional partnerships
+
+Reuse existing components and
+design infrastructure.
+
+If new persistent features are required,
+stop and request Founder approval
+before database modifications.
+
+==================================================
+17. FINAL DELIVERABLE
+==================================================
+
+Implement the Vision page refinements
+that are possible within the existing
+frontend architecture.
+
+Provide:
+
+1. Components modified
+2. New Vision content
+3. Animation improvements
+4. Interactive connection design
+5. Removed archival gallery sections
+6. Humanitarian video preservation
+7. Thanks the World campaign presentation
+8. Country selector implementation status
+9. Thanks Emirates preservation
+10. Mobile performance results
+11. Tests completed
+12. Any missing backend functionality
+
+Show the updated development preview.
+
+DO NOT DEPLOY.
+
+Wait for Founder approval before
+working on another page.

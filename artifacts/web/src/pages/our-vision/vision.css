@@ -1,0 +1,66 @@
+/* Our Vision — scoped styles. All text is visible from first paint; motion only animates accents. */
+.tv { --tv-green: 187 60% 10%; --tv-gold: 42 62% 56%; --tv-ivory: 40 33% 95%; overflow-x: clip; overflow-wrap: anywhere; }
+.tv > section { isolation: isolate; }
+.tv select { min-width: 0; max-width: 100%; }
+.tv-kuba, .tv-map { pointer-events: none; }
+.tv-reveal[data-entered="true"] { animation: tv-section-arrive .7s ease-out backwards; animation-delay: var(--tv-delay, 0ms); }
+@keyframes tv-section-arrive { from { transform: translateY(16px); opacity: .75; } to { transform: none; opacity: 1; } }
+.tv-hero { position: relative; isolation: isolate; background: hsl(187 62% 7%); color: hsl(var(--tv-ivory)); overflow: hidden; }
+.tv-kuba { position: absolute; inset: 0; z-index: -2; opacity: .13; color: hsl(var(--tv-gold));
+  background-image:
+    linear-gradient(45deg, currentColor 1px, transparent 1px 12px, currentColor 12px 13px, transparent 13px),
+    linear-gradient(-45deg, currentColor 1px, transparent 1px 12px, currentColor 12px 13px, transparent 13px);
+  background-size: 26px 26px; -webkit-mask-image: radial-gradient(ellipse at 70% 40%, #000 0%, transparent 70%); mask-image: radial-gradient(ellipse at 70% 40%, #000 0%, transparent 70%);
+  animation: tv-pattern 2s ease-out both; }
+.tv-kuba-light { position: absolute; inset: 0; pointer-events: none; opacity: .06; color: hsl(187 60% 20%);
+  background-image: repeating-linear-gradient(90deg, currentColor 0 2px, transparent 2px 18px), repeating-linear-gradient(0deg, currentColor 0 2px, transparent 2px 18px);
+  -webkit-mask-image: linear-gradient(90deg, #000, transparent 60%); mask-image: linear-gradient(90deg, #000, transparent 60%); }
+@keyframes tv-pattern { from { transform: scale(1.04); } to { transform: scale(1); } }
+
+.tv-map { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; }
+.tv-map .tv-link { fill: none; stroke: hsl(var(--tv-gold)); stroke-width: 1.2; stroke-dasharray: 600; stroke-dashoffset: 600; animation: tv-draw 2.2s ease-out forwards; animation-delay: calc(2s + var(--i) * 120ms); opacity: .7; }
+.tv-map .tv-node { fill: hsl(var(--tv-gold)); transform-box: fill-box; transform-origin: center; animation: tv-pulse 4s ease-in-out infinite; animation-delay: calc(var(--i) * 300ms); }
+@keyframes tv-draw { to { stroke-dashoffset: 0; } }
+@keyframes tv-pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.6); } }
+
+/* Headline (4–6s) and mission (6–8s): visible always, accent rule sweeps in */
+.tv-rise { animation: tv-rise 1.4s cubic-bezier(.2,.7,.2,1) both; }
+.tv-rise-h { animation-delay: 4s; } .tv-rise-m { animation-delay: 6s; }
+@keyframes tv-rise { from { transform: translateY(10px); } to { transform: none; } }
+.tv-sweep { display: block; height: 2px; background: hsl(var(--tv-gold)); transform-origin: left; transform: scaleX(0); animation: tv-sweep 1.6s ease-out forwards; }
+.tv-sweep-h { animation-delay: 4s; } .tv-sweep-m { animation-delay: 6s; }
+@keyframes tv-sweep { to { transform: scaleX(1); } }
+
+.tv-paused * , .tv-paused { animation-play-state: paused !important; }
+
+/* Network hub */
+.tv-hub-svg .spoke { stroke: hsl(var(--tv-gold) / .3); stroke-width: 1; transition: stroke .3s; }
+.tv-hub-svg .spoke.on { stroke: hsl(var(--tv-gold)); stroke-width: 2; stroke-dasharray: 4 6; animation: tv-flow 1.2s linear infinite; }
+@keyframes tv-flow { to { stroke-dashoffset: -20; } }
+.tv-hub-svg .orbit { transform-origin: 200px 200px; animation: tv-spin 60s linear infinite; }
+@keyframes tv-spin { to { transform: rotate(360deg); } }
+.tv-area { transition: transform .3s, background-color .3s, border-color .3s; }
+.tv-area[aria-selected="true"] { transform: translateY(-2px); }
+.tv-panel { animation: tv-panel .5s cubic-bezier(.2,.7,.2,1); }
+@keyframes tv-panel { from { transform: translateY(8px); } to { transform: none; } }
+.tv-motif { animation: tv-breathe 6s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+@keyframes tv-breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+.tv-motif-1 { animation-name: tv-dialogue; animation-duration: 7s; }
+.tv-motif-2 { animation-name: tv-opportunity; animation-duration: 8s; }
+.tv-motif-3 { animation-name: tv-weave; animation-duration: 9s; }
+.tv-motif-4 { animation-name: tv-balance; animation-duration: 8s; }
+.tv-motif-5 { animation-name: tv-transmit; animation-duration: 5s; }
+@keyframes tv-dialogue { 0%,100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+@keyframes tv-opportunity { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+@keyframes tv-weave { 0%,100% { transform: translateX(-1px); } 50% { transform: translateX(1px); } }
+@keyframes tv-balance { 0%,100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
+@keyframes tv-transmit { 0%,100% { transform: translateX(-2px); opacity: .65; } 50% { transform: translateX(2px); opacity: 1; } }
+
+.tv-title-line { display: block; height: 1px; background: hsl(var(--tv-gold)); transform: scaleX(.25); transform-origin: left; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+.group:hover .tv-title-line, .group:focus-visible .tv-title-line { transform: scaleX(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .tv *, .tv *::before, .tv *::after { animation: none !important; transition: none !important; }
+  .tv-map .tv-link { stroke-dashoffset: 0; }
+  .tv-sweep { transform: scaleX(1); }
+}
