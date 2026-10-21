@@ -56,3 +56,17 @@ mtime_ms = 1792547118610
 storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/c11a113c-21ea-4eae-a1b5-e6219f61dd26/f8626125-3327-4aa0-9192-d230a314d3e9"
 storage_version_token = "1792547156395099"
 content_type = "text/markdown"
+
+[[outputs]]
+id = "IElTSw5eetbWPawizZlk1"
+uri = "file://docs/FOUNDER-NEWS-CMS-IMPLEMENTATION.md"
+type = "text"
+title = "News CMS — bilan d’implémentation"
+description = "Fonctions codées, fichiers, sécurité et 28 tests hors ligne. Vérification réelle en attente d’autorisation de redémarrage de l’API de développement ; aucune migration rejouée ni publication."
+logical_id = "5ad5d08f-a765-443a-972d-f111e1f315b0"
+content_hash = "sha256:8a40e329045b6ca7a6124b7054269c747f36894f08363cf25d5422a279ee73b2"
+size = 11125
+mtime_ms = 1792548492882
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/5ad5d08f-a765-443a-972d-f111e1f315b0/73ae2a0e-636a-49de-afc8-4a2255de237c"
+storage_version_token = "1792548513386173"
+content_type = "text/markdown"

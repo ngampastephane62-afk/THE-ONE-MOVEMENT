@@ -105,6 +105,8 @@ app.post("/api/stripe/webhook", express.raw({ type: "application/json", limit: "
     res.status(400).json({ error: "Webhook verification or processing failed." });
   }
 });
+// Editorial structured text is bounded separately; all other APIs retain 32 KiB.
+app.use("/api/founder/news/actions", express.json({ limit: "768kb" }));
 app.use(express.json({ limit: "32kb" }));
 app.use(express.urlencoded({ extended: false, limit: "16kb" }));
 

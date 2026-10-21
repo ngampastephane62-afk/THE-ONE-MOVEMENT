@@ -67,16 +67,16 @@ restriction solely for this module. Partners, Members, Payments, page editing,
 notifications and broader redesign remain outside the current implementation
 authorization. Do not bypass the approval gate with fake persistence.
 
-The latest News instruction narrows the active authorization to migration
-preparation, SQL review and static validation only. Wait for fresh explicit
-approval before further database execution or implementing the News editor.
-Starting or restarting backend servers is prohibited under this scope.
+The Founder has now explicitly authorized implementing the News module in
+development without replaying its approved migration. Starting or restarting a
+backend server still requires separate permission; this implementation approval
+does not include it.
 
-**Why:** The Founder supplied a newer preparation-only directive after previously
-approving development migration execution. A newer restriction controls subsequent
-work; it does not undo operations legitimately completed before it arrived.
+**Why:** The implementation was authorized after a preparation-only review, with
+the separate backend-start restriction expressly preserved.
 
-**How to apply:** Report the actual state and distinguish prepared, executed and
-unimplemented work. Do not reapply migrations or delete tables to simulate an
-unexecuted state. Preserve existing authentication, membership, payments, content,
-animations and production isolation.
+**How to apply:** Implement only News, preserve production isolation and existing
+identity, membership, payments, archive and animations. Do not rerun migrations or
+delete tables to simulate an unexecuted state. Distinguish offline validation from
+verification against the currently running API; request permission before loading
+new backend code through a restart.

@@ -5,6 +5,277 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+export interface NewsReference {
+  key: string;
+  label: string;
+}
+
+export interface NewsImage {
+  /**
+     * @minLength 1
+     * @maxLength 100
+     */
+  uploadId: string;
+  /** @maxLength 300 */
+  alt: string;
+  /**
+     * @maxLength 200
+     * @nullable
+     */
+  credit: string | null;
+}
+
+export type NewsVideo = {
+  kind: 'upload';
+  /**
+     * @minLength 1
+     * @maxLength 100
+     */
+  uploadId: string;
+} | {
+  kind: 'embed';
+  provider: 'youtube' | 'vimeo';
+  /**
+     * @minLength 1
+     * @maxLength 30
+     */
+  videoId: string;
+};
+
+export type NewsBlock = {
+  type: 'paragraph';
+  /** @maxLength 100000 */
+  text: string;
+} | {
+  type: 'heading';
+  level: 2 | 3;
+  /** @maxLength 100000 */
+  text: string;
+} | {
+  type: 'quote';
+  /** @maxLength 100000 */
+  text: string;
+  /**
+     * @maxLength 300
+     * @nullable
+     */
+  attribution: string | null;
+} | {
+  type: 'list';
+  ordered: boolean;
+  /**
+     * @maxItems 50
+     * @items.maxLength 100000
+     */
+  items: string[];
+} | {
+  type: 'image';
+  /**
+     * @minLength 1
+     * @maxLength 100
+     */
+  uploadId: string;
+  /** @maxLength 300 */
+  alt: string;
+  /**
+     * @maxLength 200
+     * @nullable
+     */
+  credit: string | null;
+  /**
+     * @maxLength 300
+     * @nullable
+     */
+  caption: string | null;
+};
+
+export type NewsSnapshotSchemaVersion = typeof NewsSnapshotSchemaVersion[keyof typeof NewsSnapshotSchemaVersion];
+
+
+export const NewsSnapshotSchemaVersion = {
+  NUMBER_1: 1,
+} as const;
+
+export type NewsSnapshotCategory = typeof NewsSnapshotCategory[keyof typeof NewsSnapshotCategory];
+
+
+export const NewsSnapshotCategory = {
+  news: 'news',
+  'video-news': 'video-news',
+  'partnership-announcement': 'partnership-announcement',
+  'official-announcement': 'official-announcement',
+  opportunity: 'opportunity',
+  'press-release': 'press-release',
+  'event-announcement': 'event-announcement',
+  'humanitarian-update': 'humanitarian-update',
+  'ecosystem-update': 'ecosystem-update',
+} as const;
+
+export interface NewsSnapshot {
+  schemaVersion: NewsSnapshotSchemaVersion;
+  /** @maxLength 200 */
+  title: string;
+  /**
+     * @maxLength 300
+     * @nullable
+     */
+  subtitle: string | null;
+  category: NewsSnapshotCategory;
+  cover: NewsImage | null;
+  video: NewsVideo | null;
+  /** @maxItems 150 */
+  body: NewsBlock[];
+  /** @maxItems 12 */
+  additionalImages: NewsImage[];
+  /**
+     * @maxLength 120
+     * @nullable
+     */
+  author: string | null;
+  /**
+     * @maxLength 40
+     * @nullable
+     */
+  publicationDate: string | null;
+  /**
+     * @maxLength 100
+     * @nullable
+     */
+  relatedPartnerKey: string | null;
+  /**
+     * @maxLength 100
+     * @nullable
+     */
+  relatedProgrammeSlug: string | null;
+  /**
+     * @maxLength 70
+     * @nullable
+     */
+  seoTitle: string | null;
+  /**
+     * @maxLength 180
+     * @nullable
+     */
+  seoDescription: string | null;
+  mediaRightsConfirmed: boolean;
+}
+
+export type NewsActionInputAction = typeof NewsActionInputAction[keyof typeof NewsActionInputAction];
+
+
+export const NewsActionInputAction = {
+  create: 'create',
+  save: 'save',
+  publish: 'publish',
+  unpublish: 'unpublish',
+  archive: 'archive',
+  restore: 'restore',
+} as const;
+
+export interface NewsActionInput {
+  action: NewsActionInputAction;
+  /**
+     * @minimum 1
+     * @nullable
+     */
+  id: number | null;
+  /** @minimum 0 */
+  version: number;
+  /**
+     * @minLength 1
+     * @maxLength 160
+     * @nullable
+     * @pattern ^[a-z0-9]+(-[a-z0-9]+)*$
+     */
+  slug: string | null;
+  snapshot: NewsSnapshot | null;
+  /**
+     * @minimum 1
+     * @nullable
+     */
+  revisionId: number | null;
+}
+
+export type NewsUploadInputContentType = typeof NewsUploadInputContentType[keyof typeof NewsUploadInputContentType];
+
+
+export const NewsUploadInputContentType = {
+  'image/jpeg': 'image/jpeg',
+  'image/png': 'image/png',
+  'image/webp': 'image/webp',
+  'image/gif': 'image/gif',
+  'video/mp4': 'video/mp4',
+  'video/webm': 'video/webm',
+  'video/quicktime': 'video/quicktime',
+} as const;
+
+export interface NewsUploadInput {
+  /**
+     * @minLength 1
+     * @maxLength 200
+     */
+  filename: string;
+  contentType: NewsUploadInputContentType;
+  /**
+     * @minimum 1
+     * @maximum 104857600
+     */
+  size: number;
+}
+
+export interface NewsRevision {
+  id: number;
+  revisionNo: number;
+  createdAt: string;
+  snapshot: NewsSnapshot;
+}
+
+export type NewsFounderArticleStatus = typeof NewsFounderArticleStatus[keyof typeof NewsFounderArticleStatus];
+
+
+export const NewsFounderArticleStatus = {
+  draft: 'draft',
+  published: 'published',
+  archived: 'archived',
+} as const;
+
+export interface NewsFounderArticle {
+  id: number;
+  slug: string;
+  status: NewsFounderArticleStatus;
+  version: number;
+  /** @nullable */
+  draftRevisionId: number | null;
+  /** @nullable */
+  publishedRevisionId: number | null;
+  /** @nullable */
+  publishedAt: string | null;
+  updatedAt: string;
+  draft: NewsSnapshot | null;
+  published: NewsSnapshot | null;
+  history: NewsRevision[];
+  historyHasMore: boolean;
+}
+
+export interface NewsPublicArticle {
+  id: number;
+  slug: string;
+  publishedAt: string;
+  snapshot: NewsSnapshot;
+}
+
+export interface NewsPublicPage {
+  items: NewsPublicArticle[];
+  page: number;
+  hasMore: boolean;
+}
+
+export interface NewsFounderPage {
+  items: NewsFounderArticle[];
+  page: number;
+  hasMore: boolean;
+}
+
 export interface MagazineStatistics {
   editionId: string;
   opens: number;
@@ -1186,6 +1457,41 @@ export interface DetailedHealthStatus {
   status: string;
   database: string;
 }
+
+export type GetPublishedNewsArticlesParams = {
+/**
+ * @minimum 1
+ */
+page?: number;
+};
+
+export type GetFounderNewsParams = {
+/**
+ * @minimum 1
+ */
+page?: number;
+};
+
+export type GetFounderNewsOptions200 = {
+  partners: NewsReference[];
+  programmes: NewsReference[];
+};
+
+export type GetFounderNewsArticleParams = {
+/**
+ * @minimum 1
+ */
+historyPage?: number;
+};
+
+export type RequestFounderNewsUpload201 = {
+  id: string;
+  uploadUrl: string;
+};
+
+export type CompleteFounderNewsUpload200 = {
+  id: string;
+};
 
 export type RecordMagazineReadingEvent200 = {
   recorded: boolean;

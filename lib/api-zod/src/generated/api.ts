@@ -8,6 +8,1489 @@
 import * as zod from 'zod';
 
 
+export const getPublishedNewsArticlesQueryPageDefault = 1;
+
+
+
+export const GetPublishedNewsArticlesQueryParams = zod.object({
+  "page": zod.coerce.number().int().min(1).default(getPublishedNewsArticlesQueryPageDefault)
+})
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotTitleMax = 200;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotSubtitleMax = 300;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotCoverOneUploadIdMax = 100;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotCoverOneAltMax = 300;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotCoverOneCreditMax = 200;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotVideoOneOneUploadIdMax = 100;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotVideoOneTwoVideoIdMax = 30;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotBodyItemOneTextMax = 100000;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotBodyItemTwoTextMax = 100000;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotBodyItemThreeTextMax = 100000;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotBodyItemThreeAttributionMax = 300;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotBodyItemFourItemsItemMax = 100000;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotBodyItemFourItemsMax = 50;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotBodyItemFiveUploadIdMax = 100;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotBodyItemFiveAltMax = 300;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotBodyItemFiveCreditMax = 200;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotBodyItemFiveCaptionMax = 300;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotBodyMax = 150;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotAdditionalImagesItemUploadIdMax = 100;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotAdditionalImagesItemAltMax = 300;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotAdditionalImagesItemCreditMax = 200;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotAdditionalImagesMax = 12;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotAuthorMax = 120;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotPublicationDateMax = 40;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotRelatedPartnerKeyMax = 100;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotRelatedProgrammeSlugMax = 100;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotSeoTitleMax = 70;
+
+export const getPublishedNewsArticlesResponseItemsItemSnapshotSeoDescriptionMax = 180;
+
+
+
+export const GetPublishedNewsArticlesResponse = zod.object({
+  "items": zod.array(zod.object({
+  "id": zod.number().int(),
+  "slug": zod.string(),
+  "publishedAt": zod.string(),
+  "snapshot": zod.object({
+  "schemaVersion": zod.literal(1),
+  "title": zod.string().max(getPublishedNewsArticlesResponseItemsItemSnapshotTitleMax),
+  "subtitle": zod.string().max(getPublishedNewsArticlesResponseItemsItemSnapshotSubtitleMax).nullable(),
+  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update']),
+  "cover": zod.union([zod.object({
+  "uploadId": zod.string().min(1).max(getPublishedNewsArticlesResponseItemsItemSnapshotCoverOneUploadIdMax),
+  "alt": zod.string().max(getPublishedNewsArticlesResponseItemsItemSnapshotCoverOneAltMax),
+  "credit": zod.string().max(getPublishedNewsArticlesResponseItemsItemSnapshotCoverOneCreditMax).nullable()
+}),zod.null()]),
+  "video": zod.union([zod.union([zod.object({
+  "kind": zod.enum(['upload']),
+  "uploadId": zod.string().min(1).max(getPublishedNewsArticlesResponseItemsItemSnapshotVideoOneOneUploadIdMax)
+}),zod.object({
+  "kind": zod.enum(['embed']),
+  "provider": zod.enum(['youtube', 'vimeo']),
+  "videoId": zod.string().min(1).max(getPublishedNewsArticlesResponseItemsItemSnapshotVideoOneTwoVideoIdMax)
+})]),zod.null()]),
+  "body": zod.array(zod.union([zod.object({
+  "type": zod.enum(['paragraph']),
+  "text": zod.string().max(getPublishedNewsArticlesResponseItemsItemSnapshotBodyItemOneTextMax)
+}),zod.object({
+  "type": zod.enum(['heading']),
+  "level": zod.union([zod.literal(2),zod.literal(3)]),
+  "text": zod.string().max(getPublishedNewsArticlesResponseItemsItemSnapshotBodyItemTwoTextMax)
+}),zod.object({
+  "type": zod.enum(['quote']),
+  "text": zod.string().max(getPublishedNewsArticlesResponseItemsItemSnapshotBodyItemThreeTextMax),
+  "attribution": zod.string().max(getPublishedNewsArticlesResponseItemsItemSnapshotBodyItemThreeAttributionMax).nullable()
+}),zod.object({
+  "type": zod.enum(['list']),
+  "ordered": zod.boolean(),
+  "items": zod.array(zod.string().max(getPublishedNewsArticlesResponseItemsItemSnapshotBodyItemFourItemsItemMax)).max(getPublishedNewsArticlesResponseItemsItemSnapshotBodyItemFourItemsMax)
+}),zod.object({
+  "type": zod.enum(['image']),
+  "uploadId": zod.string().min(1).max(getPublishedNewsArticlesResponseItemsItemSnapshotBodyItemFiveUploadIdMax),
+  "alt": zod.string().max(getPublishedNewsArticlesResponseItemsItemSnapshotBodyItemFiveAltMax),
+  "credit": zod.string().max(getPublishedNewsArticlesResponseItemsItemSnapshotBodyItemFiveCreditMax).nullable(),
+  "caption": zod.string().max(getPublishedNewsArticlesResponseItemsItemSnapshotBodyItemFiveCaptionMax).nullable()
+})])).max(getPublishedNewsArticlesResponseItemsItemSnapshotBodyMax),
+  "additionalImages": zod.array(zod.object({
+  "uploadId": zod.string().min(1).max(getPublishedNewsArticlesResponseItemsItemSnapshotAdditionalImagesItemUploadIdMax),
+  "alt": zod.string().max(getPublishedNewsArticlesResponseItemsItemSnapshotAdditionalImagesItemAltMax),
+  "credit": zod.string().max(getPublishedNewsArticlesResponseItemsItemSnapshotAdditionalImagesItemCreditMax).nullable()
+})).max(getPublishedNewsArticlesResponseItemsItemSnapshotAdditionalImagesMax),
+  "author": zod.string().max(getPublishedNewsArticlesResponseItemsItemSnapshotAuthorMax).nullable(),
+  "publicationDate": zod.string().max(getPublishedNewsArticlesResponseItemsItemSnapshotPublicationDateMax).nullable(),
+  "relatedPartnerKey": zod.string().max(getPublishedNewsArticlesResponseItemsItemSnapshotRelatedPartnerKeyMax).nullable(),
+  "relatedProgrammeSlug": zod.string().max(getPublishedNewsArticlesResponseItemsItemSnapshotRelatedProgrammeSlugMax).nullable(),
+  "seoTitle": zod.string().max(getPublishedNewsArticlesResponseItemsItemSnapshotSeoTitleMax).nullable(),
+  "seoDescription": zod.string().max(getPublishedNewsArticlesResponseItemsItemSnapshotSeoDescriptionMax).nullable(),
+  "mediaRightsConfirmed": zod.boolean()
+})
+})),
+  "page": zod.number().int(),
+  "hasMore": zod.boolean()
+})
+
+
+export const GetPublishedNewsArticleParams = zod.object({
+  "slug": zod.coerce.string()
+})
+
+export const getPublishedNewsArticleResponseSnapshotTitleMax = 200;
+
+export const getPublishedNewsArticleResponseSnapshotSubtitleMax = 300;
+
+export const getPublishedNewsArticleResponseSnapshotCoverOneUploadIdMax = 100;
+
+export const getPublishedNewsArticleResponseSnapshotCoverOneAltMax = 300;
+
+export const getPublishedNewsArticleResponseSnapshotCoverOneCreditMax = 200;
+
+export const getPublishedNewsArticleResponseSnapshotVideoOneOneUploadIdMax = 100;
+
+export const getPublishedNewsArticleResponseSnapshotVideoOneTwoVideoIdMax = 30;
+
+export const getPublishedNewsArticleResponseSnapshotBodyItemOneTextMax = 100000;
+
+export const getPublishedNewsArticleResponseSnapshotBodyItemTwoTextMax = 100000;
+
+export const getPublishedNewsArticleResponseSnapshotBodyItemThreeTextMax = 100000;
+
+export const getPublishedNewsArticleResponseSnapshotBodyItemThreeAttributionMax = 300;
+
+export const getPublishedNewsArticleResponseSnapshotBodyItemFourItemsItemMax = 100000;
+
+export const getPublishedNewsArticleResponseSnapshotBodyItemFourItemsMax = 50;
+
+export const getPublishedNewsArticleResponseSnapshotBodyItemFiveUploadIdMax = 100;
+
+export const getPublishedNewsArticleResponseSnapshotBodyItemFiveAltMax = 300;
+
+export const getPublishedNewsArticleResponseSnapshotBodyItemFiveCreditMax = 200;
+
+export const getPublishedNewsArticleResponseSnapshotBodyItemFiveCaptionMax = 300;
+
+export const getPublishedNewsArticleResponseSnapshotBodyMax = 150;
+
+export const getPublishedNewsArticleResponseSnapshotAdditionalImagesItemUploadIdMax = 100;
+
+export const getPublishedNewsArticleResponseSnapshotAdditionalImagesItemAltMax = 300;
+
+export const getPublishedNewsArticleResponseSnapshotAdditionalImagesItemCreditMax = 200;
+
+export const getPublishedNewsArticleResponseSnapshotAdditionalImagesMax = 12;
+
+export const getPublishedNewsArticleResponseSnapshotAuthorMax = 120;
+
+export const getPublishedNewsArticleResponseSnapshotPublicationDateMax = 40;
+
+export const getPublishedNewsArticleResponseSnapshotRelatedPartnerKeyMax = 100;
+
+export const getPublishedNewsArticleResponseSnapshotRelatedProgrammeSlugMax = 100;
+
+export const getPublishedNewsArticleResponseSnapshotSeoTitleMax = 70;
+
+export const getPublishedNewsArticleResponseSnapshotSeoDescriptionMax = 180;
+
+
+
+export const GetPublishedNewsArticleResponse = zod.object({
+  "id": zod.number().int(),
+  "slug": zod.string(),
+  "publishedAt": zod.string(),
+  "snapshot": zod.object({
+  "schemaVersion": zod.literal(1),
+  "title": zod.string().max(getPublishedNewsArticleResponseSnapshotTitleMax),
+  "subtitle": zod.string().max(getPublishedNewsArticleResponseSnapshotSubtitleMax).nullable(),
+  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update']),
+  "cover": zod.union([zod.object({
+  "uploadId": zod.string().min(1).max(getPublishedNewsArticleResponseSnapshotCoverOneUploadIdMax),
+  "alt": zod.string().max(getPublishedNewsArticleResponseSnapshotCoverOneAltMax),
+  "credit": zod.string().max(getPublishedNewsArticleResponseSnapshotCoverOneCreditMax).nullable()
+}),zod.null()]),
+  "video": zod.union([zod.union([zod.object({
+  "kind": zod.enum(['upload']),
+  "uploadId": zod.string().min(1).max(getPublishedNewsArticleResponseSnapshotVideoOneOneUploadIdMax)
+}),zod.object({
+  "kind": zod.enum(['embed']),
+  "provider": zod.enum(['youtube', 'vimeo']),
+  "videoId": zod.string().min(1).max(getPublishedNewsArticleResponseSnapshotVideoOneTwoVideoIdMax)
+})]),zod.null()]),
+  "body": zod.array(zod.union([zod.object({
+  "type": zod.enum(['paragraph']),
+  "text": zod.string().max(getPublishedNewsArticleResponseSnapshotBodyItemOneTextMax)
+}),zod.object({
+  "type": zod.enum(['heading']),
+  "level": zod.union([zod.literal(2),zod.literal(3)]),
+  "text": zod.string().max(getPublishedNewsArticleResponseSnapshotBodyItemTwoTextMax)
+}),zod.object({
+  "type": zod.enum(['quote']),
+  "text": zod.string().max(getPublishedNewsArticleResponseSnapshotBodyItemThreeTextMax),
+  "attribution": zod.string().max(getPublishedNewsArticleResponseSnapshotBodyItemThreeAttributionMax).nullable()
+}),zod.object({
+  "type": zod.enum(['list']),
+  "ordered": zod.boolean(),
+  "items": zod.array(zod.string().max(getPublishedNewsArticleResponseSnapshotBodyItemFourItemsItemMax)).max(getPublishedNewsArticleResponseSnapshotBodyItemFourItemsMax)
+}),zod.object({
+  "type": zod.enum(['image']),
+  "uploadId": zod.string().min(1).max(getPublishedNewsArticleResponseSnapshotBodyItemFiveUploadIdMax),
+  "alt": zod.string().max(getPublishedNewsArticleResponseSnapshotBodyItemFiveAltMax),
+  "credit": zod.string().max(getPublishedNewsArticleResponseSnapshotBodyItemFiveCreditMax).nullable(),
+  "caption": zod.string().max(getPublishedNewsArticleResponseSnapshotBodyItemFiveCaptionMax).nullable()
+})])).max(getPublishedNewsArticleResponseSnapshotBodyMax),
+  "additionalImages": zod.array(zod.object({
+  "uploadId": zod.string().min(1).max(getPublishedNewsArticleResponseSnapshotAdditionalImagesItemUploadIdMax),
+  "alt": zod.string().max(getPublishedNewsArticleResponseSnapshotAdditionalImagesItemAltMax),
+  "credit": zod.string().max(getPublishedNewsArticleResponseSnapshotAdditionalImagesItemCreditMax).nullable()
+})).max(getPublishedNewsArticleResponseSnapshotAdditionalImagesMax),
+  "author": zod.string().max(getPublishedNewsArticleResponseSnapshotAuthorMax).nullable(),
+  "publicationDate": zod.string().max(getPublishedNewsArticleResponseSnapshotPublicationDateMax).nullable(),
+  "relatedPartnerKey": zod.string().max(getPublishedNewsArticleResponseSnapshotRelatedPartnerKeyMax).nullable(),
+  "relatedProgrammeSlug": zod.string().max(getPublishedNewsArticleResponseSnapshotRelatedProgrammeSlugMax).nullable(),
+  "seoTitle": zod.string().max(getPublishedNewsArticleResponseSnapshotSeoTitleMax).nullable(),
+  "seoDescription": zod.string().max(getPublishedNewsArticleResponseSnapshotSeoDescriptionMax).nullable(),
+  "mediaRightsConfirmed": zod.boolean()
+})
+})
+
+
+export const getFounderNewsQueryPageDefault = 1;
+
+
+
+export const GetFounderNewsQueryParams = zod.object({
+  "page": zod.coerce.number().int().min(1).default(getFounderNewsQueryPageDefault)
+})
+
+export const getFounderNewsResponseItemsItemDraftOneTitleMax = 200;
+
+export const getFounderNewsResponseItemsItemDraftOneSubtitleMax = 300;
+
+export const getFounderNewsResponseItemsItemDraftOneCoverOneUploadIdMax = 100;
+
+export const getFounderNewsResponseItemsItemDraftOneCoverOneAltMax = 300;
+
+export const getFounderNewsResponseItemsItemDraftOneCoverOneCreditMax = 200;
+
+export const getFounderNewsResponseItemsItemDraftOneVideoOneOneUploadIdMax = 100;
+
+export const getFounderNewsResponseItemsItemDraftOneVideoOneTwoVideoIdMax = 30;
+
+export const getFounderNewsResponseItemsItemDraftOneBodyItemOneTextMax = 100000;
+
+export const getFounderNewsResponseItemsItemDraftOneBodyItemTwoTextMax = 100000;
+
+export const getFounderNewsResponseItemsItemDraftOneBodyItemThreeTextMax = 100000;
+
+export const getFounderNewsResponseItemsItemDraftOneBodyItemThreeAttributionMax = 300;
+
+export const getFounderNewsResponseItemsItemDraftOneBodyItemFourItemsItemMax = 100000;
+
+export const getFounderNewsResponseItemsItemDraftOneBodyItemFourItemsMax = 50;
+
+export const getFounderNewsResponseItemsItemDraftOneBodyItemFiveUploadIdMax = 100;
+
+export const getFounderNewsResponseItemsItemDraftOneBodyItemFiveAltMax = 300;
+
+export const getFounderNewsResponseItemsItemDraftOneBodyItemFiveCreditMax = 200;
+
+export const getFounderNewsResponseItemsItemDraftOneBodyItemFiveCaptionMax = 300;
+
+export const getFounderNewsResponseItemsItemDraftOneBodyMax = 150;
+
+export const getFounderNewsResponseItemsItemDraftOneAdditionalImagesItemUploadIdMax = 100;
+
+export const getFounderNewsResponseItemsItemDraftOneAdditionalImagesItemAltMax = 300;
+
+export const getFounderNewsResponseItemsItemDraftOneAdditionalImagesItemCreditMax = 200;
+
+export const getFounderNewsResponseItemsItemDraftOneAdditionalImagesMax = 12;
+
+export const getFounderNewsResponseItemsItemDraftOneAuthorMax = 120;
+
+export const getFounderNewsResponseItemsItemDraftOnePublicationDateMax = 40;
+
+export const getFounderNewsResponseItemsItemDraftOneRelatedPartnerKeyMax = 100;
+
+export const getFounderNewsResponseItemsItemDraftOneRelatedProgrammeSlugMax = 100;
+
+export const getFounderNewsResponseItemsItemDraftOneSeoTitleMax = 70;
+
+export const getFounderNewsResponseItemsItemDraftOneSeoDescriptionMax = 180;
+
+export const getFounderNewsResponseItemsItemPublishedOneTitleMax = 200;
+
+export const getFounderNewsResponseItemsItemPublishedOneSubtitleMax = 300;
+
+export const getFounderNewsResponseItemsItemPublishedOneCoverOneUploadIdMax = 100;
+
+export const getFounderNewsResponseItemsItemPublishedOneCoverOneAltMax = 300;
+
+export const getFounderNewsResponseItemsItemPublishedOneCoverOneCreditMax = 200;
+
+export const getFounderNewsResponseItemsItemPublishedOneVideoOneOneUploadIdMax = 100;
+
+export const getFounderNewsResponseItemsItemPublishedOneVideoOneTwoVideoIdMax = 30;
+
+export const getFounderNewsResponseItemsItemPublishedOneBodyItemOneTextMax = 100000;
+
+export const getFounderNewsResponseItemsItemPublishedOneBodyItemTwoTextMax = 100000;
+
+export const getFounderNewsResponseItemsItemPublishedOneBodyItemThreeTextMax = 100000;
+
+export const getFounderNewsResponseItemsItemPublishedOneBodyItemThreeAttributionMax = 300;
+
+export const getFounderNewsResponseItemsItemPublishedOneBodyItemFourItemsItemMax = 100000;
+
+export const getFounderNewsResponseItemsItemPublishedOneBodyItemFourItemsMax = 50;
+
+export const getFounderNewsResponseItemsItemPublishedOneBodyItemFiveUploadIdMax = 100;
+
+export const getFounderNewsResponseItemsItemPublishedOneBodyItemFiveAltMax = 300;
+
+export const getFounderNewsResponseItemsItemPublishedOneBodyItemFiveCreditMax = 200;
+
+export const getFounderNewsResponseItemsItemPublishedOneBodyItemFiveCaptionMax = 300;
+
+export const getFounderNewsResponseItemsItemPublishedOneBodyMax = 150;
+
+export const getFounderNewsResponseItemsItemPublishedOneAdditionalImagesItemUploadIdMax = 100;
+
+export const getFounderNewsResponseItemsItemPublishedOneAdditionalImagesItemAltMax = 300;
+
+export const getFounderNewsResponseItemsItemPublishedOneAdditionalImagesItemCreditMax = 200;
+
+export const getFounderNewsResponseItemsItemPublishedOneAdditionalImagesMax = 12;
+
+export const getFounderNewsResponseItemsItemPublishedOneAuthorMax = 120;
+
+export const getFounderNewsResponseItemsItemPublishedOnePublicationDateMax = 40;
+
+export const getFounderNewsResponseItemsItemPublishedOneRelatedPartnerKeyMax = 100;
+
+export const getFounderNewsResponseItemsItemPublishedOneRelatedProgrammeSlugMax = 100;
+
+export const getFounderNewsResponseItemsItemPublishedOneSeoTitleMax = 70;
+
+export const getFounderNewsResponseItemsItemPublishedOneSeoDescriptionMax = 180;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotTitleMax = 200;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotSubtitleMax = 300;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotCoverOneUploadIdMax = 100;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotCoverOneAltMax = 300;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotCoverOneCreditMax = 200;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotVideoOneOneUploadIdMax = 100;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotVideoOneTwoVideoIdMax = 30;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotBodyItemOneTextMax = 100000;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotBodyItemTwoTextMax = 100000;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotBodyItemThreeTextMax = 100000;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotBodyItemThreeAttributionMax = 300;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotBodyItemFourItemsItemMax = 100000;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotBodyItemFourItemsMax = 50;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotBodyItemFiveUploadIdMax = 100;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotBodyItemFiveAltMax = 300;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotBodyItemFiveCreditMax = 200;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotBodyItemFiveCaptionMax = 300;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotBodyMax = 150;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotAdditionalImagesItemUploadIdMax = 100;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotAdditionalImagesItemAltMax = 300;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotAdditionalImagesItemCreditMax = 200;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotAdditionalImagesMax = 12;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotAuthorMax = 120;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotPublicationDateMax = 40;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotRelatedPartnerKeyMax = 100;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotRelatedProgrammeSlugMax = 100;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotSeoTitleMax = 70;
+
+export const getFounderNewsResponseItemsItemHistoryItemSnapshotSeoDescriptionMax = 180;
+
+
+
+export const GetFounderNewsResponse = zod.object({
+  "items": zod.array(zod.object({
+  "id": zod.number().int(),
+  "slug": zod.string(),
+  "status": zod.enum(['draft', 'published', 'archived']),
+  "version": zod.number().int(),
+  "draftRevisionId": zod.number().int().nullable(),
+  "publishedRevisionId": zod.number().int().nullable(),
+  "publishedAt": zod.string().nullable(),
+  "updatedAt": zod.string(),
+  "draft": zod.union([zod.object({
+  "schemaVersion": zod.literal(1),
+  "title": zod.string().max(getFounderNewsResponseItemsItemDraftOneTitleMax),
+  "subtitle": zod.string().max(getFounderNewsResponseItemsItemDraftOneSubtitleMax).nullable(),
+  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update']),
+  "cover": zod.union([zod.object({
+  "uploadId": zod.string().min(1).max(getFounderNewsResponseItemsItemDraftOneCoverOneUploadIdMax),
+  "alt": zod.string().max(getFounderNewsResponseItemsItemDraftOneCoverOneAltMax),
+  "credit": zod.string().max(getFounderNewsResponseItemsItemDraftOneCoverOneCreditMax).nullable()
+}),zod.null()]),
+  "video": zod.union([zod.union([zod.object({
+  "kind": zod.enum(['upload']),
+  "uploadId": zod.string().min(1).max(getFounderNewsResponseItemsItemDraftOneVideoOneOneUploadIdMax)
+}),zod.object({
+  "kind": zod.enum(['embed']),
+  "provider": zod.enum(['youtube', 'vimeo']),
+  "videoId": zod.string().min(1).max(getFounderNewsResponseItemsItemDraftOneVideoOneTwoVideoIdMax)
+})]),zod.null()]),
+  "body": zod.array(zod.union([zod.object({
+  "type": zod.enum(['paragraph']),
+  "text": zod.string().max(getFounderNewsResponseItemsItemDraftOneBodyItemOneTextMax)
+}),zod.object({
+  "type": zod.enum(['heading']),
+  "level": zod.union([zod.literal(2),zod.literal(3)]),
+  "text": zod.string().max(getFounderNewsResponseItemsItemDraftOneBodyItemTwoTextMax)
+}),zod.object({
+  "type": zod.enum(['quote']),
+  "text": zod.string().max(getFounderNewsResponseItemsItemDraftOneBodyItemThreeTextMax),
+  "attribution": zod.string().max(getFounderNewsResponseItemsItemDraftOneBodyItemThreeAttributionMax).nullable()
+}),zod.object({
+  "type": zod.enum(['list']),
+  "ordered": zod.boolean(),
+  "items": zod.array(zod.string().max(getFounderNewsResponseItemsItemDraftOneBodyItemFourItemsItemMax)).max(getFounderNewsResponseItemsItemDraftOneBodyItemFourItemsMax)
+}),zod.object({
+  "type": zod.enum(['image']),
+  "uploadId": zod.string().min(1).max(getFounderNewsResponseItemsItemDraftOneBodyItemFiveUploadIdMax),
+  "alt": zod.string().max(getFounderNewsResponseItemsItemDraftOneBodyItemFiveAltMax),
+  "credit": zod.string().max(getFounderNewsResponseItemsItemDraftOneBodyItemFiveCreditMax).nullable(),
+  "caption": zod.string().max(getFounderNewsResponseItemsItemDraftOneBodyItemFiveCaptionMax).nullable()
+})])).max(getFounderNewsResponseItemsItemDraftOneBodyMax),
+  "additionalImages": zod.array(zod.object({
+  "uploadId": zod.string().min(1).max(getFounderNewsResponseItemsItemDraftOneAdditionalImagesItemUploadIdMax),
+  "alt": zod.string().max(getFounderNewsResponseItemsItemDraftOneAdditionalImagesItemAltMax),
+  "credit": zod.string().max(getFounderNewsResponseItemsItemDraftOneAdditionalImagesItemCreditMax).nullable()
+})).max(getFounderNewsResponseItemsItemDraftOneAdditionalImagesMax),
+  "author": zod.string().max(getFounderNewsResponseItemsItemDraftOneAuthorMax).nullable(),
+  "publicationDate": zod.string().max(getFounderNewsResponseItemsItemDraftOnePublicationDateMax).nullable(),
+  "relatedPartnerKey": zod.string().max(getFounderNewsResponseItemsItemDraftOneRelatedPartnerKeyMax).nullable(),
+  "relatedProgrammeSlug": zod.string().max(getFounderNewsResponseItemsItemDraftOneRelatedProgrammeSlugMax).nullable(),
+  "seoTitle": zod.string().max(getFounderNewsResponseItemsItemDraftOneSeoTitleMax).nullable(),
+  "seoDescription": zod.string().max(getFounderNewsResponseItemsItemDraftOneSeoDescriptionMax).nullable(),
+  "mediaRightsConfirmed": zod.boolean()
+}),zod.null()]),
+  "published": zod.union([zod.object({
+  "schemaVersion": zod.literal(1),
+  "title": zod.string().max(getFounderNewsResponseItemsItemPublishedOneTitleMax),
+  "subtitle": zod.string().max(getFounderNewsResponseItemsItemPublishedOneSubtitleMax).nullable(),
+  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update']),
+  "cover": zod.union([zod.object({
+  "uploadId": zod.string().min(1).max(getFounderNewsResponseItemsItemPublishedOneCoverOneUploadIdMax),
+  "alt": zod.string().max(getFounderNewsResponseItemsItemPublishedOneCoverOneAltMax),
+  "credit": zod.string().max(getFounderNewsResponseItemsItemPublishedOneCoverOneCreditMax).nullable()
+}),zod.null()]),
+  "video": zod.union([zod.union([zod.object({
+  "kind": zod.enum(['upload']),
+  "uploadId": zod.string().min(1).max(getFounderNewsResponseItemsItemPublishedOneVideoOneOneUploadIdMax)
+}),zod.object({
+  "kind": zod.enum(['embed']),
+  "provider": zod.enum(['youtube', 'vimeo']),
+  "videoId": zod.string().min(1).max(getFounderNewsResponseItemsItemPublishedOneVideoOneTwoVideoIdMax)
+})]),zod.null()]),
+  "body": zod.array(zod.union([zod.object({
+  "type": zod.enum(['paragraph']),
+  "text": zod.string().max(getFounderNewsResponseItemsItemPublishedOneBodyItemOneTextMax)
+}),zod.object({
+  "type": zod.enum(['heading']),
+  "level": zod.union([zod.literal(2),zod.literal(3)]),
+  "text": zod.string().max(getFounderNewsResponseItemsItemPublishedOneBodyItemTwoTextMax)
+}),zod.object({
+  "type": zod.enum(['quote']),
+  "text": zod.string().max(getFounderNewsResponseItemsItemPublishedOneBodyItemThreeTextMax),
+  "attribution": zod.string().max(getFounderNewsResponseItemsItemPublishedOneBodyItemThreeAttributionMax).nullable()
+}),zod.object({
+  "type": zod.enum(['list']),
+  "ordered": zod.boolean(),
+  "items": zod.array(zod.string().max(getFounderNewsResponseItemsItemPublishedOneBodyItemFourItemsItemMax)).max(getFounderNewsResponseItemsItemPublishedOneBodyItemFourItemsMax)
+}),zod.object({
+  "type": zod.enum(['image']),
+  "uploadId": zod.string().min(1).max(getFounderNewsResponseItemsItemPublishedOneBodyItemFiveUploadIdMax),
+  "alt": zod.string().max(getFounderNewsResponseItemsItemPublishedOneBodyItemFiveAltMax),
+  "credit": zod.string().max(getFounderNewsResponseItemsItemPublishedOneBodyItemFiveCreditMax).nullable(),
+  "caption": zod.string().max(getFounderNewsResponseItemsItemPublishedOneBodyItemFiveCaptionMax).nullable()
+})])).max(getFounderNewsResponseItemsItemPublishedOneBodyMax),
+  "additionalImages": zod.array(zod.object({
+  "uploadId": zod.string().min(1).max(getFounderNewsResponseItemsItemPublishedOneAdditionalImagesItemUploadIdMax),
+  "alt": zod.string().max(getFounderNewsResponseItemsItemPublishedOneAdditionalImagesItemAltMax),
+  "credit": zod.string().max(getFounderNewsResponseItemsItemPublishedOneAdditionalImagesItemCreditMax).nullable()
+})).max(getFounderNewsResponseItemsItemPublishedOneAdditionalImagesMax),
+  "author": zod.string().max(getFounderNewsResponseItemsItemPublishedOneAuthorMax).nullable(),
+  "publicationDate": zod.string().max(getFounderNewsResponseItemsItemPublishedOnePublicationDateMax).nullable(),
+  "relatedPartnerKey": zod.string().max(getFounderNewsResponseItemsItemPublishedOneRelatedPartnerKeyMax).nullable(),
+  "relatedProgrammeSlug": zod.string().max(getFounderNewsResponseItemsItemPublishedOneRelatedProgrammeSlugMax).nullable(),
+  "seoTitle": zod.string().max(getFounderNewsResponseItemsItemPublishedOneSeoTitleMax).nullable(),
+  "seoDescription": zod.string().max(getFounderNewsResponseItemsItemPublishedOneSeoDescriptionMax).nullable(),
+  "mediaRightsConfirmed": zod.boolean()
+}),zod.null()]),
+  "history": zod.array(zod.object({
+  "id": zod.number().int(),
+  "revisionNo": zod.number().int(),
+  "createdAt": zod.string(),
+  "snapshot": zod.object({
+  "schemaVersion": zod.literal(1),
+  "title": zod.string().max(getFounderNewsResponseItemsItemHistoryItemSnapshotTitleMax),
+  "subtitle": zod.string().max(getFounderNewsResponseItemsItemHistoryItemSnapshotSubtitleMax).nullable(),
+  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update']),
+  "cover": zod.union([zod.object({
+  "uploadId": zod.string().min(1).max(getFounderNewsResponseItemsItemHistoryItemSnapshotCoverOneUploadIdMax),
+  "alt": zod.string().max(getFounderNewsResponseItemsItemHistoryItemSnapshotCoverOneAltMax),
+  "credit": zod.string().max(getFounderNewsResponseItemsItemHistoryItemSnapshotCoverOneCreditMax).nullable()
+}),zod.null()]),
+  "video": zod.union([zod.union([zod.object({
+  "kind": zod.enum(['upload']),
+  "uploadId": zod.string().min(1).max(getFounderNewsResponseItemsItemHistoryItemSnapshotVideoOneOneUploadIdMax)
+}),zod.object({
+  "kind": zod.enum(['embed']),
+  "provider": zod.enum(['youtube', 'vimeo']),
+  "videoId": zod.string().min(1).max(getFounderNewsResponseItemsItemHistoryItemSnapshotVideoOneTwoVideoIdMax)
+})]),zod.null()]),
+  "body": zod.array(zod.union([zod.object({
+  "type": zod.enum(['paragraph']),
+  "text": zod.string().max(getFounderNewsResponseItemsItemHistoryItemSnapshotBodyItemOneTextMax)
+}),zod.object({
+  "type": zod.enum(['heading']),
+  "level": zod.union([zod.literal(2),zod.literal(3)]),
+  "text": zod.string().max(getFounderNewsResponseItemsItemHistoryItemSnapshotBodyItemTwoTextMax)
+}),zod.object({
+  "type": zod.enum(['quote']),
+  "text": zod.string().max(getFounderNewsResponseItemsItemHistoryItemSnapshotBodyItemThreeTextMax),
+  "attribution": zod.string().max(getFounderNewsResponseItemsItemHistoryItemSnapshotBodyItemThreeAttributionMax).nullable()
+}),zod.object({
+  "type": zod.enum(['list']),
+  "ordered": zod.boolean(),
+  "items": zod.array(zod.string().max(getFounderNewsResponseItemsItemHistoryItemSnapshotBodyItemFourItemsItemMax)).max(getFounderNewsResponseItemsItemHistoryItemSnapshotBodyItemFourItemsMax)
+}),zod.object({
+  "type": zod.enum(['image']),
+  "uploadId": zod.string().min(1).max(getFounderNewsResponseItemsItemHistoryItemSnapshotBodyItemFiveUploadIdMax),
+  "alt": zod.string().max(getFounderNewsResponseItemsItemHistoryItemSnapshotBodyItemFiveAltMax),
+  "credit": zod.string().max(getFounderNewsResponseItemsItemHistoryItemSnapshotBodyItemFiveCreditMax).nullable(),
+  "caption": zod.string().max(getFounderNewsResponseItemsItemHistoryItemSnapshotBodyItemFiveCaptionMax).nullable()
+})])).max(getFounderNewsResponseItemsItemHistoryItemSnapshotBodyMax),
+  "additionalImages": zod.array(zod.object({
+  "uploadId": zod.string().min(1).max(getFounderNewsResponseItemsItemHistoryItemSnapshotAdditionalImagesItemUploadIdMax),
+  "alt": zod.string().max(getFounderNewsResponseItemsItemHistoryItemSnapshotAdditionalImagesItemAltMax),
+  "credit": zod.string().max(getFounderNewsResponseItemsItemHistoryItemSnapshotAdditionalImagesItemCreditMax).nullable()
+})).max(getFounderNewsResponseItemsItemHistoryItemSnapshotAdditionalImagesMax),
+  "author": zod.string().max(getFounderNewsResponseItemsItemHistoryItemSnapshotAuthorMax).nullable(),
+  "publicationDate": zod.string().max(getFounderNewsResponseItemsItemHistoryItemSnapshotPublicationDateMax).nullable(),
+  "relatedPartnerKey": zod.string().max(getFounderNewsResponseItemsItemHistoryItemSnapshotRelatedPartnerKeyMax).nullable(),
+  "relatedProgrammeSlug": zod.string().max(getFounderNewsResponseItemsItemHistoryItemSnapshotRelatedProgrammeSlugMax).nullable(),
+  "seoTitle": zod.string().max(getFounderNewsResponseItemsItemHistoryItemSnapshotSeoTitleMax).nullable(),
+  "seoDescription": zod.string().max(getFounderNewsResponseItemsItemHistoryItemSnapshotSeoDescriptionMax).nullable(),
+  "mediaRightsConfirmed": zod.boolean()
+})
+})),
+  "historyHasMore": zod.boolean()
+})),
+  "page": zod.number().int(),
+  "hasMore": zod.boolean()
+})
+
+
+export const GetFounderNewsOptionsResponse = zod.object({
+  "partners": zod.array(zod.object({
+  "key": zod.string(),
+  "label": zod.string()
+})),
+  "programmes": zod.array(zod.object({
+  "key": zod.string(),
+  "label": zod.string()
+}))
+})
+
+
+export const GetFounderNewsArticleParams = zod.object({
+  "id": zod.coerce.number().int()
+})
+
+export const getFounderNewsArticleQueryHistoryPageDefault = 1;
+
+
+
+export const GetFounderNewsArticleQueryParams = zod.object({
+  "historyPage": zod.coerce.number().int().min(1).default(getFounderNewsArticleQueryHistoryPageDefault)
+})
+
+export const getFounderNewsArticleResponseDraftOneTitleMax = 200;
+
+export const getFounderNewsArticleResponseDraftOneSubtitleMax = 300;
+
+export const getFounderNewsArticleResponseDraftOneCoverOneUploadIdMax = 100;
+
+export const getFounderNewsArticleResponseDraftOneCoverOneAltMax = 300;
+
+export const getFounderNewsArticleResponseDraftOneCoverOneCreditMax = 200;
+
+export const getFounderNewsArticleResponseDraftOneVideoOneOneUploadIdMax = 100;
+
+export const getFounderNewsArticleResponseDraftOneVideoOneTwoVideoIdMax = 30;
+
+export const getFounderNewsArticleResponseDraftOneBodyItemOneTextMax = 100000;
+
+export const getFounderNewsArticleResponseDraftOneBodyItemTwoTextMax = 100000;
+
+export const getFounderNewsArticleResponseDraftOneBodyItemThreeTextMax = 100000;
+
+export const getFounderNewsArticleResponseDraftOneBodyItemThreeAttributionMax = 300;
+
+export const getFounderNewsArticleResponseDraftOneBodyItemFourItemsItemMax = 100000;
+
+export const getFounderNewsArticleResponseDraftOneBodyItemFourItemsMax = 50;
+
+export const getFounderNewsArticleResponseDraftOneBodyItemFiveUploadIdMax = 100;
+
+export const getFounderNewsArticleResponseDraftOneBodyItemFiveAltMax = 300;
+
+export const getFounderNewsArticleResponseDraftOneBodyItemFiveCreditMax = 200;
+
+export const getFounderNewsArticleResponseDraftOneBodyItemFiveCaptionMax = 300;
+
+export const getFounderNewsArticleResponseDraftOneBodyMax = 150;
+
+export const getFounderNewsArticleResponseDraftOneAdditionalImagesItemUploadIdMax = 100;
+
+export const getFounderNewsArticleResponseDraftOneAdditionalImagesItemAltMax = 300;
+
+export const getFounderNewsArticleResponseDraftOneAdditionalImagesItemCreditMax = 200;
+
+export const getFounderNewsArticleResponseDraftOneAdditionalImagesMax = 12;
+
+export const getFounderNewsArticleResponseDraftOneAuthorMax = 120;
+
+export const getFounderNewsArticleResponseDraftOnePublicationDateMax = 40;
+
+export const getFounderNewsArticleResponseDraftOneRelatedPartnerKeyMax = 100;
+
+export const getFounderNewsArticleResponseDraftOneRelatedProgrammeSlugMax = 100;
+
+export const getFounderNewsArticleResponseDraftOneSeoTitleMax = 70;
+
+export const getFounderNewsArticleResponseDraftOneSeoDescriptionMax = 180;
+
+export const getFounderNewsArticleResponsePublishedOneTitleMax = 200;
+
+export const getFounderNewsArticleResponsePublishedOneSubtitleMax = 300;
+
+export const getFounderNewsArticleResponsePublishedOneCoverOneUploadIdMax = 100;
+
+export const getFounderNewsArticleResponsePublishedOneCoverOneAltMax = 300;
+
+export const getFounderNewsArticleResponsePublishedOneCoverOneCreditMax = 200;
+
+export const getFounderNewsArticleResponsePublishedOneVideoOneOneUploadIdMax = 100;
+
+export const getFounderNewsArticleResponsePublishedOneVideoOneTwoVideoIdMax = 30;
+
+export const getFounderNewsArticleResponsePublishedOneBodyItemOneTextMax = 100000;
+
+export const getFounderNewsArticleResponsePublishedOneBodyItemTwoTextMax = 100000;
+
+export const getFounderNewsArticleResponsePublishedOneBodyItemThreeTextMax = 100000;
+
+export const getFounderNewsArticleResponsePublishedOneBodyItemThreeAttributionMax = 300;
+
+export const getFounderNewsArticleResponsePublishedOneBodyItemFourItemsItemMax = 100000;
+
+export const getFounderNewsArticleResponsePublishedOneBodyItemFourItemsMax = 50;
+
+export const getFounderNewsArticleResponsePublishedOneBodyItemFiveUploadIdMax = 100;
+
+export const getFounderNewsArticleResponsePublishedOneBodyItemFiveAltMax = 300;
+
+export const getFounderNewsArticleResponsePublishedOneBodyItemFiveCreditMax = 200;
+
+export const getFounderNewsArticleResponsePublishedOneBodyItemFiveCaptionMax = 300;
+
+export const getFounderNewsArticleResponsePublishedOneBodyMax = 150;
+
+export const getFounderNewsArticleResponsePublishedOneAdditionalImagesItemUploadIdMax = 100;
+
+export const getFounderNewsArticleResponsePublishedOneAdditionalImagesItemAltMax = 300;
+
+export const getFounderNewsArticleResponsePublishedOneAdditionalImagesItemCreditMax = 200;
+
+export const getFounderNewsArticleResponsePublishedOneAdditionalImagesMax = 12;
+
+export const getFounderNewsArticleResponsePublishedOneAuthorMax = 120;
+
+export const getFounderNewsArticleResponsePublishedOnePublicationDateMax = 40;
+
+export const getFounderNewsArticleResponsePublishedOneRelatedPartnerKeyMax = 100;
+
+export const getFounderNewsArticleResponsePublishedOneRelatedProgrammeSlugMax = 100;
+
+export const getFounderNewsArticleResponsePublishedOneSeoTitleMax = 70;
+
+export const getFounderNewsArticleResponsePublishedOneSeoDescriptionMax = 180;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotTitleMax = 200;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotSubtitleMax = 300;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotCoverOneUploadIdMax = 100;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotCoverOneAltMax = 300;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotCoverOneCreditMax = 200;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotVideoOneOneUploadIdMax = 100;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotVideoOneTwoVideoIdMax = 30;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotBodyItemOneTextMax = 100000;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotBodyItemTwoTextMax = 100000;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotBodyItemThreeTextMax = 100000;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotBodyItemThreeAttributionMax = 300;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotBodyItemFourItemsItemMax = 100000;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotBodyItemFourItemsMax = 50;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotBodyItemFiveUploadIdMax = 100;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotBodyItemFiveAltMax = 300;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotBodyItemFiveCreditMax = 200;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotBodyItemFiveCaptionMax = 300;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotBodyMax = 150;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotAdditionalImagesItemUploadIdMax = 100;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotAdditionalImagesItemAltMax = 300;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotAdditionalImagesItemCreditMax = 200;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotAdditionalImagesMax = 12;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotAuthorMax = 120;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotPublicationDateMax = 40;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotRelatedPartnerKeyMax = 100;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotRelatedProgrammeSlugMax = 100;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotSeoTitleMax = 70;
+
+export const getFounderNewsArticleResponseHistoryItemSnapshotSeoDescriptionMax = 180;
+
+
+
+export const GetFounderNewsArticleResponse = zod.object({
+  "id": zod.number().int(),
+  "slug": zod.string(),
+  "status": zod.enum(['draft', 'published', 'archived']),
+  "version": zod.number().int(),
+  "draftRevisionId": zod.number().int().nullable(),
+  "publishedRevisionId": zod.number().int().nullable(),
+  "publishedAt": zod.string().nullable(),
+  "updatedAt": zod.string(),
+  "draft": zod.union([zod.object({
+  "schemaVersion": zod.literal(1),
+  "title": zod.string().max(getFounderNewsArticleResponseDraftOneTitleMax),
+  "subtitle": zod.string().max(getFounderNewsArticleResponseDraftOneSubtitleMax).nullable(),
+  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update']),
+  "cover": zod.union([zod.object({
+  "uploadId": zod.string().min(1).max(getFounderNewsArticleResponseDraftOneCoverOneUploadIdMax),
+  "alt": zod.string().max(getFounderNewsArticleResponseDraftOneCoverOneAltMax),
+  "credit": zod.string().max(getFounderNewsArticleResponseDraftOneCoverOneCreditMax).nullable()
+}),zod.null()]),
+  "video": zod.union([zod.union([zod.object({
+  "kind": zod.enum(['upload']),
+  "uploadId": zod.string().min(1).max(getFounderNewsArticleResponseDraftOneVideoOneOneUploadIdMax)
+}),zod.object({
+  "kind": zod.enum(['embed']),
+  "provider": zod.enum(['youtube', 'vimeo']),
+  "videoId": zod.string().min(1).max(getFounderNewsArticleResponseDraftOneVideoOneTwoVideoIdMax)
+})]),zod.null()]),
+  "body": zod.array(zod.union([zod.object({
+  "type": zod.enum(['paragraph']),
+  "text": zod.string().max(getFounderNewsArticleResponseDraftOneBodyItemOneTextMax)
+}),zod.object({
+  "type": zod.enum(['heading']),
+  "level": zod.union([zod.literal(2),zod.literal(3)]),
+  "text": zod.string().max(getFounderNewsArticleResponseDraftOneBodyItemTwoTextMax)
+}),zod.object({
+  "type": zod.enum(['quote']),
+  "text": zod.string().max(getFounderNewsArticleResponseDraftOneBodyItemThreeTextMax),
+  "attribution": zod.string().max(getFounderNewsArticleResponseDraftOneBodyItemThreeAttributionMax).nullable()
+}),zod.object({
+  "type": zod.enum(['list']),
+  "ordered": zod.boolean(),
+  "items": zod.array(zod.string().max(getFounderNewsArticleResponseDraftOneBodyItemFourItemsItemMax)).max(getFounderNewsArticleResponseDraftOneBodyItemFourItemsMax)
+}),zod.object({
+  "type": zod.enum(['image']),
+  "uploadId": zod.string().min(1).max(getFounderNewsArticleResponseDraftOneBodyItemFiveUploadIdMax),
+  "alt": zod.string().max(getFounderNewsArticleResponseDraftOneBodyItemFiveAltMax),
+  "credit": zod.string().max(getFounderNewsArticleResponseDraftOneBodyItemFiveCreditMax).nullable(),
+  "caption": zod.string().max(getFounderNewsArticleResponseDraftOneBodyItemFiveCaptionMax).nullable()
+})])).max(getFounderNewsArticleResponseDraftOneBodyMax),
+  "additionalImages": zod.array(zod.object({
+  "uploadId": zod.string().min(1).max(getFounderNewsArticleResponseDraftOneAdditionalImagesItemUploadIdMax),
+  "alt": zod.string().max(getFounderNewsArticleResponseDraftOneAdditionalImagesItemAltMax),
+  "credit": zod.string().max(getFounderNewsArticleResponseDraftOneAdditionalImagesItemCreditMax).nullable()
+})).max(getFounderNewsArticleResponseDraftOneAdditionalImagesMax),
+  "author": zod.string().max(getFounderNewsArticleResponseDraftOneAuthorMax).nullable(),
+  "publicationDate": zod.string().max(getFounderNewsArticleResponseDraftOnePublicationDateMax).nullable(),
+  "relatedPartnerKey": zod.string().max(getFounderNewsArticleResponseDraftOneRelatedPartnerKeyMax).nullable(),
+  "relatedProgrammeSlug": zod.string().max(getFounderNewsArticleResponseDraftOneRelatedProgrammeSlugMax).nullable(),
+  "seoTitle": zod.string().max(getFounderNewsArticleResponseDraftOneSeoTitleMax).nullable(),
+  "seoDescription": zod.string().max(getFounderNewsArticleResponseDraftOneSeoDescriptionMax).nullable(),
+  "mediaRightsConfirmed": zod.boolean()
+}),zod.null()]),
+  "published": zod.union([zod.object({
+  "schemaVersion": zod.literal(1),
+  "title": zod.string().max(getFounderNewsArticleResponsePublishedOneTitleMax),
+  "subtitle": zod.string().max(getFounderNewsArticleResponsePublishedOneSubtitleMax).nullable(),
+  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update']),
+  "cover": zod.union([zod.object({
+  "uploadId": zod.string().min(1).max(getFounderNewsArticleResponsePublishedOneCoverOneUploadIdMax),
+  "alt": zod.string().max(getFounderNewsArticleResponsePublishedOneCoverOneAltMax),
+  "credit": zod.string().max(getFounderNewsArticleResponsePublishedOneCoverOneCreditMax).nullable()
+}),zod.null()]),
+  "video": zod.union([zod.union([zod.object({
+  "kind": zod.enum(['upload']),
+  "uploadId": zod.string().min(1).max(getFounderNewsArticleResponsePublishedOneVideoOneOneUploadIdMax)
+}),zod.object({
+  "kind": zod.enum(['embed']),
+  "provider": zod.enum(['youtube', 'vimeo']),
+  "videoId": zod.string().min(1).max(getFounderNewsArticleResponsePublishedOneVideoOneTwoVideoIdMax)
+})]),zod.null()]),
+  "body": zod.array(zod.union([zod.object({
+  "type": zod.enum(['paragraph']),
+  "text": zod.string().max(getFounderNewsArticleResponsePublishedOneBodyItemOneTextMax)
+}),zod.object({
+  "type": zod.enum(['heading']),
+  "level": zod.union([zod.literal(2),zod.literal(3)]),
+  "text": zod.string().max(getFounderNewsArticleResponsePublishedOneBodyItemTwoTextMax)
+}),zod.object({
+  "type": zod.enum(['quote']),
+  "text": zod.string().max(getFounderNewsArticleResponsePublishedOneBodyItemThreeTextMax),
+  "attribution": zod.string().max(getFounderNewsArticleResponsePublishedOneBodyItemThreeAttributionMax).nullable()
+}),zod.object({
+  "type": zod.enum(['list']),
+  "ordered": zod.boolean(),
+  "items": zod.array(zod.string().max(getFounderNewsArticleResponsePublishedOneBodyItemFourItemsItemMax)).max(getFounderNewsArticleResponsePublishedOneBodyItemFourItemsMax)
+}),zod.object({
+  "type": zod.enum(['image']),
+  "uploadId": zod.string().min(1).max(getFounderNewsArticleResponsePublishedOneBodyItemFiveUploadIdMax),
+  "alt": zod.string().max(getFounderNewsArticleResponsePublishedOneBodyItemFiveAltMax),
+  "credit": zod.string().max(getFounderNewsArticleResponsePublishedOneBodyItemFiveCreditMax).nullable(),
+  "caption": zod.string().max(getFounderNewsArticleResponsePublishedOneBodyItemFiveCaptionMax).nullable()
+})])).max(getFounderNewsArticleResponsePublishedOneBodyMax),
+  "additionalImages": zod.array(zod.object({
+  "uploadId": zod.string().min(1).max(getFounderNewsArticleResponsePublishedOneAdditionalImagesItemUploadIdMax),
+  "alt": zod.string().max(getFounderNewsArticleResponsePublishedOneAdditionalImagesItemAltMax),
+  "credit": zod.string().max(getFounderNewsArticleResponsePublishedOneAdditionalImagesItemCreditMax).nullable()
+})).max(getFounderNewsArticleResponsePublishedOneAdditionalImagesMax),
+  "author": zod.string().max(getFounderNewsArticleResponsePublishedOneAuthorMax).nullable(),
+  "publicationDate": zod.string().max(getFounderNewsArticleResponsePublishedOnePublicationDateMax).nullable(),
+  "relatedPartnerKey": zod.string().max(getFounderNewsArticleResponsePublishedOneRelatedPartnerKeyMax).nullable(),
+  "relatedProgrammeSlug": zod.string().max(getFounderNewsArticleResponsePublishedOneRelatedProgrammeSlugMax).nullable(),
+  "seoTitle": zod.string().max(getFounderNewsArticleResponsePublishedOneSeoTitleMax).nullable(),
+  "seoDescription": zod.string().max(getFounderNewsArticleResponsePublishedOneSeoDescriptionMax).nullable(),
+  "mediaRightsConfirmed": zod.boolean()
+}),zod.null()]),
+  "history": zod.array(zod.object({
+  "id": zod.number().int(),
+  "revisionNo": zod.number().int(),
+  "createdAt": zod.string(),
+  "snapshot": zod.object({
+  "schemaVersion": zod.literal(1),
+  "title": zod.string().max(getFounderNewsArticleResponseHistoryItemSnapshotTitleMax),
+  "subtitle": zod.string().max(getFounderNewsArticleResponseHistoryItemSnapshotSubtitleMax).nullable(),
+  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update']),
+  "cover": zod.union([zod.object({
+  "uploadId": zod.string().min(1).max(getFounderNewsArticleResponseHistoryItemSnapshotCoverOneUploadIdMax),
+  "alt": zod.string().max(getFounderNewsArticleResponseHistoryItemSnapshotCoverOneAltMax),
+  "credit": zod.string().max(getFounderNewsArticleResponseHistoryItemSnapshotCoverOneCreditMax).nullable()
+}),zod.null()]),
+  "video": zod.union([zod.union([zod.object({
+  "kind": zod.enum(['upload']),
+  "uploadId": zod.string().min(1).max(getFounderNewsArticleResponseHistoryItemSnapshotVideoOneOneUploadIdMax)
+}),zod.object({
+  "kind": zod.enum(['embed']),
+  "provider": zod.enum(['youtube', 'vimeo']),
+  "videoId": zod.string().min(1).max(getFounderNewsArticleResponseHistoryItemSnapshotVideoOneTwoVideoIdMax)
+})]),zod.null()]),
+  "body": zod.array(zod.union([zod.object({
+  "type": zod.enum(['paragraph']),
+  "text": zod.string().max(getFounderNewsArticleResponseHistoryItemSnapshotBodyItemOneTextMax)
+}),zod.object({
+  "type": zod.enum(['heading']),
+  "level": zod.union([zod.literal(2),zod.literal(3)]),
+  "text": zod.string().max(getFounderNewsArticleResponseHistoryItemSnapshotBodyItemTwoTextMax)
+}),zod.object({
+  "type": zod.enum(['quote']),
+  "text": zod.string().max(getFounderNewsArticleResponseHistoryItemSnapshotBodyItemThreeTextMax),
+  "attribution": zod.string().max(getFounderNewsArticleResponseHistoryItemSnapshotBodyItemThreeAttributionMax).nullable()
+}),zod.object({
+  "type": zod.enum(['list']),
+  "ordered": zod.boolean(),
+  "items": zod.array(zod.string().max(getFounderNewsArticleResponseHistoryItemSnapshotBodyItemFourItemsItemMax)).max(getFounderNewsArticleResponseHistoryItemSnapshotBodyItemFourItemsMax)
+}),zod.object({
+  "type": zod.enum(['image']),
+  "uploadId": zod.string().min(1).max(getFounderNewsArticleResponseHistoryItemSnapshotBodyItemFiveUploadIdMax),
+  "alt": zod.string().max(getFounderNewsArticleResponseHistoryItemSnapshotBodyItemFiveAltMax),
+  "credit": zod.string().max(getFounderNewsArticleResponseHistoryItemSnapshotBodyItemFiveCreditMax).nullable(),
+  "caption": zod.string().max(getFounderNewsArticleResponseHistoryItemSnapshotBodyItemFiveCaptionMax).nullable()
+})])).max(getFounderNewsArticleResponseHistoryItemSnapshotBodyMax),
+  "additionalImages": zod.array(zod.object({
+  "uploadId": zod.string().min(1).max(getFounderNewsArticleResponseHistoryItemSnapshotAdditionalImagesItemUploadIdMax),
+  "alt": zod.string().max(getFounderNewsArticleResponseHistoryItemSnapshotAdditionalImagesItemAltMax),
+  "credit": zod.string().max(getFounderNewsArticleResponseHistoryItemSnapshotAdditionalImagesItemCreditMax).nullable()
+})).max(getFounderNewsArticleResponseHistoryItemSnapshotAdditionalImagesMax),
+  "author": zod.string().max(getFounderNewsArticleResponseHistoryItemSnapshotAuthorMax).nullable(),
+  "publicationDate": zod.string().max(getFounderNewsArticleResponseHistoryItemSnapshotPublicationDateMax).nullable(),
+  "relatedPartnerKey": zod.string().max(getFounderNewsArticleResponseHistoryItemSnapshotRelatedPartnerKeyMax).nullable(),
+  "relatedProgrammeSlug": zod.string().max(getFounderNewsArticleResponseHistoryItemSnapshotRelatedProgrammeSlugMax).nullable(),
+  "seoTitle": zod.string().max(getFounderNewsArticleResponseHistoryItemSnapshotSeoTitleMax).nullable(),
+  "seoDescription": zod.string().max(getFounderNewsArticleResponseHistoryItemSnapshotSeoDescriptionMax).nullable(),
+  "mediaRightsConfirmed": zod.boolean()
+})
+})),
+  "historyHasMore": zod.boolean()
+})
+
+
+
+export const runFounderNewsActionBodyVersionMin = 0;
+
+export const runFounderNewsActionBodySlugMax = 160;
+
+
+export const runFounderNewsActionBodySlugRegExp = new RegExp('^[a-z0-9]+(-[a-z0-9]+)*$');
+export const runFounderNewsActionBodySnapshotOneTitleMax = 200;
+
+export const runFounderNewsActionBodySnapshotOneSubtitleMax = 300;
+
+export const runFounderNewsActionBodySnapshotOneCoverOneUploadIdMax = 100;
+
+export const runFounderNewsActionBodySnapshotOneCoverOneAltMax = 300;
+
+export const runFounderNewsActionBodySnapshotOneCoverOneCreditMax = 200;
+
+export const runFounderNewsActionBodySnapshotOneVideoOneOneUploadIdMax = 100;
+
+export const runFounderNewsActionBodySnapshotOneVideoOneTwoVideoIdMax = 30;
+
+export const runFounderNewsActionBodySnapshotOneBodyItemOneTextMax = 100000;
+
+export const runFounderNewsActionBodySnapshotOneBodyItemTwoTextMax = 100000;
+
+export const runFounderNewsActionBodySnapshotOneBodyItemThreeTextMax = 100000;
+
+export const runFounderNewsActionBodySnapshotOneBodyItemThreeAttributionMax = 300;
+
+export const runFounderNewsActionBodySnapshotOneBodyItemFourItemsItemMax = 100000;
+
+export const runFounderNewsActionBodySnapshotOneBodyItemFourItemsMax = 50;
+
+export const runFounderNewsActionBodySnapshotOneBodyItemFiveUploadIdMax = 100;
+
+export const runFounderNewsActionBodySnapshotOneBodyItemFiveAltMax = 300;
+
+export const runFounderNewsActionBodySnapshotOneBodyItemFiveCreditMax = 200;
+
+export const runFounderNewsActionBodySnapshotOneBodyItemFiveCaptionMax = 300;
+
+export const runFounderNewsActionBodySnapshotOneBodyMax = 150;
+
+export const runFounderNewsActionBodySnapshotOneAdditionalImagesItemUploadIdMax = 100;
+
+export const runFounderNewsActionBodySnapshotOneAdditionalImagesItemAltMax = 300;
+
+export const runFounderNewsActionBodySnapshotOneAdditionalImagesItemCreditMax = 200;
+
+export const runFounderNewsActionBodySnapshotOneAdditionalImagesMax = 12;
+
+export const runFounderNewsActionBodySnapshotOneAuthorMax = 120;
+
+export const runFounderNewsActionBodySnapshotOnePublicationDateMax = 40;
+
+export const runFounderNewsActionBodySnapshotOneRelatedPartnerKeyMax = 100;
+
+export const runFounderNewsActionBodySnapshotOneRelatedProgrammeSlugMax = 100;
+
+export const runFounderNewsActionBodySnapshotOneSeoTitleMax = 70;
+
+export const runFounderNewsActionBodySnapshotOneSeoDescriptionMax = 180;
+
+
+
+
+export const RunFounderNewsActionBody = zod.object({
+  "action": zod.enum(['create', 'save', 'publish', 'unpublish', 'archive', 'restore']),
+  "id": zod.number().int().min(1).nullable(),
+  "version": zod.number().int().min(runFounderNewsActionBodyVersionMin),
+  "slug": zod.string().min(1).max(runFounderNewsActionBodySlugMax).regex(runFounderNewsActionBodySlugRegExp).nullable(),
+  "snapshot": zod.union([zod.object({
+  "schemaVersion": zod.literal(1),
+  "title": zod.string().max(runFounderNewsActionBodySnapshotOneTitleMax),
+  "subtitle": zod.string().max(runFounderNewsActionBodySnapshotOneSubtitleMax).nullable(),
+  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update']),
+  "cover": zod.union([zod.object({
+  "uploadId": zod.string().min(1).max(runFounderNewsActionBodySnapshotOneCoverOneUploadIdMax),
+  "alt": zod.string().max(runFounderNewsActionBodySnapshotOneCoverOneAltMax),
+  "credit": zod.string().max(runFounderNewsActionBodySnapshotOneCoverOneCreditMax).nullable()
+}),zod.null()]),
+  "video": zod.union([zod.union([zod.object({
+  "kind": zod.enum(['upload']),
+  "uploadId": zod.string().min(1).max(runFounderNewsActionBodySnapshotOneVideoOneOneUploadIdMax)
+}),zod.object({
+  "kind": zod.enum(['embed']),
+  "provider": zod.enum(['youtube', 'vimeo']),
+  "videoId": zod.string().min(1).max(runFounderNewsActionBodySnapshotOneVideoOneTwoVideoIdMax)
+})]),zod.null()]),
+  "body": zod.array(zod.union([zod.object({
+  "type": zod.enum(['paragraph']),
+  "text": zod.string().max(runFounderNewsActionBodySnapshotOneBodyItemOneTextMax)
+}),zod.object({
+  "type": zod.enum(['heading']),
+  "level": zod.union([zod.literal(2),zod.literal(3)]),
+  "text": zod.string().max(runFounderNewsActionBodySnapshotOneBodyItemTwoTextMax)
+}),zod.object({
+  "type": zod.enum(['quote']),
+  "text": zod.string().max(runFounderNewsActionBodySnapshotOneBodyItemThreeTextMax),
+  "attribution": zod.string().max(runFounderNewsActionBodySnapshotOneBodyItemThreeAttributionMax).nullable()
+}),zod.object({
+  "type": zod.enum(['list']),
+  "ordered": zod.boolean(),
+  "items": zod.array(zod.string().max(runFounderNewsActionBodySnapshotOneBodyItemFourItemsItemMax)).max(runFounderNewsActionBodySnapshotOneBodyItemFourItemsMax)
+}),zod.object({
+  "type": zod.enum(['image']),
+  "uploadId": zod.string().min(1).max(runFounderNewsActionBodySnapshotOneBodyItemFiveUploadIdMax),
+  "alt": zod.string().max(runFounderNewsActionBodySnapshotOneBodyItemFiveAltMax),
+  "credit": zod.string().max(runFounderNewsActionBodySnapshotOneBodyItemFiveCreditMax).nullable(),
+  "caption": zod.string().max(runFounderNewsActionBodySnapshotOneBodyItemFiveCaptionMax).nullable()
+})])).max(runFounderNewsActionBodySnapshotOneBodyMax),
+  "additionalImages": zod.array(zod.object({
+  "uploadId": zod.string().min(1).max(runFounderNewsActionBodySnapshotOneAdditionalImagesItemUploadIdMax),
+  "alt": zod.string().max(runFounderNewsActionBodySnapshotOneAdditionalImagesItemAltMax),
+  "credit": zod.string().max(runFounderNewsActionBodySnapshotOneAdditionalImagesItemCreditMax).nullable()
+})).max(runFounderNewsActionBodySnapshotOneAdditionalImagesMax),
+  "author": zod.string().max(runFounderNewsActionBodySnapshotOneAuthorMax).nullable(),
+  "publicationDate": zod.string().max(runFounderNewsActionBodySnapshotOnePublicationDateMax).nullable(),
+  "relatedPartnerKey": zod.string().max(runFounderNewsActionBodySnapshotOneRelatedPartnerKeyMax).nullable(),
+  "relatedProgrammeSlug": zod.string().max(runFounderNewsActionBodySnapshotOneRelatedProgrammeSlugMax).nullable(),
+  "seoTitle": zod.string().max(runFounderNewsActionBodySnapshotOneSeoTitleMax).nullable(),
+  "seoDescription": zod.string().max(runFounderNewsActionBodySnapshotOneSeoDescriptionMax).nullable(),
+  "mediaRightsConfirmed": zod.boolean()
+}),zod.null()]),
+  "revisionId": zod.number().int().min(1).nullable()
+})
+
+export const runFounderNewsActionResponseDraftOneTitleMax = 200;
+
+export const runFounderNewsActionResponseDraftOneSubtitleMax = 300;
+
+export const runFounderNewsActionResponseDraftOneCoverOneUploadIdMax = 100;
+
+export const runFounderNewsActionResponseDraftOneCoverOneAltMax = 300;
+
+export const runFounderNewsActionResponseDraftOneCoverOneCreditMax = 200;
+
+export const runFounderNewsActionResponseDraftOneVideoOneOneUploadIdMax = 100;
+
+export const runFounderNewsActionResponseDraftOneVideoOneTwoVideoIdMax = 30;
+
+export const runFounderNewsActionResponseDraftOneBodyItemOneTextMax = 100000;
+
+export const runFounderNewsActionResponseDraftOneBodyItemTwoTextMax = 100000;
+
+export const runFounderNewsActionResponseDraftOneBodyItemThreeTextMax = 100000;
+
+export const runFounderNewsActionResponseDraftOneBodyItemThreeAttributionMax = 300;
+
+export const runFounderNewsActionResponseDraftOneBodyItemFourItemsItemMax = 100000;
+
+export const runFounderNewsActionResponseDraftOneBodyItemFourItemsMax = 50;
+
+export const runFounderNewsActionResponseDraftOneBodyItemFiveUploadIdMax = 100;
+
+export const runFounderNewsActionResponseDraftOneBodyItemFiveAltMax = 300;
+
+export const runFounderNewsActionResponseDraftOneBodyItemFiveCreditMax = 200;
+
+export const runFounderNewsActionResponseDraftOneBodyItemFiveCaptionMax = 300;
+
+export const runFounderNewsActionResponseDraftOneBodyMax = 150;
+
+export const runFounderNewsActionResponseDraftOneAdditionalImagesItemUploadIdMax = 100;
+
+export const runFounderNewsActionResponseDraftOneAdditionalImagesItemAltMax = 300;
+
+export const runFounderNewsActionResponseDraftOneAdditionalImagesItemCreditMax = 200;
+
+export const runFounderNewsActionResponseDraftOneAdditionalImagesMax = 12;
+
+export const runFounderNewsActionResponseDraftOneAuthorMax = 120;
+
+export const runFounderNewsActionResponseDraftOnePublicationDateMax = 40;
+
+export const runFounderNewsActionResponseDraftOneRelatedPartnerKeyMax = 100;
+
+export const runFounderNewsActionResponseDraftOneRelatedProgrammeSlugMax = 100;
+
+export const runFounderNewsActionResponseDraftOneSeoTitleMax = 70;
+
+export const runFounderNewsActionResponseDraftOneSeoDescriptionMax = 180;
+
+export const runFounderNewsActionResponsePublishedOneTitleMax = 200;
+
+export const runFounderNewsActionResponsePublishedOneSubtitleMax = 300;
+
+export const runFounderNewsActionResponsePublishedOneCoverOneUploadIdMax = 100;
+
+export const runFounderNewsActionResponsePublishedOneCoverOneAltMax = 300;
+
+export const runFounderNewsActionResponsePublishedOneCoverOneCreditMax = 200;
+
+export const runFounderNewsActionResponsePublishedOneVideoOneOneUploadIdMax = 100;
+
+export const runFounderNewsActionResponsePublishedOneVideoOneTwoVideoIdMax = 30;
+
+export const runFounderNewsActionResponsePublishedOneBodyItemOneTextMax = 100000;
+
+export const runFounderNewsActionResponsePublishedOneBodyItemTwoTextMax = 100000;
+
+export const runFounderNewsActionResponsePublishedOneBodyItemThreeTextMax = 100000;
+
+export const runFounderNewsActionResponsePublishedOneBodyItemThreeAttributionMax = 300;
+
+export const runFounderNewsActionResponsePublishedOneBodyItemFourItemsItemMax = 100000;
+
+export const runFounderNewsActionResponsePublishedOneBodyItemFourItemsMax = 50;
+
+export const runFounderNewsActionResponsePublishedOneBodyItemFiveUploadIdMax = 100;
+
+export const runFounderNewsActionResponsePublishedOneBodyItemFiveAltMax = 300;
+
+export const runFounderNewsActionResponsePublishedOneBodyItemFiveCreditMax = 200;
+
+export const runFounderNewsActionResponsePublishedOneBodyItemFiveCaptionMax = 300;
+
+export const runFounderNewsActionResponsePublishedOneBodyMax = 150;
+
+export const runFounderNewsActionResponsePublishedOneAdditionalImagesItemUploadIdMax = 100;
+
+export const runFounderNewsActionResponsePublishedOneAdditionalImagesItemAltMax = 300;
+
+export const runFounderNewsActionResponsePublishedOneAdditionalImagesItemCreditMax = 200;
+
+export const runFounderNewsActionResponsePublishedOneAdditionalImagesMax = 12;
+
+export const runFounderNewsActionResponsePublishedOneAuthorMax = 120;
+
+export const runFounderNewsActionResponsePublishedOnePublicationDateMax = 40;
+
+export const runFounderNewsActionResponsePublishedOneRelatedPartnerKeyMax = 100;
+
+export const runFounderNewsActionResponsePublishedOneRelatedProgrammeSlugMax = 100;
+
+export const runFounderNewsActionResponsePublishedOneSeoTitleMax = 70;
+
+export const runFounderNewsActionResponsePublishedOneSeoDescriptionMax = 180;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotTitleMax = 200;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotSubtitleMax = 300;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotCoverOneUploadIdMax = 100;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotCoverOneAltMax = 300;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotCoverOneCreditMax = 200;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotVideoOneOneUploadIdMax = 100;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotVideoOneTwoVideoIdMax = 30;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotBodyItemOneTextMax = 100000;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotBodyItemTwoTextMax = 100000;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotBodyItemThreeTextMax = 100000;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotBodyItemThreeAttributionMax = 300;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotBodyItemFourItemsItemMax = 100000;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotBodyItemFourItemsMax = 50;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotBodyItemFiveUploadIdMax = 100;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotBodyItemFiveAltMax = 300;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotBodyItemFiveCreditMax = 200;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotBodyItemFiveCaptionMax = 300;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotBodyMax = 150;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotAdditionalImagesItemUploadIdMax = 100;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotAdditionalImagesItemAltMax = 300;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotAdditionalImagesItemCreditMax = 200;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotAdditionalImagesMax = 12;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotAuthorMax = 120;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotPublicationDateMax = 40;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotRelatedPartnerKeyMax = 100;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotRelatedProgrammeSlugMax = 100;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotSeoTitleMax = 70;
+
+export const runFounderNewsActionResponseHistoryItemSnapshotSeoDescriptionMax = 180;
+
+
+
+export const RunFounderNewsActionResponse = zod.object({
+  "id": zod.number().int(),
+  "slug": zod.string(),
+  "status": zod.enum(['draft', 'published', 'archived']),
+  "version": zod.number().int(),
+  "draftRevisionId": zod.number().int().nullable(),
+  "publishedRevisionId": zod.number().int().nullable(),
+  "publishedAt": zod.string().nullable(),
+  "updatedAt": zod.string(),
+  "draft": zod.union([zod.object({
+  "schemaVersion": zod.literal(1),
+  "title": zod.string().max(runFounderNewsActionResponseDraftOneTitleMax),
+  "subtitle": zod.string().max(runFounderNewsActionResponseDraftOneSubtitleMax).nullable(),
+  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update']),
+  "cover": zod.union([zod.object({
+  "uploadId": zod.string().min(1).max(runFounderNewsActionResponseDraftOneCoverOneUploadIdMax),
+  "alt": zod.string().max(runFounderNewsActionResponseDraftOneCoverOneAltMax),
+  "credit": zod.string().max(runFounderNewsActionResponseDraftOneCoverOneCreditMax).nullable()
+}),zod.null()]),
+  "video": zod.union([zod.union([zod.object({
+  "kind": zod.enum(['upload']),
+  "uploadId": zod.string().min(1).max(runFounderNewsActionResponseDraftOneVideoOneOneUploadIdMax)
+}),zod.object({
+  "kind": zod.enum(['embed']),
+  "provider": zod.enum(['youtube', 'vimeo']),
+  "videoId": zod.string().min(1).max(runFounderNewsActionResponseDraftOneVideoOneTwoVideoIdMax)
+})]),zod.null()]),
+  "body": zod.array(zod.union([zod.object({
+  "type": zod.enum(['paragraph']),
+  "text": zod.string().max(runFounderNewsActionResponseDraftOneBodyItemOneTextMax)
+}),zod.object({
+  "type": zod.enum(['heading']),
+  "level": zod.union([zod.literal(2),zod.literal(3)]),
+  "text": zod.string().max(runFounderNewsActionResponseDraftOneBodyItemTwoTextMax)
+}),zod.object({
+  "type": zod.enum(['quote']),
+  "text": zod.string().max(runFounderNewsActionResponseDraftOneBodyItemThreeTextMax),
+  "attribution": zod.string().max(runFounderNewsActionResponseDraftOneBodyItemThreeAttributionMax).nullable()
+}),zod.object({
+  "type": zod.enum(['list']),
+  "ordered": zod.boolean(),
+  "items": zod.array(zod.string().max(runFounderNewsActionResponseDraftOneBodyItemFourItemsItemMax)).max(runFounderNewsActionResponseDraftOneBodyItemFourItemsMax)
+}),zod.object({
+  "type": zod.enum(['image']),
+  "uploadId": zod.string().min(1).max(runFounderNewsActionResponseDraftOneBodyItemFiveUploadIdMax),
+  "alt": zod.string().max(runFounderNewsActionResponseDraftOneBodyItemFiveAltMax),
+  "credit": zod.string().max(runFounderNewsActionResponseDraftOneBodyItemFiveCreditMax).nullable(),
+  "caption": zod.string().max(runFounderNewsActionResponseDraftOneBodyItemFiveCaptionMax).nullable()
+})])).max(runFounderNewsActionResponseDraftOneBodyMax),
+  "additionalImages": zod.array(zod.object({
+  "uploadId": zod.string().min(1).max(runFounderNewsActionResponseDraftOneAdditionalImagesItemUploadIdMax),
+  "alt": zod.string().max(runFounderNewsActionResponseDraftOneAdditionalImagesItemAltMax),
+  "credit": zod.string().max(runFounderNewsActionResponseDraftOneAdditionalImagesItemCreditMax).nullable()
+})).max(runFounderNewsActionResponseDraftOneAdditionalImagesMax),
+  "author": zod.string().max(runFounderNewsActionResponseDraftOneAuthorMax).nullable(),
+  "publicationDate": zod.string().max(runFounderNewsActionResponseDraftOnePublicationDateMax).nullable(),
+  "relatedPartnerKey": zod.string().max(runFounderNewsActionResponseDraftOneRelatedPartnerKeyMax).nullable(),
+  "relatedProgrammeSlug": zod.string().max(runFounderNewsActionResponseDraftOneRelatedProgrammeSlugMax).nullable(),
+  "seoTitle": zod.string().max(runFounderNewsActionResponseDraftOneSeoTitleMax).nullable(),
+  "seoDescription": zod.string().max(runFounderNewsActionResponseDraftOneSeoDescriptionMax).nullable(),
+  "mediaRightsConfirmed": zod.boolean()
+}),zod.null()]),
+  "published": zod.union([zod.object({
+  "schemaVersion": zod.literal(1),
+  "title": zod.string().max(runFounderNewsActionResponsePublishedOneTitleMax),
+  "subtitle": zod.string().max(runFounderNewsActionResponsePublishedOneSubtitleMax).nullable(),
+  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update']),
+  "cover": zod.union([zod.object({
+  "uploadId": zod.string().min(1).max(runFounderNewsActionResponsePublishedOneCoverOneUploadIdMax),
+  "alt": zod.string().max(runFounderNewsActionResponsePublishedOneCoverOneAltMax),
+  "credit": zod.string().max(runFounderNewsActionResponsePublishedOneCoverOneCreditMax).nullable()
+}),zod.null()]),
+  "video": zod.union([zod.union([zod.object({
+  "kind": zod.enum(['upload']),
+  "uploadId": zod.string().min(1).max(runFounderNewsActionResponsePublishedOneVideoOneOneUploadIdMax)
+}),zod.object({
+  "kind": zod.enum(['embed']),
+  "provider": zod.enum(['youtube', 'vimeo']),
+  "videoId": zod.string().min(1).max(runFounderNewsActionResponsePublishedOneVideoOneTwoVideoIdMax)
+})]),zod.null()]),
+  "body": zod.array(zod.union([zod.object({
+  "type": zod.enum(['paragraph']),
+  "text": zod.string().max(runFounderNewsActionResponsePublishedOneBodyItemOneTextMax)
+}),zod.object({
+  "type": zod.enum(['heading']),
+  "level": zod.union([zod.literal(2),zod.literal(3)]),
+  "text": zod.string().max(runFounderNewsActionResponsePublishedOneBodyItemTwoTextMax)
+}),zod.object({
+  "type": zod.enum(['quote']),
+  "text": zod.string().max(runFounderNewsActionResponsePublishedOneBodyItemThreeTextMax),
+  "attribution": zod.string().max(runFounderNewsActionResponsePublishedOneBodyItemThreeAttributionMax).nullable()
+}),zod.object({
+  "type": zod.enum(['list']),
+  "ordered": zod.boolean(),
+  "items": zod.array(zod.string().max(runFounderNewsActionResponsePublishedOneBodyItemFourItemsItemMax)).max(runFounderNewsActionResponsePublishedOneBodyItemFourItemsMax)
+}),zod.object({
+  "type": zod.enum(['image']),
+  "uploadId": zod.string().min(1).max(runFounderNewsActionResponsePublishedOneBodyItemFiveUploadIdMax),
+  "alt": zod.string().max(runFounderNewsActionResponsePublishedOneBodyItemFiveAltMax),
+  "credit": zod.string().max(runFounderNewsActionResponsePublishedOneBodyItemFiveCreditMax).nullable(),
+  "caption": zod.string().max(runFounderNewsActionResponsePublishedOneBodyItemFiveCaptionMax).nullable()
+})])).max(runFounderNewsActionResponsePublishedOneBodyMax),
+  "additionalImages": zod.array(zod.object({
+  "uploadId": zod.string().min(1).max(runFounderNewsActionResponsePublishedOneAdditionalImagesItemUploadIdMax),
+  "alt": zod.string().max(runFounderNewsActionResponsePublishedOneAdditionalImagesItemAltMax),
+  "credit": zod.string().max(runFounderNewsActionResponsePublishedOneAdditionalImagesItemCreditMax).nullable()
+})).max(runFounderNewsActionResponsePublishedOneAdditionalImagesMax),
+  "author": zod.string().max(runFounderNewsActionResponsePublishedOneAuthorMax).nullable(),
+  "publicationDate": zod.string().max(runFounderNewsActionResponsePublishedOnePublicationDateMax).nullable(),
+  "relatedPartnerKey": zod.string().max(runFounderNewsActionResponsePublishedOneRelatedPartnerKeyMax).nullable(),
+  "relatedProgrammeSlug": zod.string().max(runFounderNewsActionResponsePublishedOneRelatedProgrammeSlugMax).nullable(),
+  "seoTitle": zod.string().max(runFounderNewsActionResponsePublishedOneSeoTitleMax).nullable(),
+  "seoDescription": zod.string().max(runFounderNewsActionResponsePublishedOneSeoDescriptionMax).nullable(),
+  "mediaRightsConfirmed": zod.boolean()
+}),zod.null()]),
+  "history": zod.array(zod.object({
+  "id": zod.number().int(),
+  "revisionNo": zod.number().int(),
+  "createdAt": zod.string(),
+  "snapshot": zod.object({
+  "schemaVersion": zod.literal(1),
+  "title": zod.string().max(runFounderNewsActionResponseHistoryItemSnapshotTitleMax),
+  "subtitle": zod.string().max(runFounderNewsActionResponseHistoryItemSnapshotSubtitleMax).nullable(),
+  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update']),
+  "cover": zod.union([zod.object({
+  "uploadId": zod.string().min(1).max(runFounderNewsActionResponseHistoryItemSnapshotCoverOneUploadIdMax),
+  "alt": zod.string().max(runFounderNewsActionResponseHistoryItemSnapshotCoverOneAltMax),
+  "credit": zod.string().max(runFounderNewsActionResponseHistoryItemSnapshotCoverOneCreditMax).nullable()
+}),zod.null()]),
+  "video": zod.union([zod.union([zod.object({
+  "kind": zod.enum(['upload']),
+  "uploadId": zod.string().min(1).max(runFounderNewsActionResponseHistoryItemSnapshotVideoOneOneUploadIdMax)
+}),zod.object({
+  "kind": zod.enum(['embed']),
+  "provider": zod.enum(['youtube', 'vimeo']),
+  "videoId": zod.string().min(1).max(runFounderNewsActionResponseHistoryItemSnapshotVideoOneTwoVideoIdMax)
+})]),zod.null()]),
+  "body": zod.array(zod.union([zod.object({
+  "type": zod.enum(['paragraph']),
+  "text": zod.string().max(runFounderNewsActionResponseHistoryItemSnapshotBodyItemOneTextMax)
+}),zod.object({
+  "type": zod.enum(['heading']),
+  "level": zod.union([zod.literal(2),zod.literal(3)]),
+  "text": zod.string().max(runFounderNewsActionResponseHistoryItemSnapshotBodyItemTwoTextMax)
+}),zod.object({
+  "type": zod.enum(['quote']),
+  "text": zod.string().max(runFounderNewsActionResponseHistoryItemSnapshotBodyItemThreeTextMax),
+  "attribution": zod.string().max(runFounderNewsActionResponseHistoryItemSnapshotBodyItemThreeAttributionMax).nullable()
+}),zod.object({
+  "type": zod.enum(['list']),
+  "ordered": zod.boolean(),
+  "items": zod.array(zod.string().max(runFounderNewsActionResponseHistoryItemSnapshotBodyItemFourItemsItemMax)).max(runFounderNewsActionResponseHistoryItemSnapshotBodyItemFourItemsMax)
+}),zod.object({
+  "type": zod.enum(['image']),
+  "uploadId": zod.string().min(1).max(runFounderNewsActionResponseHistoryItemSnapshotBodyItemFiveUploadIdMax),
+  "alt": zod.string().max(runFounderNewsActionResponseHistoryItemSnapshotBodyItemFiveAltMax),
+  "credit": zod.string().max(runFounderNewsActionResponseHistoryItemSnapshotBodyItemFiveCreditMax).nullable(),
+  "caption": zod.string().max(runFounderNewsActionResponseHistoryItemSnapshotBodyItemFiveCaptionMax).nullable()
+})])).max(runFounderNewsActionResponseHistoryItemSnapshotBodyMax),
+  "additionalImages": zod.array(zod.object({
+  "uploadId": zod.string().min(1).max(runFounderNewsActionResponseHistoryItemSnapshotAdditionalImagesItemUploadIdMax),
+  "alt": zod.string().max(runFounderNewsActionResponseHistoryItemSnapshotAdditionalImagesItemAltMax),
+  "credit": zod.string().max(runFounderNewsActionResponseHistoryItemSnapshotAdditionalImagesItemCreditMax).nullable()
+})).max(runFounderNewsActionResponseHistoryItemSnapshotAdditionalImagesMax),
+  "author": zod.string().max(runFounderNewsActionResponseHistoryItemSnapshotAuthorMax).nullable(),
+  "publicationDate": zod.string().max(runFounderNewsActionResponseHistoryItemSnapshotPublicationDateMax).nullable(),
+  "relatedPartnerKey": zod.string().max(runFounderNewsActionResponseHistoryItemSnapshotRelatedPartnerKeyMax).nullable(),
+  "relatedProgrammeSlug": zod.string().max(runFounderNewsActionResponseHistoryItemSnapshotRelatedProgrammeSlugMax).nullable(),
+  "seoTitle": zod.string().max(runFounderNewsActionResponseHistoryItemSnapshotSeoTitleMax).nullable(),
+  "seoDescription": zod.string().max(runFounderNewsActionResponseHistoryItemSnapshotSeoDescriptionMax).nullable(),
+  "mediaRightsConfirmed": zod.boolean()
+})
+})),
+  "historyHasMore": zod.boolean()
+})
+
+
+export const requestFounderNewsUploadBodyFilenameMax = 200;
+
+export const requestFounderNewsUploadBodySizeMax = 104857600;
+
+
+
+export const RequestFounderNewsUploadBody = zod.object({
+  "filename": zod.string().min(1).max(requestFounderNewsUploadBodyFilenameMax),
+  "contentType": zod.enum(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'video/mp4', 'video/webm', 'video/quicktime']),
+  "size": zod.number().int().min(1).max(requestFounderNewsUploadBodySizeMax)
+})
+
+export const RequestFounderNewsUploadResponse = zod.object({
+  "id": zod.string(),
+  "uploadUrl": zod.string()
+})
+
+
+export const CompleteFounderNewsUploadParams = zod.object({
+  "uploadId": zod.coerce.string()
+})
+
+export const CompleteFounderNewsUploadResponse = zod.object({
+  "id": zod.string()
+})
+
+
 export const GetMagazineStatisticsResponse = zod.object({
   "editionId": zod.string(),
   "opens": zod.number().int(),

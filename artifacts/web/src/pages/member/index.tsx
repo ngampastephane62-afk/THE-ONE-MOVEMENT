@@ -22,6 +22,7 @@ import Packages from './Packages';
 import Certifications from './Certifications';
 import Admin from './Admin';
 import FounderWorkspace from './FounderWorkspace';
+import FounderNews from './FounderNews';
 import SettingsPage from './Settings';
 import MemberWelcome from './MemberWelcome';
 import Connections from './Connections';
@@ -234,6 +235,7 @@ function NetworkGate() {
           <Route path="/member/packages" component={Packages} />
           <Route path="/member/certifications" component={Certifications} />
           <Route path="/member/admin">{me.founder ? <Admin /> : <Redirect to="/member" replace />}</Route>
+          <Route path="/member/founder/news">{me.founder ? <FounderNews /> : <Redirect to="/member" replace />}</Route>
           <Route path="/member/founder">{me.founder ? <FounderWorkspace /> : <Redirect to="/member" replace />}</Route>
           <Route path="/member/invite"><div className="flex flex-col gap-4 px-3 pt-4 md:px-0 md:pt-0"><h1 className="font-display text-2xl text-ink-900">Invite your community</h1><InvitationProgress growth={state.growth} founder={me.founder} /></div></Route>
           <Route path="/member/membership" component={Membership} />

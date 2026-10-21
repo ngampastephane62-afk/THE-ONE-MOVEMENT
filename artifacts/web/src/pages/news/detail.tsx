@@ -27,9 +27,9 @@
  * plain text.
  */
 
-import { useEffect } from 'react';
 import BrandPhotoActions from '@/components/editorial/BrandPhotoActions';
-import { useParams, useLocation, Link } from 'wouter';
+import { useParams, Link } from 'wouter';
+import CmsNewsDetail from './cms-detail';
 import { Helmet } from 'react-helmet-async';
 import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
@@ -443,16 +443,9 @@ function ArticleRenderer({ article }: { article: NewsArticle }) {
 
 export default function NewsDetail() {
   const params = useParams<{ slug: string }>();
-  const [, navigate] = useLocation();
-  const article = getPublishedArticleBySlug(params.slug ?? '');
-
-  useEffect(() => {
-    // Unknown slug, non-published, or any resolution failure → redirect cleanly.
-    // No 404, no error surface, no leakage of unpublished content.
-    if (!article) navigate('/news', { replace: true });
-  }, [article, navigate]);
-
-  if (!article) return null;
-
+  const slug = params.slug ?? '';
+  const article = getPublishedArticleBySlug(slug);
+  // Static articles keep their bespoke renderer; anything else resolves through the CMS.
+  if (!article) return <CmsNewsDetail key={slug} slug={slug} />;
   return <ArticleRenderer article={article} />;
 }

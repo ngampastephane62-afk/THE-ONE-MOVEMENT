@@ -11,6 +11,115 @@ tags:
   - name: health
     description: Health operations
 paths:
+  /news/articles:
+    get:
+      operationId: getPublishedNewsArticles
+      parameters:
+        - {name: page, in: query, schema: {type: integer, minimum: 1, default: 1}}
+      responses:
+        "200":
+          description: Published editorial articles
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/NewsPublicPage"}
+  /news/articles/{slug}:
+    get:
+      operationId: getPublishedNewsArticle
+      parameters:
+        - {name: slug, in: path, required: true, schema: {type: string}}
+      responses:
+        "200":
+          description: Current published revision
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/NewsPublicArticle"}
+        "404": {description: Article not found}
+  /founder/news:
+    get:
+      operationId: getFounderNews
+      parameters:
+        - {name: page, in: query, schema: {type: integer, minimum: 1, default: 1}}
+      responses:
+        "200":
+          description: Private management list
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/NewsFounderPage"}
+  /founder/news/options:
+    get:
+      operationId: getFounderNewsOptions
+      responses:
+        "200":
+          description: Existing catalogue references
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [partners, programmes]
+                properties:
+                  partners: {type: array, items: {$ref: "#/components/schemas/NewsReference"}}
+                  programmes: {type: array, items: {$ref: "#/components/schemas/NewsReference"}}
+  /founder/news/{id}:
+    get:
+      operationId: getFounderNewsArticle
+      parameters:
+        - {name: id, in: path, required: true, schema: {type: integer}}
+        - {name: historyPage, in: query, schema: {type: integer, minimum: 1, default: 1}}
+      responses:
+        "200":
+          description: Private draft and revision history
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/NewsFounderArticle"}
+  /founder/news/actions:
+    post:
+      operationId: runFounderNewsAction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: "#/components/schemas/NewsActionInput"}
+      responses:
+        "200":
+          description: Committed article state
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/NewsFounderArticle"}
+        "409": {description: Version conflict or reserved slug}
+  /founder/news/uploads:
+    post:
+      operationId: requestFounderNewsUpload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: "#/components/schemas/NewsUploadInput"}
+      responses:
+        "201":
+          description: Private editorial upload
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [id, uploadUrl]
+                properties:
+                  id: {type: string}
+                  uploadUrl: {type: string}
+  /founder/news/uploads/{uploadId}/complete:
+    post:
+      operationId: completeFounderNewsUpload
+      parameters:
+        - {name: uploadId, in: path, required: true, schema: {type: string}}
+      responses:
+        "200":
+          description: Upload verified
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [id]
+                properties:
+                  id: {type: string}
   /magazine/statistics:
     get:
       operationId: getMagazineStatistics
@@ -904,6 +1013,158 @@ paths:
                 $ref: "#/components/schemas/DetailedHealthStatus"
 components:
   schemas:
+    NewsReference:
+      type: object
+      required: [key, label]
+      properties:
+        key: {type: string}
+        label: {type: string}
+    NewsImage:
+      type: object
+      additionalProperties: false
+      required: [uploadId, alt, credit]
+      properties:
+        uploadId: {type: string, minLength: 1, maxLength: 100}
+        alt: {type: string, maxLength: 300}
+        credit: {type: [string, "null"], maxLength: 200}
+    NewsVideo:
+      anyOf:
+        - type: object
+          additionalProperties: false
+          required: [kind, uploadId]
+          properties:
+            kind: {type: string, enum: [upload]}
+            uploadId: {type: string, minLength: 1, maxLength: 100}
+        - type: object
+          additionalProperties: false
+          required: [kind, provider, videoId]
+          properties:
+            kind: {type: string, enum: [embed]}
+            provider: {type: string, enum: [youtube, vimeo]}
+            videoId: {type: string, minLength: 1, maxLength: 30}
+    NewsBlock:
+      anyOf:
+        - type: object
+          additionalProperties: false
+          required: [type, text]
+          properties:
+            type: {type: string, enum: [paragraph]}
+            text: {type: string, maxLength: 100000}
+        - type: object
+          additionalProperties: false
+          required: [type, level, text]
+          properties:
+            type: {type: string, enum: [heading]}
+            level: {type: integer, enum: [2, 3]}
+            text: {type: string, maxLength: 100000}
+        - type: object
+          additionalProperties: false
+          required: [type, text, attribution]
+          properties:
+            type: {type: string, enum: [quote]}
+            text: {type: string, maxLength: 100000}
+            attribution: {type: [string, "null"], maxLength: 300}
+        - type: object
+          additionalProperties: false
+          required: [type, ordered, items]
+          properties:
+            type: {type: string, enum: [list]}
+            ordered: {type: boolean}
+            items: {type: array, maxItems: 50, items: {type: string, maxLength: 100000}}
+        - type: object
+          additionalProperties: false
+          required: [type, uploadId, alt, credit, caption]
+          properties:
+            type: {type: string, enum: [image]}
+            uploadId: {type: string, minLength: 1, maxLength: 100}
+            alt: {type: string, maxLength: 300}
+            credit: {type: [string, "null"], maxLength: 200}
+            caption: {type: [string, "null"], maxLength: 300}
+    NewsSnapshot:
+      type: object
+      additionalProperties: false
+      required: [schemaVersion, title, subtitle, category, cover, video, body, additionalImages, author, publicationDate, relatedPartnerKey, relatedProgrammeSlug, seoTitle, seoDescription, mediaRightsConfirmed]
+      properties:
+        schemaVersion: {type: integer, enum: [1]}
+        title: {type: string, maxLength: 200}
+        subtitle: {type: [string, "null"], maxLength: 300}
+        category: {type: string, enum: [news, video-news, partnership-announcement, official-announcement, opportunity, press-release, event-announcement, humanitarian-update, ecosystem-update]}
+        cover: {anyOf: [{$ref: "#/components/schemas/NewsImage"}, {type: "null"}]}
+        video: {anyOf: [{$ref: "#/components/schemas/NewsVideo"}, {type: "null"}]}
+        body: {type: array, maxItems: 150, items: {$ref: "#/components/schemas/NewsBlock"}}
+        additionalImages: {type: array, maxItems: 12, items: {$ref: "#/components/schemas/NewsImage"}}
+        author: {type: [string, "null"], maxLength: 120}
+        publicationDate: {type: [string, "null"], maxLength: 40}
+        relatedPartnerKey: {type: [string, "null"], maxLength: 100}
+        relatedProgrammeSlug: {type: [string, "null"], maxLength: 100}
+        seoTitle: {type: [string, "null"], maxLength: 70}
+        seoDescription: {type: [string, "null"], maxLength: 180}
+        mediaRightsConfirmed: {type: boolean}
+    NewsActionInput:
+      type: object
+      additionalProperties: false
+      required: [action, id, version, slug, snapshot, revisionId]
+      properties:
+        action: {type: string, enum: [create, save, publish, unpublish, archive, restore]}
+        id: {type: [integer, "null"], minimum: 1}
+        version: {type: integer, minimum: 0}
+        slug: {type: [string, "null"], minLength: 1, maxLength: 160, pattern: "^[a-z0-9]+(-[a-z0-9]+)*$"}
+        snapshot: {anyOf: [{$ref: "#/components/schemas/NewsSnapshot"}, {type: "null"}]}
+        revisionId: {type: [integer, "null"], minimum: 1}
+    NewsUploadInput:
+      type: object
+      additionalProperties: false
+      required: [filename, contentType, size]
+      properties:
+        filename: {type: string, minLength: 1, maxLength: 200}
+        contentType: {type: string, enum: [image/jpeg, image/png, image/webp, image/gif, video/mp4, video/webm, video/quicktime]}
+        size: {type: integer, minimum: 1, maximum: 104857600}
+    NewsRevision:
+      type: object
+      required: [id, revisionNo, createdAt, snapshot]
+      properties:
+        id: {type: integer}
+        revisionNo: {type: integer}
+        createdAt: {type: string}
+        snapshot: {$ref: "#/components/schemas/NewsSnapshot"}
+    NewsFounderArticle:
+      type: object
+      required: [id, slug, status, version, draftRevisionId, publishedRevisionId, publishedAt, updatedAt, draft, published, history, historyHasMore]
+      properties:
+        id: {type: integer}
+        slug: {type: string}
+        status: {type: string, enum: [draft, published, archived]}
+        version: {type: integer}
+        draftRevisionId: {type: [integer, "null"]}
+        publishedRevisionId: {type: [integer, "null"]}
+        publishedAt: {type: [string, "null"]}
+        updatedAt: {type: string}
+        draft: {anyOf: [{$ref: "#/components/schemas/NewsSnapshot"}, {type: "null"}]}
+        published: {anyOf: [{$ref: "#/components/schemas/NewsSnapshot"}, {type: "null"}]}
+        history: {type: array, items: {$ref: "#/components/schemas/NewsRevision"}}
+        historyHasMore: {type: boolean}
+    NewsPublicArticle:
+      type: object
+      required: [id, slug, publishedAt, snapshot]
+      properties:
+        id: {type: integer}
+        slug: {type: string}
+        publishedAt: {type: string}
+        snapshot: {$ref: "#/components/schemas/NewsSnapshot"}
+    NewsPublicPage:
+      type: object
+      required: [items, page, hasMore]
+      properties:
+        items: {type: array, items: {$ref: "#/components/schemas/NewsPublicArticle"}}
+        page: {type: integer}
+        hasMore: {type: boolean}
+    NewsFounderPage:
+      type: object
+      required: [items, page, hasMore]
+      properties:
+        items: {type: array, items: {$ref: "#/components/schemas/NewsFounderArticle"}}
+        page: {type: integer}
+        hasMore: {type: boolean}
     MagazineStatistics:
       type: object
       required: [editionId, opens, pagesViewed, engagedSessions, startedAt, updatedAt]

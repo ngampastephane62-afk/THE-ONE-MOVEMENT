@@ -15,6 +15,7 @@ import PhotoSetActions from '@/components/editorial/PhotoSetActions';
 import NewsVideo from '@/components/editorial/NewsVideo';
 import { EDITORIAL_VIDEO_NEWS, formatNewsDate } from '@/lib/editorial-news';
 import PlacementLabel from '@/components/editorial/PlacementLabel';
+import PublicNewsList from '@/components/news-cms/PublicNewsList';
 
 const TITLE = 'In the Press — Ten Years of Coverage | The One Movement International';
 const DESC = 'The historical press archive of The One Movement International: publisher coverage of the Movement, its Founder and CEO, and its programmes, with the original captures preserved.';
@@ -112,6 +113,8 @@ export default function News() {
           )}
         </div>
       </HeroSurface>
+
+      <PublicNewsList />
 
       <section className="w-full bg-[hsl(30_40%_97%)] py-section-md" aria-labelledby="latest-heading">
         <div className="mx-auto max-w-7xl px-6">

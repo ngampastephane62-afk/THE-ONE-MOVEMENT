@@ -19,7 +19,7 @@ export function objectFile(path: string) {
   if (!bucket || !parts.length) throw new Error("Invalid storage configuration");
   return storage.bucket(bucket).file(parts.join("/"));
 }
-export async function requestUpload(ownerId: number, input: { filename: string; contentType: string; size: number }) {
+export async function requestUpload(ownerId: number, input: { filename: string; contentType: string; size: number }, scope: "network" | "news" = "network") {
   const max = input.contentType.startsWith("video/") ? 100 * 1024 * 1024 : 20 * 1024 * 1024;
   if (!types.has(input.contentType) || input.size < 1 || input.size > max) throw new NetworkError(400, "Use an allowed image, video, audio or PDF within the displayed size limit.");
   const recent = await db.select({ size: uploads.size, ready: uploads.ready }).from(uploads)
@@ -30,7 +30,7 @@ export async function requestUpload(ownerId: number, input: { filename: string; 
   const privateDir = process.env.PRIVATE_OBJECT_DIR;
   if (!privateDir) throw new NetworkError(503, "Media storage is not configured.");
   const id = randomUUID();
-  const objectPath = `${privateDir.replace(/\/$/, "")}/network/${ownerId}/${id}`;
+  const objectPath = `${privateDir.replace(/\/$/, "")}/${scope === "news" ? "news-pending" : "network"}/${ownerId}/${id}`;
   const file = objectFile(objectPath);
   const reply = await fetch("http://127.0.0.1:1106/object-storage/signed-object-url", {
     method: "POST", headers: { "Content-Type": "application/json" },
@@ -49,8 +49,8 @@ export async function requestUpload(ownerId: number, input: { filename: string; 
   });
   return { id, uploadUrl: signed.signed_url };
 }
-export async function completeUpload(ownerId: number, id: string) {
-  const [row] = await db.select().from(uploads).where(and(eq(uploads.id, id), eq(uploads.ownerId, ownerId)));
+export async function completeUpload(ownerId: number, id: string, executor: Pick<typeof db, "select" | "update"> = db) {
+  const [row] = await executor.select().from(uploads).where(and(eq(uploads.id, id), eq(uploads.ownerId, ownerId)));
   if (!row) throw new NetworkError(404, "Upload not found.");
   const file = objectFile(row.objectPath);
   const [metadata] = await file.getMetadata();
@@ -75,7 +75,7 @@ export async function completeUpload(ownerId: number, id: string) {
     await file.delete({ ignoreNotFound: true });
     throw new NetworkError(400, "The file contents are not an allowed media format.");
   }
-  await db.update(uploads).set({ ready: true }).where(eq(uploads.id, id));
+  await executor.update(uploads).set({ ready: true }).where(eq(uploads.id, id));
 }
 export async function ownedMedia(ownerId: number, ids: string[] = []) {
   const unique = [...new Set(ids)];
