@@ -1,0 +1,87 @@
+PROJECT: THE ONE MOVEMENT INTERNATIONAL (TOMI)
+
+TASK 16 — FOUNDER WORKSPACE CONNECTION DIAGNOSIS
+
+MODE: READ-ONLY DIAGNOSTIC
+
+CONTEXT:
+
+Phase A of the Founder Workspace has been completed.
+
+However, when the Founder opens the member area
+on the Replit preview domain, the application displays:
+
+"THE NETWORK DID NOT LOAD"
+
+"Unable to open your member network."
+
+The Founder cannot access the new workspace.
+
+OBJECTIVE:
+
+Identify the exact cause of this error and propose
+the safest correction.
+
+IMPORTANT:
+Do not modify code yet.
+
+1. Inspect the frontend component displaying
+   "THE NETWORK DID NOT LOAD".
+
+2. Identify the API request responsible for loading
+   the member network.
+
+3. Inspect the relevant API routes, authentication
+   requirements and error handling.
+
+4. Check whether the frontend API configuration
+   correctly supports the Replit preview environment.
+
+5. Check whether the issue could be caused by:
+   - An unavailable API server
+   - Incorrect API base URL
+   - Authentication/session failure
+   - CORS or origin restrictions
+   - Missing preview environment configuration
+   - API routing or proxy configuration
+   - A frontend error introduced during Phase A
+
+6. Determine whether the new Founder Workspace
+   depends unnecessarily on the network state
+   loading successfully.
+
+7. Inspect whether /member/founder can be accessed
+   independently while preserving Founder security.
+
+8. Review available existing logs without starting
+   or restarting application servers.
+
+STRICT RESTRICTIONS:
+
+DO NOT:
+- Start or restart backend servers
+- Modify Stripe
+- Trigger Stripe synchronization
+- Modify Clerk configuration
+- Change environment variables
+- Run database migrations
+- Modify production data
+- Deploy
+- Modify application code
+
+FINAL REPORT:
+
+Explain:
+
+1. Exact component displaying the error
+2. Failing request and expected response
+3. Verified root cause, if identifiable
+4. Whether the problem existed before Phase A
+5. Whether the Founder Workspace is affected
+6. Recommended minimal correction
+7. Files requiring modification
+8. Any remaining runtime verification needed
+
+Distinguish verified facts from hypotheses.
+
+Wait for Founder approval before implementing fixes.
