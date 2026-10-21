@@ -15,8 +15,9 @@ const root = resolve(import.meta.dirname, '..');
 const source = readFileSync(resolve(root, 'src/components/home/CinematicHero.tsx'), 'utf8');
 const css = readFileSync(resolve(root, 'src/components/home/cinematic-hero.css'), 'utf8');
 
-function fixture(reduced = false, base = '/nested/') {
+function fixture(reduced = false, base = '/nested/', { seen = false, blockedStorage = false } = {}) {
   const states = [], effects = [], events = new Map(), listeners = new Map();
+  const storage = new Map(seen ? [['tomi:home-intro-seen', '1']] : []);
   let cursor = 0;
   const media = {
     matches: reduced,
@@ -28,7 +29,7 @@ function fixture(reduced = false, base = '/nested/') {
       ...React,
       useState(initial) {
         const i = cursor++;
-        if (!(i in states)) states[i] = initial;
+        if (!(i in states)) states[i] = typeof initial === 'function' ? initial() : initial;
         return [states[i], next => { states[i] = typeof next === 'function' ? next(states[i]) : next; }];
       },
       useEffect: fn => effects.push(fn),
@@ -41,13 +42,17 @@ function fixture(reduced = false, base = '/nested/') {
     ])),
     wouter: { Link: ({ children, ...props }) => React.createElement('a', props, children) },
     'lucide-react': requireWeb('lucide-react'),
+    '@/assets/media/home/tomi-official-logo.png': { default: '/nested/assets/tomi-official-logo.png' },
   };
   const module = { exports: {} };
   runInNewContext(ts.transpileModule(source.replaceAll('import.meta.env.BASE_URL', JSON.stringify(base)), {
     compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
   }).outputText, {
     module, exports: module.exports,
-    window: { matchMedia: () => media },
+    window: { matchMedia: () => media, sessionStorage: {
+      getItem(key) { if (blockedStorage) throw new Error('Storage blocked'); return storage.get(key) ?? null; },
+      setItem(key, value) { if (blockedStorage) throw new Error('Storage blocked'); storage.set(key, value); },
+    } },
     require(id) {
       if (id.endsWith('.css')) return {};
       assert.ok(id in mocks, `No unexpected dependency or network client: ${id}`);
@@ -55,7 +60,8 @@ function fixture(reduced = false, base = '/nested/') {
     },
   });
   return {
-    events, effects, media, listeners,
+    events, effects, media, listeners, storage, exports: module.exports,
+    remount() { states.length = 0; effects.length = 0; },
     render(props = {}) {
       cursor = 0; events.clear();
       return renderToStaticMarkup(React.createElement(module.exports.default, props));
@@ -78,6 +84,10 @@ test('cinematic hero renders official message and existing destinations under a 
   const sources = [...html.matchAll(/\bsrc="([^"]+)"/g)].map(match => match[1]);
   assert.ok(sources.length >= 3, 'Background, original portrait and flag present');
   for (const src of sources) {
+    if (src === '/nested/assets/tomi-official-logo.png') {
+      assert.ok(existsSync(resolve(root, 'src/assets/media/home/tomi-official-logo.png')));
+      continue;
+    }
     assert.ok(src.startsWith('/nested/media/tomi-intro/'), src);
     const path = resolve(root, 'public', src.replace('/nested/', ''));
     assert.ok(existsSync(path), path);
@@ -110,18 +120,53 @@ test('atmospheric motion can be paused and resumed without an animation gate', (
 test('reduced motion and live preference changes stop motion and clean up listener', () => {
   const f = fixture(true);
   f.render();
-  const cleanup = f.effects[0]();
+  const cleanups = f.effects.map(effect => effect()).filter(fn => typeof fn === 'function');
   assert.match(f.render(), /data-paused="true"/);
   assert.equal(f.events.has('button-toggle-hero-motion'), false);
   f.media.matches = false;
   f.listeners.get('change')();
   assert.match(f.render(), /data-paused="false"/);
   assert.ok(f.events.has('button-toggle-hero-motion'));
-  cleanup();
+  cleanups.forEach(cleanup => cleanup());
   assert.equal(f.listeners.size, 0);
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
   assert.match(css, /animation:\s*none\s*!important/);
   assert.match(css, /animation-play-state:\s*paused/);
+});
+
+test('intro timeline is approximately ten seconds, immediately skippable and never a navigation gate', () => {
+  const f = fixture();
+  assert.match(f.render(), /data-intro="play"/);
+  assert.equal(f.exports.INTRO_DURATION_S, 9.6);
+  assert.deepEqual(JSON.parse(JSON.stringify(f.exports.INTRO_TIMELINE)), [
+    { id: 'depth', start: 0, end: 3 },
+    { id: 'globe-illumination', start: 3, end: 5 },
+    { id: 'logo-title', start: 5, end: 8 },
+    { id: 'cta-settle', start: 8, end: 10 },
+  ]);
+  assert.equal(f.events.get('link-hero-join').href, '/join');
+  assert.equal(f.events.get('link-hero-ecosystem').href, '/ecosystem');
+  f.events.get('button-skip-intro').onClick();
+  assert.match(f.render(), /data-intro="done"/);
+  assert.equal(f.events.has('button-skip-intro'), false);
+  assert.equal(f.storage.get(f.exports.INTRO_KEY), '1');
+  assert.match(css, /tch-settle 1\.6s 8s/);
+  assert.match(css, /data-intro='done'[\s\S]*?animation: none/);
+});
+
+test('session navigation, blocked storage and reduced motion never force a repeated intro', () => {
+  const remembered = fixture(false, '/nested/', { seen: true });
+  assert.match(remembered.render(), /data-intro="done"/);
+  const blocked = fixture(false, '/nested/', { blockedStorage: true });
+  assert.match(blocked.render(), /data-intro="play"/);
+  blocked.effects.forEach(effect => effect());
+  blocked.remount();
+  assert.match(blocked.render(), /data-intro="done"/);
+  const reduced = fixture(true);
+  assert.match(reduced.render(), /data-intro="done"/);
+  assert.equal(reduced.events.has('button-skip-intro'), false);
+  reduced.effects.forEach(effect => effect());
+  assert.equal(reduced.storage.get(reduced.exports.INTRO_KEY), '1');
 });
 
 test('phase one preserves homepage content and keeps responsive composition frontend-only', () => {
@@ -133,6 +178,8 @@ test('phase one preserves homepage content and keeps responsive composition fron
   }
   assert.match(css, /max-width:\s*767px/);
   assert.match(css, /max-width:\s*1023px/);
+  assert.match(css, /max-width:\s*359px/);
+  assert.match(css, /\.tomi-home-editorial \.reveal\.reveal-right:not\(\.is-visible\):has\(> #video-movement-reel\)/);
   assert.match(css, /focus-visible/);
   assert.doesNotMatch(source, /fetch\(|localStorage|@clerk|api-client|stripe|setInterval|requestAnimationFrame/);
 });

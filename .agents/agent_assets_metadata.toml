@@ -70,3 +70,17 @@ mtime_ms = 1792572865440
 storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/5ad5d08f-a765-443a-972d-f111e1f315b0/247d6ea3-ec63-4088-83f3-2ebbce0f50f3"
 storage_version_token = "1792572892402139"
 content_type = "text/markdown"
+
+[[outputs]]
+id = "fRhgXU4sNh7S_GgCuUT9J"
+uri = "file://docs/HOMEPAGE-INTRO-UNIVERSE-REVIEW.md"
+type = "text"
+title = "Accueil immersif — bilan et vérifications"
+description = "Les dix points demandés : composants réutilisés, fichiers, introduction, 17 destinations, responsive, performance, tests, sources vidéo manquantes et limites."
+logical_id = "3b84077f-2e32-497f-bcc4-b2836d1c7c3d"
+content_hash = "sha256:f1f1778a20037ad37a8e6803b7baa8f8f8074e2ddba68f3953b45bd619cdd334"
+size = 12836
+mtime_ms = 1792582246015
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/3b84077f-2e32-497f-bcc4-b2836d1c7c3d/5124955e-eae0-4988-9fd8-cee779853c10"
+storage_version_token = "1792582375850412"
+content_type = "text/markdown"

@@ -173,3 +173,77 @@
   .tch-bearer img { height: auto; }
   .tch-toggle { display: none; }
 }
+
+/* ---------- official logo (unaltered asset) ---------- */
+.tch-logo { display: block; width: clamp(120px, 14vw, 172px); height: auto; margin-bottom: 1.4rem; aspect-ratio: 640 / 336; }
+/* The existing, unentered reel reveal extends 4px beyond a 320px viewport.
+   Keep its entrance, but fit the offset inside Home's 24px mobile gutter.
+   Never shift an already visible reel or change the shared Reveal component. */
+@media (max-width: 359px) and (prefers-reduced-motion: no-preference) {
+  .tomi-home-editorial .reveal.reveal-right:not(.is-visible):has(> #video-movement-reel) {
+    transform: translateX(24px);
+  }
+}
+.tch-globe-connections { width: 100%; height: 100%; overflow: visible; fill: none; stroke: hsl(var(--tch-gold-hi) / .62); stroke-width: .65; }
+.tch-globe-connections ellipse { stroke-dasharray: 26 160; animation: tch-connection 9s linear infinite; }
+.tch-globe-connections path { opacity: .5; }
+@keyframes tch-connection { to { stroke-dashoffset: -186; } }
+.tch[data-paused='true'] .tch-globe-connections ellipse { animation-play-state: paused; }
+
+/* ---------- Skip intro: visible from first paint, never a gate ---------- */
+.tch-skip {
+  position: absolute; z-index: 8; right: 1.25rem; top: 1.25rem; min-height: 40px; padding: 0 .95rem;
+  font-size: .65rem; letter-spacing: .2em; text-transform: uppercase; font-weight: 600;
+  color: hsl(var(--tch-ivory)); background: hsl(var(--tch-ink) / .7); border: 1px solid hsl(var(--tch-gold) / .6);
+}
+.tch-skip:hover { background: hsl(var(--tch-gold)); color: hsl(var(--tch-ink)); }
+.tch-skip:focus-visible { outline: 2px solid hsl(var(--tch-gold-hi)); outline-offset: 3px; }
+
+/* ---------- 10s controlled intro (once per session). Geometry never changes:
+   only opacity/transform. Content stays readable and clickable throughout. ---------- */
+.tch[data-intro='play'] .tch-bg img { animation: tch-depth 3s cubic-bezier(.2,.7,.2,1) both, tch-push 32s 3s ease-in-out infinite alternate; }
+.tch[data-intro='play'] .tch-bearer { animation: tch-bearer-in 3s cubic-bezier(.2,.7,.2,1) both; }
+.tch[data-intro='play'] .tch-globe-light { animation: tch-ignite 2s 3s ease-out both, tch-glow 6s 5s ease-in-out infinite; }
+.tch[data-intro='play'] .tch-light { animation: tch-ignite 2s 3s ease-out both, tch-breathe 12s 5s ease-in-out infinite; }
+.tch[data-intro='play'] .tch-logo { animation: tch-reveal 1.4s 5s cubic-bezier(.2,.7,.2,1) both; }
+.tch[data-intro='play'] .tch-kicker { animation: tch-soft 1.2s 5.4s both; }
+.tch[data-intro='play'] .tch-title { animation: tch-reveal 1.6s 5.8s cubic-bezier(.2,.7,.2,1) both; }
+.tch[data-intro='play'] .tch-rule { animation: tch-line 1.2s 6.6s both cubic-bezier(.2,.7,.2,1); }
+.tch[data-intro='play'] .tch-motto { animation: tch-reveal 1.4s 6.8s cubic-bezier(.2,.7,.2,1) both; }
+.tch[data-intro='play'] .tch-actions { animation: tch-settle 1.6s 8s cubic-bezier(.2,.7,.2,1) both; }
+.tch[data-intro='play'] .tch-flag { animation: tch-soft 1.4s 8.4s both; }
+/* Settling or skipping must not restart the legacy entrance animations. */
+.tch[data-intro='done'] .tch-logo,
+.tch[data-intro='done'] .tch-kicker,
+.tch[data-intro='done'] .tch-title,
+.tch[data-intro='done'] .tch-rule,
+.tch[data-intro='done'] .tch-motto,
+.tch[data-intro='done'] .tch-actions,
+.tch[data-intro='done'] .tch-flag,
+.tch[data-intro='done'] .tch-bearer {
+  animation: none;
+  opacity: 1;
+  transform: none;
+}
+
+.tch[data-paused='true'] .tch-bearer,
+.tch[data-paused='true'] .tch-logo,
+.tch[data-paused='true'] .tch-kicker,
+.tch[data-paused='true'] .tch-title,
+.tch[data-paused='true'] .tch-rule,
+.tch[data-paused='true'] .tch-motto,
+.tch[data-paused='true'] .tch-actions,
+.tch[data-paused='true'] .tch-flag { animation-play-state: paused; }
+
+@keyframes tch-depth { from { transform: scale(1.12); } to { transform: scale(1.02); } }
+@keyframes tch-bearer-in { from { opacity: .4; transform: translateX(14px) scale(.985); } to { opacity: 1; transform: none; } }
+@keyframes tch-ignite { from { opacity: 0; } to { opacity: 1; } }
+@keyframes tch-reveal { from { opacity: 0; transform: translateY(10px) scale(.985); } to { opacity: 1; transform: none; } }
+@keyframes tch-soft { from { opacity: 0; } to { opacity: 1; } }
+/* CTAs never start invisible: they are usable from first paint and settle at 8-10s. */
+@keyframes tch-settle { from { opacity: .72; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+@media (max-width: 767px) {
+  .tch-logo { margin: 0 auto 1.1rem; width: 128px; }
+  .tch-skip { top: .75rem; right: .75rem; }
+}

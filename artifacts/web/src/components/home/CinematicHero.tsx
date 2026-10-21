@@ -2,6 +2,26 @@ import { useEffect, useState } from 'react';
 import { Link } from 'wouter';
 import { Pause, Play } from 'lucide-react';
 import './cinematic-hero.css';
+import officialLogo from '@/assets/media/home/tomi-official-logo.png';
+
+export const INTRO_KEY = 'tomi:home-intro-seen';
+/** Intro timeline in seconds (mirrors cinematic-hero.css delays). */
+export const INTRO_TIMELINE = [
+  { id: 'depth', start: 0, end: 3 },
+  { id: 'globe-illumination', start: 3, end: 5 },
+  { id: 'logo-title', start: 5, end: 8 },
+  { id: 'cta-settle', start: 8, end: 10 },
+] as const;
+export const INTRO_DURATION_S = 9.6;
+let seenInThisPageSession = false;
+function introSeen(): boolean {
+  if (seenInThisPageSession) return true;
+  try { return window.sessionStorage.getItem(INTRO_KEY) === '1'; } catch { return false; }
+}
+function markIntroSeen() {
+  seenInThisPageSession = true;
+  try { window.sessionStorage.setItem(INTRO_KEY, '1'); } catch { /* in-memory fallback still prevents SPA navigation replays */ }
+}
 
 /**
  * Phase-one cinematic hero for TOMI.
@@ -51,7 +71,16 @@ export interface CinematicHeroProps {
 
 export default function CinematicHero({ phase = 'globe-bearer', className = '', originAsset }: CinematicHeroProps) {
   const [paused, setPaused] = useState(false);
-  const [reduced, setReduced] = useState(false);
+  const [reduced, setReduced] = useState(() =>
+    typeof window !== 'undefined' && !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
+  // 10s intro timeline: depth 0-3s, globe light 3-5s, logo/title 5-8s, CTAs settle 8-10s.
+  const [intro, setIntro] = useState(() => typeof window !== 'undefined' && !introSeen() && !reduced);
+  const finishIntro = () => { markIntroSeen(); setIntro(false); };
+
+  useEffect(() => {
+    if (intro || reduced) markIntroSeen(); // a reduced-motion visit also counts as an introduction
+  }, [intro, reduced]);
+  useEffect(() => { if (reduced && intro) setIntro(false); }, [reduced, intro]);
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -68,6 +97,7 @@ export default function CinematicHero({ phase = 'globe-bearer', className = '', 
       className={`tch ${className}`}
       data-phase={phase}
       data-paused={still ? 'true' : 'false'}
+      data-intro={intro ? 'play' : 'done'}
       aria-labelledby="tch-title"
       data-testid="section-cinematic-hero"
     >
@@ -112,11 +142,25 @@ export default function CinematicHero({ phase = 'globe-bearer', className = '', 
           alt="TOMI model in black and gold holding a golden globe, a symbol of global unity"
           fetchPriority="high"
         />
-        <span className="tch-globe-light" aria-hidden="true" />
+        <span className="tch-globe-light" aria-hidden="true">
+          <svg className="tch-globe-connections" viewBox="0 0 100 100" focusable="false">
+            <ellipse cx="50" cy="50" rx="42" ry="17" transform="rotate(-22 50 50)" />
+            <path d="M18 55 Q43 25 83 44" />
+          </svg>
+        </span>
       </figure>
 
       {/* Layer 3 — minimal typography */}
       <div className="tch-copy">
+        <img
+          src={officialLogo}
+          width={640}
+          height={336}
+          alt="THE ONE MOVEMENT INTERNATIONAL official logo"
+          className="tch-logo"
+          decoding="async"
+          data-testid="img-hero-official-logo"
+        />
         <p className="tch-kicker">Eastern DR Congo &middot; Goma &rarr; Dubai</p>
         <h1 id="tch-title" className="tch-title" data-testid="text-hero-title">
           <span>The One Movement</span>
@@ -127,7 +171,10 @@ export default function CinematicHero({ phase = 'globe-bearer', className = '', 
           <strong>We Are One</strong>
           <span>For Peace &amp; Unity</span>
         </p>
-        <div className="tch-actions">
+        <div
+          className="tch-actions"
+          onAnimationEnd={(e) => { if (e.target === e.currentTarget && intro) finishIntro(); }}
+        >
           <Link href="/join" className="tch-btn tch-btn--solid" data-testid="link-hero-join">
             Join the Movement
           </Link>
@@ -149,6 +196,17 @@ export default function CinematicHero({ phase = 'globe-bearer', className = '', 
       </div>
 
       <div className="tch-grain" aria-hidden="true" />
+
+      {intro && (
+        <button
+          type="button"
+          onClick={finishIntro}
+          className="tch-skip"
+          data-testid="button-skip-intro"
+        >
+          Skip intro
+        </button>
+      )}
 
       {!reduced && (
         <button

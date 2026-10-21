@@ -12,7 +12,7 @@ import HomeReelStrip from '@/components/HomeReelStrip';
 import Reveal from '@/components/Reveal';
 import MovementAtlas from '@/components/home/MovementAtlas';
 import MovementPaths from '@/components/home/MovementPaths';
-import TomiConstellation from '@/components/TomiConstellation';
+import OneUniverse from '@/components/home/OneUniverse';
 import FashionEditionNote from '@/components/FashionEditionNote';
 import ProgrammeFilm from "@/components/programs/ProgrammeFilm";
 import SectionHeading from '@/components/SectionHeading';
@@ -83,12 +83,12 @@ export default function HomeExperience() {
       </section>
 
       {/* 03 — Ecosystem preview: breadth without full explanation. */}
-      <section className="tomi-aurora-surface py-section-lg tomi-editorial-chapter" data-chapter="03 / ALL IN ONE MOVEMENT" aria-labelledby="ecosystem-preview-heading">
+      <section id="ecosystem-preview-heading" className="tomi-aurora-surface py-section-lg tomi-editorial-chapter" data-chapter="03 / ALL IN ONE MOVEMENT" aria-label="The One Universe — 17 connected sectors">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
             <SectionHeading
               eyebrow="ONE MOVEMENT. MANY WORLDS."
-              heading="A CONNECTED ECOSYSTEM"
+              heading="THE ONE UNIVERSE"
               surface="dark"
               size="lg"
               thread
@@ -96,7 +96,8 @@ export default function HomeExperience() {
           </Reveal>
 
           <Reveal delay={90} className="mt-12">
-            <TomiConstellation />
+            {/* THE ONE UNIVERSE: canonical 17 sectors (replaces the synthetic constellation on Home only). */}
+            <OneUniverse />
           </Reveal>
 
           <Reveal delay={140} className="mt-10">

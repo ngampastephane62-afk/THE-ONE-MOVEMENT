@@ -17,4 +17,21 @@ The complementary Goma-to-Dubai brief requests a quiet origin/resilience → uni
 
 **Why:** The Founder explicitly specified the progression, action order and missing-asset behavior.
 
-**How to apply:** Keep the opening and archive motion calm, preserve photo captions and known identities, support swiping and playback controls, and respect reduced-motion preferences. Preserve existing navigation and below-fold content. Never alter supplied faces, expressions, skin, clothing, leopard fabric, cultural patterns or logos; no generated substitute people. Report missing visual assets rather than claiming they exist. This phase authorizes only the opening composition, not the full sixty-second sequence or interactive globe, which require Founder approval. No backend, database, auth, member permissions, payment changes, backend restarts or deployment.
+**How to apply:** Keep the opening and archive motion calm, preserve photo captions and known identities, support swiping and playback controls, and respect reduced-motion preferences. Preserve existing navigation and below-fold content. Never alter supplied faces, expressions, skin, clothing, leopard fabric, cultural patterns or logos; no generated substitute people. Report missing visual assets rather than claiming they exist.
+
+The Founder subsequently authorized an approximately ten-second, skippable homepage
+introduction and “THE ONE UNIVERSE,” connecting the existing seventeen sectors with
+their exact names, descriptions, identifiers and destinations. This supersedes
+the earlier opening-composition-only restriction, not the rest of the site.
+
+**Why:** The controlled homepage directive explicitly approves both experiences,
+while prohibiting a homepage rebuild or changes to other public pages, News,
+Founder Workspace, partners, identity, membership, payments or production.
+
+**How to apply:** Reuse the current architecture, supplied portrait and official
+branding; keep access immediate and motion optional. Flat portraits support
+composition and lighting transitions, not realistic walking or cloth movement.
+Request the exact source footage for those effects rather than fabricate bodies,
+faces or flags. Keep the sixty-second concept inactive, preserve other homepage
+sections and existing videos, and stop for Founder approval before another section.
+No backend, database, auth, member permissions, payment changes or deployment.

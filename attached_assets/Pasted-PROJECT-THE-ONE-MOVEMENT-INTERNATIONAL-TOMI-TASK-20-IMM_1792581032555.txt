@@ -1,0 +1,430 @@
+PROJECT: THE ONE MOVEMENT INTERNATIONAL (TOMI)
+
+TASK 20 — IMMERSIVE HOMEPAGE & THE ONE UNIVERSE
+
+MODE: CONTROLLED FRONTEND IMPLEMENTATION
+
+OBJECTIVE:
+
+Transform the existing TOMI homepage into a premium,
+cinematic, immersive digital universe.
+
+This is not an ordinary website.
+
+THE ONE MOVEMENT INTERNATIONAL is a global ecosystem
+connecting people, nations, opportunities, innovation,
+culture and humanitarian initiatives.
+
+The visitor must feel they are entering an extraordinary
+international universe.
+
+IMPORTANT:
+
+DO NOT rebuild the homepage.
+DO NOT replace the existing visual identity.
+DO NOT remove existing videos or animations.
+
+Work with the current homepage architecture,
+existing cinematic assets and 17-sector ecosystem.
+
+==================================================
+PART 1 — CINEMATIC HOMEPAGE INTRODUCTION
+==================================================
+
+DURATION: APPROXIMATELY 10 SECONDS
+
+Use the existing African female character
+wearing the original black and gold outfit.
+
+Preserve her exact appearance and identity.
+
+The scene must include:
+
+- The existing female character
+- The glowing globe
+- Burj Khalifa in the background
+- International flags
+- Elegant golden lighting
+- A premium cinematic atmosphere
+
+The background must feel integrated,
+not like separate floating images.
+
+ANIMATION TIMELINE:
+
+00:00 — 00:03
+
+The female character makes a subtle,
+natural entrance toward the globe.
+
+The Burj Khalifa is visible behind her.
+
+International flags move gently in
+the background.
+
+The camera creates a subtle cinematic
+feeling of depth.
+
+00:03 — 00:05
+
+The globe gradually illuminates.
+
+Elegant golden energy begins circulating
+around the globe.
+
+Subtle luminous connections appear
+between different regions of the world.
+
+The energy must feel sophisticated,
+not like an exaggerated science-fiction effect.
+
+00:05 — 00:08
+
+Golden energy emerges from the globe.
+
+The existing official TOMI logo and title
+appear through a cinematic reveal.
+
+TEXT:
+
+THE ONE MOVEMENT INTERNATIONAL
+
+WE ARE ONE
+FOR PEACE & UNITY
+
+The logo must remain visually consistent
+with the official TOMI identity.
+
+Do not redesign the official logo.
+
+00:08 — 00:10
+
+The animation smoothly transitions into
+the existing homepage hero.
+
+Reveal the two main buttons:
+
+JOIN THE MOVEMENT
+
+EXPLORE THE ECOSYSTEM
+
+Both buttons must be fully functional
+and preserve their existing destinations.
+
+The experience must feel like one continuous
+cinematic sequence.
+
+==================================================
+IMPORTANT — EXISTING VIDEO ASSETS
+==================================================
+
+Before implementation:
+
+Inspect the existing homepage video assets,
+hero components and animation systems.
+
+Reuse available material whenever possible.
+
+Do not replace the female character with
+an AI-generated substitute.
+
+Do not invent a new face or outfit.
+
+If the existing video does not contain
+the required character movement, do not
+pretend that CSS can create realistic movement
+inside a flattened video.
+
+Instead:
+
+- Implement the visual transitions that can
+  genuinely be achieved using existing assets.
+- Use controlled overlays and lighting effects.
+- Identify any missing source video or animation.
+- Report precisely what additional asset is needed.
+
+Do not generate unrelated placeholder visuals.
+
+==================================================
+PART 2 — PERFORMANCE & USER EXPERIENCE
+==================================================
+
+The homepage must load quickly.
+
+The cinematic introduction must not
+unnecessarily delay access to the website.
+
+Requirements:
+
+- Optimized video loading
+- Responsive desktop and mobile experience
+- No unnecessary animation libraries
+- No blocking media downloads
+- Smooth transitions
+- No layout shifts
+- No excessive GPU usage
+- Accessible Skip Intro control
+- Respect prefers-reduced-motion
+- Working navigation during or after the intro
+- Graceful fallback if video fails to load
+
+The visitor must be able to enter the
+ecosystem immediately if desired.
+
+Do not replay the full 10-second introduction
+on every internal page navigation.
+
+==================================================
+PART 3 — THE ONE UNIVERSE
+17 INTERACTIVE SECTORS
+==================================================
+
+After the cinematic introduction,
+the homepage must introduce the existing
+17 sectors through an immersive universe.
+
+This must not look like an ordinary
+list of website categories.
+
+The experience should visually communicate
+that all 17 sectors belong to one connected
+global ecosystem.
+
+VISUAL CONCEPT:
+
+THE ONE UNIVERSE
+
+A sophisticated interactive globe
+representing global connectivity.
+
+Around the globe, the 17 sectors appear
+as connected destinations.
+
+Each sector must have:
+
+- Its existing official name
+- Its existing identity
+- Its existing description
+- A clearly visible number from 01 to 17
+- An interactive element
+- A link to its existing destination
+
+IMPORTANT:
+
+Use the existing sector data and identifiers.
+
+Do not invent new sectors.
+
+Do not change existing sector names,
+slugs, membership rules or navigation.
+
+==================================================
+PART 4 — GLOBE ANIMATION
+==================================================
+
+The ecosystem globe should include:
+
+- Slow and elegant movement
+- Subtle golden orbital connections
+- Interactive sector indicators
+- Smooth discovery transitions
+- Refined lighting
+- A sense of depth and global scale
+
+The user must understand that the sectors
+are connected within the same universe.
+
+INTERACTION:
+
+When a visitor selects a sector:
+
+1. Highlight the selected sector.
+2. Display its number.
+3. Display its existing name.
+4. Reveal a short description.
+5. Provide a clear Explore action.
+6. Navigate to the correct existing sector page.
+
+Desktop:
+
+Support mouse, keyboard and touchpad.
+
+Mobile:
+
+Support touch interactions.
+
+Avoid requiring hover on mobile.
+
+Provide an accessible, readable alternative
+to the visual globe.
+
+==================================================
+PART 5 — VISUAL DESIGN
+==================================================
+
+Maintain TOMI's premium visual identity.
+
+PRIMARY VISUAL DIRECTION:
+
+Deep green
+Elegant gold
+Warm neutral tones
+Refined typography
+Cinematic lighting
+Premium composition
+Global sophistication
+
+ANIMATION STYLE:
+
+Immersive
+Smooth
+Elegant
+Realistic
+Powerful
+Minimal where appropriate
+
+Avoid:
+
+- Excessive glowing effects
+- Random particles everywhere
+- Cheap futuristic graphics
+- Generic website templates
+- Unnecessary loading screens
+- Heavy animations that slow the website
+
+The final result must feel like
+a premium international digital universe.
+
+==================================================
+PART 6 — HOMEPAGE CONTINUITY
+==================================================
+
+Preserve all existing homepage sections
+outside the authorized animation areas.
+
+The introduction and 17-sector universe
+must visually connect with the rest
+of the homepage.
+
+Do not remove:
+
+- Existing official content
+- Existing media
+- The six official programs
+- Navigation
+- Membership access
+- Founder Workspace access
+- News functionality
+- Partner functionality
+
+The existing public structure must
+remain operational.
+
+==================================================
+PART 7 — RESPONSIVE EXPERIENCE
+==================================================
+
+DESKTOP:
+
+Full immersive cinematic experience.
+
+TABLET:
+
+Adapted globe composition and controls.
+
+MOBILE:
+
+Optimized video presentation.
+
+The female character, globe and important
+text must remain visible without
+unacceptable cropping.
+
+Sector labels must remain readable.
+
+Do not allow horizontal overflow.
+
+Animations must remain fluid.
+
+Provide a lightweight fallback for
+devices with limited performance.
+
+==================================================
+PART 8 — IMPLEMENTATION & VERIFICATION
+==================================================
+
+Before changing code:
+
+Identify the relevant existing homepage
+components and animation assets.
+
+Implement only what can be supported
+by the current architecture.
+
+Then verify:
+
+1. Homepage loads correctly.
+2. Intro timing is approximately 10 seconds.
+3. Skip Intro works.
+4. Both hero buttons work.
+5. Official branding is preserved.
+6. All 17 sectors are present and numbered.
+7. Each sector points to its correct route.
+8. Mobile layout works.
+9. Reduced-motion fallback works.
+10. Existing member and Founder navigation remains intact.
+
+Run appropriate safe frontend checks.
+
+Do not start backend services that trigger
+Stripe initialization.
+
+==================================================
+STRICT RESTRICTIONS
+==================================================
+
+DO NOT:
+
+- Rebuild the homepage
+- Modify other public pages
+- Change database schemas
+- Run migrations
+- Modify Stripe
+- Modify Clerk
+- Change member permissions
+- Modify the Founder Workspace
+- Modify News CMS
+- Modify partner records
+- Remove existing videos
+- Replace the female character
+- Invent missing visual assets
+- Deploy automatically
+- Modify production data
+
+==================================================
+FINAL DELIVERABLE
+==================================================
+
+Provide:
+
+1. Existing components reused
+2. Files modified
+3. Cinematic intro implementation
+4. Globe interaction implementation
+5. Sector numbering verification
+6. Desktop/mobile adaptations
+7. Performance considerations
+8. Tests completed
+9. Missing assets, if any
+10. Remaining limitations
+
+Show the development preview.
+
+Do not deploy.
+
+STOP after completing the homepage
+cinematic introduction and 17-sector
+universe improvements.
+
+Wait for Founder approval before
+modifying another section.
