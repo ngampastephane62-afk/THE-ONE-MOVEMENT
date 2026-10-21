@@ -1,74 +1,46 @@
-.tou { --g: 43 80% 73%; --g5: 39 52% 54%; --iv: 38 57% 94%; color: hsl(var(--iv)); }
-.tou-stage { display: grid; gap: 2.5rem; align-items: center; }
-@media (min-width: 1024px) { .tou-stage { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 3.5rem; } }
+/* THE ONE UNIVERSE — crossing sector weave (home only). */
+.tou { --g: 43 70% 66%; --iv: 40 45% 94%; position: relative; display: grid; gap: clamp(2rem, 4vw, 3.5rem); }
+@media (min-width: 1024px) { .tou { grid-template-columns: 1.55fr 1fr; align-items: center; } }
 
-.tou-orbit-wrap { position: relative; width: min(100%, 640px); aspect-ratio: 1; margin: 0 auto; }
-.tou-globe { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.tou-ring { fill: none; stroke: hsl(var(--g) / .28); stroke-width: .18; }
-.tou-ring--faint { stroke: hsl(var(--g) / .1); stroke-dasharray: .4 1.2; }
-.tou-ray { stroke: hsl(var(--g) / .09); stroke-width: .14; transition: stroke .4s ease; }
-.tou-ray.is-on { stroke: hsl(var(--g) / .7); stroke-width: .22; }
-.tou-sphere { stroke: hsl(var(--g) / .5); stroke-width: .25; }
-.tou-meridians, .tou-spin { fill: none; stroke: hsl(var(--g) / .22); stroke-width: .15; }
-.tou-spin { transform-origin: 50px 50px; animation: tou-spin 28s linear infinite; }
-.tou-orbit { fill: none; stroke: hsl(var(--g) / .35); stroke-width: .2; stroke-dasharray: 2 3; animation: tou-dash 40s linear infinite; }
-@keyframes tou-spin { from { transform: scaleX(1); } 50% { transform: scaleX(-1); } to { transform: scaleX(1); } }
-@keyframes tou-dash { to { stroke-dashoffset: -100; } }
-.tou[data-active='false'] .tou-spin, .tou[data-active='false'] .tou-orbit { animation-play-state: paused; }
-
-.tou-core { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center; pointer-events: none; }
-.tou-core-num { display: block; font-family: var(--font-display); font-size: clamp(2rem, 7vw, 3.6rem); color: hsl(var(--g)); line-height: 1; }
-.tou-core-of { font-size: .62rem; letter-spacing: .3em; text-transform: uppercase; color: hsl(var(--iv) / .7); }
-
-.tou-node {
-  position: absolute; transform: translate(-50%, -50%); display: grid; place-items: center;
-  width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
-  background: hsl(170 45% 8%); border: 1px solid hsl(var(--g5) / .55); color: hsl(var(--iv));
-  transition: background-color .3s ease, border-color .3s ease, transform .3s ease;
+.tou-weave {
+  position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem .55rem;
+  padding: 2.2rem .4rem; overflow: hidden;
 }
-.tou-node-num { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .04em; }
-.tou-node-name {
-  position: absolute; top: calc(100% + 4px); left: 50%; transform: translateX(-50%); white-space: nowrap;
-  font-size: .58rem; letter-spacing: .14em; text-transform: uppercase; color: hsl(var(--iv) / .72); pointer-events: none;
-}
-.tou-node:hover { border-color: hsl(var(--g)); }
-.tou-node.is-on { background: hsl(var(--g5)); color: hsl(30 37% 7%); border-color: hsl(var(--g)); transform: translate(-50%, -50%) scale(1.12); }
-.tou-node.is-on .tou-node-name { color: hsl(var(--g)); }
-.tou-node:focus-visible, .tou-list-btn:focus-visible, .tou-explore:focus-visible { outline: 2px solid hsl(var(--g)); outline-offset: 3px; }
+.tou-threads { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: .5; }
+.tou-threads path { fill: none; stroke: hsl(var(--g) / .35); stroke-width: .25; vector-effect: non-scaling-stroke; stroke-dasharray: 2 5; }
 
-.tou-panel { border-left: 1px solid hsl(var(--g5) / .6); padding: .5rem 0 .5rem 1.75rem; }
-.tou-panel-eyebrow { font-size: .68rem; letter-spacing: .3em; text-transform: uppercase; color: hsl(var(--g)); }
-.tou-panel-name { margin-top: .9rem; font-family: var(--font-display); font-size: clamp(1.9rem, 4vw, 3rem); line-height: 1.02; text-transform: uppercase; animation: tou-in .5s cubic-bezier(.2,.7,.2,1) both; }
-.tou-panel-desc { margin-top: .9rem; font-size: 1.05rem; color: hsl(var(--g)); }
-.tou-panel-body { margin-top: .9rem; line-height: 1.65; color: hsl(var(--iv) / .86); max-width: 34rem; }
-.tou-explore {
-  margin-top: 1.6rem; display: inline-flex; align-items: center; gap: .5rem; min-height: 48px; padding: 0 1.3rem;
-  border: 1px solid hsl(var(--g5)); background: hsl(var(--g5)); color: hsl(30 37% 7%);
-  font-size: .72rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; transition: transform .25s ease;
+.tou-chip {
+  position: relative; z-index: 1; display: inline-flex; align-items: baseline; gap: .55rem;
+  min-height: 44px; padding: .6rem 1rem; border: 1px solid hsl(var(--g) / .28);
+  background: hsl(185 55% 8% / .55); color: hsl(var(--iv) / .88);
+  font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; cursor: pointer;
+  transition: transform 1.1s cubic-bezier(.2,.75,.15,1) var(--d), opacity .9s ease var(--d), border-color .3s, background-color .3s, color .3s;
 }
-.tou-explore:hover { transform: translateY(-2px); }
-.tou-hint { margin-top: 1rem; font-size: .7rem; color: hsl(var(--iv) / .6); }
+.tou[data-entered='false'] .tou-chip { opacity: 0; transform: translateX(calc(var(--from) * 46vw)); }
+.tou[data-entered='false'] .tou-chip:focus-visible { opacity: 1; transform: none; transition: none; }
+.tou-chip-num { font-family: ui-monospace, monospace; font-size: .66rem; letter-spacing: .08em; color: hsl(var(--g)); }
+.tou-chip-name { font-family: var(--font-display); }
+.tou-chip:hover { border-color: hsl(var(--g) / .7); color: hsl(var(--iv)); }
+.tou-chip:focus-visible { outline: 2px solid hsl(var(--g)); outline-offset: 3px; }
+.tou-chip.is-on { background: hsl(var(--g)); border-color: hsl(var(--g)); color: hsl(185 60% 8%); }
+.tou-chip.is-on .tou-chip-num { color: hsl(185 60% 12%); }
+
+.tou-panel { position: relative; border-left: 1px solid hsl(var(--g) / .45); padding: .4rem 0 .4rem clamp(1.2rem, 2.4vw, 2rem); min-height: 15rem; }
+.tou-panel-eyebrow { font-family: ui-monospace, monospace; font-size: .72rem; letter-spacing: .2em; color: hsl(var(--g)); }
+.tou-panel-body-wrap { animation: tou-in .6s cubic-bezier(.2,.7,.2,1) both; }
+.tou-panel-name { margin-top: .9rem; font-family: var(--font-display); font-size: clamp(1.5rem, 2.6vw, 2.2rem); line-height: 1.1; color: hsl(var(--iv)); text-transform: uppercase; letter-spacing: .04em; }
+.tou-panel-desc { margin-top: .7rem; font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: hsl(var(--g)); }
+.tou-panel-body { margin-top: 1rem; max-width: 30rem; font-size: .95rem; line-height: 1.65; color: hsl(var(--iv) / .8); }
+.tou-explore { margin-top: 1.4rem; display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; font-size: .72rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: hsl(var(--g)); border-bottom: 1px solid hsl(var(--g) / .5); }
+.tou-explore:hover { color: hsl(var(--iv)); }
 @keyframes tou-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
-.tou-list { margin-top: 3rem; display: grid; gap: 1px; background: hsl(var(--g5) / .22); border: 1px solid hsl(var(--g5) / .22); list-style: none; padding: 0; }
-@media (min-width: 640px) { .tou-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 1024px) { .tou-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-.tou-list-btn {
-  width: 100%; height: 100%; min-height: 56px; display: grid; grid-template-columns: auto 1fr; column-gap: .9rem; text-align: left;
-  padding: .85rem 1rem; background: hsl(172 45% 8%); color: hsl(var(--iv)); transition: background-color .25s ease;
-}
-.tou-list-btn:hover { background: hsl(170 40% 12%); }
-.tou-list-btn.is-on { background: hsl(168 40% 15%); box-shadow: inset 3px 0 0 hsl(var(--g)); }
-.tou-list-num { grid-row: span 2; font-family: var(--font-mono); font-size: .8rem; color: hsl(var(--g)); padding-top: .1rem; }
-.tou-list-name { font-family: var(--font-display); font-size: .9rem; letter-spacing: .08em; text-transform: uppercase; }
-.tou-list-desc { font-size: .78rem; color: hsl(var(--iv) / .74); margin-top: .15rem; }
-
-@media (max-width: 767px) {
-  .tou-node { width: 36px; height: 36px; }
-  .tou-node-num { font-size: .66rem; }
-  .tou-node-name { display: none; }
-  .tou-panel { padding-left: 1.1rem; }
+@media (max-width: 640px) {
+  .tou-weave { padding: 1.2rem 0; gap: .45rem; }
+  .tou-chip { font-size: .68rem; padding: .55rem .75rem; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .tou *, .tou *::before { animation: none !important; transition: none !important; }
+  .tou-chip { transition: border-color .2s, background-color .2s, color .2s; }
+  .tou[data-entered='false'] .tou-chip { opacity: 1; transform: none; }
+  .tou-panel-body-wrap { animation: none; }
 }

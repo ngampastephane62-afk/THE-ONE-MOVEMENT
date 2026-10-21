@@ -1,0 +1,268 @@
+PROJECT: THE ONE MOVEMENT INTERNATIONAL (TOMI)
+
+TASK: HOMEPAGE REFINEMENT — APPLY FOUNDER CORRECTIONS
+
+IMPORTANT:
+Work only on the HOMEPAGE.
+Do not redesign the whole site.
+Do not modify backend, CMS logic, Clerk, Stripe, database, Founder Workspace, or other pages.
+Do not deploy automatically.
+
+OBJECTIVE:
+Refine the homepage so it feels more cinematic, more premium, more fluid, and less repetitive.
+
+The current version repeats too much text and information.
+We need a cleaner, more elegant storytelling flow.
+
+==================================================
+1. HERO SECTION — REMOVE DUPLICATION
+==================================================
+
+The current hero repeats “The One Movement International” too many times.
+
+FOUNDER CORRECTION:
+
+- Do NOT show both the full logo and another large repeated “THE ONE MOVEMENT INTERNATIONAL” title as separate duplicated text blocks.
+- The official logo should be animated and revealed only once.
+- Remove unnecessary repetition of the same brand name in multiple stacked forms.
+
+NEW HERO FLOW:
+
+1. The woman holding the globe appears.
+2. Within maximum 3 seconds, the globe illuminates.
+3. Light emerges from the globe.
+4. From that illuminated globe, the official TOMI logo appears in animation.
+5. At the same moment, to the LEFT of the large logo area, display:
+   “WE ARE ONE
+   FOR PEACE & UNITY”
+6. Then reveal the buttons:
+   - JOIN THE MOVEMENT
+   - EXPLORE THE ECOSYSTEM
+
+IMPORTANT:
+- Keep the woman and globe scene premium and soft.
+- Remove the flag from the hero section.
+- Do not display the extra flag block shown in the current version.
+- The logo reveal must feel like it comes FROM the globe energy.
+
+==================================================
+2. SECOND HERO VISUAL / GLOBE SCENE
+==================================================
+
+The second visual must emphasize the globe lighting up.
+
+FOUNDER CORRECTION:
+
+- Keep the woman with the globe.
+- The globe must illuminate more clearly.
+- Light should come out from the globe.
+- From this light, THE ONE MOVEMENT identity is revealed.
+- Then the call-to-action buttons appear.
+
+This should feel elegant, soft, and cinematic.
+
+==================================================
+3. 17 SECTORS ANIMATION — NOT A STATIC LIST
+==================================================
+
+The current sectors presentation is too static and too list-like.
+
+FOUNDER CORRECTION:
+
+Do NOT present the sector menu as a simple plain stacked list first.
+
+Instead:
+- Animate the sectors so they enter dynamically from left and right.
+- The sector labels should cross visually, like a coordinated motion system.
+- The movement should feel like multiple elements entering from different directions and intersecting elegantly.
+- It should look like an animated ecosystem, not a boring list.
+
+Use the existing 17 sectors only.
+Do not invent new sectors.
+Do not duplicate the sectors again below as another long repeated list.
+
+IMPORTANT:
+- Remove the extra explanatory text like:
+  “illustrative composition” / “not a map of members”
+- Remove unnecessary repeated symbols or duplicated indicators if they already appear elsewhere.
+- The design should be soft, elegant and clean.
+
+==================================================
+4. REMOVE REDUNDANT SECTOR + PROGRAM LIST BLOCKS
+==================================================
+
+The current homepage repeats information too much.
+
+FOUNDER CORRECTION:
+
+Remove or simplify the blocks that repeat:
+
+- the full list of all 17 sectors
+- the long repeated list of all official programs
+
+Reason:
+The sectors are already introduced in the animated ecosystem section above.
+We do not need to list them again in a repetitive way.
+
+==================================================
+5. OFFICIAL PROGRAMS SECTION — SHOW ONLY 3
+==================================================
+
+After the animated sector/universe section, go directly to the OFFICIAL PROGRAMS section.
+
+Do NOT show the big repeated detailed program list before this section.
+
+Only display these 3 official programs for now:
+
+1. THE ONE AWARDS
+2. THE ONE SUMMIT
+3. THE ONE FASHION WEEK INTERNATIONAL
+
+ORDER REQUIRED:
+- First: THE ONE AWARDS
+- Second: THE ONE SUMMIT
+- Third: THE ONE FASHION WEEK INTERNATIONAL
+
+IMPORTANT:
+- Correct the text carefully.
+- Ensure the cover image shown for each program is the correct one.
+- Preserve premium visual presentation.
+- These cards must feel curated and highlighted, not random.
+
+ADDITIONAL NOTE:
+The One Awards already has Rosina’s profile visible — use that as the first featured program card.
+
+==================================================
+6. PROGRAM CARD DESIGN IMPROVEMENT
+==================================================
+
+Refine the official program cards so they feel cleaner and more premium.
+
+Please review:
+- text hierarchy
+- cover image quality and cropping
+- spacing
+- typography
+- card consistency
+
+Make sure the cards look editorial and elegant.
+
+==================================================
+7. COMMUNITY / PEOPLE SECTION — ADD VISUAL PATTERN LANGUAGE
+==================================================
+
+In the lower homepage sections such as community / people / possibilities:
+
+FOUNDER CORRECTION:
+
+These sections should start showing the visual identity patterns requested previously.
+
+Add subtle graphic backgrounds inspired by:
+
+- Kuba art
+- African signs
+- African geometric pattern language
+- elegant symbolic motifs
+
+IMPORTANT:
+- Keep it refined and premium.
+- Do not make it look noisy.
+- Use the pattern system as a soft background layer.
+- Patterns must support the page, not overpower it.
+
+These sections should also feel more alive through subtle motion.
+
+==================================================
+8. OVERALL DESIGN DIRECTION
+==================================================
+
+The homepage must feel:
+
+- premium
+- cinematic
+- editorial
+- soft
+- luxurious
+- African-inspired but globally sophisticated
+- fluid and immersive
+
+Avoid:
+- redundant copy
+- repeated titles
+- repeated lists
+- unnecessary labels
+- clutter
+- over-explaining sections
+
+We want less repetition, more impact.
+
+==================================================
+9. SPECIFIC CONTENT CLEANUP
+==================================================
+
+Please apply the following cleanups:
+
+- Remove repeated “The One Movement International” wording where it is duplicated visually.
+- Remove the flag block from the hero area.
+- Remove the “illustrative composition / not a map of members” explanatory note.
+- Remove redundant repeated sector lists below the animated section.
+- Remove redundant repeated program lists before the official programs cards.
+- Keep only the curated 3 featured official programs.
+- Improve section flow so each section naturally leads to the next.
+
+==================================================
+10. DO NOT CHANGE
+==================================================
+
+Do NOT change:
+
+- routes
+- backend services
+- Founder Workspace
+- News CMS
+- membership logic
+- authentication
+- payments
+- sector identities
+- official program names
+- production data
+
+This task is only about homepage refinement and front-end experience.
+
+==================================================
+11. EXPECTED RESULT
+==================================================
+
+After implementation, the homepage should flow like this:
+
+1. Cinematic hero with woman + globe
+2. Globe lights up in max 3 seconds
+3. TOMI logo emerges from globe light
+4. “We are one for peace & unity” appears beside it
+5. CTA buttons appear
+6. Animated ecosystem / 17 sectors crossing in motion from left and right
+7. No redundant repeated sectors list
+8. Direct transition to official programs
+9. Show only:
+   - The One Awards
+   - The One Summit
+   - The One Fashion Week International
+10. Community / people section with subtle African-inspired premium patterns
+
+==================================================
+12. FINAL DELIVERABLE
+==================================================
+
+After updating the homepage, report clearly:
+
+- which homepage components were modified
+- which redundant sections were removed or simplified
+- how the hero animation was refined
+- how the sector animation was changed
+- how the official programs section was reordered
+- where African-inspired background patterns were introduced
+- what remains to refine next
+
+Do not deploy automatically.
+Show the updated preview only.
+Wait for Founder approval before modifying another page.

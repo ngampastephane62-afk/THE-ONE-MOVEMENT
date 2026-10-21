@@ -7,12 +7,12 @@ import officialLogo from '@/assets/media/home/tomi-official-logo.png';
 export const INTRO_KEY = 'tomi:home-intro-seen';
 /** Intro timeline in seconds (mirrors cinematic-hero.css delays). */
 export const INTRO_TIMELINE = [
-  { id: 'depth', start: 0, end: 3 },
-  { id: 'globe-illumination', start: 3, end: 5 },
-  { id: 'logo-title', start: 5, end: 8 },
-  { id: 'cta-settle', start: 8, end: 10 },
+  { id: 'depth', start: 0, end: 1.2 },
+  { id: 'globe-illumination', start: 1.2, end: 3 },
+  { id: 'logo-title', start: 2.6, end: 4.6 },
+  { id: 'cta-settle', start: 4.4, end: 6 },
 ] as const;
-export const INTRO_DURATION_S = 9.6;
+export const INTRO_DURATION_S = 5.8;
 let seenInThisPageSession = false;
 function introSeen(): boolean {
   if (seenInThisPageSession) return true;
@@ -25,7 +25,7 @@ function markIntroSeen() {
 
 /**
  * Phase-one cinematic hero for TOMI.
- * Founder-supplied portrait and flag photographs over the supplied desert artwork.
+ * Founder-supplied portrait (flag removed from Home per Founder correction) over the supplied desert artwork.
  * People are never warped, recoloured or animated — only the backdrop and
  * surrounding light layers move. No documentary provenance is implied by the artwork.
  */
@@ -73,7 +73,7 @@ export default function CinematicHero({ phase = 'globe-bearer', className = '', 
   const [paused, setPaused] = useState(false);
   const [reduced, setReduced] = useState(() =>
     typeof window !== 'undefined' && !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
-  // 10s intro timeline: depth 0-3s, globe light 3-5s, logo/title 5-8s, CTAs settle 8-10s.
+  // ~6s intro: globe lights by 1.2-3s, logo emerges from its light 2.6-4.6s, CTAs settle 4.4-6s.
   const [intro, setIntro] = useState(() => typeof window !== 'undefined' && !introSeen() && !reduced);
   const finishIntro = () => { markIntroSeen(); setIntro(false); };
 
@@ -142,6 +142,7 @@ export default function CinematicHero({ phase = 'globe-bearer', className = '', 
           alt="TOMI model in black and gold holding a golden globe, a symbol of global unity"
           fetchPriority="high"
         />
+        <span className="tch-globe-flare" aria-hidden="true" />
         <span className="tch-globe-light" aria-hidden="true">
           <svg className="tch-globe-connections" viewBox="0 0 100 100" focusable="false">
             <ellipse cx="50" cy="50" rx="42" ry="17" transform="rotate(-22 50 50)" />
@@ -150,27 +151,26 @@ export default function CinematicHero({ phase = 'globe-bearer', className = '', 
         </span>
       </figure>
 
-      {/* Layer 3 — minimal typography */}
+      {/* Layer 3 — one official identity, emerging from the globe light; motto to its left. */}
       <div className="tch-copy">
-        <img
-          src={officialLogo}
-          width={640}
-          height={336}
-          alt="THE ONE MOVEMENT INTERNATIONAL official logo"
-          className="tch-logo"
-          decoding="async"
-          data-testid="img-hero-official-logo"
-        />
-        <p className="tch-kicker">Eastern DR Congo &middot; Goma &rarr; Dubai</p>
-        <h1 id="tch-title" className="tch-title" data-testid="text-hero-title">
-          <span>The One Movement</span>
-          <span className="tch-title-intl">International</span>
-        </h1>
-        <span className="tch-rule" aria-hidden="true" />
-        <p className="tch-motto">
-          <strong>We Are One</strong>
-          <span>For Peace &amp; Unity</span>
-        </p>
+        <div className="tch-brand">
+          <p className="tch-motto" data-testid="text-hero-motto">
+            <strong>We Are One</strong>
+            <span>For Peace &amp; Unity</span>
+          </p>
+          <h1 id="tch-title" className="tch-logo-wrap" data-testid="text-hero-title">
+            <span className="tch-logo-beam" aria-hidden="true" />
+            <img
+              src={officialLogo}
+              width={640}
+              height={336}
+              alt="THE ONE MOVEMENT INTERNATIONAL"
+              className="tch-logo"
+              decoding="async"
+              data-testid="img-hero-official-logo"
+            />
+          </h1>
+        </div>
         <div
           className="tch-actions"
           onAnimationEnd={(e) => { if (e.target === e.currentTarget && intro) finishIntro(); }}
@@ -182,17 +182,6 @@ export default function CinematicHero({ phase = 'globe-bearer', className = '', 
             Explore the Ecosystem
           </Link>
         </div>
-        {/* Layer 1 — official flag, deliberately subordinate */}
-        <figure className="tch-flag" data-testid="img-hero-flag">
-          <img
-            src={media('flag-dubai-640.webp')}
-            width={640}
-            height={427}
-            alt="The official THE ONE MOVEMENT INTERNATIONAL flag, We Are One, before the Dubai skyline"
-            decoding="async"
-          />
-          <figcaption>Official movement flag</figcaption>
-        </figure>
       </div>
 
       <div className="tch-grain" aria-hidden="true" />

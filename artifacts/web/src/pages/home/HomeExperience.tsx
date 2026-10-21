@@ -1,20 +1,15 @@
 import { Helmet } from 'react-helmet-async';
-import PhotoActions from '@/components/editorial/PhotoActions';
-import { programCardMedia } from '@/lib/cover-media';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
 import GoldThread from '@/components/GoldThread';
-import ArchivePhoto, { archiveVideo } from '@/components/ArchivePhoto';
-import ProgramVision from '@/components/ProgramVision';
-import { DiplomaticGalaPreview } from '@/components/DiplomaticGalaMedia';
 import ResponsiveMedia from '@/components/ResponsiveMedia';
 import HomeReelStrip from '@/components/HomeReelStrip';
 import Reveal from '@/components/Reveal';
-import MovementAtlas from '@/components/home/MovementAtlas';
 import MovementPaths from '@/components/home/MovementPaths';
 import OneUniverse from '@/components/home/OneUniverse';
+import OfficialProgrammes from '@/components/home/OfficialProgrammes';
+import '@/components/home/home-patterns.css';
 import FashionEditionNote from '@/components/FashionEditionNote';
-import ProgrammeFilm from "@/components/programs/ProgrammeFilm";
 import SectionHeading from '@/components/SectionHeading';
 // Legacy hero retained for rollback: '@/components/home/HomeBrandHero'
 import CinematicHero from '@/components/home/CinematicHero';
@@ -22,12 +17,6 @@ import HomeArchiveCarousel from '@/components/home/HomeArchiveCarousel';
 import movementReel from '@/assets/media/home/TOMI_HOME_MOVEMENT_REEL_01.mp4';
 import movementReelFallback from '@/assets/media/home/TOMI_HOME_MOVEMENT_REEL_01.webm';
 import movementReelPoster from '@/assets/media/home/TOMI_HOME_MOVEMENT_REEL_01-poster.webp';
-
-const PROGRAMS = [
-  { slug: 'summit', name: 'The One Summit', description: 'Leadership, ideas and business across continents.' },
-  { slug: 'diplomatic-gala', name: 'The One Diplomatic Gala', description: 'Culture and dialogue in service of peace.' },
-  { slug: 'awards', name: 'The One Awards', description: 'Recognition for courage and positive impact.' },
-];
 
 export default function HomeExperience() {
   return (
@@ -50,8 +39,39 @@ export default function HomeExperience() {
       <CinematicHero />
 
 
+      {/* 03 — Ecosystem preview: breadth without full explanation. */}
+      <section id="ecosystem-preview-heading" className="tomi-aurora-surface py-section-lg tomi-editorial-chapter" data-chapter="THE ONE UNIVERSE" aria-label="The One Universe — 17 connected sectors">
+        <div className="mx-auto max-w-7xl px-6">
+          <Reveal>
+            <SectionHeading
+              eyebrow="17 SECTORS. ONE ECOSYSTEM."
+              heading="THE ONE UNIVERSE"
+              surface="dark"
+              size="lg"
+              thread
+            />
+          </Reveal>
+
+          <Reveal delay={90} className="mt-12">
+            {/* THE ONE UNIVERSE: canonical 17 sectors (replaces the synthetic constellation on Home only). */}
+            <OneUniverse />
+          </Reveal>
+          <Reveal delay={140} className="mt-10 flex flex-wrap items-center gap-6">
+            <Link href="/ecosystem">
+              <Button variant="gold-outline" size="lg">EXPLORE THE ECOSYSTEM</Button>
+            </Link>
+            <Link href="/ecosystem#discover" className="min-h-[44px] inline-flex items-center text-xs uppercase tracking-[0.18em] text-ivory-200 underline-offset-4 hover:text-gold-400 hover:underline" data-testid="link-home-discovery">
+              What are you looking for in the world?
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Official programmes — follows the universe directly; curated three only. */}
+      <OfficialProgrammes />
+
       {/* 02 — Understanding: one concise explanation plus future movement video. */}
-      <section className="bg-ivory-100 py-section-lg tomi-editorial-chapter" data-chapter="02 / THE MOVEMENT" aria-labelledby="what-heading">
+      <section className="bg-ivory-100 py-section-lg tomi-editorial-chapter" data-chapter="THE MOVEMENT" aria-labelledby="what-heading">
         <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-12 lg:items-center">
           <Reveal className="lg:col-span-5">
             <SectionHeading
@@ -82,51 +102,8 @@ export default function HomeExperience() {
         </div>
       </section>
 
-      {/* 03 — Ecosystem preview: breadth without full explanation. */}
-      <section id="ecosystem-preview-heading" className="tomi-aurora-surface py-section-lg tomi-editorial-chapter" data-chapter="03 / ALL IN ONE MOVEMENT" aria-label="The One Universe — 17 connected sectors">
-        <div className="mx-auto max-w-7xl px-6">
-          <Reveal>
-            <SectionHeading
-              eyebrow="ONE MOVEMENT. MANY WORLDS."
-              heading="THE ONE UNIVERSE"
-              surface="dark"
-              size="lg"
-              thread
-            />
-          </Reveal>
-
-          <Reveal delay={90} className="mt-12">
-            {/* THE ONE UNIVERSE: canonical 17 sectors (replaces the synthetic constellation on Home only). */}
-            <OneUniverse />
-          </Reveal>
-
-          <Reveal delay={140} className="mt-10">
-            <Link href="/ecosystem">
-              <Button variant="gold-outline" size="lg">EXPLORE THE ECOSYSTEM</Button>
-            </Link>
-            <Link href="/ecosystem#discover" className="mt-6 flex max-w-xl min-h-[44px] items-center gap-3 border border-gold-500/50 bg-lagoon-900/60 px-4 py-3 text-sm text-ivory-200 hover:border-gold-400" data-testid="link-home-discovery">
-              <span className="font-display tracking-[0.1em] text-gold-400">WHAT ARE YOU LOOKING FOR IN THE WORLD?</span>
-              <span className="ml-auto text-xs uppercase tracking-[0.14em]">Search</span>
-            </Link>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* 03b — The global universe: illustrative atlas of sectors and programmes. */}
-      <section id="global-universe" className="tomi-aurora-surface py-section-lg scroll-mt-24" aria-labelledby="atlas-heading">
-        <div className="mx-auto max-w-7xl px-6">
-          <Reveal>
-            <p className="text-eyebrow text-gold-400">THE GLOBAL UNIVERSE</p>
-            <h2 id="atlas-heading" className="mt-4 max-w-3xl text-display-lg text-ivory-100">YOU DON&apos;T JUST JOIN A PLATFORM. YOU BECOME PART OF A GLOBAL MISSION.</h2>
-          </Reveal>
-          <Reveal delay={90} className="mt-10">
-            <MovementAtlas />
-          </Reveal>
-        </div>
-      </section>
-
       {/* 04 — Visual proof: Fashion Week receives flagship treatment. */}
-      <section className="bg-ivory-100 py-section-lg tomi-editorial-chapter" data-chapter="04 / THE ORIGIN" aria-labelledby="fashion-proof-heading">
+      <section className="bg-ivory-100 py-section-lg tomi-editorial-chapter" data-chapter="THE ORIGIN" aria-labelledby="fashion-proof-heading">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
             <SectionHeading
@@ -143,7 +120,6 @@ export default function HomeExperience() {
               <HomeReelStrip />
             </Reveal>
             <Reveal delay={100} direction="right" className="flex flex-col justify-center p-7 sm:p-10 lg:col-span-6">
-              <ProgrammeFilm id="fashion-knight-2026" className="mb-8 w-full max-w-sm" caption="Official artwork · The Founder as Chevalier de la paix et de l’unité" />
               <p className="text-eyebrow text-gold-600">FIVE EDITIONS COMPLETED · SIXTH IN DUBAI</p>
               <h2 id="fashion-proof-heading" className="mt-4 text-display-md text-ink-900" style={{ fontFamily: 'var(--font-display)' }}>
                 THE ONE FASHION WEEK INTERNATIONAL
@@ -161,54 +137,8 @@ export default function HomeExperience() {
         </div>
       </section>
 
-      {/* 05 — Concise program previews. */}
-      <section className="bg-ivory-50 py-section-lg tomi-editorial-chapter" data-chapter="05 / THE PROGRAMS" aria-labelledby="program-preview-heading">
-        <div className="mx-auto max-w-7xl px-6">
-          <Reveal>
-            <div className="flex flex-col gap-7 sm:flex-row sm:items-end sm:justify-between">
-              <SectionHeading
-                eyebrow="PROGRAM PREVIEW"
-                heading="WAYS THE MOVEMENT COMES TO LIFE"
-                surface="light"
-                size="lg"
-                thread
-              />
-              <Link href="/programs">
-                <Button variant="gold-outline">VIEW ALL PROGRAMS</Button>
-              </Link>
-            </div>
-          </Reveal>
-
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {PROGRAMS.map((program, index) => (
-              <Reveal key={program.slug} delay={index * 90}>
-                <article className="tomi-editorial-card group overflow-hidden rounded-sharp border border-sand-200 bg-ivory-100">
-                  {program.slug === 'summit' ? (
-                    <ArchivePhoto id="summit-goma" actions={false} frameClassName="aspect-[4/3] w-full" objectPosition="center 30%" sizes="(min-width: 768px) 30vw, 92vw" />
-                  ) : program.slug === 'awards' ? (
-                    <ProgrammeFilm id="awards-rosina-2027" className="w-full" caption="Rosina · producer, partner and speaker · 2 January 2027" />
-                  ) : program.slug === 'diplomatic-gala' ? (
-                    <DiplomaticGalaPreview actions={false} className="aspect-[4/3] w-full" />
-                  ) : (
-                    <ProgramVision name={program.name} className="aspect-[4/3] w-full" />
-                  )}
-                  {program.slug !== 'awards' && programCardMedia(program.slug) && <div className="px-6"><PhotoActions source={programCardMedia(program.slug)!.source} title={programCardMedia(program.slug)!.title} /></div>}
-                  <div className="p-6">
-                    <h3 className="font-display text-lg text-ink-900">{program.name}</h3>
-                    <p className="mt-3 text-sm leading-relaxed text-ink-700">{program.description}</p>
-                    <Link href={`/programs/${program.slug}`} className="mt-5 inline-block text-xs font-semibold uppercase tracking-[0.16em] text-gold-600">
-                      Discover
-                    </Link>
-                  </div>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* 06 — Founder archive composition, deliberately not a standard gallery. */}
-      <section className="bg-lagoon-900 py-section-lg tomi-editorial-chapter tomi-archive-editorial" data-chapter="06 / MOVEMENT IN ACTION" aria-labelledby="archive-heading">
+      <section className="bg-lagoon-900 py-section-lg tomi-editorial-chapter tomi-archive-editorial" data-chapter="MOVEMENT IN ACTION" aria-labelledby="archive-heading">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
             <SectionHeading
@@ -237,6 +167,7 @@ export default function HomeExperience() {
       {/* Single-purpose conversion ending. */}
       <section className="tomi-final-join relative overflow-hidden py-section-xl text-center">
         <div className="tomi-surface-grid pointer-events-none absolute inset-0" aria-hidden="true" />
+        <div className="thp-pattern thp-pattern--dark" aria-hidden="true" />
         <Reveal className="relative z-10 mx-auto max-w-4xl px-6">
           <p className="text-eyebrow text-gold-400">THE NEXT CONNECTION</p>
           <h2 className="mt-5 text-display-lg text-ivory-100" style={{ fontFamily: 'var(--font-display)' }}>

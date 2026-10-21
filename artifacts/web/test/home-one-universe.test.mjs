@@ -77,24 +77,29 @@ test('home universe reuses exactly the 17 official names, numbers, order and can
   })))));
   const html = f.render();
   assert.equal((html.match(/data-testid="button-universe-node-/g) ?? []).length, 17);
-  assert.equal((html.match(/data-testid="button-universe-list-/g) ?? []).length, 17);
-  assert.match(html, /<ol[^>]+aria-label="The 17 sectors/);
+  assert.equal((html.match(/data-testid="button-universe-list-/g) ?? []).length, 0);
+  assert.match(html, /role="group" aria-label="The 17 sectors/);
   for (const [i, sector] of f.registry.entries()) {
-    assert.equal(f.events.get(`button-universe-node-${sector.slug}`)['aria-label'], `${String(i + 1).padStart(2, '0')} ${sector.name}`);
+    const props = f.events.get(`button-universe-node-${sector.slug}`);
+    assert.equal(props.children[0].props.children, String(i + 1).padStart(2, '0'));
+    assert.equal(props.children[1].props.children, sector.name);
+    assert.equal(props.style['--from'], i % 2 === 0 ? -1 : 1);
   }
 });
 
-test('every touch/list selection reveals its real description, number and Explore destination', () => {
+test('every animated label selects its real description, number and Explore destination without a duplicate list', () => {
   const f = fixture();
   f.render();
   for (const sector of f.registry) {
-    f.events.get(`button-universe-list-${sector.slug}`).onClick();
+    f.events.get(`button-universe-node-${sector.slug}`).onClick();
     const html = f.render();
     assert.equal(f.events.get('text-universe-sector-name').children, sector.name);
     assert.equal(f.events.get('link-universe-explore').href, `/ecosystem?sector=${sector.slug}#explore`);
     assert.equal(f.events.get(`button-universe-node-${sector.slug}`)['aria-pressed'], true);
     assert.ok(html.includes(sector.descriptor.replaceAll('&', '&amp;')), sector.slug);
   }
+  f.events.get('home-one-universe').onFocusCapture();
+  assert.match(f.render(), /data-entered="true"/, 'Keyboard arrival reveals the motion composition immediately');
 });
 
 test('globe indicators select directly and arrow keys wrap at both ends', () => {
@@ -121,9 +126,10 @@ test('universe remains home-only, responsive, reduced-motion safe and free of ba
   assert.match(home, /<OneUniverse\s*\/>/);
   assert.ok(existsSync(resolve(root, 'components/TomiConstellation.tsx')));
   assert.match(source, /IntersectionObserver/);
-  assert.match(css, /animation-play-state: paused/);
+  assert.match(css, /translateX\(calc\(var\(--from\) \* 46vw\)\)/);
+  assert.match(css, /tou-chip:focus-visible/);
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
-  assert.match(css, /max-width:\s*767px/);
+  assert.match(css, /max-width:\s*640px/);
   assert.match(css, /focus-visible/);
   assert.doesNotMatch(source, /fetch\(|@clerk|api-client|stripe|localStorage|three|canvas/);
 });

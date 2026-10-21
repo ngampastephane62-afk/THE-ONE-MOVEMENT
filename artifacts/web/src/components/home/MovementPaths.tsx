@@ -1,5 +1,6 @@
 import { Link } from 'wouter';
 import { ArrowUpRight } from 'lucide-react';
+import './home-patterns.css';
 import Chapter from '@/components/editorial/Chapter';
 
 const PATHS = [
@@ -11,7 +12,9 @@ const PATHS = [
 /** Links to real public discovery surfaces, never fabricated member previews. */
 export default function MovementPaths() {
   return (
-    <section aria-labelledby="movement-paths-title" className="bg-ivory-100 py-section-lg">
+    <section aria-labelledby="movement-paths-title" className="thp-patterned bg-ivory-100 py-section-lg">
+      <div className="thp-pattern" aria-hidden="true" />
+      <div className="thp-pattern thp-pattern--steps" aria-hidden="true" />
       <div className="mx-auto max-w-7xl px-6">
         <Chapter as="h2" id="movement-paths-title" index="08" eyebrow="PEOPLE & POSSIBILITIES"
           title="A shared mission. Your own way in."

@@ -71,8 +71,10 @@ function fixture(reduced = false, base = '/nested/', { seen = false, blockedStor
 
 test('cinematic hero renders official message and existing destinations under a nested base', () => {
   const f = fixture(), html = f.render();
-  assert.match(html, /The One Movement/);
-  assert.match(html, /International/);
+  assert.match(html, /THE ONE MOVEMENT INTERNATIONAL/);
+  assert.equal((html.match(/data-testid="img-hero-official-logo"/g) ?? []).length, 1);
+  assert.equal((html.match(/THE ONE MOVEMENT INTERNATIONAL/g) ?? []).length, 1, 'One logo alt, no duplicate visible brand heading');
+  assert.doesNotMatch(html, /img-hero-flag|tch-flag|flag-dubai/);
   assert.match(html, /We Are One/);
   assert.match(html, /For Peace &amp; Unity/);
   assert.equal(f.events.get('link-hero-ecosystem').href, '/ecosystem');
@@ -82,7 +84,7 @@ test('cinematic hero renders official message and existing destinations under a 
   assert.ok(html.indexOf('data-testid="link-hero-join"') < html.indexOf('data-testid="link-hero-ecosystem"'));
   assert.doesNotMatch(html, /<a[^>]*>\s*<button/);
   const sources = [...html.matchAll(/\bsrc="([^"]+)"/g)].map(match => match[1]);
-  assert.ok(sources.length >= 3, 'Background, original portrait and flag present');
+  assert.equal(sources.length, 3, 'Background, original portrait and one official logo, no flag');
   for (const src of sources) {
     if (src === '/nested/assets/tomi-official-logo.png') {
       assert.ok(existsSync(resolve(root, 'src/assets/media/home/tomi-official-logo.png')));
@@ -95,10 +97,9 @@ test('cinematic hero renders official message and existing destinations under a 
   }
 });
 
-test('Goma origin is honest about missing imagery and accepts a future approved local asset', () => {
+test('optional origin layer never invents imagery and accepts only a future approved local asset', () => {
   const f = fixture(), html = f.render();
-  assert.match(html, /Goma/);
-  assert.match(html, /Dubai/);
+  assert.match(html, /desert-dubai/);
   assert.equal(f.events.has('img-hero-origin'), false, 'No missing asset request or invented volcano');
   const future = f.render({ originAsset: { file: 'approved-goma.webp', alt: 'Approved future Goma landscape', width: 1200, height: 800 } });
   assert.match(future, /src="\/nested\/media\/tomi-intro\/approved-goma.webp"/);
@@ -134,15 +135,15 @@ test('reduced motion and live preference changes stop motion and clean up listen
   assert.match(css, /animation-play-state:\s*paused/);
 });
 
-test('intro timeline is approximately ten seconds, immediately skippable and never a navigation gate', () => {
+test('Founder intro lights the globe by three seconds, is skippable and never gates navigation', () => {
   const f = fixture();
   assert.match(f.render(), /data-intro="play"/);
-  assert.equal(f.exports.INTRO_DURATION_S, 9.6);
+  assert.equal(f.exports.INTRO_DURATION_S, 5.8);
   assert.deepEqual(JSON.parse(JSON.stringify(f.exports.INTRO_TIMELINE)), [
-    { id: 'depth', start: 0, end: 3 },
-    { id: 'globe-illumination', start: 3, end: 5 },
-    { id: 'logo-title', start: 5, end: 8 },
-    { id: 'cta-settle', start: 8, end: 10 },
+    { id: 'depth', start: 0, end: 1.2 },
+    { id: 'globe-illumination', start: 1.2, end: 3 },
+    { id: 'logo-title', start: 2.6, end: 4.6 },
+    { id: 'cta-settle', start: 4.4, end: 6 },
   ]);
   assert.equal(f.events.get('link-hero-join').href, '/join');
   assert.equal(f.events.get('link-hero-ecosystem').href, '/ecosystem');
@@ -150,7 +151,9 @@ test('intro timeline is approximately ten seconds, immediately skippable and nev
   assert.match(f.render(), /data-intro="done"/);
   assert.equal(f.events.has('button-skip-intro'), false);
   assert.equal(f.storage.get(f.exports.INTRO_KEY), '1');
-  assert.match(css, /tch-settle 1\.6s 8s/);
+  assert.match(css, /tch-ignite 1\.6s 1\.2s/);
+  assert.match(css, /tch-emerge 2s 2\.6s/);
+  assert.match(css, /tch-settle 1\.4s 4\.4s/);
   assert.match(css, /data-intro='done'[\s\S]*?animation: none/);
 });
 
@@ -169,13 +172,15 @@ test('session navigation, blocked storage and reduced motion never force a repea
   assert.equal(reduced.storage.get(reduced.exports.INTRO_KEY), '1');
 });
 
-test('phase one preserves homepage content and keeps responsive composition frontend-only', () => {
+test('Founder composition removes duplicate atlas and follows universe directly with official programmes', () => {
   const home = readFileSync(resolve(root, 'src/pages/home/HomeExperience.tsx'), 'utf8');
   assert.match(home, /<CinematicHero\s*\/>/);
   assert.ok(existsSync(resolve(root, 'src/components/home/HomeBrandHero.tsx')));
-  for (const marker of ['what-heading', 'ecosystem-preview-heading', 'global-universe', 'fashion-proof-heading', 'program-preview-heading', 'HomeArchiveCarousel']) {
+  for (const marker of ['what-heading', 'ecosystem-preview-heading', 'fashion-proof-heading', 'HomeArchiveCarousel']) {
     assert.ok(home.includes(marker), marker);
   }
+  assert.doesNotMatch(home, /MovementAtlas|global-universe|DiplomaticGalaPreview|const PROGRAMS/);
+  assert.match(home, /<OneUniverse\s*\/>[\s\S]*?<\/section>\s*\{\/\*[^]*?\*\/\}\s*<OfficialProgrammes\s*\/>/);
   assert.match(css, /max-width:\s*767px/);
   assert.match(css, /max-width:\s*1023px/);
   assert.match(css, /max-width:\s*359px/);

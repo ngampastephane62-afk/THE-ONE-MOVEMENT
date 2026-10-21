@@ -247,3 +247,64 @@
   .tch-logo { margin: 0 auto 1.1rem; width: 128px; }
   .tch-skip { top: .75rem; right: .75rem; }
 }
+
+/* ==========================================================================
+   Founder correction (homepage refinement): no flag, no duplicated title.
+   Globe illuminates by 3s; the single official logo rises out of that light,
+   motto sits to its LEFT on desktop, then the CTAs settle. CTAs stay usable
+   throughout (opacity never below .72, pointer events always on).
+   ========================================================================== */
+.tch-copy { width: min(58%, 760px); }
+.tch-brand { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: clamp(1.4rem, 3vw, 2.8rem); }
+.tch-motto { border-right: 1px solid hsl(var(--tch-gold) / .55); padding-right: clamp(1.2rem, 2.6vw, 2.4rem); }
+.tch-motto strong { font-size: clamp(1.15rem, 1.9vw, 1.7rem); line-height: 1.15; }
+.tch-motto span { font-size: .72rem; }
+.tch-logo-wrap { position: relative; margin: 0; font-size: 1rem; line-height: 0; }
+.tch-logo { width: clamp(220px, 26vw, 400px); margin: 0; filter: drop-shadow(0 6px 30px hsl(44 100% 60% / .28)); }
+/* light thread that travels from the globe (right) to the logo */
+.tch-logo-beam {
+  position: absolute; left: 50%; top: 50%; width: 140%; height: 46%; transform: translate(-30%, -50%);
+  pointer-events: none; opacity: 0; border-radius: 50%;
+  background: radial-gradient(ellipse at 70% 50%, hsl(46 100% 82% / .38), hsl(44 100% 70% / .12) 45%, transparent 72%);
+}
+.tch-globe-flare {
+  position: absolute; left: 52%; top: 63%; width: 120%; aspect-ratio: 1; transform: translate(-50%, -50%) scale(.4);
+  border-radius: 50%; pointer-events: none; opacity: .55; mix-blend-mode: screen;
+  background: radial-gradient(circle, hsl(48 100% 88% / .75) 0%, hsl(44 100% 68% / .28) 22%, transparent 58%);
+}
+.tch-globe-light { mix-blend-mode: screen; }
+@media (max-width: 767px) {
+  /* Keep the actual globe in the first scene, not below a tall text stack.
+     Reserve the top for identity and the bottom for usable controls. */
+  .tch { min-height: max(720px, calc(100svh - 60px)); }
+  .tch-copy { width: 100%; min-height: inherit; padding: 4rem 1.5rem 5.2rem; display: flex; flex-direction: column; justify-content: space-between; }
+  .tch-bearer { position: absolute; left: 0; right: 0; bottom: 0; width: min(78vw, 300px); height: auto; margin: 0 auto; }
+  .tch-globe-light { display: block; }
+  .tch-toggle { display: inline-flex; }
+  .tch-brand { grid-template-columns: 1fr; justify-items: center; gap: 1.1rem; }
+  .tch-logo-wrap { order: -1; }
+  .tch-logo { width: min(68vw, 260px); margin: 0 auto; }
+  .tch-motto { border-right: 0; padding-right: 0; text-align: center; }
+  .tch-actions { margin-top: 0; }
+}
+/* intro timeline (overrides the legacy 10s timeline above) */
+.tch[data-intro='play'] .tch-bg img { animation: tch-depth 1.6s cubic-bezier(.2,.7,.2,1) both, tch-push 32s 1.6s ease-in-out infinite alternate; }
+.tch[data-intro='play'] .tch-bearer { animation: tch-bearer-in 1.4s cubic-bezier(.2,.7,.2,1) both; }
+.tch[data-intro='play'] .tch-globe-flare { animation: tch-flare 3.6s 1.2s cubic-bezier(.2,.7,.2,1) both; }
+.tch[data-intro='play'] .tch-globe-light { animation: tch-ignite 1.6s 1.2s ease-out both, tch-glow 6s 2.8s ease-in-out infinite; }
+.tch[data-intro='play'] .tch-light { animation: tch-ignite 1.6s 1.2s ease-out both, tch-breathe 12s 2.8s ease-in-out infinite; }
+.tch[data-intro='play'] .tch-logo-beam { animation: tch-beam 2.6s 2.4s ease-out both; }
+.tch[data-intro='play'] .tch-logo { animation: tch-emerge 2s 2.6s cubic-bezier(.2,.7,.2,1) both; }
+.tch[data-intro='play'] .tch-motto { animation: tch-reveal 1.6s 2.9s cubic-bezier(.2,.7,.2,1) both; }
+.tch[data-intro='play'] .tch-actions { animation: tch-settle 1.4s 4.4s cubic-bezier(.2,.7,.2,1) both; }
+.tch[data-intro='done'] .tch-logo-beam, .tch[data-intro='done'] .tch-globe-flare { animation: none; }
+.tch[data-paused='true'] .tch-logo-beam, .tch[data-paused='true'] .tch-globe-flare { animation-play-state: paused; }
+@keyframes tch-flare { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.3); } 45% { opacity: 1; } 100% { opacity: .55; transform: translate(-50%, -50%) scale(.4); } }
+@keyframes tch-beam { 0% { opacity: 0; transform: translate(10%, -50%) scaleX(.4); } 40% { opacity: 1; } 100% { opacity: .35; transform: translate(-30%, -50%) scaleX(1); } }
+@keyframes tch-emerge { from { opacity: 0; transform: translateX(14%) scale(.82); filter: blur(10px) brightness(1.8); } to { opacity: 1; transform: none; filter: drop-shadow(0 6px 30px hsl(44 100% 60% / .28)); } }
+@media (max-width: 767px) {
+  @keyframes tch-emerge { from { opacity: 0; transform: translateY(16px) scale(.86); filter: blur(10px) brightness(1.8); } to { opacity: 1; transform: none; filter: none; } }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tch-logo-beam { display: none; }
+}

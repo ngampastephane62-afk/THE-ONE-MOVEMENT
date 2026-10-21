@@ -1,0 +1,34 @@
+/* Home-only refinement: editorial programme cards + soft Kuba-inspired pattern layers.
+   Patterns reuse the existing --kuba-lattice / --kuba-steps tokens (index.css);
+   they are an inspired geometric language, not reproductions of specific sacred signs. */
+.thp-card { display: flex; flex-direction: column; }
+.thp-card-media { overflow: hidden; background: hsl(187 67% 8%); }
+/* Keep the approved films uncropped in the same portrait frame as Summit,
+   without changing ProgrammeFilm anywhere else on the site. */
+.thp-card-media figure[data-testid^="film-"] { aspect-ratio: 3 / 4 !important; }
+.thp-card-body { position: relative; padding: 1.6rem 0 0; border-top: 1px solid hsl(39 52% 54% / .45); margin-top: 1.2rem; }
+.thp-card-num { font-family: var(--font-display); font-size: .78rem; letter-spacing: .3em; color: hsl(39 52% 44%); }
+.thp-card-title { margin-top: .6rem; font-family: var(--font-display); font-size: clamp(1.15rem, 1.6vw, 1.4rem); line-height: 1.2; letter-spacing: .04em; text-transform: uppercase; color: hsl(30 30% 10%); text-wrap: balance; }
+.thp-card-line { margin-top: .7rem; font-size: .92rem; line-height: 1.6; color: hsl(30 15% 30%); max-width: 26rem; }
+.thp-card-link { margin-top: 1.1rem; display: inline-flex; align-items: center; gap: .35rem; min-height: 44px; font-size: .7rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: hsl(188 60% 22%); }
+.thp-card-link:hover { color: hsl(39 52% 40%); }
+.thp-card-link:focus-visible { outline: 2px solid hsl(188 60% 30%); outline-offset: 3px; }
+
+.thp-patterned { position: relative; isolation: isolate; overflow: hidden; }
+.thp-patterned > *:not(.thp-pattern) { position: relative; z-index: 1; }
+.thp-pattern {
+  position: absolute; inset: -48px; z-index: 0; pointer-events: none;
+  background-image: var(--kuba-lattice); background-size: 56px 56px; opacity: .12;
+  -webkit-mask-image: radial-gradient(ellipse 70% 80% at 90% 50%, #000 0%, transparent 70%);
+          mask-image: radial-gradient(ellipse 70% 80% at 90% 50%, #000 0%, transparent 70%);
+  animation: thp-drift 60s linear infinite;
+}
+.thp-pattern--steps { background-image: var(--kuba-steps); background-size: 44px 44px; opacity: .06;
+  -webkit-mask-image: radial-gradient(ellipse 60% 70% at 8% 40%, #000 0%, transparent 70%);
+          mask-image: radial-gradient(ellipse 60% 70% at 8% 40%, #000 0%, transparent 70%);
+  animation-direction: reverse; }
+.thp-pattern--dark { opacity: .1; -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 50%, transparent 30%, #000 100%);
+          mask-image: radial-gradient(ellipse 60% 70% at 50% 50%, transparent 30%, #000 100%); }
+@keyframes thp-drift { to { transform: translate3d(56px, 56px, 0); } }
+@media (max-width: 767px) { .thp-pattern { opacity: .05; } }
+@media (prefers-reduced-motion: reduce) { .thp-pattern { animation: none; } }
