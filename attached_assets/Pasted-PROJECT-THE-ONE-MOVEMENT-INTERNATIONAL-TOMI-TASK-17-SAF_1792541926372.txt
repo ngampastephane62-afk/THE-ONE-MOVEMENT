@@ -1,0 +1,180 @@
+PROJECT: THE ONE MOVEMENT INTERNATIONAL (TOMI)
+
+TASK 17 — SAFE API PREVIEW STARTUP
+
+MODE: CONTROLLED IMPLEMENTATION
+
+CONTEXT:
+
+The Founder Workspace Phase A is completed.
+
+However, the Replit preview cannot load the member
+network because the API workflow is not running.
+
+Verified diagnostic:
+
+- Frontend workflow: running
+- API workflow: not_started
+- GET /api/healthz: HTTP 502
+- GET /api/network/state: HTTP 502
+
+The API startup currently triggers Stripe
+initialization, including migrations,
+webhook preparation and synchronization.
+
+OBJECTIVE:
+
+Restore the development preview API safely,
+without triggering Stripe initialization,
+database migrations or payment synchronization.
+
+==================================================
+STEP 1 — SAFE STARTUP ISOLATION
+==================================================
+
+Inspect the API startup sequence in:
+
+artifacts/api-server/src/index.ts
+
+Identify exactly where initializeStripe()
+is called and which operations it triggers.
+
+Implement the smallest possible development-only
+startup safeguard.
+
+REQUIREMENTS:
+
+1. Preserve the existing production behavior.
+
+2. Disable automatic Stripe initialization ONLY
+   in the explicitly authorized Replit development
+   preview environment.
+
+3. Do not use NODE_ENV alone as the safeguard.
+
+4. Use an explicit development-only configuration
+   with a safe default.
+
+5. Ensure the safeguard cannot silently disable
+   Stripe initialization in production.
+
+6. Do not modify payment processing logic.
+
+7. Do not modify existing subscriptions.
+
+8. Do not execute Stripe migrations.
+
+9. Do not trigger webhook synchronization.
+
+10. Do not run syncBackfill.
+
+==================================================
+STEP 2 — VERIFY STARTUP SAFETY
+==================================================
+
+Before starting the API:
+
+- Verify the development-only safeguard.
+- Verify the effective environment.
+- Verify Stripe initialization is disabled.
+- Verify production behavior remains unchanged.
+- Check whether any other startup operation
+  can modify persistent data.
+
+IMPORTANT:
+
+If other potentially destructive startup
+operations are discovered, STOP and report
+them before starting the server.
+
+==================================================
+STEP 3 — DEVELOPMENT API STARTUP
+==================================================
+
+Only after confirming all safety conditions,
+start the API in the development preview.
+
+Do not deploy.
+
+Do not connect to production data for testing.
+
+Do not run migrations.
+
+Do not initialize Stripe.
+
+==================================================
+STEP 4 — HEALTH VERIFICATION
+==================================================
+
+Verify:
+
+GET /api/healthz
+
+Expected result:
+
+HTTP 200
+
+Then verify the member API is reachable.
+
+Do not bypass Clerk authentication.
+
+Do not fabricate a Founder session.
+
+Do not weaken server-side authorization.
+
+==================================================
+STEP 5 — FOUNDER WORKSPACE
+==================================================
+
+Confirm that the API is available for
+the existing Founder Workspace.
+
+Do not modify the Workspace design.
+
+Do not modify the CMS.
+
+Do not change the member network architecture.
+
+If authenticated runtime testing is unavailable,
+report this limitation.
+
+==================================================
+STRICT RESTRICTIONS
+==================================================
+
+DO NOT:
+
+- Modify production Stripe behavior
+- Execute database migrations
+- Modify payment records
+- Synchronize Stripe products
+- Create Stripe webhooks
+- Modify Clerk configuration
+- Change Founder identity
+- Modify membership rules
+- Modify production data
+- Deploy
+- Rebuild the website
+- Modify public pages
+
+==================================================
+FINAL REPORT
+==================================================
+
+Provide:
+
+1. Root cause addressed
+2. Files modified
+3. Development safeguard implemented
+4. Effective preview configuration
+5. Stripe initialization status
+6. API startup status
+7. Health endpoint result
+8. Member API result
+9. Tests performed
+10. Remaining limitations
+
+If safe startup cannot be guaranteed,
+do not start the API.
+
+Stop and request further authorization.

@@ -39,3 +39,15 @@ and requires stopping before Phase B.
 to implement page editing, new roles, media management or publication workflows.
 Do not change Founder identity, Clerk, membership/payment rules, database schemas,
 production data, restart backend servers or deploy under this authorization.
+
+Separate authorization permits restoring the development preview API only after
+verifying that startup cannot run Stripe initialization, migrations, webhook
+creation or synchronization. If the effective environment cannot be established
+safely, stop before starting the API and request further authorization.
+
+**Why:** The Founder explicitly required a controlled, development-only restoration,
+preserved production behavior and a stop when startup safety cannot be guaranteed.
+
+**How to apply:** Do not treat preview restoration as permission to override
+ambiguous runtime environment markers, access production data, fabricate an
+authenticated Founder session, change payment rules or deploy.

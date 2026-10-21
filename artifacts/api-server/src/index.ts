@@ -1,6 +1,10 @@
 import app from "./app";
 import { logger } from "./lib/logger";
 import { initializeStripe } from "./services/networkPayments";
+import { stripeStartupMode } from "./lib/previewStartup";
+
+// Validate before opening a port or scheduling any payment initialization.
+const paymentStartup = stripeStartupMode(process.env);
 
 const rawPort = process.env["PORT"];
 
@@ -34,4 +38,11 @@ async function startPayments() {
     setTimeout(() => void startPayments(), 60_000).unref();
   }
 }
-void startPayments();
+if (paymentStartup === "preview-skip") {
+  logger.warn("Replit development preview: automatic Stripe initialization disabled explicitly; no payment bootstrap or retry scheduled.");
+} else {
+  if (process.env.TOMI_PREVIEW_SKIP_STRIPE_INIT) {
+    logger.warn("Preview Stripe safeguard is not active; normal payment initialization retained.");
+  }
+  void startPayments();
+}

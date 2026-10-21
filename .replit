@@ -28,5 +28,8 @@ packages = ["freetype", "gumbo", "harfbuzz", "jbig2dec", "libjpeg_turbo", "mupdf
 [userenv.shared]
 TOMI_FOUNDER_EMAIL = "yustonnessybush@gmail.com"
 
+[userenv.development]
+TOMI_PREVIEW_SKIP_STRIPE_INIT = "1"
+
 [objectStorage]
 defaultBucketID = "replit-objstore-dff55171-2234-4344-b2ab-09e947c5c215"
