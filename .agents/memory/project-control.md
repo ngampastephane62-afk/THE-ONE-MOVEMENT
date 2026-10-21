@@ -26,3 +26,16 @@ Owner approval of the Privacy Policy and Terms was explicitly granted on 2026-10
 **Why:** The owner selected “I approve the current copy as owner” after being told the policies distinguish free accounts, monthly professional subscriptions and annual event packages.
 
 **How to apply:** Do not continue treating owner sign-off on that copy as missing. Keep professional legal validation separate, and seek renewed approval for material changes to legal obligations or business terms.
+
+The Founder authorized only the private Workspace foundation: reuse existing
+authentication and Founder authorization, preserve the administration tools and
+mark unfinished content modules unavailable. The next editorial/CMS phase needs
+new Founder approval.
+
+**Why:** The controlled implementation directive explicitly limits work to Phase A
+and requires stopping before Phase B.
+
+**How to apply:** Do not interpret the Workspace or its navigation as authorization
+to implement page editing, new roles, media management or publication workflows.
+Do not change Founder identity, Clerk, membership/payment rules, database schemas,
+production data, restart backend servers or deploy under this authorization.

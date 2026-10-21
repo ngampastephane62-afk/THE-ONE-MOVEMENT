@@ -1,0 +1,253 @@
+PROJECT: THE ONE MOVEMENT INTERNATIONAL (TOMI)
+
+TASK 15 — FOUNDER WORKSPACE FOUNDATION
+
+MODE: CONTROLLED IMPLEMENTATION
+
+The previous read-only audit confirmed that TOMI
+already has an existing Founder authorization system,
+administrative tools and member dashboard.
+
+We are now authorized to implement PHASE A ONLY.
+
+OBJECTIVE:
+
+Create a premium, responsive Founder Workspace
+inside the existing TOMI member account.
+
+This workspace will eventually allow the Founder
+to manage public website content without accessing
+Replit.
+
+IMPORTANT:
+Do not rebuild existing features.
+Reuse the current project architecture.
+
+==================================================
+1. FOUNDER WORKSPACE ACCESS
+==================================================
+
+Create a dedicated private route:
+
+/member/founder
+
+Reuse the existing Clerk authentication and
+server-side Founder authorization.
+
+Do not create a second Founder role.
+
+Do not change TOMI_FOUNDER_EMAIL.
+
+Do not modify Clerk configuration.
+
+Only the verified Founder may access this workspace.
+
+Unauthorized users must not receive private
+administrative data.
+
+Add a visible "Founder Workspace" entry to the
+Founder's existing member dashboard.
+
+This entry must not appear for ordinary members.
+
+==================================================
+2. PREMIUM WORKSPACE DESIGN
+==================================================
+
+Build a premium Founder dashboard consistent
+with the existing TOMI design system.
+
+VISUAL DIRECTION:
+
+- Premium international platform
+- Elegant and modern
+- Deep green
+- Refined gold accents
+- Warm neutral backgrounds
+- Clean typography
+- Professional spacing
+- Subtle animations
+- Smooth transitions
+- Responsive desktop and mobile layout
+
+The interface must feel like the private
+executive workspace of a global movement.
+
+Avoid generic admin dashboard templates.
+
+Use the existing design tokens and components
+where available.
+
+Do not introduce an unrelated design system.
+
+==================================================
+3. WORKSPACE NAVIGATION
+==================================================
+
+Create the following sections:
+
+OVERVIEW
+PAGES
+NEWS & ARTICLES
+PARTNERS
+MEDIA LIBRARY
+PROGRAMS & EVENTS
+BRANDING
+PUBLISHING HISTORY
+FOUNDER SETTINGS
+
+IMPORTANT:
+
+Only connect modules that already have
+working backend functionality.
+
+For modules that are not implemented yet,
+display a clearly labeled "Coming Soon"
+or "Not Yet Available" state.
+
+Do not create fake working buttons.
+
+Do not fabricate statistics or content.
+
+==================================================
+4. OVERVIEW DASHBOARD
+==================================================
+
+Create an elegant dashboard homepage.
+
+Display:
+
+- Founder Workspace heading
+- Welcome section
+- Available administration tools
+- Quick access to existing management features
+- Clear status of upcoming CMS modules
+
+Reuse existing authorized data only where
+appropriate and safely available.
+
+Do not create new database tables.
+
+Do not introduce mock production data.
+
+==================================================
+5. EXISTING ADMINISTRATION TOOLS
+==================================================
+
+Preserve the existing administration route:
+
+/member/admin
+
+Do not remove or replace it.
+
+Provide working navigation links to existing
+Founder tools, including:
+
+- News archive management
+- Media requests
+- Partner introductions
+- Certifications
+- Moderation
+- Humanitarian offers
+- Magazine submission review
+
+Use the existing routes and access controls.
+
+Do not duplicate business logic.
+
+==================================================
+6. USER EXPERIENCE
+==================================================
+
+The Founder must be able to:
+
+1. Log in normally.
+2. Open the existing member dashboard.
+3. Select Founder Workspace.
+4. Access the private executive dashboard.
+5. Navigate between available sections.
+6. Open existing administration tools.
+7. Return to the public website easily.
+
+Ensure:
+
+- Responsive navigation
+- Mobile-friendly layout
+- Accessible buttons
+- Clear active states
+- Keyboard navigation
+- Loading and error states
+- No broken navigation links
+
+==================================================
+7. SECURITY REQUIREMENTS
+==================================================
+
+Reuse existing Founder authorization.
+
+Do not rely only on hiding frontend elements.
+
+Any new private API endpoint must enforce
+Founder authorization on the server.
+
+Do not expose sensitive account information,
+credentials, environment variables or
+administrative data.
+
+Do not introduce new roles or permissions.
+
+==================================================
+8. STRICT RESTRICTIONS
+==================================================
+
+DO NOT:
+
+- Modify Stripe
+- Modify subscriptions
+- Modify membership rules
+- Modify Clerk configuration
+- Change Founder identity
+- Modify database schemas
+- Run migrations
+- Start or restart backend servers
+- Trigger Stripe synchronization
+- Modify production data
+- Deploy automatically
+- Replace the homepage
+- Remove existing animations
+- Implement the full CMS
+- Modify the 17 sectors
+- Modify the six official programs
+
+Do not run backend-dependent tests that
+require starting application servers.
+
+Use safe static checks where available.
+
+==================================================
+9. DELIVERABLE
+==================================================
+
+Implement the Founder Workspace foundation.
+
+At completion, provide:
+
+1. Files created
+2. Files modified
+3. Founder Workspace route
+4. Navigation entry location
+5. Existing admin tools connected
+6. Sections marked as not yet available
+7. Security measures implemented
+8. Static validation results
+9. Any unresolved limitations
+
+Do not claim runtime testing unless it
+was actually performed.
+
+Do not deploy.
+
+Stop after completing PHASE A.
+
+Wait for Founder approval before implementing
+Phase B.

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'wouter';
+import { Link, useLocation, useSearch } from 'wouter';
+import { adminTabFromSearch, type AdminTab } from '@/lib/admin-navigation';
 import { AlertTriangle } from 'lucide-react';
 import { useGetNetworkState, getGetNetworkStateQueryKey, type NetworkCertification, type NetworkReport } from '@workspace/api-client-react';
 import MediaRequestsAdmin from '@/components/partners/MediaRequestsAdmin';
@@ -81,7 +82,10 @@ function ReportRow({ r }: { r: NetworkReport }) {
 }
 
 export default function Admin() {
-  const [tab, setTab] = useState<'certs' | 'reports' | 'members' | 'media' | 'intros' | 'news' | 'offers'>('certs');
+  const search = useSearch();
+  const [, navigate] = useLocation();
+  const tab = adminTabFromSearch(search);
+  const setTab = (next: AdminTab) => navigate(`/member/admin?tab=${next}`);
   const q = useGetNetworkState({}, { query: { queryKey: getGetNetworkStateQueryKey({}) } });
   const { run, pending } = useAct();
   if (q.isLoading) return <div className="p-3 md:p-0"><Skeleton /></div>;
@@ -94,6 +98,7 @@ export default function Admin() {
   return (
     <div className="flex flex-col gap-4 px-3 pt-4 md:px-0 md:pt-0">
       <header>
+        <Link href="/member/founder" className="mb-3 inline-flex min-h-11 items-center text-xs font-semibold text-lagoon-700 underline underline-offset-4" data-testid="link-admin-founder-workspace">Back to Founder Workspace</Link>
         <div className="flex flex-wrap items-baseline justify-between gap-2"><h1 className="font-display text-2xl text-ink-900">Founder administration</h1><Link href="~/tropik-magazine/contribute#founder-review" className="text-xs font-semibold text-lagoon-700 underline underline-offset-4" data-testid="link-admin-magazine-proposals">Magazine proposals</Link></div>
         <p className="mt-1 flex items-start gap-1.5 text-sm text-ink-700"><AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-gold-600" />Approval applies to one role and programme. Non-commercial roles activate on approval; commercial roles (partner, sponsor, designer, exhibitor or any package) need a signed agreement, and the badge activates only once payment is confirmed. Payment alone never grants a badge.</p>
       </header>

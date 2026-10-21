@@ -21,6 +21,7 @@ import Messages from './Messages';
 import Packages from './Packages';
 import Certifications from './Certifications';
 import Admin from './Admin';
+import FounderWorkspace from './FounderWorkspace';
 import SettingsPage from './Settings';
 import MemberWelcome from './MemberWelcome';
 import Connections from './Connections';
@@ -155,6 +156,11 @@ function AppShell({ me, base, children }: Ctx & { children: ReactNode }) {
               <I className="h-4 w-4" />{label}{label === 'Messages' && unread > 0 && <span className="ml-auto rounded-full bg-coral-500 px-1.5 text-[10px] font-bold text-ink-900">{unread}</span>}
             </Link>
           ))}
+          {me.founder && (
+            <Link href="/member/founder" aria-current={active('/member/founder') ? 'page' : undefined} className={`flex min-h-11 items-center gap-3 rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 ${active('/member/founder') ? 'bg-lagoon-900 font-semibold text-gold-400' : 'border border-gold-500/35 text-lagoon-900 hover:bg-ivory-200'}`} data-testid="nav-founder-workspace">
+              <Shield className="h-4 w-4 shrink-0" />Founder Workspace
+            </Link>
+          )}
           <Link href="/member/invite" className={`flex items-center gap-3 rounded-full px-4 py-2.5 text-sm ${active('/member/invite') ? 'bg-lagoon-900 font-semibold text-gold-400' : 'text-ink-800 hover:bg-ivory-200'}`} data-testid="nav-invite"><UserPlus className="h-4 w-4" />Invite{base.growth && !me.founder && <span className="ml-auto text-[10px] text-sand-400">{base.growth.qualifiedInvites}</span>}</Link>
           <Link href="/member/membership" className={`flex items-center gap-3 rounded-full px-4 py-2.5 text-sm ${active('/member/membership') ? 'bg-lagoon-900 font-semibold text-gold-400' : 'text-ink-800 hover:bg-ivory-200'}`} data-testid="nav-membership"><BadgeCheck className="h-4 w-4" />Membership</Link>
           <Link href="/member/business" className={`flex items-center gap-3 rounded-full px-4 py-2.5 text-sm ${active('/member/business') ? 'bg-lagoon-900 font-semibold text-gold-400' : 'text-ink-800 hover:bg-ivory-200'}`} data-testid="nav-business"><Building2 className="h-4 w-4" />Company</Link>
@@ -163,6 +169,11 @@ function AppShell({ me, base, children }: Ctx & { children: ReactNode }) {
           <Link href="/donate" className="mt-2 flex items-center gap-3 rounded-2xl border border-gold-500/40 bg-gold-500/10 px-4 py-3 text-sm text-ink-800 hover:border-gold-500" data-testid="link-humanitarian"><HandHeart className="h-4 w-4 text-gold-700" />Humanitarian action</Link>
         </aside>
         <main className="min-w-0 flex-1">
+          {me.founder && (
+            <Link href="/member/founder" aria-current={active('/member/founder') ? 'page' : undefined} className="mx-3 mb-3 flex min-h-12 items-center justify-between gap-3 rounded-xl border border-gold-500/40 bg-lagoon-900 px-4 py-3 text-sm font-semibold text-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 md:hidden" data-testid="nav-founder-workspace-mobile">
+              Founder Workspace<Shield className="h-4 w-4 shrink-0" />
+            </Link>
+          )}
           <Link href="/member/thanks-emirates" className="mx-3 mt-4 mb-3 flex items-center justify-between gap-3 rounded-xl border border-gold-500/40 bg-lagoon-900 px-4 py-3 text-xs text-ivory-100 md:hidden" data-testid="nav-thanks-emirates-mobile">
             <span>Thanks Emirates · Share your story</span><Sparkles className="h-4 w-4 shrink-0 text-gold-400" />
           </Link>
@@ -223,6 +234,7 @@ function NetworkGate() {
           <Route path="/member/packages" component={Packages} />
           <Route path="/member/certifications" component={Certifications} />
           <Route path="/member/admin">{me.founder ? <Admin /> : <Redirect to="/member" replace />}</Route>
+          <Route path="/member/founder">{me.founder ? <FounderWorkspace /> : <Redirect to="/member" replace />}</Route>
           <Route path="/member/invite"><div className="flex flex-col gap-4 px-3 pt-4 md:px-0 md:pt-0"><h1 className="font-display text-2xl text-ink-900">Invite your community</h1><InvitationProgress growth={state.growth} founder={me.founder} /></div></Route>
           <Route path="/member/membership" component={Membership} />
           <Route path="/member/business/:memberId" component={BusinessDetail} />
