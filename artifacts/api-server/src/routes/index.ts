@@ -15,6 +15,7 @@ import officialMeetingsRouter from "./officialMeetings";
 import magazineRouter from "./magazine";
 import publicInvestmentRouter from "./publicInvestment";
 import newsPublishingRouter from "./newsPublishing";
+import gratitudeRouter from "./gratitude";
 
 const router: IRouter = Router();
 
@@ -34,5 +35,6 @@ router.use(officialMeetingsRouter);
 router.use(magazineRouter);
 router.use(publicInvestmentRouter);
 router.use(newsPublishingRouter);
+router.use(gratitudeRouter);
 
 export default router;

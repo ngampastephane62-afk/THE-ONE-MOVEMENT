@@ -8,7 +8,12 @@ import GoldThread from '@/components/GoldThread';
 import EditorialFilm from '@/components/EditorialFilm';
 import Reveal from './VisionReveal';
 import ConnectNetwork from './ConnectNetwork';
-import ThanksWorldPreview from './ThanksWorldPreview';
+import ThanksWorldLive from './ThanksWorldLive';
+import { FlagField } from '@/lib/gratitude';
+import { COUNTRIES } from './country-data';
+
+const FLAG_CODES = COUNTRIES.map((c) => c.code);
+import '@/pages/thanks-the-world/ttw.css';
 import './vision.css';
 
 const NODES = [
@@ -86,9 +91,10 @@ export default function OurVision() {
       </section>
 
       {/* Closing message */}
-      <section className="relative bg-ivory-100 py-section-lg">
+      <section className="relative overflow-hidden bg-ivory-100 py-section-lg">
         <div className="tv-kuba-light" aria-hidden />
-        <Reveal className="relative mx-auto max-w-5xl px-6 text-center">
+        <FlagField codes={FLAG_CODES} count={32} />
+        <Reveal className="relative mx-auto max-w-5xl px-6 text-center tv-from-scale">
           <p className="font-display text-3xl leading-tight text-ink-900 sm:text-4xl" style={{ textWrap: 'balance' }}>
             “Different nations. Different cultures. Different ambitions. One shared humanity.”
           </p>
@@ -101,7 +107,7 @@ export default function OurVision() {
       <section ref={network.ref} className={`relative bg-lagoon-900 py-section-xl text-ivory-100 ${network.paused ? 'tv-paused' : ''}`} aria-labelledby="connect-heading">
         <div className="tv-kuba" style={{ opacity: 0.06 }} aria-hidden />
         <div className="relative mx-auto max-w-6xl px-6">
-          <Reveal className="grid gap-8 lg:grid-cols-12">
+          <Reveal className="grid gap-8 lg:grid-cols-12 tv-from-left">
             <div className="lg:col-span-5">
               <p className="text-eyebrow text-gold-400">HOW WE CONNECT</p>
               <h2 id="connect-heading" className="mt-4 text-display-lg">Different worlds. Shared possibilities.</h2>
@@ -140,7 +146,7 @@ export default function OurVision() {
             ))}
           </ol>
           <Reveal className="mt-10 flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:justify-between">
-            <p className="max-w-xl text-sm leading-relaxed text-ink-700">Explore existing programmes, editorial enquiries and member spaces. Membership opens possibilities; it does not guarantee investments, customers, introductions, certifications, media coverage or financial returns. Thanks the World story submission is a planned capability, not yet available.</p>
+            <p className="max-w-xl text-sm leading-relaxed text-ink-700">Explore existing programmes, editorial enquiries and member spaces. Membership opens possibilities; it does not guarantee investments, customers, introductions, certifications, media coverage or financial returns. Thanks the World stories are shared by members and published only after the Founder's review.</p>
             <Link href="/join" data-testid="link-join-members"><Button size="xl" variant="default">JOIN THE MOVEMENT</Button></Link>
           </Reveal>
         </div>
@@ -170,7 +176,7 @@ export default function OurVision() {
       <section id="thanks-the-world" style={{ scrollMarginTop: '96px' }} className="relative bg-lagoon-900 py-section-xl text-ivory-100" aria-labelledby="ttw-heading">
         <div className="tv-kuba" style={{ opacity: 0.05 }} aria-hidden />
         <div className="relative mx-auto max-w-6xl px-6">
-          <Reveal className="grid gap-8 lg:grid-cols-12">
+          <Reveal className="grid gap-8 lg:grid-cols-12 tv-from-left">
             <div className="lg:col-span-6">
               <p className="text-eyebrow text-gold-400">THANKS THE WORLD · GLOBAL CAMPAIGN</p>
               <h2 id="ttw-heading" className="mt-4 text-display-lg">EVERY COUNTRY HAS A STORY.<br /><span className="text-gold-400">EVERY VOICE MATTERS.</span></h2>
@@ -183,7 +189,7 @@ export default function OurVision() {
               </ul>
             </div>
           </Reveal>
-          <Reveal delay={100} className="mt-12"><div id="thanks-world-preview" style={{ scrollMarginTop: '96px' }}><ThanksWorldPreview /></div></Reveal>
+          <Reveal delay={100} className="mt-12 tv-from-right"><div id="thanks-world-campaign" style={{ scrollMarginTop: '96px' }}><ThanksWorldLive /></div></Reveal>
         </div>
       </section>
 
@@ -193,7 +199,7 @@ export default function OurVision() {
           <Reveal><p id="motion-heading" className="text-eyebrow text-gold-600">THE VISION IN MOTION</p></Reveal>
           <div className="mt-8 grid gap-px bg-sand-200 md:grid-cols-3">
             {[
-              { href: '#thanks-the-world', k: 'Global Gratitude Campaign', t: 'THANKS THE WORLD', d: 'A new global campaign concept, shown here as a preview. Story contributions are not yet open.', pat: 'M0 30 Q25 0 50 30 T100 30' },
+              { href: '/thanks-the-world', k: 'Global Gratitude Campaign', t: 'THANKS THE WORLD', d: 'Members share personal stories of gratitude, published after the Founder\'s review once a campaign is active.', pat: 'M0 30 Q25 0 50 30 T100 30' },
               { href: '/thanks-emirates', k: 'UAE Gratitude Campaign', t: 'THANKS EMIRATES', d: 'A distinct campaign of personal stories of gratitude, coexistence and opportunity connected to the UAE.', pat: 'M0 50 L25 20 L50 50 L75 20 L100 50' },
               { href: '/the-one-documentary', k: 'Documentary / storytelling initiative', t: 'THE ONE DOCUMENTARY', d: 'People, cultures and journeys, following the Movement.', pat: 'M0 40 H30 M40 40 H60 M70 40 H100 M30 20 V60 M70 20 V60' },
             ].map((x, i) => (

@@ -27,6 +27,7 @@ import ThanksEmirates from '@/pages/thanks-emirates';
 import Ambassadors from '@/pages/ambassadors';
 import AmbassadorDetail from '@/pages/ambassadors/detail';
 import ThanksWorld from '@/pages/thanks-world';
+import ThanksTheWorld from '@/pages/thanks-the-world';
 import Documentary from '@/pages/documentary';
 import News from '@/pages/news';
 import NewsDetail from '@/pages/news/detail';
@@ -118,6 +119,7 @@ function Router() {
       <Route path="/ambassadors/:slug" component={AmbassadorDetail} />
       <Route path="/ambassadors" component={Ambassadors} />
       <Route path="/thanks-world" component={ThanksWorld} />
+      <Route path="/thanks-the-world" component={ThanksTheWorld} />
       <Route path="/the-one-documentary" component={Documentary} />
       <Route path="/news" component={News} />
       <Route path="/news/coverage/:id" component={CoverageDetail} />

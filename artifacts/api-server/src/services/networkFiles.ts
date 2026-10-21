@@ -3,6 +3,7 @@ import { randomUUID } from "node:crypto";
 import { db, networkUploads as uploads } from "@workspace/db";
 import { eq, and, inArray, gte } from "drizzle-orm";
 import { NetworkError } from "./networkAuth";
+import { isCampaignPath, isReservedMediaPath } from "./mediaIsolation";
 
 export const storage = new Storage({
   projectId: "",
@@ -19,7 +20,7 @@ export function objectFile(path: string) {
   if (!bucket || !parts.length) throw new Error("Invalid storage configuration");
   return storage.bucket(bucket).file(parts.join("/"));
 }
-export async function requestUpload(ownerId: number, input: { filename: string; contentType: string; size: number }, scope: "network" | "news" = "network") {
+export async function requestUpload(ownerId: number, input: { filename: string; contentType: string; size: number }, scope: "network" | "news" | "gratitude" = "network") {
   const max = input.contentType.startsWith("video/") ? 100 * 1024 * 1024 : 20 * 1024 * 1024;
   if (!types.has(input.contentType) || input.size < 1 || input.size > max) throw new NetworkError(400, "Use an allowed image, video, audio or PDF within the displayed size limit.");
   const recent = await db.select({ size: uploads.size, ready: uploads.ready }).from(uploads)
@@ -30,7 +31,7 @@ export async function requestUpload(ownerId: number, input: { filename: string; 
   const privateDir = process.env.PRIVATE_OBJECT_DIR;
   if (!privateDir) throw new NetworkError(503, "Media storage is not configured.");
   const id = randomUUID();
-  const objectPath = `${privateDir.replace(/\/$/, "")}/${scope === "news" ? "news-pending" : "network"}/${ownerId}/${id}`;
+  const objectPath = `${privateDir.replace(/\/$/, "")}/${scope === "gratitude" ? "gratitude-pending" : scope === "news" ? "news-pending" : "network"}/${ownerId}/${id}`;
   const file = objectFile(objectPath);
   const reply = await fetch("http://127.0.0.1:1106/object-storage/signed-object-url", {
     method: "POST", headers: { "Content-Type": "application/json" },
@@ -49,9 +50,10 @@ export async function requestUpload(ownerId: number, input: { filename: string; 
   });
   return { id, uploadUrl: signed.signed_url };
 }
-export async function completeUpload(ownerId: number, id: string, executor: Pick<typeof db, "select" | "update"> = db) {
+export async function completeUpload(ownerId: number, id: string, executor: Pick<typeof db, "select" | "update"> = db, campaign = false) {
   const [row] = await executor.select().from(uploads).where(and(eq(uploads.id, id), eq(uploads.ownerId, ownerId)));
   if (!row) throw new NetworkError(404, "Upload not found.");
+  if (!campaign && isReservedMediaPath(row.objectPath)) throw new NetworkError(400, "Finalize this file through its dedicated review workflow.");
   const file = objectFile(row.objectPath);
   const [metadata] = await file.getMetadata();
   if (Number(metadata.size) !== row.size || metadata.contentType?.split(";")[0] !== row.contentType) {
@@ -82,6 +84,7 @@ export async function ownedMedia(ownerId: number, ids: string[] = []) {
   if (!unique.length) return [];
   const found = await db.select().from(uploads).where(and(eq(uploads.ownerId, ownerId), eq(uploads.ready, true), inArray(uploads.id, unique)));
   if (found.length !== unique.length) throw new NetworkError(400, "Attach only your own completed uploads.");
+  if (found.some(row => isCampaignPath(row.objectPath) || isReservedMediaPath(row.objectPath))) throw new NetworkError(400, "Campaign review files cannot be attached to another publication.");
   return found;
 }
 export function mediaDto(row: typeof uploads.$inferSelect) {

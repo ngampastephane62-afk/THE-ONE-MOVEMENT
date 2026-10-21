@@ -11,6 +11,136 @@ tags:
   - name: health
     description: Health operations
 paths:
+  /gratitude/options:
+    get:
+      operationId: getGratitudeOptions
+      responses:
+        "200":
+          description: Active campaigns and international country/theme choices
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/GratitudeOptions"}
+  /gratitude/stories:
+    get:
+      operationId: getGratitudeStories
+      parameters:
+        - {name: country, in: query, schema: {type: string}}
+        - {name: continent, in: query, schema: {type: string}}
+        - {name: campaign, in: query, schema: {type: integer}}
+        - {name: author, in: query, schema: {type: integer}}
+        - {name: sort, in: query, schema: {type: string, enum: [recent, views, likes, discussed, featured], default: recent}}
+        - {name: page, in: query, schema: {type: integer, minimum: 1, default: 1}}
+      responses:
+        "200":
+          description: Approved and privacy-eligible public stories
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/GratitudePage"}
+  /gratitude/stories/{id}:
+    get:
+      operationId: getGratitudeStory
+      parameters:
+        - {name: id, in: path, required: true, schema: {type: integer}}
+      responses:
+        "200":
+          description: Public story with visible comments
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/GratitudeStory"}
+  /gratitude/me:
+    get:
+      operationId: getMyGratitudeStories
+      parameters:
+        - {name: page, in: query, schema: {type: integer, minimum: 1, default: 1}}
+      responses:
+        "200":
+          description: Current member's private drafts and statuses
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/GratitudePage"}
+  /gratitude/founder:
+    get:
+      operationId: getFounderGratitude
+      parameters:
+        - {name: page, in: query, schema: {type: integer, minimum: 1, default: 1}}
+      responses:
+        "200":
+          description: Founder-only stories, campaigns and open reports
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/GratitudeFounder"}
+  /gratitude/review/{id}:
+    get:
+      operationId: getFounderGratitudeStory
+      parameters:
+        - {name: id, in: path, required: true, schema: {type: integer}}
+      responses:
+        "200":
+          description: Founder-only story and comments for moderation
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/GratitudeStory"}
+  /gratitude/actions:
+    post:
+      operationId: runGratitudeAction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: "#/components/schemas/GratitudeAction"}
+      responses:
+        "200":
+          description: Committed action; refetch affected gratitude queries
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [id]
+                properties:
+                  id: {type: integer}
+  /gratitude/uploads:
+    post:
+      operationId: requestGratitudeUpload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: "#/components/schemas/GratitudeUploadInput"}
+      responses:
+        "201":
+          description: Private upload reservation
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [id, uploadUrl, version]
+                properties:
+                  id: {type: string}
+                  uploadUrl: {type: string}
+                  version: {type: integer}
+  /gratitude/uploads/{id}/complete:
+    post:
+      operationId: completeGratitudeUpload
+      parameters:
+        - {name: id, in: path, required: true, schema: {type: string}}
+      responses:
+        "200":
+          description: Validated media or explicit processing error
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [id]
+                properties:
+                  id: {type: string}
+  /gratitude/media/{id}:
+    get:
+      operationId: getGratitudeMedia
+      parameters:
+        - {name: id, in: path, required: true, schema: {type: string}}
+      responses:
+        "200": {description: "Authorized media stream, with byte ranges for videos"}
+        "404": {description: Media unavailable or not authorized}
   /news/articles:
     get:
       operationId: getPublishedNewsArticles
@@ -1013,6 +1143,152 @@ paths:
                 $ref: "#/components/schemas/DetailedHealthStatus"
 components:
   schemas:
+    GratitudeUploadInput:
+      type: object
+      required: [contributionId, version, filename, contentType, size]
+      properties:
+        contributionId: {type: integer}
+        version: {type: integer}
+        filename: {type: string, maxLength: 200}
+        contentType: {type: string, enum: [image/jpeg, image/png, image/webp, video/mp4, video/webm, video/quicktime]}
+        size: {type: integer, minimum: 1, maximum: 104857600}
+        altText: {type: string, maxLength: 500}
+    GratitudeCampaign:
+      type: object
+      required: [id, slug, name, description, status, identity]
+      properties:
+        id: {type: integer}
+        parentId: {type: [integer, "null"]}
+        slug: {type: string}
+        name: {type: string}
+        description: {type: string}
+        status: {type: string, enum: [draft, active, paused, archived]}
+        identity: {type: object, additionalProperties: true}
+    GratitudeOptions:
+      type: object
+      required: [campaigns, countries, themes, consentVersion]
+      properties:
+        campaigns: {type: array, items: {$ref: "#/components/schemas/GratitudeCampaign"}}
+        countries:
+          type: array
+          items:
+            type: object
+            required: [code, name, region, continent]
+            properties:
+              code: {type: string}
+              name: {type: string}
+              region: {type: string}
+              continent: {type: string}
+        themes:
+          type: array
+          items:
+            type: object
+            required: [id, label]
+            properties:
+              id: {type: string}
+              label: {type: string}
+        consentVersion: {type: string}
+    GratitudeMedia:
+      type: object
+      required: [id, uploadId, kind, status, altText]
+      properties:
+        id: {type: integer}
+        uploadId: {type: string}
+        kind: {type: string}
+        status: {type: string}
+        url: {type: [string, "null"]}
+        thumbnailUrl: {type: [string, "null"]}
+        durationMs: {type: [integer, "null"]}
+        altText: {type: string}
+    GratitudeComment:
+      type: object
+      required: [id, authorId, authorName, body, createdAt]
+      properties:
+        id: {type: integer}
+        authorId: {type: integer}
+        authorName: {type: string}
+        body: {type: string}
+        createdAt: {type: string}
+        hidden: {type: boolean}
+    GratitudeStory:
+      type: object
+      required: [id, authorId, authorName, campaignId, campaignName, title, body, countryCode, countryName, region, continent, theme, status, version, featured, decisionReason, profileEligible, media, views, likes, commentCount, shareIntents, liked, comments]
+      properties:
+        id: {type: integer}
+        authorId: {type: integer}
+        authorName: {type: string}
+        campaignId: {type: integer}
+        campaignName: {type: string}
+        title: {type: string}
+        body: {type: string}
+        countryCode: {type: [string, "null"]}
+        countryName: {type: string}
+        region: {type: string}
+        continent: {type: string}
+        theme: {type: [string, "null"]}
+        status: {type: string}
+        version: {type: integer}
+        featured: {type: boolean}
+        decisionReason: {type: string}
+        profileEligible: {type: boolean}
+        publishedAt: {type: [string, "null"]}
+        updatedAt: {type: string}
+        media: {type: array, items: {$ref: "#/components/schemas/GratitudeMedia"}}
+        views: {type: integer}
+        likes: {type: integer}
+        commentCount: {type: integer}
+        shareIntents: {type: integer}
+        liked: {type: boolean}
+        comments: {type: array, items: {$ref: "#/components/schemas/GratitudeComment"}}
+    GratitudePage:
+      type: object
+      required: [items, page, hasMore]
+      properties:
+        items: {type: array, items: {$ref: "#/components/schemas/GratitudeStory"}}
+        page: {type: integer}
+        hasMore: {type: boolean}
+    GratitudeFounder:
+      allOf:
+        - {$ref: "#/components/schemas/GratitudePage"}
+        - type: object
+          required: [campaigns, reports]
+          properties:
+            campaigns: {type: array, items: {$ref: "#/components/schemas/GratitudeCampaign"}}
+            reports:
+              type: array
+              items:
+                type: object
+                required: [id, contributionId, reason]
+                properties:
+                  id: {type: integer}
+                  contributionId: {type: integer}
+                  commentId: {type: [integer, "null"]}
+                  reason: {type: string}
+    GratitudeAction:
+      type: object
+      required: [action]
+      properties:
+        action: {type: string, enum: [save, submit, archive, moderate, removeMedia, like, view, share, comment, deleteComment, report, resolveReport, moderateComment, campaign]}
+        id: {type: integer}
+        version: {type: integer}
+        campaignId: {type: integer}
+        title: {type: string, maxLength: 160}
+        body: {type: string, maxLength: 5000}
+        countryCode: {type: [string, "null"]}
+        theme: {type: [string, "null"]}
+        consent: {type: boolean}
+        rights: {type: boolean}
+        decision: {type: string, enum: [publish, reject, hide, restore, feature, unfeature]}
+        reason: {type: string, maxLength: 2000}
+        accepted: {type: boolean}
+        commentId: {type: integer}
+        mediaId: {type: integer}
+        slug: {type: string, maxLength: 120}
+        name: {type: string, maxLength: 120}
+        description: {type: string, maxLength: 4000}
+        parentId: {type: [integer, "null"]}
+        campaignStatus: {type: string, enum: [draft, active, paused, archived]}
+        identity: {type: string, enum: [global, emirates, africa, usa, europe]}
     NewsReference:
       type: object
       required: [key, label]

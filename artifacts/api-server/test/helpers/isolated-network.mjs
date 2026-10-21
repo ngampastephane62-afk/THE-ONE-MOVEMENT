@@ -177,6 +177,7 @@ const output = await build({
           contents = `import { db, networkUploads as uploads } from "@workspace/db";
             import { eq, and, inArray } from "drizzle-orm";
             import { NetworkError } from "./networkAuth";
+            import { isCampaignPath, isReservedMediaPath } from "./mediaIsolation";
             ${source.slice(source.indexOf('export async function ownedMedia'))}
             export const completeUpload = () => { throw Error("Storage is forbidden"); };`;
         } else if (path === 'monthlyMembership') {

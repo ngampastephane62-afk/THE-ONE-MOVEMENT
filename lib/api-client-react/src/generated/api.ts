@@ -26,6 +26,7 @@ import type {
 
 import type {
   CompleteFounderNewsUpload200,
+  CompleteGratitudeUpload200,
   CreateHumanitarianCheckout200,
   CreateHumanitarianOffer201,
   CreatePartnerIntroduction201,
@@ -34,18 +35,27 @@ import type {
   DonationCampaign,
   GetDocumentaryAccess200,
   GetEcosystemMembers200,
+  GetFounderGratitudeParams,
   GetFounderNewsArticleParams,
   GetFounderNewsOptions200,
   GetFounderNewsParams,
+  GetGratitudeStoriesParams,
   GetHumanitarianConfig200,
   GetHumanitarianOffers200Item,
   GetHumanitarianPaymentStatus200,
   GetHumanitarianPaymentStatusParams,
   GetMediaEngagementParams,
+  GetMyGratitudeStoriesParams,
   GetNetworkPaymentStatusParams,
   GetNetworkStateParams,
   GetProfessionalResource200,
   GetPublishedNewsArticlesParams,
+  GratitudeAction,
+  GratitudeFounder,
+  GratitudeOptions,
+  GratitudePage,
+  GratitudeStory,
+  GratitudeUploadInput,
   HealthStatus,
   HumanitarianCheckoutInput,
   HumanitarianOfferInput,
@@ -94,6 +104,8 @@ import type {
   ProfessionalState,
   RecordMagazineReadingEvent200,
   RequestFounderNewsUpload201,
+  RequestGratitudeUpload201,
+  RunGratitudeAction200,
   SavedItemInput,
   UpdateHumanitarianOffer200,
   UpdateMediaEngagementParams,
@@ -127,6 +139,924 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   }
   return result;
 };
+
+export const getGetGratitudeOptionsUrl = () => {
+
+
+
+
+  return `/api/gratitude/options`
+}
+
+export const getGratitudeOptions = async ( options?: Parameters<typeof customFetch>[1]): Promise<GratitudeOptions> => {
+
+  return customFetch<GratitudeOptions>(getGetGratitudeOptionsUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetGratitudeOptionsQueryKey = () => {
+    return [
+    `/api/gratitude/options`
+    ] as const;
+    }
+
+
+export const getGetGratitudeOptionsQueryOptions = <TData = Awaited<ReturnType<typeof getGratitudeOptions>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGratitudeOptions>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetGratitudeOptionsQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getGratitudeOptions>>> = ({ signal }) => getGratitudeOptions({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getGratitudeOptions>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetGratitudeOptionsQueryResult = NonNullable<Awaited<ReturnType<typeof getGratitudeOptions>>>
+export type GetGratitudeOptionsQueryError = ErrorType<unknown>
+
+
+export function useGetGratitudeOptions<TData = Awaited<ReturnType<typeof getGratitudeOptions>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGratitudeOptions>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getGratitudeOptions>>,
+          TError,
+          Awaited<ReturnType<typeof getGratitudeOptions>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetGratitudeOptions<TData = Awaited<ReturnType<typeof getGratitudeOptions>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGratitudeOptions>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getGratitudeOptions>>,
+          TError,
+          Awaited<ReturnType<typeof getGratitudeOptions>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetGratitudeOptions<TData = Awaited<ReturnType<typeof getGratitudeOptions>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGratitudeOptions>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetGratitudeOptions<TData = Awaited<ReturnType<typeof getGratitudeOptions>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGratitudeOptions>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetGratitudeOptionsQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getGetGratitudeStoriesUrl = (params?: GetGratitudeStoriesParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/gratitude/stories?${stringifiedParams}` : `/api/gratitude/stories`
+}
+
+export const getGratitudeStories = async (params?: GetGratitudeStoriesParams, options?: Parameters<typeof customFetch>[1]): Promise<GratitudePage> => {
+
+  return customFetch<GratitudePage>(getGetGratitudeStoriesUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetGratitudeStoriesQueryKey = (params?: GetGratitudeStoriesParams,) => {
+    return [
+    `/api/gratitude/stories`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getGetGratitudeStoriesQueryOptions = <TData = Awaited<ReturnType<typeof getGratitudeStories>>, TError = ErrorType<unknown>>(params?: GetGratitudeStoriesParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGratitudeStories>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetGratitudeStoriesQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getGratitudeStories>>> = ({ signal }) => getGratitudeStories(params, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getGratitudeStories>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetGratitudeStoriesQueryResult = NonNullable<Awaited<ReturnType<typeof getGratitudeStories>>>
+export type GetGratitudeStoriesQueryError = ErrorType<unknown>
+
+
+export function useGetGratitudeStories<TData = Awaited<ReturnType<typeof getGratitudeStories>>, TError = ErrorType<unknown>>(
+ params: undefined |  GetGratitudeStoriesParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGratitudeStories>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getGratitudeStories>>,
+          TError,
+          Awaited<ReturnType<typeof getGratitudeStories>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetGratitudeStories<TData = Awaited<ReturnType<typeof getGratitudeStories>>, TError = ErrorType<unknown>>(
+ params?: GetGratitudeStoriesParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGratitudeStories>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getGratitudeStories>>,
+          TError,
+          Awaited<ReturnType<typeof getGratitudeStories>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetGratitudeStories<TData = Awaited<ReturnType<typeof getGratitudeStories>>, TError = ErrorType<unknown>>(
+ params?: GetGratitudeStoriesParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGratitudeStories>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetGratitudeStories<TData = Awaited<ReturnType<typeof getGratitudeStories>>, TError = ErrorType<unknown>>(
+ params?: GetGratitudeStoriesParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGratitudeStories>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetGratitudeStoriesQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getGetGratitudeStoryUrl = (id: number,) => {
+
+
+
+
+  return `/api/gratitude/stories/${id}`
+}
+
+export const getGratitudeStory = async (id: number, options?: Parameters<typeof customFetch>[1]): Promise<GratitudeStory> => {
+
+  return customFetch<GratitudeStory>(getGetGratitudeStoryUrl(id),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetGratitudeStoryQueryKey = (id: number,) => {
+    return [
+    `/api/gratitude/stories/${id}`
+    ] as const;
+    }
+
+
+export const getGetGratitudeStoryQueryOptions = <TData = Awaited<ReturnType<typeof getGratitudeStory>>, TError = ErrorType<unknown>>(id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGratitudeStory>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetGratitudeStoryQueryKey(id);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getGratitudeStory>>> = ({ signal }) => getGratitudeStory(id, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getGratitudeStory>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetGratitudeStoryQueryResult = NonNullable<Awaited<ReturnType<typeof getGratitudeStory>>>
+export type GetGratitudeStoryQueryError = ErrorType<unknown>
+
+
+export function useGetGratitudeStory<TData = Awaited<ReturnType<typeof getGratitudeStory>>, TError = ErrorType<unknown>>(
+ id: number, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGratitudeStory>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getGratitudeStory>>,
+          TError,
+          Awaited<ReturnType<typeof getGratitudeStory>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetGratitudeStory<TData = Awaited<ReturnType<typeof getGratitudeStory>>, TError = ErrorType<unknown>>(
+ id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGratitudeStory>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getGratitudeStory>>,
+          TError,
+          Awaited<ReturnType<typeof getGratitudeStory>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetGratitudeStory<TData = Awaited<ReturnType<typeof getGratitudeStory>>, TError = ErrorType<unknown>>(
+ id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGratitudeStory>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetGratitudeStory<TData = Awaited<ReturnType<typeof getGratitudeStory>>, TError = ErrorType<unknown>>(
+ id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGratitudeStory>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetGratitudeStoryQueryOptions(id,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getGetMyGratitudeStoriesUrl = (params?: GetMyGratitudeStoriesParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/gratitude/me?${stringifiedParams}` : `/api/gratitude/me`
+}
+
+export const getMyGratitudeStories = async (params?: GetMyGratitudeStoriesParams, options?: Parameters<typeof customFetch>[1]): Promise<GratitudePage> => {
+
+  return customFetch<GratitudePage>(getGetMyGratitudeStoriesUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetMyGratitudeStoriesQueryKey = (params?: GetMyGratitudeStoriesParams,) => {
+    return [
+    `/api/gratitude/me`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getGetMyGratitudeStoriesQueryOptions = <TData = Awaited<ReturnType<typeof getMyGratitudeStories>>, TError = ErrorType<unknown>>(params?: GetMyGratitudeStoriesParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyGratitudeStories>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMyGratitudeStoriesQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMyGratitudeStories>>> = ({ signal }) => getMyGratitudeStories(params, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMyGratitudeStories>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMyGratitudeStoriesQueryResult = NonNullable<Awaited<ReturnType<typeof getMyGratitudeStories>>>
+export type GetMyGratitudeStoriesQueryError = ErrorType<unknown>
+
+
+export function useGetMyGratitudeStories<TData = Awaited<ReturnType<typeof getMyGratitudeStories>>, TError = ErrorType<unknown>>(
+ params: undefined |  GetMyGratitudeStoriesParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyGratitudeStories>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMyGratitudeStories>>,
+          TError,
+          Awaited<ReturnType<typeof getMyGratitudeStories>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyGratitudeStories<TData = Awaited<ReturnType<typeof getMyGratitudeStories>>, TError = ErrorType<unknown>>(
+ params?: GetMyGratitudeStoriesParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyGratitudeStories>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMyGratitudeStories>>,
+          TError,
+          Awaited<ReturnType<typeof getMyGratitudeStories>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyGratitudeStories<TData = Awaited<ReturnType<typeof getMyGratitudeStories>>, TError = ErrorType<unknown>>(
+ params?: GetMyGratitudeStoriesParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyGratitudeStories>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetMyGratitudeStories<TData = Awaited<ReturnType<typeof getMyGratitudeStories>>, TError = ErrorType<unknown>>(
+ params?: GetMyGratitudeStoriesParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyGratitudeStories>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMyGratitudeStoriesQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getGetFounderGratitudeUrl = (params?: GetFounderGratitudeParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/gratitude/founder?${stringifiedParams}` : `/api/gratitude/founder`
+}
+
+export const getFounderGratitude = async (params?: GetFounderGratitudeParams, options?: Parameters<typeof customFetch>[1]): Promise<GratitudeFounder> => {
+
+  return customFetch<GratitudeFounder>(getGetFounderGratitudeUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetFounderGratitudeQueryKey = (params?: GetFounderGratitudeParams,) => {
+    return [
+    `/api/gratitude/founder`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getGetFounderGratitudeQueryOptions = <TData = Awaited<ReturnType<typeof getFounderGratitude>>, TError = ErrorType<unknown>>(params?: GetFounderGratitudeParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderGratitude>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetFounderGratitudeQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getFounderGratitude>>> = ({ signal }) => getFounderGratitude(params, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getFounderGratitude>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetFounderGratitudeQueryResult = NonNullable<Awaited<ReturnType<typeof getFounderGratitude>>>
+export type GetFounderGratitudeQueryError = ErrorType<unknown>
+
+
+export function useGetFounderGratitude<TData = Awaited<ReturnType<typeof getFounderGratitude>>, TError = ErrorType<unknown>>(
+ params: undefined |  GetFounderGratitudeParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderGratitude>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getFounderGratitude>>,
+          TError,
+          Awaited<ReturnType<typeof getFounderGratitude>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetFounderGratitude<TData = Awaited<ReturnType<typeof getFounderGratitude>>, TError = ErrorType<unknown>>(
+ params?: GetFounderGratitudeParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderGratitude>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getFounderGratitude>>,
+          TError,
+          Awaited<ReturnType<typeof getFounderGratitude>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetFounderGratitude<TData = Awaited<ReturnType<typeof getFounderGratitude>>, TError = ErrorType<unknown>>(
+ params?: GetFounderGratitudeParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderGratitude>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetFounderGratitude<TData = Awaited<ReturnType<typeof getFounderGratitude>>, TError = ErrorType<unknown>>(
+ params?: GetFounderGratitudeParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderGratitude>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetFounderGratitudeQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getGetFounderGratitudeStoryUrl = (id: number,) => {
+
+
+
+
+  return `/api/gratitude/review/${id}`
+}
+
+export const getFounderGratitudeStory = async (id: number, options?: Parameters<typeof customFetch>[1]): Promise<GratitudeStory> => {
+
+  return customFetch<GratitudeStory>(getGetFounderGratitudeStoryUrl(id),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetFounderGratitudeStoryQueryKey = (id: number,) => {
+    return [
+    `/api/gratitude/review/${id}`
+    ] as const;
+    }
+
+
+export const getGetFounderGratitudeStoryQueryOptions = <TData = Awaited<ReturnType<typeof getFounderGratitudeStory>>, TError = ErrorType<unknown>>(id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderGratitudeStory>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetFounderGratitudeStoryQueryKey(id);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getFounderGratitudeStory>>> = ({ signal }) => getFounderGratitudeStory(id, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getFounderGratitudeStory>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetFounderGratitudeStoryQueryResult = NonNullable<Awaited<ReturnType<typeof getFounderGratitudeStory>>>
+export type GetFounderGratitudeStoryQueryError = ErrorType<unknown>
+
+
+export function useGetFounderGratitudeStory<TData = Awaited<ReturnType<typeof getFounderGratitudeStory>>, TError = ErrorType<unknown>>(
+ id: number, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderGratitudeStory>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getFounderGratitudeStory>>,
+          TError,
+          Awaited<ReturnType<typeof getFounderGratitudeStory>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetFounderGratitudeStory<TData = Awaited<ReturnType<typeof getFounderGratitudeStory>>, TError = ErrorType<unknown>>(
+ id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderGratitudeStory>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getFounderGratitudeStory>>,
+          TError,
+          Awaited<ReturnType<typeof getFounderGratitudeStory>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetFounderGratitudeStory<TData = Awaited<ReturnType<typeof getFounderGratitudeStory>>, TError = ErrorType<unknown>>(
+ id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderGratitudeStory>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetFounderGratitudeStory<TData = Awaited<ReturnType<typeof getFounderGratitudeStory>>, TError = ErrorType<unknown>>(
+ id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderGratitudeStory>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetFounderGratitudeStoryQueryOptions(id,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getRunGratitudeActionUrl = () => {
+
+
+
+
+  return `/api/gratitude/actions`
+}
+
+export const runGratitudeAction = async (gratitudeAction: GratitudeAction, options?: Parameters<typeof customFetch>[1]): Promise<RunGratitudeAction200> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<RunGratitudeAction200>(getRunGratitudeActionUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(gratitudeAction)
+  }
+);}
+
+
+
+
+
+export const getRunGratitudeActionMutationKey = () => ['runGratitudeAction'] as const;
+
+export const getRunGratitudeActionMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof runGratitudeAction>>, TError,RunGratitudeActionMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof runGratitudeAction>>, TError,RunGratitudeActionMutationVariables, TContext> => {
+
+const mutationKey = getRunGratitudeActionMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof runGratitudeAction>>, RunGratitudeActionMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  runGratitudeAction(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type RunGratitudeActionMutationResult = NonNullable<Awaited<ReturnType<typeof runGratitudeAction>>>
+    export type RunGratitudeActionMutationBody = BodyType<GratitudeAction>
+    export type RunGratitudeActionMutationError = ErrorType<unknown>
+    export type RunGratitudeActionMutationVariables = {data: BodyType<GratitudeAction>}
+
+    export const useRunGratitudeAction = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof runGratitudeAction>>, TError,RunGratitudeActionMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof runGratitudeAction>>,
+        TError,
+        RunGratitudeActionMutationVariables,
+        TContext
+      > => {
+      return useMutation(getRunGratitudeActionMutationOptions(options), queryClient);
+    }
+
+export const getRequestGratitudeUploadUrl = () => {
+
+
+
+
+  return `/api/gratitude/uploads`
+}
+
+export const requestGratitudeUpload = async (gratitudeUploadInput: GratitudeUploadInput, options?: Parameters<typeof customFetch>[1]): Promise<RequestGratitudeUpload201> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<RequestGratitudeUpload201>(getRequestGratitudeUploadUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(gratitudeUploadInput)
+  }
+);}
+
+
+
+
+
+export const getRequestGratitudeUploadMutationKey = () => ['requestGratitudeUpload'] as const;
+
+export const getRequestGratitudeUploadMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof requestGratitudeUpload>>, TError,RequestGratitudeUploadMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof requestGratitudeUpload>>, TError,RequestGratitudeUploadMutationVariables, TContext> => {
+
+const mutationKey = getRequestGratitudeUploadMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof requestGratitudeUpload>>, RequestGratitudeUploadMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  requestGratitudeUpload(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type RequestGratitudeUploadMutationResult = NonNullable<Awaited<ReturnType<typeof requestGratitudeUpload>>>
+    export type RequestGratitudeUploadMutationBody = BodyType<GratitudeUploadInput>
+    export type RequestGratitudeUploadMutationError = ErrorType<unknown>
+    export type RequestGratitudeUploadMutationVariables = {data: BodyType<GratitudeUploadInput>}
+
+    export const useRequestGratitudeUpload = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof requestGratitudeUpload>>, TError,RequestGratitudeUploadMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof requestGratitudeUpload>>,
+        TError,
+        RequestGratitudeUploadMutationVariables,
+        TContext
+      > => {
+      return useMutation(getRequestGratitudeUploadMutationOptions(options), queryClient);
+    }
+
+export const getCompleteGratitudeUploadUrl = (id: string,) => {
+
+
+
+
+  return `/api/gratitude/uploads/${id}/complete`
+}
+
+export const completeGratitudeUpload = async (id: string, options?: Parameters<typeof customFetch>[1]): Promise<CompleteGratitudeUpload200> => {
+
+  return customFetch<CompleteGratitudeUpload200>(getCompleteGratitudeUploadUrl(id),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+
+
+
+
+export const getCompleteGratitudeUploadMutationKey = () => ['completeGratitudeUpload'] as const;
+
+export const getCompleteGratitudeUploadMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof completeGratitudeUpload>>, TError,CompleteGratitudeUploadMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof completeGratitudeUpload>>, TError,CompleteGratitudeUploadMutationVariables, TContext> => {
+
+const mutationKey = getCompleteGratitudeUploadMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof completeGratitudeUpload>>, CompleteGratitudeUploadMutationVariables> = (props) => {
+          const {id} = props ?? {};
+
+          return  completeGratitudeUpload(id,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CompleteGratitudeUploadMutationResult = NonNullable<Awaited<ReturnType<typeof completeGratitudeUpload>>>
+
+    export type CompleteGratitudeUploadMutationError = ErrorType<unknown>
+    export type CompleteGratitudeUploadMutationVariables = {id: string}
+
+    export const useCompleteGratitudeUpload = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof completeGratitudeUpload>>, TError,CompleteGratitudeUploadMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof completeGratitudeUpload>>,
+        TError,
+        CompleteGratitudeUploadMutationVariables,
+        TContext
+      > => {
+      return useMutation(getCompleteGratitudeUploadMutationOptions(options), queryClient);
+    }
+
+export const getGetGratitudeMediaUrl = (id: string,) => {
+
+
+
+
+  return `/api/gratitude/media/${id}`
+}
+
+export const getGratitudeMedia = async (id: string, options?: Parameters<typeof customFetch>[1]): Promise<void> => {
+
+  return customFetch<void>(getGetGratitudeMediaUrl(id),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetGratitudeMediaQueryKey = (id: string,) => {
+    return [
+    `/api/gratitude/media/${id}`
+    ] as const;
+    }
+
+
+export const getGetGratitudeMediaQueryOptions = <TData = Awaited<ReturnType<typeof getGratitudeMedia>>, TError = ErrorType<void>>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGratitudeMedia>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetGratitudeMediaQueryKey(id);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getGratitudeMedia>>> = ({ signal }) => getGratitudeMedia(id, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getGratitudeMedia>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetGratitudeMediaQueryResult = NonNullable<Awaited<ReturnType<typeof getGratitudeMedia>>>
+export type GetGratitudeMediaQueryError = ErrorType<void>
+
+
+export function useGetGratitudeMedia<TData = Awaited<ReturnType<typeof getGratitudeMedia>>, TError = ErrorType<void>>(
+ id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGratitudeMedia>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getGratitudeMedia>>,
+          TError,
+          Awaited<ReturnType<typeof getGratitudeMedia>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetGratitudeMedia<TData = Awaited<ReturnType<typeof getGratitudeMedia>>, TError = ErrorType<void>>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGratitudeMedia>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getGratitudeMedia>>,
+          TError,
+          Awaited<ReturnType<typeof getGratitudeMedia>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetGratitudeMedia<TData = Awaited<ReturnType<typeof getGratitudeMedia>>, TError = ErrorType<void>>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGratitudeMedia>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetGratitudeMedia<TData = Awaited<ReturnType<typeof getGratitudeMedia>>, TError = ErrorType<void>>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getGratitudeMedia>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetGratitudeMediaQueryOptions(id,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
 
 export const getGetPublishedNewsArticlesUrl = (params?: GetPublishedNewsArticlesParams,) => {
   const normalizedParams = new URLSearchParams();

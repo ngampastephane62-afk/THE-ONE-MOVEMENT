@@ -4,7 +4,7 @@ import PendingInvitation from '@/components/network/PendingInvitation';
 import { Helmet } from 'react-helmet-async';
 import { Link, Redirect, Route, Switch, useLocation } from 'wouter';
 import { Show, useAuth, useUser, useClerk } from '@clerk/react';
-import { Award, BadgeCheck, Bell, Building2, Sparkles, UserPlus, Briefcase, Compass, HandHeart, Home, Newspaper, LogOut, MessageSquare, Settings, Shield, Users } from 'lucide-react';
+import { Award, BadgeCheck, Bell, Building2, Sparkles, UserPlus, Briefcase, Compass, Globe2, HandHeart, Home, Newspaper, LogOut, MessageSquare, Settings, Shield, Users } from 'lucide-react';
 import {
   useGetMemberProfile, getGetMemberProfileQueryKey, useGetNetworkState, getGetNetworkStateQueryKey,
 } from '@workspace/api-client-react';
@@ -27,6 +27,7 @@ import SettingsPage from './Settings';
 import MemberWelcome from './MemberWelcome';
 import Connections from './Connections';
 import ThanksEmiratesForm from './ThanksEmirates';
+import ThanksTheWorldMember from './ThanksTheWorld';
 import Membership from './Membership';
 import MemberEcosystem from './Ecosystem';
 import Business, { BusinessDetail } from './Business';
@@ -167,6 +168,7 @@ function AppShell({ me, base, children }: Ctx & { children: ReactNode }) {
           <Link href="/member/business" className={`flex items-center gap-3 rounded-full px-4 py-2.5 text-sm ${active('/member/business') ? 'bg-lagoon-900 font-semibold text-gold-400' : 'text-ink-800 hover:bg-ivory-200'}`} data-testid="nav-business"><Building2 className="h-4 w-4" />Company</Link>
           <Link href="/member/settings" className={`flex items-center gap-3 rounded-full px-4 py-2.5 text-sm ${active('/member/settings') ? 'bg-lagoon-900 font-semibold text-gold-400' : 'text-ink-800 hover:bg-ivory-200'}`}><Settings className="h-4 w-4" />Settings & workspace</Link>
           <Link href="/member/thanks-emirates" className={`mt-4 flex items-center gap-3 rounded-2xl border border-lagoon-600/40 px-4 py-3 text-sm ${active('/member/thanks-emirates') ? 'bg-lagoon-900 text-gold-400' : 'bg-lagoon-600/5 text-ink-800 hover:border-lagoon-600'}`} data-testid="nav-thanks-emirates"><Sparkles className="h-4 w-4 text-lagoon-600" />Thanks Emirates</Link>
+          <Link href="/member/thanks-the-world" className={`mt-2 flex items-center gap-3 rounded-2xl border border-gold-500/40 px-4 py-3 text-sm ${active('/member/thanks-the-world') ? 'bg-lagoon-900 text-gold-400' : 'text-ink-800 hover:border-gold-500'}`} data-testid="nav-thanks-the-world"><Globe2 className="h-4 w-4 text-gold-700" />Thanks the World</Link>
           <Link href="/donate" className="mt-2 flex items-center gap-3 rounded-2xl border border-gold-500/40 bg-gold-500/10 px-4 py-3 text-sm text-ink-800 hover:border-gold-500" data-testid="link-humanitarian"><HandHeart className="h-4 w-4 text-gold-700" />Humanitarian action</Link>
         </aside>
         <main className="min-w-0 flex-1">
@@ -177,6 +179,9 @@ function AppShell({ me, base, children }: Ctx & { children: ReactNode }) {
           )}
           <Link href="/member/thanks-emirates" className="mx-3 mt-4 mb-3 flex items-center justify-between gap-3 rounded-xl border border-gold-500/40 bg-lagoon-900 px-4 py-3 text-xs text-ivory-100 md:hidden" data-testid="nav-thanks-emirates-mobile">
             <span>Thanks Emirates · Share your story</span><Sparkles className="h-4 w-4 shrink-0 text-gold-400" />
+          </Link>
+          <Link href="/member/thanks-the-world" className="mx-3 mb-3 flex items-center justify-between gap-3 rounded-xl border border-gold-500/40 bg-ivory-50 px-4 py-3 text-xs text-ink-800 md:hidden" data-testid="nav-thanks-the-world-mobile">
+            <span>Thanks the World · Your stories</span><Globe2 className="h-4 w-4 shrink-0 text-gold-700" />
           </Link>
           <div className="tomi-member-path mx-3 mb-4 md:mx-0" aria-label="Belong, discover, connect, contribute, grow" data-testid="member-path"><span>Belong</span><span>Discover</span><span>Connect</span><span>Contribute</span><span>Grow</span></div>
           {(loc === '/member' || loc === '/member/') && <MemberWelcome />}
@@ -243,6 +248,7 @@ function NetworkGate() {
           <Route path="/member/business" component={Business} />
           <Route path="/member/settings" component={SettingsPage} />
           <Route path="/member/thanks-emirates" component={ThanksEmiratesForm} />
+          <Route path="/member/thanks-the-world" component={ThanksTheWorldMember} />
           <Route><Redirect to="/member" replace /></Route>
         </Switch>
       </AppShell>

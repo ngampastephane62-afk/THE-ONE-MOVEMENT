@@ -5,6 +5,235 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+export type GratitudeUploadInputContentType = typeof GratitudeUploadInputContentType[keyof typeof GratitudeUploadInputContentType];
+
+
+export const GratitudeUploadInputContentType = {
+  'image/jpeg': 'image/jpeg',
+  'image/png': 'image/png',
+  'image/webp': 'image/webp',
+  'video/mp4': 'video/mp4',
+  'video/webm': 'video/webm',
+  'video/quicktime': 'video/quicktime',
+} as const;
+
+export interface GratitudeUploadInput {
+  contributionId: number;
+  version: number;
+  /** @maxLength 200 */
+  filename: string;
+  contentType: GratitudeUploadInputContentType;
+  /**
+     * @minimum 1
+     * @maximum 104857600
+     */
+  size: number;
+  /** @maxLength 500 */
+  altText?: string;
+}
+
+export type GratitudeCampaignStatus = typeof GratitudeCampaignStatus[keyof typeof GratitudeCampaignStatus];
+
+
+export const GratitudeCampaignStatus = {
+  draft: 'draft',
+  active: 'active',
+  paused: 'paused',
+  archived: 'archived',
+} as const;
+
+export type GratitudeCampaignIdentity = { [key: string]: unknown };
+
+export interface GratitudeCampaign {
+  id: number;
+  /** @nullable */
+  parentId?: number | null;
+  slug: string;
+  name: string;
+  description: string;
+  status: GratitudeCampaignStatus;
+  identity: GratitudeCampaignIdentity;
+}
+
+export type GratitudeOptionsCountriesItem = {
+  code: string;
+  name: string;
+  region: string;
+  continent: string;
+};
+
+export type GratitudeOptionsThemesItem = {
+  id: string;
+  label: string;
+};
+
+export interface GratitudeOptions {
+  campaigns: GratitudeCampaign[];
+  countries: GratitudeOptionsCountriesItem[];
+  themes: GratitudeOptionsThemesItem[];
+  consentVersion: string;
+}
+
+export interface GratitudeMedia {
+  id: number;
+  uploadId: string;
+  kind: string;
+  status: string;
+  /** @nullable */
+  url?: string | null;
+  /** @nullable */
+  thumbnailUrl?: string | null;
+  /** @nullable */
+  durationMs?: number | null;
+  altText: string;
+}
+
+export interface GratitudeComment {
+  id: number;
+  authorId: number;
+  authorName: string;
+  body: string;
+  createdAt: string;
+  hidden?: boolean;
+}
+
+export interface GratitudeStory {
+  id: number;
+  authorId: number;
+  authorName: string;
+  campaignId: number;
+  campaignName: string;
+  title: string;
+  body: string;
+  /** @nullable */
+  countryCode: string | null;
+  countryName: string;
+  region: string;
+  continent: string;
+  /** @nullable */
+  theme: string | null;
+  status: string;
+  version: number;
+  featured: boolean;
+  decisionReason: string;
+  profileEligible: boolean;
+  /** @nullable */
+  publishedAt?: string | null;
+  updatedAt?: string;
+  media: GratitudeMedia[];
+  views: number;
+  likes: number;
+  commentCount: number;
+  shareIntents: number;
+  liked: boolean;
+  comments: GratitudeComment[];
+}
+
+export interface GratitudePage {
+  items: GratitudeStory[];
+  page: number;
+  hasMore: boolean;
+}
+
+export type GratitudeFounderReportsItem = {
+  id: number;
+  contributionId: number;
+  /** @nullable */
+  commentId?: number | null;
+  reason: string;
+};
+
+export type GratitudeFounder = GratitudePage & {
+  campaigns: GratitudeCampaign[];
+  reports: GratitudeFounderReportsItem[];
+};
+
+export type GratitudeActionAction = typeof GratitudeActionAction[keyof typeof GratitudeActionAction];
+
+
+export const GratitudeActionAction = {
+  save: 'save',
+  submit: 'submit',
+  archive: 'archive',
+  moderate: 'moderate',
+  removeMedia: 'removeMedia',
+  like: 'like',
+  view: 'view',
+  share: 'share',
+  comment: 'comment',
+  deleteComment: 'deleteComment',
+  report: 'report',
+  resolveReport: 'resolveReport',
+  moderateComment: 'moderateComment',
+  campaign: 'campaign',
+} as const;
+
+export type GratitudeActionDecision = typeof GratitudeActionDecision[keyof typeof GratitudeActionDecision];
+
+
+export const GratitudeActionDecision = {
+  publish: 'publish',
+  reject: 'reject',
+  hide: 'hide',
+  restore: 'restore',
+  feature: 'feature',
+  unfeature: 'unfeature',
+} as const;
+
+export type GratitudeActionCampaignStatus = typeof GratitudeActionCampaignStatus[keyof typeof GratitudeActionCampaignStatus];
+
+
+export const GratitudeActionCampaignStatus = {
+  draft: 'draft',
+  active: 'active',
+  paused: 'paused',
+  archived: 'archived',
+} as const;
+
+export type GratitudeActionIdentity = typeof GratitudeActionIdentity[keyof typeof GratitudeActionIdentity];
+
+
+export const GratitudeActionIdentity = {
+  global: 'global',
+  emirates: 'emirates',
+  africa: 'africa',
+  usa: 'usa',
+  europe: 'europe',
+} as const;
+
+export interface GratitudeAction {
+  action: GratitudeActionAction;
+  id?: number;
+  version?: number;
+  campaignId?: number;
+  /** @maxLength 160 */
+  title?: string;
+  /** @maxLength 5000 */
+  body?: string;
+  /** @nullable */
+  countryCode?: string | null;
+  /** @nullable */
+  theme?: string | null;
+  consent?: boolean;
+  rights?: boolean;
+  decision?: GratitudeActionDecision;
+  /** @maxLength 2000 */
+  reason?: string;
+  accepted?: boolean;
+  commentId?: number;
+  mediaId?: number;
+  /** @maxLength 120 */
+  slug?: string;
+  /** @maxLength 120 */
+  name?: string;
+  /** @maxLength 4000 */
+  description?: string;
+  /** @nullable */
+  parentId?: number | null;
+  campaignStatus?: GratitudeActionCampaignStatus;
+  identity?: GratitudeActionIdentity;
+}
+
 export interface NewsReference {
   key: string;
   label: string;
@@ -1457,6 +1686,57 @@ export interface DetailedHealthStatus {
   status: string;
   database: string;
 }
+
+export type GetGratitudeStoriesParams = {
+country?: string;
+continent?: string;
+campaign?: number;
+author?: number;
+sort?: GetGratitudeStoriesSort;
+/**
+ * @minimum 1
+ */
+page?: number;
+};
+
+export type GetGratitudeStoriesSort = typeof GetGratitudeStoriesSort[keyof typeof GetGratitudeStoriesSort];
+
+
+export const GetGratitudeStoriesSort = {
+  recent: 'recent',
+  views: 'views',
+  likes: 'likes',
+  discussed: 'discussed',
+  featured: 'featured',
+} as const;
+
+export type GetMyGratitudeStoriesParams = {
+/**
+ * @minimum 1
+ */
+page?: number;
+};
+
+export type GetFounderGratitudeParams = {
+/**
+ * @minimum 1
+ */
+page?: number;
+};
+
+export type RunGratitudeAction200 = {
+  id: number;
+};
+
+export type RequestGratitudeUpload201 = {
+  id: string;
+  uploadUrl: string;
+  version: number;
+};
+
+export type CompleteGratitudeUpload200 = {
+  id: string;
+};
 
 export type GetPublishedNewsArticlesParams = {
 /**

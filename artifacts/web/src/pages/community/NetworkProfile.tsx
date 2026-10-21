@@ -6,6 +6,7 @@ import ProfileHero, { appearanceOf } from '@/components/network/ProfileHero';
 import { useGetPublicNetworkProfile, getGetPublicNetworkProfileQueryKey } from '@workspace/api-client-react';
 import { SECTORS } from '@/lib/sectors-data';
 import { ErrorBox, Skeleton, errStatus } from '@/components/network/kit';
+import ProfileGratitude from '@/components/gratitude/ProfileGratitude';
 import { storePendingFollow } from '@/lib/network-invitations';
 
 const cta = 'inline-flex items-center gap-2 bg-lagoon-900 px-6 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-ivory-100 hover:bg-lagoon-800';
@@ -76,6 +77,7 @@ export default function NetworkProfilePage() {
           </>)}
         </div>
       </div>
+      <ProfileGratitude memberId={p.id} />
     </article>,
   );
 }

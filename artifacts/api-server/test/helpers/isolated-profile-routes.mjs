@@ -97,6 +97,7 @@ export function profileRoutes(memberRows, profileRows = [], uploadRows = []) {
     '../services/networkActions': { networkAction: forbid },
     '../services/networkState': { activeBadge: () => false, networkState: forbid, visibleMember: forbid },
     '../services/networkFiles': { requestUpload: forbid, objectFile: forbid },
+    '../services/mediaIsolation': load(`${root}/src/services/mediaIsolation.ts`, {}),
     '../services/networkPayments': { DOCUMENTS: [], paymentStatus: forbid },
   };
   load(`${root}/src/routes/member.ts`, deps);

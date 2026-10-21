@@ -12,6 +12,7 @@ import { requestUpload, objectFile } from "../services/networkFiles";
 import { DOCUMENTS, paymentStatus } from "../services/networkPayments";
 import type { Request, Response, NextFunction } from "express";
 import { projectPublicNetworkProfile } from "../services/profileProjection";
+import { isCampaignPath } from "../services/mediaIsolation";
 
 const router = Router();
 router.get("/community/profiles/:id", async (req, res) => {
@@ -113,7 +114,7 @@ router.get("/network/documents/:slug", async (req, res) => {
 router.get("/network/media/:id", async (req, res) => {
   const who = actor(res, false);
   const [upload] = await db.select().from(uploads).where(and(eq(uploads.id, String(req.params.id)), eq(uploads.ready, true)));
-  if (!upload) throw new NetworkError(404, "Media not found.");
+  if (!upload || isCampaignPath(upload.objectPath)) throw new NetworkError(404, "Media not found.");
   let allowed = upload.ownerId === who.member.id;
   if (!allowed) {
     const [profile] = await db.select().from(profiles).where(and(eq(profiles.memberId, upload.ownerId), eq(profiles.enabled, true), eq(profiles.suspended, false)));

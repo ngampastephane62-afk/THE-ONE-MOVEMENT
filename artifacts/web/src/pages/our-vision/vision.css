@@ -59,6 +59,14 @@
 .tv-title-line { display: block; height: 1px; background: hsl(var(--tv-gold)); transform: scaleX(.25); transform-origin: left; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
 .group:hover .tv-title-line, .group:focus-visible .tv-title-line { transform: scaleX(1); }
 
+.tv-reveal.tv-from-left[data-entered="true"] { animation-name: tv-from-left; }
+.tv-reveal.tv-from-right[data-entered="true"] { animation-name: tv-from-right; }
+.tv-reveal.tv-from-scale[data-entered="true"] { animation-name: tv-from-scale; }
+@keyframes tv-from-left { from { transform: translateX(-36px); } to { transform: none; } }
+@keyframes tv-from-right { from { transform: translateX(36px); } to { transform: none; } }
+@keyframes tv-from-scale { from { transform: scale(.96); } to { transform: none; } }
+@media (max-width: 640px) { @keyframes tv-from-left { from { transform: translateX(-14px); } to { transform: none; } } @keyframes tv-from-right { from { transform: translateX(14px); } to { transform: none; } } }
+
 @media (prefers-reduced-motion: reduce) {
   .tv *, .tv *::before, .tv *::after { animation: none !important; transition: none !important; }
   .tv-map .tv-link { stroke-dashoffset: 0; }

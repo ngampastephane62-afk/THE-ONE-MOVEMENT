@@ -3,7 +3,7 @@ name: Global gratitude campaign
 description: Founder intent for Thanks the World, its distinction from Thanks Emirates, and the moderation boundary for stories.
 ---
 
-Thanks the World is a global gratitude-story campaign concept; Thanks Emirates remains a distinct UAE-focused initiative. Gratitude is voluntary, not a system for political endorsements or compulsory praise of leaders. Browsing must not require nationality disclosure.
+Thanks the World is a global gratitude-story campaign; Thanks Emirates remains a distinct UAE-focused initiative. Gratitude is voluntary, not a system for political endorsements or compulsory praise of leaders. Browsing must not require nationality disclosure.
 
 The Founder now requires a real text/video contribution campaign from existing
 member accounts, with pre-publication Founder review, member status management,
@@ -27,3 +27,14 @@ Worldwide stories require validation and moderation before public publication, a
 **Why:** The existing UAE testimony flow creates a member-network post. Reusing it as worldwide public campaign publication would bypass the Founder's explicit moderation and privacy requirements.
 
 **How to apply:** Preserve the member testimony workflow separately; do not silently redirect worldwide campaign submissions into it. Obtain the required schema approval before introducing persistent global contributions.
+
+Regional identities are not automatically official active campaigns. Engagement
+rankings and featured stories are discovery aids, not prize winners; award rules,
+eligibility periods and prizes remain for the Founder to announce separately.
+
+**Why:** The Founder explicitly reserves activation and award announcements and
+requires distinct regional cultural identities within a worldwide campaign.
+
+**How to apply:** Do not seed active regional campaigns, announce winners or
+present selected countries as verified nationality. Keep unrelated regions free
+of reused African Kuba ornament.

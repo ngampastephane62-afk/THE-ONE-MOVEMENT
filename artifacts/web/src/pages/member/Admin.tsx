@@ -7,6 +7,7 @@ import MediaRequestsAdmin from '@/components/partners/MediaRequestsAdmin';
 import PartnerIntroductionsAdmin from '@/components/partners/PartnerIntroductionsAdmin';
 import NewsArchiveAdmin from '@/components/news/NewsArchiveAdmin';
 import OffersAdmin from '@/components/humanitarian/OffersAdmin';
+import FounderGratitudeAdmin from '@/components/gratitude/FounderGratitudeAdmin';
 import { Empty, ErrorBox, MediaView, PersonLine, Skeleton, btn, btnGhost, card, field, label, useAct } from '@/components/network/kit';
 
 const COMMERCIAL = ['partner', 'sponsor', 'designer', 'exhibitor'];
@@ -103,7 +104,7 @@ export default function Admin() {
         <p className="mt-1 flex items-start gap-1.5 text-sm text-ink-700"><AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-gold-600" />Approval applies to one role and programme. Non-commercial roles activate on approval; commercial roles (partner, sponsor, designer, exhibitor or any package) need a signed agreement, and the badge activates only once payment is confirmed. Payment alone never grants a badge.</p>
       </header>
       <div className="flex gap-1 overflow-x-auto rounded-full bg-ivory-200 p-1" role="tablist">
-        {([['certs', `Certifications (${pendingCerts.length})`], ['reports', `Reports (${open.length})`], ['members', `Suspended (${suspended.length})`], ['media', 'Media requests'], ['intros', 'Introductions'], ['news', 'News'], ['offers', 'Humanitarian offers']] as const).map(([id, l]) => (
+        {([['certs', `Certifications (${pendingCerts.length})`], ['reports', `Reports (${open.length})`], ['members', `Suspended (${suspended.length})`], ['media', 'Media requests'], ['intros', 'Introductions'], ['news', 'News'], ['offers', 'Humanitarian offers'], ['gratitude', 'Thanks the World']] as const).map(([id, l]) => (
           <button key={id} role="tab" aria-selected={tab === id} onClick={() => setTab(id)} className={`flex-1 whitespace-nowrap rounded-full px-3 py-1.5 text-xs ${tab === id ? 'bg-ivory-50 font-semibold text-lagoon-900 shadow-sm' : 'text-ink-700'}`}>{l}</button>
         ))}
       </div>
@@ -115,6 +116,7 @@ export default function Admin() {
       {tab === 'intros' && <PartnerIntroductionsAdmin />}
       {tab === 'news' && <NewsArchiveAdmin />}
       {tab === 'offers' && <OffersAdmin />}
+      {tab === 'gratitude' && <FounderGratitudeAdmin />}
       {tab === 'members' && (suspended.length === 0 ? <Empty title="No suspended members" body="Members suspended through moderation are listed here." /> :
         <ul className="flex flex-col gap-3">{suspended.map((m) => (
           <li key={m.id} className={`${card} flex items-center justify-between gap-3 p-4`}><PersonLine m={m} />

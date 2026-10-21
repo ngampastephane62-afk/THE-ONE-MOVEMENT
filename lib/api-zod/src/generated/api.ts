@@ -8,6 +8,409 @@
 import * as zod from 'zod';
 
 
+export const GetGratitudeOptionsResponse = zod.object({
+  "campaigns": zod.array(zod.object({
+  "id": zod.number().int(),
+  "parentId": zod.number().int().nullish(),
+  "slug": zod.string(),
+  "name": zod.string(),
+  "description": zod.string(),
+  "status": zod.enum(['draft', 'active', 'paused', 'archived']),
+  "identity": zod.record(zod.string(), zod.unknown())
+})),
+  "countries": zod.array(zod.object({
+  "code": zod.string(),
+  "name": zod.string(),
+  "region": zod.string(),
+  "continent": zod.string()
+})),
+  "themes": zod.array(zod.object({
+  "id": zod.string(),
+  "label": zod.string()
+})),
+  "consentVersion": zod.string()
+})
+
+
+export const getGratitudeStoriesQuerySortDefault = `recent`;
+export const getGratitudeStoriesQueryPageDefault = 1;
+
+
+
+export const GetGratitudeStoriesQueryParams = zod.object({
+  "country": zod.coerce.string().optional(),
+  "continent": zod.coerce.string().optional(),
+  "campaign": zod.coerce.number().int().optional(),
+  "author": zod.coerce.number().int().optional(),
+  "sort": zod.enum(['recent', 'views', 'likes', 'discussed', 'featured']).default(getGratitudeStoriesQuerySortDefault),
+  "page": zod.coerce.number().int().min(1).default(getGratitudeStoriesQueryPageDefault)
+})
+
+export const GetGratitudeStoriesResponse = zod.object({
+  "items": zod.array(zod.object({
+  "id": zod.number().int(),
+  "authorId": zod.number().int(),
+  "authorName": zod.string(),
+  "campaignId": zod.number().int(),
+  "campaignName": zod.string(),
+  "title": zod.string(),
+  "body": zod.string(),
+  "countryCode": zod.string().nullable(),
+  "countryName": zod.string(),
+  "region": zod.string(),
+  "continent": zod.string(),
+  "theme": zod.string().nullable(),
+  "status": zod.string(),
+  "version": zod.number().int(),
+  "featured": zod.boolean(),
+  "decisionReason": zod.string(),
+  "profileEligible": zod.boolean(),
+  "publishedAt": zod.string().nullish(),
+  "updatedAt": zod.string().optional(),
+  "media": zod.array(zod.object({
+  "id": zod.number().int(),
+  "uploadId": zod.string(),
+  "kind": zod.string(),
+  "status": zod.string(),
+  "url": zod.string().nullish(),
+  "thumbnailUrl": zod.string().nullish(),
+  "durationMs": zod.number().int().nullish(),
+  "altText": zod.string()
+})),
+  "views": zod.number().int(),
+  "likes": zod.number().int(),
+  "commentCount": zod.number().int(),
+  "shareIntents": zod.number().int(),
+  "liked": zod.boolean(),
+  "comments": zod.array(zod.object({
+  "id": zod.number().int(),
+  "authorId": zod.number().int(),
+  "authorName": zod.string(),
+  "body": zod.string(),
+  "createdAt": zod.string(),
+  "hidden": zod.boolean().optional()
+}))
+})),
+  "page": zod.number().int(),
+  "hasMore": zod.boolean()
+})
+
+
+export const GetGratitudeStoryParams = zod.object({
+  "id": zod.coerce.number().int()
+})
+
+export const GetGratitudeStoryResponse = zod.object({
+  "id": zod.number().int(),
+  "authorId": zod.number().int(),
+  "authorName": zod.string(),
+  "campaignId": zod.number().int(),
+  "campaignName": zod.string(),
+  "title": zod.string(),
+  "body": zod.string(),
+  "countryCode": zod.string().nullable(),
+  "countryName": zod.string(),
+  "region": zod.string(),
+  "continent": zod.string(),
+  "theme": zod.string().nullable(),
+  "status": zod.string(),
+  "version": zod.number().int(),
+  "featured": zod.boolean(),
+  "decisionReason": zod.string(),
+  "profileEligible": zod.boolean(),
+  "publishedAt": zod.string().nullish(),
+  "updatedAt": zod.string().optional(),
+  "media": zod.array(zod.object({
+  "id": zod.number().int(),
+  "uploadId": zod.string(),
+  "kind": zod.string(),
+  "status": zod.string(),
+  "url": zod.string().nullish(),
+  "thumbnailUrl": zod.string().nullish(),
+  "durationMs": zod.number().int().nullish(),
+  "altText": zod.string()
+})),
+  "views": zod.number().int(),
+  "likes": zod.number().int(),
+  "commentCount": zod.number().int(),
+  "shareIntents": zod.number().int(),
+  "liked": zod.boolean(),
+  "comments": zod.array(zod.object({
+  "id": zod.number().int(),
+  "authorId": zod.number().int(),
+  "authorName": zod.string(),
+  "body": zod.string(),
+  "createdAt": zod.string(),
+  "hidden": zod.boolean().optional()
+}))
+})
+
+
+export const getMyGratitudeStoriesQueryPageDefault = 1;
+
+
+
+export const GetMyGratitudeStoriesQueryParams = zod.object({
+  "page": zod.coerce.number().int().min(1).default(getMyGratitudeStoriesQueryPageDefault)
+})
+
+export const GetMyGratitudeStoriesResponse = zod.object({
+  "items": zod.array(zod.object({
+  "id": zod.number().int(),
+  "authorId": zod.number().int(),
+  "authorName": zod.string(),
+  "campaignId": zod.number().int(),
+  "campaignName": zod.string(),
+  "title": zod.string(),
+  "body": zod.string(),
+  "countryCode": zod.string().nullable(),
+  "countryName": zod.string(),
+  "region": zod.string(),
+  "continent": zod.string(),
+  "theme": zod.string().nullable(),
+  "status": zod.string(),
+  "version": zod.number().int(),
+  "featured": zod.boolean(),
+  "decisionReason": zod.string(),
+  "profileEligible": zod.boolean(),
+  "publishedAt": zod.string().nullish(),
+  "updatedAt": zod.string().optional(),
+  "media": zod.array(zod.object({
+  "id": zod.number().int(),
+  "uploadId": zod.string(),
+  "kind": zod.string(),
+  "status": zod.string(),
+  "url": zod.string().nullish(),
+  "thumbnailUrl": zod.string().nullish(),
+  "durationMs": zod.number().int().nullish(),
+  "altText": zod.string()
+})),
+  "views": zod.number().int(),
+  "likes": zod.number().int(),
+  "commentCount": zod.number().int(),
+  "shareIntents": zod.number().int(),
+  "liked": zod.boolean(),
+  "comments": zod.array(zod.object({
+  "id": zod.number().int(),
+  "authorId": zod.number().int(),
+  "authorName": zod.string(),
+  "body": zod.string(),
+  "createdAt": zod.string(),
+  "hidden": zod.boolean().optional()
+}))
+})),
+  "page": zod.number().int(),
+  "hasMore": zod.boolean()
+})
+
+
+export const getFounderGratitudeQueryPageDefault = 1;
+
+
+
+export const GetFounderGratitudeQueryParams = zod.object({
+  "page": zod.coerce.number().int().min(1).default(getFounderGratitudeQueryPageDefault)
+})
+
+export const GetFounderGratitudeResponse = zod.object({
+  "items": zod.array(zod.object({
+  "id": zod.number().int(),
+  "authorId": zod.number().int(),
+  "authorName": zod.string(),
+  "campaignId": zod.number().int(),
+  "campaignName": zod.string(),
+  "title": zod.string(),
+  "body": zod.string(),
+  "countryCode": zod.string().nullable(),
+  "countryName": zod.string(),
+  "region": zod.string(),
+  "continent": zod.string(),
+  "theme": zod.string().nullable(),
+  "status": zod.string(),
+  "version": zod.number().int(),
+  "featured": zod.boolean(),
+  "decisionReason": zod.string(),
+  "profileEligible": zod.boolean(),
+  "publishedAt": zod.string().nullish(),
+  "updatedAt": zod.string().optional(),
+  "media": zod.array(zod.object({
+  "id": zod.number().int(),
+  "uploadId": zod.string(),
+  "kind": zod.string(),
+  "status": zod.string(),
+  "url": zod.string().nullish(),
+  "thumbnailUrl": zod.string().nullish(),
+  "durationMs": zod.number().int().nullish(),
+  "altText": zod.string()
+})),
+  "views": zod.number().int(),
+  "likes": zod.number().int(),
+  "commentCount": zod.number().int(),
+  "shareIntents": zod.number().int(),
+  "liked": zod.boolean(),
+  "comments": zod.array(zod.object({
+  "id": zod.number().int(),
+  "authorId": zod.number().int(),
+  "authorName": zod.string(),
+  "body": zod.string(),
+  "createdAt": zod.string(),
+  "hidden": zod.boolean().optional()
+}))
+})),
+  "page": zod.number().int(),
+  "hasMore": zod.boolean()
+}).and(zod.object({
+  "campaigns": zod.array(zod.object({
+  "id": zod.number().int(),
+  "parentId": zod.number().int().nullish(),
+  "slug": zod.string(),
+  "name": zod.string(),
+  "description": zod.string(),
+  "status": zod.enum(['draft', 'active', 'paused', 'archived']),
+  "identity": zod.record(zod.string(), zod.unknown())
+})),
+  "reports": zod.array(zod.object({
+  "id": zod.number().int(),
+  "contributionId": zod.number().int(),
+  "commentId": zod.number().int().nullish(),
+  "reason": zod.string()
+}))
+}))
+
+
+export const GetFounderGratitudeStoryParams = zod.object({
+  "id": zod.coerce.number().int()
+})
+
+export const GetFounderGratitudeStoryResponse = zod.object({
+  "id": zod.number().int(),
+  "authorId": zod.number().int(),
+  "authorName": zod.string(),
+  "campaignId": zod.number().int(),
+  "campaignName": zod.string(),
+  "title": zod.string(),
+  "body": zod.string(),
+  "countryCode": zod.string().nullable(),
+  "countryName": zod.string(),
+  "region": zod.string(),
+  "continent": zod.string(),
+  "theme": zod.string().nullable(),
+  "status": zod.string(),
+  "version": zod.number().int(),
+  "featured": zod.boolean(),
+  "decisionReason": zod.string(),
+  "profileEligible": zod.boolean(),
+  "publishedAt": zod.string().nullish(),
+  "updatedAt": zod.string().optional(),
+  "media": zod.array(zod.object({
+  "id": zod.number().int(),
+  "uploadId": zod.string(),
+  "kind": zod.string(),
+  "status": zod.string(),
+  "url": zod.string().nullish(),
+  "thumbnailUrl": zod.string().nullish(),
+  "durationMs": zod.number().int().nullish(),
+  "altText": zod.string()
+})),
+  "views": zod.number().int(),
+  "likes": zod.number().int(),
+  "commentCount": zod.number().int(),
+  "shareIntents": zod.number().int(),
+  "liked": zod.boolean(),
+  "comments": zod.array(zod.object({
+  "id": zod.number().int(),
+  "authorId": zod.number().int(),
+  "authorName": zod.string(),
+  "body": zod.string(),
+  "createdAt": zod.string(),
+  "hidden": zod.boolean().optional()
+}))
+})
+
+
+export const runGratitudeActionBodyTitleMax = 160;
+
+export const runGratitudeActionBodyBodyMax = 5000;
+
+export const runGratitudeActionBodyReasonMax = 2000;
+
+export const runGratitudeActionBodySlugMax = 120;
+
+export const runGratitudeActionBodyNameMax = 120;
+
+export const runGratitudeActionBodyDescriptionMax = 4000;
+
+
+
+export const RunGratitudeActionBody = zod.object({
+  "action": zod.enum(['save', 'submit', 'archive', 'moderate', 'removeMedia', 'like', 'view', 'share', 'comment', 'deleteComment', 'report', 'resolveReport', 'moderateComment', 'campaign']),
+  "id": zod.number().int().optional(),
+  "version": zod.number().int().optional(),
+  "campaignId": zod.number().int().optional(),
+  "title": zod.string().max(runGratitudeActionBodyTitleMax).optional(),
+  "body": zod.string().max(runGratitudeActionBodyBodyMax).optional(),
+  "countryCode": zod.string().nullish(),
+  "theme": zod.string().nullish(),
+  "consent": zod.boolean().optional(),
+  "rights": zod.boolean().optional(),
+  "decision": zod.enum(['publish', 'reject', 'hide', 'restore', 'feature', 'unfeature']).optional(),
+  "reason": zod.string().max(runGratitudeActionBodyReasonMax).optional(),
+  "accepted": zod.boolean().optional(),
+  "commentId": zod.number().int().optional(),
+  "mediaId": zod.number().int().optional(),
+  "slug": zod.string().max(runGratitudeActionBodySlugMax).optional(),
+  "name": zod.string().max(runGratitudeActionBodyNameMax).optional(),
+  "description": zod.string().max(runGratitudeActionBodyDescriptionMax).optional(),
+  "parentId": zod.number().int().nullish(),
+  "campaignStatus": zod.enum(['draft', 'active', 'paused', 'archived']).optional(),
+  "identity": zod.enum(['global', 'emirates', 'africa', 'usa', 'europe']).optional()
+})
+
+export const RunGratitudeActionResponse = zod.object({
+  "id": zod.number().int()
+})
+
+
+export const requestGratitudeUploadBodyFilenameMax = 200;
+
+export const requestGratitudeUploadBodySizeMax = 104857600;
+
+export const requestGratitudeUploadBodyAltTextMax = 500;
+
+
+
+export const RequestGratitudeUploadBody = zod.object({
+  "contributionId": zod.number().int(),
+  "version": zod.number().int(),
+  "filename": zod.string().max(requestGratitudeUploadBodyFilenameMax),
+  "contentType": zod.enum(['image/jpeg', 'image/png', 'image/webp', 'video/mp4', 'video/webm', 'video/quicktime']),
+  "size": zod.number().int().min(1).max(requestGratitudeUploadBodySizeMax),
+  "altText": zod.string().max(requestGratitudeUploadBodyAltTextMax).optional()
+})
+
+export const RequestGratitudeUploadResponse = zod.object({
+  "id": zod.string(),
+  "uploadUrl": zod.string(),
+  "version": zod.number().int()
+})
+
+
+export const CompleteGratitudeUploadParams = zod.object({
+  "id": zod.coerce.string()
+})
+
+export const CompleteGratitudeUploadResponse = zod.object({
+  "id": zod.string()
+})
+
+
+export const GetGratitudeMediaParams = zod.object({
+  "id": zod.coerce.string()
+})
+
+export const GetGratitudeMediaResponse = zod.unknown()
+
+
 export const getPublishedNewsArticlesQueryPageDefault = 1;
 
 

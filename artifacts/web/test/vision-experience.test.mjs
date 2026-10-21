@@ -43,6 +43,8 @@ function fixture(entry) {
     '@/components/GoldThread': { default: () => React.createElement('span', { 'aria-hidden': true }) },
     '@/components/SectionHeading': { default: ({ eyebrow, heading }) => React.createElement('header', null, eyebrow, React.createElement('h2', null, heading)) },
     '@/components/EditorialFilm': { default: props => React.createElement('figure', { 'data-testid': props.testId, 'data-film-source': props.name }, props.label, props.caption, props.credit) },
+    '@/lib/gratitude': { FlagField: () => React.createElement('div', { 'aria-hidden': true }) },
+    './ThanksWorldLive': { default: () => React.createElement('a', { href: '/thanks-the-world' }, 'Explore the campaign') },
   };
   function load(file) {
     if (cache.has(file)) return cache.get(file);
@@ -83,7 +85,7 @@ test('Vision renders the exact global mission, six benefit choices, archive film
     'THANKS THE WORLD', 'THANKS EMIRATES', 'THE ONE DOCUMENTARY',
   ]) assert.ok(html.includes(text), text);
   assert.equal(f.events.get('link-join-members').href, '/join');
-  assert.equal(f.events.get('link-vision-thanks-the-world').href, '#thanks-the-world');
+  assert.equal(f.events.get('link-vision-thanks-the-world').href, '/thanks-the-world');
   assert.equal(f.events.get('link-vision-thanks-emirates').href, '/thanks-emirates');
   assert.equal(f.events.get('link-vision-the-one-documentary').href, '/the-one-documentary');
   assert.match(html, /data-testid="film-goma-donation" data-film-source="goma-donation"/);
@@ -151,13 +153,16 @@ test('Failed flag has an explicit fallback and country change remounts its error
   assert.match(read('ThanksWorldPreview.tsx'), /<Flag key=\{country.code\}/);
 });
 
-test('Campaign remains preview-only with source attribution, no message capture, submission, private fields or persistence', () => {
+test('Unused legacy preview retains attribution and is not mounted by the live Vision page', () => {
   const f = fixture('ThanksWorldPreview.tsx'), html = f.render();
   assert.match(html, /Preview only — contributions are not yet open/);
   assert.match(html, /mledoze\/countries/);
   assert.match(html, /ODbL 1\.0/);
   assert.match(html, /not represent political endorsements/);
   assert.doesNotMatch(read('ThanksWorldPreview.tsx'), /fetch\(|localStorage|useMutation|<textarea|type="submit"|useMe\b|useAct\b/);
+  assert.doesNotMatch(read('index.tsx'), /ThanksWorldPreview/);
+  assert.match(read('ThanksWorldLive.tsx'), /useGetGratitudeOptions/);
+  assert.match(read('ThanksWorldLive.tsx'), /href="\/member\/thanks-the-world"/);
 });
 
 test('Motion has content-visible defaults, reduced-motion overrides, offscreen pause and no new animation libraries', () => {
