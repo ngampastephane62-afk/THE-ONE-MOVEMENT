@@ -1,10 +1,10 @@
 # Thanks the World — proposition soumise à approbation
 
-Statut : SCHÉMA APPROUVÉ POUR PRÉPARATION ; SQL GÉNÉRÉ, NON APPLIQUÉ.
+Statut : MIGRATION APPLIQUÉE EN DÉVELOPPEMENT APRÈS ACCORD DISTINCT.
 
-Le Fondateur a autorisé la préparation du schéma et du SQL uniquement. Les
-définitions Drizzle et la migration sont désormais préparées dans le dépôt,
-sans application à une base. Aucun compte, contenu ou fichier média modifié.
+Le Fondateur a autorisé la préparation du schéma et du SQL, puis les contrôles
+et l’application en développement uniquement. Les sept tables sont créées et
+vides ; aucun compte, contenu ou fichier média modifié.
 Voir `THANKS-THE-WORLD-MIGRATION-REVIEW.md` pour la revue et les vérifications.
 La campagne reste non implémentée ; les sections ci-dessous conservent la
 proposition approuvée et le rapport de l’inspection initiale.

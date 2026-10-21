@@ -3,9 +3,40 @@
 ## Décision et périmètre
 
 Le Fondateur a autorisé la préparation du schéma et du SQL, **sans application**.
-Cette étape est terminée. La campagne n’est pas encore fonctionnelle.
-Aucune commande de migration, de push, de seed ou de démarrage de service
-n’a été exécutée.
+La préparation a été terminée, puis le Fondateur a donné un accord distinct
+pour les contrôles et l’application en développement uniquement.
+La migration est désormais appliquée en développement. La campagne n’est pas
+encore fonctionnelle. Aucun push, seed ou démarrage de service n’a été exécuté.
+
+## Application autorisée et vérifiée
+
+- La cible du runner a été comparée à la base explicitement sélectionnée avec
+  `executeSql(environment: development)` : même base et identifiant de cluster.
+  Aucun identifiant de connexion ou secret n’a été affiché.
+- Les marqueurs de l’éditeur étaient présents et le marqueur de déploiement
+  publié n’était pas actif ; `REPLIT_ENVIRONMENT` n’a pas servi à classer la cible.
+- Les quinze migrations historiques correspondent toutes au journal local :
+  mêmes horodatages et empreintes SHA-256 des fichiers.
+- Seule la migration revue était en attente ; aucune table de campagne existante
+  n’entrait en collision avec les créations.
+- L’empreinte du SQL a été vérifiée avant exécution, puis le script existant
+  `pnpm run db:migrate` a terminé avec succès dans `lib/db`.
+- La lecture du registre en développement confirme la nouvelle entrée et
+  l’empreinte exacte du SQL revu.
+- Le catalogue PostgreSQL confirme sept tables, 74 colonnes, sept clés primaires,
+  vingt clés étrangères, trente-trois CHECK et cinq contraintes d’unicité ;
+  toutes les contraintes sont validées.
+- Vingt-quatre index existent, en comptant ceux des clés primaires et des
+  contraintes d’unicité, dont les douze index explicitement créés.
+- Les sept nouvelles tables contiennent chacune zéro ligne.
+
+La production n’a pas été consultée ou modifiée. Aucun redémarrage d’API,
+aucun changement d’interface et aucun déploiement. Aucun test d’upload,
+d’autorisation ou de publication n’est revendiqué : leurs services ne sont pas
+encore implémentés.
+
+Les sections suivantes conservent la revue préalable, y compris son état
+historique « non appliqué » au moment de sa rédaction.
 
 ## Fichier examiné
 
@@ -94,7 +125,7 @@ La création d’une table n’active ni le formulaire, ni les vidéos, ni le fe
 ni le classement, ni les actions du Founder. Les pages publiques, Clerk, Stripe,
 les abonnements et les permissions existantes restent inchangés.
 
-## Étape suivante soumise à une autorisation distincte
+## Procédure d’application — réalisée après autorisation distincte
 
 1. Autoriser explicitement l’application en développement uniquement.
 2. Vérifier l’environnement et lire le registre des migrations de cette base,
@@ -107,8 +138,9 @@ les abonnements et les permissions existantes restent inchangés.
 5. Contrôler les tables/contraintes et le registre après application.
 
 Tout changement de SQL après cette revue exige une nouvelle revue.
-Ne pas démarrer l’implémentation complète ni publier implicitement à partir
-du seul accord de préparation.
+L’accord de migration ne vaut pas déploiement. Prochaine étape proposée :
+implémenter les services et interfaces du module selon les protections approuvées,
+sans rejouer la migration ni créer de contenu factice.
 
 ## Retour arrière
 
