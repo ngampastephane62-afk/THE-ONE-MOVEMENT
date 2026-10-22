@@ -8,8 +8,9 @@
    information and portrait, direct selectors, previous/next and touch swipes.
 3. Leadership: compact President introduction, optional Radix dialog showing one
    profile at a time, previous/next, direct selection, arrow keys and return/close.
-4. Shared identity/culture: real Abu Dhabi skyline and Al Fahidi heritage photos,
-   approved dunes artwork and the preserved CulturalStory content.
+4. Preserved CulturalStory follows leadership directly. The three repetitive
+   Emirates Story blocks (shared vision, daily life, room to belong), including
+   their images, credits, animations and section spacing, have been removed.
 5. Global bridge: separate connecting-world sequence using Founder gold world
    artwork and lightweight animated routes starting at the UAE.
 6. Global discovery: umbrella campaign, recognizable world artwork and six

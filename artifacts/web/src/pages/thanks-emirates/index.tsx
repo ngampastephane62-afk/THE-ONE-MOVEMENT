@@ -5,7 +5,7 @@ import CulturalStory from '@/components/editorial/CulturalStory';
 import EmiratesIntro from '@/components/emirates/EmiratesIntro';
 import FederationChapter from '@/components/emirates/FederationChapter';
 import LeadershipChapter from '@/components/emirates/LeadershipChapter';
-import EmiratesStoryChapter, { EmiratesConnectionChapter } from '@/components/emirates/EmiratesStoryChapter';
+import { EmiratesConnectionChapter } from '@/components/emirates/EmiratesStoryChapter';
 import HumanStoryChapter from '@/components/emirates/HumanStoryChapter';
 import JourneyChapter from '@/components/emirates/JourneyChapter';
 import GlobalExplorer from '@/components/emirates/GlobalExplorer';
@@ -37,7 +37,6 @@ export default function ThanksEmirates() {
         <EmiratesIntro />
         <FederationChapter index={emirate} onSelect={setEmirate} />
         <LeadershipChapter index={emirate} onSelect={setEmirate} />
-        <EmiratesStoryChapter />
         <CulturalStory preset="emirates" />
         <EmiratesConnectionChapter />
         <GlobalExplorer />

@@ -243,7 +243,9 @@ test('secondary resources preserve important claims and provenance without mount
 
 test('motion honours reduced motion, offscreen/hidden state, pause and cleanup while chapters retain order', () => {
   const page = read('pages/thanks-emirates/index.tsx');
-  const chapters = ['<EmiratesIntro', '<FederationChapter', '<LeadershipChapter', '<EmiratesStoryChapter', '<CulturalStory', '<EmiratesConnectionChapter', '<GlobalExplorer', '<HumanStoryChapter', '<JourneyChapter', '<EmiratesResources'];
+  const chapters = ['<EmiratesIntro', '<FederationChapter', '<LeadershipChapter', '<CulturalStory', '<EmiratesConnectionChapter', '<GlobalExplorer', '<HumanStoryChapter', '<JourneyChapter', '<EmiratesResources'];
+  assert.doesNotMatch(page, /<EmiratesStoryChapter/);
+  for (const chapter of chapters) assert.ok(page.includes(chapter), chapter);
   for (let i = 1; i < chapters.length; i++) assert.ok(page.indexOf(chapters[i - 1]) < page.indexOf(chapters[i]));
   const hooks = read('components/emirates/use-emirates-motion.ts');
   for (const safeguard of ['prefers-reduced-motion', 'IntersectionObserver', "el.dataset.em = 'in'", "removeEventListener", 'visibilityState', 'disconnect']) assert.ok(hooks.includes(safeguard), safeguard);
@@ -311,14 +313,15 @@ test('continent gateways start closed and reveal only the selected real pathway'
   assert.match(read('components/emirates/emirates.css'), /\.em-gate-panel\[hidden\]\s*\{\s*display:\s*none/);
 });
 
-test('photographic statements and connecting-world imagery replace every placeholder diagram', () => {
+test('removed story blocks leave no content or spacing while the global bridge stays intact', () => {
   const f = fixture(), Story = f.load('components/emirates/EmiratesStoryChapter.tsx');
-  const html = f.render(Story.default) + f.render(Story.EmiratesConnectionChapter);
-  assert.match(html, /images\/emirates\/shared-vision.webp/);
-  assert.match(html, /images\/emirates\/al-fahidi.webp/);
+  assert.equal(Story.default, undefined);
+  const html = f.render(Story.EmiratesConnectionChapter);
+  const source = read('components/emirates/EmiratesStoryChapter.tsx');
+  assert.doesNotMatch(source, /SEVEN EMIRATES|MANY CULTURES|ROOM TO BUILD|StatementRow|em-story-h|space-y-20|SHARED_VISION|AL_FAHIDI|emirates-dunes/);
+  assert.doesNotMatch(html, /shared-vision.webp|al-fahidi.webp|Wadiia|Delta.jpg|THE EMIRATES STORY/);
   assert.match(html, /images\/vision\/founder-world-gold.webp/);
-  assert.match(html, /Wadiia/); assert.match(html, /Delta.jpg/);
-  assert.match(html, /creativecommons.org\/licenses\/by-sa\/4.0/);
+  assert.match(html, /CONNECTING THE WORLD/);
   assert.doesNotMatch(html, /schematic|Meridians|SevenDots|Arches|em-lattice/);
   assert.equal((html.match(/class="em-route"/g) || []).length, 8);
   assert.ok(existsSync(resolve(root, '../public/images/emirates/LICENSES.md')));

@@ -61,6 +61,12 @@ refinement, not replacement, while correcting long portrait and information list
 **How to apply:** Keep leadership a compact, optional discovery chapter with all
 seven Emirates accessible; human connection and free participation remain central.
 Move supporting material into accessible disclosures instead of deleting it.
+Exception: remove the three repetitive “The Emirates Story” blocks (“Seven
+Emirates. One shared vision.”, “Many cultures. One daily life.”, “Room to build.
+Room to belong.”) completely, not into disclosures or replacement paragraphs.
+**Why:** The Founder explicitly requested a shorter Emirates page while preserving
+the earlier interactive federation/leadership and later campaign/participation.
+**How to apply:** Do not restore these blocks during future visual refinements.
 Preserve portrait provenance and distinguish official biographical sources from
 the actual source of each photograph; inclusion never implies endorsement.
 Use compact continent navigation that distinguishes configured active campaigns
