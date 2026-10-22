@@ -164,7 +164,7 @@ test('sector filtering retains its accessible empty state and clear action', () 
   f.events.get('input-sector-search').onChange({ target: { value: 'no-sector-matches-this' } });
   assert.match(f.render(), /No sector matches/);
   f.events.get('button-clear-filters').onClick();
-  assert.match(f.render(), /17 of 17 sectors/);
+  assert.match(f.render(), /17 of 17 gateways/);
 });
 
 test('editorial Chapter exposes real headings and preserves optional actions', () => {

@@ -41,3 +41,17 @@ backend CMS, privilege changes, new paywalls and invented affiliations.
 **How to apply:** Keep future publication, asset safety, visibility and versioning
 requirements in the design proposal. Seek separate authorization before backend,
 database, authentication, entitlement, payment or production operations.
+
+The Ecosystem should feel like a digital exhibition: a world introduction,
+TOMI as an honest guided navigator, a symbolic One Key and seventeen gateways.
+Remove the duplicate hero logo. Identity-based recommendations are optional,
+not an entrance requirement. Existing official sectors take precedence over
+illustrative names or numbering in creative examples.
+
+**Why:** The Founder explicitly requested this discovery narrative while preserving
+free exploration, real search, sector identities and all existing functionality.
+
+**How to apply:** Reuse the supplied world maps and interpret reference-video motion,
+not its branding. The key never gates navigation, login or payment. Keep natural
+mobile scrolling, noninteractive decoration behind readable content and usable
+static states when motion is paused or reduced. This remains frontend-only.

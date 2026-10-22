@@ -1,68 +1,79 @@
+import type { CSSProperties } from 'react';
 import { Link } from 'wouter';
 import { Pause, Play } from 'lucide-react';
 import { Show } from '@clerk/react';
-import logoSrc from '@/assets/media/home/tomi-peace-logo.webp';
-import WavingFlag from './WavingFlag';
 import SectorUniverse from './SectorUniverse';
+import HeroWorld from './exhibition/HeroWorld';
+import OneKey from './exhibition/OneKey';
+import { useStage } from './exhibition/useStage';
 
 interface Props {
   paused: boolean;
   onTogglePause: () => void;
+  motionLocked?: boolean;
   selected: string;
   onPickSector: (slug: string) => void;
 }
 
-export default function EcosystemHero({ paused, onTogglePause, selected, onPickSector }: Props) {
+const d = (ms: number) => ({ '--d': `${ms}ms` } as CSSProperties);
+
+export default function EcosystemHero({ paused, onTogglePause, motionLocked = false, selected, onPickSector }: Props) {
+  const { ref, attrs } = useStage<HTMLElement>();
   return (
-    <section className="eco-hero relative overflow-hidden" aria-labelledby="eco-hero-title">
-      <div className="pointer-events-none absolute inset-y-0 right-0 flex w-[85%] items-center opacity-20 sm:w-[65%]" aria-hidden="true">
-        <WavingFlag className="w-full" />
-      </div>
-      <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-6 py-16 lg:grid-cols-12 lg:py-24">
-        <div className="lg:col-span-6 relative z-10">
-          <div className="mb-7 opacity-60">
-            <img src={logoSrc} alt="The One Movement peace emblem" className="h-14 w-14 rounded-full object-cover eco-breathe" />
-          </div>
-          <p className="text-eyebrow text-gold-400 mb-5">THE ECOSYSTEM · {`SEVENTEEN SECTORS`}</p>
-          <h1 id="eco-hero-title" className="text-display-xl text-ivory-100" style={{ fontFamily: 'var(--font-display)' }}>
-            FIND YOUR PLACE IN <span className="text-gold-400">ONE SHARED WORLD.</span>
-          </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-ivory-200">
-            Artists and designers, investors and builders, care workers, NGOs and institutions.
-            Choose who you are, find your sector, see the TOMI programmes that connect to it and
-            the official public knowledge worth reading next.
+    <section ref={ref} {...attrs} className="x-hero" aria-labelledby="eco-hero-title">
+      <HeroWorld />
+      <div className="x-content mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 pb-16 pt-20 lg:grid-cols-12 lg:pb-24 lg:pt-28">
+        <div className="lg:col-span-6">
+          <p className="x-track text-eyebrow text-gold-400" style={d(250)}>
+            The Ecosystem <span className="mx-2 text-gold-500/60">·</span> Seventeen sectors
           </p>
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+          <h1 id="eco-hero-title" className="mt-6 text-display-xl text-ivory-100" style={{ fontFamily: 'var(--font-display)' }}>
+            <span className="x-line"><span style={d(550)}>FIND YOUR PLACE</span></span>
+            <span className="x-line"><span style={d(760)}>IN ONE SHARED</span></span>
+            <span className="x-line"><span style={d(970)}><em className="x-world-word">WORLD.</em></span></span>
+          </h1>
+          <p className="x-fade mt-7 max-w-xl text-lg leading-relaxed text-ivory-200" style={d(1350)}>
+            Artists and designers, investors and builders, care workers, NGOs and institutions.
+          </p>
+          <p className="x-fade mt-2 max-w-xl text-base leading-relaxed text-ivory-300" style={d(1520)}>
+            Wherever you come from and whatever you do, walk through seventeen worlds, find the TOMI programmes connected to yours and the official public knowledge worth reading next.
+          </p>
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Show when="signed-out">
-              <Link href="/sign-up" data-testid="link-hero-signup" className="inline-flex items-center justify-center bg-gold-500 px-7 py-3.5 text-xs font-semibold uppercase tracking-[0.12em] text-ink-900 hover:bg-gold-400">
-                Create your member space
+              <Link href="/sign-in" data-testid="link-hero-signin" className="x-fade x-btn x-btn-gold" style={d(1750)}>
+                <OneKey className="x-btn-key h-3 w-8" /> Open my workspace
               </Link>
-              <Link href="/sign-in" data-testid="link-hero-signin" className="inline-flex items-center justify-center border border-ivory-100/30 px-7 py-3.5 text-xs font-semibold uppercase tracking-[0.12em] text-ivory-100 hover:border-ivory-100/70">
-                Sign in
+              <Link href="/sign-up" data-testid="link-hero-signup" className="x-fade x-btn x-btn-ghost" style={d(1850)}>
+                Create your free member space
               </Link>
             </Show>
             <Show when="signed-in">
-              <Link href="/member" data-testid="link-hero-workspace" className="inline-flex items-center justify-center bg-gold-500 px-7 py-3.5 text-xs font-semibold uppercase tracking-[0.12em] text-ink-900 hover:bg-gold-400">
-                Open my workspace
+              <Link href="/member" data-testid="link-hero-workspace" className="x-fade x-btn x-btn-gold" style={d(1750)}>
+                <OneKey className="x-btn-key h-3 w-8" /> Open my workspace
               </Link>
             </Show>
-            <a href="#explore" className="inline-flex items-center justify-center px-4 py-3.5 text-xs font-semibold uppercase tracking-[0.12em] text-gold-400 hover:text-gold-500">
+            <a href="#explore" data-testid="link-hero-explore" className="x-fade x-btn text-gold-400 hover:text-ivory-100" style={d(1950)}>
               Explore sectors
             </a>
           </div>
+          <div className="x-fade mt-14 hidden lg:block" style={d(2300)} aria-hidden="true">
+            <span className="x-scrollcue"><i /> Scroll to enter</span>
+          </div>
         </div>
 
-        <div className="lg:col-span-6 relative">
+        <div className="x-rise relative lg:col-span-6" style={d(900)}>
           <SectorUniverse selected={selected} onPick={onPickSector} />
           <button
             type="button"
             onClick={onTogglePause}
+            disabled={motionLocked}
+            title={motionLocked ? 'Motion is reduced by your system settings' : undefined}
             aria-pressed={paused}
             data-testid="button-toggle-motion"
-            className="absolute right-0 top-0 inline-flex items-center gap-1.5 bg-lagoon-900/85 px-3 py-2 text-[11px] uppercase tracking-wider text-ivory-100 backdrop-blur hover:text-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400"
+            className="absolute right-0 top-0 z-10 inline-flex min-h-[40px] items-center gap-1.5 bg-lagoon-900/85 px-3 py-2 text-[11px] uppercase tracking-wider text-ivory-100 backdrop-blur hover:text-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400"
           >
-            {paused ? <Play className="h-3.5 w-3.5" /> : <Pause className="h-3.5 w-3.5" />}
-            {paused ? 'Play motion' : 'Pause motion'}
+            {paused ? <Play className="h-3.5 w-3.5" aria-hidden="true" /> : <Pause className="h-3.5 w-3.5" aria-hidden="true" />}
+            {motionLocked ? 'Motion reduced' : paused ? 'Play motion' : 'Pause motion'}
           </button>
         </div>
       </div>

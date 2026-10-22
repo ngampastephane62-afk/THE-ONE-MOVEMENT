@@ -5,6 +5,7 @@ import '@/styles/sector-world.css';
 import '@/styles/worlds.css';
 import Chapter from '../SectorWorldChapter';
 import WorldMotif from './WorldMotif';
+import OneKey from '../exhibition/OneKey';
 import { WORLD_CHAPTERS, getWorldConfig } from './world-config';
 import { SECTORS, type Sector } from '@/lib/sectors-data';
 import { PROGRAMS } from '@/lib/programs-data';
@@ -92,8 +93,9 @@ export default function SectorWorld({ slug }: { slug: string }) {
   const resources = ECOSYSTEM_RESOURCES.filter((r) => r.sectors.includes(slug)).slice(0, 3);
 
   return (
-    <div ref={root} key={slug} className="lw-world" style={{ '--w': cfg.accent } as CSSProperties} data-testid={`world-${slug}`}>
+    <div ref={root} key={slug} className="lw-world" style={{ '--w': cfg.accent } as CSSProperties} data-motif={cfg.motif} data-testid={`world-${slug}`}>
       <header className="lw-hero" data-testid={`world-hero-${slug}`}>
+        <div className="lw-atmos" aria-hidden="true"><WorldMotif motif={cfg.motif} /></div>
         <div className="lw-hero-copy">
           <p className="text-eyebrow lw-accent">World {String(idx).padStart(2, '0')} of {SECTORS.length} · {sector.name}</p>
           <h3 className="mt-3 text-display-lg text-ivory-100">{cfg.headline[0]}<br /><em className="lw-serif">{cfg.headline[1]}</em> {cfg.headline[2]}</h3>
@@ -108,6 +110,9 @@ export default function SectorWorld({ slug }: { slug: string }) {
         </div>
         <div className="lw-art">
           <WorldMotif motif={cfg.motif} />
+          <span className="lw-gate-l" aria-hidden="true" />
+          <span className="lw-gate-r" aria-hidden="true" />
+          <span className="lw-gate-key" aria-hidden="true"><OneKey className="w-full" /></span>
           <span className="lw-art-label">Illustrative motif. Not a real event or place.</span>
         </div>
       </header>

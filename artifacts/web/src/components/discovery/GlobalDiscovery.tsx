@@ -1,8 +1,18 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { Link } from 'wouter';
 import { ArrowRight, Compass, Search, Sparkles } from 'lucide-react';
 import '@/styles/worlds.css';
 import { DISCOVERY_EXAMPLES, GUIDE_STEPS, matchDiscovery } from './discovery-index';
+import { prefersReducedMotion, useStage } from '@/components/ecosystem/exhibition/useStage';
+
+/** Gently rotating example phrases shown as a typing cue (visual only; the real placeholder stays for assistive tech). */
+const ROTATING = [
+  'I am a fashion designer...',
+  'I want to learn artificial intelligence...',
+  'I want to discover African culture...',
+  'I am looking for business opportunities...',
+  'I want to explore humanitarian projects...',
+];
 
 const KIND_LABEL = { world: 'World', programme: 'Programme', page: 'Page' } as const;
 
@@ -11,27 +21,40 @@ function scrollExploreSoon(href: string) {
   window.setTimeout(() => document.getElementById('explore')?.scrollIntoView({ block: 'start' }), 60);
 }
 
-export default function GlobalDiscovery() {
+export default function GlobalDiscovery({ paused = false }: { paused?: boolean } = {}) {
   const [query, setQuery] = useState('');
   const [guide, setGuide] = useState<string | null>(null);
   const results = useMemo(() => matchDiscovery(query), [query]);
   const step = GUIDE_STEPS.find((g) => g.id === guide);
+  const { ref, attrs, live } = useStage<HTMLElement>();
+  const [focused, setFocused] = useState(false);
+  const [phrase, setPhrase] = useState(0);
+  const cue = query === '' && !focused;
+  useEffect(() => {
+    if (!cue || !live || paused || prefersReducedMotion()) return;
+    const t = window.setInterval(() => setPhrase((n) => (n + 1) % ROTATING.length), 3200);
+    return () => window.clearInterval(t);
+  }, [cue, live, paused]);
 
   return (
-    <section id="discover" className="gd-surface scroll-mt-20 py-16" aria-labelledby="discover-title" data-testid="section-global-discovery">
+    <section ref={ref} {...attrs} id="discover" className="gd-surface scroll-mt-20 py-16" aria-labelledby="discover-title" data-testid="section-global-discovery">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-12">
         <div className="lg:col-span-7">
-          <p className="text-eyebrow text-gold-400">One global discovery</p>
-          <h2 id="discover-title" className="mt-2 text-display-md text-ivory-100">WHAT ARE YOU LOOKING FOR IN THE WORLD?</h2>
-          <p className="mt-3 max-w-xl text-sm text-ivory-300">Search the seventeen worlds, programmes and pages that exist today. Results come only from the site itself.</p>
-          <form role="search" className="relative mt-6" onSubmit={(e) => e.preventDefault()}>
+          <p className="x-track text-eyebrow text-gold-400">Chapter three · Find your direction</p>
+          <h2 id="discover-title" className="mt-3 text-display-md text-ivory-100">
+            <span className="x-line"><span style={{ '--d': '120ms' } as CSSProperties}>WHAT ARE YOU LOOKING FOR</span></span>
+            <span className="x-line"><span style={{ '--d': '300ms' } as CSSProperties}>IN THE <em className="not-italic text-gold-400">WORLD?</em></span></span>
+          </h2>
+          <p className="x-fade mt-3 max-w-xl text-sm text-ivory-300" style={{ '--d': '480ms' } as CSSProperties}>Search the seventeen worlds, programmes and pages that exist today. Results come only from the site itself.</p>
+          <form role="search" className="x-fade relative mt-6" style={{ '--d': '620ms' } as CSSProperties} onSubmit={(e) => e.preventDefault()}>
             <label htmlFor="global-discovery" className="sr-only">Describe what you are looking for</label>
             <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gold-400" aria-hidden="true" />
-            <input id="global-discovery" type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="I am a fashion designer..." className="gd-input" data-testid="input-global-discovery" autoComplete="off" />
+            <input id="global-discovery" type="search" value={query} onChange={(e) => setQuery(e.target.value)} onFocus={() => setFocused(true)} onBlur={() => setFocused(false)} placeholder={cue ? '' : 'I am a fashion designer...'} className="gd-input" data-testid="input-global-discovery" autoComplete="off" />
+            {cue && <span className="x-typing" aria-hidden="true"><span key={phrase} className="x-typing-text">{ROTATING[phrase]}</span></span>}
           </form>
-          <div className="mt-4 flex flex-wrap gap-2" aria-label="Example searches">
+          <div className="x-stagger mt-4 flex flex-wrap gap-2" aria-label="Example searches">
             {DISCOVERY_EXAMPLES.map((ex, i) => (
-              <button key={ex} type="button" className="gd-example" onClick={() => setQuery(ex)} data-testid={`button-discovery-example-${i}`}>{ex}</button>
+              <button key={ex} type="button" style={{ '--d': `${800 + i * 140}ms` } as CSSProperties} className="gd-example" onClick={() => setQuery(ex)} data-testid={`button-discovery-example-${i}`}>{ex}</button>
             ))}
           </div>
           <div className="mt-6" aria-live="polite" data-testid="region-discovery-results">
@@ -59,7 +82,7 @@ export default function GlobalDiscovery() {
           </div>
         </div>
 
-        <aside className="gd-guide p-6 lg:col-span-5" aria-labelledby="tomi-ai-title" data-testid="panel-tomi-ai">
+        <aside className="x-fade gd-guide p-6 lg:col-span-5" style={{ '--d': '400ms' } as CSSProperties}  aria-labelledby="tomi-ai-title" data-testid="panel-tomi-ai">
           <div className="flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-gold-400" aria-hidden="true" />
             <h3 id="tomi-ai-title" className="font-display text-sm tracking-[0.16em] text-ivory-100">TOMI AI</h3>

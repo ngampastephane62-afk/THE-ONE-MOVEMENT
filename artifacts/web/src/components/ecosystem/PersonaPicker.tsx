@@ -7,14 +7,14 @@ interface Props {
 
 export default function PersonaPicker({ value, onChange }: Props) {
   return (
-    <div role="radiogroup" aria-label="Who are you?" className="flex flex-wrap gap-2">
+    <div role="radiogroup" aria-label="Personalize your discovery (optional)" className="flex flex-wrap gap-2">
       <button
         type="button"
         role="radio"
         aria-checked={value === null}
         onClick={() => onChange(null)}
         data-testid="button-persona-all"
-        className={`px-4 py-2.5 text-xs uppercase tracking-[0.1em] border transition-colors ${value === null ? 'bg-lagoon-900 border-lagoon-900 text-gold-400' : 'border-sand-300 text-ink-700 hover:border-lagoon-600'}`}
+        className={`min-h-[44px] px-4 py-2.5 text-xs uppercase tracking-[0.1em] border transition-colors ${value === null ? 'bg-gold-500 border-gold-500 text-ink-900' : 'border-ivory-100/25 text-ivory-200 hover:border-gold-400'}`}
       >
         Everyone
       </button>
@@ -28,7 +28,7 @@ export default function PersonaPicker({ value, onChange }: Props) {
             aria-checked={active}
             onClick={() => onChange(active ? null : p.id)}
             data-testid={`button-persona-${p.id}`}
-            className={`px-4 py-2.5 text-xs uppercase tracking-[0.1em] border transition-colors ${active ? 'bg-lagoon-900 border-lagoon-900 text-gold-400' : 'border-sand-300 text-ink-700 hover:border-lagoon-600'}`}
+            className={`min-h-[44px] px-4 py-2.5 text-xs uppercase tracking-[0.1em] border transition-colors ${active ? 'bg-gold-500 border-gold-500 text-ink-900' : 'border-ivory-100/25 text-ivory-200 hover:border-gold-400'}`}
           >
             {p.label}
           </button>

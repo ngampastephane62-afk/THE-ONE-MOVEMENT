@@ -61,7 +61,7 @@ Member ecosystem profiles are private by default; public showcase visibility req
 
 **How to apply:** Separate account access from paid/event membership, expose only opt-in profile fields, preserve recommendations/bookmarks privately, and label AI illustration and source-check dates honestly.
 
-The stakeholder requests a flag-led Home without the foreground logo banner; the Ecosystem keeps a subdued logo and a waving background flag, not a second small foreground flag. Sector discovery should represent all sectors interactively, rather than repeat CEO portraits.
+The stakeholder requests a flag-led Home without the foreground logo banner. The later Ecosystem exhibition directive removes its duplicate hero logo entirely because the official logo already appears in navigation; use the supplied world imagery behind content instead. Sector discovery should represent all sectors interactively, rather than repeat CEO portraits.
 
 **Why:** They explicitly objected to repetitive similar images and Yuston Nessy appearing everywhere, and requested a community-led visual balance.
 

@@ -182,6 +182,11 @@ test('discovery input, empty recovery, examples and TOMI AI guided answer are fu
   const f = fixture(), path = 'components/discovery/GlobalDiscovery.tsx';
   let html = f.render(path);
   assert.match(html, /This is not an AI assistant yet/);
+  assert.equal(f.events.get('input-global-discovery').placeholder, '', 'rotating cue must not overlap a native placeholder');
+  f.events.get('input-global-discovery').onFocus();
+  html = f.render();
+  assert.equal(f.events.get('input-global-discovery').placeholder, 'I am a fashion designer...');
+  assert.doesNotMatch(html, /class="x-typing"/);
   assert.equal(f.events.has('link-guide-go'), false);
   f.events.get('input-global-discovery').onChange({ target: { value: 'zzzxnonexistent' } });
   f.render();

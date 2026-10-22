@@ -1,6 +1,9 @@
+import type { CSSProperties } from 'react';
 import { Link } from 'wouter';
 import { ArrowRight, BookOpen, KeyRound, Palette } from 'lucide-react';
 import '@/styles/worlds.css';
+import OneKey from './exhibition/OneKey';
+import { useStage } from './exhibition/useStage';
 
 export const ONE_KEY_POSSIBILITIES = [
   'Enhanced guided experiences',
@@ -21,35 +24,31 @@ export const CONNECTED_BRANDS: ConnectedBrand[] = [
   { id: 'oye', name: 'OYE', role: 'Future navigation concept', status: 'Planned. No page or service yet.' },
 ];
 
-function KeyMark() {
-  return (
-    <svg viewBox="0 0 160 160" className="ok-key h-40 w-40" aria-hidden="true">
-      <circle cx="56" cy="80" r="34" fill="none" stroke="currentColor" strokeWidth="2" />
-      <circle cx="56" cy="80" r="14" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.6" />
-      <path d="M90 80 H150 M130 80 V98 M144 80 V92" fill="none" stroke="currentColor" strokeWidth="2" />
-      {Array.from({ length: 17 }, (_, i) => { const a = (i / 17) * Math.PI * 2; return <circle key={i} cx={56 + Math.cos(a) * 46} cy={80 + Math.sin(a) * 46} r="1.8" fill="currentColor" className="wm-pulse" style={{ animationDelay: `${i * 120}ms` }} />; })}
-    </svg>
-  );
-}
-
 export default function EcosystemConcepts() {
+  const { ref, attrs } = useStage<HTMLDivElement>();
   return (
-    <section aria-label="Future concepts and connected brands" className="bg-ivory-100 py-16">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="grid gap-8 border border-sand-200 bg-ivory-50 p-6 md:grid-cols-[auto_1fr] md:p-10" data-testid="section-one-key">
-          <KeyMark />
-          <div>
-            <p className="text-eyebrow text-gold-700">Future concept · not available yet</p>
-            <h2 className="mt-2 text-display-md text-ink-900">THE ONE KEY</h2>
-            <p className="mt-1 font-display text-sm tracking-[0.14em] text-lagoon-600">ONE KEY. INFINITE POSSIBILITIES.</p>
-            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-ink-700">An optional key being considered for additional services in the future. Free belonging, public information, ordinary community participation and exploring the seventeen worlds never require it. It is not available today and has no price, payment or subscription. Any future paid service would be described separately before anyone chose it.</p>
-            <ul className="mt-5 grid gap-2 sm:grid-cols-2">
-              {ONE_KEY_POSSIBILITIES.map((p) => <li key={p} className="flex items-center gap-2 text-sm text-ink-800"><KeyRound className="h-4 w-4 text-gold-600" aria-hidden="true" /> {p}</li>)}
+    <section aria-label="Future concepts and connected brands" className="bg-ivory-100 pb-16">
+      <div ref={ref} {...attrs} className="x-onekey py-20 text-ivory-100 lg:py-28" data-testid="section-one-key">
+        <div className="x-content mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-12">
+          <div className="x-onekey-art x-rise relative lg:col-span-6" aria-hidden="true">
+            <div className="x-keyspin relative px-4 py-16"><OneKey className="mx-auto w-full max-w-lg" /></div>
+          </div>
+          <div className="lg:col-span-6">
+            <p className="x-track text-eyebrow text-gold-400">Future concept · not available yet</p>
+            <h2 className="mt-3 text-display-lg">
+              <span className="x-line"><span style={{ '--d': '120ms' } as CSSProperties}>THE ONE KEY.</span></span>
+            </h2>
+            <p className="x-fade mt-2 font-display text-sm tracking-[0.18em] text-gold-400" style={{ '--d': '320ms' } as CSSProperties}>ONE KEY. INFINITE POSSIBILITIES.</p>
+            <p className="x-fade mt-5 max-w-xl text-sm leading-relaxed text-ivory-200" style={{ '--d': '460ms' } as CSSProperties}>An optional key being considered for additional services in the future. Free belonging, public information, ordinary community participation and exploring the seventeen worlds never require it. It is not available today and has no price, payment or subscription. Any future paid service would be described separately before anyone chose it.</p>
+            <ul className="x-stagger mt-6 grid gap-x-6 gap-y-3 border-t border-gold-500/20 pt-6 sm:grid-cols-2">
+              {ONE_KEY_POSSIBILITIES.map((p, i) => <li key={p} style={{ '--d': `${560 + i * 90}ms` } as CSSProperties} className="flex items-center gap-2 text-sm text-ivory-200"><KeyRound className="h-4 w-4 shrink-0 text-gold-400" aria-hidden="true" /> {p}</li>)}
             </ul>
-            <p className="mt-4 text-xs text-ink-700">It will never promise meetings, investment, contracts, government access, institutional influence or media publication.</p>
+            <p className="x-fade mt-5 text-xs text-ivory-300" style={{ '--d': '1100ms' } as CSSProperties}>It will never promise meetings, investment, contracts, government access, institutional influence or media publication.</p>
           </div>
         </div>
+      </div>
 
+      <div className="mx-auto max-w-7xl px-6">
         <div className="mt-8 grid gap-8 lg:grid-cols-2">
           <div className="border border-lagoon-600/40 bg-lagoon-900 p-6 text-ivory-100 md:p-8" data-testid="section-creative-space">
             <Palette className="h-6 w-6 text-gold-400" aria-hidden="true" />

@@ -32,3 +32,5 @@
 # Programs motion references, not application runtime assets.
 /attached_assets/757e0ead33ce47638cd14b0bf989aeb9_1792624887585.mp4
 /attached_assets/a77af245f7374339b2f72457e97df1cb_1792624887586.mp4
+# Ecosystem motion reference, not an application runtime asset.
+/attached_assets/757e0ead33ce47638cd14b0bf989aeb9_1792627670678.mp4
