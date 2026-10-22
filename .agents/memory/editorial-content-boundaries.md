@@ -21,17 +21,28 @@ External announcements are information relays, not TOMI concepts or programmes. 
 
 **How to apply:** Use short source-labelled announcements with a direct link to the original publisher’s official page. Do not give external campaigns a TOMI byline, claim TOMI supplied or owns their footage, or add TOMI initiatives, medical recommendations or fundraising narratives. Distinguish the date shared here from an unknown filming or original publication date.
 
-The Founder explicitly requires the uploaded MONUSCO campaign film, CANAL+ teaser and TV5MONDE video to appear directly with their respective subjects on the same page, in one consecutive video collection.
+The Founder requires the supplied awareness and television videos to appear
+inline with their subjects in one collection; the later video correction
+supersedes the earlier CANAL+ teaser identification.
 
 **Why:** The Founder repeated this requirement after screenshots showed “video pending” notices and broadcaster descriptions without the uploaded clips. Having a video somewhere else on the site does not satisfy it.
 
 **How to apply:** Show native inline players and keep the supplied documentary highlights together, with an optional next-video sequence. Audit existing uploads, including the original ZIP, before asking for reuploads or claiming a film is unavailable. Confirm ambiguous broadcaster-to-file mappings rather than treating an unrelated generic teaser as verified broadcaster footage.
 
-The Founder confirmed the 29-second runway/interview teaser for CANAL+ and added “Les 3”, asking for the three teasers together. The Founder explicitly rejected the 2:09 Radio Okapi film as the MONUSCO campaign film.
+The Founder identifies the 29-second film as an awareness campaign developed
+with MONUSCO against hate speech and disinformation, not a documentary teaser.
+Remove unsupported CANAL+ attribution from this film. The 76-second, 7-second
+and 61-second excerpts must remain unpublished, with their files, history and
+engagement data retained. TV5MONDE/France 24 and Radio Okapi remain available.
 
-**Why:** This is a direct correction of the provisional video associations, not a request to remove the Radio Okapi archive itself.
+**Why:** The Founder explicitly corrected the earlier association and requested
+a shorter collection without permanently deleting historical material.
 
-**How to apply:** Keep the three CANAL+ teasers together. Keep Radio Okapi credited separately; never label it as the requested anti-disinformation campaign or substitute it while identifying the actual campaign source.
+**How to apply:** Keep the corrected campaign's original footage and engagement
+identity. Apply the MONUSCO description only to that campaign, never to TOMI as
+a whole; flag formal partnership attribution for Founder source review. Keep
+Radio Okapi credited separately. Do not restore archived teasers on alternative
+public collection surfaces or fill their spaces with unrelated footage.
 
 The stakeholder describes a ten-year journey and confirms that the supplied press outlets are longstanding partners with evidence. Their explicit News requirement is publisher attribution, publisher logos, links to the outlets' pages and an administrator's ability to add more coverage.
 
