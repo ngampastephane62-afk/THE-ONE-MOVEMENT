@@ -1,6 +1,7 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ArrowLeft, ChevronLeft, ChevronRight, ExternalLink, X } from 'lucide-react';
-import PersonPortrait, { PortraitActions, PortraitCredit } from '@/components/editorial/PersonPortrait';
+import { PortraitActions, PortraitCredit } from '@/components/editorial/PersonPortrait';
+import RulerPortrait from './RulerPortrait';
 import { SEVEN_EMIRATES, emirateRuler, stepIndex, COUNCIL_SOURCE, PRESIDENT_SLUG, INTRO_SOURCE } from '@/lib/emirates-experience';
 import { useEmiratesMotion, useSwipe } from './use-emirates-motion';
 
@@ -34,7 +35,7 @@ export default function LeadershipExplorer({ open, onOpenChange, index, onSelect
           }}
           data-testid="dialog-leadership-explorer"
         >
-          <div className="em-lattice pointer-events-none absolute inset-0 opacity-70" aria-hidden />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_20%_30%,hsl(39_52%_54%/.12),transparent_60%)]" aria-hidden />
           <div className="relative flex items-center justify-between gap-4 border-b border-gold-500/25 px-5 py-3 sm:px-8">
             <DialogPrimitive.Close className="em-focus inline-flex min-h-11 items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-gold-400" data-testid="button-explorer-return"><ArrowLeft className="h-4 w-4" aria-hidden />Return to the campaign</DialogPrimitive.Close>
             <DialogPrimitive.Close className="em-focus grid h-11 w-11 place-items-center border border-gold-500/40" aria-label="Close leadership explorer" data-testid="button-explorer-close"><X className="h-5 w-5" /></DialogPrimitive.Close>
@@ -42,7 +43,7 @@ export default function LeadershipExplorer({ open, onOpenChange, index, onSelect
 
           <div className="relative mx-auto grid w-full max-w-6xl flex-1 gap-8 px-5 py-8 sm:px-8 md:grid-cols-12 md:items-center" {...swipe} aria-live="polite">
             <div key={`p-${e.id}`} className="md:col-span-5">
-              {ruler && <PersonPortrait slug={ruler.slug} name={ruler.name} contain className="em-portrait-in mx-auto aspect-[4/5] max-h-[52dvh] w-full max-w-sm overflow-hidden bg-lagoon-900/60" />}
+              {ruler && <RulerPortrait slug={ruler.slug} name={ruler.name} box="h-[min(52dvh,26rem)] w-full" />}
             </div>
             <div key={`t-${e.id}`} className="md:col-span-7">
               <p className="text-eyebrow text-gold-400">{e.name.toUpperCase()} · <span lang="ar" dir="rtl" className="em-ar normal-case tracking-normal">{e.ar}</span></p>

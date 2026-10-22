@@ -51,7 +51,7 @@ accepts member submissions, but every contribution still requires review,
 consent and eligible privacy settings before becoming public.
 
 The Emirates campaign must retain its approved flags, dunes artwork and opening
-composition. Present THANK YOU, EMIRATES, SHUKRAN EMIRATES and شكراً للإمارات
+composition. Present THANKS EMIRATES, SHUKRAN EMIRATES and شكراً الإمارات
 harmoniously, with genuine RTL Arabic, not character-by-character decoration.
 The Founder reviews this experience primarily on an iPhone.
 
@@ -66,3 +66,20 @@ the actual source of each photograph; inclusion never implies endorsement.
 Use compact continent navigation that distinguishes configured active campaigns
 from editorial directories. Never silently turn private Emirates member-network
 testimonies into publicly approved worldwide campaign contributions.
+
+The Founder rejected the schematic locator, abstract continent blobs, symbolic
+grids/circles and visible "schematic / not official / not to scale" explanations
+on the Emirates page. This page is intended for cultural, diplomatic and government
+presentation, not a conceptual prototype.
+
+**Why:** The Founder explicitly requested credible, premium visual storytelling,
+clean complete ruler portraits and actual world imagery rather than a cosmetic
+recolour of placeholder diagrams.
+
+**How to apply:** Use real geographic geometry for the UAE locator and one selected
+capital highlight, authentic licensed architecture/heritage imagery and the
+supplied world artwork. Keep sources/licences available without cluttering the
+main narrative. Preserve full portrait content within consistent natural-ratio
+frames. Follow the requested narrative: introduction, federation, leadership,
+shared culture, UAE global bridge, continent gateways, philosophy/participation.
+Continent details should be progressively disclosed, not six simultaneous lists.

@@ -32,7 +32,7 @@ export default function JourneyChapter() {
     <section aria-labelledby="em-journey-h" className="bg-lagoon-800 py-section-lg text-ivory-100" id="em-participate">
       <div className="mx-auto max-w-6xl px-6">
         <div ref={r}>
-          <p className="em-r-fade text-eyebrow text-gold-400">06 · PARTICIPATE · FREE</p>
+          <p className="em-r-fade text-eyebrow text-gold-400">08 · PARTICIPATE · FREE</p>
           <h2 id="em-journey-h" className="mt-4 font-display text-[clamp(2rem,5vw,3.75rem)] leading-[1]">
             <span className="em-mask"><span className="em-r-line block">FOUR STEPS.</span></span>
             <span className="em-mask"><span className="em-r-line block text-gold-400" style={{ ['--d' as string]: '120ms' }}>NO PAYMENT.</span></span>

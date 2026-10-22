@@ -9,7 +9,7 @@ export default function HumanStoryChapter() {
     <section ref={r} aria-labelledby="em-human-h" className="relative overflow-hidden bg-lagoon-900 py-section-xl text-center text-ivory-100">
       <div className="em-r-wide em-lattice absolute inset-x-6 inset-y-10 border border-gold-500/25 sm:inset-x-16" aria-hidden />
       <div className="relative mx-auto max-w-3xl px-6">
-        <p className="em-r-fade text-eyebrow text-gold-400">05 · THE HUMAN STORY</p>
+        <p className="em-r-fade text-eyebrow text-gold-400">07 · THE HUMAN STORY</p>
         <h2 id="em-human-h" className="mt-6 font-display text-[clamp(2.2rem,6vw,4.5rem)] leading-[0.98]">
           <span className="em-mask"><span className="em-r-line block" style={{ ['--d' as string]: '120ms' }}>EVERY PERSON</span></span>
           <span className="em-mask"><span className="em-r-line block" style={{ ['--d' as string]: '240ms' }}>HAS A STORY.</span></span>

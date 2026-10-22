@@ -35,6 +35,7 @@ function fixture(extra = {}) {
     '@/components/editorial/EmiratesHero': { default: ({ children }) => React.createElement('section', { 'data-approved-hero': true }, children) },
     '@/components/GoldThread': { default: () => null },
     '@/components/editorial/PersonPortrait': {
+      PERSON_MEDIA: JSON.parse(read('lib/person-media.json')),
       default: ({ slug, name, contain, className }) => React.createElement('figure', { 'data-portrait': slug, 'data-contain': contain, className, 'aria-label': name }),
       PortraitCredit: ({ slug }) => React.createElement('span', { 'data-credit': slug }, 'Original photo credit'),
       PortraitActions: ({ slug }) => React.createElement('span', { 'data-reactions': slug }),
@@ -53,6 +54,7 @@ function fixture(extra = {}) {
   function load(file) {
     if (cache.has(file)) return cache.get(file);
     if (file.endsWith('.json')) return JSON.parse(readFileSync(file, 'utf8'));
+    if (/\.(webp|png|jpe?g)$/.test(file)) return { default: `/assets/${file.split('/').at(-1)}` };
     const module = { exports: {} };
     cache.set(file, module.exports);
     const code = ts.transpileModule(readFileSync(file, 'utf8').replaceAll('import.meta.env.BASE_URL', "'/'"), {
@@ -139,8 +141,9 @@ test('approved introduction transclusion keeps real English/Arabic text and the 
   assert.match(html, /data-approved-hero/);
   assert.match(html, /SHUKRAN EMIRATES/);
   assert.match(html, /lang="ar" dir="rtl"/);
-  assert.match(html, /شكراً للإمارات/);
+   assert.match(html, /شكراً الإمارات/);
   assert.match(html, /href="\/member\/thanks-emirates"/);
+  assert.doesNotMatch(html, /animate-cinematic-3/);
   const hero = read('components/editorial/EmiratesHero.tsx');
   for (const original of ['emirates-dunes.webp', 'seven emirates panorama', 'tomi-pan', 'UAE flag']) assert.ok(hero.toLowerCase().includes(original.toLowerCase()), original);
 });
@@ -150,7 +153,9 @@ test('federation reveals one selected portrait; direct selection and arrows reta
   let selected = 0;
   let html = f.render(Federation, { index: selected, onSelect: n => { selected = n; } });
   assert.equal((html.match(/data-portrait=/g) || []).length, 1);
-  assert.match(html, /not an official or to-scale map/);
+  assert.match(html, /svg-uae-locator/);
+  assert.match(html, /Natural Earth/);
+  assert.doesNotMatch(html, /schematic|not an official|not to scale/i);
   for (const e of model.SEVEN_EMIRATES) assert.ok(f.events.has(`button-emirate-${e.id}`));
   f.events.get('button-emirate-fujairah').onClick();
   assert.equal(selected, 6);
@@ -238,7 +243,7 @@ test('secondary resources preserve important claims and provenance without mount
 
 test('motion honours reduced motion, offscreen/hidden state, pause and cleanup while chapters retain order', () => {
   const page = read('pages/thanks-emirates/index.tsx');
-  const chapters = ['<EmiratesIntro', '<FederationChapter', '<LeadershipChapter', '<EmiratesStoryChapter', '<HumanStoryChapter', '<JourneyChapter', '<GlobalExplorer', '<EmiratesResources'];
+  const chapters = ['<EmiratesIntro', '<FederationChapter', '<LeadershipChapter', '<EmiratesStoryChapter', '<CulturalStory', '<EmiratesConnectionChapter', '<GlobalExplorer', '<HumanStoryChapter', '<JourneyChapter', '<EmiratesResources'];
   for (let i = 1; i < chapters.length; i++) assert.ok(page.indexOf(chapters[i - 1]) < page.indexOf(chapters[i]));
   const hooks = read('components/emirates/use-emirates-motion.ts');
   for (const safeguard of ['prefers-reduced-motion', 'IntersectionObserver', "el.dataset.em = 'in'", "removeEventListener", 'visibilityState', 'disconnect']) assert.ok(hooks.includes(safeguard), safeguard);
@@ -250,4 +255,71 @@ test('motion honours reduced motion, offscreen/hidden state, pause and cleanup w
   const explorer = read('components/emirates/LeadershipExplorer.tsx');
   assert.match(explorer, /data-paused=\{paused/);
   assert.match(explorer, /button-explorer-motion/);
+});
+
+test('all seven locators use distinct capital positions on the actual country outline', () => {
+  const f = fixture(), Locator = f.load('components/emirates/UaeLocator.tsx').default;
+  const geo = f.load('lib/emirates-geography.ts');
+  assert.ok(geo.UAE_OUTLINE.length > 1500);
+  assert.ok(geo.UAE_ENCLAVE_HOLE.length > 100);
+  assert.equal(new Set(Object.values(geo.EMIRATE_CAPITALS).map(p => `${p.x},${p.y}`)).size, 7);
+  for (let index = 0; index < 7; index++) {
+    let selected = index;
+    const html = f.render(Locator, { index, onSelect: n => selected = n });
+    assert.match(html, /fill-rule="evenodd"/);
+    assert.ok(html.includes(model.SEVEN_EMIRATES[index].name));
+    const p = geo.EMIRATE_CAPITALS[model.SEVEN_EMIRATES[index].id];
+    assert.ok(html.includes(`translate(${p.x}px, ${p.y}px)`));
+    assert.equal((html.match(/class="em-loc-marker"/g) || []).length, 1);
+    assert.doesNotMatch(html, /schematic|not to scale|polyline/i);
+    assert.equal(selected, index, 'Rendering a locator must not navigate automatically');
+  }
+});
+
+test('complete, naturally proportioned portrait framing is shared across all ruler surfaces', () => {
+  const f = fixture(), Portrait = f.load('components/emirates/RulerPortrait.tsx').default;
+  const media = JSON.parse(read('lib/person-media.json'));
+  for (const e of model.SEVEN_EMIRATES) {
+    const m = media[e.rulerSlug];
+    const html = f.render(Portrait, { slug: e.rulerSlug, name: e.name, box: 'h-44 w-32' });
+    assert.match(html, /data-contain="true"/);
+    assert.ok(html.includes(`aspect-ratio:${m.width / m.height}`));
+    assert.doesNotMatch(html, /object-cover|bg-lagoon/);
+  }
+  for (const name of ['FederationChapter', 'LeadershipChapter', 'LeadershipExplorer']) assert.ok(read(`components/emirates/${name}.tsx`).includes('<RulerPortrait'));
+});
+
+test('continent gateways start closed and reveal only the selected real pathway', () => {
+  let selected = null;
+  const f = fixture({ react: { ...React, useState: () => [selected, n => { selected = n; }] } });
+  const Global = f.load('components/emirates/GlobalExplorer.tsx').default;
+  let html = f.render(Global);
+  assert.equal((html.match(/aria-expanded="false"/g) || []).length, 6);
+  assert.equal((html.match(/id="em-gate-[^"]+"[^>]*hidden/g) || []).length, 6);
+  f.events.get('button-continent-africa').onClick();
+  assert.equal(selected, 'africa');
+  html = f.render(Global);
+  assert.equal((html.match(/aria-expanded="true"/g) || []).length, 1);
+  assert.match(html, /id="em-gate-africa"[^>]*data-open="true"/);
+  assert.doesNotMatch(html.match(/id="em-gate-africa"[^>]*/)[0], /\bhidden/);
+  f.events.get('button-continent-oceania').onClick();
+  assert.equal(selected, 'oceania');
+  html = f.render(Global);
+  assert.match(html, /id="em-gate-africa"[^>]*hidden/);
+  f.events.get('button-continent-oceania').onClick();
+  assert.equal(selected, null);
+  assert.match(read('components/emirates/emirates.css'), /\.em-gate-panel\[hidden\]\s*\{\s*display:\s*none/);
+});
+
+test('photographic statements and connecting-world imagery replace every placeholder diagram', () => {
+  const f = fixture(), Story = f.load('components/emirates/EmiratesStoryChapter.tsx');
+  const html = f.render(Story.default) + f.render(Story.EmiratesConnectionChapter);
+  assert.match(html, /images\/emirates\/shared-vision.webp/);
+  assert.match(html, /images\/emirates\/al-fahidi.webp/);
+  assert.match(html, /images\/vision\/founder-world-gold.webp/);
+  assert.match(html, /Wadiia/); assert.match(html, /Delta.jpg/);
+  assert.match(html, /creativecommons.org\/licenses\/by-sa\/4.0/);
+  assert.doesNotMatch(html, /schematic|Meridians|SevenDots|Arches|em-lattice/);
+  assert.equal((html.match(/class="em-route"/g) || []).length, 8);
+  assert.ok(existsSync(resolve(root, '../public/images/emirates/LICENSES.md')));
 });

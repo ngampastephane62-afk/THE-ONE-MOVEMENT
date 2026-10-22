@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
-import PersonPortrait, { PortraitCredit } from '@/components/editorial/PersonPortrait';
+import { PortraitCredit } from '@/components/editorial/PersonPortrait';
+import RulerPortrait from './RulerPortrait';
 import { SEVEN_EMIRATES, president, COUNCIL_SOURCE } from '@/lib/emirates-experience';
 import LeadershipExplorer from './LeadershipExplorer';
 import { useEmReveal } from './use-emirates-motion';
@@ -14,10 +15,10 @@ export default function LeadershipChapter({ index, onSelect }: { index: number; 
 
   return (
     <section ref={reveal} aria-labelledby="em-lead-h" className="relative overflow-hidden bg-lagoon-900 py-section-lg text-ivory-100">
-      <div className="em-lattice pointer-events-none absolute inset-0 opacity-60" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_15%_40%,hsl(39_52%_54%/.14),transparent_55%)]" aria-hidden />
       <div className="relative mx-auto grid max-w-6xl gap-10 px-6 md:grid-cols-12 md:items-center">
         <div className="md:col-span-4">
-          {p && <PersonPortrait slug={p.slug} name={p.name} contain className="em-r-media aspect-[4/5] w-full max-w-[18rem] overflow-hidden bg-lagoon-800" />}
+          {p && <div className="em-r-media"><RulerPortrait slug={p.slug} name={p.name} box="h-[22rem] w-full max-w-[19rem]" align="start" /></div>}
           {p && <div className="text-ivory-300"><PortraitCredit slug={p.slug} /></div>}
         </div>
         <div className="md:col-span-8">

@@ -4,16 +4,19 @@
 
 1. Approved introduction: existing UAE flag band, dunes artwork, panorama and
    hero composition; English, transliteration and genuine Arabic typography.
-2. Seven Emirates: schematic geographic composition, one selected Emirate's
+2. Seven Emirates: Natural Earth UAE outline and selected capital locator, one selected Emirate's
    information and portrait, direct selectors, previous/next and touch swipes.
 3. Leadership: compact President introduction, optional Radix dialog showing one
    profile at a time, previous/next, direct selection, arrow keys and return/close.
-4. Emirates story: four short editorial sequences, with existing CulturalStory.
-5. Human story: authentic member participation and its existing privacy boundary.
-6. Free four-step journey: account, verification, explicit network activation,
-   then consent and text/video submission through the existing form.
-7. Global discovery: six continents, lightweight schematic map and the existing
-   campaign configuration endpoint; editorial directories clearly distinguished.
+4. Shared identity/culture: real Abu Dhabi skyline and Al Fahidi heritage photos,
+   approved dunes artwork and the preserved CulturalStory content.
+5. Global bridge: separate connecting-world sequence using Founder gold world
+   artwork and lightweight animated routes starting at the UAE.
+6. Global discovery: umbrella campaign, recognizable world artwork and six
+   continent gateways closed by default; only one detail panel open at a time.
+   Existing campaign configuration and editorial-directory boundaries preserved.
+7. Human story and free four-step journey: account, verification, explicit network
+   activation, consent and text/video submission through the unchanged form.
 8. Secondary resources: original principles, platforms, pilot status, illustrative
    samples, recognition concepts, roadmap and source-labelled directories in
    closed disclosures; supporting portraits mount only on explicit expansion.
@@ -54,10 +57,12 @@ assumption that all “Americas” countries belong to North America.
 ## Verification
 
 - TypeScript and whitespace checks pass.
-- 31 offline checks pass across Emirates rendering/navigation/motion contracts,
-  existing media actions, News compatibility and gratitude sign-in intent rules.
+- 20 offline checks pass across Emirates rendering/navigation/motion contracts,
+  complete ruler framing, accurate-outline locators, collapsed continent gateways,
+  licensed photo/world imagery and existing gratitude sign-in intent rules.
 - Screenshot inspection: approved introduction and genuine RTL Arabic at 390px;
-  federation at 390px; global explorer at 320px. No visible page overflow in these
+  federation and natural-ratio President portrait at 390px; global gateways at
+  320px; connecting-world composition at 1440px. No visible page overflow in these
   inspected views and no JavaScript errors reported by the capture browser.
 - The member Emirates form, shared ruler data, original portrait component and
   worldwide campaign page are byte-for-byte unchanged from the starting snapshot.
@@ -66,7 +71,11 @@ assumption that all “Americas” countries belong to North America.
 ## Limits / not claimed
 
 - No physical iPhone Safari, VoiceOver or hardware frame-rate test was performed.
-- Diagrams are clearly labelled schematics, not official geographic boundaries.
+- Placeholder diagrams and schematic disclaimers removed. UAE outline derives
+  from public-domain Natural Earth data and retains the Oman enclave; locators
+  represent emirate capitals, not invented internal administrative boundaries.
+  Global routes are editorial connections on Founder artwork, not measured
+  flight, trade or partnership data. Marker placement checked against the artwork.
 - No public Emirates testimony endpoint was added. Existing Emirates posts stay
   in the signed-in member network; no fake or relabelled worldwide stories shown.
   A public Emirates gallery would need a separate, explicitly authorized consent
@@ -85,5 +94,8 @@ assumption that all “Americas” countries belong to North America.
 - artifacts/web/src/components/emirates/ (focused chapter components, dialog,
   resources, local hooks and stylesheet)
 - artifacts/web/src/lib/emirates-experience.ts
+- artifacts/web/src/lib/emirates-geography.ts
+- artifacts/web/public/images/emirates/ (two WebP photos, combined 122KB)
+- artifacts/web/public/images/emirates/LICENSES.md (verified CC BY-SA 4.0 sources)
 - artifacts/web/test/emirates-experience.test.mjs
 - Reference MP4 excluded from Git/deployment; it is not a runtime asset.

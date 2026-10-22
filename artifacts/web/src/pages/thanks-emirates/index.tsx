@@ -5,7 +5,7 @@ import CulturalStory from '@/components/editorial/CulturalStory';
 import EmiratesIntro from '@/components/emirates/EmiratesIntro';
 import FederationChapter from '@/components/emirates/FederationChapter';
 import LeadershipChapter from '@/components/emirates/LeadershipChapter';
-import EmiratesStoryChapter from '@/components/emirates/EmiratesStoryChapter';
+import EmiratesStoryChapter, { EmiratesConnectionChapter } from '@/components/emirates/EmiratesStoryChapter';
 import HumanStoryChapter from '@/components/emirates/HumanStoryChapter';
 import JourneyChapter from '@/components/emirates/JourneyChapter';
 import GlobalExplorer from '@/components/emirates/GlobalExplorer';
@@ -39,16 +39,17 @@ export default function ThanksEmirates() {
         <LeadershipChapter index={emirate} onSelect={setEmirate} />
         <EmiratesStoryChapter />
         <CulturalStory preset="emirates" />
+        <EmiratesConnectionChapter />
+        <GlobalExplorer />
         <HumanStoryChapter />
         <JourneyChapter />
-        <GlobalExplorer />
         <EmiratesResources />
 
         <section className="bg-lagoon-900 py-section-lg text-center text-ivory-100">
           <div className="mx-auto max-w-3xl px-6">
             <p className="font-display text-2xl leading-relaxed text-ivory-200">One story can inspire another. One person can connect another. One country can inspire the world.</p>
             <p className="mt-6 text-display-md text-gold-400">THANK YOU, EMIRATES. WE ARE ONE.</p>
-            <p lang="ar" dir="rtl" className="em-ar mt-3 text-2xl text-gold-200">شكراً للإمارات</p>
+            <p lang="ar" dir="rtl" className="em-ar mt-3 text-2xl text-gold-200">شكراً الإمارات</p>
             <p className="mt-6 text-xs text-ivory-300">A TOMI initiative. No governmental endorsement, patronage or Emirates airline sponsorship is implied.</p>
           </div>
         </section>

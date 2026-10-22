@@ -66,3 +66,48 @@
 .em-res-plus { transition: transform 300ms var(--em-ease); }
 .em-noscroll { scrollbar-width: none; }
 .em-noscroll::-webkit-scrollbar { display: none; }
+
+/* ---------- Refinement layer: imagery, locator, portraits, gateways ---------- */
+.em-intro-ar-line { display: block; animation: em-wipe-rtl 1000ms var(--em-ease) both; animation-delay: var(--d, 0ms); }
+.em-intro-copy { animation: em-copy-settle 700ms var(--em-ease) both; }
+@keyframes em-copy-settle { from { opacity: .9; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.em-world-caption { color: hsl(39 65% 75%); text-shadow: 0 2px 8px black; }
+.em-hair { background: linear-gradient(90deg, transparent, hsl(39 52% 54% / .7), transparent); height: 1px; }
+
+/* Portrait: frame takes the image's natural ratio, so nothing is cropped and no bands appear. */
+.em-frame { position: relative; padding: 6px; background: hsl(40 40% 96% / .04); box-shadow: inset 0 0 0 1px hsl(39 52% 54% / .55); }
+.em-frame::after { content: ''; position: absolute; inset: -7px; border: 1px solid hsl(39 52% 54% / .22); pointer-events: none; }
+.em-frame.em-frame-light { background: hsl(40 40% 96%); box-shadow: inset 0 0 0 1px hsl(39 52% 54% / .6), 0 30px 60px -36px hsl(190 50% 12% / .45); }
+.em-frame img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.em-frame > figure { width: 100%; height: 100%; }
+
+/* Locator: one active marker glides between capitals. */
+.em-loc-marker { transition: transform 900ms var(--em-ease); }
+.em-loc-dot { transition: opacity 500ms var(--em-ease), transform 500ms var(--em-ease); transform-box: fill-box; transform-origin: center; }
+.em-loc-dot[data-on='true'] { opacity: 0; }
+.em-loc-land { transition: opacity 900ms var(--em-ease); }
+.em-loc-label { animation: em-loc-in 600ms var(--em-ease) both; animation-delay: 420ms; }
+@keyframes em-loc-in { from { opacity: 0; transform: translate3d(0,8px,0); } to { opacity: 1; transform: none; } }
+.em-loc-lead { stroke-dasharray: 1; animation: em-lead 700ms var(--em-ease) both; animation-delay: 200ms; }
+@keyframes em-lead { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+
+/* Image push / ken burns, ambient-gated */
+.em-kb { animation: em-kb 22s ease-in-out infinite alternate; transform-origin: 60% 50%; }
+@keyframes em-kb { from { transform: scale(1.04); } to { transform: scale(1.12) translate3d(-1.5%, -1%, 0); } }
+.em-route { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1600ms var(--em-ease); transition-delay: var(--d, 0ms); }
+[data-em='in'] .em-route { stroke-dashoffset: 0; }
+.em-route-pulse { animation: em-dash 5s linear infinite; stroke-dasharray: .03 .97; }
+@keyframes em-dash { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+.em-world-stage { transition: transform 1100ms var(--em-ease); transform-origin: 0 0; }
+.em-gate-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 600ms var(--em-ease); }
+.em-gate-panel[hidden] { display: none; }
+.em-gate-panel[data-open='true'] { grid-template-rows: 1fr; }
+.em-gate-panel > div { overflow: hidden; }
+.em-gate-chev { transition: transform 450ms var(--em-ease); }
+[aria-expanded='true'] .em-gate-chev { transform: rotate(180deg); }
+[data-ambient='stop'] .em-kb, [data-ambient='stop'] .em-route-pulse, [data-ambient='stop'] .em-pulse { animation-play-state: paused; }
+.em[data-paused='true'] .em-route, .em [data-em] .em-route { }
+.em[data-paused='true'] .em-route { stroke-dashoffset: 0; }
+.em[data-paused='true'] .em-route-pulse { display: none; }
+.em[data-paused='true'] .em-gate-panel { transition: none; }
+@media (prefers-reduced-motion: reduce) { .em .em-route { stroke-dashoffset: 0; } .em .em-route-pulse { display: none; } }
