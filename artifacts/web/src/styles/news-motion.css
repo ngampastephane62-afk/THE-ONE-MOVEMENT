@@ -1,0 +1,54 @@
+/* News-scoped motion. Everything visible unless [data-nm='armed'] (set by JS). */
+.nm-scope { --nm-ease: cubic-bezier(.22, 1, .36, 1); }
+
+.nm-scope .nm-line { display: block; overflow: hidden; padding-bottom: .06em; }
+.nm-scope .nm-line > span { display: block; transition: transform 850ms var(--nm-ease), opacity 850ms var(--nm-ease); transition-delay: var(--d, 0ms); }
+.nm-scope .nm-media { overflow: hidden; clip-path: inset(0); transition: clip-path 1100ms var(--nm-ease); transition-delay: var(--d, 0ms); }
+.nm-scope .nm-media .nm-push { transition: transform 1400ms var(--nm-ease); transition-delay: var(--d, 0ms); }
+.nm-scope .nm-up { transition: transform 600ms var(--nm-ease), opacity 600ms var(--nm-ease); transition-delay: var(--d, 0ms); }
+.nm-scope .nm-side { transition: transform 900ms var(--nm-ease), opacity 900ms var(--nm-ease); transition-delay: var(--d, 0ms); }
+.nm-scope .nm-rule { transform-origin: left; transition: transform 900ms var(--nm-ease); transition-delay: var(--d, 0ms); }
+
+.nm-scope [data-nm='armed'] .nm-line > span { transform: translateY(105%); opacity: 0; }
+.nm-scope [data-nm='armed'] .nm-media { clip-path: inset(0 0 0 100%); }
+.nm-scope [data-nm='armed'] .nm-media.nm-from-left { clip-path: inset(0 100% 0 0); }
+.nm-scope [data-nm='armed'] .nm-media.nm-from-bottom { clip-path: inset(100% 0 0 0); }
+.nm-scope [data-nm='armed'] .nm-media .nm-push { transform: scale(1.06); }
+.nm-scope [data-nm='armed'] .nm-up { transform: translateY(12px); opacity: 0; }
+.nm-scope [data-nm='armed'] .nm-side { transform: translateX(var(--x, 24px)); opacity: 0; }
+.nm-scope [data-nm='armed'] .nm-rule { transform: scaleX(0); }
+
+/* Paused by visitor or reduced motion: final, readable state immediately. */
+.nm-scope[data-paused='true'] *, .nm-scope[data-paused='true'] *::before, .nm-scope[data-paused='true'] *::after { transition: none !important; animation: none !important; }
+.nm-scope[data-paused='true'] [data-nm='armed'] .nm-line > span,
+.nm-scope[data-paused='true'] [data-nm='armed'] .nm-up,
+.nm-scope[data-paused='true'] [data-nm='armed'] .nm-side { transform: none; opacity: 1; }
+.nm-scope[data-paused='true'] [data-nm='armed'] .nm-media { clip-path: inset(0); }
+.nm-scope[data-paused='true'] [data-nm='armed'] .nm-push { transform: none; }
+.nm-scope[data-paused='true'] [data-nm='armed'] .nm-rule { transform: none; }
+
+/* Layered light, always behind content. */
+.nm-light { position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.nm-light::before {
+  content: ''; position: absolute; inset: -20% -10%;
+  background:
+    radial-gradient(ellipse 45% 38% at 78% 30%, hsl(43 80% 73% / .16), transparent 70%),
+    radial-gradient(ellipse 50% 50% at 10% 85%, hsl(165 60% 30% / .35), transparent 70%);
+}
+.nm-light::after {
+  content: ''; position: absolute; top: 0; bottom: 0; left: 55%; width: 1px;
+  background: linear-gradient(to bottom, transparent, hsl(43 80% 73% / .35), transparent);
+  animation: nmSweep 14s ease-in-out infinite alternate; animation-play-state: paused;
+}
+[data-ambient='run'] .nm-light::after { animation-play-state: running; }
+@keyframes nmSweep { from { transform: translateX(-12vw); opacity: .4; } to { transform: translateX(12vw); opacity: .9; } }
+
+/* Selective kente-inspired band, used once per surface. */
+.nm-band { height: 6px; pointer-events: none; background: repeating-linear-gradient(90deg, hsl(39 52% 54%) 0 18px, hsl(166 55% 18%) 18px 24px, hsl(38 57% 94%) 24px 28px, hsl(166 55% 18%) 28px 34px); opacity: .7; }
+
+.nm-headline { overflow-wrap: anywhere; hyphens: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  .nm-scope * { transition: none !important; }
+  .nm-light::after { animation: none; }
+}

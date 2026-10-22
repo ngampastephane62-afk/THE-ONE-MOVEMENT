@@ -28,3 +28,4 @@
 - [Global gratitude campaign](global-gratitude-campaign.md) — distinguish worldwide gratitude from UAE testimonies and public-figure directories; public stories require moderation and consent.
 - [Vision motion direction](vision-motion-direction.md) — supplied maps remain the hero artwork; decoration stays behind readable text, with original museum-inspired motion.
 - [Programs editorial motion](programs-editorial-motion.md) — animate the existing six programmes without replacing Founder photos, approved copy or real engagement controls.
+- [News editorial priority](news-editorial-priority.md) — newest published story first; coordinated editorial motion, source-labelled media and preserved historical archive last.

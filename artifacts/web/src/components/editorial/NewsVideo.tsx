@@ -8,7 +8,7 @@ import VideoActions from './VideoActions';
  * Vertical 9:16 editorial video. Never autoplays; controls sit outside the
  * frame's clip, and the reaction strip sits below so it cannot be cut off.
  */
-export default function NewsVideo({ item, compact = false }: { item: EditorialVideoNews; compact?: boolean }) {
+export default function NewsVideo({ item, compact = false, actionsLayout }: { item: EditorialVideoNews; compact?: boolean; actionsLayout?: 'default' | 'row' }) {
   const v = item.video;
   const video = useRef<HTMLVideoElement>(null);
   const anchor = useDeepLinkFocus<HTMLElement>({ videoId: v.id });
@@ -71,7 +71,7 @@ export default function NewsVideo({ item, compact = false }: { item: EditorialVi
           {item.credit}<span className="sr-only"> (opens in a new tab)</span>
         </a>
       </figcaption>
-      {<div className="mx-auto max-w-xl"><VideoActions videoId={v.id} title={item.title} /></div>}
+      {<div className="mx-auto max-w-xl"><VideoActions videoId={v.id} title={item.title} layout={actionsLayout} /></div>}
     </figure>
   );
 }

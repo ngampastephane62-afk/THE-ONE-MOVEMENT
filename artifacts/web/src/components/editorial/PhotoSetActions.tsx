@@ -10,16 +10,20 @@ export type PhotoSetItem = { src: string; title: string };
  * linked artwork). A labelled chooser selects the photo; the strip below is
  * that photo's own persisted engagement. Render it OUTSIDE any card link.
  */
-export default function PhotoSetActions({ items, tone = 'light', label = 'Choose a photo to react to', className, onInteract }: {
+export default function PhotoSetActions({ items, tone = 'light', label = 'Choose a photo to react to', className, onInteract, layout, selectedIndex, onSelectedIndexChange, hideChooser = false }: {
+  layout?: 'default' | 'row';
+  selectedIndex?: number; onSelectedIndexChange?: (index: number) => void; hideChooser?: boolean;
   items: PhotoSetItem[]; tone?: 'light' | 'dark'; label?: string; className?: string; onInteract?: () => void;
 }) {
-  const [i, setI] = useState(0);
+  const [localIndex, setLocalIndex] = useState(0);
+  const i = selectedIndex ?? localIndex;
+  const setI = (index: number) => { setLocalIndex(index); onSelectedIndexChange?.(index); };
   if (!items.length) return null;
   const dark = tone === 'dark';
   const gallery = items.map((it) => ({ source: canonicalMediaSource(it.src), title: it.title }));
   return (
     <div className={cn('pt-3', className)} data-gallery-root onFocusCapture={onInteract} onPointerDownCapture={onInteract}>
-      {items.length > 1 && (
+      {!hideChooser && items.length > 1 && (
         <div className="mb-3 flex flex-wrap items-center gap-1.5" role="group" aria-label={label}>
           {items.map((it, k) => (
             <button key={it.src} type="button" onClick={() => setI(k)} aria-pressed={i === k} aria-label={`Photo ${k + 1}: ${it.title}`}
@@ -31,7 +35,7 @@ export default function PhotoSetActions({ items, tone = 'light', label = 'Choose
           ))}
         </div>
       )}
-      <GalleryActions items={gallery} index={i} onSelect={setI} onInteract={onInteract} tone={tone} />
+      <GalleryActions items={gallery} index={i} onSelect={setI} onInteract={onInteract} tone={tone} layout={layout} />
     </div>
   );
 }
