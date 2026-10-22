@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Pause, Play } from 'lucide-react';
 import emiratesArt from '@/assets/media/editorial/emirates-dunes.webp';
 
@@ -18,8 +18,24 @@ const EMIRATES: { name: string; ar: string; shape: ReactNode }[] = [
   { name: 'Fujairah', ar: 'الفجيرة', shape: (<g><path d="M0 120 L24 70 L46 96 L64 60 L90 120 Z" /><rect x="70" y="84" width="34" height="36" /><circle cx="87" cy="80" r="8" /></g>) },
 ];
 
-export default function EmiratesHero({ children }: { children: ReactNode }) {
+/**
+ * Opt-in props (defaults keep the original behaviour): `externalPaused` merges a
+ * page-level visitor pause; `pauseOffscreen` stops the panorama offscreen or in a hidden tab.
+ */
+export default function EmiratesHero({ children, externalPaused = false, pauseOffscreen = false }: { children: ReactNode; externalPaused?: boolean; pauseOffscreen?: boolean }) {
   const [paused, setPaused] = useState(false);
+  const [away, setAway] = useState(false);
+  const rootRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (!pauseOffscreen) return;
+    const el = rootRef.current;
+    let off = false;
+    const sync = () => setAway(off || document.visibilityState === 'hidden');
+    const io = el && typeof IntersectionObserver !== 'undefined' ? new IntersectionObserver(([e]) => { off = !e.isIntersecting; sync(); }) : null;
+    if (el) io?.observe(el);
+    document.addEventListener('visibilitychange', sync);
+    return () => { io?.disconnect(); document.removeEventListener('visibilitychange', sync); };
+  }, [pauseOffscreen]);
   const [reduced, setReduced] = useState(false);
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -28,11 +44,11 @@ export default function EmiratesHero({ children }: { children: ReactNode }) {
     mq.addEventListener('change', on);
     return () => mq.removeEventListener('change', on);
   }, []);
-  const still = paused || reduced;
+  const still = paused || reduced || externalPaused || away;
   const strip = [...EMIRATES, ...EMIRATES];
 
   return (
-    <section className="relative isolate flex min-h-[92dvh] items-end overflow-hidden bg-lagoon-900 text-ivory-100">
+    <section ref={rootRef} className="relative isolate flex min-h-[92dvh] items-end overflow-hidden bg-lagoon-900 text-ivory-100">
       <style>{`
         @keyframes tomi-pan { from { transform: translate3d(0,0,0); } to { transform: translate3d(-50%,0,0); } }
         @keyframes tomi-drift { 0%,100% { transform: translate3d(0,0,0); opacity:.55; } 50% { transform: translate3d(0,-10px,0); opacity:.85; } }
@@ -81,13 +97,13 @@ export default function EmiratesHero({ children }: { children: ReactNode }) {
       <button
         type="button"
         onClick={() => setPaused((p) => !p)}
-        disabled={reduced}
+        disabled={reduced || externalPaused}
         className="absolute right-5 top-24 z-10 inline-flex items-center gap-2 border border-gold-500/40 bg-lagoon-900/60 px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-gold-400 backdrop-blur disabled:opacity-50"
-        aria-pressed={still}
+        aria-pressed={paused || externalPaused}
         data-testid="button-toggle-hero-motion"
       >
-        {still ? <Play className="h-3 w-3" /> : <Pause className="h-3 w-3" />}
-        {reduced ? 'Motion reduced' : still ? 'Play' : 'Pause'}
+        {paused || externalPaused ? <Play className="h-3 w-3" /> : <Pause className="h-3 w-3" />}
+        {reduced ? 'Motion reduced' : paused || externalPaused ? 'Play' : 'Pause'}
       </button>
 
       <p className="absolute bottom-2 right-4 z-10 text-[10px] tracking-wide text-ivory-300/70">Dubai dunes artwork supplied by The One Movement</p>

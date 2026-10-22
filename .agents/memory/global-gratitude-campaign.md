@@ -49,3 +49,20 @@ development, not merely labelled open in the interface.
 **How to apply:** Keep activation distinct from publication: an active campaign
 accepts member submissions, but every contribution still requires review,
 consent and eligible privacy settings before becoming public.
+
+The Emirates campaign must retain its approved flags, dunes artwork and opening
+composition. Present THANK YOU, EMIRATES, SHUKRAN EMIRATES and شكراً للإمارات
+harmoniously, with genuine RTL Arabic, not character-by-character decoration.
+The Founder reviews this experience primarily on an iPhone.
+
+**Why:** The Founder explicitly approved the introduction and requested its
+refinement, not replacement, while correcting long portrait and information lists.
+
+**How to apply:** Keep leadership a compact, optional discovery chapter with all
+seven Emirates accessible; human connection and free participation remain central.
+Move supporting material into accessible disclosures instead of deleting it.
+Preserve portrait provenance and distinguish official biographical sources from
+the actual source of each photograph; inclusion never implies endorsement.
+Use compact continent navigation that distinguishes configured active campaigns
+from editorial directories. Never silently turn private Emirates member-network
+testimonies into publicly approved worldwide campaign contributions.

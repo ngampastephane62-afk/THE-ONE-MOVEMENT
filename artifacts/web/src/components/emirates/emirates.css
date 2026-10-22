@@ -1,0 +1,68 @@
+/* Thank You, Emirates — scoped motion system (docs/EMIRATES-MOTION-SPEC.md). Everything under .em. */
+.em { --em-ease: cubic-bezier(.22,1,.36,1); }
+.em section[id] { scroll-margin-top: 5rem; }
+.em-ar { font-family: var(--font-arabic); }
+
+/* ---------- Intro (refines approved hero, no letter splitting) ---------- */
+.em-mask { display: block; overflow: hidden; padding-bottom: .06em; }
+.em-intro-line { display: block; animation: em-rise 800ms var(--em-ease) both; animation-delay: var(--d, 0ms); }
+.em-intro-ar { display: block; animation: em-wipe-rtl 900ms var(--em-ease) both; animation-delay: var(--d, 0ms); }
+@keyframes em-rise { from { transform: translate3d(0,105%,0); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes em-wipe-rtl { from { clip-path: inset(0 0 0 100%); transform: translate3d(-18px,0,0); opacity: .2; } to { clip-path: inset(0 0 0 0); transform: none; opacity: 1; } }
+
+/* ---------- Reveal primitives: visible by default, hidden only when armed ---------- */
+[data-em='armed'] .em-r-line { transform: translate3d(0,105%,0); opacity: 0; }
+[data-em='armed'] .em-r-fade { transform: translate3d(0,24px,0); opacity: 0; }
+[data-em='armed'] .em-r-media { transform: scale(1.04); clip-path: inset(10% 6% 10% 6%); opacity: .4; }
+[data-em='armed'] .em-r-scale { transform: scale(.86); opacity: 0; }
+[data-em='armed'] .em-r-x { transform: translate3d(-40px,0,0); opacity: 0; }
+[data-em='armed'] .em-r-xr { transform: translate3d(40px,0,0); opacity: 0; }
+[data-em='armed'] .em-r-conn { transform: scaleX(0); }
+[data-em='armed'] .em-r-wide { clip-path: inset(0 22% 0 22%); transform: scale(.94); opacity: .3; }
+.em-r-line, .em-r-fade, .em-r-scale, .em-r-x, .em-r-xr { transition: transform 800ms var(--em-ease), opacity 700ms var(--em-ease); transition-delay: var(--d, 0ms); }
+.em-r-media, .em-r-wide { transition: transform 900ms var(--em-ease), clip-path 900ms var(--em-ease), opacity 700ms var(--em-ease); transition-delay: var(--d, 0ms); }
+.em-r-conn { transform-origin: left center; transition: transform 650ms var(--em-ease); transition-delay: var(--d, 0ms); }
+@media (max-width: 767px) { .em-r-conn { transform-origin: top center; } [data-em='armed'] .em-r-conn { transform: scaleY(0); } }
+
+/* ---------- Swap animations keyed on selection ---------- */
+.em-swap-mask { animation: em-mask-up 650ms var(--em-ease) both; animation-delay: var(--d, 0ms); }
+@keyframes em-mask-up { from { clip-path: inset(100% 0 0 0); transform: translate3d(0,14px,0); } to { clip-path: inset(0 0 0 0); transform: none; } }
+.em-portrait-in { animation: em-inset 850ms var(--em-ease) both; }
+@keyframes em-inset { from { clip-path: inset(18% 18% 18% 18% round 999px); transform: scale(1.08); } to { clip-path: inset(0 0 0 0 round 0); transform: none; } }
+.em-node { transition: transform 450ms var(--em-ease), opacity 450ms var(--em-ease); transform-box: fill-box; transform-origin: center; }
+.em-node[data-on='true'] { transform: scale(1.45); }
+.em-pulse { transform-box: fill-box; transform-origin: center; animation: em-pulse 2.6s var(--em-ease) infinite; }
+@keyframes em-pulse { from { transform: scale(1); opacity: .7; } to { transform: scale(3.2); opacity: 0; } }
+.em-draw { stroke-dasharray: 1; stroke-dashoffset: 0; transition: stroke-dashoffset 900ms var(--em-ease); }
+[data-em='armed'] .em-draw { stroke-dashoffset: 1; }
+.em-world-pan { transition: transform 650ms var(--em-ease); }
+.em-cont { transition: opacity 450ms var(--em-ease), transform 650ms var(--em-ease); transform-box: fill-box; transform-origin: center; }
+.em-drift { animation: em-drift 14s ease-in-out infinite alternate; }
+@keyframes em-drift { from { transform: translate3d(-1.5%,0,0); } to { transform: translate3d(1.5%,0,0); } }
+
+/* Ambient pausing: offscreen / hidden tab */
+[data-ambient='stop'] .em-pulse, [data-ambient='stop'] .em-drift { animation-play-state: paused; }
+
+/* ---------- Visitor pause + reduced motion: final readable states ---------- */
+.em[data-paused='true'] .em-pulse, .em[data-paused='true'] .em-drift { animation: none; }
+.em[data-paused='true'] *, .em[data-paused='true'] *::before { transition: none !important; animation: none !important; }
+.em[data-paused='true'] [data-em] .em-r-line, .em[data-paused='true'] [data-em] .em-r-fade, .em[data-paused='true'] [data-em] .em-r-media,
+.em[data-paused='true'] [data-em] .em-r-scale, .em[data-paused='true'] [data-em] .em-r-x, .em[data-paused='true'] [data-em] .em-r-xr,
+.em[data-paused='true'] [data-em] .em-r-conn, .em[data-paused='true'] [data-em] .em-r-wide { transform: none; opacity: 1; clip-path: none; }
+.em[data-paused='true'] [data-em] .em-draw { stroke-dashoffset: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .em *, .em *::before { animation: none !important; transition: none !important; }
+  .em [data-em] .em-r-line, .em [data-em] .em-r-fade, .em [data-em] .em-r-media, .em [data-em] .em-r-scale,
+  .em [data-em] .em-r-x, .em [data-em] .em-r-xr, .em [data-em] .em-r-conn, .em [data-em] .em-r-wide { transform: none; opacity: 1; clip-path: none; }
+  .em [data-em] .em-draw { stroke-dashoffset: 0; }
+}
+
+/* ---------- Shared bits ---------- */
+.em-focus:focus-visible { outline: 2px solid hsl(39 52% 54%); outline-offset: 3px; }
+.em-lattice { background-image: repeating-linear-gradient(45deg, hsl(38 70% 60% / .09) 0 1px, transparent 1px 22px), repeating-linear-gradient(-45deg, hsl(38 70% 60% / .09) 0 1px, transparent 1px 22px); }
+.em-res > summary { list-style: none; }
+.em-res > summary::-webkit-details-marker { display: none; }
+.em-res[open] .em-res-plus { transform: rotate(45deg); }
+.em-res-plus { transition: transform 300ms var(--em-ease); }
+.em-noscroll { scrollbar-width: none; }
+.em-noscroll::-webkit-scrollbar { display: none; }
