@@ -84,3 +84,17 @@ mtime_ms = 1792582246015
 storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/3b84077f-2e32-497f-bcc4-b2836d1c7c3d/5124955e-eae0-4988-9fd8-cee779853c10"
 storage_version_token = "1792582375850412"
 content_type = "text/markdown"
+
+[[outputs]]
+id = "LdSNu0B_0BaZbbe4zqHQ_"
+uri = "file://screenshots/tomi-awareness-mobile.jpg"
+type = "image"
+title = "Aperçu mobile — Campagne paix & unité"
+description = "Présentation à 390 px : titre corrigé, vidéo originale, texte MONUSCO et commandes Like / Comment / Share."
+logical_id = "0d3b267f-99a4-4b83-b582-bd6d3ebb85bf"
+content_hash = "sha256:1be0ca1f50e961fe5deb142432e3bb373346ffba37c55e5001948a77bb39ceab"
+size = 54881
+mtime_ms = 1792758656355
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/0d3b267f-99a4-4b83-b582-bd6d3ebb85bf/80135b7f-b44e-45a8-915d-7bef0183b972"
+storage_version_token = "1792758676974548"
+content_type = "image/jpeg"

@@ -32,11 +32,11 @@ export function CinematicVideoStory({ film, media, actions, onPlay, onEnded, art
   const fid = focusId === undefined ? `video-${vid}` : focusId;
   return (
     <article ref={ref} id={articleId} className="tomi-cine scroll-mt-24" data-testid={testId ?? `cinematic-film-${film.id}`}>
-      <p data-cine="category" className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-gold-700">
-        {typeof index === 'number' && total && total > 1 && <span className="font-mono tracking-normal text-ink-500">{String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}</span>}
-        <span>{film.name}</span>
-        <span aria-hidden className="h-px w-6 bg-gold-500/70" />
-        <span className="font-mono tracking-normal text-ink-600">{film.duration}</span>
+      <p data-cine="category" className="flex items-center gap-2 text-[11px] font-semibold uppercase leading-relaxed tracking-[0.22em] text-gold-700 sm:gap-3">
+        {typeof index === 'number' && total && total > 1 && <span className="shrink-0 whitespace-nowrap font-mono tracking-normal text-ink-500">{String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}</span>}
+        <span className="min-w-0">{film.name}</span>
+        <span aria-hidden className="hidden h-px w-6 shrink-0 bg-gold-500/70 sm:block" />
+        <span className="shrink-0 whitespace-nowrap font-mono tracking-normal text-ink-600">{film.duration}</span>
       </p>
       <Heading data-cine="title" className="tomi-cine-mask mt-3 font-display text-[clamp(1.6rem,6.2vw,3rem)] uppercase leading-[1.02] text-ink-900">
         <span>{film.title}</span>

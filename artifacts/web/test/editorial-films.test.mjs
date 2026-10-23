@@ -110,6 +110,11 @@ test('motion and presentation preserve accessibility, aspect ratios, original na
   assert.match(hook, /IntersectionObserver/);
   assert.match(hook, /clearTimeout/);
   assert.match(hook, /focusin/);
+  assert.match(hook, /dataset.immediate = 'true'/);
+  assert.match(css, /--cine-copy-delay: calc\(var\(--cine-frame-delay\) \+ var\(--cine-frame-duration\)\)/);
+  assert.match(css, /--cine-actions-delay: calc\(var\(--cine-copy-delay\) \+ \.65s\)/);
+  assert.match(css, /tomi-cine-action-in/);
+  assert.match(css, /nth-child\(3\)/);
   assert.match(card, /aspectRatio:.*film.width.*film.height/);
   assert.match(card, /preload="none" autoPlay=\{false\}/);
   assert.match(card, /layout="row"/);

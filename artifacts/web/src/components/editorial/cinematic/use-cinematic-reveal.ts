@@ -14,7 +14,7 @@ export function useCinematicReveal<T extends HTMLElement>() {
       if (entries.some(e => e.isIntersecting)) { el.dataset.in = 'true'; io.disconnect(); }
     }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
     io.observe(el);
-    const show = () => { el.dataset.in = 'true'; io.disconnect(); };
+    const show = () => { el.dataset.immediate = 'true'; el.dataset.in = 'true'; io.disconnect(); };
     el.addEventListener('focusin', show);
     const failsafe = window.setTimeout(() => { if (el.getBoundingClientRect().top < window.innerHeight) el.dataset.in = 'true'; }, 2500);
     return () => { io.disconnect(); window.clearTimeout(failsafe); el.removeEventListener('focusin', show); };

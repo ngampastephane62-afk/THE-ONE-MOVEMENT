@@ -3,6 +3,12 @@ name: Browser media verification
 description: Distinguishes missing codecs or failed browser infrastructure from invalid Founder video assets.
 ---
 
+The Founder primarily reviews this platform on an iPhone. Distinguish an iPhone-sized Chromium preview from verification in iPhone Safari or WebKit.
+
+**Why:** The Founder specified iPhone Safari testing in the video-refinement brief.
+
+**How to apply:** Check narrow touch layouts and reduced motion; report the actual browser engine and any Safari verification gap instead of claiming an emulated viewport proves Safari behavior.
+
 The testing browser may lack H.264/AAC support. Check `canPlayType` before interpreting a demuxer “no supported streams” error as a corrupt video or failed delivery.
 
 **Why:** A Founder-approved video passed full local decoding and HTTP range checks, but test Chromium returned no H.264/AAC support. Playback succeeded with VP9/Opus derived from the same footage.
