@@ -1,3 +1,4 @@
+import { BespokeLead, BespokeTail } from '@/components/programs/editorial/BespokeFrame';
 import { Helmet } from 'react-helmet-async';
 import SummitHero from '@/components/summit/SummitHero';
 import PillarGrid from '@/components/summit/PillarGrid';
@@ -23,6 +24,7 @@ export default function SummitEcosystem() {
         <link rel="canonical" href="/programs/summit" />
       </Helmet>
       <SummitHero />
+      <BespokeLead slug="summit" />
       <div>
         <PillarGrid />
         <EverydayEcosystem programmeSlug="summit" />
@@ -34,6 +36,7 @@ export default function SummitEcosystem() {
         <MediaSection />
         <ImpactSection />
         <ParticipationSection />
+        <BespokeTail slug="summit" name="THE ONE SUMMIT" partnership />
         <FinalCTA />
       </div>
     </div>

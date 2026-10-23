@@ -5,9 +5,16 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+import type { GetHumanitarianPaymentStatus200Currency } from './getHumanitarianPaymentStatus200Currency';
 import type { GetHumanitarianPaymentStatus200Status } from './getHumanitarianPaymentStatus200Status';
 
 export type GetHumanitarianPaymentStatus200 = {
   status: GetHumanitarianPaymentStatus200Status;
   archiveAccess: boolean;
+  /** Amount in minor units recorded for this verified session */
+  amount?: number;
+  currency?: GetHumanitarianPaymentStatus200Currency;
+  /** Non-sensitive TOMI payment reference */
+  reference?: string;
+  testMode?: boolean;
 };

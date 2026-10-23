@@ -8,6 +8,951 @@
 import * as zod from 'zod';
 
 
+export const GetProgramEditorialParams = zod.object({
+  "slug": zod.coerce.string()
+})
+
+export const getProgramEditorialResponseIntroductionMax = 2000;
+
+export const getProgramEditorialResponseDescriptionMax = 4000;
+
+export const getProgramEditorialResponsePurposeMax = 3000;
+
+export const getProgramEditorialResponseCriteriaMax = 6000;
+
+export const getProgramEditorialResponseEventDateMax = 100;
+
+export const getProgramEditorialResponseVenueMax = 300;
+
+export const getProgramEditorialResponseAnnouncementMax = 3000;
+
+export const getProgramEditorialResponseParticipationRolesMax = 12;
+
+export const getProgramEditorialResponsePeopleItemIdMax = 100;
+
+export const getProgramEditorialResponsePeopleItemNameMax = 150;
+
+export const getProgramEditorialResponsePeopleItemDesignationMax = 200;
+
+export const getProgramEditorialResponsePeopleItemBiographyMax = 3000;
+
+export const getProgramEditorialResponsePeopleItemProfileUrlMax = 500;
+
+export const getProgramEditorialResponsePeopleItemOrderMin = 0;
+export const getProgramEditorialResponsePeopleItemOrderMax = 10000;
+
+export const getProgramEditorialResponsePeopleItemVideosItemIdMax = 100;
+
+export const getProgramEditorialResponsePeopleItemVideosItemTitleMax = 200;
+
+export const getProgramEditorialResponsePeopleItemVideosItemDescriptionMax = 2000;
+
+export const getProgramEditorialResponsePeopleItemVideosItemCreditMax = 300;
+
+export const getProgramEditorialResponsePeopleItemVideosItemOrderMin = 0;
+export const getProgramEditorialResponsePeopleItemVideosItemOrderMax = 10000;
+
+export const getProgramEditorialResponsePeopleItemVideosMax = 20;
+
+export const getProgramEditorialResponsePeopleMax = 100;
+
+export const getProgramEditorialResponseMediaItemIdMax = 100;
+
+export const getProgramEditorialResponseMediaItemTitleMax = 200;
+
+export const getProgramEditorialResponseMediaItemDescriptionMax = 2000;
+
+export const getProgramEditorialResponseMediaItemCreditMax = 300;
+
+export const getProgramEditorialResponseMediaItemOrderMin = 0;
+export const getProgramEditorialResponseMediaItemOrderMax = 10000;
+
+export const getProgramEditorialResponseMediaMax = 50;
+
+
+
+export const GetProgramEditorialResponse = zod.object({
+  "slug": zod.string(),
+  "updatedAt": zod.string().nullable(),
+  "status": zod.enum(['draft', 'published']),
+  "introduction": zod.string().max(getProgramEditorialResponseIntroductionMax),
+  "description": zod.string().max(getProgramEditorialResponseDescriptionMax),
+  "purpose": zod.string().max(getProgramEditorialResponsePurposeMax),
+  "criteria": zod.string().max(getProgramEditorialResponseCriteriaMax),
+  "heroVideoUploadId": zod.string().nullable(),
+  "heroImageUploadId": zod.string().nullable(),
+  "heroVideoUrl": zod.string().nullable(),
+  "heroImageUrl": zod.string().nullable(),
+  "eventDate": zod.string().max(getProgramEditorialResponseEventDateMax).nullable(),
+  "venue": zod.string().max(getProgramEditorialResponseVenueMax),
+  "eventDetailsConfirmed": zod.boolean(),
+  "announcement": zod.string().max(getProgramEditorialResponseAnnouncementMax),
+  "participationRoles": zod.array(zod.enum(['speaker', 'exhibitor', 'media', 'partner', 'sponsor', 'collaborator'])).max(getProgramEditorialResponseParticipationRolesMax),
+  "people": zod.array(zod.object({
+  "id": zod.string().min(1).max(getProgramEditorialResponsePeopleItemIdMax),
+  "name": zod.string().min(1).max(getProgramEditorialResponsePeopleItemNameMax),
+  "designation": zod.string().max(getProgramEditorialResponsePeopleItemDesignationMax),
+  "biography": zod.string().max(getProgramEditorialResponsePeopleItemBiographyMax),
+  "kind": zod.enum(['nominee', 'speaker', 'participant']),
+  "confirmed": zod.boolean(),
+  "published": zod.boolean(),
+  "portraitKey": zod.string().nullable(),
+  "portraitUploadId": zod.string().nullable(),
+  "portraitUrl": zod.string().nullable(),
+  "profileUrl": zod.string().max(getProgramEditorialResponsePeopleItemProfileUrlMax).nullable(),
+  "order": zod.number().int().min(getProgramEditorialResponsePeopleItemOrderMin).max(getProgramEditorialResponsePeopleItemOrderMax),
+  "videos": zod.array(zod.object({
+  "id": zod.string().min(1).max(getProgramEditorialResponsePeopleItemVideosItemIdMax),
+  "title": zod.string().min(1).max(getProgramEditorialResponsePeopleItemVideosItemTitleMax),
+  "description": zod.string().max(getProgramEditorialResponsePeopleItemVideosItemDescriptionMax),
+  "credit": zod.string().max(getProgramEditorialResponsePeopleItemVideosItemCreditMax),
+  "uploadId": zod.string().nullable(),
+  "assetKey": zod.string().nullable(),
+  "url": zod.string().nullable(),
+  "published": zod.boolean(),
+  "rightsConfirmed": zod.boolean(),
+  "order": zod.number().int().min(getProgramEditorialResponsePeopleItemVideosItemOrderMin).max(getProgramEditorialResponsePeopleItemVideosItemOrderMax)
+})).max(getProgramEditorialResponsePeopleItemVideosMax)
+})).max(getProgramEditorialResponsePeopleMax),
+  "media": zod.array(zod.object({
+  "id": zod.string().min(1).max(getProgramEditorialResponseMediaItemIdMax),
+  "title": zod.string().min(1).max(getProgramEditorialResponseMediaItemTitleMax),
+  "description": zod.string().max(getProgramEditorialResponseMediaItemDescriptionMax),
+  "credit": zod.string().max(getProgramEditorialResponseMediaItemCreditMax),
+  "uploadId": zod.string().nullable(),
+  "assetKey": zod.string().nullable(),
+  "url": zod.string().nullable(),
+  "published": zod.boolean(),
+  "rightsConfirmed": zod.boolean(),
+  "order": zod.number().int().min(getProgramEditorialResponseMediaItemOrderMin).max(getProgramEditorialResponseMediaItemOrderMax)
+})).max(getProgramEditorialResponseMediaMax)
+})
+
+
+export const GetFounderProgramEditorialParams = zod.object({
+  "slug": zod.coerce.string()
+})
+
+export const getFounderProgramEditorialResponseIntroductionMax = 2000;
+
+export const getFounderProgramEditorialResponseDescriptionMax = 4000;
+
+export const getFounderProgramEditorialResponsePurposeMax = 3000;
+
+export const getFounderProgramEditorialResponseCriteriaMax = 6000;
+
+export const getFounderProgramEditorialResponseEventDateMax = 100;
+
+export const getFounderProgramEditorialResponseVenueMax = 300;
+
+export const getFounderProgramEditorialResponseAnnouncementMax = 3000;
+
+export const getFounderProgramEditorialResponseParticipationRolesMax = 12;
+
+export const getFounderProgramEditorialResponsePeopleItemIdMax = 100;
+
+export const getFounderProgramEditorialResponsePeopleItemNameMax = 150;
+
+export const getFounderProgramEditorialResponsePeopleItemDesignationMax = 200;
+
+export const getFounderProgramEditorialResponsePeopleItemBiographyMax = 3000;
+
+export const getFounderProgramEditorialResponsePeopleItemProfileUrlMax = 500;
+
+export const getFounderProgramEditorialResponsePeopleItemOrderMin = 0;
+export const getFounderProgramEditorialResponsePeopleItemOrderMax = 10000;
+
+export const getFounderProgramEditorialResponsePeopleItemVideosItemIdMax = 100;
+
+export const getFounderProgramEditorialResponsePeopleItemVideosItemTitleMax = 200;
+
+export const getFounderProgramEditorialResponsePeopleItemVideosItemDescriptionMax = 2000;
+
+export const getFounderProgramEditorialResponsePeopleItemVideosItemCreditMax = 300;
+
+export const getFounderProgramEditorialResponsePeopleItemVideosItemOrderMin = 0;
+export const getFounderProgramEditorialResponsePeopleItemVideosItemOrderMax = 10000;
+
+export const getFounderProgramEditorialResponsePeopleItemVideosMax = 20;
+
+export const getFounderProgramEditorialResponsePeopleMax = 100;
+
+export const getFounderProgramEditorialResponseMediaItemIdMax = 100;
+
+export const getFounderProgramEditorialResponseMediaItemTitleMax = 200;
+
+export const getFounderProgramEditorialResponseMediaItemDescriptionMax = 2000;
+
+export const getFounderProgramEditorialResponseMediaItemCreditMax = 300;
+
+export const getFounderProgramEditorialResponseMediaItemOrderMin = 0;
+export const getFounderProgramEditorialResponseMediaItemOrderMax = 10000;
+
+export const getFounderProgramEditorialResponseMediaMax = 50;
+
+
+
+export const GetFounderProgramEditorialResponse = zod.object({
+  "slug": zod.string(),
+  "updatedAt": zod.string().nullable(),
+  "status": zod.enum(['draft', 'published']),
+  "introduction": zod.string().max(getFounderProgramEditorialResponseIntroductionMax),
+  "description": zod.string().max(getFounderProgramEditorialResponseDescriptionMax),
+  "purpose": zod.string().max(getFounderProgramEditorialResponsePurposeMax),
+  "criteria": zod.string().max(getFounderProgramEditorialResponseCriteriaMax),
+  "heroVideoUploadId": zod.string().nullable(),
+  "heroImageUploadId": zod.string().nullable(),
+  "heroVideoUrl": zod.string().nullable(),
+  "heroImageUrl": zod.string().nullable(),
+  "eventDate": zod.string().max(getFounderProgramEditorialResponseEventDateMax).nullable(),
+  "venue": zod.string().max(getFounderProgramEditorialResponseVenueMax),
+  "eventDetailsConfirmed": zod.boolean(),
+  "announcement": zod.string().max(getFounderProgramEditorialResponseAnnouncementMax),
+  "participationRoles": zod.array(zod.enum(['speaker', 'exhibitor', 'media', 'partner', 'sponsor', 'collaborator'])).max(getFounderProgramEditorialResponseParticipationRolesMax),
+  "people": zod.array(zod.object({
+  "id": zod.string().min(1).max(getFounderProgramEditorialResponsePeopleItemIdMax),
+  "name": zod.string().min(1).max(getFounderProgramEditorialResponsePeopleItemNameMax),
+  "designation": zod.string().max(getFounderProgramEditorialResponsePeopleItemDesignationMax),
+  "biography": zod.string().max(getFounderProgramEditorialResponsePeopleItemBiographyMax),
+  "kind": zod.enum(['nominee', 'speaker', 'participant']),
+  "confirmed": zod.boolean(),
+  "published": zod.boolean(),
+  "portraitKey": zod.string().nullable(),
+  "portraitUploadId": zod.string().nullable(),
+  "portraitUrl": zod.string().nullable(),
+  "profileUrl": zod.string().max(getFounderProgramEditorialResponsePeopleItemProfileUrlMax).nullable(),
+  "order": zod.number().int().min(getFounderProgramEditorialResponsePeopleItemOrderMin).max(getFounderProgramEditorialResponsePeopleItemOrderMax),
+  "videos": zod.array(zod.object({
+  "id": zod.string().min(1).max(getFounderProgramEditorialResponsePeopleItemVideosItemIdMax),
+  "title": zod.string().min(1).max(getFounderProgramEditorialResponsePeopleItemVideosItemTitleMax),
+  "description": zod.string().max(getFounderProgramEditorialResponsePeopleItemVideosItemDescriptionMax),
+  "credit": zod.string().max(getFounderProgramEditorialResponsePeopleItemVideosItemCreditMax),
+  "uploadId": zod.string().nullable(),
+  "assetKey": zod.string().nullable(),
+  "url": zod.string().nullable(),
+  "published": zod.boolean(),
+  "rightsConfirmed": zod.boolean(),
+  "order": zod.number().int().min(getFounderProgramEditorialResponsePeopleItemVideosItemOrderMin).max(getFounderProgramEditorialResponsePeopleItemVideosItemOrderMax)
+})).max(getFounderProgramEditorialResponsePeopleItemVideosMax)
+})).max(getFounderProgramEditorialResponsePeopleMax),
+  "media": zod.array(zod.object({
+  "id": zod.string().min(1).max(getFounderProgramEditorialResponseMediaItemIdMax),
+  "title": zod.string().min(1).max(getFounderProgramEditorialResponseMediaItemTitleMax),
+  "description": zod.string().max(getFounderProgramEditorialResponseMediaItemDescriptionMax),
+  "credit": zod.string().max(getFounderProgramEditorialResponseMediaItemCreditMax),
+  "uploadId": zod.string().nullable(),
+  "assetKey": zod.string().nullable(),
+  "url": zod.string().nullable(),
+  "published": zod.boolean(),
+  "rightsConfirmed": zod.boolean(),
+  "order": zod.number().int().min(getFounderProgramEditorialResponseMediaItemOrderMin).max(getFounderProgramEditorialResponseMediaItemOrderMax)
+})).max(getFounderProgramEditorialResponseMediaMax)
+})
+
+
+export const SaveProgramEditorialParams = zod.object({
+  "slug": zod.coerce.string()
+})
+
+export const saveProgramEditorialBodyContentIntroductionMax = 2000;
+
+export const saveProgramEditorialBodyContentDescriptionMax = 4000;
+
+export const saveProgramEditorialBodyContentPurposeMax = 3000;
+
+export const saveProgramEditorialBodyContentCriteriaMax = 6000;
+
+export const saveProgramEditorialBodyContentEventDateMax = 100;
+
+export const saveProgramEditorialBodyContentVenueMax = 300;
+
+export const saveProgramEditorialBodyContentAnnouncementMax = 3000;
+
+export const saveProgramEditorialBodyContentParticipationRolesMax = 12;
+
+export const saveProgramEditorialBodyContentPeopleItemIdMax = 100;
+
+export const saveProgramEditorialBodyContentPeopleItemNameMax = 150;
+
+export const saveProgramEditorialBodyContentPeopleItemDesignationMax = 200;
+
+export const saveProgramEditorialBodyContentPeopleItemBiographyMax = 3000;
+
+export const saveProgramEditorialBodyContentPeopleItemProfileUrlMax = 500;
+
+export const saveProgramEditorialBodyContentPeopleItemOrderMin = 0;
+export const saveProgramEditorialBodyContentPeopleItemOrderMax = 10000;
+
+export const saveProgramEditorialBodyContentPeopleItemVideosItemIdMax = 100;
+
+export const saveProgramEditorialBodyContentPeopleItemVideosItemTitleMax = 200;
+
+export const saveProgramEditorialBodyContentPeopleItemVideosItemDescriptionMax = 2000;
+
+export const saveProgramEditorialBodyContentPeopleItemVideosItemCreditMax = 300;
+
+export const saveProgramEditorialBodyContentPeopleItemVideosItemOrderMin = 0;
+export const saveProgramEditorialBodyContentPeopleItemVideosItemOrderMax = 10000;
+
+export const saveProgramEditorialBodyContentPeopleItemVideosMax = 20;
+
+export const saveProgramEditorialBodyContentPeopleMax = 100;
+
+export const saveProgramEditorialBodyContentMediaItemIdMax = 100;
+
+export const saveProgramEditorialBodyContentMediaItemTitleMax = 200;
+
+export const saveProgramEditorialBodyContentMediaItemDescriptionMax = 2000;
+
+export const saveProgramEditorialBodyContentMediaItemCreditMax = 300;
+
+export const saveProgramEditorialBodyContentMediaItemOrderMin = 0;
+export const saveProgramEditorialBodyContentMediaItemOrderMax = 10000;
+
+export const saveProgramEditorialBodyContentMediaMax = 50;
+
+
+
+export const SaveProgramEditorialBody = zod.object({
+  "expectedUpdatedAt": zod.string().nullable(),
+  "content": zod.object({
+  "slug": zod.string(),
+  "updatedAt": zod.string().nullable(),
+  "status": zod.enum(['draft', 'published']),
+  "introduction": zod.string().max(saveProgramEditorialBodyContentIntroductionMax),
+  "description": zod.string().max(saveProgramEditorialBodyContentDescriptionMax),
+  "purpose": zod.string().max(saveProgramEditorialBodyContentPurposeMax),
+  "criteria": zod.string().max(saveProgramEditorialBodyContentCriteriaMax),
+  "heroVideoUploadId": zod.string().nullable(),
+  "heroImageUploadId": zod.string().nullable(),
+  "heroVideoUrl": zod.string().nullable(),
+  "heroImageUrl": zod.string().nullable(),
+  "eventDate": zod.string().max(saveProgramEditorialBodyContentEventDateMax).nullable(),
+  "venue": zod.string().max(saveProgramEditorialBodyContentVenueMax),
+  "eventDetailsConfirmed": zod.boolean(),
+  "announcement": zod.string().max(saveProgramEditorialBodyContentAnnouncementMax),
+  "participationRoles": zod.array(zod.enum(['speaker', 'exhibitor', 'media', 'partner', 'sponsor', 'collaborator'])).max(saveProgramEditorialBodyContentParticipationRolesMax),
+  "people": zod.array(zod.object({
+  "id": zod.string().min(1).max(saveProgramEditorialBodyContentPeopleItemIdMax),
+  "name": zod.string().min(1).max(saveProgramEditorialBodyContentPeopleItemNameMax),
+  "designation": zod.string().max(saveProgramEditorialBodyContentPeopleItemDesignationMax),
+  "biography": zod.string().max(saveProgramEditorialBodyContentPeopleItemBiographyMax),
+  "kind": zod.enum(['nominee', 'speaker', 'participant']),
+  "confirmed": zod.boolean(),
+  "published": zod.boolean(),
+  "portraitKey": zod.string().nullable(),
+  "portraitUploadId": zod.string().nullable(),
+  "portraitUrl": zod.string().nullable(),
+  "profileUrl": zod.string().max(saveProgramEditorialBodyContentPeopleItemProfileUrlMax).nullable(),
+  "order": zod.number().int().min(saveProgramEditorialBodyContentPeopleItemOrderMin).max(saveProgramEditorialBodyContentPeopleItemOrderMax),
+  "videos": zod.array(zod.object({
+  "id": zod.string().min(1).max(saveProgramEditorialBodyContentPeopleItemVideosItemIdMax),
+  "title": zod.string().min(1).max(saveProgramEditorialBodyContentPeopleItemVideosItemTitleMax),
+  "description": zod.string().max(saveProgramEditorialBodyContentPeopleItemVideosItemDescriptionMax),
+  "credit": zod.string().max(saveProgramEditorialBodyContentPeopleItemVideosItemCreditMax),
+  "uploadId": zod.string().nullable(),
+  "assetKey": zod.string().nullable(),
+  "url": zod.string().nullable(),
+  "published": zod.boolean(),
+  "rightsConfirmed": zod.boolean(),
+  "order": zod.number().int().min(saveProgramEditorialBodyContentPeopleItemVideosItemOrderMin).max(saveProgramEditorialBodyContentPeopleItemVideosItemOrderMax)
+})).max(saveProgramEditorialBodyContentPeopleItemVideosMax)
+})).max(saveProgramEditorialBodyContentPeopleMax),
+  "media": zod.array(zod.object({
+  "id": zod.string().min(1).max(saveProgramEditorialBodyContentMediaItemIdMax),
+  "title": zod.string().min(1).max(saveProgramEditorialBodyContentMediaItemTitleMax),
+  "description": zod.string().max(saveProgramEditorialBodyContentMediaItemDescriptionMax),
+  "credit": zod.string().max(saveProgramEditorialBodyContentMediaItemCreditMax),
+  "uploadId": zod.string().nullable(),
+  "assetKey": zod.string().nullable(),
+  "url": zod.string().nullable(),
+  "published": zod.boolean(),
+  "rightsConfirmed": zod.boolean(),
+  "order": zod.number().int().min(saveProgramEditorialBodyContentMediaItemOrderMin).max(saveProgramEditorialBodyContentMediaItemOrderMax)
+})).max(saveProgramEditorialBodyContentMediaMax)
+})
+})
+
+export const saveProgramEditorialResponseIntroductionMax = 2000;
+
+export const saveProgramEditorialResponseDescriptionMax = 4000;
+
+export const saveProgramEditorialResponsePurposeMax = 3000;
+
+export const saveProgramEditorialResponseCriteriaMax = 6000;
+
+export const saveProgramEditorialResponseEventDateMax = 100;
+
+export const saveProgramEditorialResponseVenueMax = 300;
+
+export const saveProgramEditorialResponseAnnouncementMax = 3000;
+
+export const saveProgramEditorialResponseParticipationRolesMax = 12;
+
+export const saveProgramEditorialResponsePeopleItemIdMax = 100;
+
+export const saveProgramEditorialResponsePeopleItemNameMax = 150;
+
+export const saveProgramEditorialResponsePeopleItemDesignationMax = 200;
+
+export const saveProgramEditorialResponsePeopleItemBiographyMax = 3000;
+
+export const saveProgramEditorialResponsePeopleItemProfileUrlMax = 500;
+
+export const saveProgramEditorialResponsePeopleItemOrderMin = 0;
+export const saveProgramEditorialResponsePeopleItemOrderMax = 10000;
+
+export const saveProgramEditorialResponsePeopleItemVideosItemIdMax = 100;
+
+export const saveProgramEditorialResponsePeopleItemVideosItemTitleMax = 200;
+
+export const saveProgramEditorialResponsePeopleItemVideosItemDescriptionMax = 2000;
+
+export const saveProgramEditorialResponsePeopleItemVideosItemCreditMax = 300;
+
+export const saveProgramEditorialResponsePeopleItemVideosItemOrderMin = 0;
+export const saveProgramEditorialResponsePeopleItemVideosItemOrderMax = 10000;
+
+export const saveProgramEditorialResponsePeopleItemVideosMax = 20;
+
+export const saveProgramEditorialResponsePeopleMax = 100;
+
+export const saveProgramEditorialResponseMediaItemIdMax = 100;
+
+export const saveProgramEditorialResponseMediaItemTitleMax = 200;
+
+export const saveProgramEditorialResponseMediaItemDescriptionMax = 2000;
+
+export const saveProgramEditorialResponseMediaItemCreditMax = 300;
+
+export const saveProgramEditorialResponseMediaItemOrderMin = 0;
+export const saveProgramEditorialResponseMediaItemOrderMax = 10000;
+
+export const saveProgramEditorialResponseMediaMax = 50;
+
+
+
+export const SaveProgramEditorialResponse = zod.object({
+  "slug": zod.string(),
+  "updatedAt": zod.string().nullable(),
+  "status": zod.enum(['draft', 'published']),
+  "introduction": zod.string().max(saveProgramEditorialResponseIntroductionMax),
+  "description": zod.string().max(saveProgramEditorialResponseDescriptionMax),
+  "purpose": zod.string().max(saveProgramEditorialResponsePurposeMax),
+  "criteria": zod.string().max(saveProgramEditorialResponseCriteriaMax),
+  "heroVideoUploadId": zod.string().nullable(),
+  "heroImageUploadId": zod.string().nullable(),
+  "heroVideoUrl": zod.string().nullable(),
+  "heroImageUrl": zod.string().nullable(),
+  "eventDate": zod.string().max(saveProgramEditorialResponseEventDateMax).nullable(),
+  "venue": zod.string().max(saveProgramEditorialResponseVenueMax),
+  "eventDetailsConfirmed": zod.boolean(),
+  "announcement": zod.string().max(saveProgramEditorialResponseAnnouncementMax),
+  "participationRoles": zod.array(zod.enum(['speaker', 'exhibitor', 'media', 'partner', 'sponsor', 'collaborator'])).max(saveProgramEditorialResponseParticipationRolesMax),
+  "people": zod.array(zod.object({
+  "id": zod.string().min(1).max(saveProgramEditorialResponsePeopleItemIdMax),
+  "name": zod.string().min(1).max(saveProgramEditorialResponsePeopleItemNameMax),
+  "designation": zod.string().max(saveProgramEditorialResponsePeopleItemDesignationMax),
+  "biography": zod.string().max(saveProgramEditorialResponsePeopleItemBiographyMax),
+  "kind": zod.enum(['nominee', 'speaker', 'participant']),
+  "confirmed": zod.boolean(),
+  "published": zod.boolean(),
+  "portraitKey": zod.string().nullable(),
+  "portraitUploadId": zod.string().nullable(),
+  "portraitUrl": zod.string().nullable(),
+  "profileUrl": zod.string().max(saveProgramEditorialResponsePeopleItemProfileUrlMax).nullable(),
+  "order": zod.number().int().min(saveProgramEditorialResponsePeopleItemOrderMin).max(saveProgramEditorialResponsePeopleItemOrderMax),
+  "videos": zod.array(zod.object({
+  "id": zod.string().min(1).max(saveProgramEditorialResponsePeopleItemVideosItemIdMax),
+  "title": zod.string().min(1).max(saveProgramEditorialResponsePeopleItemVideosItemTitleMax),
+  "description": zod.string().max(saveProgramEditorialResponsePeopleItemVideosItemDescriptionMax),
+  "credit": zod.string().max(saveProgramEditorialResponsePeopleItemVideosItemCreditMax),
+  "uploadId": zod.string().nullable(),
+  "assetKey": zod.string().nullable(),
+  "url": zod.string().nullable(),
+  "published": zod.boolean(),
+  "rightsConfirmed": zod.boolean(),
+  "order": zod.number().int().min(saveProgramEditorialResponsePeopleItemVideosItemOrderMin).max(saveProgramEditorialResponsePeopleItemVideosItemOrderMax)
+})).max(saveProgramEditorialResponsePeopleItemVideosMax)
+})).max(saveProgramEditorialResponsePeopleMax),
+  "media": zod.array(zod.object({
+  "id": zod.string().min(1).max(saveProgramEditorialResponseMediaItemIdMax),
+  "title": zod.string().min(1).max(saveProgramEditorialResponseMediaItemTitleMax),
+  "description": zod.string().max(saveProgramEditorialResponseMediaItemDescriptionMax),
+  "credit": zod.string().max(saveProgramEditorialResponseMediaItemCreditMax),
+  "uploadId": zod.string().nullable(),
+  "assetKey": zod.string().nullable(),
+  "url": zod.string().nullable(),
+  "published": zod.boolean(),
+  "rightsConfirmed": zod.boolean(),
+  "order": zod.number().int().min(saveProgramEditorialResponseMediaItemOrderMin).max(saveProgramEditorialResponseMediaItemOrderMax)
+})).max(saveProgramEditorialResponseMediaMax)
+})
+
+
+export const GetProgramInquiriesParams = zod.object({
+  "slug": zod.coerce.string()
+})
+
+export const GetProgramInquiriesResponseItem = zod.object({
+  "id": zod.number().int(),
+  "organization": zod.string(),
+  "name": zod.string(),
+  "title": zod.string(),
+  "email": zod.string(),
+  "country": zod.string(),
+  "message": zod.string(),
+  "status": zod.string(),
+  "createdAt": zod.string()
+})
+export const GetProgramInquiriesResponse = zod.array(GetProgramInquiriesResponseItem)
+
+
+export const getPartnerDirectoryResponseItemsItemOneNameMin = 2;
+export const getPartnerDirectoryResponseItemsItemOneNameMax = 200;
+
+export const getPartnerDirectoryResponseItemsItemOneDescriptionMax = 2000;
+
+export const getPartnerDirectoryResponseItemsItemOneWebsiteMax = 2000;
+
+export const getPartnerDirectoryResponseItemsItemOneLogoUploadIdMax = 100;
+
+
+export const getPartnerDirectoryResponseItemsItemOnePriorityMin = 0;
+export const getPartnerDirectoryResponseItemsItemOnePriorityMax = 100000;
+
+export const getPartnerDirectoryResponseContentOneHeroTitleMin = 2;
+export const getPartnerDirectoryResponseContentOneHeroTitleMax = 160;
+
+export const getPartnerDirectoryResponseContentOneHeroLineOneMin = 2;
+export const getPartnerDirectoryResponseContentOneHeroLineOneMax = 160;
+
+export const getPartnerDirectoryResponseContentOneHeroLineTwoMin = 2;
+export const getPartnerDirectoryResponseContentOneHeroLineTwoMax = 160;
+
+export const getPartnerDirectoryResponseContentOneHeroDescriptionMin = 2;
+export const getPartnerDirectoryResponseContentOneHeroDescriptionMax = 1500;
+
+export const getPartnerDirectoryResponseContentOneDirectoryTitleMin = 2;
+export const getPartnerDirectoryResponseContentOneDirectoryTitleMax = 160;
+
+export const getPartnerDirectoryResponseContentOneDirectoryDescriptionMin = 2;
+export const getPartnerDirectoryResponseContentOneDirectoryDescriptionMax = 1500;
+
+export const getPartnerDirectoryResponseContentOneCollaborationTitleMin = 2;
+export const getPartnerDirectoryResponseContentOneCollaborationTitleMax = 160;
+
+export const getPartnerDirectoryResponseContentOneCollaborationSubtitleMin = 2;
+export const getPartnerDirectoryResponseContentOneCollaborationSubtitleMax = 160;
+
+export const getPartnerDirectoryResponseContentOnePartnershipButtonMin = 2;
+export const getPartnerDirectoryResponseContentOnePartnershipButtonMax = 160;
+
+export const getPartnerDirectoryResponseContentOneConversationButtonMin = 2;
+export const getPartnerDirectoryResponseContentOneConversationButtonMax = 160;
+
+export const getPartnerDirectoryResponseContentOneDisplayNoteMin = 2;
+export const getPartnerDirectoryResponseContentOneDisplayNoteMax = 1500;
+
+
+
+export const GetPartnerDirectoryResponse = zod.object({
+  "items": zod.array(zod.object({
+  "name": zod.string().min(getPartnerDirectoryResponseItemsItemOneNameMin).max(getPartnerDirectoryResponseItemsItemOneNameMax),
+  "category": zod.enum(['institutions', 'corporate-brands', 'culture-creativity', 'media-press']),
+  "relationship": zod.enum(['historical-collaboration', 'media-relationship', 'event-collaborator', 'current-partner', 'institutional-reference']),
+  "description": zod.string().max(getPartnerDirectoryResponseItemsItemOneDescriptionMax),
+  "website": zod.string().max(getPartnerDirectoryResponseItemsItemOneWebsiteMax),
+  "logoUploadId": zod.string().max(getPartnerDirectoryResponseItemsItemOneLogoUploadIdMax).nullable(),
+  "legacyLogoId": zod.number().int().min(1).nullable(),
+  "status": zod.enum(['draft', 'published', 'archived']),
+  "relationshipVerified": zod.boolean(),
+  "rightsConfirmed": zod.boolean(),
+  "priority": zod.number().int().min(getPartnerDirectoryResponseItemsItemOnePriorityMin).max(getPartnerDirectoryResponseItemsItemOnePriorityMax)
+}).and(zod.object({
+  "id": zod.string(),
+  "logoUrl": zod.string().nullable(),
+  "updatedAt": zod.string()
+}))),
+  "content": zod.object({
+  "heroTitle": zod.string().min(getPartnerDirectoryResponseContentOneHeroTitleMin).max(getPartnerDirectoryResponseContentOneHeroTitleMax),
+  "heroLineOne": zod.string().min(getPartnerDirectoryResponseContentOneHeroLineOneMin).max(getPartnerDirectoryResponseContentOneHeroLineOneMax),
+  "heroLineTwo": zod.string().min(getPartnerDirectoryResponseContentOneHeroLineTwoMin).max(getPartnerDirectoryResponseContentOneHeroLineTwoMax),
+  "heroDescription": zod.string().min(getPartnerDirectoryResponseContentOneHeroDescriptionMin).max(getPartnerDirectoryResponseContentOneHeroDescriptionMax),
+  "directoryTitle": zod.string().min(getPartnerDirectoryResponseContentOneDirectoryTitleMin).max(getPartnerDirectoryResponseContentOneDirectoryTitleMax),
+  "directoryDescription": zod.string().min(getPartnerDirectoryResponseContentOneDirectoryDescriptionMin).max(getPartnerDirectoryResponseContentOneDirectoryDescriptionMax),
+  "collaborationTitle": zod.string().min(getPartnerDirectoryResponseContentOneCollaborationTitleMin).max(getPartnerDirectoryResponseContentOneCollaborationTitleMax),
+  "collaborationSubtitle": zod.string().min(getPartnerDirectoryResponseContentOneCollaborationSubtitleMin).max(getPartnerDirectoryResponseContentOneCollaborationSubtitleMax),
+  "partnershipButton": zod.string().min(getPartnerDirectoryResponseContentOnePartnershipButtonMin).max(getPartnerDirectoryResponseContentOnePartnershipButtonMax),
+  "conversationButton": zod.string().min(getPartnerDirectoryResponseContentOneConversationButtonMin).max(getPartnerDirectoryResponseContentOneConversationButtonMax),
+  "displayNote": zod.string().min(getPartnerDirectoryResponseContentOneDisplayNoteMin).max(getPartnerDirectoryResponseContentOneDisplayNoteMax)
+}).and(zod.object({
+  "updatedAt": zod.string()
+}))
+})
+
+
+export const getAdminPartnerDirectoryResponseItemsItemOneNameMin = 2;
+export const getAdminPartnerDirectoryResponseItemsItemOneNameMax = 200;
+
+export const getAdminPartnerDirectoryResponseItemsItemOneDescriptionMax = 2000;
+
+export const getAdminPartnerDirectoryResponseItemsItemOneWebsiteMax = 2000;
+
+export const getAdminPartnerDirectoryResponseItemsItemOneLogoUploadIdMax = 100;
+
+
+export const getAdminPartnerDirectoryResponseItemsItemOnePriorityMin = 0;
+export const getAdminPartnerDirectoryResponseItemsItemOnePriorityMax = 100000;
+
+export const getAdminPartnerDirectoryResponseContentOneHeroTitleMin = 2;
+export const getAdminPartnerDirectoryResponseContentOneHeroTitleMax = 160;
+
+export const getAdminPartnerDirectoryResponseContentOneHeroLineOneMin = 2;
+export const getAdminPartnerDirectoryResponseContentOneHeroLineOneMax = 160;
+
+export const getAdminPartnerDirectoryResponseContentOneHeroLineTwoMin = 2;
+export const getAdminPartnerDirectoryResponseContentOneHeroLineTwoMax = 160;
+
+export const getAdminPartnerDirectoryResponseContentOneHeroDescriptionMin = 2;
+export const getAdminPartnerDirectoryResponseContentOneHeroDescriptionMax = 1500;
+
+export const getAdminPartnerDirectoryResponseContentOneDirectoryTitleMin = 2;
+export const getAdminPartnerDirectoryResponseContentOneDirectoryTitleMax = 160;
+
+export const getAdminPartnerDirectoryResponseContentOneDirectoryDescriptionMin = 2;
+export const getAdminPartnerDirectoryResponseContentOneDirectoryDescriptionMax = 1500;
+
+export const getAdminPartnerDirectoryResponseContentOneCollaborationTitleMin = 2;
+export const getAdminPartnerDirectoryResponseContentOneCollaborationTitleMax = 160;
+
+export const getAdminPartnerDirectoryResponseContentOneCollaborationSubtitleMin = 2;
+export const getAdminPartnerDirectoryResponseContentOneCollaborationSubtitleMax = 160;
+
+export const getAdminPartnerDirectoryResponseContentOnePartnershipButtonMin = 2;
+export const getAdminPartnerDirectoryResponseContentOnePartnershipButtonMax = 160;
+
+export const getAdminPartnerDirectoryResponseContentOneConversationButtonMin = 2;
+export const getAdminPartnerDirectoryResponseContentOneConversationButtonMax = 160;
+
+export const getAdminPartnerDirectoryResponseContentOneDisplayNoteMin = 2;
+export const getAdminPartnerDirectoryResponseContentOneDisplayNoteMax = 1500;
+
+
+
+export const GetAdminPartnerDirectoryResponse = zod.object({
+  "items": zod.array(zod.object({
+  "name": zod.string().min(getAdminPartnerDirectoryResponseItemsItemOneNameMin).max(getAdminPartnerDirectoryResponseItemsItemOneNameMax),
+  "category": zod.enum(['institutions', 'corporate-brands', 'culture-creativity', 'media-press']),
+  "relationship": zod.enum(['historical-collaboration', 'media-relationship', 'event-collaborator', 'current-partner', 'institutional-reference']),
+  "description": zod.string().max(getAdminPartnerDirectoryResponseItemsItemOneDescriptionMax),
+  "website": zod.string().max(getAdminPartnerDirectoryResponseItemsItemOneWebsiteMax),
+  "logoUploadId": zod.string().max(getAdminPartnerDirectoryResponseItemsItemOneLogoUploadIdMax).nullable(),
+  "legacyLogoId": zod.number().int().min(1).nullable(),
+  "status": zod.enum(['draft', 'published', 'archived']),
+  "relationshipVerified": zod.boolean(),
+  "rightsConfirmed": zod.boolean(),
+  "priority": zod.number().int().min(getAdminPartnerDirectoryResponseItemsItemOnePriorityMin).max(getAdminPartnerDirectoryResponseItemsItemOnePriorityMax)
+}).and(zod.object({
+  "id": zod.string(),
+  "logoUrl": zod.string().nullable(),
+  "updatedAt": zod.string()
+}))),
+  "content": zod.object({
+  "heroTitle": zod.string().min(getAdminPartnerDirectoryResponseContentOneHeroTitleMin).max(getAdminPartnerDirectoryResponseContentOneHeroTitleMax),
+  "heroLineOne": zod.string().min(getAdminPartnerDirectoryResponseContentOneHeroLineOneMin).max(getAdminPartnerDirectoryResponseContentOneHeroLineOneMax),
+  "heroLineTwo": zod.string().min(getAdminPartnerDirectoryResponseContentOneHeroLineTwoMin).max(getAdminPartnerDirectoryResponseContentOneHeroLineTwoMax),
+  "heroDescription": zod.string().min(getAdminPartnerDirectoryResponseContentOneHeroDescriptionMin).max(getAdminPartnerDirectoryResponseContentOneHeroDescriptionMax),
+  "directoryTitle": zod.string().min(getAdminPartnerDirectoryResponseContentOneDirectoryTitleMin).max(getAdminPartnerDirectoryResponseContentOneDirectoryTitleMax),
+  "directoryDescription": zod.string().min(getAdminPartnerDirectoryResponseContentOneDirectoryDescriptionMin).max(getAdminPartnerDirectoryResponseContentOneDirectoryDescriptionMax),
+  "collaborationTitle": zod.string().min(getAdminPartnerDirectoryResponseContentOneCollaborationTitleMin).max(getAdminPartnerDirectoryResponseContentOneCollaborationTitleMax),
+  "collaborationSubtitle": zod.string().min(getAdminPartnerDirectoryResponseContentOneCollaborationSubtitleMin).max(getAdminPartnerDirectoryResponseContentOneCollaborationSubtitleMax),
+  "partnershipButton": zod.string().min(getAdminPartnerDirectoryResponseContentOnePartnershipButtonMin).max(getAdminPartnerDirectoryResponseContentOnePartnershipButtonMax),
+  "conversationButton": zod.string().min(getAdminPartnerDirectoryResponseContentOneConversationButtonMin).max(getAdminPartnerDirectoryResponseContentOneConversationButtonMax),
+  "displayNote": zod.string().min(getAdminPartnerDirectoryResponseContentOneDisplayNoteMin).max(getAdminPartnerDirectoryResponseContentOneDisplayNoteMax)
+}).and(zod.object({
+  "updatedAt": zod.string()
+}))
+})
+
+
+export const createPartnerOrganizationBodyOneNameMin = 2;
+export const createPartnerOrganizationBodyOneNameMax = 200;
+
+export const createPartnerOrganizationBodyOneDescriptionMax = 2000;
+
+export const createPartnerOrganizationBodyOneWebsiteMax = 2000;
+
+export const createPartnerOrganizationBodyOneLogoUploadIdMax = 100;
+
+
+export const createPartnerOrganizationBodyOnePriorityMin = 0;
+export const createPartnerOrganizationBodyOnePriorityMax = 100000;
+
+export const createPartnerOrganizationBodyTwoExpectedUpdatedAtMax = 40;
+
+
+
+export const CreatePartnerOrganizationBody = zod.object({
+  "name": zod.string().min(createPartnerOrganizationBodyOneNameMin).max(createPartnerOrganizationBodyOneNameMax),
+  "category": zod.enum(['institutions', 'corporate-brands', 'culture-creativity', 'media-press']),
+  "relationship": zod.enum(['historical-collaboration', 'media-relationship', 'event-collaborator', 'current-partner', 'institutional-reference']),
+  "description": zod.string().max(createPartnerOrganizationBodyOneDescriptionMax),
+  "website": zod.string().max(createPartnerOrganizationBodyOneWebsiteMax),
+  "logoUploadId": zod.string().max(createPartnerOrganizationBodyOneLogoUploadIdMax).nullable(),
+  "legacyLogoId": zod.number().int().min(1).nullable(),
+  "status": zod.enum(['draft', 'published', 'archived']),
+  "relationshipVerified": zod.boolean(),
+  "rightsConfirmed": zod.boolean(),
+  "priority": zod.number().int().min(createPartnerOrganizationBodyOnePriorityMin).max(createPartnerOrganizationBodyOnePriorityMax)
+}).and(zod.object({
+  "expectedUpdatedAt": zod.string().max(createPartnerOrganizationBodyTwoExpectedUpdatedAtMax).nullable()
+}))
+
+export const createPartnerOrganizationResponseOneNameMin = 2;
+export const createPartnerOrganizationResponseOneNameMax = 200;
+
+export const createPartnerOrganizationResponseOneDescriptionMax = 2000;
+
+export const createPartnerOrganizationResponseOneWebsiteMax = 2000;
+
+export const createPartnerOrganizationResponseOneLogoUploadIdMax = 100;
+
+
+export const createPartnerOrganizationResponseOnePriorityMin = 0;
+export const createPartnerOrganizationResponseOnePriorityMax = 100000;
+
+
+
+export const CreatePartnerOrganizationResponse = zod.object({
+  "name": zod.string().min(createPartnerOrganizationResponseOneNameMin).max(createPartnerOrganizationResponseOneNameMax),
+  "category": zod.enum(['institutions', 'corporate-brands', 'culture-creativity', 'media-press']),
+  "relationship": zod.enum(['historical-collaboration', 'media-relationship', 'event-collaborator', 'current-partner', 'institutional-reference']),
+  "description": zod.string().max(createPartnerOrganizationResponseOneDescriptionMax),
+  "website": zod.string().max(createPartnerOrganizationResponseOneWebsiteMax),
+  "logoUploadId": zod.string().max(createPartnerOrganizationResponseOneLogoUploadIdMax).nullable(),
+  "legacyLogoId": zod.number().int().min(1).nullable(),
+  "status": zod.enum(['draft', 'published', 'archived']),
+  "relationshipVerified": zod.boolean(),
+  "rightsConfirmed": zod.boolean(),
+  "priority": zod.number().int().min(createPartnerOrganizationResponseOnePriorityMin).max(createPartnerOrganizationResponseOnePriorityMax)
+}).and(zod.object({
+  "id": zod.string(),
+  "logoUrl": zod.string().nullable(),
+  "updatedAt": zod.string()
+}))
+
+
+export const updatePartnerPageContentBodyOneHeroTitleMin = 2;
+export const updatePartnerPageContentBodyOneHeroTitleMax = 160;
+
+export const updatePartnerPageContentBodyOneHeroLineOneMin = 2;
+export const updatePartnerPageContentBodyOneHeroLineOneMax = 160;
+
+export const updatePartnerPageContentBodyOneHeroLineTwoMin = 2;
+export const updatePartnerPageContentBodyOneHeroLineTwoMax = 160;
+
+export const updatePartnerPageContentBodyOneHeroDescriptionMin = 2;
+export const updatePartnerPageContentBodyOneHeroDescriptionMax = 1500;
+
+export const updatePartnerPageContentBodyOneDirectoryTitleMin = 2;
+export const updatePartnerPageContentBodyOneDirectoryTitleMax = 160;
+
+export const updatePartnerPageContentBodyOneDirectoryDescriptionMin = 2;
+export const updatePartnerPageContentBodyOneDirectoryDescriptionMax = 1500;
+
+export const updatePartnerPageContentBodyOneCollaborationTitleMin = 2;
+export const updatePartnerPageContentBodyOneCollaborationTitleMax = 160;
+
+export const updatePartnerPageContentBodyOneCollaborationSubtitleMin = 2;
+export const updatePartnerPageContentBodyOneCollaborationSubtitleMax = 160;
+
+export const updatePartnerPageContentBodyOnePartnershipButtonMin = 2;
+export const updatePartnerPageContentBodyOnePartnershipButtonMax = 160;
+
+export const updatePartnerPageContentBodyOneConversationButtonMin = 2;
+export const updatePartnerPageContentBodyOneConversationButtonMax = 160;
+
+export const updatePartnerPageContentBodyOneDisplayNoteMin = 2;
+export const updatePartnerPageContentBodyOneDisplayNoteMax = 1500;
+
+export const updatePartnerPageContentBodyTwoExpectedUpdatedAtMax = 40;
+
+
+
+export const UpdatePartnerPageContentBody = zod.object({
+  "heroTitle": zod.string().min(updatePartnerPageContentBodyOneHeroTitleMin).max(updatePartnerPageContentBodyOneHeroTitleMax),
+  "heroLineOne": zod.string().min(updatePartnerPageContentBodyOneHeroLineOneMin).max(updatePartnerPageContentBodyOneHeroLineOneMax),
+  "heroLineTwo": zod.string().min(updatePartnerPageContentBodyOneHeroLineTwoMin).max(updatePartnerPageContentBodyOneHeroLineTwoMax),
+  "heroDescription": zod.string().min(updatePartnerPageContentBodyOneHeroDescriptionMin).max(updatePartnerPageContentBodyOneHeroDescriptionMax),
+  "directoryTitle": zod.string().min(updatePartnerPageContentBodyOneDirectoryTitleMin).max(updatePartnerPageContentBodyOneDirectoryTitleMax),
+  "directoryDescription": zod.string().min(updatePartnerPageContentBodyOneDirectoryDescriptionMin).max(updatePartnerPageContentBodyOneDirectoryDescriptionMax),
+  "collaborationTitle": zod.string().min(updatePartnerPageContentBodyOneCollaborationTitleMin).max(updatePartnerPageContentBodyOneCollaborationTitleMax),
+  "collaborationSubtitle": zod.string().min(updatePartnerPageContentBodyOneCollaborationSubtitleMin).max(updatePartnerPageContentBodyOneCollaborationSubtitleMax),
+  "partnershipButton": zod.string().min(updatePartnerPageContentBodyOnePartnershipButtonMin).max(updatePartnerPageContentBodyOnePartnershipButtonMax),
+  "conversationButton": zod.string().min(updatePartnerPageContentBodyOneConversationButtonMin).max(updatePartnerPageContentBodyOneConversationButtonMax),
+  "displayNote": zod.string().min(updatePartnerPageContentBodyOneDisplayNoteMin).max(updatePartnerPageContentBodyOneDisplayNoteMax)
+}).and(zod.object({
+  "expectedUpdatedAt": zod.string().min(1).max(updatePartnerPageContentBodyTwoExpectedUpdatedAtMax)
+}))
+
+export const updatePartnerPageContentResponseOneHeroTitleMin = 2;
+export const updatePartnerPageContentResponseOneHeroTitleMax = 160;
+
+export const updatePartnerPageContentResponseOneHeroLineOneMin = 2;
+export const updatePartnerPageContentResponseOneHeroLineOneMax = 160;
+
+export const updatePartnerPageContentResponseOneHeroLineTwoMin = 2;
+export const updatePartnerPageContentResponseOneHeroLineTwoMax = 160;
+
+export const updatePartnerPageContentResponseOneHeroDescriptionMin = 2;
+export const updatePartnerPageContentResponseOneHeroDescriptionMax = 1500;
+
+export const updatePartnerPageContentResponseOneDirectoryTitleMin = 2;
+export const updatePartnerPageContentResponseOneDirectoryTitleMax = 160;
+
+export const updatePartnerPageContentResponseOneDirectoryDescriptionMin = 2;
+export const updatePartnerPageContentResponseOneDirectoryDescriptionMax = 1500;
+
+export const updatePartnerPageContentResponseOneCollaborationTitleMin = 2;
+export const updatePartnerPageContentResponseOneCollaborationTitleMax = 160;
+
+export const updatePartnerPageContentResponseOneCollaborationSubtitleMin = 2;
+export const updatePartnerPageContentResponseOneCollaborationSubtitleMax = 160;
+
+export const updatePartnerPageContentResponseOnePartnershipButtonMin = 2;
+export const updatePartnerPageContentResponseOnePartnershipButtonMax = 160;
+
+export const updatePartnerPageContentResponseOneConversationButtonMin = 2;
+export const updatePartnerPageContentResponseOneConversationButtonMax = 160;
+
+export const updatePartnerPageContentResponseOneDisplayNoteMin = 2;
+export const updatePartnerPageContentResponseOneDisplayNoteMax = 1500;
+
+
+
+export const UpdatePartnerPageContentResponse = zod.object({
+  "heroTitle": zod.string().min(updatePartnerPageContentResponseOneHeroTitleMin).max(updatePartnerPageContentResponseOneHeroTitleMax),
+  "heroLineOne": zod.string().min(updatePartnerPageContentResponseOneHeroLineOneMin).max(updatePartnerPageContentResponseOneHeroLineOneMax),
+  "heroLineTwo": zod.string().min(updatePartnerPageContentResponseOneHeroLineTwoMin).max(updatePartnerPageContentResponseOneHeroLineTwoMax),
+  "heroDescription": zod.string().min(updatePartnerPageContentResponseOneHeroDescriptionMin).max(updatePartnerPageContentResponseOneHeroDescriptionMax),
+  "directoryTitle": zod.string().min(updatePartnerPageContentResponseOneDirectoryTitleMin).max(updatePartnerPageContentResponseOneDirectoryTitleMax),
+  "directoryDescription": zod.string().min(updatePartnerPageContentResponseOneDirectoryDescriptionMin).max(updatePartnerPageContentResponseOneDirectoryDescriptionMax),
+  "collaborationTitle": zod.string().min(updatePartnerPageContentResponseOneCollaborationTitleMin).max(updatePartnerPageContentResponseOneCollaborationTitleMax),
+  "collaborationSubtitle": zod.string().min(updatePartnerPageContentResponseOneCollaborationSubtitleMin).max(updatePartnerPageContentResponseOneCollaborationSubtitleMax),
+  "partnershipButton": zod.string().min(updatePartnerPageContentResponseOnePartnershipButtonMin).max(updatePartnerPageContentResponseOnePartnershipButtonMax),
+  "conversationButton": zod.string().min(updatePartnerPageContentResponseOneConversationButtonMin).max(updatePartnerPageContentResponseOneConversationButtonMax),
+  "displayNote": zod.string().min(updatePartnerPageContentResponseOneDisplayNoteMin).max(updatePartnerPageContentResponseOneDisplayNoteMax)
+}).and(zod.object({
+  "updatedAt": zod.string()
+}))
+
+
+export const updatePartnerOrganizationPathIdMax = 100;
+
+
+
+export const UpdatePartnerOrganizationParams = zod.object({
+  "id": zod.coerce.string().max(updatePartnerOrganizationPathIdMax)
+})
+
+export const updatePartnerOrganizationBodyOneNameMin = 2;
+export const updatePartnerOrganizationBodyOneNameMax = 200;
+
+export const updatePartnerOrganizationBodyOneDescriptionMax = 2000;
+
+export const updatePartnerOrganizationBodyOneWebsiteMax = 2000;
+
+export const updatePartnerOrganizationBodyOneLogoUploadIdMax = 100;
+
+
+export const updatePartnerOrganizationBodyOnePriorityMin = 0;
+export const updatePartnerOrganizationBodyOnePriorityMax = 100000;
+
+export const updatePartnerOrganizationBodyTwoExpectedUpdatedAtMax = 40;
+
+
+
+export const UpdatePartnerOrganizationBody = zod.object({
+  "name": zod.string().min(updatePartnerOrganizationBodyOneNameMin).max(updatePartnerOrganizationBodyOneNameMax),
+  "category": zod.enum(['institutions', 'corporate-brands', 'culture-creativity', 'media-press']),
+  "relationship": zod.enum(['historical-collaboration', 'media-relationship', 'event-collaborator', 'current-partner', 'institutional-reference']),
+  "description": zod.string().max(updatePartnerOrganizationBodyOneDescriptionMax),
+  "website": zod.string().max(updatePartnerOrganizationBodyOneWebsiteMax),
+  "logoUploadId": zod.string().max(updatePartnerOrganizationBodyOneLogoUploadIdMax).nullable(),
+  "legacyLogoId": zod.number().int().min(1).nullable(),
+  "status": zod.enum(['draft', 'published', 'archived']),
+  "relationshipVerified": zod.boolean(),
+  "rightsConfirmed": zod.boolean(),
+  "priority": zod.number().int().min(updatePartnerOrganizationBodyOnePriorityMin).max(updatePartnerOrganizationBodyOnePriorityMax)
+}).and(zod.object({
+  "expectedUpdatedAt": zod.string().max(updatePartnerOrganizationBodyTwoExpectedUpdatedAtMax).nullable()
+}))
+
+export const updatePartnerOrganizationResponseOneNameMin = 2;
+export const updatePartnerOrganizationResponseOneNameMax = 200;
+
+export const updatePartnerOrganizationResponseOneDescriptionMax = 2000;
+
+export const updatePartnerOrganizationResponseOneWebsiteMax = 2000;
+
+export const updatePartnerOrganizationResponseOneLogoUploadIdMax = 100;
+
+
+export const updatePartnerOrganizationResponseOnePriorityMin = 0;
+export const updatePartnerOrganizationResponseOnePriorityMax = 100000;
+
+
+
+export const UpdatePartnerOrganizationResponse = zod.object({
+  "name": zod.string().min(updatePartnerOrganizationResponseOneNameMin).max(updatePartnerOrganizationResponseOneNameMax),
+  "category": zod.enum(['institutions', 'corporate-brands', 'culture-creativity', 'media-press']),
+  "relationship": zod.enum(['historical-collaboration', 'media-relationship', 'event-collaborator', 'current-partner', 'institutional-reference']),
+  "description": zod.string().max(updatePartnerOrganizationResponseOneDescriptionMax),
+  "website": zod.string().max(updatePartnerOrganizationResponseOneWebsiteMax),
+  "logoUploadId": zod.string().max(updatePartnerOrganizationResponseOneLogoUploadIdMax).nullable(),
+  "legacyLogoId": zod.number().int().min(1).nullable(),
+  "status": zod.enum(['draft', 'published', 'archived']),
+  "relationshipVerified": zod.boolean(),
+  "rightsConfirmed": zod.boolean(),
+  "priority": zod.number().int().min(updatePartnerOrganizationResponseOnePriorityMin).max(updatePartnerOrganizationResponseOnePriorityMax)
+}).and(zod.object({
+  "id": zod.string(),
+  "logoUrl": zod.string().nullable(),
+  "updatedAt": zod.string()
+}))
+
+
+export const deletePartnerOrganizationPathIdMax = 100;
+
+
+
+export const DeletePartnerOrganizationParams = zod.object({
+  "id": zod.coerce.string().max(deletePartnerOrganizationPathIdMax)
+})
+
+export const deletePartnerOrganizationBodyExpectedUpdatedAtMax = 40;
+
+
+
+export const DeletePartnerOrganizationBody = zod.object({
+  "expectedUpdatedAt": zod.string().min(1).max(deletePartnerOrganizationBodyExpectedUpdatedAtMax)
+})
+
+export const DeletePartnerOrganizationResponse = zod.void()
+
+
+export const getPartnerOrganizationLogoPathIdMax = 100;
+
+
+
+export const GetPartnerOrganizationLogoParams = zod.object({
+  "id": zod.coerce.string().max(getPartnerOrganizationLogoPathIdMax)
+})
+
+export const GetPartnerOrganizationLogoResponse = zod.unknown()
+
+
 
 
 
@@ -2940,8 +3885,12 @@ export const GetHumanitarianPaymentStatusQueryParams = zod.object({
 })
 
 export const GetHumanitarianPaymentStatusResponse = zod.object({
-  "status": zod.enum(['pending', 'paid', 'refunded', 'expired']),
-  "archiveAccess": zod.boolean()
+  "status": zod.enum(['pending', 'paid', 'refunded', 'expired', 'failed']),
+  "archiveAccess": zod.boolean(),
+  "amount": zod.number().int().optional().describe('Amount in minor units recorded for this verified session'),
+  "currency": zod.enum(['usd', 'aed']).optional(),
+  "reference": zod.string().optional().describe('Non-sensitive TOMI payment reference'),
+  "testMode": zod.boolean().optional()
 })
 
 

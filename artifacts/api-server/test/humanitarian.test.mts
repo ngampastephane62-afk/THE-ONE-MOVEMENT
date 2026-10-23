@@ -12,6 +12,7 @@ const require = createRequire(import.meta.url);
 // Local process only: the provider below is entirely fake.
 process.env.TOMI_HUMANITARIAN_LIVE_AUTHORIZED = "true";
 const stripe = {
+  accounts: { retrieve: async () => ({ charges_enabled: true, capabilities: { card_payments: "active" } }) },
   balance: { retrieve: async () => ({ livemode: true }) },
   checkout: { sessions: {
     async create(params: any, options: any) {
@@ -28,7 +29,7 @@ const stripe = {
     },
     retrieve: async (id: string) => [...globals.sessions.values()].find((session: any) => session.id === id),
   } },
-  paymentIntents: { retrieve: async () => ({ status: "succeeded", amount_received: 1000, currency: "usd", latest_charge: { amount_refunded: globals.refunded } }) },
+  paymentIntents: { retrieve: async (id: string) => ({ id, livemode: true, status: "succeeded", amount: 1000, amount_received: 1000, currency: "usd", latest_charge: { amount_refunded: globals.refunded } }) },
 };
 globals.stripe = stripe;
 globals.sessions = new Map();

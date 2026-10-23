@@ -1,5 +1,4 @@
 import ArchivePhoto from '@/components/ArchivePhoto';
-import ProgrammeNominees from '@/components/editorial/ProgrammeNominees';
 import { ActionLink, Eyebrow, SectionTitle } from './SummitUI';
 import { IMPACT_FOCUS, PATHWAYS, ROUTES } from './summit-data';
 
@@ -25,7 +24,6 @@ export function MediaSection() {
           </div>
         </div>
       </div>
-      <ProgrammeNominees programme="summit" />
     </section>
   );
 }

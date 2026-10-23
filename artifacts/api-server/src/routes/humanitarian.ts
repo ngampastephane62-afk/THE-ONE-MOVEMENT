@@ -55,6 +55,8 @@ router.post("/humanitarian/checkout", limiter, optionalMember, async (req, res) 
     return created!;
   });
   const stripe = await getUncachableStripeClient();
+  const mode = await stripe.balance.retrieve();
+  if (mode.livemode !== row.liveMode) throw new NetworkError(503, "Payment configuration changed. Nothing was charged. Start again later.");
   if (row.stripeSessionId) {
     const session = await stripe.checkout.sessions.retrieve(row.stripeSessionId);
     if (session.status === "open" && session.url) return void res.json({ url: session.url });
@@ -78,6 +80,10 @@ router.post("/humanitarian/checkout", limiter, optionalMember, async (req, res) 
     success_url: `${returnOrigin}${path}?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${returnOrigin}${path}?payment=cancelled`,
   }, { idempotencyKey: `tomi-humanitarian-${row.id}` });
+  if (session.livemode !== row.liveMode || session.mode !== "payment" ||
+    session.amount_total !== row.amount || session.currency !== row.currency) {
+    throw new NetworkError(503, "Payment details could not be confirmed. No payment window was opened.");
+  }
   await db.update(payments).set({ stripeSessionId: session.id, updatedAt: new Date() }).where(eq(payments.id, row.id));
   if (!session.url) throw new NetworkError(503, "Checkout did not provide a payment window.");
   res.set("Cache-Control", "no-store").json({ url: session.url });
@@ -94,6 +100,10 @@ router.get("/humanitarian/payment-status", statusLimiter, optionalMember, async 
   res.set("Cache-Control", "no-store").json({
     status: current!.status === "pending" && session.status === "expired" ? "expired" : current!.status,
     archiveAccess: false,
+    amount: current!.amount,
+    currency: current!.currency,
+    reference: `TOMI-${String(current!.id).padStart(6, "0")}`,
+    testMode: !current!.liveMode,
   });
 });
 router.post("/humanitarian/offers", limiter, async (req, res) => {

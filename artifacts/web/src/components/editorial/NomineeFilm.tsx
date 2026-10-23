@@ -5,6 +5,8 @@ const FILMS: Record<string, { id: string; path: string; title: string; webm?: bo
   mohombi: { id: 'mohombi-nomination', path: 'mohombi-announcement', title: 'Mohombi · TOMI announcement', webm: true },
   'nancy-isime': { id: 'nancy-isime-nomination', path: 'awards-nominees', title: 'Nancy Isime · TOMI announcement' },
 };
+export const hasNomineeFilm = (slug: string) => slug in FILMS;
+export const nomineeFilmTitle = (slug: string) => FILMS[slug]?.title;
 export default function NomineeFilm({ slug }: { slug: string }) {
   const film = FILMS[slug];
   if (!film) return <p className="border border-sand-300 p-4 text-sm text-ink-700">No individual announcement video has been supplied for this profile yet. The official nomination poster is available above.</p>;

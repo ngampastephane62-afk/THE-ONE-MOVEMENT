@@ -50,9 +50,9 @@ router.get(["/home-reels/:filename", "/program-media/:filename", "/humanitarian-
     : isEditorialMedia
     ? /^(goma-donation|previous-editions)\.(mp4|webm|webp)$/.test(filename)
     : isHumanitarianMedia
-    ? /^(panzi-appeal|tomi-fonarev-story)\.(mp4|webm|webp)$/.test(filename)
+    ? /^(?:(panzi-appeal|tomi-fonarev-story)\.(mp4|webm|webp)|photo-0[1-9]\.webp)$/.test(filename)
     : isProgramMedia
-    ? /^(awards-(nominees|ciara)\.mp4|(fashion-knight-2026|awards-rosina-2027)\.(mp4|webm|webp))$/.test(filename)
+    ? /^(awards-(nominees|ciara)\.mp4|(nancy-isime-supplied|ciara-supplied|rosina-peace-supplied)\.(mp4|webp)|(fashion-knight-2026|awards-rosina-2027)\.(mp4|webm|webp))$/.test(filename)
     : /^(reel-[123]\.(mp4|webp)|(we-are-one-2026|movement-vision-2026|movement-together-2026)\.(mp4|webm|webp))$/.test(filename);
   if (!allowed) {
     res.sendStatus(404);

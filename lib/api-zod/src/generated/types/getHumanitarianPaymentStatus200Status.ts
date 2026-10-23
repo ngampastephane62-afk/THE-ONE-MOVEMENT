@@ -14,4 +14,5 @@ export const GetHumanitarianPaymentStatus200Status = {
   paid: 'paid',
   refunded: 'refunded',
   expired: 'expired',
+  failed: 'failed',
 } as const;

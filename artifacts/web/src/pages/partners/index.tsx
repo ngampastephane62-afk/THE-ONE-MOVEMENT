@@ -1,86 +1,83 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'wouter';
-import PartnerOrbitStage from '@/components/partners/PartnerOrbitStage';
-import PartnerEditorial from '@/components/partners/PartnerEditorial';
-import { PartnerInstitutions, PartnerMedia } from '@/components/partners/PartnerHistory';
+import { getGetPartnerDirectoryQueryKey, useGetPartnerDirectory } from '@workspace/api-client-react';
+import PartnerNetworkHero from '@/components/partners/PartnerNetworkHero';
+import PartnerGallery, { PartnerGallerySkeleton } from '@/components/partners/PartnerGallery';
 import PartnerOpportunities from '@/components/partners/PartnerOpportunities';
 import InvestmentPresentation from '@/components/partners/InvestmentPresentation';
 import BroadcasterAudience from '@/components/partners/BroadcasterAudience';
 import SectionHeading from '@/components/SectionHeading';
 import Reveal from '@/components/Reveal';
 import DocumentaryTeasers from '@/components/editorial/DocumentaryTeasers';
-import ResponsiveMedia from '@/components/ResponsiveMedia';
-import { archiveVideo } from '@/components/ArchivePhoto';
+import NetworkMotif from '@/components/partners/NetworkMotif';
+import { mergeContent } from '@/lib/partner-directory';
 
 export default function Partners() {
+  const q = useGetPartnerDirectory({ query: { queryKey: getGetPartnerDirectoryQueryKey(), refetchOnMount: 'always', refetchOnWindowFocus: true, refetchInterval: 120_000, staleTime: 30_000 } });
+  const c = mergeContent(q.data?.content);
+  const items = (q.data?.items ?? []).filter((i) => i.status === 'published');
+
   return (
-    <div className="bg-ivory-50 min-h-screen">
+    <div className="min-h-[100dvh] bg-ivory-50">
       <Helmet>
-        <title>PARTNERS & INVESTMENT — THE ONE MOVEMENT INTERNATIONAL</title>
-        <meta name="description" content="Governments, UN entities, diplomatic missions, Rawbank, private companies, international brands and broadcasters that have partnered with The One Movement International — and the paths to invest in or partner with the Movement." />
-         <meta property="og:title" content="Partners & Investment — The One Movement International" />
-         <meta property="og:description" content="Explore the Movement's partner network and explore investment and partnership opportunities." />
+        <title>PARTNERS — THE ONE MOVEMENT INTERNATIONAL</title>
+        <meta name="description" content="Institutions, corporate brands, cultural organizations and media that form The One Movement International's global network." />
+        <meta property="og:title" content="Our Global Network — The One Movement International" />
+        <meta property="og:description" content={c.heroDescription} />
         <link rel="canonical" href="/partners" />
       </Helmet>
 
-      <PartnerOrbitStage />
+      <PartnerNetworkHero c={c} count={items.length} />
 
-      <PartnerInstitutions />
+      <section id="partner-gallery" className="scroll-mt-20 py-section-lg" aria-labelledby="partner-gallery-heading" data-testid="section-partner-gallery">
+        <div className="mx-auto max-w-7xl px-6">
+          <Reveal>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-lagoon-600">Partners · Collaborators · Media</p>
+            <h2 id="partner-gallery-heading" className="mt-3 font-display text-3xl tracking-[0.02em] text-ink-900 sm:text-5xl" data-testid="text-directory-title">{c.directoryTitle}</h2>
+            <p className="mt-4 max-w-2xl leading-relaxed text-ink-800" data-testid="text-directory-description">{c.directoryDescription}</p>
+          </Reveal>
+          <div className="mt-10">
+            {q.isLoading ? <PartnerGallerySkeleton />
+              : q.isError && !q.data ? (
+                <div className="rounded-3xl border border-sand-300 p-8 text-center" role="alert" data-testid="status-partners-error">
+                  <p className="text-ink-800">The partner network could not be loaded.</p>
+                  <button type="button" onClick={() => q.refetch()} className="mt-4 inline-flex min-h-11 items-center rounded-full bg-lagoon-900 px-5 text-xs font-semibold text-ivory-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500" data-testid="button-partners-retry">Try again</button>
+                </div>
+              ) : items.length === 0 ? (
+                <p className="rounded-3xl border border-dashed border-sand-300 p-10 text-center text-ink-700" data-testid="status-partners-none">The network is being updated. Please check back shortly.</p>
+              ) : <PartnerGallery items={items} />}
+          </div>
+          <p className="mt-6 max-w-3xl text-xs leading-relaxed text-ink-700" data-testid="text-display-note">{c.displayNote}</p>
+        </div>
+      </section>
 
       <PartnerOpportunities />
-
       <InvestmentPresentation />
-
-      <PartnerMedia />
-
       <BroadcasterAudience />
 
-      <PartnerEditorial />
-
-      {/* DOCUMENTARY ARCHIVE */}
-      <section className="py-section-lg bg-ivory-50 border-t border-sand-200" aria-labelledby="engagement-heading">
+      <section className="border-t border-sand-200 py-section-lg" aria-labelledby="archive-heading">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
             <SectionHeading eyebrow="SINCE THE FIRST EDITION" heading="OUR DOCUMENTARY ARCHIVE" surface="light" size="lg" thread />
-            <p id="engagement-heading" className="mt-6 max-w-2xl leading-relaxed text-ink-800">
-              Since its first edition, The One Movement has produced documentaries and magazines.
-            </p>
+            <p id="archive-heading" className="mt-6 max-w-2xl leading-relaxed text-ink-800">Since its first edition, The One Movement has produced documentaries and magazines. Institutional history and press coverage remain available in <Link href="/media" className="font-semibold text-lagoon-700 underline underline-offset-4" data-testid="link-history-media">Media</Link> and <Link href="/news" className="font-semibold text-lagoon-700 underline underline-offset-4" data-testid="link-history-news">News</Link>.</p>
           </Reveal>
           <DocumentaryTeasers />
-          <Reveal className="mt-12 flex flex-col items-center sm:flex-row sm:items-center sm:gap-10">
-            <ResponsiveMedia
-              kind="vertical-reel"
-              label={archiveVideo('institutional-meeting').title}
-              purpose={archiveVideo('institutional-meeting').purpose}
-              videoSrc={archiveVideo('institutional-meeting').videoSrc}
-              videoFallbackSrc={archiveVideo('institutional-meeting').videoFallbackSrc}
-              posterSrc={archiveVideo('institutional-meeting').posterSrc}
-              assetId="PARTNERS-MEETING"
-              autoPlay={false}
-              className="aspect-[9/16] w-full max-w-xs"
-            />
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-ink-700 sm:mt-0">
-              Meeting with the Private Office of Sheikh Hamdan Al Nahyan · Founder archive footage.
-            </p>
-          </Reveal>
         </div>
       </section>
 
-
-      {/* POLICY */}
-      <section className="py-12 bg-ivory-50 border-t border-sand-200">
-        <div className="mx-auto max-w-3xl px-6 text-center">
+      <section className="relative isolate overflow-hidden bg-lagoon-900 py-28 text-center text-ivory-50" aria-labelledby="collab-heading" data-testid="section-partners-cta">
+        <NetworkMotif className="pointer-events-none absolute left-1/2 top-1/2 -z-10 w-[140%] max-w-[900px] -translate-x-1/2 -translate-y-1/2 opacity-40" />
+        <div className="mx-auto max-w-4xl px-6">
           <Reveal>
-            <p className="text-[10px] font-semibold text-ink-500 tracking-[0.2em] uppercase">OUR DISPLAY POLICY</p>
-            <p className="mt-3 text-sm text-ink-700 leading-relaxed">
-              Partners listed on this page are relationships confirmed by the Founder. Organisations that enquire are reviewed before any public listing, and an enquiry is never shown as a partnership.
-            </p>
-            <p className="mt-3 text-sm text-ink-700 leading-relaxed">Industry profiles are editorial context and do not indicate a partnership.</p>
-            <Link href="/news" className="mt-4 inline-block text-sm font-semibold text-lagoon-700 underline underline-offset-4" data-testid="link-press-news">Looking for press coverage? Visit News.</Link>
+            <h2 id="collab-heading" className="font-display text-[clamp(2rem,6vw,4.2rem)] leading-[1] tracking-[0.02em]" data-testid="text-collab-title">{c.collaborationTitle}</h2>
+            <p className="mt-5 text-sm uppercase tracking-[0.24em] text-gold-400 sm:text-base" data-testid="text-collab-subtitle">{c.collaborationSubtitle}</p>
+            <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Link href="/join#institutional-inquiry" className="inline-flex min-h-12 items-center rounded-full bg-gold-500 px-7 text-xs font-semibold uppercase tracking-[0.16em] text-ink-900 hover:bg-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ivory-50 focus-visible:ring-offset-2 focus-visible:ring-offset-lagoon-900" data-testid="link-cta-partnership">{c.partnershipButton}</Link>
+              <Link href="/join" className="inline-flex min-h-12 items-center rounded-full border border-ivory-100/40 px-7 text-xs font-semibold uppercase tracking-[0.16em] text-ivory-50 hover:border-gold-400 hover:text-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400" data-testid="link-cta-conversation">{c.conversationButton}</Link>
+            </div>
           </Reveal>
         </div>
       </section>
-
     </div>
   );
 }

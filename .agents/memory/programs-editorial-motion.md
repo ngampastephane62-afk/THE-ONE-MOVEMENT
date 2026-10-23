@@ -4,7 +4,7 @@ description: Founder constraints for cinematic refinements of the six official P
 ---
 
 Programs animation upgrades must preserve the six official programmes, approved
-names, descriptions, selected Founder photographs and existing destinations.
+names and facts, selected Founder photographs and existing destinations.
 The supplied immersive clips are motion references only, not replacement
 content or videos to embed on the page.
 
@@ -25,3 +25,27 @@ requirements alongside the cinematic presentation.
 
 **How to apply:** Refine page-scoped presentation without changing engagement
 contracts, counts, authentication, programme details or other pages.
+
+Programme pages should use fewer visible elements and concise explanations,
+while sharing an adaptable editorial structure and retaining distinct identities.
+The later six-programme brief permits consolidating repetitive descriptions,
+not merely animating the original paragraphs unchanged.
+
+**Why:** The Founder explicitly requested “LESS CLUTTER. STRONGER STORYTELLING.
+BETTER INFORMATION. MORE MEANINGFUL INTERACTIONS.”
+
+**How to apply:** Introduce each programme before administrative details. Give
+Awards nominees early, compact discovery; keep Gala's cultural identity,
+Summit's year-round ecosystem and Fashion Week's historical footage distinct.
+Avoid empty sections and duplicating the seventeen ecosystem sectors as programmes.
+
+Awards recognition is not for sale. Nominations and selection are independent
+of sponsorship, professional services and other commercial arrangements.
+
+**Why:** The Founder called this a critical principle of The One Awards.
+
+**How to apply:** Keep the statement prominent; do not invent judging criteria,
+sell nominations, promise selection, or infer confirmed Summit/Fashion Week
+appearances from an Awards nomination. Publish confirmed programme appearances
+separately. Preserve approved biography records while removing wealth estimates
+from nominee presentation.

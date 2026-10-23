@@ -15,11 +15,19 @@ The owner separately approved the two accompanying new videos for the public hom
 
 **How to apply:** Keep the supplied films public without adding the private planning details as captions or announcements.
 
-The One Fashion Week International is announced for 22 December 2026 in Dubai. The One Awards are announced for 2 January 2027.
+The One Fashion Week International is announced for 22 December 2026 in Dubai.
+The earlier 2 January 2027 Awards announcement must not be restored automatically:
+the later Awards redesign requests an official-announcement-coming-soon treatment
+until fresh confirmed event details are published by the Founder.
 
-**Why:** The owner confirmed the Fashion Week date and clarified that the January event is the following year, correcting an initial January 2026 entry.
+**Why:** The owner confirmed the Fashion Week date and initially clarified the
+Awards year. The subsequent Awards brief directs removal of outdated/unapproved
+dates and a coming-soon announcement, superseding the previous public date copy.
 
-**How to apply:** Use these specific dates, not recurring annual dates. Remove superseded November/postponement copy without treating the sixth Fashion Week edition as completed. Do not invent a venue, time, ticket offer or attendance confirmation.
+**How to apply:** Keep the approved Fashion Week date, not a recurring annual date.
+Remove superseded November/postponement copy without treating the sixth Fashion
+Week edition as completed. Do not infer an Awards date from old media filenames
+or invent a venue, time, ticket offer or attendance confirmation.
 
 Fashion Week should let designers, models, photographers, influencers and other professions discover and contact real network members. The supplied Instagram roster represents voices supporting peace and unity, not automatically member accounts or confirmed event guests.
 

@@ -291,8 +291,7 @@ export const PROGRAMS: Program[] = [
     eyebrow: 'OFFICIAL PROGRAM — RECOGNITION',
     tagline: 'Recognition. Excellence. Impact.',
     heroStatement:
-      'Ceremony date: 2 January 2027. Honoring the people and organizations whose work embodies what the Movement stands for.',
-    date: '2 January 2027',
+      'A global recognition initiative celebrating individuals, organizations and changemakers whose creativity, leadership, courage and commitment contribute to a more connected, inclusive and peaceful world.',
     purpose:
       "The One Awards exist to recognize excellence that serves something larger than itself: creativity, courage, collaboration and positive impact across the Movement's global community.",
     overview:

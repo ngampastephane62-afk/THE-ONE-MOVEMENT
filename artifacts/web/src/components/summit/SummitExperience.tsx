@@ -1,11 +1,8 @@
-import { getProgrammeServiceOffers } from '@workspace/shared';
 import ArchivePhoto from '@/components/ArchivePhoto';
 import { ActionLink, Eyebrow, SectionTitle } from './SummitUI';
 import { ROUTES, ZONES } from './summit-data';
 
 export default function SummitExperience() {
-  const speaker = getProgrammeServiceOffers('summit').find((o) => o.role === 'speaker');
-  const fee = speaker?.priceUsd ?? null;
   return (
     <section id="experience" aria-labelledby="experience-title" className="scroll-mt-16 bg-ivory-100 py-section-lg border-t border-sand-200">
       <div className="mx-auto max-w-7xl px-6">
@@ -39,12 +36,10 @@ export default function SummitExperience() {
             <ActionLink href={ROUTES.speaker} variant="outline" testId="link-share-expertise">Share your expertise</ActionLink>
             <ActionLink href={ROUTES.partnership} variant="outline" testId="link-explore-partnerships">Explore partnerships</ActionLink>
           </div>
-          {fee !== null && (
-            <p className="max-w-sm text-xs leading-relaxed text-ink-700" data-testid="text-speaker-fee">
-              Speaking slots for non-sponsors carry a USD {fee.toLocaleString('en-US')} participation fee, agreed in a written scope.{' '}
+            <p className="max-w-sm text-xs leading-relaxed text-ink-700" data-testid="text-speaker-opportunity">
+              Tailored speaking opportunities. Scope and any commercial terms are discussed privately after review.{' '}
               <ActionLink href={ROUTES.speakerSponsor} variant="text" testId="link-speaker-sponsor">Already a sponsor?</ActionLink>
             </p>
-          )}
         </div>
       </div>
     </section>

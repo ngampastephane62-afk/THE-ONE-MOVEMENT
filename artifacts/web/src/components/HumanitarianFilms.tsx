@@ -38,14 +38,15 @@ const FILMS: Film[] = [
   },
 ];
 
-function FilmPlayer({ film }: { film: Film }) {
+function FilmPlayer({ film, cinematic = false, index = 0 }: { film: Film; cinematic?: boolean; index?: number }) {
   const [attempt, setAttempt] = useState(0);
   const [failed, setFailed] = useState(false);
   const titleId = `film-${film.slug}-title`;
   const noteId = `film-${film.slug}-note`;
   return (
-    <figure className={`mx-auto w-full ${film.frame}`} aria-labelledby={titleId} data-testid={`film-${film.slug}`}>
-      <figcaption className="mb-4">
+    <figure className={`mx-auto w-full ${film.frame} ${cinematic ? 'hum-film-chapter' : ''}`} aria-labelledby={titleId} data-testid={`film-${film.slug}`}>
+      {cinematic && <p className="hum-film-index font-mono text-xs text-gold-400/80" aria-hidden>FILM {String(index + 1).padStart(2, '0')}</p>}
+      <figcaption className={cinematic ? 'hum-film-text mb-4' : 'mb-4'}>
         <p className="text-eyebrow text-gold-400">{film.eyebrow}</p>
         <h3 id={titleId} className="mt-2 font-display text-2xl tracking-wide text-ivory-100">{film.title}</h3>
         <p className="mt-2 text-sm text-ivory-300">{film.credit} <span className="whitespace-nowrap text-gold-400">· {film.duration}</span></p>
@@ -55,7 +56,7 @@ function FilmPlayer({ film }: { film: Film }) {
         <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-coral-500" aria-hidden />
         <span>Content notice: this film speaks of armed conflict, violence, trauma and death. It does not play automatically — start it when you are ready.</span>
       </p>
-      <div className="relative overflow-hidden border border-gold-500/30 bg-ink-950" style={failed ? { aspectRatio: film.aspect } : undefined}>
+      <div className={`relative overflow-hidden border border-gold-500/30 bg-ink-950 ${cinematic ? 'hum-film-frame' : ''}`} style={failed ? { aspectRatio: film.aspect } : undefined}>
         {failed ? (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center" role="alert">
             <p className="text-sm text-ivory-200">This film could not be loaded.</p>
@@ -88,15 +89,20 @@ function FilmPlayer({ film }: { film: Film }) {
   );
 }
 
-export default function HumanitarianFilms() {
+/** `cinematic` is opt-in (used by /donate): adds chapter headings and staged reveal classes. Media, credits, notices and playback stay identical. */
+export default function HumanitarianFilms({ cinematic = false }: { cinematic?: boolean } = {}) {
   return (
     <section className="tomi-aurora-surface text-ivory-100" aria-labelledby="films-title">
       <div className="mx-auto max-w-5xl px-6 py-16">
-        <p className="text-eyebrow text-gold-400">WITNESS</p>
-        <h2 id="films-title" className="mt-2 text-display-md">Two films from eastern DRC</h2>
+        <p className="text-eyebrow text-gold-400">{cinematic ? 'HUMANITARIAN FILMS AND TESTIMONIES' : 'WITNESS'}</p>
+        {cinematic ? (
+          <h2 id="films-title" className="mt-2 text-display-lg"><span className="hum-mask"><span>STORIES THAT MUST BE HEARD.</span></span><span className="hum-mask mt-2 block text-gold-400" style={{ fontSize: '0.5em' }}><span>HUMANITARIAN FILMS FROM EASTERN CONGO.</span></span></h2>
+        ) : (
+          <h2 id="films-title" className="mt-2 text-display-md">Two films from eastern DRC</h2>
+        )}
         <p className="mt-4 max-w-2xl text-sm leading-relaxed text-ivory-300">Each film is shown uncut, in its original frame. They have different authors and purposes: one is the Panzi Foundation’s own appeal, the other a story told by TOMI with FONAREV.</p>
         <div className="mt-12 flex flex-col gap-16">
-          {FILMS.map((f) => <FilmPlayer key={f.slug} film={f} />)}
+          {FILMS.map((f, i) => <FilmPlayer key={f.slug} film={f} cinematic={cinematic} index={i} />)}
         </div>
       </div>
     </section>

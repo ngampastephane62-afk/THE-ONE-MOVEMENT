@@ -82,6 +82,12 @@ Humanitarian contributions are received by The One Movement International, which
 
 Humanitarian actions and films are free to access, with voluntary contributions entirely separate from professional ecosystem subscriptions. Do not restore the earlier US$10 humanitarian-film purchase.
 
+Donors may return whenever they choose, but each donation remains a separate, non-recurring payment. Preserve the Panzi Foundation's own appeal attribution and TOMI × FONAREV's verified Nyota credits; neither film implies endorsement or receipt of current TOMI Fund donations.
+
+**Why:** The Founder distinguished donations available at any time from subscriptions and required credible source attribution.
+
+**How to apply:** Never add automatic recurring charges, infer activity dates, claim tax deductibility or earmarking, or describe test receipts as actual donations. Clear finished checkout references so a later voluntary donation of the same amount remains possible.
+
 **Why:** On 2026-10-16 the stakeholder clarified that the paid product is a monthly professional/social ecosystem subscription, not humanitarian action, superseding the earlier film-price instruction. They supplied distinct TOMI Goma and MONUSCO/Radio Okapi files.
 
 **How to apply:** Keep both supplied humanitarian films public. Goma is about 59 seconds, not feature-length. Kinshasa footage has not been supplied; Dubai is a separate future project. Never describe test contributions as real fundraising.

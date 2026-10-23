@@ -1274,3 +1274,23 @@ body {
 .tomi-member-path { display: flex; flex-wrap: wrap; gap: 0.25rem; }
 .tomi-member-path span { flex: 1 0 auto; padding: 0.55rem 0.9rem; border-top: 2px solid hsl(39 52% 54% / 0.35); font-size: 0.625rem; letter-spacing: 0.22em; text-transform: uppercase; color: hsl(37 62% 29%); font-weight: 600; }
 .tomi-member-path span:first-child { border-top-color: hsl(39 52% 54%); }
+
+/* ── Partners network (TASK 28) ─────────────────────────────── */
+.pn-mask { overflow: hidden; padding-bottom: 0.06em; }
+.pn-line { transform: translateY(105%); animation: pnRise 1.1s cubic-bezier(.2,.8,.2,1) forwards; }
+.pn-stage { opacity: 0; animation: pnFade .9s ease-out forwards; }
+.pn-dot { transform: translate(var(--dx), var(--dy)); opacity: 0; animation: pnGather 2.4s cubic-bezier(.3,.7,.2,1) forwards; }
+.pn-links, .pn-globe { opacity: 0; animation: pnFade 1.6s ease-out 1.6s forwards; }
+.pn-motif { animation: pnSpin 120s linear infinite; transform-origin: center; }
+.pn-field { background: radial-gradient(120% 100% at 50% 100%, hsl(165 55% 40% / .25), transparent 70%); }
+.pn-card { transition: opacity .7s ease-out, transform .7s cubic-bezier(.2,.8,.2,1); }
+.pn-card.pn-wait:not(.pn-in) { opacity: 0; transform: translateY(14px); }
+.pn-card.pn-wait:not(.pn-in):focus-within { opacity: 1; transform: none; }
+@keyframes pnRise { to { transform: translateY(0); } }
+@keyframes pnFade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes pnGather { 0% { opacity: 0; } 30% { opacity: 1; } 100% { opacity: 1; transform: translate(0,0); } }
+@keyframes pnSpin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .pn-line, .pn-stage, .pn-dot, .pn-links, .pn-globe, .pn-card, .pn-card.pn-wait { animation: none; transition: none; opacity: 1; transform: none; }
+  .pn-motif { animation: none; }
+}

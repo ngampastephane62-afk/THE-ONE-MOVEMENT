@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
 import { build } from "esbuild";
+// This suite tests the public/live gate, not the separately authorized editor.
+process.env.TOMI_HUMANITARIAN_TEST_AUTHORIZED = "false";
 
 // No database, credentials or payment network. Each bundle has a fresh mode cache.
 for (const live of [false, true]) {
@@ -10,7 +12,7 @@ for (const live of [false, true]) {
         resolveDir: process.cwd(),
       },
       bundle: true, write: false, platform: "node", format: "esm",
-      define: { "process.env.TOMI_HUMANITARIAN_LIVE_AUTHORIZED": JSON.stringify(String(authorised)) },
+      define: { "process.env.TOMI_HUMANITARIAN_LIVE_AUTHORIZED": JSON.stringify(String(authorised)), "process.env.TOMI_HUMANITARIAN_TEST_AUTHORIZED": '"false"' },
       plugins: [{
         name: "isolated-payment-mode",
         setup(b) {
@@ -21,7 +23,7 @@ for (const live of [false, true]) {
               : args.path === "drizzle-orm"
                 ? `export const eq=()=>{}, and=()=>{}, sql=()=>{};`
                 : args.path.endsWith("stripeClient")
-                  ? `export async function getUncachableStripeClient(){return {balance:{retrieve:async()=>({livemode:${live}})}}}`
+                  ? `export async function getUncachableStripeClient(){return {balance:{retrieve:async()=>({livemode:${live}})},accounts:{retrieve:async()=>({charges_enabled:true,capabilities:{card_payments:'active'}})}}}`
                   : args.path.endsWith("networkPayments")
                     ? `export const stripeReady=true;`
                     : `export class NetworkError extends Error { constructor(status,message){super(message);this.status=status} }`;

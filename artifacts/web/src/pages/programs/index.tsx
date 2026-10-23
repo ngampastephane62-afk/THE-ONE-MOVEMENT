@@ -46,7 +46,7 @@ const PROGRAMS: {
     slug: 'awards',
     name: 'THE ONE AWARDS',
     tagline: 'Recognition. Excellence. Impact.',
-    desc: "2 January 2027. Recognition for creativity, courage, collaboration and positive impact, with Rosina as producer, partner and speaker.",
+    desc: "Recognition for creativity, courage, collaboration and positive impact, with Rosina as producer, partner and speaker. Recognition is not for sale.",
   },
   {
     slug: 'fashion-night',

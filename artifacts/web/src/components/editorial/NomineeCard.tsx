@@ -2,7 +2,6 @@ import { Link } from 'wouter';
 import { ArrowUpRight } from 'lucide-react';
 import type { AmbassadorProfile } from '@workspace/shared';
 import { posterFor } from './posters';
-import { WEALTH_ESTIMATES } from '@/lib/wealth-data';
 import PhotoActions from './PhotoActions';
 
 export default function NomineeCard({ person, index, dark = false }: { person: AmbassadorProfile; index: number; dark?: boolean }) {
@@ -31,8 +30,6 @@ export default function NomineeCard({ person, index, dark = false }: { person: A
       <div className="pt-4">
         <p className={`font-display text-2xl leading-tight ${dark ? 'text-ivory-100' : 'text-ink-900'}`}>{person.name}</p>
         <p className={`mt-1 text-xs ${dark ? 'text-ivory-300' : 'text-ink-700'}`}>{person.role}</p>
-        {WEALTH_ESTIMATES[person.slug] && <p className={`mt-3 text-xs ${dark ? 'text-gold-400' : 'text-gold-600'}`}>Estimated net worth: {WEALTH_ESTIMATES[person.slug]!.display}</p>}
-        {WEALTH_ESTIMATES[person.slug] && <p className={`mt-1 text-[10px] ${dark ? 'text-ivory-300' : 'text-ink-700'}`}>{WEALTH_ESTIMATES[person.slug]!.publisher} · {WEALTH_ESTIMATES[person.slug]!.date} </p>}
       </div>
       <p className={`mt-3 inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.18em] ${dark ? 'text-gold-400' : 'text-gold-600'}`}>
         View profile <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

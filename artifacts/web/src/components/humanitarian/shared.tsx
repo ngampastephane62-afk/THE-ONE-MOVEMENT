@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { AlertTriangle, CheckCircle2, Clock, FlaskConical, Loader2, RotateCw, XCircle } from 'lucide-react';
+import { AlertTriangle, ArrowRight, CheckCircle2, Clock, FlaskConical, Loader2, RotateCw, XCircle } from 'lucide-react';
 import {
   useGetHumanitarianConfig, useCreateHumanitarianCheckout, useGetHumanitarianPaymentStatus,
   useCreateHumanitarianOffer, getGetHumanitarianPaymentStatusQueryKey,
-  type HumanitarianCheckoutInputCurrency, type HumanitarianOfferInputKind,
+  type GetHumanitarianPaymentStatus200, type HumanitarianCheckoutInputCurrency, type HumanitarianOfferInputKind,
 } from '@workspace/api-client-react';
 
 export type Currency = HumanitarianCheckoutInputCurrency;
@@ -11,6 +11,26 @@ const PRESETS: Record<Currency, number[]> = { usd: [100, 1000, 2500, 5000, 10000
 
 export const fmt = (cents: number, c: Currency) =>
   new Intl.NumberFormat('en-US', { style: 'currency', currency: c.toUpperCase(), maximumFractionDigits: cents % 100 ? 2 : 0 }).format(cents / 100);
+
+const REQ_KEY = 'tomi-donation-request';
+/** Reuse the same requestId for the same amount+currency across a cancel/return, so a retry can never create a second charge. */
+function stableRequestId(key: string): string {
+  try {
+    const saved = JSON.parse(sessionStorage.getItem(REQ_KEY) ?? 'null') as { key: string; id: string } | null;
+    if (saved && saved.key === key) return saved.id;
+    const id = newId();
+    sessionStorage.setItem(REQ_KEY, JSON.stringify({ key, id }));
+    return id;
+  } catch { return newId(); }
+}
+
+/** Clear the stored request only after the server reports a terminal outcome for that exact amount+currency, so a new donation of the same amount gets a fresh request. */
+export function clearRequestFor(key: string | null) {
+  try {
+    const saved = JSON.parse(sessionStorage.getItem(REQ_KEY) ?? 'null') as { key: string } | null;
+    if (saved && (key === null || saved.key === key)) sessionStorage.removeItem(REQ_KEY);
+  } catch { /* storage unavailable */ }
+}
 
 const newId = () => (typeof crypto !== 'undefined' && 'randomUUID' in crypto ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}-req`);
 
@@ -44,6 +64,7 @@ export function CheckoutPanel({ kind }: { kind: 'donation' }) {
   const [accepted, setAccepted] = useState(false);
   const [error, setError] = useState('');
   const [arrange, setArrange] = useState(false);
+  const [conflict, setConflict] = useState(false);
   const reqRef = useRef<{ key: string; id: string } | null>(null);
   const busy = useRef(false);
 
@@ -57,21 +78,22 @@ export function CheckoutPanel({ kind }: { kind: 'donation' }) {
   const large = valid && amount > 99_999_999;
   const disabled = (!large && !c?.available) || !valid || !accepted || checkout.isPending;
 
-  useEffect(() => { setError(''); setArrange(false); }, [amount, cur]);
+  useEffect(() => { setError(''); setArrange(false); setConflict(false); }, [amount, cur]);
 
   async function submit() {
     if (disabled || busy.current) return;
     if (large) { setArrange(true); return; }
     busy.current = true;
     const key = `${kind}:${amount}:${cur}`;
-    if (!reqRef.current || reqRef.current.key !== key) reqRef.current = { key, id: newId() };
+    if (!reqRef.current || reqRef.current.key !== key) reqRef.current = { key, id: stableRequestId(key) };
     setError('');
     try {
       const r = await checkout.mutateAsync({ data: { kind, amount, currency: cur, accepted: true, requestId: reqRef.current.id } });
       window.location.assign(r.url);
     } catch (e) {
       const status = (e as { status?: number })?.status;
-      setError(status === 401 ? 'Please sign in with a verified account first.' : 'Checkout could not be started. Nothing was charged. You can try again.');
+      if (status === 409) { setConflict(true); setError('This donation request has already finished (paid, expired or closed). To give again, start a new donation.'); }
+      else setError(status === 401 ? 'Please sign in with a verified account first.' : 'Secure checkout did not open. You can try again; the same request is reused, so a retry cannot create a duplicate charge.');
       busy.current = false;
     }
   }
@@ -80,7 +102,7 @@ export function CheckoutPanel({ kind }: { kind: 'donation' }) {
   if (cfg.isError) return (
     <div className="flex items-center gap-3 border border-crimson-700/30 bg-crimson-700/5 p-5" role="alert">
       <p className="text-sm text-crimson-700">Payment settings could not be loaded.</p>
-      <button onClick={() => cfg.refetch()} className="inline-flex items-center gap-1.5 bg-lagoon-900 px-4 py-2 text-xs uppercase tracking-wider text-ivory-100" data-testid="button-retry-config"><RotateCw className="h-3.5 w-3.5" />Retry</button>
+      <button onClick={() => cfg.refetch()} className="inline-flex min-h-11 items-center gap-1.5 bg-lagoon-900 px-4 py-2 text-xs uppercase tracking-wider text-ivory-100" data-testid="button-retry-config"><RotateCw className="h-3.5 w-3.5" />Retry</button>
     </div>
   );
 
@@ -89,23 +111,24 @@ export function CheckoutPanel({ kind }: { kind: 'donation' }) {
       <TestModeBanner />
       <>
           <div className="mt-5 flex items-center justify-between gap-4">
-            <p className="text-eyebrow text-gold-700">ONE-TIME CONTRIBUTION</p>
+            <p className="text-eyebrow text-gold-700">CHOOSE YOUR DONATION AMOUNT</p>
             <div className="flex border border-sand-300" role="radiogroup" aria-label="Currency">
               {(['usd', 'aed'] as const).map((x) => (
                 <button key={x} role="radio" aria-checked={currency === x} onClick={() => { setCurrency(x); setPreset(x === 'usd' ? 100 : 200); setCustom(''); }}
-                  className={`px-4 py-1.5 text-xs font-semibold tracking-wider ${currency === x ? 'bg-lagoon-900 text-ivory-100' : 'text-ink-700'}`} data-testid={`button-currency-${x}`}>{x.toUpperCase()}</button>
+                  className={`min-h-11 min-w-14 px-4 text-xs font-semibold tracking-wider ${currency === x ? 'bg-lagoon-900 text-ivory-100' : 'text-ink-700'}`} data-testid={`button-currency-${x}`}>{x.toUpperCase()}</button>
               ))}
             </div>
           </div>
+          <p className="mt-3 text-sm text-ink-800" data-testid="text-donation-separate">Each donation is a separate payment. No recurring charge will be made. You are charged exactly the amount shown, in {currency.toUpperCase()}; TOMI applies no currency conversion.</p>
           <div className="mt-5 grid grid-cols-3 gap-2 sm:grid-cols-5">
             {PRESETS[currency].map((p) => (
               <button key={p} onClick={() => { setPreset(p); setCustom(''); }} aria-pressed={preset === p}
-                className={`border py-3 font-display text-lg transition-colors ${preset === p ? 'border-lagoon-900 bg-lagoon-900 text-gold-400' : 'border-sand-300 text-ink-900 hover:border-gold-500'}`} data-testid={`button-preset-${p}`}>{fmt(p, currency)}</button>
+                className={`min-h-11 border py-3 font-display text-base sm:text-lg transition-colors ${preset === p ? 'border-lagoon-900 bg-lagoon-900 text-gold-400' : 'border-sand-300 text-ink-900 hover:border-gold-500'}`} data-testid={`button-preset-${p}`}>{fmt(p, currency)}</button>
             ))}
           </div>
           <label className="mt-4 block text-sm text-ink-800">Other amount ({currency.toUpperCase()})
             <input inputMode="decimal" value={custom} onChange={(e) => { setCustom(e.target.value); setPreset(null); }}
-              placeholder={`Minimum ${fmt(minimum, currency)}`} className="mt-1 w-full border border-sand-300 bg-ivory-50 px-3 py-2.5 text-ink-900 focus:border-lagoon-600 focus:outline-none" data-testid="input-custom-amount" />
+              placeholder={`Minimum ${fmt(minimum, currency)}`} className="mt-1 w-full border border-sand-300 bg-ivory-50 min-h-11 px-3 py-2.5 text-base text-ink-900 focus:border-lagoon-600 focus:outline-none" data-testid="input-custom-amount" />
           </label>
           {preset === null && custom && !valid && <p className="mt-1 text-xs text-crimson-700">Enter at least {fmt(minimum, currency)}.</p>}
           <p className="mt-3 text-xs leading-relaxed text-ink-700">Minimums: {fmt(c?.minimumUsd ?? 100, 'usd')} or {fmt(c?.minimumAed ?? 200, 'aed')}. Stripe requires at least AED 2 per card payment, so smaller AED amounts cannot be processed.</p>
@@ -114,10 +137,11 @@ export function CheckoutPanel({ kind }: { kind: 'donation' }) {
       </>
 
       <label className="mt-5 flex items-start gap-2.5 text-sm text-ink-800">
-        <input type="checkbox" checked={accepted} onChange={(e) => setAccepted(e.target.checked)} className="mt-1 accent-[hsl(187_67%_12%)]" data-testid="checkbox-accept-terms" />
-        <span>I understand this is a one-time payment collected by {c?.collector ?? 'The One Movement International'}. TOMI decides how the fund is allocated according to emergency; I am not choosing a specific project. No recurring charge and no tax-deduction receipt is offered.</span>
+        <input type="checkbox" checked={accepted} onChange={(e) => setAccepted(e.target.checked)} className="mt-0.5 h-5 w-5 shrink-0 accent-[hsl(187_67%_12%)]" data-testid="checkbox-accept-terms" />
+        <span>I understand each donation is a separate payment collected by {c?.collector ?? 'The One Movement International'}. TOMI decides how the fund is allocated according to emergency; I am not choosing a specific project. No recurring charge and no tax-deduction receipt is offered.</span>
       </label>
       {error && <p className="mt-3 text-sm text-crimson-700" role="alert" data-testid="text-checkout-error">{error}</p>}
+      {conflict && <button type="button" onClick={() => { clearRequestFor(`${kind}:${amount}:${cur}`); reqRef.current = null; setAccepted(false); setConflict(false); setError(''); }} className="mt-3 inline-flex min-h-11 items-center border border-lagoon-900 px-5 text-xs font-semibold uppercase tracking-[0.16em] text-lagoon-900 hover:bg-lagoon-900 hover:text-ivory-100" data-testid="button-start-new-donation">Start a new donation</button>}
       <button onClick={submit} disabled={disabled}
         className="mt-6 inline-flex w-full items-center justify-center gap-2 bg-lagoon-900 px-6 py-4 text-sm font-semibold uppercase tracking-[0.16em] text-ivory-100 transition-colors hover:bg-lagoon-800 disabled:cursor-not-allowed disabled:opacity-40" data-testid={`button-checkout-${kind}`}>
         {checkout.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
@@ -130,8 +154,13 @@ export function CheckoutPanel({ kind }: { kind: 'donation' }) {
 
 const MAX_TRIES = 15;
 
+function safeAmount(x: GetHumanitarianPaymentStatus200): string | null {
+  const c = typeof x.currency === 'string' ? x.currency.toLowerCase() : '';
+  if ((c !== 'usd' && c !== 'aed') || typeof x.amount !== 'number' || !Number.isSafeInteger(x.amount) || x.amount <= 0) return null;
+  return fmt(x.amount, c);
+}
+
 export function PaymentReturn({ sessionId, cancelled }: { sessionId: string | null; cancelled: boolean }) {
-  const cfg = useConfig();
   const [tries, setTries] = useState(0);
   const enabled = !!sessionId;
   const q = useGetHumanitarianPaymentStatus({ session_id: sessionId ?? '' }, {
@@ -144,33 +173,72 @@ export function PaymentReturn({ sessionId, cancelled }: { sessionId: string | nu
   });
   const status = q.data?.status;
   useEffect(() => { if (q.dataUpdatedAt) setTries((t) => t + 1); }, [q.dataUpdatedAt]);
+  const d = q.data;
+  useEffect(() => {
+    if (!d || d.status === 'pending') return;
+    const c = d.currency?.toLowerCase();
+    if (typeof d.amount === 'number' && (c === 'usd' || c === 'aed')) clearRequestFor(`donation:${d.amount}:${c}`);
+  }, [d]);
 
   if (cancelled && !sessionId) return (
-    <Notice icon={<XCircle className="h-5 w-5 text-gold-700" />} title="Checkout cancelled" testId="status-payment-cancelled">No payment was taken. You can start again whenever you wish.</Notice>
+    <Notice icon={<XCircle className="h-5 w-5 text-gold-700" />} title="Checkout cancelled" testId="status-payment-cancelled">
+      Payment not confirmed — no new payment was taken automatically. <a href="#give" className="font-semibold underline underline-offset-4" data-testid="link-retry-donation">Return to the donation form</a>; the same amount and currency reuse the same request, so trying again cannot create a duplicate charge.
+    </Notice>
   );
   if (!sessionId) return null;
-  const test = cfg.data?.testMode;
   if (q.isError) return (
     <Notice icon={<AlertTriangle className="h-5 w-5 text-crimson-700" />} title="We could not check this payment" testId="status-payment-error">
-      Status is unknown right now. <button className="underline" onClick={() => { setTries(0); q.refetch(); }} data-testid="button-retry-status">Check again</button>
+      We cannot verify the payment status right now, so we cannot say whether a charge was made. Please do not pay again yet. <button className="min-h-11 underline" onClick={() => { setTries(0); q.refetch(); }} data-testid="button-retry-status">Check again</button>
     </Notice>
   );
   if (!q.data || status === 'pending') return (
     <Notice icon={tries >= MAX_TRIES ? <Clock className="h-5 w-5 text-gold-700" /> : <Loader2 className="h-5 w-5 animate-spin text-lagoon-700" />} title={tries >= MAX_TRIES ? 'Still awaiting confirmation' : 'Confirming with Stripe'} testId="status-payment-pending">
       {tries >= MAX_TRIES
-        ? <>Stripe has not confirmed the contribution yet. <button className="underline" onClick={() => { setTries(0); q.refetch(); }} data-testid="button-recheck-status">Check again</button></>
-        : 'A contribution is recorded as paid only after Stripe confirms it on our server.'}
+        ? <>Not confirmed yet — this is not a success. Please do not pay again. <button className="min-h-11 underline" onClick={() => { setTries(0); q.refetch(); }} data-testid="button-recheck-status">Check again</button></>
+        : 'A donation is recorded as received only after Stripe confirms it on our server.'}
     </Notice>
   );
-  if (status === 'paid') return (
-    <Notice icon={<CheckCircle2 className="h-5 w-5 text-lagoon-700" />} title={test ? 'Test payment confirmed' : 'Payment confirmed. Thank you.'} testId="status-payment-paid">
-      {test ? 'This was a test-mode payment. It is not a real donation and no money was collected.' : 'Your contribution to the TOMI humanitarian fund has been received.'}
-      {' Humanitarian films remain free. This contribution does not purchase certification or professional ecosystem services.'}
+  const x = q.data;
+  if (status === 'paid' && typeof x.testMode !== 'boolean') return (
+    <Notice icon={<Clock className="h-5 w-5 text-gold-700" />} title="Verification incomplete" testId="status-payment-unverified">
+      The payment mode could not be verified yet, so this is not shown as a confirmed donation. Please do not pay again. <button className="min-h-11 underline" onClick={() => { setTries(0); q.refetch(); }} data-testid="button-recheck-mode">Check again</button>
+    </Notice>
+  );
+  if (status === 'paid') {
+    const test = x.testMode === true;
+    const amount = safeAmount(x);
+    const ref = typeof x.reference === 'string' && /^[A-Za-z0-9_-]{1,80}$/.test(x.reference) ? x.reference : null;
+    return (
+      <div className="mx-auto max-w-5xl px-6 pt-8" role="status" data-testid="status-payment-paid">
+        <div className="hum-confirm relative overflow-hidden border border-gold-500/50 bg-lagoon-900 p-7 text-ivory-100 sm:p-10">
+          {test && <p className="mb-5 flex items-start gap-2 border-l-2 border-coral-500 bg-ink-900/40 px-4 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-ivory-100" data-testid="text-test-payment"><FlaskConical className="mt-0.5 h-4 w-4 shrink-0 text-coral-500" />TEST PAYMENT — NO REAL DONATION RECEIVED. No money was collected.</p>}
+          <CheckCircle2 className="h-7 w-7 text-gold-400" />
+          <p className="mt-4 font-display text-2xl tracking-wide sm:text-3xl">{test ? 'TEST CHECKOUT CONFIRMED.' : 'THANK YOU FOR YOUR GENEROSITY.'}</p>
+          <p className="mt-2 text-eyebrow text-gold-400">{test ? 'STRIPE TEST MODE' : 'YOUR CONTRIBUTION HAS BEEN RECEIVED.'}</p>
+          <dl className="mt-7 grid gap-px bg-gold-500/25 sm:grid-cols-3">
+            <div className="bg-lagoon-900 py-3 sm:pr-4"><dt className="text-xs uppercase tracking-wider text-ivory-300">Status</dt><dd className="mt-1 font-display text-lg" data-testid="text-confirm-status">{test ? 'Test · confirmed' : 'Confirmed'}</dd></div>
+            <div className="bg-lagoon-900 py-3 sm:px-4"><dt className="text-xs uppercase tracking-wider text-ivory-300">Amount</dt><dd className="mt-1 font-display text-lg" data-testid="text-confirm-amount">{amount ?? 'Shown on your Stripe receipt'}</dd></div>
+            <div className="bg-lagoon-900 py-3 sm:pl-4"><dt className="text-xs uppercase tracking-wider text-ivory-300">Reference</dt><dd className="mt-1 break-all font-mono text-sm" data-testid="text-confirm-reference">{ref ?? '—'}</dd></div>
+          </dl>
+          <p className="mt-6 max-w-2xl text-sm leading-relaxed text-ivory-300">TOMI allocates the fund according to need; this gift is not earmarked to a specific project. No tax-deduction receipt is claimed. Each donation is separate — nothing recurs.</p>
+          <a href="#top" className="mt-6 inline-flex min-h-11 items-center gap-2 border border-gold-500 px-5 text-xs font-semibold uppercase tracking-[0.16em] text-gold-400 hover:bg-gold-500 hover:text-ink-900" data-testid="link-confirm-return">Return to the page <ArrowRight className="h-3.5 w-3.5" /></a>
+        </div>
+      </div>
+    );
+  }
+  if (status === 'refunded') return (
+    <Notice icon={<RotateCw className="h-5 w-5 text-lagoon-700" />} title="Payment refunded" testId="status-payment-refunded">
+      {x.testMode === true ? 'This test payment was refunded. ' : 'This donation was refunded to the original payment method. '}{safeAmount(x) && <>Amount: {safeAmount(x)}. </>}Refund timing depends on your card issuer.
+    </Notice>
+  );
+  if (status === 'failed') return (
+    <Notice icon={<XCircle className="h-5 w-5 text-crimson-700" />} title="Payment failed" testId="status-payment-failed">
+      Stripe reported that this payment did not succeed, so no donation was received. If your bank shows a pending hold, it is normally released by the issuer. <a href="#give" className="font-semibold underline underline-offset-4" data-testid="link-retry-donation">Start a new donation</a>
     </Notice>
   );
   return (
-    <Notice icon={<XCircle className="h-5 w-5 text-gold-700" />} title={status === 'refunded' ? 'Payment refunded' : 'Checkout expired'} testId={`status-payment-${status}`}>
-      {status === 'refunded' ? 'This contribution was refunded.' : 'The session expired before payment. Nothing was charged.'}
+    <Notice icon={<XCircle className="h-5 w-5 text-gold-700" />} title="Checkout expired" testId="status-payment-expired">
+      Stripe reports this checkout session expired before payment was completed; no donation was received. <a href="#give" className="font-semibold underline underline-offset-4" data-testid="link-retry-donation">Start a new donation</a>
     </Notice>
   );
 }

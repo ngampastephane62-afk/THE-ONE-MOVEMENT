@@ -6,7 +6,6 @@ import { AMBASSADOR_NOMINEES, getAmbassadorBySlug } from '@workspace/shared';
 import GoldThread from '@/components/GoldThread';
 import CollaborationRequest from '@/components/editorial/CollaborationRequest';
 import { posterFor } from '@/components/editorial/posters';
-import WealthLabel from '@/components/editorial/WealthLabel';
 import NomineeFilm from '@/components/editorial/NomineeFilm';
 import PhotoActions from '@/components/editorial/PhotoActions';
 
@@ -55,7 +54,6 @@ export default function AmbassadorDetail() {
             <div>
               <p className="text-eyebrow text-gold-600">PROFILE</p>
               <p className="mt-4 font-display text-2xl leading-snug text-ink-900">{person.bio}</p>
-              <WealthLabel slug={person.slug} />
             </div>
             <div>
               <h2 className="mb-5 font-display text-2xl text-ink-900">Announcement film</h2>

@@ -3,6 +3,7 @@ import type { ProgrammeServiceOffer } from '@workspace/shared';
 import { CONSENT_TEXT, ORG_TYPE_OPTIONS } from './join-data';
 import { GALA_PARTICIPATION_CATEGORIES, getGalaCategory, getGalaInquiryContext, getInquiryDefinition, type InquiryIntent } from './inquiry-intents';
 import { FASHION_CATEGORIES, getFashionCategory, getFashionInquiryContext } from '@/lib/fashion-participation';
+import { getProgramBySlug } from '@/lib/programs-data';
 export type { InquiryIntent } from './inquiry-intents';
 
 /* ── Types ────────────────────────────────────────────────────────────────── */
@@ -130,13 +131,20 @@ function Field({
 
 /* ── Component ────────────────────────────────────────────────────────────── */
 
-export default function InquiryForm({ privacyRequest = false, intent, serviceOffer, existingSponsor = false, participationCategory, onParticipationCategoryChange }: {
+export default function InquiryForm({ privacyRequest = false, intent, serviceOffer, existingSponsor = false, participationCategory, onParticipationCategoryChange, programmeSlug, programmeInterest }: {
   privacyRequest?: boolean; intent?: InquiryIntent; serviceOffer?: ProgrammeServiceOffer; existingSponsor?: boolean;
   participationCategory?: string;
   onParticipationCategoryChange?: (value: string) => void;
+  programmeSlug?: string;
+  programmeInterest?: string;
 }) {
   const inquiryDefinition = privacyRequest ? undefined : getInquiryDefinition(intent);
-  const isProfessional = Boolean(serviceOffer || inquiryDefinition?.professional);
+  const programme = !privacyRequest ? getProgramBySlug(serviceOffer?.programme ?? programmeSlug ?? (intent === 'diplomatic-gala' || intent === 'fashion-week' ? intent : '')) : undefined;
+  const isSpeaker = serviceOffer?.role === 'speaker';
+  const interest = ['partner', 'sponsor', 'media', 'collaborator'].includes(programmeInterest ?? '') ? programmeInterest : 'partner';
+  const isProfessional = Boolean(serviceOffer || programme || inquiryDefinition?.professional);
+  const [expertise, setExpertise] = useState('');
+  const [topic, setTopic] = useState('');
   const isGala = !privacyRequest && intent === 'diplomatic-gala';
   const isFashion = !privacyRequest && intent === 'fashion-week';
   const participationCategories = isFashion ? FASHION_CATEGORIES : GALA_PARTICIPATION_CATEGORIES;
@@ -147,17 +155,18 @@ export default function InquiryForm({ privacyRequest = false, intent, serviceOff
   }, [participationCategory, categoryOf]);
   const [fields, setFields] = useState<InquiryState>(() => ({
     ...INITIAL,
-    message: serviceOffer
+    message: isSpeaker ? '' : serviceOffer
       ? 'My professional background, objectives and preferred participation:\n'
       : inquiryDefinition?.message ?? '',
     organizationType: isProfessional || (!privacyRequest && intent === 'partnership') ? 'partner' : '',
-    contactRole: serviceOffer?.name ?? (isGala ? 'Gala participation contact' : isFashion ? 'Fashion Week participation contact' : ''),
+    contactRole: isGala ? 'Gala participation contact' : isFashion ? 'Fashion Week participation contact' : '',
   }));
   const [sponsorReview, setSponsorReview] = useState(existingSponsor);
   const serviceContext = serviceOffer
-    ? `Professional service enquiry\nProgramme: ${serviceOffer.programmeName}\nRole: ${serviceOffer.name}\nNon-sponsor fee: ${serviceOffer.priceUsd === null ? 'Tailored quote' : `USD ${serviceOffer.priceUsd.toLocaleString('en-US')}`}; subject to agreed scope.\nExisting sponsor inclusion review: ${sponsorReview ? 'Requested — check agreed benefits before any extra charge' : 'Not requested'}\n\n`
-    : isGala ? getGalaInquiryContext(category)
-    : isFashion ? getFashionInquiryContext(category)
+    ? `Programme participation inquiry\nProgramme: ${serviceOffer.programmeName.toUpperCase()}\nInterest: ${serviceOffer.role.toUpperCase()}\nExisting sponsor inclusion review: ${sponsorReview ? 'Requested' : 'Not requested'}\n${isSpeaker ? `Area of expertise: ${expertise.trim()}\nProposed speaking topic: ${topic.trim()}\nShort professional biography:\n` : 'Scope and any fees discussed privately after review.\n'}\n`
+    : isGala ? `Programme: ${programme?.name}\n${getGalaInquiryContext(category)}`
+    : isFashion ? `Programme: ${programme?.name}\n${getFashionInquiryContext(category)}`
+    : programme ? `Programme inquiry\nProgramme: ${programme.name}\nInterest: ${interest?.toUpperCase()}\n\n`
     : '';
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -173,6 +182,8 @@ export default function InquiryForm({ privacyRequest = false, intent, serviceOff
     setApiMessage('');
 
     const newErrors = validate(fields);
+    if (isSpeaker && !expertise.trim()) newErrors.expertise = 'Enter your area of expertise.';
+    if (isSpeaker && !topic.trim()) newErrors.topic = 'Enter a proposed speaking topic.';
     if ((isGala || isFashion) && !categoryOf(category)) {
       newErrors.participationCategory = 'Please select a proposed participation category.';
     }
@@ -279,15 +290,17 @@ export default function InquiryForm({ privacyRequest = false, intent, serviceOff
         <div className="mb-8 border-s-2 border-gold-500 bg-lagoon-800/50 px-4 py-4" role="note">
           <p className="text-eyebrow text-gold-400">{serviceOffer.programmeName} · {serviceOffer.name}</p>
           <p className="mt-3 text-sm text-ivory-200">
-            {serviceOffer.priceUsd === null ? 'A tailored fee will be proposed for your agreed scope.' : `Non-sponsor service fee: USD ${serviceOffer.priceUsd.toLocaleString('en-US')}. This is not a sponsorship purchase.`}
+            Tailored opportunities. Available on inquiry. Any scope and commercial terms are discussed privately.
           </p>
           <label className="mt-5 flex items-start gap-3 text-sm leading-relaxed text-ivory-200">
             <input type="checkbox" className="mt-1 h-4 w-4 shrink-0 accent-gold-500" checked={sponsorReview} onChange={(e) => setSponsorReview(e.target.checked)} />
             <span>I am already a sponsor. Please check the benefits in my agreement before quoting an additional service fee.</span>
           </label>
           <p className="mt-3 text-xs leading-relaxed text-ivory-300">No payment is taken here. Programme selection, deliverables and any fee are confirmed in writing after review.</p>
+          {serviceOffer.programme === 'awards' && <p className="mt-3 text-sm text-gold-400">Recognition is not for sale. This inquiry does not guarantee nomination, selection, recognition or speaking acceptance.</p>}
         </div>
       )}
+      {!serviceOffer && programme && <div className="mb-8 border-s-2 border-gold-500 px-4 py-4" role="note"><p className="text-eyebrow text-gold-400">{programme.name} · {interest?.toUpperCase()} INQUIRY</p><p className="mt-3 text-sm text-ivory-200">Your inquiry will be sent to TOMI for this programme. No participation, coverage or recognition is guaranteed.</p></div>}
       {privacyRequest && (
         <div
           className="mb-8 border-s-2 border-gold-500 bg-lagoon-800/50 px-4 py-4"
@@ -491,10 +504,18 @@ export default function InquiryForm({ privacyRequest = false, intent, serviceOff
           </Field>
         )}
 
+        {isSpeaker && <>
+          <Field id="inq-expertise" label="Area of expertise" error={errors.expertise} required>
+            <input id="inq-expertise" maxLength={90} value={expertise} onChange={e => { setExpertise(e.target.value); setErrors(p => ({ ...p, expertise: '' })); }} className="w-full rounded-sharp border border-lagoon-600 bg-lagoon-900 p-3 text-ivory-100" />
+          </Field>
+          <Field id="inq-topic" label="Proposed speaking topic" error={errors.topic} required>
+            <input id="inq-topic" maxLength={120} value={topic} onChange={e => { setTopic(e.target.value); setErrors(p => ({ ...p, topic: '' })); }} className="w-full rounded-sharp border border-lagoon-600 bg-lagoon-900 p-3 text-ivory-100" />
+          </Field>
+        </>}
         {/* Message */}
         <Field
           id="inq-message"
-          label={`${privacyRequest ? 'Privacy / data-rights request details' : isGala || isFashion ? 'Proposed contribution' : 'Message'} (${fields.message.length} / ${MAX_LEN.message - serviceContext.length})`}
+          label={`${privacyRequest ? 'Privacy / data-rights request details' : isSpeaker ? 'Short professional biography' : isGala || isFashion ? 'Proposed contribution' : 'Message'} (${fields.message.length} / ${MAX_LEN.message - serviceContext.length})`}
           error={errors.message}
           required
         >

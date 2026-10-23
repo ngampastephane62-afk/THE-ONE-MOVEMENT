@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
+import { BespokeLead, BespokeTail } from '@/components/programs/editorial/BespokeFrame';
 import { Helmet } from 'react-helmet-async';
 import GalaHero from './Hero';
 import GalaVision from './Vision';
@@ -36,6 +37,7 @@ export default function DiplomaticGalaPage() {
         <link rel="canonical" href="/programs/diplomatic-gala" />
       </Helmet>
       <GalaHero onRepresent={() => goToForm()} />
+      <BespokeLead slug="diplomatic-gala" />
       <GalaVision />
       <EverydayEcosystem programmeSlug="diplomatic-gala" />
       <GalaPavilions onPropose={goToForm} />
@@ -44,6 +46,7 @@ export default function DiplomaticGalaPage() {
       <GalaRepresent ref={headingRef} category={category} onCategoryChange={setCategory} />
       <GalaCulture />
       <GalaPartnerships onSelect={goToForm} />
+      <BespokeTail slug="diplomatic-gala" name="THE ONE DIPLOMATIC GALA" mediaEyebrow="OFFICIAL VIDEOS AND MEDIA" />
       <GalaClosing />
     </div>
   );

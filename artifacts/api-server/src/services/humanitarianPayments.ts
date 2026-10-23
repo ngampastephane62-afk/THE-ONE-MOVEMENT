@@ -1,26 +1,38 @@
 import { db, humanitarianPayments as payments } from "@workspace/db";
-import { and, eq } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 import type Stripe from "stripe";
 import { getUncachableStripeClient } from "../stripeClient";
 import { stripeReady } from "./networkPayments";
 import { NetworkError } from "./networkAuth";
+import { humanitarianTestAuthorized } from "../lib/humanitarianTestMode";
 
 export const COLLECTION_CONSENT = "tomi-discretionary-humanitarian-one-time-v1";
 let availability: { expires: number; available: boolean; testMode: boolean; reason: string } | undefined;
 export async function humanitarianConfiguration() {
   if (!availability || availability.expires < Date.now()) {
-    let available = false, testMode = false, reason = "The payment service is not ready. No money has been collected.";
-    if (stripeReady) {
-      try {
-        const stripe = await getUncachableStripeClient();
-        const balance = await stripe.balance.retrieve();
-        testMode = !balance.livemode;
-        available = !testMode && process.env.TOMI_HUMANITARIAN_LIVE_AUTHORIZED === "true";
-        reason = testMode ? "Real contributions are not enabled yet. Test checkout is closed. No money has been collected."
-          : available ? "One-time contributions are received by The One Movement International, which allocates funds according to humanitarian urgency."
-          : "Real collection awaits confirmation of fundraising authorization and payment-provider eligibility. No live payments are enabled.";
-      } catch { reason = "Payment-provider availability could not be checked. Please retry later."; }
-    }
+    let available = false, testMode = false, reason = "Online contributions are not open yet. No payment will be taken here.";
+    try {
+      // Read-only capability check. This does not run StripeSync migrations,
+      // create webhooks, seed products or change the connected account.
+      const stripe = await getUncachableStripeClient();
+      const balance = await stripe.balance.retrieve();
+      testMode = !balance.livemode;
+      if (testMode) {
+        available = humanitarianTestAuthorized(process.env);
+        reason = available ? "Test payments only. No real funds are collected and a test payment is not a donation."
+          : "Real contributions are not enabled. Test checkout is closed outside the authorized development preview.";
+      } else if (humanitarianTestAuthorized(process.env)) {
+        // A preview identity can resolve the live connector. Never substitute a
+        // real collection for the test environment the Founder authorized.
+        reason = "The test payment environment could not be confirmed. Online payment remains unavailable; no checkout has been opened.";
+      } else {
+        const account = await stripe.accounts.retrieve(null);
+        available = stripeReady && process.env.TOMI_HUMANITARIAN_LIVE_AUTHORIZED === "true"
+          && account.charges_enabled === true && account.capabilities?.card_payments === "active";
+        reason = available ? "Contributions are received by The One Movement International and allocated according to humanitarian urgency."
+          : "Online contributions are not open yet. Payment activation and fundraising authorization must be confirmed before collection.";
+      }
+    } catch { reason = "Online payment availability could not be confirmed. Please retry later; no payment was started."; }
     availability = { expires: Date.now() + 15_000, available, testMode, reason };
   }
   const { expires: _, ...config } = availability;
@@ -54,11 +66,13 @@ export async function confirmHumanitarianSession(session: Stripe.Checkout.Sessio
   if (!intentId) return;
   const stripe = await getUncachableStripeClient();
   const intent = await stripe.paymentIntents.retrieve(intentId, { expand: ["latest_charge"] });
-  if (intent.status !== "succeeded" || intent.amount_received < row.amount || intent.currency !== row.currency) return;
+  if (intent.id !== intentId || intent.status !== "succeeded" || intent.amount !== row.amount ||
+    intent.amount_received !== row.amount || intent.currency !== row.currency || intent.livemode !== row.liveMode) return;
   const charge = typeof intent.latest_charge === "object" ? intent.latest_charge : null;
   const refundedAmount = Math.max(row.refundedAmount, charge?.amount_refunded ?? 0);
   await db.update(payments).set({
-    status: refundedAmount > 0 ? "refunded" : "paid", refundedAmount,
+    status: sql`case when greatest(${payments.refundedAmount}, ${refundedAmount}) > 0 then 'refunded' else 'paid' end`,
+    refundedAmount: sql`greatest(${payments.refundedAmount}, ${refundedAmount})`,
     paymentIntentId: intentId, updatedAt: new Date(),
   }).where(eq(payments.id, id));
 }
@@ -66,11 +80,20 @@ export async function processHumanitarianEvent(event: Stripe.Event) {
   if (event.type === "checkout.session.completed" || event.type === "checkout.session.async_payment_succeeded") {
     await confirmHumanitarianSession(event.data.object as Stripe.Checkout.Session);
   }
+  if (event.type === "checkout.session.async_payment_failed") {
+    const session = event.data.object as Stripe.Checkout.Session;
+    const id = Number(session.metadata?.tomi_humanitarian);
+    if (Number.isSafeInteger(id) && id > 0) {
+      await db.update(payments).set({ status: "failed", updatedAt: new Date() })
+        .where(and(eq(payments.id, id), eq(payments.stripeSessionId, session.id),
+          eq(payments.liveMode, session.livemode), eq(payments.status, "pending")));
+    }
+  }
   if (event.type === "charge.refunded") {
     const charge = event.data.object as Stripe.Charge;
     const intent = typeof charge.payment_intent === "string" ? charge.payment_intent : charge.payment_intent?.id;
     if (intent && charge.amount_refunded > 0) {
-      await db.update(payments).set({ status: "refunded", refundedAmount: charge.amount_refunded, updatedAt: new Date() })
+      await db.update(payments).set({ status: "refunded", refundedAmount: sql`greatest(${payments.refundedAmount}, ${charge.amount_refunded})`, updatedAt: new Date() })
         .where(eq(payments.paymentIntentId, intent));
     }
   }

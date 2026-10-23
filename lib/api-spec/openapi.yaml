@@ -11,6 +11,144 @@ tags:
   - name: health
     description: Health operations
 paths:
+  /program-editorial/{slug}:
+    get:
+      operationId: getProgramEditorial
+      tags: [ProgramEditorial]
+      parameters:
+        - { name: slug, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: Published programme editorial content only.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ProgramEditorial' }
+  /founder/program-editorial/{slug}:
+    get:
+      operationId: getFounderProgramEditorial
+      tags: [ProgramEditorial]
+      parameters:
+        - { name: slug, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: Founder draft and revision.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ProgramEditorial' }
+    put:
+      operationId: saveProgramEditorial
+      tags: [ProgramEditorial]
+      parameters:
+        - { name: slug, in: path, required: true, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ProgramEditorialSave' }
+      responses:
+        '200':
+          description: Saved draft or explicitly published changes.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ProgramEditorial' }
+  /founder/program-editorial/{slug}/inquiries:
+    get:
+      operationId: getProgramInquiries
+      tags: [ProgramEditorial]
+      parameters:
+        - { name: slug, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: Programme-specific inquiries, newest first, maximum 100.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/ProgramInquiry' }
+  /partner-directory:
+    get:
+      operationId: getPartnerDirectory
+      tags: [PartnerDirectory]
+      responses:
+        '200':
+          description: Approved public organizations and page copy.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PartnerDirectoryResponse' }
+  /founder/partner-directory:
+    get:
+      operationId: getAdminPartnerDirectory
+      tags: [PartnerDirectory]
+      responses:
+        '200':
+          description: Founder organization records including review drafts.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PartnerDirectoryResponse' }
+    post:
+      operationId: createPartnerOrganization
+      tags: [PartnerDirectory]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/PartnerOrganizationSave' }
+      responses:
+        '201':
+          description: Organization saved.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PartnerOrganization' }
+  /founder/partner-directory/content:
+    put:
+      operationId: updatePartnerPageContent
+      tags: [PartnerDirectory]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/PartnerPageContentSave' }
+      responses:
+        '200':
+          description: Partner page copy saved.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PartnerPageContent' }
+  /founder/partner-directory/{id}:
+    parameters:
+      - { name: id, in: path, required: true, schema: { type: string, maxLength: 100 } }
+    put:
+      operationId: updatePartnerOrganization
+      tags: [PartnerDirectory]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/PartnerOrganizationSave' }
+      responses:
+        '200':
+          description: Organization saved; stale edits return 409.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PartnerOrganization' }
+    delete:
+      operationId: deletePartnerOrganization
+      tags: [PartnerDirectory]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/PartnerOrganizationDelete' }
+      responses:
+        '204': { description: Entry removed from display; records and files retained. }
+  /partner-directory/{id}/logo:
+    get:
+      operationId: getPartnerOrganizationLogo
+      tags: [PartnerDirectory]
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string, maxLength: 100 } }
+      responses:
+        '200': { description: Publication-scoped organization image. }
   /media-center:
     get:
       operationId: getMediaPublications
@@ -776,8 +914,12 @@ paths:
                 type: object
                 required: [status, archiveAccess]
                 properties:
-                  status: {type: string, enum: [pending, paid, refunded, expired]}
+                  status: {type: string, enum: [pending, paid, refunded, expired, failed]}
                   archiveAccess: {type: boolean}
+                  amount: {type: integer, description: Amount in minor units recorded for this verified session}
+                  currency: {type: string, enum: [usd, aed]}
+                  reference: {type: string, description: Non-sensitive TOMI payment reference}
+                  testMode: {type: boolean}
         "404": {description: Payment not found}
   /humanitarian/offers:
     post:
@@ -1222,12 +1364,175 @@ paths:
                 $ref: "#/components/schemas/DetailedHealthStatus"
 components:
   schemas:
+    ProgramVideo:
+      type: object
+      required: [id, title, description, credit, uploadId, assetKey, url, published, rightsConfirmed, order]
+      properties:
+        id: { type: string, minLength: 1, maxLength: 100 }
+        title: { type: string, minLength: 1, maxLength: 200 }
+        description: { type: string, maxLength: 2000 }
+        credit: { type: string, maxLength: 300 }
+        uploadId: { type: [string, 'null'] }
+        assetKey: { type: [string, 'null'] }
+        url: { type: [string, 'null'] }
+        published: { type: boolean }
+        rightsConfirmed: { type: boolean }
+        order: { type: integer, minimum: 0, maximum: 10000 }
+    ProgramPerson:
+      type: object
+      required: [id, name, designation, biography, kind, confirmed, published, portraitKey, portraitUploadId, portraitUrl, profileUrl, order, videos]
+      properties:
+        id: { type: string, minLength: 1, maxLength: 100 }
+        name: { type: string, minLength: 1, maxLength: 150 }
+        designation: { type: string, maxLength: 200 }
+        biography: { type: string, maxLength: 3000 }
+        kind: { type: string, enum: [nominee, speaker, participant] }
+        confirmed: { type: boolean }
+        published: { type: boolean }
+        portraitKey: { type: [string, 'null'] }
+        portraitUploadId: { type: [string, 'null'] }
+        portraitUrl: { type: [string, 'null'] }
+        profileUrl: { type: [string, 'null'], maxLength: 500 }
+        order: { type: integer, minimum: 0, maximum: 10000 }
+        videos:
+          type: array
+          maxItems: 20
+          items: { $ref: '#/components/schemas/ProgramVideo' }
+    ProgramEditorial:
+      type: object
+      required: [slug, updatedAt, status, introduction, description, purpose, criteria, heroVideoUploadId, heroImageUploadId, heroVideoUrl, heroImageUrl, eventDate, venue, eventDetailsConfirmed, announcement, participationRoles, people, media]
+      properties:
+        slug: { type: string }
+        updatedAt: { type: [string, 'null'] }
+        status: { type: string, enum: [draft, published] }
+        introduction: { type: string, maxLength: 2000 }
+        description: { type: string, maxLength: 4000 }
+        purpose: { type: string, maxLength: 3000 }
+        criteria: { type: string, maxLength: 6000 }
+        heroVideoUploadId: { type: [string, 'null'] }
+        heroImageUploadId: { type: [string, 'null'] }
+        heroVideoUrl: { type: [string, 'null'] }
+        heroImageUrl: { type: [string, 'null'] }
+        eventDate: { type: [string, 'null'], maxLength: 100 }
+        venue: { type: string, maxLength: 300 }
+        eventDetailsConfirmed: { type: boolean }
+        announcement: { type: string, maxLength: 3000 }
+        participationRoles:
+          type: array
+          maxItems: 12
+          items: { type: string, enum: [speaker, exhibitor, media, partner, sponsor, collaborator] }
+        people:
+          type: array
+          maxItems: 100
+          items: { $ref: '#/components/schemas/ProgramPerson' }
+        media:
+          type: array
+          maxItems: 50
+          items: { $ref: '#/components/schemas/ProgramVideo' }
+    ProgramEditorialSave:
+      type: object
+      required: [expectedUpdatedAt, content]
+      properties:
+        expectedUpdatedAt: { type: [string, 'null'] }
+        content: { $ref: '#/components/schemas/ProgramEditorial' }
+    ProgramInquiry:
+      type: object
+      required: [id, organization, name, title, email, country, message, status, createdAt]
+      properties:
+        id: { type: integer }
+        organization: { type: string }
+        name: { type: string }
+        title: { type: string }
+        email: { type: string }
+        country: { type: string }
+        message: { type: string }
+        status: { type: string }
+        createdAt: { type: string }
     MediaPublicationDelete:
       type: object
       additionalProperties: false
       required: [expectedUpdatedAt]
       properties:
         expectedUpdatedAt: { type: string, minLength: 1, maxLength: 40 }
+    PartnerDirectoryCategory:
+      type: string
+      enum: [institutions, corporate-brands, culture-creativity, media-press]
+    PartnerRelationship:
+      type: string
+      enum: [historical-collaboration, media-relationship, event-collaborator, current-partner, institutional-reference]
+    PartnerOrganizationFields:
+      type: object
+      required: [name, category, relationship, description, website, logoUploadId, legacyLogoId, status, relationshipVerified, rightsConfirmed, priority]
+      properties:
+        name: { type: string, minLength: 2, maxLength: 200 }
+        category: { $ref: '#/components/schemas/PartnerDirectoryCategory' }
+        relationship: { $ref: '#/components/schemas/PartnerRelationship' }
+        description: { type: string, maxLength: 2000 }
+        website: { type: string, maxLength: 2000 }
+        logoUploadId: { type: string, nullable: true, maxLength: 100 }
+        legacyLogoId: { type: integer, nullable: true, minimum: 1 }
+        status: { type: string, enum: [draft, published, archived] }
+        relationshipVerified: { type: boolean }
+        rightsConfirmed: { type: boolean }
+        priority: { type: integer, minimum: 0, maximum: 100000 }
+    PartnerOrganizationSave:
+      allOf:
+        - { $ref: '#/components/schemas/PartnerOrganizationFields' }
+        - type: object
+          required: [expectedUpdatedAt]
+          properties:
+            expectedUpdatedAt: { type: string, nullable: true, maxLength: 40 }
+    PartnerOrganizationDelete:
+      type: object
+      required: [expectedUpdatedAt]
+      properties:
+        expectedUpdatedAt: { type: string, minLength: 1, maxLength: 40 }
+    PartnerOrganization:
+      allOf:
+        - { $ref: '#/components/schemas/PartnerOrganizationFields' }
+        - type: object
+          required: [id, logoUrl, updatedAt]
+          properties:
+            id: { type: string }
+            logoUrl: { type: string, nullable: true }
+            updatedAt: { type: string }
+    PartnerPageText:
+      type: object
+      required: [heroTitle, heroLineOne, heroLineTwo, heroDescription, directoryTitle, directoryDescription, collaborationTitle, collaborationSubtitle, partnershipButton, conversationButton, displayNote]
+      properties:
+        heroTitle: { type: string, minLength: 2, maxLength: 160 }
+        heroLineOne: { type: string, minLength: 2, maxLength: 160 }
+        heroLineTwo: { type: string, minLength: 2, maxLength: 160 }
+        heroDescription: { type: string, minLength: 2, maxLength: 1500 }
+        directoryTitle: { type: string, minLength: 2, maxLength: 160 }
+        directoryDescription: { type: string, minLength: 2, maxLength: 1500 }
+        collaborationTitle: { type: string, minLength: 2, maxLength: 160 }
+        collaborationSubtitle: { type: string, minLength: 2, maxLength: 160 }
+        partnershipButton: { type: string, minLength: 2, maxLength: 160 }
+        conversationButton: { type: string, minLength: 2, maxLength: 160 }
+        displayNote: { type: string, minLength: 2, maxLength: 1500 }
+    PartnerPageContent:
+      allOf:
+        - { $ref: '#/components/schemas/PartnerPageText' }
+        - type: object
+          required: [updatedAt]
+          properties:
+            updatedAt: { type: string }
+    PartnerPageContentSave:
+      allOf:
+        - { $ref: '#/components/schemas/PartnerPageText' }
+        - type: object
+          required: [expectedUpdatedAt]
+          properties:
+            expectedUpdatedAt: { type: string, minLength: 1, maxLength: 40 }
+    PartnerDirectoryResponse:
+      type: object
+      required: [items, content]
+      properties:
+        items:
+          type: array
+          items: { $ref: '#/components/schemas/PartnerOrganization' }
+        content: { $ref: '#/components/schemas/PartnerPageContent' }
     MediaPublicationCategory:
       type: string
       enum: [international-press, television, magazine, newspaper, interview, press-release, official-announcement, media-partnership]

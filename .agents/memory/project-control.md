@@ -3,6 +3,12 @@ name: Project control and Tropik licensing
 description: Approval boundaries for development, financial accounts, and legal ownership of TOMI.
 ---
 
+Le Founder doit avoir « la possibilité de modifier tous les textes, images, etc. sur le site » sans modifier le code.
+
+**Why:** The Founder repeated this requirement when authorizing partner management.
+
+**How to apply:** Build real editorial controls with durable storage in the authorized module rather than leaving its content code-only. Keep broader site-wide editing as an explicit product requirement; do not claim a single module provides whole-site coverage or silently extend a scoped backend authorization.
+
 The project stakeholder requires sole control and validation of work, including Stripe and other accounts associated with The One Movement.
 
 **Why:** The stakeholder explicitly conditioned continued development on retaining control without affecting another developer's account.

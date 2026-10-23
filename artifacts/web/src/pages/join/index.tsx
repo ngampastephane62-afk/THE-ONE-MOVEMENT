@@ -498,8 +498,9 @@ export default function JoinTheMovement() {
                 }}
               >
                 <InquiryForm
-                  key={privacyRequest ? 'privacy' : serviceOffer ? `${serviceOffer.programme}-${serviceOffer.role}-${search.get('coverage') ?? ''}` : inquiryIntent ?? 'institutional'}
+                  key={privacyRequest ? 'privacy' : serviceOffer ? `${serviceOffer.programme}-${serviceOffer.role}-${search.get('coverage') ?? ''}` : `${inquiryIntent ?? 'institutional'}-${search.get('program') ?? ''}-${search.get('interest') ?? ''}`}
                   privacyRequest={privacyRequest} intent={inquiryIntent} serviceOffer={serviceOffer}
+                  programmeSlug={search.get('program') ?? undefined} programmeInterest={search.get('interest') ?? undefined}
                   existingSponsor={search.get('coverage') === 'existing-sponsor'}
                   participationCategory={search.get('category') ?? undefined}
                 />

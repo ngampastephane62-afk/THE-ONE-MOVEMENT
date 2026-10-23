@@ -59,6 +59,7 @@ function fixture({ founder = true, search = '', loading = false, error = false }
     '@/components/partners/PartnerIntroductionsAdmin': 'intros',
     '@/components/news/NewsArchiveAdmin': 'news',
     '@/components/humanitarian/OffersAdmin': 'offers',
+    '@/components/gratitude/FounderGratitudeAdmin': 'gratitude',
   };
   function load(file, extraMocks = {}) {
     if (cache.has(file)) return cache.get(file);
@@ -115,11 +116,11 @@ test('workspace rejects an ordinary member before rendering administrative links
   assert.doesNotMatch(html, /Press archive|Founder Workspace|DO_NOT_DISPLAY/);
 });
 
-test('overview contains nine real sections and seven existing tools without fabricated production data', () => {
+test('overview contains nine real sections and current existing tools without fabricated production data', () => {
   const f = fixture(), html = f.render();
   const { FOUNDER_SECTIONS: sections, FOUNDER_TOOLS: tools } = f.load('components/founder/founder-workspace-config.ts');
   assert.equal(sections.length, 9);
-  assert.equal(Object.keys(tools).length, 7);
+  assert.equal(Object.keys(tools).length, 10);
   for (const s of sections) assert.ok(f.events.has(`nav-founder-${s.id}`), s.id);
   for (const tool of Object.values(tools)) assert.equal(f.events.get(`link-founder-tool-${tool.id}`).href, tool.href);
   assert.match(html, /&lt;Founder &amp; TOMI&gt;/);
@@ -195,7 +196,8 @@ test('member gate, Founder-only navigation and inherited loading/error branches 
   assert.match(src, /profileQ\.isLoading \|\| stateQ\.isLoading/);
   assert.match(src, /if \(stateQ\.isError\)/);
   assert.match(src, /stateQ\.refetch\(\)/);
-  assert.match(src, /<Show when="signed-out"><Redirect to="\/sign-in"/);
+  assert.match(src, /<Show when="signed-out"><Redirect to=/);
+  assert.match(src, /gratitudeIntent/);
   assert.match(fixture({ loading: true }).renderAdmin(), /Loading existing administration/);
   assert.match(fixture({ error: true }).renderAdmin(), /Existing admin error/);
 });

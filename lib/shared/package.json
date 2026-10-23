@@ -5,6 +5,7 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./taxonomy": "./src/taxonomy.ts"
+    "./taxonomy": "./src/taxonomy.ts",
+    "./partner-directory": "./src/partner-directory.ts"
   }
 }

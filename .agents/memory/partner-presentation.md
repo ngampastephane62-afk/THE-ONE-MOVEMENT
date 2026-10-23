@@ -3,6 +3,12 @@ name: Partner presentation hierarchy
 description: Owner-required priority, historical trust, banking and media audience distinctions.
 ---
 
+Use individual organization logos with permanently visible names and verified relationship labels, never old composite logo banners. Remove the generic Banking identity, not Rawbank. A logo on a reference sheet is identification evidence only, not approval of a current partnership.
+
+**Why:** The Founder consolidated these corrections and explicitly required confirmation before publishing uncertain institutional, broadcaster or brand relationships.
+
+**How to apply:** Keep uncertain organizations and missing-quality logos in private review drafts until the Founder confirms identity, relationship and display rights. Preserve original assets and historical records; do not invent endorsements or publish unclear cropped logos.
+
 Lead the Partners page with major institutional, governmental and diplomatic relationships, then banking/private companies, then international brands. Broadcasters, press and other media come last, followed by their audience statistics.
 
 **Why:** The owner explicitly rejected the media-first logo inventory. A prospective partner must see the Movement’s established institutional and commercial relationships before media coverage to understand its history and trustworthiness.

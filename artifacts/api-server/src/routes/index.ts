@@ -16,7 +16,9 @@ import magazineRouter from "./magazine";
 import publicInvestmentRouter from "./publicInvestment";
 import newsPublishingRouter from "./newsPublishing";
 import mediaCenterRouter from "./mediaCenter";
+import partnerDirectoryRouter from "./partnerDirectory";
 import gratitudeRouter from "./gratitude";
+import programEditorialRouter from "./programEditorial";
 
 const router: IRouter = Router();
 
@@ -37,6 +39,8 @@ router.use(magazineRouter);
 router.use(publicInvestmentRouter);
 router.use(newsPublishingRouter);
 router.use(mediaCenterRouter);
+router.use(partnerDirectoryRouter);
 router.use(gratitudeRouter);
+router.use(programEditorialRouter);
 
 export default router;

@@ -5,12 +5,326 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+export interface ProgramVideo {
+  /**
+     * @minLength 1
+     * @maxLength 100
+     */
+  id: string;
+  /**
+     * @minLength 1
+     * @maxLength 200
+     */
+  title: string;
+  /** @maxLength 2000 */
+  description: string;
+  /** @maxLength 300 */
+  credit: string;
+  /** @nullable */
+  uploadId: string | null;
+  /** @nullable */
+  assetKey: string | null;
+  /** @nullable */
+  url: string | null;
+  published: boolean;
+  rightsConfirmed: boolean;
+  /**
+     * @minimum 0
+     * @maximum 10000
+     */
+  order: number;
+}
+
+export type ProgramPersonKind = typeof ProgramPersonKind[keyof typeof ProgramPersonKind];
+
+
+export const ProgramPersonKind = {
+  nominee: 'nominee',
+  speaker: 'speaker',
+  participant: 'participant',
+} as const;
+
+export interface ProgramPerson {
+  /**
+     * @minLength 1
+     * @maxLength 100
+     */
+  id: string;
+  /**
+     * @minLength 1
+     * @maxLength 150
+     */
+  name: string;
+  /** @maxLength 200 */
+  designation: string;
+  /** @maxLength 3000 */
+  biography: string;
+  kind: ProgramPersonKind;
+  confirmed: boolean;
+  published: boolean;
+  /** @nullable */
+  portraitKey: string | null;
+  /** @nullable */
+  portraitUploadId: string | null;
+  /** @nullable */
+  portraitUrl: string | null;
+  /**
+     * @maxLength 500
+     * @nullable
+     */
+  profileUrl: string | null;
+  /**
+     * @minimum 0
+     * @maximum 10000
+     */
+  order: number;
+  /** @maxItems 20 */
+  videos: ProgramVideo[];
+}
+
+export type ProgramEditorialStatus = typeof ProgramEditorialStatus[keyof typeof ProgramEditorialStatus];
+
+
+export const ProgramEditorialStatus = {
+  draft: 'draft',
+  published: 'published',
+} as const;
+
+export type ProgramEditorialParticipationRolesItem = typeof ProgramEditorialParticipationRolesItem[keyof typeof ProgramEditorialParticipationRolesItem];
+
+
+export const ProgramEditorialParticipationRolesItem = {
+  speaker: 'speaker',
+  exhibitor: 'exhibitor',
+  media: 'media',
+  partner: 'partner',
+  sponsor: 'sponsor',
+  collaborator: 'collaborator',
+} as const;
+
+export interface ProgramEditorial {
+  slug: string;
+  /** @nullable */
+  updatedAt: string | null;
+  status: ProgramEditorialStatus;
+  /** @maxLength 2000 */
+  introduction: string;
+  /** @maxLength 4000 */
+  description: string;
+  /** @maxLength 3000 */
+  purpose: string;
+  /** @maxLength 6000 */
+  criteria: string;
+  /** @nullable */
+  heroVideoUploadId: string | null;
+  /** @nullable */
+  heroImageUploadId: string | null;
+  /** @nullable */
+  heroVideoUrl: string | null;
+  /** @nullable */
+  heroImageUrl: string | null;
+  /**
+     * @maxLength 100
+     * @nullable
+     */
+  eventDate: string | null;
+  /** @maxLength 300 */
+  venue: string;
+  eventDetailsConfirmed: boolean;
+  /** @maxLength 3000 */
+  announcement: string;
+  /** @maxItems 12 */
+  participationRoles: ProgramEditorialParticipationRolesItem[];
+  /** @maxItems 100 */
+  people: ProgramPerson[];
+  /** @maxItems 50 */
+  media: ProgramVideo[];
+}
+
+export interface ProgramEditorialSave {
+  /** @nullable */
+  expectedUpdatedAt: string | null;
+  content: ProgramEditorial;
+}
+
+export interface ProgramInquiry {
+  id: number;
+  organization: string;
+  name: string;
+  title: string;
+  email: string;
+  country: string;
+  message: string;
+  status: string;
+  createdAt: string;
+}
+
 export interface MediaPublicationDelete {
   /**
      * @minLength 1
      * @maxLength 40
      */
   expectedUpdatedAt: string;
+}
+
+export type PartnerDirectoryCategory = typeof PartnerDirectoryCategory[keyof typeof PartnerDirectoryCategory];
+
+
+export const PartnerDirectoryCategory = {
+  institutions: 'institutions',
+  'corporate-brands': 'corporate-brands',
+  'culture-creativity': 'culture-creativity',
+  'media-press': 'media-press',
+} as const;
+
+export type PartnerRelationship = typeof PartnerRelationship[keyof typeof PartnerRelationship];
+
+
+export const PartnerRelationship = {
+  'historical-collaboration': 'historical-collaboration',
+  'media-relationship': 'media-relationship',
+  'event-collaborator': 'event-collaborator',
+  'current-partner': 'current-partner',
+  'institutional-reference': 'institutional-reference',
+} as const;
+
+export type PartnerOrganizationFieldsStatus = typeof PartnerOrganizationFieldsStatus[keyof typeof PartnerOrganizationFieldsStatus];
+
+
+export const PartnerOrganizationFieldsStatus = {
+  draft: 'draft',
+  published: 'published',
+  archived: 'archived',
+} as const;
+
+export interface PartnerOrganizationFields {
+  /**
+     * @minLength 2
+     * @maxLength 200
+     */
+  name: string;
+  category: PartnerDirectoryCategory;
+  relationship: PartnerRelationship;
+  /** @maxLength 2000 */
+  description: string;
+  /** @maxLength 2000 */
+  website: string;
+  /**
+     * @maxLength 100
+     * @nullable
+     */
+  logoUploadId: string | null;
+  /**
+     * @minimum 1
+     * @nullable
+     */
+  legacyLogoId: number | null;
+  status: PartnerOrganizationFieldsStatus;
+  relationshipVerified: boolean;
+  rightsConfirmed: boolean;
+  /**
+     * @minimum 0
+     * @maximum 100000
+     */
+  priority: number;
+}
+
+export type PartnerOrganizationSave = PartnerOrganizationFields & ({
+  /**
+     * @maxLength 40
+     * @nullable
+     */
+  expectedUpdatedAt: string | null;
+});
+
+export interface PartnerOrganizationDelete {
+  /**
+     * @minLength 1
+     * @maxLength 40
+     */
+  expectedUpdatedAt: string;
+}
+
+export type PartnerOrganization = PartnerOrganizationFields & ({
+  id: string;
+  /** @nullable */
+  logoUrl: string | null;
+  updatedAt: string;
+});
+
+export interface PartnerPageText {
+  /**
+     * @minLength 2
+     * @maxLength 160
+     */
+  heroTitle: string;
+  /**
+     * @minLength 2
+     * @maxLength 160
+     */
+  heroLineOne: string;
+  /**
+     * @minLength 2
+     * @maxLength 160
+     */
+  heroLineTwo: string;
+  /**
+     * @minLength 2
+     * @maxLength 1500
+     */
+  heroDescription: string;
+  /**
+     * @minLength 2
+     * @maxLength 160
+     */
+  directoryTitle: string;
+  /**
+     * @minLength 2
+     * @maxLength 1500
+     */
+  directoryDescription: string;
+  /**
+     * @minLength 2
+     * @maxLength 160
+     */
+  collaborationTitle: string;
+  /**
+     * @minLength 2
+     * @maxLength 160
+     */
+  collaborationSubtitle: string;
+  /**
+     * @minLength 2
+     * @maxLength 160
+     */
+  partnershipButton: string;
+  /**
+     * @minLength 2
+     * @maxLength 160
+     */
+  conversationButton: string;
+  /**
+     * @minLength 2
+     * @maxLength 1500
+     */
+  displayNote: string;
+}
+
+export type PartnerPageContent = PartnerPageText & {
+  updatedAt: string;
+};
+
+export type PartnerPageContentSave = PartnerPageText & {
+  /**
+     * @minLength 1
+     * @maxLength 40
+     */
+  expectedUpdatedAt: string;
+};
+
+export interface PartnerDirectoryResponse {
+  items: PartnerOrganization[];
+  content: PartnerPageContent;
 }
 
 export type MediaPublicationCategory = typeof MediaPublicationCategory[keyof typeof MediaPublicationCategory];
@@ -1977,11 +2291,26 @@ export const GetHumanitarianPaymentStatus200Status = {
   paid: 'paid',
   refunded: 'refunded',
   expired: 'expired',
+  failed: 'failed',
+} as const;
+
+export type GetHumanitarianPaymentStatus200Currency = typeof GetHumanitarianPaymentStatus200Currency[keyof typeof GetHumanitarianPaymentStatus200Currency];
+
+
+export const GetHumanitarianPaymentStatus200Currency = {
+  usd: 'usd',
+  aed: 'aed',
 } as const;
 
 export type GetHumanitarianPaymentStatus200 = {
   status: GetHumanitarianPaymentStatus200Status;
   archiveAccess: boolean;
+  /** Amount in minor units recorded for this verified session */
+  amount?: number;
+  currency?: GetHumanitarianPaymentStatus200Currency;
+  /** Non-sensitive TOMI payment reference */
+  reference?: string;
+  testMode?: boolean;
 };
 
 export type CreateHumanitarianOffer201 = {

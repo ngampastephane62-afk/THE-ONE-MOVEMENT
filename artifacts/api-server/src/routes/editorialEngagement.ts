@@ -21,11 +21,19 @@ export const EDITORIAL_VIDEO_IDS = new Set([
   "home-movement-vision-2026", "home-movement-together-2026",
   "documentary-teaser-01", "documentary-teaser-02", "documentary-teaser-03", "documentary-teaser-04",
   "fashion-week-tv5",
+  "awards-nancy-isime-supplied", "awards-ciara-supplied", "awards-rosina-peace-supplied",
 ]);
-function videoId(value: unknown) {
+async function videoId(value: unknown) {
   const id = String(value);
-  if (!EDITORIAL_VIDEO_IDS.has(id)) throw new NetworkError(404, "Video not found.");
-  return id;
+  if (EDITORIAL_VIDEO_IDS.has(id)) return id;
+  const uploaded = /^program-([a-z-]+)--([0-9a-f-]{36})$/i.exec(id);
+  if (uploaded) {
+    const { programSlug, programDocument } = await import("../services/programEditorial");
+    const doc = await programDocument(programSlug(uploaded[1]));
+    const clips = [...doc.media, ...doc.people.filter(p => p.published && p.confirmed).flatMap(p => p.videos)];
+    if (clips.some(v => v.published && v.rightsConfirmed && v.uploadId === uploaded[2])) return id;
+  }
+  throw new NetworkError(404, "Video not found.");
 }
 async function engagement(id: string, memberId?: number, founder = false) {
   const [counts] = await db.select({ count: sql<number>`count(*)::integer` }).from(likes).where(eq(likes.videoId, id));
@@ -41,7 +49,7 @@ router.get(["/editorial/videos/:videoId/engagement", "/editorial/media/engagemen
   const complete = async () => {
     try {
       const who = res.locals.actor;
-      const id = req.params.videoId ? videoId(req.params.videoId) : await editorialPhotoId(req.query.source, req);
+      const id = req.params.videoId ? await videoId(req.params.videoId) : await editorialPhotoId(req.query.source, req);
       res.set("Cache-Control", "no-store").json(await engagement(id, who?.member?.id, who?.founder));
     } catch (error) { next(error); }
   };
@@ -49,7 +57,7 @@ router.get(["/editorial/videos/:videoId/engagement", "/editorial/media/engagemen
   await complete();
 });
 router.post(["/editorial/videos/:videoId/engagement", "/editorial/media/engagement"], networkAuth, networkWrite, async (req, res) => {
-  const id = req.params.videoId ? videoId(req.params.videoId) : await editorialPhotoId(req.query.source, req);
+  const id = req.params.videoId ? await videoId(req.params.videoId) : await editorialPhotoId(req.query.source, req);
   const who = actor(res, false);
   const parsed = UpdateVideoEngagementBody.strict().safeParse(req.body);
   if (!parsed.success) throw new NetworkError(400, "Invalid video action.");

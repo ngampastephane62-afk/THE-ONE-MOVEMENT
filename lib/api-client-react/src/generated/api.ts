@@ -98,9 +98,15 @@ import type {
   NewsPublicArticle,
   NewsPublicPage,
   NewsUploadInput,
+  PartnerDirectoryResponse,
   PartnerIntroduction,
   PartnerIntroductionInput,
   PartnerIntroductionStatusInput,
+  PartnerOrganization,
+  PartnerOrganizationDelete,
+  PartnerOrganizationSave,
+  PartnerPageContent,
+  PartnerPageContentSave,
   PressEntry,
   PressEntryInput,
   ProfessionalAction200,
@@ -108,6 +114,9 @@ import type {
   ProfessionalBusiness,
   ProfessionalIntroductionInput,
   ProfessionalState,
+  ProgramEditorial,
+  ProgramEditorialSave,
+  ProgramInquiry,
   RecordMagazineReadingEvent200,
   RequestFounderNewsUpload201,
   RequestGratitudeUpload201,
@@ -145,6 +154,989 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   }
   return result;
 };
+
+export const getGetProgramEditorialUrl = (slug: string,) => {
+
+
+
+
+  return `/api/program-editorial/${slug}`
+}
+
+export const getProgramEditorial = async (slug: string, options?: Parameters<typeof customFetch>[1]): Promise<ProgramEditorial> => {
+
+  return customFetch<ProgramEditorial>(getGetProgramEditorialUrl(slug),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetProgramEditorialQueryKey = (slug: string,) => {
+    return [
+    `/api/program-editorial/${slug}`
+    ] as const;
+    }
+
+
+export const getGetProgramEditorialQueryOptions = <TData = Awaited<ReturnType<typeof getProgramEditorial>>, TError = ErrorType<unknown>>(slug: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProgramEditorial>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetProgramEditorialQueryKey(slug);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getProgramEditorial>>> = ({ signal }) => getProgramEditorial(slug, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: slug !== null && slug !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getProgramEditorial>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetProgramEditorialQueryResult = NonNullable<Awaited<ReturnType<typeof getProgramEditorial>>>
+export type GetProgramEditorialQueryError = ErrorType<unknown>
+
+
+export function useGetProgramEditorial<TData = Awaited<ReturnType<typeof getProgramEditorial>>, TError = ErrorType<unknown>>(
+ slug: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProgramEditorial>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getProgramEditorial>>,
+          TError,
+          Awaited<ReturnType<typeof getProgramEditorial>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetProgramEditorial<TData = Awaited<ReturnType<typeof getProgramEditorial>>, TError = ErrorType<unknown>>(
+ slug: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProgramEditorial>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getProgramEditorial>>,
+          TError,
+          Awaited<ReturnType<typeof getProgramEditorial>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetProgramEditorial<TData = Awaited<ReturnType<typeof getProgramEditorial>>, TError = ErrorType<unknown>>(
+ slug: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProgramEditorial>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetProgramEditorial<TData = Awaited<ReturnType<typeof getProgramEditorial>>, TError = ErrorType<unknown>>(
+ slug: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProgramEditorial>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetProgramEditorialQueryOptions(slug,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getGetFounderProgramEditorialUrl = (slug: string,) => {
+
+
+
+
+  return `/api/founder/program-editorial/${slug}`
+}
+
+export const getFounderProgramEditorial = async (slug: string, options?: Parameters<typeof customFetch>[1]): Promise<ProgramEditorial> => {
+
+  return customFetch<ProgramEditorial>(getGetFounderProgramEditorialUrl(slug),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetFounderProgramEditorialQueryKey = (slug: string,) => {
+    return [
+    `/api/founder/program-editorial/${slug}`
+    ] as const;
+    }
+
+
+export const getGetFounderProgramEditorialQueryOptions = <TData = Awaited<ReturnType<typeof getFounderProgramEditorial>>, TError = ErrorType<unknown>>(slug: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderProgramEditorial>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetFounderProgramEditorialQueryKey(slug);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getFounderProgramEditorial>>> = ({ signal }) => getFounderProgramEditorial(slug, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: slug !== null && slug !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getFounderProgramEditorial>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetFounderProgramEditorialQueryResult = NonNullable<Awaited<ReturnType<typeof getFounderProgramEditorial>>>
+export type GetFounderProgramEditorialQueryError = ErrorType<unknown>
+
+
+export function useGetFounderProgramEditorial<TData = Awaited<ReturnType<typeof getFounderProgramEditorial>>, TError = ErrorType<unknown>>(
+ slug: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderProgramEditorial>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getFounderProgramEditorial>>,
+          TError,
+          Awaited<ReturnType<typeof getFounderProgramEditorial>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetFounderProgramEditorial<TData = Awaited<ReturnType<typeof getFounderProgramEditorial>>, TError = ErrorType<unknown>>(
+ slug: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderProgramEditorial>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getFounderProgramEditorial>>,
+          TError,
+          Awaited<ReturnType<typeof getFounderProgramEditorial>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetFounderProgramEditorial<TData = Awaited<ReturnType<typeof getFounderProgramEditorial>>, TError = ErrorType<unknown>>(
+ slug: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderProgramEditorial>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetFounderProgramEditorial<TData = Awaited<ReturnType<typeof getFounderProgramEditorial>>, TError = ErrorType<unknown>>(
+ slug: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderProgramEditorial>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetFounderProgramEditorialQueryOptions(slug,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getSaveProgramEditorialUrl = (slug: string,) => {
+
+
+
+
+  return `/api/founder/program-editorial/${slug}`
+}
+
+export const saveProgramEditorial = async (slug: string,
+    programEditorialSave: ProgramEditorialSave, options?: Parameters<typeof customFetch>[1]): Promise<ProgramEditorial> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<ProgramEditorial>(getSaveProgramEditorialUrl(slug),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(programEditorialSave)
+  }
+);}
+
+
+
+
+
+export const getSaveProgramEditorialMutationKey = () => ['saveProgramEditorial'] as const;
+
+export const getSaveProgramEditorialMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof saveProgramEditorial>>, TError,SaveProgramEditorialMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof saveProgramEditorial>>, TError,SaveProgramEditorialMutationVariables, TContext> => {
+
+const mutationKey = getSaveProgramEditorialMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof saveProgramEditorial>>, SaveProgramEditorialMutationVariables> = (props) => {
+          const {slug,data} = props ?? {};
+
+          return  saveProgramEditorial(slug,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type SaveProgramEditorialMutationResult = NonNullable<Awaited<ReturnType<typeof saveProgramEditorial>>>
+    export type SaveProgramEditorialMutationBody = BodyType<ProgramEditorialSave>
+    export type SaveProgramEditorialMutationError = ErrorType<unknown>
+    export type SaveProgramEditorialMutationVariables = {slug: string;data: BodyType<ProgramEditorialSave>}
+
+    export const useSaveProgramEditorial = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof saveProgramEditorial>>, TError,SaveProgramEditorialMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof saveProgramEditorial>>,
+        TError,
+        SaveProgramEditorialMutationVariables,
+        TContext
+      > => {
+      return useMutation(getSaveProgramEditorialMutationOptions(options), queryClient);
+    }
+
+export const getGetProgramInquiriesUrl = (slug: string,) => {
+
+
+
+
+  return `/api/founder/program-editorial/${slug}/inquiries`
+}
+
+export const getProgramInquiries = async (slug: string, options?: Parameters<typeof customFetch>[1]): Promise<ProgramInquiry[]> => {
+
+  return customFetch<ProgramInquiry[]>(getGetProgramInquiriesUrl(slug),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetProgramInquiriesQueryKey = (slug: string,) => {
+    return [
+    `/api/founder/program-editorial/${slug}/inquiries`
+    ] as const;
+    }
+
+
+export const getGetProgramInquiriesQueryOptions = <TData = Awaited<ReturnType<typeof getProgramInquiries>>, TError = ErrorType<unknown>>(slug: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProgramInquiries>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetProgramInquiriesQueryKey(slug);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getProgramInquiries>>> = ({ signal }) => getProgramInquiries(slug, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: slug !== null && slug !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getProgramInquiries>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetProgramInquiriesQueryResult = NonNullable<Awaited<ReturnType<typeof getProgramInquiries>>>
+export type GetProgramInquiriesQueryError = ErrorType<unknown>
+
+
+export function useGetProgramInquiries<TData = Awaited<ReturnType<typeof getProgramInquiries>>, TError = ErrorType<unknown>>(
+ slug: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProgramInquiries>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getProgramInquiries>>,
+          TError,
+          Awaited<ReturnType<typeof getProgramInquiries>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetProgramInquiries<TData = Awaited<ReturnType<typeof getProgramInquiries>>, TError = ErrorType<unknown>>(
+ slug: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProgramInquiries>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getProgramInquiries>>,
+          TError,
+          Awaited<ReturnType<typeof getProgramInquiries>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetProgramInquiries<TData = Awaited<ReturnType<typeof getProgramInquiries>>, TError = ErrorType<unknown>>(
+ slug: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProgramInquiries>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetProgramInquiries<TData = Awaited<ReturnType<typeof getProgramInquiries>>, TError = ErrorType<unknown>>(
+ slug: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProgramInquiries>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetProgramInquiriesQueryOptions(slug,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getGetPartnerDirectoryUrl = () => {
+
+
+
+
+  return `/api/partner-directory`
+}
+
+export const getPartnerDirectory = async ( options?: Parameters<typeof customFetch>[1]): Promise<PartnerDirectoryResponse> => {
+
+  return customFetch<PartnerDirectoryResponse>(getGetPartnerDirectoryUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetPartnerDirectoryQueryKey = () => {
+    return [
+    `/api/partner-directory`
+    ] as const;
+    }
+
+
+export const getGetPartnerDirectoryQueryOptions = <TData = Awaited<ReturnType<typeof getPartnerDirectory>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPartnerDirectory>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetPartnerDirectoryQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getPartnerDirectory>>> = ({ signal }) => getPartnerDirectory({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getPartnerDirectory>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetPartnerDirectoryQueryResult = NonNullable<Awaited<ReturnType<typeof getPartnerDirectory>>>
+export type GetPartnerDirectoryQueryError = ErrorType<unknown>
+
+
+export function useGetPartnerDirectory<TData = Awaited<ReturnType<typeof getPartnerDirectory>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPartnerDirectory>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getPartnerDirectory>>,
+          TError,
+          Awaited<ReturnType<typeof getPartnerDirectory>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetPartnerDirectory<TData = Awaited<ReturnType<typeof getPartnerDirectory>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPartnerDirectory>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getPartnerDirectory>>,
+          TError,
+          Awaited<ReturnType<typeof getPartnerDirectory>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetPartnerDirectory<TData = Awaited<ReturnType<typeof getPartnerDirectory>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPartnerDirectory>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetPartnerDirectory<TData = Awaited<ReturnType<typeof getPartnerDirectory>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPartnerDirectory>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetPartnerDirectoryQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getGetAdminPartnerDirectoryUrl = () => {
+
+
+
+
+  return `/api/founder/partner-directory`
+}
+
+export const getAdminPartnerDirectory = async ( options?: Parameters<typeof customFetch>[1]): Promise<PartnerDirectoryResponse> => {
+
+  return customFetch<PartnerDirectoryResponse>(getGetAdminPartnerDirectoryUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetAdminPartnerDirectoryQueryKey = () => {
+    return [
+    `/api/founder/partner-directory`
+    ] as const;
+    }
+
+
+export const getGetAdminPartnerDirectoryQueryOptions = <TData = Awaited<ReturnType<typeof getAdminPartnerDirectory>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAdminPartnerDirectory>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetAdminPartnerDirectoryQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAdminPartnerDirectory>>> = ({ signal }) => getAdminPartnerDirectory({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAdminPartnerDirectory>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetAdminPartnerDirectoryQueryResult = NonNullable<Awaited<ReturnType<typeof getAdminPartnerDirectory>>>
+export type GetAdminPartnerDirectoryQueryError = ErrorType<unknown>
+
+
+export function useGetAdminPartnerDirectory<TData = Awaited<ReturnType<typeof getAdminPartnerDirectory>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAdminPartnerDirectory>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAdminPartnerDirectory>>,
+          TError,
+          Awaited<ReturnType<typeof getAdminPartnerDirectory>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAdminPartnerDirectory<TData = Awaited<ReturnType<typeof getAdminPartnerDirectory>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAdminPartnerDirectory>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAdminPartnerDirectory>>,
+          TError,
+          Awaited<ReturnType<typeof getAdminPartnerDirectory>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAdminPartnerDirectory<TData = Awaited<ReturnType<typeof getAdminPartnerDirectory>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAdminPartnerDirectory>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetAdminPartnerDirectory<TData = Awaited<ReturnType<typeof getAdminPartnerDirectory>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAdminPartnerDirectory>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetAdminPartnerDirectoryQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getCreatePartnerOrganizationUrl = () => {
+
+
+
+
+  return `/api/founder/partner-directory`
+}
+
+export const createPartnerOrganization = async (partnerOrganizationSave: PartnerOrganizationSave, options?: Parameters<typeof customFetch>[1]): Promise<PartnerOrganization> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<PartnerOrganization>(getCreatePartnerOrganizationUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(partnerOrganizationSave)
+  }
+);}
+
+
+
+
+
+export const getCreatePartnerOrganizationMutationKey = () => ['createPartnerOrganization'] as const;
+
+export const getCreatePartnerOrganizationMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createPartnerOrganization>>, TError,CreatePartnerOrganizationMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof createPartnerOrganization>>, TError,CreatePartnerOrganizationMutationVariables, TContext> => {
+
+const mutationKey = getCreatePartnerOrganizationMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createPartnerOrganization>>, CreatePartnerOrganizationMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  createPartnerOrganization(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreatePartnerOrganizationMutationResult = NonNullable<Awaited<ReturnType<typeof createPartnerOrganization>>>
+    export type CreatePartnerOrganizationMutationBody = BodyType<PartnerOrganizationSave>
+    export type CreatePartnerOrganizationMutationError = ErrorType<unknown>
+    export type CreatePartnerOrganizationMutationVariables = {data: BodyType<PartnerOrganizationSave>}
+
+    export const useCreatePartnerOrganization = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createPartnerOrganization>>, TError,CreatePartnerOrganizationMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createPartnerOrganization>>,
+        TError,
+        CreatePartnerOrganizationMutationVariables,
+        TContext
+      > => {
+      return useMutation(getCreatePartnerOrganizationMutationOptions(options), queryClient);
+    }
+
+export const getUpdatePartnerPageContentUrl = () => {
+
+
+
+
+  return `/api/founder/partner-directory/content`
+}
+
+export const updatePartnerPageContent = async (partnerPageContentSave: PartnerPageContentSave, options?: Parameters<typeof customFetch>[1]): Promise<PartnerPageContent> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<PartnerPageContent>(getUpdatePartnerPageContentUrl(),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(partnerPageContentSave)
+  }
+);}
+
+
+
+
+
+export const getUpdatePartnerPageContentMutationKey = () => ['updatePartnerPageContent'] as const;
+
+export const getUpdatePartnerPageContentMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updatePartnerPageContent>>, TError,UpdatePartnerPageContentMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof updatePartnerPageContent>>, TError,UpdatePartnerPageContentMutationVariables, TContext> => {
+
+const mutationKey = getUpdatePartnerPageContentMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updatePartnerPageContent>>, UpdatePartnerPageContentMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  updatePartnerPageContent(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdatePartnerPageContentMutationResult = NonNullable<Awaited<ReturnType<typeof updatePartnerPageContent>>>
+    export type UpdatePartnerPageContentMutationBody = BodyType<PartnerPageContentSave>
+    export type UpdatePartnerPageContentMutationError = ErrorType<unknown>
+    export type UpdatePartnerPageContentMutationVariables = {data: BodyType<PartnerPageContentSave>}
+
+    export const useUpdatePartnerPageContent = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updatePartnerPageContent>>, TError,UpdatePartnerPageContentMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof updatePartnerPageContent>>,
+        TError,
+        UpdatePartnerPageContentMutationVariables,
+        TContext
+      > => {
+      return useMutation(getUpdatePartnerPageContentMutationOptions(options), queryClient);
+    }
+
+export const getUpdatePartnerOrganizationUrl = (id: string,) => {
+
+
+
+
+  return `/api/founder/partner-directory/${id}`
+}
+
+export const updatePartnerOrganization = async (id: string,
+    partnerOrganizationSave: PartnerOrganizationSave, options?: Parameters<typeof customFetch>[1]): Promise<PartnerOrganization> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<PartnerOrganization>(getUpdatePartnerOrganizationUrl(id),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(partnerOrganizationSave)
+  }
+);}
+
+
+
+
+
+export const getUpdatePartnerOrganizationMutationKey = () => ['updatePartnerOrganization'] as const;
+
+export const getUpdatePartnerOrganizationMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updatePartnerOrganization>>, TError,UpdatePartnerOrganizationMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof updatePartnerOrganization>>, TError,UpdatePartnerOrganizationMutationVariables, TContext> => {
+
+const mutationKey = getUpdatePartnerOrganizationMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updatePartnerOrganization>>, UpdatePartnerOrganizationMutationVariables> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  updatePartnerOrganization(id,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdatePartnerOrganizationMutationResult = NonNullable<Awaited<ReturnType<typeof updatePartnerOrganization>>>
+    export type UpdatePartnerOrganizationMutationBody = BodyType<PartnerOrganizationSave>
+    export type UpdatePartnerOrganizationMutationError = ErrorType<unknown>
+    export type UpdatePartnerOrganizationMutationVariables = {id: string;data: BodyType<PartnerOrganizationSave>}
+
+    export const useUpdatePartnerOrganization = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updatePartnerOrganization>>, TError,UpdatePartnerOrganizationMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof updatePartnerOrganization>>,
+        TError,
+        UpdatePartnerOrganizationMutationVariables,
+        TContext
+      > => {
+      return useMutation(getUpdatePartnerOrganizationMutationOptions(options), queryClient);
+    }
+
+export const getDeletePartnerOrganizationUrl = (id: string,) => {
+
+
+
+
+  return `/api/founder/partner-directory/${id}`
+}
+
+export const deletePartnerOrganization = async (id: string,
+    partnerOrganizationDelete: PartnerOrganizationDelete, options?: Parameters<typeof customFetch>[1]): Promise<void> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<void>(getDeletePartnerOrganizationUrl(id),
+  {
+    ...options,
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(partnerOrganizationDelete)
+  }
+);}
+
+
+
+
+
+export const getDeletePartnerOrganizationMutationKey = () => ['deletePartnerOrganization'] as const;
+
+export const getDeletePartnerOrganizationMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deletePartnerOrganization>>, TError,DeletePartnerOrganizationMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof deletePartnerOrganization>>, TError,DeletePartnerOrganizationMutationVariables, TContext> => {
+
+const mutationKey = getDeletePartnerOrganizationMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deletePartnerOrganization>>, DeletePartnerOrganizationMutationVariables> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  deletePartnerOrganization(id,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type DeletePartnerOrganizationMutationResult = NonNullable<Awaited<ReturnType<typeof deletePartnerOrganization>>>
+    export type DeletePartnerOrganizationMutationBody = BodyType<PartnerOrganizationDelete>
+    export type DeletePartnerOrganizationMutationError = ErrorType<unknown>
+    export type DeletePartnerOrganizationMutationVariables = {id: string;data: BodyType<PartnerOrganizationDelete>}
+
+    export const useDeletePartnerOrganization = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deletePartnerOrganization>>, TError,DeletePartnerOrganizationMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof deletePartnerOrganization>>,
+        TError,
+        DeletePartnerOrganizationMutationVariables,
+        TContext
+      > => {
+      return useMutation(getDeletePartnerOrganizationMutationOptions(options), queryClient);
+    }
+
+export const getGetPartnerOrganizationLogoUrl = (id: string,) => {
+
+
+
+
+  return `/api/partner-directory/${id}/logo`
+}
+
+export const getPartnerOrganizationLogo = async (id: string, options?: Parameters<typeof customFetch>[1]): Promise<void> => {
+
+  return customFetch<void>(getGetPartnerOrganizationLogoUrl(id),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetPartnerOrganizationLogoQueryKey = (id: string,) => {
+    return [
+    `/api/partner-directory/${id}/logo`
+    ] as const;
+    }
+
+
+export const getGetPartnerOrganizationLogoQueryOptions = <TData = Awaited<ReturnType<typeof getPartnerOrganizationLogo>>, TError = ErrorType<unknown>>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPartnerOrganizationLogo>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetPartnerOrganizationLogoQueryKey(id);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getPartnerOrganizationLogo>>> = ({ signal }) => getPartnerOrganizationLogo(id, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getPartnerOrganizationLogo>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetPartnerOrganizationLogoQueryResult = NonNullable<Awaited<ReturnType<typeof getPartnerOrganizationLogo>>>
+export type GetPartnerOrganizationLogoQueryError = ErrorType<unknown>
+
+
+export function useGetPartnerOrganizationLogo<TData = Awaited<ReturnType<typeof getPartnerOrganizationLogo>>, TError = ErrorType<unknown>>(
+ id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPartnerOrganizationLogo>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getPartnerOrganizationLogo>>,
+          TError,
+          Awaited<ReturnType<typeof getPartnerOrganizationLogo>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetPartnerOrganizationLogo<TData = Awaited<ReturnType<typeof getPartnerOrganizationLogo>>, TError = ErrorType<unknown>>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPartnerOrganizationLogo>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getPartnerOrganizationLogo>>,
+          TError,
+          Awaited<ReturnType<typeof getPartnerOrganizationLogo>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetPartnerOrganizationLogo<TData = Awaited<ReturnType<typeof getPartnerOrganizationLogo>>, TError = ErrorType<unknown>>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPartnerOrganizationLogo>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetPartnerOrganizationLogo<TData = Awaited<ReturnType<typeof getPartnerOrganizationLogo>>, TError = ErrorType<unknown>>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPartnerOrganizationLogo>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetPartnerOrganizationLogoQueryOptions(id,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
 
 export const getGetMediaPublicationsUrl = (params?: GetMediaPublicationsParams,) => {
   const normalizedParams = new URLSearchParams();

@@ -98,3 +98,87 @@ mtime_ms = 1792758656355
 storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/0d3b267f-99a4-4b83-b582-bd6d3ebb85bf/80135b7f-b44e-45a8-915d-7bef0183b972"
 storage_version_token = "1792758676974548"
 content_type = "image/jpeg"
+
+[[outputs]]
+id = "f0Rf2z_4g1qwzXMVtFS-v"
+uri = "file://reports/partners-redesign-audit.html"
+type = "html"
+title = "Partners — Rapport complet de la refonte"
+description = "Audit des organisations, brouillons à valider, logos, animations, gestion Founder, fichiers modifiés et limites des vérifications."
+logical_id = "c90aa3ef-c18c-453a-97c6-bf2756a4916d"
+content_hash = "sha256:6ce85bfc328622340b0d2424d70afee353242085866aa5b225a11323edb3529c"
+size = 10765
+mtime_ms = 1792762533701
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/c90aa3ef-c18c-453a-97c6-bf2756a4916d/75bdb05a-9cf8-4515-b4a1-563c2d455eb4"
+storage_version_token = "1792762599640507"
+content_type = "text/html"
+
+[[outputs]]
+id = "JwD-VNhWZm3Sq4LRXMVPP"
+uri = "file://screenshots/partners-mobile-hero.jpg"
+type = "image"
+title = "Partners — Aperçu mobile"
+description = "Nouvelle introduction émeraude, réseau animé et accès à la galerie des 43 organisations."
+logical_id = "77f7a848-b5a6-474b-9a97-d18870cc856e"
+content_hash = "sha256:4d06ee44fc81537508c499a2ff22119e29932de54d09b5ac3b9694be54d56c26"
+size = 37487
+mtime_ms = 1792762214136
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/77f7a848-b5a6-474b-9a97-d18870cc856e/af0436e7-69b6-4ee4-ae2b-33859f645bc1"
+storage_version_token = "1792762600921344"
+content_type = "image/jpeg"
+
+[[outputs]]
+id = "lObkBWEVh2GhTbKXXCsjm"
+uri = "file://reports/humanitarian-implementation.html"
+type = "html"
+title = "TOMI Fund — Rapport complet et blocages"
+description = "Les 15 points demandés : refonte, films, galerie, diagnostic Stripe, tests réalisés et éléments à autoriser avant lancement."
+logical_id = "24a15779-b177-4fca-a26a-5255bf6b9486"
+content_hash = "sha256:7d1a5faf4e8b88a2db6675ea94855cfeefeac7e0ff7368628b49455defe6382b"
+size = 10829
+mtime_ms = 1792764019589
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/24a15779-b177-4fca-a26a-5255bf6b9486/10440f48-245b-445a-a0d9-2781718ab1f9"
+storage_version_token = "1792764036684205"
+content_type = "text/html"
+
+[[outputs]]
+id = "Z514dnQFbgvNgneCS4bjm"
+uri = "file://screenshots/humanitarian-mobile-hero.jpg"
+type = "image"
+title = "Humanitarian Action — Aperçu mobile"
+description = "Introduction mise à jour et disponibilité des dons annoncée sans ambiguïté."
+logical_id = "76b04227-d2a1-4e48-944c-d1facef3be7b"
+content_hash = "sha256:653533446acee03c06b8723adbf21bbfdad9d543fcb7f4f5c7c33b66b862b049"
+size = 36927
+mtime_ms = 1792763979709
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/76b04227-d2a1-4e48-944c-d1facef3be7b/01f2faa6-82a4-4253-9951-f3383e4f9566"
+storage_version_token = "1792764037961393"
+content_type = "image/jpeg"
+
+[[outputs]]
+id = "REuKvK_4Na3zNfglI9d6U"
+uri = "file://reports/awards-six-programmes-audit.html"
+type = "html"
+title = "Awards et six programmes — Rapport de réalisation"
+description = "Les 12 points demandés : contenus, vidéos, Founder Workspace, contacts, tests et limites de vérification."
+logical_id = "8aa08dda-3433-4265-ad88-0d732ce75f4d"
+content_hash = "sha256:835aecb628daf19f580effddd686767b70204d1a30908550c30b4e744c8650c6"
+size = 12455
+mtime_ms = 1792766367313
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/8aa08dda-3433-4265-ad88-0d732ce75f4d/bcf45675-1d7c-4366-84c8-f25c3df796b7"
+storage_version_token = "1792766400526079"
+content_type = "text/html"
+
+[[outputs]]
+id = "u8AuqJlFkCuUHUsFEdm4W"
+uri = "file://screenshots/awards-mobile-hero.jpg"
+type = "image"
+title = "The One Awards — Aperçu mobile"
+description = "Nouvelle ouverture avec Rosina, typographie et accès aux nominés."
+logical_id = "bdbf245a-f23c-4a70-86b1-d39edf503015"
+content_hash = "sha256:c9b7700b49e220048eb41a07139c991ec3348f610265ce8a78204878de87362b"
+size = 44348
+mtime_ms = 1792765767813
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/bdbf245a-f23c-4a70-86b1-d39edf503015/88d795ff-8c6c-4da3-a180-d19389fa4fb0"
+storage_version_token = "1792766401824801"
+content_type = "image/jpeg"

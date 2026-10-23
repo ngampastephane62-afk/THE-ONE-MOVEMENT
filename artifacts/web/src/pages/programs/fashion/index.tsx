@@ -9,10 +9,12 @@ import ProgrammeCover from '@/components/programs/ProgrammeCover';
 import ProgrammeFilm from '@/components/programs/ProgrammeFilm';
 import PeaceVoices from '@/components/programs/PeaceVoices';
 import FashionConnections from '@/components/programs/FashionConnections';
-import ProgrammeNominees from '@/components/editorial/ProgrammeNominees';
 import InquiryForm from '@/pages/join/InquiryForm';
 import { FASHION_CATEGORIES } from '@/lib/fashion-participation';
 import DesignerPackages from './DesignerPackages';
+import FashionArchive from './FashionArchive';
+import { BespokeLead, BespokeTail } from '@/components/programs/editorial/BespokeFrame';
+import { inquiryHref } from '@/lib/programme-editorial';
 import EverydayEcosystem from '@/components/programs/EverydayEcosystem';
 
 const TITLE = 'The One Fashion Week International — Participation';
@@ -88,6 +90,7 @@ export default function FashionWeekPage() {
         </div>
       </HeroSurface>
 
+      <BespokeLead slug="fashion-week" />
       {/* 2 · ECOSYSTEM */}
       <section className="bg-ivory-100 py-section-lg" aria-labelledby="eco-h">
         <div className="mx-auto max-w-7xl px-6">
@@ -109,7 +112,8 @@ export default function FashionWeekPage() {
               ))}
             </ol>
           </div>
-          <div className="mt-16 grid grid-cols-12 gap-3 sm:gap-5">
+          <p className="mt-16 font-mono text-[11px] uppercase tracking-[0.3em] text-gold-600">Previous editions · archive</p>
+          <div className="mt-4 grid grid-cols-12 gap-3 sm:gap-5">
             <div className="col-span-12 sm:col-span-7"><ArchivePhoto id="runway-cultural" caption sizes="(min-width: 640px) 55vw, 92vw" /></div>
             <div className="col-span-6 sm:col-span-5"><ArchivePhoto id="designer-portrait" caption sizes="(min-width: 640px) 38vw, 46vw" /></div>
             <div className="col-span-6 sm:hidden"><ArchivePhoto id="casting-portrait" caption sizes="46vw" /></div>
@@ -168,7 +172,7 @@ export default function FashionWeekPage() {
               <div className="mt-8 flex flex-wrap gap-3">
                 {current.value === 'sponsors-partners' ? (
                   <>
-                    <Link href="/join?intent=partnership#institutional-inquiry" data-testid="link-partnership" className="inline-flex min-h-12 items-center bg-lagoon-900 px-6 text-xs font-semibold uppercase tracking-wider text-ivory-100 hover:bg-lagoon-800">Open a partnership enquiry</Link>
+                    <Link href={inquiryHref.partnership('fashion-week', 'partner')} data-testid="link-partnership" className="inline-flex min-h-12 items-center bg-lagoon-900 px-6 text-xs font-semibold uppercase tracking-wider text-ivory-100 hover:bg-lagoon-800">Open a partnership enquiry</Link>
                     <button type="button" onClick={() => goToForm(current.value)} data-testid="button-apply-category" className="min-h-12 border border-lagoon-900 px-6 text-xs font-semibold uppercase tracking-wider text-lagoon-900 hover:bg-lagoon-900 hover:text-ivory-100">Or write to the Fashion Week team</button>
                   </>
                 ) : current.value === 'experts-educators' ? (
@@ -232,7 +236,7 @@ export default function FashionWeekPage() {
               Livelihoods, artisanal skills, cultural memory and peace are questions no runway solves alone. We invite institutions, diplomatic missions and humanitarian organisations to cooperate with the fashion community. These are invitations to work together, not claims of funded results.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/join?intent=partnership#institutional-inquiry" data-testid="link-coop-partnership" className="inline-flex min-h-12 items-center bg-gold-500 px-6 text-xs font-semibold uppercase tracking-wider text-ink-900 hover:bg-gold-400">Propose a cooperation</Link>
+              <Link href={inquiryHref.partnership('fashion-week', 'collaborator')} data-testid="link-coop-partnership" className="inline-flex min-h-12 items-center bg-gold-500 px-6 text-xs font-semibold uppercase tracking-wider text-ink-900 hover:bg-gold-400">Propose a cooperation</Link>
               <Link href="/programs/diplomatic-gala" data-testid="link-coop-gala" className="inline-flex min-h-12 items-center border border-gold-500/70 px-6 text-xs font-semibold uppercase tracking-wider text-gold-400 hover:bg-gold-500/10">The Diplomatic Gala</Link>
             </div>
           </div>
@@ -242,10 +246,10 @@ export default function FashionWeekPage() {
         </div>
       </section>
 
+      <FashionArchive />
       {/* 7 · DISCOVERY ACROSS CONTINENTS */}
       <FashionConnections />
       <PeaceVoices />
-      <ProgrammeNominees programme="fashion-week" />
 
       {/* 8 · APPLICATION FORM */}
       <section id="apply" className="scroll-mt-16 py-section-lg" style={{ backgroundColor: 'hsl(187 67% 12%)' }} aria-labelledby="apply-h">
@@ -263,6 +267,7 @@ export default function FashionWeekPage() {
         </div>
       </section>
 
+      <BespokeTail slug="fashion-week" name="THE ONE FASHION WEEK INTERNATIONAL" mediaEyebrow="PREVIOUS EDITIONS · ARCHIVE AND OFFICIAL MEDIA" />
       {/* 9 · CLOSING */}
       <HeroSurface minHeight="48vh" className="px-6">
         <div className="mx-auto max-w-4xl py-section-lg text-center">
