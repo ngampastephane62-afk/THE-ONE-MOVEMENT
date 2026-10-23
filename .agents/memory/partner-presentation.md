@@ -33,8 +33,14 @@ Partner leadership introductions must use a TOMI-handled form only; never expose
 
 **How to apply:** Keep the partner target separate from the requester’s own organisation. Make requests accessible to the Founder, explain that receipt does not guarantee an introduction, and use verified public names and correct institutional roles. Mark unknown leadership honestly; distinguish parent-group executives from individual brand or local management.
 
-The owner wants separate investment and commercial partnership paths. The investor deck and final annual partnership document supplied on 2026-10-17 are intended for public on-page reading, explaining The One Movement Multinational, funding needs, budget and partnership benefits. Partnership enquiries should cover visibility and outdoor marketing.
+The owner wants separate investment and commercial partnership paths. The investor deck and final annual partnership document supplied on 2026-10-17 remain approved public copies, but the later architecture directive removes inline readers, pricing tables and financial proposals from the main Partners page. Each document belongs to its corresponding dedicated opportunity pathway, opened on request.
 
-**Why:** The owner explicitly requested a public presentation rather than a download-only document, while separately reserving event-preparation information for sponsors and people who have paid.
+**Why:** The earlier public-document approval remains, but the later Founder directive corrects where and how commercial information is presented. Sponsorship and investment are distinct relationships.
 
-**How to apply:** This authorizes public copies of these supplied documents, not unrelated confidential documents or private event information. Preserve the distinction between investment and sponsorship fees, and between funding requirements, valuation, funds raised and projected revenue. Do not invent allocation details or returns.
+**How to apply:** This authorizes public copies of these supplied documents, not unrelated confidential documents or private event information. Hiding a reader is not access control. Keep required investment risk disclosures in the investment pathway. Preserve the distinction between funding requirements, valuation, funds raised and projected revenue; do not invent returns.
+
+Keep the real Founder and historical-collaboration photo sequence immediately after the Partners introduction, before detailed opportunities. Removing obsolete composite logo collages does not authorize removing this gallery.
+
+**Why:** The Founder explicitly corrected the loss of previously approved photographs and animations during partner-page changes.
+
+**How to apply:** Reuse the original photographs and animation behaviour, including the three-second loaded-photo visibility rule above. Never substitute generated or stock photographs for historical relationships.

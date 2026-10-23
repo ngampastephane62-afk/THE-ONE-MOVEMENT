@@ -1,4 +1,5 @@
 import { useMemo, useState, type CSSProperties } from 'react';
+import { Link } from 'wouter';
 import '@/styles/universe.css';
 import { ArrowRight, ChevronDown, Search, SlidersHorizontal } from 'lucide-react';
 import { SECTORS } from '@/lib/sectors-data';
@@ -133,15 +134,20 @@ export default function SectorExplorer({ selected: controlled, onSelect }: Props
             {active && (
               <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
                 <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold-400" data-testid="text-sector-gateway-index">Gateway {String(SECTORS.findIndex((x) => x.slug === active.slug) + 1).padStart(2, '0')} of {SECTORS.length}</p>
-                <button type="button" onClick={enterWorld} className="x-btn x-btn-ghost !min-h-[40px] !px-4 !py-2" data-testid="button-enter-world">
-                  Enter the {active.name} world <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-                </button>
+                <div className="flex flex-wrap gap-2">
+                  <button type="button" onClick={enterWorld} className="x-btn x-btn-ghost !min-h-[40px] !px-4 !py-2" data-testid="button-enter-world">
+                    Enter the {active.name} world <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                  </button>
+                  <Link href={`/ecosystem/${active.slug}`} className="x-btn !min-h-[40px] !px-4 !py-2" data-testid="link-open-sector-hub">
+                    Open the {active.name} hub <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                  </Link>
+                </div>
               </div>
             )}
             {active ? <SectorDetail sector={active} /> : <p className="text-ivory-300">Choose a sector to see its programmes and resources.</p>}
           </div>
         </div>
-        {active && <div id="sector-world-anchor" className="x-content mx-auto mt-12 max-w-7xl scroll-mt-20 px-6">{active.slug === 'real-estate' ? <RealEstateWorld /> : <SectorWorld key={active.slug} slug={active.slug} />}</div>}
+        {active && <div id="sector-world-anchor" className="x-content mx-auto mt-12 max-w-7xl scroll-mt-20 px-6">{active.slug === 'real-estate' ? <RealEstateWorld /> : <SectorWorld key={active.slug} slug={active.slug} />}<p className="mt-6 text-center"><Link href={`/ecosystem/${active.slug}`} className="inline-flex min-h-[44px] items-center gap-2 text-xs uppercase tracking-[0.16em] text-gold-400 hover:text-ivory-100" data-testid="link-sector-hub-footer">Community, learning, posts and your activity in {active.name} <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" /></Link></p></div>}
       </div>
     </section>
   );

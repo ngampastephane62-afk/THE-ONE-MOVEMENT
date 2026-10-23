@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'wouter';
+import MovementLink from '@/components/MovementLink';
 import { Pause, Play } from 'lucide-react';
 import './cinematic-hero.css';
 import officialLogo from '@/assets/media/home/tomi-official-logo.png';
@@ -175,9 +176,7 @@ export default function CinematicHero({ phase = 'globe-bearer', className = '', 
           className="tch-actions"
           onAnimationEnd={(e) => { if (e.target === e.currentTarget && intro) finishIntro(); }}
         >
-          <Link href="/join" className="tch-btn tch-btn--solid" data-testid="link-hero-join">
-            Join the Movement
-          </Link>
+          <MovementLink className="tch-btn tch-btn--solid" data-testid="link-hero-join" />
           <Link href="/ecosystem" className="tch-btn tch-btn--ghost" data-testid="link-hero-ecosystem">
             Explore the Ecosystem
           </Link>

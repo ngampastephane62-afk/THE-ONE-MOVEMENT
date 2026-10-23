@@ -3,6 +3,7 @@ import { LanguageSwitcher } from '@/lib/locale';
 import { Link, useLocation } from 'wouter';
 import { navItems } from '@/lib/navigation';
 import { Show } from '@clerk/react';
+import MovementLink from '@/components/MovementLink';
 import tomiLogo from '@/assets/media/home/tomi-official-logo.png';
 
 /**
@@ -289,6 +290,7 @@ export default function Layout({ children }: LayoutProps) {
                   ['Join the Movement', '/join'],
                 ].map(([label, href]) => (
                   <li key={label}>
+                    {href === '/join' ? <MovementLink className="kuba-footer-link text-sm leading-snug py-1 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 rounded-sharp" style={{ color: 'hsl(36 24% 68%)' }} /> :
                     <Link
                       href={href}
                       className="kuba-footer-link text-sm leading-snug py-1 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 rounded-sharp"
@@ -296,6 +298,7 @@ export default function Layout({ children }: LayoutProps) {
                     >
                       {label}
                     </Link>
+                    }
                   </li>
                 ))}
               </ul>

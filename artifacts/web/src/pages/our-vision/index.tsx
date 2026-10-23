@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'wouter';
+import MovementLink from '@/components/MovementLink';
 import { ArrowUpRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import HeroSurface from '@/components/HeroSurface';
@@ -129,7 +130,7 @@ export default function OurVision() {
           </ol>
           <Reveal className="mt-10 flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:justify-between">
             <p className="max-w-xl text-sm leading-relaxed text-ink-700">Explore existing programmes, editorial enquiries and member spaces. Membership opens possibilities; it does not guarantee investments, customers, introductions, certifications, media coverage or financial returns. Thanks the World stories are shared by members and published only after the Founder's review.</p>
-            <Link href="/join" data-testid="link-join-members"><Button size="xl" variant="default">JOIN THE MOVEMENT</Button></Link>
+            <MovementLink buttonSize="xl" data-testid="link-join-members" />
           </Reveal>
         </div>
       </section>
@@ -220,7 +221,7 @@ export default function OurVision() {
             <GoldThread className="mt-8 mx-auto" length="240px" node />
           </Reveal>
           <Reveal delay={100} className="mt-10 flex flex-wrap justify-center gap-4">
-            <Link href="/join" data-testid="link-join-final"><Button size="xl" variant="default">JOIN THE MOVEMENT</Button></Link>
+            <MovementLink buttonSize="xl" data-testid="link-join-final" />
             <Link href="/ecosystem" data-testid="link-ecosystem"><Button size="xl" variant="gold-outline">EXPLORE THE ECOSYSTEM</Button></Link>
           </Reveal>
         </div>

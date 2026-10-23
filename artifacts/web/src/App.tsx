@@ -34,6 +34,9 @@ import NewsDetail from '@/pages/news/detail';
 import CoverageDetail from '@/pages/news/coverage';
 import PinkOctoberNews from '@/pages/news/pink-october';
 import Partners from '@/pages/partners';
+import PartnershipOpportunity from '@/pages/partners/partnership';
+import InvestmentOpportunity from '@/pages/partners/investment';
+import SectorHub from '@/pages/ecosystem/SectorHub';
 import PartnerDetail from '@/pages/partners/detail';
 import JoinTheMovement from '@/pages/join';
 import SignIn from '@/pages/sign-in';
@@ -105,6 +108,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/our-vision" component={OurVision} />
       <Route path="/ecosystem" component={Ecosystem} />
+      <Route path="/ecosystem/:slug" component={SectorHub} />
       <Route path="/community" component={Community} />
       <Route path="/community/members/:id" component={NetworkProfile} />
       <Route path="/invite/:code" component={Invitation} />
@@ -126,6 +130,8 @@ function Router() {
       <Route path="/news/pink-october-burj-khalifa" component={PinkOctoberNews} />
       <Route path="/news/:slug" component={NewsDetail} />
       <Route path="/partners" component={Partners} />
+      <Route path="/partners/partnership" component={PartnershipOpportunity} />
+      <Route path="/partners/investment" component={InvestmentOpportunity} />
       <Route path="/partners/:slug" component={PartnerDetail} />
       <Route path="/join" component={JoinTheMovement} />
       <Route path="/sign-in/*?" component={SignIn} />

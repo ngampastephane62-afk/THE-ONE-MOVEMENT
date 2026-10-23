@@ -2,7 +2,7 @@ export const INQUIRY_INTENTS = {
   investment: {
     eyebrow: 'INVESTMENT & PARTNERSHIPS',
     heading: 'INVEST IN THE ONE MOVEMENT MULTINATIONAL',
-    note: 'Discuss the project, its funding needs and development milestones directly with TOMI. This enquiry is not an investment commitment. Read the public investment presentation on the Partners page.',
+    note: 'Discuss the project, its funding needs and development milestones directly with TOMI. This enquiry is not an investment commitment. The investment presentation is available on the Partners investment page.',
     message: 'Investment enquiry — The One Movement Multinational\n\nI would like to discuss the project, its funding requirements, budget and development milestones.\nMy investment interests and indicative budget:\n',
     professional: false,
   },

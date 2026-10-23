@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'wouter';
+import MovementLink from '@/components/MovementLink';
 import { useAuth } from '@clerk/react';
 import { RotateCw } from 'lucide-react';
 import { useGetEcosystemMembers, type PublicMember } from '@workspace/api-client-react';
@@ -109,7 +110,7 @@ export default function FashionConnections() {
           ) : (
             <>
               <Link href="/sign-in" data-testid="link-connections-signin" className="inline-flex min-h-11 items-center bg-gold-500 px-5 text-xs font-semibold uppercase tracking-wider text-ink-900 hover:bg-gold-400">Sign in to connect</Link>
-              <Link href="/join" data-testid="link-connections-join" className="inline-flex min-h-11 items-center border border-lagoon-900 px-5 text-xs font-semibold uppercase tracking-wider text-lagoon-900 hover:bg-lagoon-900 hover:text-ivory-100">Join the Movement</Link>
+              <MovementLink data-testid="link-connections-join" className="inline-flex min-h-11 items-center border border-lagoon-900 px-5 text-xs font-semibold uppercase tracking-wider text-lagoon-900 hover:bg-lagoon-900 hover:text-ivory-100" />
             </>
           )}
           <p className="text-xs text-ink-700">Profiles are self-described, not verified or endorsed by TOMI.</p>

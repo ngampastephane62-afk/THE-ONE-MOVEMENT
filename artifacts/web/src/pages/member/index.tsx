@@ -29,6 +29,7 @@ import FounderPartners from './FounderPartners';
 import FounderPrograms from './FounderPrograms';
 import SettingsPage from './Settings';
 import MemberWelcome from './MemberWelcome';
+import MemberOnboarding from './Onboarding';
 import Connections from './Connections';
 import ThanksEmiratesForm from './ThanksEmirates';
 import ThanksTheWorldMember from './ThanksTheWorld';
@@ -101,7 +102,7 @@ function CompleteProfile({ me }: { me: Ctx['me'] }) {
     <div className="mx-3 mb-4 flex flex-wrap items-center gap-3 rounded-2xl border border-sand-200 bg-ivory-50 p-3 md:mx-0" data-testid="panel-complete-profile">
       <Avatar m={me} size={36} />
       <p className="min-w-0 flex-1 text-sm text-ink-800">Complete your profile only if you wish: add your role, sectors, photo and a short description. Your saved sectors also help you find related programmes and resources in Workspace. You can explore without completing your profile.</p>
-      <Link href="/member/settings" className={btn} data-testid="link-complete-profile">Complete profile</Link>
+      <Link href="/member/onboarding" className={btn} data-testid="link-complete-profile">Complete profile</Link>
       <button type="button" className="text-xs text-sand-400 hover:text-ink-800" onClick={() => { try { localStorage.setItem(key, '1'); } catch { /* ignore */ } setHidden(true); }} data-testid="button-dismiss-complete">Later</button>
     </div>
   );
@@ -224,8 +225,8 @@ function NetworkGate() {
   if (!state.me) {
     return (
       <Onboard eyebrow="WELCOME" title="Create your member profile">
-        <p className="mb-6 text-sm text-ink-700">Membership is free. Your name is enough to begin; completing the rest of your profile is optional. Creating a profile does not activate network participation or grant official certification.</p>
-        <ProfileForm initial={profileQ.data?.profile ?? null} defaultName={user?.fullName ?? ''} onDone={() => stateQ.refetch()} />
+        <p className="mb-6 text-sm text-ink-700">Membership is free. Add your name, profession, country and at least one sector to set up your profile. Creating a profile does not activate network participation, make you public or grant official certification.</p>
+        <ProfileForm onboarding initial={profileQ.data?.profile ?? null} defaultName={user?.fullName ?? ''} onDone={() => stateQ.refetch()} />
       </Onboard>
     );
   }
@@ -254,6 +255,7 @@ function NetworkGate() {
           <Route path="/member/business/:memberId" component={BusinessDetail} />
           <Route path="/member/business" component={Business} />
           <Route path="/member/settings" component={SettingsPage} />
+          <Route path="/member/onboarding" component={MemberOnboarding} />
           <Route path="/member/thanks-emirates" component={ThanksEmiratesForm} />
           <Route path="/member/thanks-the-world" component={ThanksTheWorldMember} />
           <Route><Redirect to="/member" replace /></Route>

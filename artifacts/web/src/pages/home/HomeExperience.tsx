@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'wouter';
+import MovementLink from '@/components/MovementLink';
 import { Button } from '@/components/ui/button';
 import GoldThread from '@/components/GoldThread';
 import ResponsiveMedia from '@/components/ResponsiveMedia';
@@ -182,9 +183,7 @@ export default function HomeExperience() {
             You don&apos;t just join a platform. You become part of a global mission.
             The public website introduces TOMI. Participation begins with an expression of interest and a real conversation.
           </p>
-          <Link href="/join" className="mt-9 inline-block">
-            <Button size="xl">JOIN THE MOVEMENT</Button>
-          </Link>
+          <MovementLink buttonSize="xl" className="mt-9 inline-block" />
         </Reveal>
       </section>
     </div>

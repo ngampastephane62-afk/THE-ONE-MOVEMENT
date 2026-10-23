@@ -4,7 +4,7 @@ import { getGetPartnerDirectoryQueryKey, useGetPartnerDirectory } from '@workspa
 import PartnerNetworkHero from '@/components/partners/PartnerNetworkHero';
 import PartnerGallery, { PartnerGallerySkeleton } from '@/components/partners/PartnerGallery';
 import PartnerOpportunities from '@/components/partners/PartnerOpportunities';
-import InvestmentPresentation from '@/components/partners/InvestmentPresentation';
+import PartnerOrbitStage from '@/components/partners/PartnerOrbitStage';
 import BroadcasterAudience from '@/components/partners/BroadcasterAudience';
 import SectionHeading from '@/components/SectionHeading';
 import Reveal from '@/components/Reveal';
@@ -28,6 +28,7 @@ export default function Partners() {
       </Helmet>
 
       <PartnerNetworkHero c={c} count={items.length} />
+      <PartnerOrbitStage />
 
       <section id="partner-gallery" className="scroll-mt-20 py-section-lg" aria-labelledby="partner-gallery-heading" data-testid="section-partner-gallery">
         <div className="mx-auto max-w-7xl px-6">
@@ -52,7 +53,6 @@ export default function Partners() {
       </section>
 
       <PartnerOpportunities />
-      <InvestmentPresentation />
       <BroadcasterAudience />
 
       <section className="border-t border-sand-200 py-section-lg" aria-labelledby="archive-heading">
@@ -72,7 +72,7 @@ export default function Partners() {
             <h2 id="collab-heading" className="font-display text-[clamp(2rem,6vw,4.2rem)] leading-[1] tracking-[0.02em]" data-testid="text-collab-title">{c.collaborationTitle}</h2>
             <p className="mt-5 text-sm uppercase tracking-[0.24em] text-gold-400 sm:text-base" data-testid="text-collab-subtitle">{c.collaborationSubtitle}</p>
             <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Link href="/join#institutional-inquiry" className="inline-flex min-h-12 items-center rounded-full bg-gold-500 px-7 text-xs font-semibold uppercase tracking-[0.16em] text-ink-900 hover:bg-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ivory-50 focus-visible:ring-offset-2 focus-visible:ring-offset-lagoon-900" data-testid="link-cta-partnership">{c.partnershipButton}</Link>
+              <Link href="/join?intent=partnership" className="inline-flex min-h-12 items-center rounded-full bg-gold-500 px-7 text-xs font-semibold uppercase tracking-[0.16em] text-ink-900 hover:bg-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ivory-50 focus-visible:ring-offset-2 focus-visible:ring-offset-lagoon-900" data-testid="link-cta-partnership">{c.partnershipButton}</Link>
               <Link href="/join" className="inline-flex min-h-12 items-center rounded-full border border-ivory-100/40 px-7 text-xs font-semibold uppercase tracking-[0.16em] text-ivory-50 hover:border-gold-400 hover:text-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400" data-testid="link-cta-conversation">{c.conversationButton}</Link>
             </div>
           </Reveal>

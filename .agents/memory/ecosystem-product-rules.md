@@ -51,11 +51,17 @@ Members should be able to list Instagram, Facebook, TikTok and LinkedIn profiles
 
 **How to apply:** Treat a profile URL, an authorised account connection and a replicated post as separate capabilities. Preserve member choice and TOMI publishing eligibility; never describe an entered URL as a connected account or automatically copy content without authorisation.
 
-Member discovery should use explicit saved sector choices, while keeping all 17 official sectors accessible. With no chosen sector, preserve general discovery. Profile completion is optional; discovery must not introduce mandatory onboarding or expose private preferences.
+An authenticated TOMI account has already joined the Movement. Never require a second membership application or generic expression of interest. Keep opportunity enquiries separate from membership, and network participation consent separate from both.
 
-**Why:** The Founder authorized targeted welcome and discovery improvements, not inferred-interest personalization, a recommendation algorithm or a second member identity.
+**Why:** The later ecosystem architecture directive explicitly corrects duplicate membership journeys and calls for one member identity.
 
-**How to apply:** Reuse existing programmes, resources and people discovery. Do not imply that the “For You” feed is algorithmically personalized, bookmarks register participation, programme links guarantee admission, or activation unlocks all messaging. Subscription and messaging eligibility changes require separate authorization.
+**How to apply:** Use My Space for signed-in members. First-time profile setup may require essential supported fields; existing members retain their account and access, with a prefilled completion invitation rather than re-registration. Individual/organization storage extensions require approval before migration. Do not create a second password or identity system.
+
+Member discovery should use explicit saved sector choices and transparent suggestions from declared professional information, while keeping all 17 official sectors accessible. With no chosen sector, preserve general discovery. A recommendation is not a saved follow or an algorithmically personalized feed.
+
+**Why:** The later directive authorizes relevant sector recommendations, multiple followed worlds and structured onboarding; it does not authorize automatic following or disclosure of private preferences.
+
+**How to apply:** Save choices only after member confirmation. The seventeen sectors are ongoing communities, distinct from the six official programmes. Reuse existing resources and authorized network data; do not pretend an absent course, sector publishing system or opportunity is live. Bookmarks are not registrations, programme links are not admission, and subscription or messaging eligibility changes still need separate authorization.
 
 The One Awards should include every officially established ambassador, with sourced biographies and official social links. Separate regional impact-leader selections (Africa, USA and eventually other regions/sectors) from TOMI ambassadors.
 

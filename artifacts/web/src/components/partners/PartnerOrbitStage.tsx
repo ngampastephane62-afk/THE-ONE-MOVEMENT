@@ -112,9 +112,9 @@ export default function PartnerOrbitStage() {
               {s.word}
             </p>
           </div>
-          <h1 className="mt-6 text-2xl text-ivory-100 uppercase sm:text-3xl" style={{ fontFamily: 'var(--font-display)' }}>
+          <h2 className="mt-6 text-2xl text-ivory-100 uppercase sm:text-3xl" style={{ fontFamily: 'var(--font-display)' }}>
             Build with the Movement.
-          </h1>
+          </h2>
           <p className="mt-4 max-w-lg text-ivory-200 leading-relaxed">
             Governments, UN entities, diplomatic missions, a leading Congolese bank and international brands have worked with the Movement across a decade of editions between Africa, the UAE and the world.
           </p>

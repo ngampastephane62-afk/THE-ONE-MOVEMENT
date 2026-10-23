@@ -182,3 +182,45 @@ mtime_ms = 1792765767813
 storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/bdbf245a-f23c-4a70-86b1-d39edf503015/88d795ff-8c6c-4da3-a180-d19389fa4fb0"
 storage_version_token = "1792766401824801"
 content_type = "image/jpeg"
+
+[[outputs]]
+id = "V95uZkzjohTKyr9pXAFE-"
+uri = "file://reports/ecosystem-architecture-audit.html"
+type = "html"
+title = "Écosystème TOMI — Rapport de réalisation"
+description = "Les 11 points demandés, les contrôles publics, les limites et les fonctions restant soumises à approbation."
+logical_id = "c8b5d5c3-d1bf-4361-b1ac-ddf2387024e2"
+content_hash = "sha256:4a5d18534b53e3322d7e5da8bfd68ad754b302bc28590faeac6f38655540a6de"
+size = 13121
+mtime_ms = 1792775904890
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/c8b5d5c3-d1bf-4361-b1ac-ddf2387024e2/b5959838-210d-466a-a49a-1075273ea8ab"
+storage_version_token = "1792776000756325"
+content_type = "text/html"
+
+[[outputs]]
+id = "mMtGVRICoRvbDxpSzEvck"
+uri = "file://reports/member-profile-extension-proposal.md"
+type = "text"
+title = "Profils Individuel / Organisation — Proposition de schéma"
+description = "Cinq champs proposés, confidentialité et étapes d’approbation avant toute migration."
+logical_id = "cd1a6b7d-ac49-47b1-8189-89df01636427"
+content_hash = "sha256:e010f7c7889da1f461add05ddcff5ecf611588aeed1943081f57eb297b33a7db"
+size = 7118
+mtime_ms = 1792775243955
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/cd1a6b7d-ac49-47b1-8189-89df01636427/c34977d7-fc3d-4aff-97b8-20c17f53953a"
+storage_version_token = "1792776002040063"
+content_type = "text/markdown"
+
+[[outputs]]
+id = "z9BBm9U3rgLTh4rzNdzO8"
+uri = "file://screenshots/task31-fashion-hub-mobile.jpg"
+type = "image"
+title = "Monde Fashion — Aperçu mobile"
+description = "Page sectorielle dédiée, navigation et identité visuelle à 390 px."
+logical_id = "258a7848-b1c2-43fd-b9d5-620e424bbc53"
+content_hash = "sha256:99a1125514fea16c60ec0ee11da07a4d2fe19ecf712063939f657980018ac9a0"
+size = 43566
+mtime_ms = 1792775417894
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/258a7848-b1c2-43fd-b9d5-620e424bbc53/8ca8e8b1-5174-453b-bed3-f1c6fc0b233a"
+storage_version_token = "1792776003327445"
+content_type = "image/jpeg"

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'wouter';
+import MovementLink from '@/components/MovementLink';
 import { Pause, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import GoldThread from '@/components/GoldThread';
@@ -68,9 +69,7 @@ export default function HomeBrandHero() {
           </p>
         </Reveal>
         <Reveal delay={120} className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-          <Link href="/join" data-testid="link-hero-join">
-            <Button size="lg">JOIN THE MOVEMENT</Button>
-          </Link>
+          <MovementLink buttonSize="lg" data-testid="link-hero-join" />
           <Link href="/ecosystem" data-testid="link-hero-ecosystem">
             <Button size="lg" variant="gold-outline">EXPLORE THE ECOSYSTEM</Button>
           </Link>

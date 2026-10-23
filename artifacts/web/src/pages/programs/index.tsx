@@ -4,6 +4,7 @@ import VideoActions from "@/components/editorial/VideoActions";
 import { programCardMedia } from '@/lib/cover-media';
 import ProgrammeCover from '@/components/programs/ProgrammeCover';
 import { Link } from 'wouter';
+import MovementLink from '@/components/MovementLink';
 import { Button } from '@/components/ui/button';
 import HeroSurface from '@/components/HeroSurface';
 import { MotionToggle, WordLine, useProgramsMotion } from './ProgramsMotion';
@@ -209,18 +210,14 @@ export default function Programs() {
             className="mt-8 text-ivory-200 text-lg leading-relaxed max-w-xl mx-auto animate-fade-in"
             style={{ animationDelay: '0.15s' }}
           >
-            Join the Movement to receive official program announcements and
-            opportunities to participate.
+            Discover official programme announcements and opportunities to participate.
+            Each programme sets out its current status and participation process.
           </p>
           <div
             className="mt-10 flex flex-wrap justify-center gap-4 animate-fade-in"
             style={{ animationDelay: '0.25s' }}
           >
-            <Link href="/join">
-              <Button size="xl" variant="default">
-                JOIN THE MOVEMENT
-              </Button>
-            </Link>
+            <MovementLink buttonSize="xl" />
           </div>
           <p
             className="mt-12 text-sm font-semibold tracking-wide animate-fade-in"

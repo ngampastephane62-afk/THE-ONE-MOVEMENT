@@ -131,12 +131,13 @@ function Field({
 
 /* ── Component ────────────────────────────────────────────────────────────── */
 
-export default function InquiryForm({ privacyRequest = false, intent, serviceOffer, existingSponsor = false, participationCategory, onParticipationCategoryChange, programmeSlug, programmeInterest }: {
+export default function InquiryForm({ privacyRequest = false, intent, serviceOffer, existingSponsor = false, participationCategory, onParticipationCategoryChange, programmeSlug, programmeInterest, documentationRequest = false }: {
   privacyRequest?: boolean; intent?: InquiryIntent; serviceOffer?: ProgrammeServiceOffer; existingSponsor?: boolean;
   participationCategory?: string;
   onParticipationCategoryChange?: (value: string) => void;
   programmeSlug?: string;
   programmeInterest?: string;
+  documentationRequest?: boolean;
 }) {
   const inquiryDefinition = privacyRequest ? undefined : getInquiryDefinition(intent);
   const programme = !privacyRequest ? getProgramBySlug(serviceOffer?.programme ?? programmeSlug ?? (intent === 'diplomatic-gala' || intent === 'fashion-week' ? intent : '')) : undefined;
@@ -157,7 +158,9 @@ export default function InquiryForm({ privacyRequest = false, intent, serviceOff
     ...INITIAL,
     message: isSpeaker ? '' : serviceOffer
       ? 'My professional background, objectives and preferred participation:\n'
-      : inquiryDefinition?.message ?? '',
+      : (documentationRequest && (intent === 'partnership' || intent === 'investment')
+        ? `Documentation request: I would like to receive the full ${intent === 'investment' ? 'investment' : 'partnership'} documentation.\n\n`
+        : '') + (inquiryDefinition?.message ?? ''),
     organizationType: isProfessional || (!privacyRequest && intent === 'partnership') ? 'partner' : '',
     contactRole: isGala ? 'Gala participation contact' : isFashion ? 'Fashion Week participation contact' : '',
   }));
