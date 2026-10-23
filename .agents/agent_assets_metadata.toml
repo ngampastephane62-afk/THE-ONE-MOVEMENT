@@ -224,3 +224,17 @@ mtime_ms = 1792775417894
 storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/258a7848-b1c2-43fd-b9d5-620e424bbc53/8ca8e8b1-5174-453b-bed3-f1c6fc0b233a"
 storage_version_token = "1792776003327445"
 content_type = "image/jpeg"
+
+[[outputs]]
+id = "oC48N3JO7iNboZYLeUQ1O"
+uri = "file://reports/member-profile-sql-review.html"
+type = "html"
+title = "Profils Individuel / Organisation — SQL prêt pour revue"
+description = "SQL exact, contrôles de compatibilité et confidentialité, confirmation du nettoyage et étapes restant soumises à autorisation. Migration non appliquée."
+logical_id = "3054caca-af3f-4273-88e9-b2cf1450dfe9"
+content_hash = "sha256:d6e8b3585db678a3b50db1c51f53ba2261dffd77bf1a54c72d1cdcfff3a86e88"
+size = 5974
+mtime_ms = 1792776937802
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/3054caca-af3f-4273-88e9-b2cf1450dfe9/0870d1b2-bdf8-4787-820b-b779a6e19c48"
+storage_version_token = "1792777027227324"
+content_type = "text/html"

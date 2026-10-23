@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fr"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TOMI — SQL des profils : revue avant application</title>
+<style>
+body{margin:0;background:#f7f4eb;color:#17312b;font:16px/1.65 system-ui,sans-serif}
+main{max-width:960px;margin:auto;padding:32px 20px 64px}h1{line-height:1.2}h2{margin-top:32px;font-size:23px}
+.status{padding:18px;border-left:4px solid #a77c33;background:#fff}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:10px;text-align:left;border-bottom:1px solid #d7d4c9;vertical-align:top}
+code{overflow-wrap:anywhere}pre{padding:18px;overflow:auto;background:#102a24;color:#f5f1e7;font:13px/1.65 ui-monospace,monospace;border-radius:8px}
+small{color:#4e6259}li{margin:8px 0}
+</style><main>
+<p>THE ONE MOVEMENT INTERNATIONAL</p>
+<h1>Profils Individuel / Organisation : SQL préparé, non appliqué</h1>
+<p class="status"><strong>Autorisation reçue :</strong> préparer le SQL des cinq champs approuvés. Cette autorisation ne couvre ni l’application de la migration, ni la mise en production. Le schéma utilisé par l’API et l’historique canonique des migrations restent inchangés.</p>
+<h2>1. Nettoyage autorisé du test</h2>
+<p>La demande fictive n°12 a été supprimée uniquement en développement, avec un filtre combinant identifiant, identité de test, date exacte et statut. Le DELETE a renvoyé uniquement l’identifiant 12 ; le contrôle suivant retourne zéro ligne restante pour cet identifiant. Aucun autre enregistrement n’a été ciblé. Aucun lien de suppression en cascade ni déclencheur personnalisé n’était associé à cette table.</p>
+<h2>2. Extension approuvée</h2>
+<table><thead><tr><th>Champ</th><th>Type</th><th>Règle</th></tr></thead><tbody>
+<tr><td>account_type</td><td>text</td><td>individual ou organization</td></tr>
+<tr><td>city_region</td><td>varchar(120)</td><td>Ville / région privée</td></tr>
+<tr><td>organization_type</td><td>varchar(100)</td><td>Type d’organisation privé</td></tr>
+<tr><td>contact_name</td><td>varchar(100)</td><td>Contact privé, pas nom public implicite</td></tr>
+<tr><td>main_sector</td><td>text</td><td>Un des 17 identifiants des mondes publics</td></tr>
+</tbody></table>
+<p>Tous les champs sont facultatifs en base, sans valeur par défaut : les profils existants ne sont ni reclassés ni bloqués. Aucun profil supplémentaire ni compte Clerk n’est créé. La validation de complétude future dépendra du type choisi par le membre.</p>
+<h2>3. SQL exact pour revue</h2>
+<p>Généré hors connexion avec Drizzle ; conservé dans <code>lib/db/review/member-profiles/0016_member_profile_extension_review.sql</code>. Le numéro 0016 est prévisionnel et devra être revérifié avant toute application.</p>
+<pre>ALTER TABLE "ecosystem_members" ADD COLUMN "account_type" text;--&gt; statement-breakpoint
+ALTER TABLE "ecosystem_members" ADD COLUMN "city_region" varchar(120);--&gt; statement-breakpoint
+ALTER TABLE "ecosystem_members" ADD COLUMN "organization_type" varchar(100);--&gt; statement-breakpoint
+ALTER TABLE "ecosystem_members" ADD COLUMN "contact_name" varchar(100);--&gt; statement-breakpoint
+ALTER TABLE "ecosystem_members" ADD COLUMN "main_sector" text;--&gt; statement-breakpoint
+ALTER TABLE "ecosystem_members" ADD CONSTRAINT "ecosystem_members_account_type_check" CHECK ("ecosystem_members"."account_type" IS NULL OR "ecosystem_members"."account_type" IN ('individual', 'organization'));--&gt; statement-breakpoint
+ALTER TABLE "ecosystem_members" ADD CONSTRAINT "ecosystem_members_main_sector_check" CHECK ("ecosystem_members"."main_sector" IS NULL OR "ecosystem_members"."main_sector" IN ('fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'real-estate', 'health-care', 'humanitarian-action'));</pre>
+<h2>4. Vérifications effectuées</h2>
+<ul>
+<li>Comparaison des snapshots : cinq colonnes et deux contraintes nouvelles seulement ; toutes les définitions existantes du profil et les 49 autres tables sont inchangées.</li>
+<li>Aucun effacement, renommage, remplacement de données, ajout de valeur par défaut ou obligation de remplir les nouveaux champs sur les anciens comptes.</li>
+<li>Les 17 valeurs du secteur principal correspondent aux identifiants des mondes publics.</li>
+<li>Les cinq colonnes sont encore absentes de la base de développement ; aucun SQL de migration n’a été exécuté.</li>
+<li>La configuration de revue ne possède aucun identifiant de connexion. Les fichiers de revue ne sont ni importés par l’API ni inscrits dans sa file de migrations.</li>
+</ul>
+<p>Ces contrôles sont statiques : ils ne remplacent pas une application autorisée ni les futurs tests authentifiés. La taxonomie partagée historique contient 15 secteurs ; la validation du nouveau champ devra être alignée sur les 17 mondes, sans élargir implicitement les contrats publics.</p>
+<h2>5. Étapes suivantes soumises à autorisation</h2>
+<ol>
+<li>Contrôler à nouveau la cible de développement, les changements intervenus et les éventuels verrous de table.</li>
+<li>Intégrer la migration et les métadonnées revues à l’historique canonique ; ne pas écraser un schéma plus récent.</li>
+<li>Appliquer uniquement après autorisation distincte. L’ajout de colonnes et de contraintes nécessite des verrous : aucun engagement d’absence totale d’interruption n’est fait.</li>
+<li>Brancher ensuite les contrats propriétaires, les formulaires Individuel / Organisation et leurs validations, puis tester la compatibilité et la confidentialité.</li>
+</ol>
+<p class="status">Les champs privés ne doivent jamais être ajoutés automatiquement aux profils publics, résultats de recherche, publications imbriquées ou caches publics. Aucune modification de Clerk, aucun paiement et aucun déploiement n’ont été effectués.</p>
+</main></html>

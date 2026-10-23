@@ -2,6 +2,7 @@
 - [Join Stage 1 Backend](join-backend.md) — trust proxy, enum-as-text convention, lib/shared tsconfig, in-memory rate limiter, upsert transaction pattern.
 - [Join Page Frontend](join-frontend.md) — @workspace/shared in web, PathCard→form wiring, API URL pattern, form error handling, SuccessPanel focus management.
 - [DB Migration Rule and Workflow](db-migration-rule.md) — generate→review→migrate mandatory; push --force prohibited; drizzle-kit 0.31.10 quirks (no status cmd, relative out path required).
+- [Database timestamp precision](database-timestamp-precision.md) — exact write guards need PostgreSQL microseconds; tool-formatted ISO timestamps may truncate them.
 - [Public live-versus-future boundary](public-product-truth.md) — current site/programs/enquiries are live; AI, social, member platform and commerce remain future until functional.
 - [Homepage reveal principle](homepage-reveal-principle.md) — keep Home focused on introduction, visual proof, discovery and Join; detailed explanations belong on dedicated pages.
 - [Browser media verification](browser-media-verification.md) — test Chromium may lack H.264/AAC; check codec support before treating a valid MP4 as broken.

@@ -2,9 +2,9 @@
 
 ## État et autorisation
 
-Proposition uniquement. Aucun changement de schéma, de permissions, de configuration Clerk ou de production n’a été effectué.
+Schéma approuvé par le Founder ; SQL préparé pour revue, non appliqué. Aucun changement du schéma actif, des permissions, de la configuration Clerk ou de production n’a été effectué.
 
-L’approbation demandée porte sur le schéma ci-dessous et la préparation du SQL de migration pour revue. Elle ne vaut pas autorisation d’appliquer la migration ni de déployer.
+L’approbation reçue porte sur le schéma ci-dessous et la préparation du SQL de migration pour revue. Elle ne vaut pas autorisation d’appliquer la migration ni de déployer. Le SQL généré et isolé se trouve dans `lib/db/review/member-profiles/0016_member_profile_extension_review.sql` ; la revue et ses limites sont dans `reports/member-profile-sql-review.html`.
 
 ## Ce qui fonctionne déjà
 
