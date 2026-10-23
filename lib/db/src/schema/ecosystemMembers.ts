@@ -12,6 +12,9 @@ export const ecosystemMembersTable = pgTable("ecosystem_members", {
   organizationType: varchar("organization_type", { length: 100 }),
   contactName: varchar("contact_name", { length: 100 }),
   mainSector: text("main_sector"),
+  activeSectors: text("active_sectors").array(),
+  locationVisibility: text("location_visibility").$type<"hidden" | "country" | "country_city">().notNull().default("hidden"),
+  otherProfessionalActivity: varchar("other_professional_activity", { length: 300 }),
   fullName: text("full_name").notNull(),
   profession: text("profession").notNull(),
   organization: text("organization").notNull().default(""),
@@ -36,4 +39,16 @@ export const ecosystemMembersTable = pgTable("ecosystem_members", {
 }, (table) => [
   check("ecosystem_members_account_type_check", sql`${table.accountType} IS NULL OR ${table.accountType} IN ('individual', 'organization')`),
   check("ecosystem_members_main_sector_check", sql`${table.mainSector} IS NULL OR ${table.mainSector} IN ('fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'real-estate', 'health-care', 'humanitarian-action')`),
+  check("ecosystem_members_location_visibility_check", sql`${table.locationVisibility} IN ('hidden', 'country', 'country_city')`),
+  check("ecosystem_members_active_sectors_check", sql`${table.activeSectors} IS NULL OR (
+    cardinality(${table.activeSectors}) BETWEEN 1 AND 3
+    AND array_ndims(${table.activeSectors}) = 1
+    AND array_lower(${table.activeSectors}, 1) = 1
+    AND array_position(${table.activeSectors}, NULL) IS NULL
+    AND ${table.activeSectors} <@ ARRAY['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'real-estate', 'health-care', 'humanitarian-action']::text[]
+    AND (cardinality(${table.activeSectors}) < 2 OR ${table.activeSectors}[1] <> ${table.activeSectors}[2])
+    AND (cardinality(${table.activeSectors}) < 3 OR (${table.activeSectors}[1] <> ${table.activeSectors}[3] AND ${table.activeSectors}[2] <> ${table.activeSectors}[3]))
+    AND ${table.mainSector} IS NOT NULL
+    AND ${table.mainSector} = ANY(${table.activeSectors})
+  )`),
 ]);

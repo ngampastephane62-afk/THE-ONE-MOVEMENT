@@ -1,8 +1,11 @@
-# Secteurs actifs et confidentialité — SQL préparé, NON APPLIQUÉ
+# Secteurs actifs et confidentialité — migration appliquée en développement
 
-Autorisation reçue : schéma et génération SQL uniquement. Aucun changement à la
-base, au schéma importé par le serveur ou au journal canonique des migrations.
-Ce dossier ne doit jamais être importé par l'application.
+Après l'autorisation distincte d'application, la migration canonique
+`0017_active_sector_privacy` a été appliquée uniquement en développement.
+La cible a été comparée à celle du service de base de développement et les
+17 migrations précédentes ont été vérifiées par leurs empreintes SQL.
+Ce dossier conserve la proposition historique ; ne jamais rejouer son SQL
+manuellement ni importer son schéma dans l'application.
 
 ## Trois colonnes proposées
 
@@ -12,8 +15,8 @@ Ce dossier ne doit jamais être importé par l'application.
   `main_sector`, déjà présent, doit alors être renseigné et appartenir à ce choix.
   L'ordre des secteurs ne remplace pas la sélection explicite du principal.
 - `location_visibility text NOT NULL DEFAULT 'hidden'`, limité à `hidden`,
-  `country`, `country_city`. Les profils existants recevront `hidden` si la
-  migration est approuvée ; aucune donnée de localisation existante n'est effacée.
+  `country`, `country_city`. Les profils existants ont reçu `hidden` ;
+  aucune donnée de localisation existante n'est effacée.
 - `other_professional_activity varchar(300)`, nullable, privé, sans création de
   secteur officiel.
 
@@ -35,13 +38,20 @@ Il comporte trois ADD COLUMN et deux ADD CONSTRAINT, sans DML ni DROP.
 Ne pas copier ce fichier dans `drizzle/` avant autorisation distincte et
 vérification du prochain numéro de migration (d'autres travaux peuvent avancer).
 
-## Avant une application ultérieure
+## Procédure suivie pour cette application
 
-Demander l'autorisation d'application en développement. Vérifier la cible et
-l'historique réel, régénérer depuis l'état canonique actuel, comparer le SQL puis
-appliquer par le workflow normal generate → review → migrate.
-Prévoir des délais de verrouillage et d'exécution bornés : ALTER TABLE prend des
-verrous et les contraintes sont validées sur les lignes existantes.
+Autorisation d'application en développement obtenue. Cible et historique réel
+vérifiés, SQL canonique généré puis comparé au SQL approuvé et appliqué avec
+`db:migrate`, délai de verrouillage de 5 secondes et délai d'exécution de
+30 secondes. Aucun déploiement, aucune écriture en production.
+
+Contrôles après application : 27 profils conservés ; empreinte agrégée de tous
+les anciens champs identique avant/après ; les 27 nouvelles préférences sont
+`active_sectors = NULL`, `location_visibility = hidden` et
+`other_professional_activity = NULL`. Les deux contraintes sont validées,
+le journal contient 18 migrations et la génération depuis le schéma réel
+ne produit aucun diff. L'API redémarrée renvoie un annuaire public valide,
+sans propagation des nouveaux champs privés.
 
 L'application de ces champs ne rendra pas le parcours membre fonctionnel à elle
 seule. La validation API, les formulaires préremplis, l'édition, les projections
