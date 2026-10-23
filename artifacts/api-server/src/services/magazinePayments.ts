@@ -4,6 +4,7 @@ import type Stripe from "stripe";
 import { getUncachableStripeClient } from "../stripeClient";
 import { stripeReady } from "./networkPayments";
 import { NetworkError } from "./networkAuth";
+import { readMagazineAvailability } from "./magazineAvailability";
 
 export const MAGAZINE_CONSENT = "tropik-magazine-retail-2026-v1";
 export const FEATURE_PRICE = 20000;
@@ -11,22 +12,8 @@ let cached: { expires: number; available: boolean; testMode: boolean; reason: st
 
 export async function magazineConfiguration() {
   if (!cached || cached.expires < Date.now()) {
-    let available = false, testMode = false;
-    let reason = "Magazine payments are not ready. No money has been collected.";
-    if (stripeReady) {
-      try {
-        const stripe = await getUncachableStripeClient();
-        const balance = await stripe.balance.retrieve();
-        testMode = !balance.livemode;
-        available = !testMode;
-        reason = testMode
-          ? "The connected payment account is in test mode. Magazine sales are not open and no real payment can be taken."
-          : "One inside printed page costs USD200. Editorial approval and publication conditions are required before payment.";
-      } catch {
-        reason = "Payment availability could not be checked. Please retry later.";
-      }
-    }
-    cached = { expires: Date.now() + 15_000, available, testMode, reason };
+    const settings = await readMagazineAvailability(stripeReady, getUncachableStripeClient);
+    cached = { expires: Date.now() + 15_000, ...settings };
   }
   const { expires: _, ...settings } = cached;
   return { ...settings, digitalUsd: 10, printUsd: 25, shippingMinUsd: 10, shippingMaxUsd: 30, pageCount: 10 };

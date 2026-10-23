@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="fr"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TOMI — Revue SQL et garde-fou des paiements</title>
+<style>body{margin:0;background:#f5f3ec;color:#162c30;font:16px/1.65 system-ui,sans-serif}main{max-width:850px;margin:auto;padding:36px 22px}h1,h2{line-height:1.2}h2{margin-top:36px}code{overflow-wrap:anywhere}table{border-collapse:collapse;width:100%}th,td{padding:12px;text-align:left;border-bottom:1px solid #c7cdc7;vertical-align:top}.status{padding:18px;background:#e1eee6;border-left:4px solid #80651e}li{margin-bottom:10px}</style>
+<main>
+<h1>TOMI — SQL préparé et contrôle des paiements corrigé</h1>
+<p class="status"><strong>Développement uniquement.</strong> Les trois nouveaux champs ne sont pas appliqués. Aucun déploiement, paiement, changement du compte Stripe ou modification de l’authentification.</p>
+<h2>1. Extension proposée</h2>
+<table><thead><tr><th>Champ</th><th>Règle</th></tr></thead><tbody>
+<tr><td><code>active_sectors</code></td><td>Tableau nullable, sans choix automatique. Une fois confirmé : un à trois secteurs officiels distincts et secteur principal explicite, inclus dans ce choix.</td></tr>
+<tr><td><code>location_visibility</code></td><td>Valeur obligatoire, défaut <code>hidden</code>. Autres valeurs : <code>country</code> et <code>country_city</code>. Les localisations privées restent conservées.</td></tr>
+<tr><td><code>other_professional_activity</code></td><td>Texte privé facultatif, maximum 300 caractères, sans création de secteur officiel.</td></tr>
+</tbody></table>
+<p>Les intérêts existants ne sont ni convertis, ni tronqués, ni supprimés. Les profils existants restent compatibles grâce aux secteurs actifs non renseignés. Les autres champs et les accès ne sont pas modifiés.</p>
+<h2>2. SQL isolé et revu</h2>
+<p>Le fichier <code>lib/db/review/active-sector-privacy/0017_active_sector_privacy_review.sql</code> contient trois ajouts de colonnes et deux contraintes. Il a été généré avec Drizzle à partir du journal courant puis comparé au fichier conservé. Les 49 autres tables sont inchangées. Aucun DELETE, UPDATE, INSERT, DROP, TRUNCATE ou RENAME.</p>
+<p>Le schéma importé par l’application et le journal canonique sont inchangés. Aucun lancement de migration. Avant application, il faudra revalider la cible de développement et l’historique courant, puis appliquer avec des délais de verrouillage et d’exécution bornés. ALTER TABLE nécessite des verrous et valide les contraintes sur les lignes existantes.</p>
+<p>Les dix cas de contrainte ont été évalués en PostgreSQL par SELECT uniquement : ancien profil, un secteur, trois secteurs, tableau vide, doublon, quatre secteurs, secteur inconnu, principal absent, principal extérieur au choix et entrée NULL. Résultats conformes.</p>
+<h2>3. Contrôle Stripe corrigé</h2>
+<p>La disponibilité du magazine ne repose plus seulement sur le mode réel du compte. Elle exige aussi <code>charges_enabled = true</code> et <code>card_payments = active</code>. En cas d’erreur, de mode test ou de capacité manquante, elle reste fermée.</p>
+<p>Les règles existantes restent en place : serveur Stripe prêt, approbation Founder, montant de la proposition et conditions de publication. Le cache court existant reste inchangé. Le contrôle humanitaire existant vérifiait déjà les capacités et son autorisation spécifique : il n’a pas été modifié.</p>
+<p>La correction utilise uniquement des lectures de capacité. Aucun checkout, produit, webhook, abonnement, encaissement ou modification du compte connecté n’a été créé pour les tests.</p>
+<h2>4. Vérifications</h2>
+<ul>
+<li>TypeScript API : réussi.</li>
+<li>Six tests : réussis, dont matrice des capacités, erreurs de connexion, accès PDF et validation des propositions éditoriales.</li>
+<li>API redémarrée et construction réussie. L’initialisation automatique Stripe reste explicitement désactivée dans l’aperçu de développement.</li>
+<li>GET de développement : magazine indisponible, humanitaire indisponible. Le premier est fermé par l’état de préparation du serveur ; la matrice de capacités a été vérifiée avec des clients simulés, pas avec un vrai paiement.</li>
+<li>Page publique Tropik contrôlée à 390 px : contenu lisible, pas de débordement apparent et pas d’erreur JavaScript dans la capture. Aucun test Safari réel ni transaction navigateur.</li>
+</ul>
+<h2>5. Ce qui reste à autoriser</h2>
+<p>Application de la migration en développement uniquement. Cette application ne suffira pas à rendre fonctionnels le choix des secteurs et le consentement de localisation : il restera à implémenter et vérifier les formulaires, la validation API, les projections publiques et imbriquées, les filtres et les caches. Aucun engagement d’encaissement réel ni de mise en production n’est inclus.</p>
+</main></html>

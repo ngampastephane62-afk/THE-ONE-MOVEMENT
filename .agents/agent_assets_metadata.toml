@@ -266,3 +266,17 @@ mtime_ms = 1792778575360
 storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/4f991a3c-076b-4d98-b314-ba72531a0a5c/bf120eb3-37f4-4db6-aaad-7e756e9a680c"
 storage_version_token = "1792778835001629"
 content_type = "image/jpeg"
+
+[[outputs]]
+id = "GAEC-Ir8wMoVL7ulTfbWd"
+uri = "file://reports/active-sector-privacy-payment-review.html"
+type = "html"
+title = "TOMI — Revue SQL et paiements"
+description = "Champs préparés mais non appliqués, contrôle Stripe corrigé et résultats des vérifications."
+logical_id = "d49c7a4b-7bc0-41db-814b-6f4e7ecf2cda"
+content_hash = "sha256:03c9dcfdad97617914dad0020f53b75acd28b244662353b93d187ffc1018ef59"
+size = 4967
+mtime_ms = 1792780213026
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/d49c7a4b-7bc0-41db-814b-6f4e7ecf2cda/3eb9761b-4213-4743-9229-74f4a6adedb9"
+storage_version_token = "1792780223166052"
+content_type = "text/html"
