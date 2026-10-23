@@ -2,9 +2,9 @@
 
 ## État et autorisation
 
-Schéma approuvé par le Founder ; SQL préparé pour revue, non appliqué. Aucun changement du schéma actif, des permissions, de la configuration Clerk ou de production n’a été effectué.
+Schéma approuvé par le Founder ; SQL ensuite appliqué avec son autorisation distincte, en développement uniquement. Les 27 profils existants sont conservés et leurs anciennes données sont inchangées. Les cinq champs sont encore vides ; leurs contrats propriétaires et formulaires ne sont pas activés. Les permissions, Clerk et la production restent inchangés.
 
-L’approbation reçue porte sur le schéma ci-dessous et la préparation du SQL de migration pour revue. Elle ne vaut pas autorisation d’appliquer la migration ni de déployer. Le SQL généré et isolé se trouve dans `lib/db/review/member-profiles/0016_member_profile_extension_review.sql` ; la revue et ses limites sont dans `reports/member-profile-sql-review.html`.
+La migration canonique appliquée est `lib/db/drizzle/0016_member_profile_extension.sql`. La copie de revue est historique et ne doit pas être rejouée. Aucune autorisation de déploiement n’a été donnée. Les nouvelles règles des trois secteurs actifs et de visibilité de localisation sont distinctes ; leur proposition complémentaire figure dans `reports/task32-architecture-status.html`.
 
 ## Ce qui fonctionne déjà
 

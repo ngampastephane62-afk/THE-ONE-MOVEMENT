@@ -27,6 +27,32 @@ Nationality must be supplied explicitly by the member, never inferred from IP ad
 
 **How to apply:** Reuse the existing member identity rather than creating duplicate profile tables. Do not reinterpret an ambiguous country field as nationality, copy private contacts into public profiles, or automatically activate the network during profile initialization.
 
+During the current free-access phase, the Founder requires one primary sector
+and up to two additional active sectors per member, while all seventeen worlds
+remain publicly discoverable. General interests are distinct from active sector
+membership; never erase or silently truncate existing member preferences.
+
+**Why:** The Founder explicitly revised the sector-access rule and requires one
+identity with three active sectors, not separate registrations.
+
+**How to apply:** Ask members to confirm their active choices rather than
+automatically converting old interests. Enforce an approved active-membership
+policy on the server, not only through a frontend selection limit. Future paid
+privileges require separate approval; do not charge for sector changes, equate
+donations with membership purchases or schedule automatic paid activation.
+
+Members must voluntarily choose location visibility: hidden, country, or
+country and city/region. Privacy-preserving defaults and editable controls are
+required; do not infer location or collect GPS/home addresses.
+
+**Why:** The Founder wants international professional discovery without exposing
+private residence details.
+
+**How to apply:** Reuse declared country/city information, keep owner inputs
+separate from public projections, and respect visibility in nested profiles,
+filters and caches. Free-text professional activities do not create new
+official sectors.
+
 Earlier requests to enable real monthly subscriptions do not authorize launching that model under the newer free-membership mandate.
 
 **Why:** The Founder now explicitly separates free belonging from optional paid services and rejects the existing monthly prices as approved pricing.

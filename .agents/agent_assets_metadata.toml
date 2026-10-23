@@ -238,3 +238,31 @@ mtime_ms = 1792776937802
 storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/3054caca-af3f-4273-88e9-b2cf1450dfe9/0870d1b2-bdf8-4787-820b-b779a6e19c48"
 storage_version_token = "1792777027227324"
 content_type = "text/html"
+
+[[outputs]]
+id = "PmCv6g4smKhO_8rO3YB9L"
+uri = "file://reports/task32-architecture-status.html"
+type = "html"
+title = "TOMI — Corrections d’architecture et blocages restants"
+description = "Rapport en 14 points : One Key, programmes, migration appliquée en développement, diagnostic Stripe et proposition backend à approuver."
+logical_id = "5aa5a99a-c876-4587-a72f-22d56ddfe0e4"
+content_hash = "sha256:b8a4626b87598eb5f0c76353571f62b5c5172f01de02d72c1dafbeac1d5f56d1"
+size = 11097
+mtime_ms = 1792778777658
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/5aa5a99a-c876-4587-a72f-22d56ddfe0e4/e89fbe6c-34d4-44c4-a681-8277c0514d34"
+storage_version_token = "1792778833712086"
+content_type = "text/html"
+
+[[outputs]]
+id = "4GPxstlTgQ_OhcsuMHJwo"
+uri = "file://screenshots/task32-one-key-mobile.jpg"
+type = "image"
+title = "One Key — Aperçu mobile"
+description = "Entrée publique Real Estate à 390 px, avec la clé et son accès direct au monde sélectionné."
+logical_id = "4f991a3c-076b-4d98-b314-ba72531a0a5c"
+content_hash = "sha256:29ab047b5697e67115dace7d5d71cc0c11040bd99c477a76ba39caae1b17d63b"
+size = 68903
+mtime_ms = 1792778575360
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/4f991a3c-076b-4d98-b314-ba72531a0a5c/bf120eb3-37f4-4db6-aaad-7e756e9a680c"
+storage_version_token = "1792778835001629"
+content_type = "image/jpeg"

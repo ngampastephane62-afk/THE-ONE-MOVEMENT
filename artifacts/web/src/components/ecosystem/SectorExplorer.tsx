@@ -58,15 +58,28 @@ export default function SectorExplorer({ selected: controlled, onSelect }: Props
           </div>
         )}
         <div className="x-content mx-auto max-w-7xl px-6">
-          <p className="x-track text-eyebrow text-gold-400">Chapter five · The gateways</p>
+          <p className="x-track text-eyebrow text-gold-400">Chapter two · The One Key and the gateways</p>
           <h2 id="explore-title" className="mt-3 text-display-lg text-ivory-100">
             <span className="x-line"><span style={{ '--d': '100ms' } as CSSProperties}>SEVENTEEN SECTORS.</span></span>
             <span className="x-line"><span style={{ '--d': '260ms' } as CSSProperties} className="text-gold-400">SEVENTEEN GATEWAYS.</span></span>
             <span className="x-line"><span style={{ '--d': '420ms' } as CSSProperties} className="text-display-md text-ivory-200">ONE CONNECTED UNIVERSE.</span></span>
           </h2>
-          <p className="x-fade mt-5 max-w-2xl text-ivory-300" style={{ '--d': '560ms' } as CSSProperties}>Every gateway is open. Choose any world directly, search, or narrow the list by interest if you like. Nothing here asks who you are first.</p>
+          <p className="x-fade mt-5 max-w-2xl text-ivory-300" style={{ '--d': '560ms' } as CSSProperties}>Choose a gateway and the One Key turns it. Every gateway is open. Choose any world directly, search, or narrow the list by interest if you like. Nothing here asks who you are first. <a href="#one-key-passage" className="text-gold-400 underline-offset-4 hover:underline" data-testid="link-watch-key-passage">Watch the full key passage</a></p>
         </div>
 
+        {active && (
+          <div className="x-content mx-auto mt-6 max-w-7xl px-6">
+            <Link href={`/ecosystem/${active.slug}`} data-testid="link-one-key-entry" className="inline-flex min-h-20 max-w-full items-center gap-4 border border-gold-400/60 bg-lagoon-900 px-5 py-4 text-gold-400 transition-colors hover:bg-lagoon-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400">
+              <OneKey className="h-9 w-28 shrink-0" />
+              <span className="min-w-0">
+                <span className="block text-xs uppercase tracking-widest">The One Key</span>
+                <span className="mt-1 block font-display text-lg">Enter {active.name}</span>
+              </span>
+              <ArrowRight className="h-5 w-5 shrink-0" aria-hidden="true" />
+            </Link>
+            <p className="mt-3 text-sm text-ivory-300">Choose another gateway below, or enter this world now. No animation or registration is required to explore.</p>
+          </div>
+        )}
         <div className="x-content mx-auto mt-12 grid max-w-7xl gap-10 px-6 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <label htmlFor="sector-search" className="text-eyebrow text-gold-400">Find a world</label>
@@ -133,6 +146,11 @@ export default function SectorExplorer({ selected: controlled, onSelect }: Props
           <div className="lg:col-span-7 lg:border-l lg:border-lagoon-600/50 lg:pl-10" aria-live="polite">
             {active && (
               <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                <div key={active.slug} className="x-keygate" aria-hidden="true" data-testid="art-key-reveal">
+                  <div className="x-kg-beyond"><WorldMotif motif={activeCfg?.motif ?? 'skyline'} /></div>
+                  <div className="x-kg-leaf l" /><div className="x-kg-leaf r" />
+                  <div className="x-kg-key"><OneKey className="w-full" /></div>
+                </div>
                 <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold-400" data-testid="text-sector-gateway-index">Gateway {String(SECTORS.findIndex((x) => x.slug === active.slug) + 1).padStart(2, '0')} of {SECTORS.length}</p>
                 <div className="flex flex-wrap gap-2">
                   <button type="button" onClick={enterWorld} className="x-btn x-btn-ghost !min-h-[40px] !px-4 !py-2" data-testid="button-enter-world">

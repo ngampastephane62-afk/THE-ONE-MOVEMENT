@@ -212,3 +212,22 @@
 .eco-x.eco-paused .x-typing::after { animation: none !important; }
 
 @media (max-width: 1023px) { .eco-x .x-gate { width: min(100%, 17rem); } }
+
+/* Selection-triggered key reveal (TASK32): key approaches, turns, gate leaves part. Re-keyed per sector. */
+.eco-x .x-keygate { position: relative; flex: none; width: 5.5rem; height: 3.5rem; overflow: hidden; border: 1px solid hsl(var(--x-gold) / 0.45); border-radius: 999px 999px 0 0; border-bottom: 0; color: hsl(var(--x-gold)); }
+.eco-x .x-kg-beyond { position: absolute; inset: 0; opacity: 0.7; color: hsl(var(--w, 39 52% 54%)); }
+.eco-x .x-kg-beyond svg { width: 100%; height: 100%; }
+.eco-x .x-kg-leaf { position: absolute; top: 0; bottom: 0; width: 50%; background: hsl(187 67% 8%); border-inline: 1px solid hsl(var(--x-gold) / 0.3); opacity: 0; }
+.eco-x .x-kg-leaf.l { left: 0; } .eco-x .x-kg-leaf.r { right: 0; }
+.eco-x .x-kg-key { position: absolute; left: 50%; top: 50%; width: 3rem; margin: -0.6rem 0 0 -1.5rem; opacity: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .eco-x .x-kg-key { animation: x-kg-key 1.3s var(--x-ease) both; }
+  .eco-x .x-kg-leaf.l { animation: x-kg-l 1.3s var(--x-ease) both; }
+  .eco-x .x-kg-leaf.r { animation: x-kg-r 1.3s var(--x-ease) both; }
+  .eco-x .x-kg-beyond { animation: x-kg-beyond 1.3s var(--x-ease) both; }
+}
+.eco-x.eco-paused .x-kg-key, .eco-x.eco-paused .x-kg-leaf, .eco-x.eco-paused .x-kg-beyond { animation: none !important; }
+@keyframes x-kg-key { 0% { opacity: 0; transform: translateX(-160%); } 35% { opacity: 1; transform: translateX(0); } 60% { opacity: 1; transform: rotate(-90deg) scale(0.85); } 100% { opacity: 0; transform: rotate(-90deg) scale(0.6); } }
+@keyframes x-kg-l { 0%, 55% { opacity: 1; transform: none; } 100% { opacity: 1; transform: translateX(-100%); } }
+@keyframes x-kg-r { 0%, 55% { opacity: 1; transform: none; } 100% { opacity: 1; transform: translateX(100%); } }
+@keyframes x-kg-beyond { 0%, 50% { opacity: 0; } 100% { opacity: 0.7; } }

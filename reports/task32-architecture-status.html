@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="fr"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TOMI — Correction d’architecture : état et autorisations restantes</title>
+<style>body{margin:0;background:#f6f2e8;color:#163b33;font:16px/1.65 system-ui,sans-serif}main{max-width:980px;margin:auto;padding:36px 20px 70px}h1{line-height:1.15}h2{font-size:22px;margin-top:32px}.note{padding:18px;background:white;border-left:4px solid #ad853f}code{font-size:13px;overflow-wrap:anywhere}li{margin:7px 0}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px;border-bottom:1px solid #d4cfbf;text-align:left;vertical-align:top}</style>
+<main><p>THE ONE MOVEMENT INTERNATIONAL · 23 octobre 2026</p>
+<h1>Une identité, dix-sept mondes : corrections ciblées</h1>
+<p class="note"><strong>Livraison partielle, pas validation complète de la tâche.</strong> La navigation et la séparation des contenus sont corrigées. La migration des cinq champs précédemment approuvés est appliquée en développement seulement. Les trois adhésions actives, le parcours complet et les réglages de localisation exigent encore une autorisation backend complémentaire. Aucune mise en production ni nouveau paiement.</p>
+<h2>1. Fichiers modifiés</h2>
+<ul>
+<li><code>artifacts/web/src/pages/ecosystem/index.tsx</code></li>
+<li><code>artifacts/web/src/components/ecosystem/SectorExplorer.tsx</code></li>
+<li><code>artifacts/web/src/components/ecosystem/exhibition/KeyPassage.tsx</code></li>
+<li><code>artifacts/web/src/components/ecosystem/JoinPaths.tsx</code></li>
+<li><code>artifacts/web/src/components/ecosystem/exhibition/TomiGuideIntro.tsx</code></li>
+<li><code>artifacts/web/src/components/discovery/GlobalDiscovery.tsx</code></li>
+<li><code>artifacts/web/src/components/programs/EverydayEcosystem.tsx</code></li>
+<li><code>artifacts/web/src/styles/exhibition.css</code></li>
+<li><code>lib/db/src/schema/ecosystemMembers.ts</code>, migration canonique <code>lib/db/drizzle/0016_member_profile_extension.sql</code>, snapshot et journal associés.</li>
+<li>Configuration de génération isolée <code>lib/db/review/member-profiles/drizzle.promote.config.ts</code> et mises à jour des documents de revue.</li>
+</ul>
+<h2>2. One Key : emplacement et fonction</h2>
+<p>Les passerelles et la One Key arrivent immédiatement après le héros, avant le guide, la découverte globale et le long passage cinématique. La clé visible est un vrai lien vers le monde sélectionné. Le même état pilote le héros et l’unique liste de passerelles de l’explorateur. La sélection rejoue une courte approche/rotation de clé et l’ouverture du portail ; le lien reste utilisable sans attendre. Le long film de défilement existant reste accessible, sans bloquer la navigation. Mouvement réduit et pause conservent une présentation statique.</p>
+<h2>3. Trois secteurs actifs</h2>
+<p><strong>Non opérationnel côté serveur.</strong> La nouvelle règle est explicitée sans prétendre l’avoir appliquée. Les sélections historiques restent des intérêts généraux ; aucune n’a été tronquée ou convertie automatiquement. Il faut un stockage distinct et une validation serveur pour un principal et deux secteurs supplémentaires.</p>
+<h2>4. Compatibilité des membres existants</h2>
+<p>Clerk et les identifiants sont conservés. Les membres connectés ne reçoivent plus les boutons d’inscription dans le bloc d’accès de l’écosystème : My Space et gestion du profil les remplacent. La migration autorisée conserve les 27 profils ; la comparaison agrégée de tous leurs anciens champs est identique avant/après. Les nouveaux champs restent NULL. Le GET public fonctionne et n’expose aucun des cinq champs privés.</p>
+<h2>5. Inscription et informations réutilisées</h2>
+<p>Le parcours existant Join → Clerk → profil reste unique. Les organismes utilisent la même identité membre, les demandes institutionnelles sont facultatives et distinctes. Aucun deuxième formulaire ou compte n’est créé. Le parcours progressif complet Individuel/Organisation, la sauvegarde du principal et les seules informations manquantes restent à brancher après autorisation ; ils ne sont pas présentés comme terminés.</p>
+<h2>6. Imagerie sectorielle</h2>
+<p>Les motifs, accents et illustrations existants des mondes sont réutilisés dans les passerelles et le portail. Aucun nouveau média n’a été généré, supprimé ou présenté comme photographie d’une activité TOMI. Aucun nouveau lot de photographies sous licence n’a été ajouté.</p>
+<h2>7. Fonctionnalités communautaires</h2>
+<p>Les sept rubriques existantes des pages sectorielles restent en place : découverte, communauté, apprentissage, opportunités, publications, collaboration et activité personnelle. Elles réutilisent annuaire volontaire, sources externes et fil autorisé existants. Aucun faux cours, membre ou emploi. Les publications explicitement classées/modérées par secteur et les offres validées ne sont pas encore un backend opérationnel.</p>
+<h2>8. Programmes et secteurs</h2>
+<p>Les six routes officielles restent distinctes. Le catalogue général de culture/science/création, précédemment répété dans Summit, Gala et Fashion Week, est désormais rendu une seule fois dans l’écosystème. Les programmes conservent un lien compact et leurs explications approuvées « avant, pendant, après ». Les sources et ressources sont préservées. Les pages Awards, Fashion Night et Investment Forum gardent leur présentation officielle ; aucune nouvelle date, billetterie ou inscription n’a été activée.</p>
+<h2>9. Confidentialité de la localisation</h2>
+<p><strong>Partielle.</strong> Le stockage privé ville/région existe désormais, sans saisie ni publication nouvelle. Les choix « masquer / pays / pays et ville » ne sont pas encore enregistrables. Les projections publiques actuelles sont maintenues, sans extension implicite. Il faut un réglage de visibilité et son application cohérente aux profils, recherches et caches avant d’ajouter la découverte par ville.</p>
+<h2>10. Diagnostic des paiements</h2>
+<ul>
+<li>Site publié confirmé disponible ; seuls des GET publics ont été effectués sur les configurations, sans commande, checkout ou paiement.</li>
+<li>Compte Stripe connecté interrogé en lecture seule : mode réel ; encaissements désactivés ; versements désactivés ; capacité carte inactive. Aucun changement de compte effectué. Cela ne constitue pas une vérification complète du chemin de paiement en production.</li>
+<li>Configuration humanitaire publiée : indisponible, avec confirmation d’autorisation de collecte et d’éligibilité encore requise. Cette fermeture est préservée.</li>
+<li>Configuration magazine publiée : annonce une disponibilité en mode réel. Ce signal n’établit pas l’éligibilité du compte ni la réussite d’un achat. Le contrôle de disponibilité doit être renforcé ; aucun paiement fonctionnel de bout en bout n’est déclaré.</li>
+<li>Pas de reconstruction de Stripe, nouvelle offre payante, abonnement ou test en argent réel.</li>
+</ul>
+<h2>11. Opérationnel et vérifié</h2>
+<p>Navigation publique et lien One Key ; réutilisation des mondes et ressources ; accès membre distinct de l’inscription ; migration approuvée appliquée ; conservation des profils ; absence de nouveaux champs privés dans l’API publique. Typechecks web/API/DB réussis. Génération Drizzle ultérieure : aucun écart entre schéma et migration. Serveurs redémarrés et disponibles, sans bootstrap Stripe en aperçu.</p>
+<h2>12. Backend restant et proposition précise</h2>
+<p>Les cinq champs approuvés sont présents : type de compte, ville/région, type d’organisme, contact privé et secteur principal. Pour la nouvelle règle, proposition limitée à <strong>trois colonnes supplémentaires</strong> dans le même profil :</p>
+<table><thead><tr><th>Champ</th><th>Proposition</th></tr></thead><tbody>
+<tr><td>active_sectors</td><td>text[] facultatif, sans conversion des intérêts historiques. Contrôle serveur de trois valeurs distinctes maximum parmi les 17 ; principal explicite appartenant à cette sélection. Les anciens comptes non configurés gardent leur accès actuel.</td></tr>
+<tr><td>location_visibility</td><td>text, valeur par défaut hidden ; valeurs hidden, country, country_city. Seule une projection autorisée rendrait le pays/la ville visibles. Les données de localisation existantes sont conservées.</td></tr>
+<tr><td>other_professional_activity</td><td>varchar(300), facultatif, privé : activité libre sans créer de secteur officiel. Pas de précision résidentielle ni nouvelle identité.</td></tr>
+</tbody></table>
+<p>Après autorisation : préparer le SQL pour revue, puis demander séparément son application. Brancher ensuite les contrats propriétaires, un seul formulaire progressif prérempli et les changements de secteurs gratuits. Les champs sectoriels optionnels déjà connus seront réutilisés plutôt que redemandés. Les intérêts généraux restent distincts. Les offres, cours administrables et modération sectorielle dédiée nécessitent leurs contrats propres ; ils ne font pas partie de la migration déjà appliquée.</p>
+<p>Correctif de paiement proposé séparément : vérifier réellement la capacité de collecte/carte dans les contrôles de disponibilité concernés, en conservant les autorisations légales et commerciales existantes. Pas de mutation du compte Stripe ni d’ouverture de collecte.</p>
+<h2>13. Contrôle mobile</h2>
+<p>Capture réelle à 390 × 1000 px sur l’entrée One Key avec Real Estate sélectionné : clé visible, action directe et recherche lisibles, sans débordement apparent. Illustration conservée. Aucun test Safari réel ni parcours authentifié d’écriture effectué pendant cette correction. Les propriétés de mouvement réduit sont vérifiées dans le code ; aucune mesure de performance Safari n’est revendiquée.</p>
+<h2>14. Blocages de lancement</h2>
+<ul><li>Autorisation et implémentation des trois secteurs actifs, du parcours complet et de la confidentialité géographique.</li><li>Capacité d’encaissement Stripe et signal de disponibilité du magazine à résoudre ; achat réel non vérifié.</li><li>Publication sectorielle modérée, offres validées et catalogue pédagogique administrable à développer sans faux contenus.</li><li>Contrôle Safari réel et session membre autorisée à effectuer sur les futurs parcours d’écriture.</li><li>Avertissements de listeners sur les flux médias déjà présents dans les journaux ; non corrigés dans ce périmètre ciblé.</li></ul>
+<p class="note">La configuration serveur d’une future offre premium n’a pas été ajoutée. Aucune nouvelle restriction payante ni activation programmée n’est introduite. La règle actuelle reste gratuite et tout futur tarif nécessitera l’accord séparé du Founder. La tâche complète n’est pas déclarée achevée.</p>
+</main></html>

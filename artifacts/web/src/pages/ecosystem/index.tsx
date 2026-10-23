@@ -6,6 +6,7 @@ import EcosystemHero from '@/components/ecosystem/EcosystemHero';
 import SectorExplorer from '@/components/ecosystem/SectorExplorer';
 import MemberDirectory from '@/components/ecosystem/MemberDirectory';
 import GlobalDiscovery from '@/components/discovery/GlobalDiscovery';
+import EverydayEcosystem from '@/components/programs/EverydayEcosystem';
 import EcosystemConcepts from '@/components/ecosystem/EcosystemConcepts';
 import JoinPaths from '@/components/ecosystem/JoinPaths';
 import TomiGuideIntro from '@/components/ecosystem/exhibition/TomiGuideIntro';
@@ -13,7 +14,7 @@ import KeyPassage from '@/components/ecosystem/exhibition/KeyPassage';
 import { sectorFromSearch } from '@/components/ecosystem/sector-location';
 import { usePageHidden, useReducedMotion } from '@/components/ecosystem/exhibition/useStage';
 
-/** The journey: enter the world → meet TOMI → find your direction → the One Key → the gateways → the worlds → the movement. */
+/** The journey: enter the world → the One Key at the gateways → the full key passage → meet TOMI → find your direction → the movement. */
 export default function Ecosystem() {
   const search = useSearch();
   const reduced = useReducedMotion();
@@ -27,7 +28,7 @@ export default function Ecosystem() {
   // Reapply only real public chapter anchors, without changing history.
   useEffect(() => {
     const id = window.location.hash.slice(1);
-    if (!['explore', 'discover', 'one-key-passage'].includes(id)) return;
+    if (!['explore', 'discover', 'one-key-passage', 'everyday'].includes(id)) return;
     const frame = requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ block: 'start' }));
     return () => cancelAnimationFrame(frame);
   }, [search]);
@@ -38,10 +39,11 @@ export default function Ecosystem() {
         <meta name="description" content="Find your sector, the TOMI programmes connected to it, curated official knowledge and the opt-in community directory." />
       </Helmet>
       <EcosystemHero paused={paused} onTogglePause={() => setPaused((p) => !p)} motionLocked={reduced} selected={sector} onPickSector={setSector} />
+      <SectorExplorer selected={sector} onSelect={setSector} />
+      <KeyPassage paused={paused} />
       <TomiGuideIntro />
       <GlobalDiscovery paused={paused} />
-      <KeyPassage paused={paused} />
-      <SectorExplorer selected={sector} onSelect={setSector} />
+      <EverydayEcosystem programmeSlug="ecosystem" />
       <MemberDirectory />
       <EcosystemConcepts />
       <JoinPaths />

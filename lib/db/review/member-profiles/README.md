@@ -1,18 +1,20 @@
-# Member profile extension — approved preparation, NOT applied
+# Member profile extension — applied in development only
 
-The Founder approved the five-field proposal and SQL preparation only.
-Applying this migration requires separate development-only authorization.
-No authentication change, new account, production operation or deployment is
-authorized by this preparation.
+The Founder separately approved preparation and development-only application.
+The approved SQL is now canonical as `drizzle/0016_member_profile_extension.sql`
+and was applied with `db:migrate`, after editor/target and migration-hash checks.
+No authentication change, new account, production operation or deployment was
+performed. Owner API inputs and profile forms are not extended by this migration.
 
 ## Isolation
 
-- The application still imports `src/schema/ecosystemMembers.ts`, unchanged.
-- The canonical `drizzle/meta/_journal.json` still ends at migration 0015.
+- The application imports `src/schema/ecosystemMembers.ts`, synchronized only
+  after successful database application. Public projections remain allowlists.
+- The canonical `drizzle/meta/_journal.json` now ends at migration 0016.
 - `index.ts` replaces only the member table for offline Drizzle generation.
 - The review configuration has **no database credentials**.
-- The SQL here is not in the canonical migration queue and will not be picked
-  up by the existing `db:migrate` command.
+- The SQL here is the historical review copy, not an additional migration.
+  Do not apply it again; the equivalent canonical migration is already recorded.
 - Do not import this review schema into application code before the database
   has the corresponding columns. Drizzle can otherwise select missing columns.
 - Do not copy this whole proposed table over a newer runtime definition.
@@ -41,8 +43,11 @@ guessed. No existing key, column, visibility flag, role or relation changes.
 Offline comparison of generated snapshots verified that all 49 other tables
 and all existing member definitions are unchanged. The generated statements
 contain no DELETE, UPDATE, DROP, TRUNCATE, RENAME, NOT NULL or default assignment.
-The five columns were confirmed absent in the development database.
-This is static review, not an executed migration or an authenticated form test.
+After application, the five columns were confirmed present, nullable and without
+defaults, and both constraints were validated. All 27 existing profiles were
+preserved; an aggregate digest of all pre-existing fields was identical before
+and after application. Public API responses did not expose the new fields.
+Authenticated profile-form saving remains unimplemented for these fields.
 
 The shared taxonomy currently lists 15 sector identifiers, while the frontend
 has 17, including `real-estate` and `health-care`. The new CHECK covers all 17.
@@ -57,7 +62,7 @@ Organization contact name must not implicitly replace the public display name.
 Keep the same Clerk-linked profile and unique identity; do not block existing
 members whose new fields remain NULL. No duplicate identity or new role.
 
-## Before any separately authorized application
+## Historical application checklist and future changes
 
 1. Recheck the development target, current history and drift from this baseline.
 2. Regenerate and review against the current canonical snapshot if it changed.
@@ -71,5 +76,5 @@ members whose new fields remain NULL. No duplicate identity or new role.
 6. Verify legacy profiles, upsert identity, edits/reloads and public privacy.
    Do not publish without separate Founder authorization.
 
-Runtime schema baseline SHA-256:
+Pre-migration runtime schema baseline SHA-256:
 `15ad03374b280211ec10302e53f90673acfda5bf85c0dc99aa65efc0fb6809ad`.

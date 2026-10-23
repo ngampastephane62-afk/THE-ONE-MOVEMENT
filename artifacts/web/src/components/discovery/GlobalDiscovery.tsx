@@ -40,7 +40,7 @@ export default function GlobalDiscovery({ paused = false }: { paused?: boolean }
     <section ref={ref} {...attrs} id="discover" className="gd-surface scroll-mt-20 py-16" aria-labelledby="discover-title" data-testid="section-global-discovery">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-12">
         <div className="lg:col-span-7">
-          <p className="x-track text-eyebrow text-gold-400">Chapter three · Find your direction</p>
+          <p className="x-track text-eyebrow text-gold-400">Chapter five · Find your direction</p>
           <h2 id="discover-title" className="mt-3 text-display-md text-ivory-100">
             <span className="x-line"><span style={{ '--d': '120ms' } as CSSProperties}>WHAT ARE YOU LOOKING FOR</span></span>
             <span className="x-line"><span style={{ '--d': '300ms' } as CSSProperties}>IN THE <em className="not-italic text-gold-400">WORLD?</em></span></span>

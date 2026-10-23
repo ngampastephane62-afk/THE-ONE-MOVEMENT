@@ -31,7 +31,7 @@ export default function TomiGuideIntro() {
       <div className="x-content mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-12">
         <div className="x-rise flex justify-center lg:col-span-5" style={{ '--d': '100ms' } as CSSProperties}><TomiSigil /></div>
         <div className="lg:col-span-7">
-          <p className="x-track text-eyebrow text-gold-400">Chapter two · The navigator</p>
+          <p className="x-track text-eyebrow text-gold-400">Chapter four · The navigator</p>
           <h2 id="meet-tomi-title" className="mt-4 text-display-lg text-ivory-100">
             <span className="x-line"><span style={{ '--d': '150ms' } as CSSProperties}>MEET TOMI.</span></span>
             <span className="x-line text-gold-400"><span style={{ '--d': '320ms' } as CSSProperties} className="text-display-md">YOUR GUIDE TO ONE CONNECTED WORLD.</span></span>

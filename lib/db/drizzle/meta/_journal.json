@@ -113,6 +113,13 @@
       "when": 1792592571691,
       "tag": "0015_absurd_wallow",
       "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1792778061706,
+      "tag": "0016_member_profile_extension",
+      "breakpoints": true
     }
   ]
 }
