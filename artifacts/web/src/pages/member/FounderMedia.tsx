@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useAuth } from '@clerk/react';
+import { useQueryClient } from '@tanstack/react-query';
 import { Link, Redirect } from 'wouter';
 import { ChevronLeft, ChevronRight, ExternalLink, Plus, RotateCw } from 'lucide-react';
 import { useGetAdminMediaPublications, getGetAdminMediaPublicationsQueryKey, type MediaPublication } from '@workspace/api-client-react';
@@ -15,12 +17,22 @@ const WAIT = 'Please wait until the current save or upload finishes.';
 
 export default function FounderMedia() {
   const { me } = useMe();
+  const { userId } = useAuth();
+  const qc = useQueryClient();
   const [page, setPage] = useState(1);
   const [sel, setSel] = useState<Sel>({ mode: 'none' });
   const [notice, setNotice] = useState('');
   const dirtyRef = useRef(false);
   const busyRef = useRef(false);
   const q = useGetAdminMediaPublications({ page }, { query: { queryKey: getGetAdminMediaPublicationsQueryKey({ page }), enabled: !!me?.founder, placeholderData: (p) => p } });
+  const lastUser = useRef(userId);
+  useEffect(() => {
+    if (lastUser.current === userId) return;
+    lastUser.current = userId;
+    qc.removeQueries({ queryKey: getGetAdminMediaPublicationsQueryKey() });
+    setSel({ mode: 'none' }); setPage(1); setNotice('');
+    dirtyRef.current = false; busyRef.current = false;
+  }, [userId, qc]);
 
   useEffect(() => {
     const stay = window.location.href;

@@ -37,6 +37,7 @@ export default function MediaEditor({ entry, onDone, onDirty, onBusy }: {
   const busyCb = useRef(onBusy); busyCb.current = onBusy;
   useEffect(() => { dirtyCb.current(dirty); }, [dirty]);
   useEffect(() => { busyCb.current(busy); }, [busy]);
+  useEffect(() => () => { busyCb.current(false); }, []);
 
   const set = <K extends keyof MediaForm>(k: K, v: MediaForm[K]) => setForm((f) => ({ ...f, [k]: v }));
   const status = entry?.status ?? 'draft';

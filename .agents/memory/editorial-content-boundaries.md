@@ -3,11 +3,11 @@ name: Editorial pages, campaign and documentary
 description: Stakeholder rules for page-specific content, donation context, Thanks Emirates and documentary announcement.
 ---
 
-Keep Tropik's media distribution catalogue in Media and partner profiles in Partners. Historical press coverage belongs in a separate News page, not in Media or duplicated in Partners. Vision should follow the supplied narrative, use the donation film instead of the humanitarian photograph, and avoid repeated image collages or copied sections.
+Keep Tropik's media distribution catalogue in Media and partner profiles in Partners. News retains its historical press archive; Media now also presents a separately curated press centre for approved publications, interviews and announcements without duplicating the News archive. The awareness/MONUSCO, TV5MONDE and Radio Okapi film collection belongs in The One Documentary, not in Media. Vision should follow the supplied narrative, use the donation film instead of the humanitarian photograph, and avoid repeated image collages or copied sections.
 
-**Why:** The stakeholder explicitly requested that media stay in Media, partners stay in Partners, and information and images not be repeated across pages.
+**Why:** The stakeholder explicitly requested that media stay in Media, partners stay in Partners, and information and images not be repeated across pages; they later clarified that the film collection belongs only in The One Documentary while a Founder-managed press centre belongs on Media.
 
-**How to apply:** Short conceptual descriptions and links are appropriate elsewhere, but do not duplicate the media catalogue, partner galleries or entire report sections.
+**How to apply:** Short conceptual descriptions and links are appropriate elsewhere, but do not duplicate the documentary collection, News archive, media catalogue, partner galleries or entire report sections. The Founder approves Media centre publications individually.
 
 Published editorial photographs and videos throughout the platform must support persistent likes, comments and media-specific sharing. Existing member posts keep their own post reactions; logos, interface icons, decorative backgrounds and unpublished private proposals are not public editorial media.
 

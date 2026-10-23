@@ -90,6 +90,7 @@ export function formIssues(f: MediaForm, status: MediaPublicationSave['status'])
   const pr = Number(f.priority);
   if (!Number.isInteger(pr) || pr < 0 || pr > 100000) out.push('Order must be a whole number from 0 to 100000.');
   if (f.publicationDate && !validDate(f.publicationDate)) out.push('Publication date is not valid.');
+  if ((f.coverUploadId || f.logoUploadId) && !f.rightsConfirmed) out.push('Confirm image rights before saving an image.');
   if (status === 'published') {
     if (f.description.trim().length < 10) out.push('Publishing needs a description of at least 10 characters.');
     if (!validDate(f.publicationDate)) out.push('Publishing needs a publication date.');

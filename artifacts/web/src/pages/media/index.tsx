@@ -37,6 +37,9 @@ export default function MediaHub() {
         </div>
       </HeroSurface>
 
+      {/* Published press coverage, interviews and official announcements */}
+      <MediaCenter />
+
       <MagazineFeature />
 
       {/* INTERNATIONAL MEDIA REACH */}
@@ -84,9 +87,6 @@ export default function MediaHub() {
         </div>
         <MediaCatalogue />
       </div>
-
-      {/* 4. PRESS & COVERAGE — dynamic media center */}
-      <MediaCenter />
 
       {/* 5. MEDIA KIT */}
       <section className="py-section-lg bg-ivory-100 border-t border-sand-200">
