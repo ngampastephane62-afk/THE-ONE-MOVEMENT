@@ -11,6 +11,85 @@ tags:
   - name: health
     description: Health operations
 paths:
+  /media-center:
+    get:
+      operationId: getMediaPublications
+      tags: [MediaCenter]
+      parameters:
+        - { name: page, in: query, schema: { type: integer, minimum: 1 } }
+      responses:
+        '200':
+          description: Published press and media publications, editorial order first.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/MediaPublicationPage' }
+  /founder/media-center:
+    get:
+      operationId: getAdminMediaPublications
+      tags: [MediaCenter]
+      parameters:
+        - { name: page, in: query, schema: { type: integer, minimum: 1 } }
+      responses:
+        '200':
+          description: Authorized Founder publication management.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/MediaPublicationPage' }
+    post:
+      operationId: createMediaPublication
+      tags: [MediaCenter]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/MediaPublicationSave' }
+      responses:
+        '201':
+          description: Publication saved.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/MediaPublication' }
+  /founder/media-center/{id}:
+    parameters:
+      - { name: id, in: path, required: true, schema: { type: integer, minimum: 1 } }
+    put:
+      operationId: updateMediaPublication
+      tags: [MediaCenter]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/MediaPublicationSave' }
+      responses:
+        '200':
+          description: Publication saved; stale revisions return 409.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/MediaPublication' }
+    delete:
+      operationId: deleteMediaPublication
+      tags: [MediaCenter]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/MediaPublicationDelete' }
+      responses:
+        '204':
+          description: Removed from active publications; underlying media retained.
+  /media-center/{id}/assets/{slot}:
+    get:
+      operationId: getMediaPublicationAsset
+      tags: [MediaCenter]
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: integer, minimum: 1 } }
+        - { name: slot, in: path, required: true, schema: { type: string, enum: [cover, logo] } }
+      responses:
+        '200':
+          description: Publication image; unpublished images require Founder access.
+          content:
+            image/webp:
+              schema: { type: string, format: binary }
   /gratitude/options:
     get:
       operationId: getGratitudeOptions
@@ -1143,6 +1222,73 @@ paths:
                 $ref: "#/components/schemas/DetailedHealthStatus"
 components:
   schemas:
+    MediaPublicationDelete:
+      type: object
+      additionalProperties: false
+      required: [expectedUpdatedAt]
+      properties:
+        expectedUpdatedAt: { type: string, minLength: 1, maxLength: 40 }
+    MediaPublicationCategory:
+      type: string
+      enum: [international-press, television, magazine, newspaper, interview, press-release, official-announcement, media-partnership]
+    MediaPublicationEmbed:
+      type: object
+      additionalProperties: false
+      required: [provider, videoId]
+      properties:
+        provider: { type: string, enum: [youtube, vimeo] }
+        videoId: { type: string, minLength: 1, maxLength: 30 }
+    MediaPublicationSave:
+      type: object
+      additionalProperties: false
+      required: [title, publisher, description, category, publicationDate, externalUrl, embed, priority, status, coverUploadId, logoUploadId, rightsConfirmed, expectedUpdatedAt]
+      properties:
+        title: { type: string, minLength: 2, maxLength: 240 }
+        publisher: { type: string, maxLength: 140 }
+        description: { type: string, maxLength: 6000 }
+        category: { $ref: '#/components/schemas/MediaPublicationCategory' }
+        publicationDate: { type: string, maxLength: 10 }
+        externalUrl: { type: string, maxLength: 2000 }
+        embed:
+          allOf: [{ $ref: '#/components/schemas/MediaPublicationEmbed' }]
+          nullable: true
+        priority: { type: integer, minimum: 0, maximum: 100000 }
+        status: { type: string, enum: [draft, published, archived] }
+        coverUploadId: { type: string, nullable: true, maxLength: 100 }
+        logoUploadId: { type: string, nullable: true, maxLength: 100 }
+        rightsConfirmed: { type: boolean }
+        expectedUpdatedAt: { type: string, nullable: true, maxLength: 40 }
+    MediaPublication:
+      type: object
+      required: [id, title, publisher, description, category, publicationDate, externalUrl, embed, priority, status, coverUrl, logoUrl, coverUploadId, logoUploadId, rightsConfirmed, updatedAt]
+      properties:
+        id: { type: integer }
+        title: { type: string }
+        publisher: { type: string }
+        description: { type: string }
+        category: { $ref: '#/components/schemas/MediaPublicationCategory' }
+        publicationDate: { type: string }
+        externalUrl: { type: string }
+        embed:
+          allOf: [{ $ref: '#/components/schemas/MediaPublicationEmbed' }]
+          nullable: true
+        priority: { type: integer }
+        status: { type: string, enum: [draft, published, archived] }
+        coverUrl: { type: string, nullable: true }
+        logoUrl: { type: string, nullable: true }
+        coverUploadId: { type: string, nullable: true }
+        logoUploadId: { type: string, nullable: true }
+        rightsConfirmed: { type: boolean }
+        updatedAt: { type: string }
+    MediaPublicationPage:
+      type: object
+      required: [items, page, hasMore]
+      properties:
+        items:
+          type: array
+          items: { $ref: '#/components/schemas/MediaPublication' }
+        page: { type: integer }
+        hasMore: { type: boolean }
     GratitudeUploadInput:
       type: object
       required: [contributionId, version, filename, contentType, size]

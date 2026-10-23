@@ -49,7 +49,7 @@ function Panel({ s, name }: { s: FounderSection; name: string }) {
       {s.status !== 'available' && s.unavailableNote && <Unavailable s={s} />}
       {s.toolIds.length > 0 && (
         <div>
-          <h3 className="text-eyebrow text-gold-700">{s.id === 'overview' ? 'AVAILABLE TOOLS' : s.id === 'media' ? 'SEPARATE EXISTING TOOL' : 'EXISTING TOOLS'}</h3>
+          <h3 className="text-eyebrow text-gold-700">{s.id === 'overview' ? 'AVAILABLE TOOLS' : 'EXISTING TOOLS'}</h3>
           <ul className="mt-3 grid gap-3 sm:grid-cols-2">{s.toolIds.map((id) => <ToolLink key={id} id={id} />)}</ul>
         </div>
       )}

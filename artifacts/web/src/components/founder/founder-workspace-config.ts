@@ -23,6 +23,7 @@ export interface FounderSection {
 export const FOUNDER_TOOLS: Record<string, FounderTool> = {
   newsEditor: { id: 'news-editor', label: 'News editor', href: '/member/founder/news', description: 'Write private drafts, preview them, and explicitly publish articles to the public News page.' },
   news: { id: 'news', label: 'Press archive', href: '/member/admin?tab=news', description: 'Manage the existing News press archive. This is not full editorial article publishing.' },
+  mediaCenter: { id: 'media-management', label: 'MEDIA MANAGEMENT', href: '/member/founder/media', description: 'Create, edit, order, publish, archive and delete press and media publications on the public Media page.' },
   media: { id: 'media', label: 'Media requests', href: '/member/admin?tab=media', description: 'Review incoming media and press requests. This is not a media library.' },
   intros: { id: 'intros', label: 'Partner introductions', href: '/member/admin?tab=intros', description: 'Review partner introduction requests. Partner profiles cannot be edited here.' },
   certs: { id: 'certs', label: 'Certifications', href: '/member/admin?tab=certs', description: 'Review official role and programme certification requests.' },
@@ -32,11 +33,11 @@ export const FOUNDER_TOOLS: Record<string, FounderTool> = {
 };
 
 export const FOUNDER_SECTIONS: FounderSection[] = [
-  { id: 'overview', label: 'Overview', status: 'available', summary: 'Your workspace foundation and the founder tools available today.', toolIds: ['newsEditor', 'news', 'media', 'intros', 'certs', 'reports', 'offers', 'magazine'] },
+  { id: 'overview', label: 'Overview', status: 'available', summary: 'Your workspace foundation and the founder tools available today.', toolIds: ['newsEditor', 'news', 'mediaCenter', 'media', 'intros', 'certs', 'reports', 'offers', 'magazine'] },
   { id: 'pages', label: 'Pages', status: 'unavailable', summary: 'Editing public website pages.', unavailableNote: 'Page editing is not yet available. Public pages are currently updated by the TOMI technical team.', toolIds: [] },
   { id: 'news', label: 'News & Articles', status: 'available', summary: 'Write, preview and publish News articles. The historical press archive remains a separate tool.', toolIds: ['newsEditor', 'news', 'magazine'] },
   { id: 'partners', label: 'Partners', status: 'partial', summary: 'Partner introduction requests can be reviewed today.', unavailableNote: 'Editing partner profiles, logos and dates is not yet available.', toolIds: ['intros'] },
-  { id: 'media', label: 'Media Library', status: 'unavailable', summary: 'A central library for photos, video and documents.', unavailableNote: 'The media library is not yet available. Media requests are a separate tool for press enquiries.', toolIds: ['media'] },
+  { id: 'media', label: 'Media Management', status: 'available', summary: 'Publish press coverage, television, interviews and announcements to the public Media page. Media requests remain a separate tool for press enquiries.', toolIds: ['mediaCenter', 'media'] },
   { id: 'programs', label: 'Programs & Events', status: 'unavailable', summary: 'Managing programmes and events.', unavailableNote: 'Programme and event management is coming soon.', toolIds: [] },
   { id: 'branding', label: 'Branding', status: 'unavailable', summary: 'Logos, colours and brand assets.', unavailableNote: 'Brand management is coming soon.', toolIds: [] },
   { id: 'history', label: 'Publishing History', status: 'unavailable', summary: 'A record of what has been published and when.', unavailableNote: 'Publishing history is not yet available. No history is recorded in this phase.', toolIds: [] },

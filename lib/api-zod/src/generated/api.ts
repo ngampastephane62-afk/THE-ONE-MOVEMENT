@@ -8,6 +8,258 @@
 import * as zod from 'zod';
 
 
+
+
+
+export const GetMediaPublicationsQueryParams = zod.object({
+  "page": zod.coerce.number().int().min(1).optional()
+})
+
+export const getMediaPublicationsResponseItemsItemEmbedOneVideoIdMax = 30;
+
+
+
+export const GetMediaPublicationsResponse = zod.object({
+  "items": zod.array(zod.object({
+  "id": zod.number().int(),
+  "title": zod.string(),
+  "publisher": zod.string(),
+  "description": zod.string(),
+  "category": zod.enum(['international-press', 'television', 'magazine', 'newspaper', 'interview', 'press-release', 'official-announcement', 'media-partnership']),
+  "publicationDate": zod.string(),
+  "externalUrl": zod.string(),
+  "embed": zod.union([zod.object({
+  "provider": zod.enum(['youtube', 'vimeo']),
+  "videoId": zod.string().min(1).max(getMediaPublicationsResponseItemsItemEmbedOneVideoIdMax)
+}),zod.null()]),
+  "priority": zod.number().int(),
+  "status": zod.enum(['draft', 'published', 'archived']),
+  "coverUrl": zod.string().nullable(),
+  "logoUrl": zod.string().nullable(),
+  "coverUploadId": zod.string().nullable(),
+  "logoUploadId": zod.string().nullable(),
+  "rightsConfirmed": zod.boolean(),
+  "updatedAt": zod.string()
+})),
+  "page": zod.number().int(),
+  "hasMore": zod.boolean()
+})
+
+
+
+
+
+export const GetAdminMediaPublicationsQueryParams = zod.object({
+  "page": zod.coerce.number().int().min(1).optional()
+})
+
+export const getAdminMediaPublicationsResponseItemsItemEmbedOneVideoIdMax = 30;
+
+
+
+export const GetAdminMediaPublicationsResponse = zod.object({
+  "items": zod.array(zod.object({
+  "id": zod.number().int(),
+  "title": zod.string(),
+  "publisher": zod.string(),
+  "description": zod.string(),
+  "category": zod.enum(['international-press', 'television', 'magazine', 'newspaper', 'interview', 'press-release', 'official-announcement', 'media-partnership']),
+  "publicationDate": zod.string(),
+  "externalUrl": zod.string(),
+  "embed": zod.union([zod.object({
+  "provider": zod.enum(['youtube', 'vimeo']),
+  "videoId": zod.string().min(1).max(getAdminMediaPublicationsResponseItemsItemEmbedOneVideoIdMax)
+}),zod.null()]),
+  "priority": zod.number().int(),
+  "status": zod.enum(['draft', 'published', 'archived']),
+  "coverUrl": zod.string().nullable(),
+  "logoUrl": zod.string().nullable(),
+  "coverUploadId": zod.string().nullable(),
+  "logoUploadId": zod.string().nullable(),
+  "rightsConfirmed": zod.boolean(),
+  "updatedAt": zod.string()
+})),
+  "page": zod.number().int(),
+  "hasMore": zod.boolean()
+})
+
+
+export const createMediaPublicationBodyTitleMin = 2;
+export const createMediaPublicationBodyTitleMax = 240;
+
+export const createMediaPublicationBodyPublisherMax = 140;
+
+export const createMediaPublicationBodyDescriptionMax = 6000;
+
+export const createMediaPublicationBodyPublicationDateMax = 10;
+
+export const createMediaPublicationBodyExternalUrlMax = 2000;
+
+export const createMediaPublicationBodyEmbedOneVideoIdMax = 30;
+
+export const createMediaPublicationBodyPriorityMin = 0;
+export const createMediaPublicationBodyPriorityMax = 100000;
+
+export const createMediaPublicationBodyCoverUploadIdMax = 100;
+
+export const createMediaPublicationBodyLogoUploadIdMax = 100;
+
+export const createMediaPublicationBodyExpectedUpdatedAtMax = 40;
+
+
+
+export const CreateMediaPublicationBody = zod.object({
+  "title": zod.string().min(createMediaPublicationBodyTitleMin).max(createMediaPublicationBodyTitleMax),
+  "publisher": zod.string().max(createMediaPublicationBodyPublisherMax),
+  "description": zod.string().max(createMediaPublicationBodyDescriptionMax),
+  "category": zod.enum(['international-press', 'television', 'magazine', 'newspaper', 'interview', 'press-release', 'official-announcement', 'media-partnership']),
+  "publicationDate": zod.string().max(createMediaPublicationBodyPublicationDateMax),
+  "externalUrl": zod.string().max(createMediaPublicationBodyExternalUrlMax),
+  "embed": zod.union([zod.object({
+  "provider": zod.enum(['youtube', 'vimeo']),
+  "videoId": zod.string().min(1).max(createMediaPublicationBodyEmbedOneVideoIdMax)
+}),zod.null()]),
+  "priority": zod.number().int().min(createMediaPublicationBodyPriorityMin).max(createMediaPublicationBodyPriorityMax),
+  "status": zod.enum(['draft', 'published', 'archived']),
+  "coverUploadId": zod.string().max(createMediaPublicationBodyCoverUploadIdMax).nullable(),
+  "logoUploadId": zod.string().max(createMediaPublicationBodyLogoUploadIdMax).nullable(),
+  "rightsConfirmed": zod.boolean(),
+  "expectedUpdatedAt": zod.string().max(createMediaPublicationBodyExpectedUpdatedAtMax).nullable()
+})
+
+export const createMediaPublicationResponseEmbedOneVideoIdMax = 30;
+
+
+
+export const CreateMediaPublicationResponse = zod.object({
+  "id": zod.number().int(),
+  "title": zod.string(),
+  "publisher": zod.string(),
+  "description": zod.string(),
+  "category": zod.enum(['international-press', 'television', 'magazine', 'newspaper', 'interview', 'press-release', 'official-announcement', 'media-partnership']),
+  "publicationDate": zod.string(),
+  "externalUrl": zod.string(),
+  "embed": zod.union([zod.object({
+  "provider": zod.enum(['youtube', 'vimeo']),
+  "videoId": zod.string().min(1).max(createMediaPublicationResponseEmbedOneVideoIdMax)
+}),zod.null()]),
+  "priority": zod.number().int(),
+  "status": zod.enum(['draft', 'published', 'archived']),
+  "coverUrl": zod.string().nullable(),
+  "logoUrl": zod.string().nullable(),
+  "coverUploadId": zod.string().nullable(),
+  "logoUploadId": zod.string().nullable(),
+  "rightsConfirmed": zod.boolean(),
+  "updatedAt": zod.string()
+})
+
+
+
+
+
+export const UpdateMediaPublicationParams = zod.object({
+  "id": zod.coerce.number().int().min(1)
+})
+
+export const updateMediaPublicationBodyTitleMin = 2;
+export const updateMediaPublicationBodyTitleMax = 240;
+
+export const updateMediaPublicationBodyPublisherMax = 140;
+
+export const updateMediaPublicationBodyDescriptionMax = 6000;
+
+export const updateMediaPublicationBodyPublicationDateMax = 10;
+
+export const updateMediaPublicationBodyExternalUrlMax = 2000;
+
+export const updateMediaPublicationBodyEmbedOneVideoIdMax = 30;
+
+export const updateMediaPublicationBodyPriorityMin = 0;
+export const updateMediaPublicationBodyPriorityMax = 100000;
+
+export const updateMediaPublicationBodyCoverUploadIdMax = 100;
+
+export const updateMediaPublicationBodyLogoUploadIdMax = 100;
+
+export const updateMediaPublicationBodyExpectedUpdatedAtMax = 40;
+
+
+
+export const UpdateMediaPublicationBody = zod.object({
+  "title": zod.string().min(updateMediaPublicationBodyTitleMin).max(updateMediaPublicationBodyTitleMax),
+  "publisher": zod.string().max(updateMediaPublicationBodyPublisherMax),
+  "description": zod.string().max(updateMediaPublicationBodyDescriptionMax),
+  "category": zod.enum(['international-press', 'television', 'magazine', 'newspaper', 'interview', 'press-release', 'official-announcement', 'media-partnership']),
+  "publicationDate": zod.string().max(updateMediaPublicationBodyPublicationDateMax),
+  "externalUrl": zod.string().max(updateMediaPublicationBodyExternalUrlMax),
+  "embed": zod.union([zod.object({
+  "provider": zod.enum(['youtube', 'vimeo']),
+  "videoId": zod.string().min(1).max(updateMediaPublicationBodyEmbedOneVideoIdMax)
+}),zod.null()]),
+  "priority": zod.number().int().min(updateMediaPublicationBodyPriorityMin).max(updateMediaPublicationBodyPriorityMax),
+  "status": zod.enum(['draft', 'published', 'archived']),
+  "coverUploadId": zod.string().max(updateMediaPublicationBodyCoverUploadIdMax).nullable(),
+  "logoUploadId": zod.string().max(updateMediaPublicationBodyLogoUploadIdMax).nullable(),
+  "rightsConfirmed": zod.boolean(),
+  "expectedUpdatedAt": zod.string().max(updateMediaPublicationBodyExpectedUpdatedAtMax).nullable()
+})
+
+export const updateMediaPublicationResponseEmbedOneVideoIdMax = 30;
+
+
+
+export const UpdateMediaPublicationResponse = zod.object({
+  "id": zod.number().int(),
+  "title": zod.string(),
+  "publisher": zod.string(),
+  "description": zod.string(),
+  "category": zod.enum(['international-press', 'television', 'magazine', 'newspaper', 'interview', 'press-release', 'official-announcement', 'media-partnership']),
+  "publicationDate": zod.string(),
+  "externalUrl": zod.string(),
+  "embed": zod.union([zod.object({
+  "provider": zod.enum(['youtube', 'vimeo']),
+  "videoId": zod.string().min(1).max(updateMediaPublicationResponseEmbedOneVideoIdMax)
+}),zod.null()]),
+  "priority": zod.number().int(),
+  "status": zod.enum(['draft', 'published', 'archived']),
+  "coverUrl": zod.string().nullable(),
+  "logoUrl": zod.string().nullable(),
+  "coverUploadId": zod.string().nullable(),
+  "logoUploadId": zod.string().nullable(),
+  "rightsConfirmed": zod.boolean(),
+  "updatedAt": zod.string()
+})
+
+
+
+
+
+export const DeleteMediaPublicationParams = zod.object({
+  "id": zod.coerce.number().int().min(1)
+})
+
+export const deleteMediaPublicationBodyExpectedUpdatedAtMax = 40;
+
+
+
+export const DeleteMediaPublicationBody = zod.object({
+  "expectedUpdatedAt": zod.string().min(1).max(deleteMediaPublicationBodyExpectedUpdatedAtMax)
+})
+
+export const DeleteMediaPublicationResponse = zod.void()
+
+
+
+
+
+export const GetMediaPublicationAssetParams = zod.object({
+  "id": zod.coerce.number().int().min(1),
+  "slot": zod.enum(['cover', 'logo'])
+})
+
+export const GetMediaPublicationAssetResponse = zod.unknown()
+
+
 export const GetGratitudeOptionsResponse = zod.object({
   "campaigns": zod.array(zod.object({
   "id": zod.number().int(),

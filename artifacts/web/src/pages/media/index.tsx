@@ -4,21 +4,20 @@ import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
 import SectionHeading from '@/components/SectionHeading';
 import { Button } from '@/components/ui/button';
-import EditorialFilm from '@/components/EditorialFilm';
 import MediaCatalogue from '@/components/partners/MediaCatalogue';
 import Reveal from '@/components/Reveal';
 import { Mail } from 'lucide-react';
 import MagazineFeature from '@/components/magazine/MagazineFeature';
-import BroadcastFilms from '@/components/editorial/BroadcastFilms';
+import MediaCenter from '@/components/media-center/MediaCenter';
 
 export default function MediaHub() {
   return (
     <div className="bg-ivory-50 min-h-screen">
       <Helmet>
-        <title>Media — Coverage, films and press | TOMI</title>
-        <meta name="description" content="Media hub for The One Movement International: coverage catalogue, editorial films from previous editions, broadcast context and press pathways." />
+        <title>Media Center — Press, television and coverage | TOMI</title>
+        <meta name="description" content="Media center of The One Movement International: international press, television, magazines, newspapers, interviews, press releases, official announcements and media partnerships." />
         <meta property="og:title" content="Media — The One Movement International" />
-        <meta property="og:description" content="Coverage catalogue, editorial films and press pathways." />
+        <meta property="og:description" content="International press coverage, interviews, press releases and media pathways." />
       </Helmet>
 
       {/* 1. MEDIA HERO */}
@@ -32,13 +31,11 @@ export default function MediaHub() {
             </h1>
             <GoldThread className="mt-8" length="200px" node />
             <p className="mt-6 text-ivory-200 text-lg leading-relaxed max-w-2xl">
-              Institutions, programs, culture and video from the connected network, with pathways for journalists and production partners.
+              International press, television, interviews, press releases and official announcements, with pathways for journalists and media partners.
             </p>
           </Reveal>
         </div>
       </HeroSurface>
-
-      <BroadcastFilms />
 
       <MagazineFeature />
 
@@ -88,40 +85,8 @@ export default function MediaHub() {
         <MediaCatalogue />
       </div>
 
-      {/* 3. EDITORIAL FILM — previous editions */}
-      <section className="py-section-lg bg-lagoon-900 text-ivory-100" aria-labelledby="previous-editions-heading">
-        <div className="mx-auto max-w-5xl px-6">
-          <Reveal>
-            <p className="text-eyebrow text-gold-400">WATCH · EDITORIAL FILM</p>
-            <h2 id="previous-editions-heading" className="mt-4 text-display-md text-ivory-100">PREVIOUS EDITIONS, IN MOTION.</h2>
-          </Reveal>
-          <Reveal delay={120} className="mt-10 text-ivory-200">
-            <EditorialFilm
-              name="previous-editions"
-              testId="film-previous-editions"
-              label="Runway, artists and audience at previous The One Fashion Week editions"
-              caption="Runway, artists and audience from previous editions of The One Fashion Week."
-              credit="Film credit: Ngonga Inbox"
-            />
-          </Reveal>
-        </div>
-      </section>
-
-      {/* 4. PRESS & COVERAGE */}
-      <section className="py-section-lg bg-ivory-50">
-        <div className="mx-auto max-w-7xl px-6">
-          <Reveal>
-            <SectionHeading eyebrow="COVERAGE" heading="PRESS / COVERAGE" surface="light" thread />
-            <div className="mt-10 max-w-2xl border border-sand-200 bg-white p-8 shadow-sm">
-              <div className="mb-4 h-px w-12 bg-gold-500" aria-hidden="true" />
-              <h4 className="text-lg font-display text-ink-900">Editorial enquiries</h4>
-              <p className="mt-3 text-sm leading-relaxed text-ink-700">
-                Contact the team for interviews, program context and information about the Movement's partner network. Published articles and press mentions are listed only when confirmed.
-              </p>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      {/* 4. PRESS & COVERAGE — dynamic media center */}
+      <MediaCenter />
 
       {/* 5. MEDIA KIT */}
       <section className="py-section-lg bg-ivory-100 border-t border-sand-200">

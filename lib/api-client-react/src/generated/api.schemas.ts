@@ -5,6 +5,132 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+export interface MediaPublicationDelete {
+  /**
+     * @minLength 1
+     * @maxLength 40
+     */
+  expectedUpdatedAt: string;
+}
+
+export type MediaPublicationCategory = typeof MediaPublicationCategory[keyof typeof MediaPublicationCategory];
+
+
+export const MediaPublicationCategory = {
+  'international-press': 'international-press',
+  television: 'television',
+  magazine: 'magazine',
+  newspaper: 'newspaper',
+  interview: 'interview',
+  'press-release': 'press-release',
+  'official-announcement': 'official-announcement',
+  'media-partnership': 'media-partnership',
+} as const;
+
+export type MediaPublicationEmbedProvider = typeof MediaPublicationEmbedProvider[keyof typeof MediaPublicationEmbedProvider];
+
+
+export const MediaPublicationEmbedProvider = {
+  youtube: 'youtube',
+  vimeo: 'vimeo',
+} as const;
+
+export interface MediaPublicationEmbed {
+  provider: MediaPublicationEmbedProvider;
+  /**
+     * @minLength 1
+     * @maxLength 30
+     */
+  videoId: string;
+}
+
+export type MediaPublicationSaveStatus = typeof MediaPublicationSaveStatus[keyof typeof MediaPublicationSaveStatus];
+
+
+export const MediaPublicationSaveStatus = {
+  draft: 'draft',
+  published: 'published',
+  archived: 'archived',
+} as const;
+
+export interface MediaPublicationSave {
+  /**
+     * @minLength 2
+     * @maxLength 240
+     */
+  title: string;
+  /** @maxLength 140 */
+  publisher: string;
+  /** @maxLength 6000 */
+  description: string;
+  category: MediaPublicationCategory;
+  /** @maxLength 10 */
+  publicationDate: string;
+  /** @maxLength 2000 */
+  externalUrl: string;
+  embed: MediaPublicationEmbed | null;
+  /**
+     * @minimum 0
+     * @maximum 100000
+     */
+  priority: number;
+  status: MediaPublicationSaveStatus;
+  /**
+     * @maxLength 100
+     * @nullable
+     */
+  coverUploadId: string | null;
+  /**
+     * @maxLength 100
+     * @nullable
+     */
+  logoUploadId: string | null;
+  rightsConfirmed: boolean;
+  /**
+     * @maxLength 40
+     * @nullable
+     */
+  expectedUpdatedAt: string | null;
+}
+
+export type MediaPublicationStatus = typeof MediaPublicationStatus[keyof typeof MediaPublicationStatus];
+
+
+export const MediaPublicationStatus = {
+  draft: 'draft',
+  published: 'published',
+  archived: 'archived',
+} as const;
+
+export interface MediaPublication {
+  id: number;
+  title: string;
+  publisher: string;
+  description: string;
+  category: MediaPublicationCategory;
+  publicationDate: string;
+  externalUrl: string;
+  embed: MediaPublicationEmbed | null;
+  priority: number;
+  status: MediaPublicationStatus;
+  /** @nullable */
+  coverUrl: string | null;
+  /** @nullable */
+  logoUrl: string | null;
+  /** @nullable */
+  coverUploadId: string | null;
+  /** @nullable */
+  logoUploadId: string | null;
+  rightsConfirmed: boolean;
+  updatedAt: string;
+}
+
+export interface MediaPublicationPage {
+  items: MediaPublication[];
+  page: number;
+  hasMore: boolean;
+}
+
 export type GratitudeUploadInputContentType = typeof GratitudeUploadInputContentType[keyof typeof GratitudeUploadInputContentType];
 
 
@@ -1686,6 +1812,20 @@ export interface DetailedHealthStatus {
   status: string;
   database: string;
 }
+
+export type GetMediaPublicationsParams = {
+/**
+ * @minimum 1
+ */
+page?: number;
+};
+
+export type GetAdminMediaPublicationsParams = {
+/**
+ * @minimum 1
+ */
+page?: number;
+};
 
 export type GetGratitudeStoriesParams = {
 country?: string;

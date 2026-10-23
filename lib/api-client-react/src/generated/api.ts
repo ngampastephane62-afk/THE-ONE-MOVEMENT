@@ -33,6 +33,7 @@ import type {
   CreateProfessionalIntroduction201,
   DetailedHealthStatus,
   DonationCampaign,
+  GetAdminMediaPublicationsParams,
   GetDocumentaryAccess200,
   GetEcosystemMembers200,
   GetFounderGratitudeParams,
@@ -45,6 +46,7 @@ import type {
   GetHumanitarianPaymentStatus200,
   GetHumanitarianPaymentStatusParams,
   GetMediaEngagementParams,
+  GetMediaPublicationsParams,
   GetMyGratitudeStoriesParams,
   GetNetworkPaymentStatusParams,
   GetNetworkStateParams,
@@ -77,6 +79,10 @@ import type {
   MediaInquiryInput,
   MediaInquiryReceipt,
   MediaInquiryReview,
+  MediaPublication,
+  MediaPublicationDelete,
+  MediaPublicationPage,
+  MediaPublicationSave,
   MemberProfileInput,
   MemberProfileResponse,
   NetworkActionInput,
@@ -139,6 +145,561 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   }
   return result;
 };
+
+export const getGetMediaPublicationsUrl = (params?: GetMediaPublicationsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/media-center?${stringifiedParams}` : `/api/media-center`
+}
+
+export const getMediaPublications = async (params?: GetMediaPublicationsParams, options?: Parameters<typeof customFetch>[1]): Promise<MediaPublicationPage> => {
+
+  return customFetch<MediaPublicationPage>(getGetMediaPublicationsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetMediaPublicationsQueryKey = (params?: GetMediaPublicationsParams,) => {
+    return [
+    `/api/media-center`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getGetMediaPublicationsQueryOptions = <TData = Awaited<ReturnType<typeof getMediaPublications>>, TError = ErrorType<unknown>>(params?: GetMediaPublicationsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMediaPublications>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMediaPublicationsQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMediaPublications>>> = ({ signal }) => getMediaPublications(params, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMediaPublications>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMediaPublicationsQueryResult = NonNullable<Awaited<ReturnType<typeof getMediaPublications>>>
+export type GetMediaPublicationsQueryError = ErrorType<unknown>
+
+
+export function useGetMediaPublications<TData = Awaited<ReturnType<typeof getMediaPublications>>, TError = ErrorType<unknown>>(
+ params: undefined |  GetMediaPublicationsParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMediaPublications>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMediaPublications>>,
+          TError,
+          Awaited<ReturnType<typeof getMediaPublications>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMediaPublications<TData = Awaited<ReturnType<typeof getMediaPublications>>, TError = ErrorType<unknown>>(
+ params?: GetMediaPublicationsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMediaPublications>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMediaPublications>>,
+          TError,
+          Awaited<ReturnType<typeof getMediaPublications>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMediaPublications<TData = Awaited<ReturnType<typeof getMediaPublications>>, TError = ErrorType<unknown>>(
+ params?: GetMediaPublicationsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMediaPublications>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetMediaPublications<TData = Awaited<ReturnType<typeof getMediaPublications>>, TError = ErrorType<unknown>>(
+ params?: GetMediaPublicationsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMediaPublications>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMediaPublicationsQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getGetAdminMediaPublicationsUrl = (params?: GetAdminMediaPublicationsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/founder/media-center?${stringifiedParams}` : `/api/founder/media-center`
+}
+
+export const getAdminMediaPublications = async (params?: GetAdminMediaPublicationsParams, options?: Parameters<typeof customFetch>[1]): Promise<MediaPublicationPage> => {
+
+  return customFetch<MediaPublicationPage>(getGetAdminMediaPublicationsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetAdminMediaPublicationsQueryKey = (params?: GetAdminMediaPublicationsParams,) => {
+    return [
+    `/api/founder/media-center`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getGetAdminMediaPublicationsQueryOptions = <TData = Awaited<ReturnType<typeof getAdminMediaPublications>>, TError = ErrorType<unknown>>(params?: GetAdminMediaPublicationsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAdminMediaPublications>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetAdminMediaPublicationsQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAdminMediaPublications>>> = ({ signal }) => getAdminMediaPublications(params, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAdminMediaPublications>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetAdminMediaPublicationsQueryResult = NonNullable<Awaited<ReturnType<typeof getAdminMediaPublications>>>
+export type GetAdminMediaPublicationsQueryError = ErrorType<unknown>
+
+
+export function useGetAdminMediaPublications<TData = Awaited<ReturnType<typeof getAdminMediaPublications>>, TError = ErrorType<unknown>>(
+ params: undefined |  GetAdminMediaPublicationsParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAdminMediaPublications>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAdminMediaPublications>>,
+          TError,
+          Awaited<ReturnType<typeof getAdminMediaPublications>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAdminMediaPublications<TData = Awaited<ReturnType<typeof getAdminMediaPublications>>, TError = ErrorType<unknown>>(
+ params?: GetAdminMediaPublicationsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAdminMediaPublications>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAdminMediaPublications>>,
+          TError,
+          Awaited<ReturnType<typeof getAdminMediaPublications>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAdminMediaPublications<TData = Awaited<ReturnType<typeof getAdminMediaPublications>>, TError = ErrorType<unknown>>(
+ params?: GetAdminMediaPublicationsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAdminMediaPublications>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetAdminMediaPublications<TData = Awaited<ReturnType<typeof getAdminMediaPublications>>, TError = ErrorType<unknown>>(
+ params?: GetAdminMediaPublicationsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAdminMediaPublications>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetAdminMediaPublicationsQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getCreateMediaPublicationUrl = () => {
+
+
+
+
+  return `/api/founder/media-center`
+}
+
+export const createMediaPublication = async (mediaPublicationSave: MediaPublicationSave, options?: Parameters<typeof customFetch>[1]): Promise<MediaPublication> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<MediaPublication>(getCreateMediaPublicationUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(mediaPublicationSave)
+  }
+);}
+
+
+
+
+
+export const getCreateMediaPublicationMutationKey = () => ['createMediaPublication'] as const;
+
+export const getCreateMediaPublicationMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createMediaPublication>>, TError,CreateMediaPublicationMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof createMediaPublication>>, TError,CreateMediaPublicationMutationVariables, TContext> => {
+
+const mutationKey = getCreateMediaPublicationMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createMediaPublication>>, CreateMediaPublicationMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  createMediaPublication(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateMediaPublicationMutationResult = NonNullable<Awaited<ReturnType<typeof createMediaPublication>>>
+    export type CreateMediaPublicationMutationBody = BodyType<MediaPublicationSave>
+    export type CreateMediaPublicationMutationError = ErrorType<unknown>
+    export type CreateMediaPublicationMutationVariables = {data: BodyType<MediaPublicationSave>}
+
+    export const useCreateMediaPublication = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createMediaPublication>>, TError,CreateMediaPublicationMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createMediaPublication>>,
+        TError,
+        CreateMediaPublicationMutationVariables,
+        TContext
+      > => {
+      return useMutation(getCreateMediaPublicationMutationOptions(options), queryClient);
+    }
+
+export const getUpdateMediaPublicationUrl = (id: number,) => {
+
+
+
+
+  return `/api/founder/media-center/${id}`
+}
+
+export const updateMediaPublication = async (id: number,
+    mediaPublicationSave: MediaPublicationSave, options?: Parameters<typeof customFetch>[1]): Promise<MediaPublication> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<MediaPublication>(getUpdateMediaPublicationUrl(id),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(mediaPublicationSave)
+  }
+);}
+
+
+
+
+
+export const getUpdateMediaPublicationMutationKey = () => ['updateMediaPublication'] as const;
+
+export const getUpdateMediaPublicationMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateMediaPublication>>, TError,UpdateMediaPublicationMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateMediaPublication>>, TError,UpdateMediaPublicationMutationVariables, TContext> => {
+
+const mutationKey = getUpdateMediaPublicationMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateMediaPublication>>, UpdateMediaPublicationMutationVariables> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  updateMediaPublication(id,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateMediaPublicationMutationResult = NonNullable<Awaited<ReturnType<typeof updateMediaPublication>>>
+    export type UpdateMediaPublicationMutationBody = BodyType<MediaPublicationSave>
+    export type UpdateMediaPublicationMutationError = ErrorType<unknown>
+    export type UpdateMediaPublicationMutationVariables = {id: number;data: BodyType<MediaPublicationSave>}
+
+    export const useUpdateMediaPublication = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateMediaPublication>>, TError,UpdateMediaPublicationMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof updateMediaPublication>>,
+        TError,
+        UpdateMediaPublicationMutationVariables,
+        TContext
+      > => {
+      return useMutation(getUpdateMediaPublicationMutationOptions(options), queryClient);
+    }
+
+export const getDeleteMediaPublicationUrl = (id: number,) => {
+
+
+
+
+  return `/api/founder/media-center/${id}`
+}
+
+export const deleteMediaPublication = async (id: number,
+    mediaPublicationDelete: MediaPublicationDelete, options?: Parameters<typeof customFetch>[1]): Promise<void> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<void>(getDeleteMediaPublicationUrl(id),
+  {
+    ...options,
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(mediaPublicationDelete)
+  }
+);}
+
+
+
+
+
+export const getDeleteMediaPublicationMutationKey = () => ['deleteMediaPublication'] as const;
+
+export const getDeleteMediaPublicationMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteMediaPublication>>, TError,DeleteMediaPublicationMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteMediaPublication>>, TError,DeleteMediaPublicationMutationVariables, TContext> => {
+
+const mutationKey = getDeleteMediaPublicationMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteMediaPublication>>, DeleteMediaPublicationMutationVariables> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  deleteMediaPublication(id,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteMediaPublicationMutationResult = NonNullable<Awaited<ReturnType<typeof deleteMediaPublication>>>
+    export type DeleteMediaPublicationMutationBody = BodyType<MediaPublicationDelete>
+    export type DeleteMediaPublicationMutationError = ErrorType<unknown>
+    export type DeleteMediaPublicationMutationVariables = {id: number;data: BodyType<MediaPublicationDelete>}
+
+    export const useDeleteMediaPublication = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteMediaPublication>>, TError,DeleteMediaPublicationMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof deleteMediaPublication>>,
+        TError,
+        DeleteMediaPublicationMutationVariables,
+        TContext
+      > => {
+      return useMutation(getDeleteMediaPublicationMutationOptions(options), queryClient);
+    }
+
+export const getGetMediaPublicationAssetUrl = (id: number,
+    slot: 'cover' | 'logo',) => {
+
+
+
+
+  return `/api/media-center/${id}/assets/${slot}`
+}
+
+export const getMediaPublicationAsset = async (id: number,
+    slot: 'cover' | 'logo', options?: Parameters<typeof customFetch>[1]): Promise<Blob> => {
+
+  return customFetch<Blob>(getGetMediaPublicationAssetUrl(id,slot),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetMediaPublicationAssetQueryKey = (id: number,
+    slot: 'cover' | 'logo',) => {
+    return [
+    `/api/media-center/${id}/assets/${slot}`
+    ] as const;
+    }
+
+
+export const getGetMediaPublicationAssetQueryOptions = <TData = Awaited<ReturnType<typeof getMediaPublicationAsset>>, TError = ErrorType<unknown>>(id: number,
+    slot: 'cover' | 'logo', options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMediaPublicationAsset>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMediaPublicationAssetQueryKey(id,slot);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMediaPublicationAsset>>> = ({ signal }) => getMediaPublicationAsset(id,slot, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: id !== null && id !== undefined && slot !== null && slot !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMediaPublicationAsset>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMediaPublicationAssetQueryResult = NonNullable<Awaited<ReturnType<typeof getMediaPublicationAsset>>>
+export type GetMediaPublicationAssetQueryError = ErrorType<unknown>
+
+
+export function useGetMediaPublicationAsset<TData = Awaited<ReturnType<typeof getMediaPublicationAsset>>, TError = ErrorType<unknown>>(
+ id: number,
+    slot: 'cover' | 'logo', options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMediaPublicationAsset>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMediaPublicationAsset>>,
+          TError,
+          Awaited<ReturnType<typeof getMediaPublicationAsset>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMediaPublicationAsset<TData = Awaited<ReturnType<typeof getMediaPublicationAsset>>, TError = ErrorType<unknown>>(
+ id: number,
+    slot: 'cover' | 'logo', options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMediaPublicationAsset>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMediaPublicationAsset>>,
+          TError,
+          Awaited<ReturnType<typeof getMediaPublicationAsset>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMediaPublicationAsset<TData = Awaited<ReturnType<typeof getMediaPublicationAsset>>, TError = ErrorType<unknown>>(
+ id: number,
+    slot: 'cover' | 'logo', options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMediaPublicationAsset>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetMediaPublicationAsset<TData = Awaited<ReturnType<typeof getMediaPublicationAsset>>, TError = ErrorType<unknown>>(
+ id: number,
+    slot: 'cover' | 'logo', options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMediaPublicationAsset>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMediaPublicationAssetQueryOptions(id,slot,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
 
 export const getGetGratitudeOptionsUrl = () => {
 
