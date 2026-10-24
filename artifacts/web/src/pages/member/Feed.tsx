@@ -37,6 +37,7 @@ function Composer() {
             placeholder={kind === 'business' ? 'Present an offer, a collaboration or a project seeking partners' : kind === 'reel' ? 'Caption your reel — attach a short video' : 'What are you working on?'} data-testid="input-composer" />
         </div>
       </div>
+      <p className="mt-3 text-xs text-ink-700" data-testid="text-trial-posting">Community trials: updates, Business posts and reels are free. No subscription or invitations required.</p>
       <div className="mt-3"><UploadTray u={u} label="Photo, video, audio or PDF" testId="post-upload" /></div>
       {err && <p className="mt-2 text-xs text-crimson-700" role="alert">Not published. Your draft is kept — try again.</p>}
       <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-sand-100 pt-3">

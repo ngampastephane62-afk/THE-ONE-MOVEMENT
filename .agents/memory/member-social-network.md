@@ -27,6 +27,12 @@ New members may join, publish, follow people, like and comment after their email
 
 **How to apply:** Keep server-side verified-identity, active-membership and suspension checks. Do not gate posts or reels on invitation counts, follower totals or programme purchases. Invitation statistics may remain as optional community-growth information.
 
+During community trials, publishing is open to all signed-in members, including Business posts and reels, without a paid subscription or referral threshold. Anonymous publishing is not authorized.
+
+**Why:** The Founder asked to let everyone post during trials and explicitly chose “Tous les membres connectés” rather than visitors without accounts.
+
+**How to apply:** Apply the trial opening to community publishing only, not official editorial pages, certifications or other paid services. Preserve verified identity, voluntary network activation, suspension, media ownership, blocking and moderation. Do not automatically change existing account visibility or activate memberships.
+
 Creating a free account must not itself activate network participation. A correction to new-profile activation defaults must preserve existing members' activation choices, independently of public visibility.
 
 **Why:** The Founder explicitly approved voluntary activation and prohibited bulk changes to existing activation states.

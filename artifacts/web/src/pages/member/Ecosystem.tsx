@@ -83,7 +83,7 @@ export default function Ecosystem() {
       </div>
 
       <p translate="no" className="rounded-xl border border-sand-300 p-3 text-xs leading-relaxed text-ink-700" data-testid="text-ecosystem-rules">
-        {t('Ordinary posts require no invitations or subscription. Specialized paid services retain their existing access controls, including referral requirements for Business posts and reels. Payment does not replace licence approval or identity certification.', 'Les publications ordinaires ne nécessitent ni invitation ni abonnement. Les services payants spécialisés conservent leurs contrôles d’accès, dont le parrainage pour les publications Business et les Reels. Le paiement ne remplace ni l’approbation de licence ni la certification d’identité.')}
+        {t('During community trials, updates, Business posts and reels require no invitations or subscription. Verify your email and activate the network to publish. Specialized paid services retain their existing access controls. Payment does not replace licence approval or identity certification.', 'Pendant les essais communautaires, les publications, les publications Business et les Reels ne nécessitent ni invitation ni abonnement. Vérifiez votre adresse e-mail et activez le réseau pour publier. Les services payants spécialisés conservent leurs contrôles d’accès. Le paiement ne remplace ni l’approbation de licence ni la certification d’identité.')}
       </p>
     </div>
   );

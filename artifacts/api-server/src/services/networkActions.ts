@@ -9,8 +9,7 @@ import { and, eq, inArray, or, ne, isNull } from "drizzle-orm";
 import type { Request, Response } from "express";
 import { actor, NetworkError, requireFounder } from "./networkAuth";
 import { ownedMedia, completeUpload } from "./networkFiles";
-import { visibleMember, visiblePost, ownThread, ROLES, PROGRAMS, isBlocked, qualifiedInviteCount } from "./networkState";
-import { requireMonthly } from "./monthlyMembership";
+import { visibleMember, visiblePost, ownThread, ROLES, PROGRAMS, isBlocked } from "./networkState";
 import { startOrdinaryThread } from "./ordinaryMessaging";
 import { checkout, PACKAGE_DEFINITIONS, customPackages } from "./networkPayments";
 
@@ -81,8 +80,8 @@ export async function networkAction(req: Request, res: Response) {
       const media = await ownedMedia(self, input.mediaIds);
       if (!content && !media.length) throw new NetworkError(400, "Write something or attach media.");
       const kind = input.kind ?? "post";
-      if (!who.founder && (kind === "business" || kind === "reel") && await qualifiedInviteCount(self) < 10) throw new NetworkError(403, "Business posts and reels require ten genuine verified referral followers.");
-      if (!who.founder && (kind === "business" || kind === "reel")) await requireMonthly(self);
+      // Community trials: all post types share the verified, voluntarily active
+      // member gate above. Paid services and official roles remain separate.
       if (!["post", "business", "reel"].includes(kind)) throw new NetworkError(400, "Choose post, business or reel.");
       if (kind === "reel" && !media.some(m => m.contentType.startsWith("video/"))) throw new NetworkError(400, "A reel needs an uploaded video.");
       if (input.action === "post.edit") {

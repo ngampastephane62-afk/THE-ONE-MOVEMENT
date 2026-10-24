@@ -10,20 +10,21 @@ import express from "express";
 // Unrelated services fail closed: no storage, payments, migrations or startup.
 const require = createRequire(import.meta.url);
 const fixture = `
-export const state = { members: [], profiles: [], identities: new Map() };
+export const state = { members: [], profiles: [], posts: [], identities: new Map() };
 export const ecosystemMembersTable = { table: "members", clerkId: "clerkId", id: "id" };
 export const networkProfiles = { table: "profiles", memberId: "memberId" };
-export const networkUploads = {}, networkPosts = {}, networkComments = {},
+export const networkUploads = {}, networkPosts = { table: "posts", id: "id", authorId: "authorId" }, networkComments = {},
   networkLikes = {}, networkViews = {}, networkFollows = {}, networkBlocks = {},
   networkThreads = {}, networkMessages = {}, networkCertifications = {},
   networkReports = {}, networkAudit = {};
 function rows(table) {
-  if (!["members", "profiles"].includes(table.table)) throw Error("Unexpected table");
+  if (!["members", "profiles", "posts"].includes(table.table)) throw Error("Unexpected table");
   return state[table.table];
 }
 export const db = {
   select: () => ({ from: table => ({ where: condition => {
-    const result = rows(table).filter(row => row[condition.column] === condition.value);
+    const matches = (row, c) => c.conditions ? c.conditions.every(child => matches(row, child)) : row[c.column] === c.value;
+    const result = rows(table).filter(row => matches(row, condition));
     return Object.assign(Promise.resolve(result), { limit: n => Promise.resolve(result.slice(0, n)) });
   } }) }),
   insert: table => ({ values: values => {
@@ -38,12 +39,19 @@ export const db = {
       return [row];
     };
     return {
+      returning: async () => {
+        if (table.table !== "posts") throw Error("Unexpected direct insert");
+        const row = { id: state.posts.length + 1, ...values };
+        state.posts.push(row);
+        return [row];
+      },
       onConflictDoNothing: () => ({ returning: async () => execute() }),
       onConflictDoUpdate: async conflict => execute(conflict),
     };
   } }),
   update: table => ({ set: values => ({ where: async condition => {
-    for (const row of rows(table)) if (row[condition.column] === condition.value) Object.assign(row, values);
+    const matches = (row, c) => c.conditions ? c.conditions.every(child => matches(row, child)) : row[c.column] === c.value;
+    for (const row of rows(table)) if (matches(row, condition)) Object.assign(row, values);
   } }) }),
 };
 export const getAuth = req => ({ userId: req.headers["x-fixture-identity"] ?? null });
@@ -59,7 +67,13 @@ export const clerkClient = { users: { getUser: async id => {
 `;
 const failClosed = `
 const forbidden = () => { throw Error("Unrelated service must not run in activation tests"); };
-export const requestUpload = forbidden, objectFile = forbidden, ownedMedia = forbidden,
+export async function ownedMedia(memberId, ids = []) {
+  return ids.map(id => {
+    if (id !== "fixture-video") throw Error("Unexpected fixture upload");
+    return { id, ownerId: memberId, contentType: "video/mp4" };
+  });
+}
+export const requestUpload = forbidden, objectFile = forbidden,
   completeUpload = forbidden, activeBadge = forbidden, visibleMember = forbidden,
   visiblePost = forbidden, ownThread = forbidden, isBlocked = forbidden,
   qualifiedInviteCount = forbidden, requireMonthly = forbidden, checkout = forbidden,
@@ -87,7 +101,7 @@ const output = await build({
         contents: path === "identity-and-db" ? fixture : path === "unrelated" ? failClosed
           : path === "origin" ? `export const getClerkProxyHost = req => req.get("host");`
             : `export const eq = (column, value) => ({ column, value });
-               export const and = () => {}, inArray = () => {}, or = () => {}, ne = () => {}, isNull = () => {}, sql = () => {};`,
+               export const and = (...conditions) => ({ conditions }), inArray = () => {}, or = () => {}, ne = () => {}, isNull = () => {}, sql = () => {};`,
       }));
       b.onResolve({ filter: /^express$/ }, args => ({
         path: pathToFileURL(require.resolve(args.path)).href, external: true,
@@ -165,6 +179,40 @@ test("explicit network activation (isolated HTTP regression suite)", async t => 
     assert.equal((await request("new", join)).status, 200);
     assert.equal((await request("new")).status, 200);
     assert.deepEqual(profile("new"), before);
+  });
+  await t.test("trial members create and edit every post type without referrals or billing", async () => {
+    for (const kind of ["post", "business", "reel"]) {
+      const body = { action: "post.create", kind, text: "Trial fixture only",
+        ...(kind === "reel" ? { mediaIds: ["fixture-video"] } : {}) };
+      const response = await request("new", body);
+      assert.equal(response.status, 200, await response.clone().text());
+      const { id } = await response.json();
+      const saved = state.posts.find(p => p.id === id);
+      assert.equal(saved.authorId, profile("new").memberId);
+      assert.equal(saved.kind, kind);
+      assert.equal((await request("new", { ...body, action: "post.edit", id, text: "Edited fixture" })).status, 200);
+      assert.equal(saved.text, "Edited fixture");
+    }
+    // Referral and billing mocks throw if called; success proves neither ran.
+  });
+  await t.test("posting preserves authentication, activation, origin, ownership and reel validation", async () => {
+    const before = state.posts.length;
+    const post = { action: "post.create", kind: "business", text: "Must not publish" };
+    assert.equal((await request(null, post)).status, 401);
+    assert.equal((await request("unverified", post)).status, 403);
+    assert.equal((await request("other", post)).status, 409);
+    assert.equal((await request("new", post, { origin: "https://other.fixture.invalid" })).status, 403);
+    assert.equal((await request("new", { ...post, kind: "reel" })).status, 400);
+    assert.equal((await request("new", { ...post, kind: "official" })).status, 400);
+    assert.equal((await request("new", { ...post, text: "" })).status, 400);
+    assert.equal(state.posts.length, before);
+    identity("writer");
+    await request("writer", join);
+    assert.equal((await request("writer", { ...post, action: "post.edit", id: state.posts[0].id })).status, 404);
+    assert.equal(state.posts[0].text, "Edited fixture");
+    profile("writer").suspended = true;
+    assert.equal((await request("writer", post)).status, 403);
+    assert.equal(state.posts.length, before);
   });
   await t.test("activation preserves both public visibility choices and public media consent", async () => {
     for (const isPublic of [false, true]) {

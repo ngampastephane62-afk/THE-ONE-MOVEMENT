@@ -46,7 +46,7 @@ export default function InvitationProgress({ growth, founder, compact }: { growt
       <div className="flex flex-col gap-3 p-5">
         {!compact && (
           <div className="flex flex-col gap-1.5 text-sm leading-relaxed text-ink-700">
-            <p>Your account is free and editable now. Ordinary posts do not require invitations or a subscription. Business posts and reels retain their existing ten-referral requirement and need an active <a href="/member/membership" className="font-semibold text-lagoon-700 underline">membership</a>.</p>
+            <p>During community trials, updates, Business posts and reels are free for all verified members who activate the network. No invitations or subscription are required to publish. Paid services and official certifications remain separate.</p>
             <p>An invitation counts when someone opens your link, creates a new verified account (less than 24 hours old) and accepts your invitation, which makes them follow you. Each account can be credited once.</p>
             <p>The count reflects invited members who currently follow you and are active. Only real, currently active followers count; the number is never estimated. Packages, events, humanitarian films and donations are separate.</p>
           </div>
