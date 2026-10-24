@@ -178,3 +178,67 @@ test("only existing Founder authorization can read or change private programme s
   assert.equal(res.body.slug, "awards");
   assert.equal(f.rows.length, 1);
 });
+
+test("photo captions survive draft, publish, reload, legacy updates and explicit clearing without losing programme fields", async () => {
+  for (const [slug, first, last] of [
+    ["fashion-night", "fashion-night-archive-01", "fashion-night-archive-07"],
+    ["summit", "summit-encounters-01", "summit-encounters-08"],
+  ]) {
+    const f = fixture(), doc = f.store.defaultProgram(slug);
+    doc.description = "Keep the approved programme description";
+    doc.heroImageUploadId = image;
+    doc.status = "draft";
+    doc.photoCaptions = { [first]: "  Rencontre et créativité — légende du Founder  ", [last]: "Last supplied photo" };
+    let saved = await f.store.saveProgram(payload(doc), slug, 1);
+    assert.equal(saved.photoCaptions[first], "Rencontre et créativité — légende du Founder");
+    assert.equal(Object.keys(f.store.programDTO(await f.store.programDocument(slug)).photoCaptions).length, 0, "draft captions stay private");
+    assert.equal((await f.store.programDocument(slug, true)).photoCaptions[last], "Last supplied photo");
+    saved = await f.store.saveProgram(payload({ ...saved, status: "published" }), slug, 1);
+    assert.equal(f.store.programDTO(await f.store.programDocument(slug)).photoCaptions[first], saved.photoCaptions[first]);
+    const legacy = { ...saved, description: "Updated by an older client" };
+    delete legacy.photoCaptions;
+    saved = await f.store.saveProgram(payload(legacy), slug, 1);
+    assert.equal(saved.photoCaptions[last], "Last supplied photo", "omitting the new field must not erase stored captions");
+    assert.equal(saved.heroImageUploadId, image);
+    assert.equal(saved.participationRoles.length, doc.participationRoles.length);
+    assert.equal(saved.people.length, doc.people.length);
+    assert.equal(saved.media.length, doc.media.length);
+    saved = await f.store.saveProgram(payload({ ...saved, photoCaptions: { ...saved.photoCaptions, [first]: "" } }), slug, 1);
+    assert.equal(saved.photoCaptions[first], "");
+    assert.equal(saved.photoCaptions[last], "Last supplied photo", "clearing one photograph preserves the others");
+    await assert.rejects(f.store.saveProgram(payload({ ...saved, photoCaptions: {} }, null), slug, 1), e => e.status === 409);
+    assert.equal((await f.store.programDocument(slug, true)).photoCaptions[last], "Last supplied photo", "conflicting saves do not erase captions");
+    saved = await f.store.saveProgram(payload({ ...saved, photoCaptions: {} }), slug, 1);
+    assert.equal(Object.keys(f.store.programDTO(await f.store.programDocument(slug)).photoCaptions).length, 0);
+    assert.equal(saved.description, "Updated by an older client");
+    assert.equal(f.rows.find(r => r.type === "unrelated").body, "untouched");
+  }
+});
+
+test("caption validation limits text and accepts only photograph IDs belonging to the programme", () => {
+  const f = fixture();
+  const doc = f.store.defaultProgram("fashion-night");
+  for (const photoCaptions of [
+    { "fashion-night-archive-01": "x".repeat(301) },
+    { "summit-encounters-01": "Wrong programme" },
+    { "fashion-night-archive-08": "Not supplied" },
+    { "../escape": "Invalid ID" },
+    { "fashion-night-archive-01": 123 },
+    JSON.parse('{"__proto__":"not a photograph"}'),
+  ]) {
+    assert.throws(() => f.store.editorialInput(payload({ ...doc, photoCaptions }), "fashion-night"), e => e.status === 400);
+  }
+  assert.throws(() => f.store.editorialInput(payload({ ...f.store.defaultProgram("awards"), photoCaptions: { "fashion-night-archive-01": "Wrong placement" } }), "awards"), e => e.status === 400);
+  const parsed = f.store.editorialInput(payload({ ...doc, photoCaptions: { "fashion-night-archive-01": "x".repeat(300) } }), "fashion-night");
+  assert.equal(parsed.content.photoCaptions["fashion-night-archive-01"].length, 300);
+});
+
+test("photo-caption writes retain Founder and origin protection", async () => {
+  const f = fixture();
+  const body = payload({ ...f.store.defaultProgram("summit"), photoCaptions: { "summit-encounters-01": "Protected caption" } });
+  for (const [user, status] of [[undefined, 401], ["member", 403]]) {
+    await assert.rejects(f.request("put", "/founder/program-editorial/:slug", { params: { slug: "summit" }, user, body }), e => e.status === status);
+  }
+  await assert.rejects(f.request("put", "/founder/program-editorial/:slug", { params: { slug: "summit" }, user: "founder", crossOrigin: true, body }), e => e.status === 403);
+  assert.equal(f.rows.length, 1, "rejected requests must not write any document");
+});

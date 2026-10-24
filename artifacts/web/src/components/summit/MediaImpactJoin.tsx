@@ -1,11 +1,15 @@
+import { useMemo } from 'react';
 import { ProgrammeArchiveSlideshow } from '@/components/programs/FashionNightSlideshow';
 import { SUMMIT_ENCOUNTER_PHOTOS } from '@/lib/programme-photo-archives';
+import { useProgrammeEditorial } from '@/lib/use-programme-editorial';
 import { ActionLink, Eyebrow, SectionTitle } from './SummitUI';
 import { IMPACT_FOCUS, PATHWAYS, ROUTES } from './summit-data';
 
 const MEDIA_FORMATS = ['Founder interviews', 'Business stories', 'Innovation reports', 'Expert conversations', 'Podcasts', 'Educational videos', 'Sector insights', 'Impact stories'];
 
 export function MediaSection() {
+  const { data } = useProgrammeEditorial('summit');
+  const photos = useMemo(() => SUMMIT_ENCOUNTER_PHOTOS.map(photo => ({ ...photo, caption: data?.photoCaptions?.[photo.id] })), [data?.photoCaptions]);
   return (
     <section id="media" aria-labelledby="media-title" className="scroll-mt-16 bg-ivory-50 py-section-lg border-t border-sand-200">
       <div className="mx-auto max-w-7xl px-6">
@@ -19,7 +23,7 @@ export function MediaSection() {
             </ul>
             <div className="mt-8"><ActionLink href={ROUTES.media} testId="link-media">Visit The One Media</ActionLink></div>
           </div>
-          <ProgrammeArchiveSlideshow photos={SUMMIT_ENCOUNTER_PHOTOS} title="Meetings and encounters · supplied photographs"
+          <ProgrammeArchiveSlideshow photos={photos} title="Meetings and encounters · supplied photographs"
             className="mx-auto w-full max-w-lg lg:col-span-6 lg:col-start-7" testId="summit-encounters-slideshow" />
         </div>
       </div>

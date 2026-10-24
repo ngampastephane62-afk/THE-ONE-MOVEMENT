@@ -102,6 +102,11 @@ export const ProgramEditorialParticipationRolesItem = {
   collaborator: 'collaborator',
 } as const;
 
+/**
+ * Plain-text captions keyed by the supplied photograph ID belonging to this programme. Omit on legacy updates to preserve existing captions; an empty object clears them.
+ */
+export interface ProgramPhotoCaptions {[key: string]: string}
+
 export interface ProgramEditorial {
   slug: string;
   /** @nullable */
@@ -133,6 +138,7 @@ export interface ProgramEditorial {
   eventDetailsConfirmed: boolean;
   /** @maxLength 3000 */
   announcement: string;
+  photoCaptions?: ProgramPhotoCaptions;
   /** @maxItems 12 */
   participationRoles: ProgramEditorialParticipationRolesItem[];
   /** @maxItems 100 */

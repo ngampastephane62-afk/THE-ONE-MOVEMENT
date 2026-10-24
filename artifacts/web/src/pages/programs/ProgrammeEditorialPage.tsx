@@ -67,7 +67,7 @@ export default function ProgrammeEditorialPage({ program }: { program: Program &
       <Chapter n="02" eyebrow="WHAT IS THIS PROGRAM?" title={id.whatTitle} tone="paper" theme={T}>
         <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
           <p className="whitespace-pre-line text-lg leading-relaxed lg:col-span-6">{pick(data?.description, program.overview)}</p>
-          {id.secondImage && <FashionNightSlideshow />}
+          {id.secondImage && <FashionNightSlideshow captions={data?.photoCaptions} />}
         </div>
       </Chapter>
 

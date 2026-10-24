@@ -20,3 +20,9 @@ Do not rely on generator auto-detection of library majors in this workspace; pnp
 **Why:** After upgrading Orval, generation silently targeted Zod 4 despite the validation package using Zod 3. A successful generation alone was not evidence of compatibility.
 
 **How to apply:** Keep explicit compatible generation targets, and typecheck regenerated client and validators together. Fix generation configuration rather than manually repairing generated output.
+
+Zod record parsing can silently discard reserved object keys instead of rejecting them.
+
+**Why:** A validation test demonstrated that an input record containing an own `__proto__` key could parse successfully after that key disappeared.
+
+**How to apply:** When record keys have a business whitelist, validate the original input keys before parsing as well as validating the parsed values. Do not mistake silent key removal for explicit rejection.

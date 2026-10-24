@@ -52,7 +52,7 @@ export function defaultProgram(slug: string): ProgramEditorial {
     // The Fashion Week date was explicitly approved separately; the new Awards
     // brief requests coming-soon information instead of the former date.
     eventDate: slug === "fashion-week" ? "22 December 2026" : null, venue: "",
-    eventDetailsConfirmed: slug === "fashion-week", announcement: "",
+    eventDetailsConfirmed: slug === "fashion-week", announcement: "", photoCaptions: {},
     participationRoles: ["speaker", "exhibitor", "media", "partner", "sponsor", "collaborator"], people, media: [],
   };
 }
@@ -85,7 +85,8 @@ export function programDTO(doc: ProgramEditorial, admin = false): ProgramEditori
     url: v.uploadId ? asset(v.uploadId) : v.assetKey ? archiveVideos[v.assetKey] ?? null : null,
   });
   return {
-    ...doc, heroImageUploadId: admin ? doc.heroImageUploadId : null, heroVideoUploadId: admin ? doc.heroVideoUploadId : null,
+    ...doc, photoCaptions: doc.photoCaptions ?? {},
+    heroImageUploadId: admin ? doc.heroImageUploadId : null, heroVideoUploadId: admin ? doc.heroVideoUploadId : null,
     heroImageUrl: doc.heroImageUploadId ? asset(doc.heroImageUploadId) : null,
     heroVideoUrl: doc.heroVideoUploadId ? asset(doc.heroVideoUploadId) : null,
     eventDate: admin || doc.eventDetailsConfirmed ? doc.eventDate : null,
@@ -105,10 +106,23 @@ function unique(ids: string[]) {
   }
 }
 export function editorialInput(raw: unknown, slug: string): { content: ProgramEditorial; expectedUpdatedAt: string | null } {
+  const captions = (raw as { content?: { photoCaptions?: unknown } } | null)?.content?.photoCaptions;
+  // Validate original keys before Zod can discard reserved object properties.
+  if (captions && typeof captions === "object") {
+    const allowed = slug === "fashion-night" ? /^fashion-night-archive-0[1-7]$/
+      : slug === "summit" ? /^summit-encounters-0[1-8]$/ : null;
+    const ids = Object.getOwnPropertyNames(captions);
+    if (ids.length > 8 || ids.some(id => !allowed?.test(id))) {
+      throw new NetworkError(400, "Choose a photograph belonging to this programme.");
+    }
+  }
   const parsed = SaveProgramEditorialBody.strict().safeParse(raw);
   if (!parsed.success) throw new NetworkError(400, "Check the programme fields and upload limits.");
   const { content: c, expectedUpdatedAt } = parsed.data;
   if (c.slug !== slug) throw new NetworkError(400, "The programme does not match this page.");
+  if (c.photoCaptions !== undefined) {
+    c.photoCaptions = Object.fromEntries(Object.entries(c.photoCaptions).map(([id, text]) => [id, text.trim()]));
+  }
   unique(c.people.map(p => p.id));
   unique(c.media.map(v => v.id));
   c.participationRoles = [...new Set(c.participationRoles)];
@@ -145,6 +159,8 @@ export async function saveProgram(raw: unknown, slug: string, ownerId: number) {
     await tx.execute(sql`select pg_advisory_xact_lock(17420730)`);
     const previous = await programDocument(slug, true, tx);
     if (previous.updatedAt !== expectedUpdatedAt) throw new NetworkError(409, "This programme changed elsewhere. Reload before saving; your changes were not overwritten.");
+    // Older clients must not silently remove captions they do not yet edit.
+    if (content.photoCaptions === undefined) content.photoCaptions = previous.photoCaptions ?? {};
     const oldUploads = referencedUploads(previous), next = referencedUploads(content);
     const changed = [...next.keys()].filter(id => !oldUploads.has(id));
     const files = changed.length ? await ownedMedia(ownerId, changed) : [];

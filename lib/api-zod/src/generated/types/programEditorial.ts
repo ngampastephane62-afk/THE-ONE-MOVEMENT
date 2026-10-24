@@ -8,6 +8,7 @@
 import type { ProgramEditorialParticipationRolesItem } from './programEditorialParticipationRolesItem';
 import type { ProgramEditorialStatus } from './programEditorialStatus';
 import type { ProgramPerson } from './programPerson';
+import type { ProgramPhotoCaptions } from './programPhotoCaptions';
 import type { ProgramVideo } from './programVideo';
 
 export interface ProgramEditorial {
@@ -41,6 +42,7 @@ export interface ProgramEditorial {
   eventDetailsConfirmed: boolean;
   /** @maxLength 3000 */
   announcement: string;
+  photoCaptions?: ProgramPhotoCaptions;
   /** @maxItems 12 */
   participationRoles: ProgramEditorialParticipationRolesItem[];
   /** @maxItems 100 */

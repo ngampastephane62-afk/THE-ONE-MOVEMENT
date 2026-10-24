@@ -1417,6 +1417,8 @@ components:
         venue: { type: string, maxLength: 300 }
         eventDetailsConfirmed: { type: boolean }
         announcement: { type: string, maxLength: 3000 }
+        photoCaptions:
+          $ref: '#/components/schemas/ProgramPhotoCaptions'
         participationRoles:
           type: array
           maxItems: 12
@@ -1429,6 +1431,13 @@ components:
           type: array
           maxItems: 50
           items: { $ref: '#/components/schemas/ProgramVideo' }
+    ProgramPhotoCaptions:
+      type: object
+      description: Plain-text captions keyed by the supplied photograph ID belonging to this programme. Omit on legacy updates to preserve existing captions; an empty object clears them.
+      maxProperties: 8
+      additionalProperties:
+        type: string
+        maxLength: 300
     ProgramEditorialSave:
       type: object
       required: [expectedUpdatedAt, content]

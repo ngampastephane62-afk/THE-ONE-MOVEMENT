@@ -196,6 +196,7 @@ export * from './programEditorialStatus';
 export * from './programInquiry';
 export * from './programPerson';
 export * from './programPersonKind';
+export * from './programPhotoCaptions';
 export * from './programVideo';
 export * from './publicMember';
 export * from './recordMagazineReadingEvent200';

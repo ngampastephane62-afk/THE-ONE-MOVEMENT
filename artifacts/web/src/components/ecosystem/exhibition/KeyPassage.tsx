@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { ArrowUp } from 'lucide-react';
+import { ArrowDown } from 'lucide-react';
 import OneKey from './OneKey';
 import { usePageHidden, useReducedMotion } from './useStage';
 
@@ -65,7 +65,7 @@ export default function KeyPassage({ paused = false }: { paused?: boolean }) {
     <section id="one-key-passage" ref={root} data-stage="0" data-live="false" className="x-passage scroll-mt-20 text-ivory-100" aria-labelledby="key-passage-title" data-testid="section-key-passage">
       <div className="x-passage-stage x-content mx-auto grid max-w-7xl items-center gap-10 px-6 py-20 lg:grid-cols-12 lg:py-0">
         <div className="order-2 lg:order-1 lg:col-span-5">
-          <p className="text-eyebrow text-gold-400">Chapter three · The One Key, in full</p>
+          <p className="text-eyebrow text-gold-400">Chapter two · The One Key, in full</p>
           <h2 id="key-passage-title" className="mt-4 text-display-lg">ONE KEY.<br /><span className="text-gold-400">SEVENTEEN WORLDS.</span><br /><span className="text-display-md text-ivory-200">INFINITE POSSIBILITIES.</span></h2>
           <ol className="mt-8 space-y-3">
             {CAPTIONS.map((c, i) => (
@@ -75,8 +75,8 @@ export default function KeyPassage({ paused = false }: { paused?: boolean }) {
               </li>
             ))}
           </ol>
-          <p className="mt-6 max-w-md text-xs leading-relaxed text-ivory-300">The key is a symbol. Exploring every sector, searching and joining as an ordinary member are free and need no key.</p>
-          <a href="#explore" className="x-btn x-btn-gold mt-6" data-testid="link-key-open-gateways">Back to the gateways <ArrowUp className="h-4 w-4" aria-hidden="true" /></a>
+          <p className="mt-6 max-w-md text-xs leading-relaxed text-ivory-300">The One Key is the on-page navigation button for your selected sector. Choose a sector, then click its key to open that world. It is not a paid product or membership requirement.</p>
+          <a href="#explore" className="x-btn x-btn-gold mt-6" data-testid="link-key-open-gateways">Choose your sector <ArrowDown className="h-4 w-4" aria-hidden="true" /></a>
         </div>
         <div ref={artRef} className="x-noclick relative order-1 lg:order-2 lg:col-span-7" aria-hidden="true">
           <div className="x-gate">

@@ -10,6 +10,7 @@ import { Field, Text, Toggle, UploadButton } from './fields';
 import PeopleEditor from './PeopleEditor';
 import VideoListEditor from './VideoListEditor';
 import ProgramPreview from './ProgramPreview';
+import PhotoCaptionEditor from './PhotoCaptionEditor';
 
 const ROLES: ProgramEditorialParticipationRolesItem[] = ['speaker', 'exhibitor', 'media', 'partner', 'sponsor', 'collaborator'];
 
@@ -84,6 +85,8 @@ export default function ProgramEditor({ initial, programmeName, onDirty, onBusy,
         <Text label="Purpose and vision" value={draft.purpose} onChange={(v) => update({ purpose: v })} max={3000} rows={4} testId="input-program-purpose" />
         <Text label="Approved criteria" value={draft.criteria} onChange={(v) => update({ criteria: v })} max={6000} rows={4} hint="Only formally approved eligibility and selection criteria. Leave empty until approved." testId="input-program-criteria" />
       </Panel>
+
+      <PhotoCaptionEditor programme={draft.slug} captions={draft.photoCaptions ?? {}} onChange={photoCaptions => update({ photoCaptions })} />
 
       <Panel title="Hero media" hint="Images up to 5 MB, videos up to 100 MB. Videos never autoplay with sound.">
         <div className="grid gap-4 md:grid-cols-2">

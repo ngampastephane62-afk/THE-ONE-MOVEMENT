@@ -26,6 +26,8 @@ export const getProgramEditorialResponseVenueMax = 300;
 
 export const getProgramEditorialResponseAnnouncementMax = 3000;
 
+export const getProgramEditorialResponsePhotoCaptionsMaxOne = 300;
+
 export const getProgramEditorialResponseParticipationRolesMax = 12;
 
 export const getProgramEditorialResponsePeopleItemIdMax = 100;
@@ -87,6 +89,7 @@ export const GetProgramEditorialResponse = zod.object({
   "venue": zod.string().max(getProgramEditorialResponseVenueMax),
   "eventDetailsConfirmed": zod.boolean(),
   "announcement": zod.string().max(getProgramEditorialResponseAnnouncementMax),
+  "photoCaptions": zod.record(zod.string(), zod.string().max(getProgramEditorialResponsePhotoCaptionsMaxOne)).optional().describe('Plain-text captions keyed by the supplied photograph ID belonging to this programme. Omit on legacy updates to preserve existing captions; an empty object clears them.'),
   "participationRoles": zod.array(zod.enum(['speaker', 'exhibitor', 'media', 'partner', 'sponsor', 'collaborator'])).max(getProgramEditorialResponseParticipationRolesMax),
   "people": zod.array(zod.object({
   "id": zod.string().min(1).max(getProgramEditorialResponsePeopleItemIdMax),
@@ -146,6 +149,8 @@ export const getFounderProgramEditorialResponseEventDateMax = 100;
 export const getFounderProgramEditorialResponseVenueMax = 300;
 
 export const getFounderProgramEditorialResponseAnnouncementMax = 3000;
+
+export const getFounderProgramEditorialResponsePhotoCaptionsMaxOne = 300;
 
 export const getFounderProgramEditorialResponseParticipationRolesMax = 12;
 
@@ -208,6 +213,7 @@ export const GetFounderProgramEditorialResponse = zod.object({
   "venue": zod.string().max(getFounderProgramEditorialResponseVenueMax),
   "eventDetailsConfirmed": zod.boolean(),
   "announcement": zod.string().max(getFounderProgramEditorialResponseAnnouncementMax),
+  "photoCaptions": zod.record(zod.string(), zod.string().max(getFounderProgramEditorialResponsePhotoCaptionsMaxOne)).optional().describe('Plain-text captions keyed by the supplied photograph ID belonging to this programme. Omit on legacy updates to preserve existing captions; an empty object clears them.'),
   "participationRoles": zod.array(zod.enum(['speaker', 'exhibitor', 'media', 'partner', 'sponsor', 'collaborator'])).max(getFounderProgramEditorialResponseParticipationRolesMax),
   "people": zod.array(zod.object({
   "id": zod.string().min(1).max(getFounderProgramEditorialResponsePeopleItemIdMax),
@@ -267,6 +273,8 @@ export const saveProgramEditorialBodyContentEventDateMax = 100;
 export const saveProgramEditorialBodyContentVenueMax = 300;
 
 export const saveProgramEditorialBodyContentAnnouncementMax = 3000;
+
+export const saveProgramEditorialBodyContentPhotoCaptionsMaxOne = 300;
 
 export const saveProgramEditorialBodyContentParticipationRolesMax = 12;
 
@@ -331,6 +339,7 @@ export const SaveProgramEditorialBody = zod.object({
   "venue": zod.string().max(saveProgramEditorialBodyContentVenueMax),
   "eventDetailsConfirmed": zod.boolean(),
   "announcement": zod.string().max(saveProgramEditorialBodyContentAnnouncementMax),
+  "photoCaptions": zod.record(zod.string(), zod.string().max(saveProgramEditorialBodyContentPhotoCaptionsMaxOne)).optional().describe('Plain-text captions keyed by the supplied photograph ID belonging to this programme. Omit on legacy updates to preserve existing captions; an empty object clears them.'),
   "participationRoles": zod.array(zod.enum(['speaker', 'exhibitor', 'media', 'partner', 'sponsor', 'collaborator'])).max(saveProgramEditorialBodyContentParticipationRolesMax),
   "people": zod.array(zod.object({
   "id": zod.string().min(1).max(saveProgramEditorialBodyContentPeopleItemIdMax),
@@ -386,6 +395,8 @@ export const saveProgramEditorialResponseEventDateMax = 100;
 export const saveProgramEditorialResponseVenueMax = 300;
 
 export const saveProgramEditorialResponseAnnouncementMax = 3000;
+
+export const saveProgramEditorialResponsePhotoCaptionsMaxOne = 300;
 
 export const saveProgramEditorialResponseParticipationRolesMax = 12;
 
@@ -448,6 +459,7 @@ export const SaveProgramEditorialResponse = zod.object({
   "venue": zod.string().max(saveProgramEditorialResponseVenueMax),
   "eventDetailsConfirmed": zod.boolean(),
   "announcement": zod.string().max(saveProgramEditorialResponseAnnouncementMax),
+  "photoCaptions": zod.record(zod.string(), zod.string().max(saveProgramEditorialResponsePhotoCaptionsMaxOne)).optional().describe('Plain-text captions keyed by the supplied photograph ID belonging to this programme. Omit on legacy updates to preserve existing captions; an empty object clears them.'),
   "participationRoles": zod.array(zod.enum(['speaker', 'exhibitor', 'media', 'partner', 'sponsor', 'collaborator'])).max(saveProgramEditorialResponseParticipationRolesMax),
   "people": zod.array(zod.object({
   "id": zod.string().min(1).max(saveProgramEditorialResponsePeopleItemIdMax),

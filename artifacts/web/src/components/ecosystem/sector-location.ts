@@ -2,8 +2,13 @@ import { SECTORS } from '@/lib/sectors-data';
 
 /** UI navigation only: never a saved preference, identity inference or opt-in. */
 export function sectorFromSearch(search: string): string {
+  return sectorChoiceFromSearch(search) || SECTORS[0].slug;
+}
+
+/** A preview is not a visitor's choice: the ecosystem starts without a selected world. */
+export function sectorChoiceFromSearch(search: string): string {
   const value = new URLSearchParams(search).get('sector');
-  return SECTORS.find(sector => sector.slug === value)?.slug ?? SECTORS[0].slug;
+  return SECTORS.find(sector => sector.slug === value)?.slug ?? '';
 }
 
 export function sectorDestination(slug: string): string {

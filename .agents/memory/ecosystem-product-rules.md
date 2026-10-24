@@ -103,6 +103,18 @@ Member discovery should use explicit saved sector choices and transparent sugges
 
 The One Awards should include every officially established ambassador, with sourced biographies and official social links. Separate regional impact-leader selections (Africa, USA and eventually other regions/sectors) from TOMI ambassadors.
 
+Do not display the “Voices of Peace” directory of Instagram handles in the sector worlds.
+
+**Why:** The user repeated that these outbound Instagram lists must be removed. This does not request deleting official ambassador profiles or genuine campaign functionality.
+
+**How to apply:** Do not reintroduce the handle directory when updating Fashion or other worlds; distinguish it from sourced official profiles.
+
+Present The One Key, TOMI and shared ecosystem discovery tools before sector-world content. Visitors explicitly select a sector, then click its key to open that world; Fashion must not open automatically.
+
+**Why:** The user wants the ecosystem explained first and the sector choice followed by an intentional key-opening action, with other pillars and detailed content afterwards.
+
+**How to apply:** Preserve free access and direct sector URLs. A gateway selection is navigation, not a saved preference, membership application, follow or purchase.
+
 The same peace-ambassador nominees are announced as planned Summit speakers and Fashion Week red-carpet participants, as well as participants in other activities. Use one shared profile across programmes, not separate contradictory biographies.
 
 **Why:** The stakeholder explicitly clarified these cross-programme roles. A nomination is not an award already won, and an announcement is not proof of past attendance.

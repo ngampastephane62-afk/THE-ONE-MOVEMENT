@@ -21,7 +21,6 @@ import SectorWorld from '@/components/ecosystem/worlds/SectorWorld';
 import RealEstateWorld from '@/components/ecosystem/RealEstateWorld';
 import FashionConnections from '@/components/programs/FashionConnections';
 import FashionWorldContext from '@/components/ecosystem/FashionWorldContext';
-import PeaceVoices from '@/components/programs/PeaceVoices';
 import WorldMotif from '@/components/ecosystem/worlds/WorldMotif';
 import { getWorldConfig } from '@/components/ecosystem/worlds/world-config';
 
@@ -271,7 +270,6 @@ export default function SectorHub() {
           </section>
           <FashionWorldContext />
           <FashionConnections />
-          <PeaceVoices />
         </>
       )}
 

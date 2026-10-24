@@ -35,3 +35,7 @@ export const SUMMIT_ENCOUNTER_PHOTOS = archive('summit-encounters', [
   { w: 2889, h: 3183, alt: 'Two people standing between the UAE and Democratic Republic of the Congo flags' },
   { w: 2560, h: 1708, alt: 'Two people posing together in an office' },
 ]);
+
+export function programmeArchivePhotos(slug: string): ProgrammeArchivePhoto[] {
+  return slug === 'fashion-night' ? FASHION_NIGHT_PHOTOS : slug === 'summit' ? SUMMIT_ENCOUNTER_PHOTOS : [];
+}

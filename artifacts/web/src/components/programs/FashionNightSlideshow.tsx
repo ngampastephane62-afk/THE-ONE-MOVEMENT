@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 import PhotoActions from '@/components/editorial/PhotoActions';
@@ -74,7 +74,7 @@ export function ProgrammeArchiveSlideshow({ photos, title, className, testId, en
           )}
         </AnimatePresence>
       </div>
-      <figcaption className="mt-2 text-[11px] leading-relaxed text-ink-700">
+      <figcaption className="mt-2 whitespace-pre-line break-words text-[11px] leading-relaxed text-ink-700">
         {photo.caption || title}
       </figcaption>
       <div className="mt-2 flex items-center justify-between gap-2">
@@ -97,8 +97,9 @@ export function ProgrammeArchiveSlideshow({ photos, title, className, testId, en
   );
 }
 
-export default function FashionNightSlideshow() {
-  return <ProgrammeArchiveSlideshow photos={FASHION_NIGHT_PHOTOS} title="Fashion archive · supplied photographs"
+export default function FashionNightSlideshow({ captions }: { captions?: Record<string, string> }) {
+  const photos = useMemo(() => FASHION_NIGHT_PHOTOS.map(photo => ({ ...photo, caption: captions?.[photo.id] })), [captions]);
+  return <ProgrammeArchiveSlideshow photos={photos} title="Fashion archive · supplied photographs"
     className="mx-auto w-full max-w-sm lg:col-span-5 lg:col-start-8" testId="fashion-night-slideshow"
     engagementSource={programAssetSource('fashion-portrait.webp')} />;
 }

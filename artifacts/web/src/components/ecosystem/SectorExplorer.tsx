@@ -1,4 +1,4 @@
-import { useMemo, useState, type CSSProperties } from 'react';
+import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { Link } from 'wouter';
 import '@/styles/universe.css';
 import { ArrowRight, ChevronDown, Search, SlidersHorizontal } from 'lucide-react';
@@ -22,9 +22,18 @@ interface Props {
 export default function SectorExplorer({ selected: controlled, onSelect }: Props = {}) {
   const [persona, setPersona] = useState<string | null>(null);
   const [query, setQuery] = useState('');
-  const [local, setLocal] = useState<string>(SECTORS[0].slug);
+  const [local, setLocal] = useState('');
+  const [opened, setOpened] = useState<string | null>(null);
   const selected = controlled ?? local;
   const setSelected = (slug: string) => { setLocal(slug); onSelect?.(slug); };
+  useEffect(() => { setOpened(null); }, [selected]);
+  useEffect(() => {
+    if (!opened) return;
+    const frame = requestAnimationFrame(() => document.getElementById('sector-world-anchor')?.scrollIntoView({
+      behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start',
+    }));
+    return () => cancelAnimationFrame(frame);
+  }, [opened]);
   const { ref, attrs } = useStage<HTMLDivElement>();
 
   const visible = useMemo(() => {
@@ -38,15 +47,16 @@ export default function SectorExplorer({ selected: controlled, onSelect }: Props
   }, [persona, query]);
 
   // A sector chosen on the hero orbit always shows, even if filters would hide it.
-  const active = visible.find((s) => s.slug === selected) ?? (controlled ? SECTORS.find((s) => s.slug === controlled) : undefined) ?? visible[0];
+  const active = SECTORS.find((s) => s.slug === selected);
   const art = (slug: string) => { const c = getWorldConfig(slug); return { motif: c?.motif ?? ('skyline' as const), accent: c?.accent ?? '39 52% 54%' }; };
   const activeCfg = active ? art(active.slug) : undefined;
   const personaLabel = ECOSYSTEM_PERSONAS.find((x) => x.id === persona)?.label;
 
   const enterWorld = () => {
     if (!active) return;
-    const el = document.querySelector<HTMLElement>(`[data-testid="world-${active.slug}"]`) ?? document.getElementById('sector-world-anchor');
-    el?.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
+    if (opened === active.slug) {
+      document.getElementById('sector-world-anchor')?.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
+    } else setOpened(active.slug);
   };
 
   return (
@@ -58,28 +68,15 @@ export default function SectorExplorer({ selected: controlled, onSelect }: Props
           </div>
         )}
         <div className="x-content mx-auto max-w-7xl px-6">
-          <p className="x-track text-eyebrow text-gold-400">Chapter two · The One Key and the gateways</p>
+          <p className="x-track text-eyebrow text-gold-400">Chapter five · Choose a sector, then open its world</p>
           <h2 id="explore-title" className="mt-3 text-display-lg text-ivory-100">
             <span className="x-line"><span style={{ '--d': '100ms' } as CSSProperties}>SEVENTEEN SECTORS.</span></span>
             <span className="x-line"><span style={{ '--d': '260ms' } as CSSProperties} className="text-gold-400">SEVENTEEN GATEWAYS.</span></span>
             <span className="x-line"><span style={{ '--d': '420ms' } as CSSProperties} className="text-display-md text-ivory-200">ONE CONNECTED UNIVERSE.</span></span>
           </h2>
-          <p className="x-fade mt-5 max-w-2xl text-ivory-300" style={{ '--d': '560ms' } as CSSProperties}>Choose a gateway and the One Key turns it. Every gateway is open. Choose any world directly, search, or narrow the list by interest if you like. Nothing here asks who you are first. <a href="#one-key-passage" className="text-gold-400 underline-offset-4 hover:underline" data-testid="link-watch-key-passage">Watch the full key passage</a></p>
+          <p className="x-fade mt-5 max-w-2xl text-ivory-300" style={{ '--d': '560ms' } as CSSProperties}>The One Key is a navigation control, not a product. First select your sector. Then click The One Key beside your selection to open its world, programmes and resources. All seventeen worlds are free to explore; no registration is required. <a href="#one-key-passage" className="text-gold-400 underline-offset-4 hover:underline" data-testid="link-watch-key-passage">See how The One Key works</a></p>
         </div>
 
-        {active && (
-          <div className="x-content mx-auto mt-6 max-w-7xl px-6">
-            <Link href={`/ecosystem/${active.slug}`} data-testid="link-one-key-entry" className="inline-flex min-h-20 max-w-full items-center gap-4 border border-gold-400/60 bg-lagoon-900 px-5 py-4 text-gold-400 transition-colors hover:bg-lagoon-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400">
-              <OneKey className="h-9 w-28 shrink-0" />
-              <span className="min-w-0">
-                <span className="block text-xs uppercase tracking-widest">The One Key</span>
-                <span className="mt-1 block font-display text-lg">Enter {active.name}</span>
-              </span>
-              <ArrowRight className="h-5 w-5 shrink-0" aria-hidden="true" />
-            </Link>
-            <p className="mt-3 text-sm text-ivory-300">Choose another gateway below, or enter this world now. No animation or registration is required to explore.</p>
-          </div>
-        )}
         <div className="x-content mx-auto mt-12 grid max-w-7xl gap-10 px-6 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <label htmlFor="sector-search" className="text-eyebrow text-gold-400">Find a world</label>
@@ -129,9 +126,16 @@ export default function SectorExplorer({ selected: controlled, onSelect }: Props
                         <span className="tomi-gateway-num" aria-hidden="true">{String(n).padStart(2, '0')} / {SECTORS.length}</span>
                         <span className={`mt-2 block font-display text-xs tracking-[0.12em] ${on ? 'text-gold-400' : 'text-ivory-100'}`}>{s.name.toUpperCase()}</span>
                         <span className="mt-1 block text-[11px] leading-snug text-ivory-300 line-clamp-2">{s.descriptor}</span>
-                        <span className="x-gw-enter" aria-hidden="true">{on ? 'Gateway open' : 'Open gateway'} <ArrowRight className="h-3 w-3" /></span>
-                        {on && <span key={s.slug} className="x-gw-unlock" aria-hidden="true"><OneKey className="w-full" /></span>}
+                        <span className="x-gw-enter" aria-hidden="true">{on ? 'Selected sector' : 'Select sector'} <ArrowRight className="h-3 w-3" /></span>
                       </button>
+                      {on && (
+                        <button type="button" onClick={enterWorld} className="x-btn x-btn-gold mt-2 w-full !px-3"
+                          data-testid={`button-one-key-open-${s.slug}`} aria-expanded={opened === s.slug}
+                          aria-label={`Open ${s.name} with The One Key`}>
+                          <OneKey className="h-8 w-20 shrink-0" />
+                          <span className="min-w-0">The One Key · Open {s.name}</span>
+                        </button>
+                      )}
                     </li>
                   );
                 })}
@@ -144,28 +148,23 @@ export default function SectorExplorer({ selected: controlled, onSelect }: Props
             )}
           </div>
           <div className="lg:col-span-7 lg:border-l lg:border-lagoon-600/50 lg:pl-10" aria-live="polite">
-            {active && (
-              <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-                <div key={active.slug} className="x-keygate" aria-hidden="true" data-testid="art-key-reveal">
-                  <div className="x-kg-beyond"><WorldMotif motif={activeCfg?.motif ?? 'skyline'} /></div>
-                  <div className="x-kg-leaf l" /><div className="x-kg-leaf r" />
-                  <div className="x-kg-key"><OneKey className="w-full" /></div>
-                </div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold-400" data-testid="text-sector-gateway-index">Gateway {String(SECTORS.findIndex((x) => x.slug === active.slug) + 1).padStart(2, '0')} of {SECTORS.length}</p>
-                <div className="flex flex-wrap gap-2">
-                  <button type="button" onClick={enterWorld} className="x-btn x-btn-ghost !min-h-[40px] !px-4 !py-2" data-testid="button-enter-world">
-                    Enter the {active.name} world <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-                  </button>
-                  <Link href={`/ecosystem/${active.slug}`} className="x-btn !min-h-[40px] !px-4 !py-2" data-testid="link-open-sector-hub">
-                    Open the {active.name} hub <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-                  </Link>
-                </div>
-              </div>
-            )}
-            {active ? <SectorDetail sector={active} /> : <p className="text-ivory-300">Choose a sector to see its programmes and resources.</p>}
+            <div className="lg:sticky lg:top-28">
+              <OneKey className="mb-5 h-16 w-52 max-w-full text-gold-400" />
+              <p className="text-eyebrow text-gold-400">{active ? 'Your selected sector' : 'Your next step'}</p>
+              <h3 className="mt-3 text-display-md text-ivory-100">{active ? active.name : 'Choose your sector.'}</h3>
+              <p className="mt-4 text-ivory-300">{active ? `Click The One Key beside ${active.name} to open this world. Selecting a sector does not open it automatically or change your member profile.` : 'Select one of the seventeen sectors, then click The One Key that appears beside your selection. Its world and related services open below.'}</p>
+              {active && !visible.some(s => s.slug === active.slug) && (
+                <button type="button" onClick={enterWorld} className="x-btn x-btn-gold mt-5 w-full"
+                  data-testid="button-enter-world" aria-expanded={opened === active.slug}>
+                  <OneKey className="h-8 w-20 shrink-0" />
+                  <span>The One Key · Open {active.name}</span>
+                </button>
+              )}
+              <p className="mt-4 text-sm text-ivory-300">The key connects you to the ecosystem. It is not a purchase, membership application or automatic subscription.</p>
+            </div>
           </div>
         </div>
-        {active && <div id="sector-world-anchor" className="x-content mx-auto mt-12 max-w-7xl scroll-mt-20 px-6">{active.slug === 'real-estate' ? <RealEstateWorld /> : <SectorWorld key={active.slug} slug={active.slug} />}<p className="mt-6 text-center"><Link href={`/ecosystem/${active.slug}`} className="inline-flex min-h-[44px] items-center gap-2 text-xs uppercase tracking-[0.16em] text-gold-400 hover:text-ivory-100" data-testid="link-sector-hub-footer">Community, learning, posts and your activity in {active.name} <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" /></Link></p></div>}
+        {active && opened === active.slug && <div id="sector-world-anchor" className="x-content mx-auto mt-12 max-w-7xl scroll-mt-20 px-6">{active.slug === 'real-estate' ? <RealEstateWorld /> : <SectorWorld key={active.slug} slug={active.slug} />}<div className="mt-10"><SectorDetail sector={active} /></div><p className="mt-6 text-center"><Link href={`/ecosystem/${active.slug}`} className="inline-flex min-h-[44px] items-center gap-2 text-xs uppercase tracking-[0.16em] text-gold-400 hover:text-ivory-100" data-testid="link-sector-hub-footer">Community, learning, posts and your activity in {active.name} <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" /></Link></p></div>}
       </div>
     </section>
   );
