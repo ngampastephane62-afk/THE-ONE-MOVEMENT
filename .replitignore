@@ -37,3 +37,5 @@
 /attached_assets/757e0ead33ce47638cd14b0bf989aeb9_1792627670678.mp4
 # News animation reference, not an application runtime asset.
 /attached_assets/2e9fff2e8bd14d228be23241c6996760_1792675995834.mp4
+# Generated prelaunch verification captures, not runtime assets.
+/screenshots/prelaunch-*.jpg

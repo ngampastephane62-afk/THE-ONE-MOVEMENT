@@ -46,13 +46,13 @@ export default function HumanitarianGallery() {
     <section className="hum-gallery overflow-hidden bg-ivory-100 py-section-lg" aria-labelledby="gallery-title" data-testid="section-gallery">
       <div className="mx-auto max-w-6xl px-6">
         <p className="hum-chapter text-eyebrow text-gold-600"><span className="font-mono">06</span> · PREVIOUS DONATION PHOTO GALLERY</p>
-        <h2 id="gallery-title" className="mt-4 text-display-lg text-ink-900"><span className="hum-mask"><span>OUR HUMANITARIAN JOURNEY.</span></span></h2>
+        <h2 id="gallery-title" className="mt-4 text-display-lg text-ink-900"><span className="hum-mask"><span>OUR HUMANITARIAN</span></span><span className="hum-mask" style={{ ['--d' as string]: '120ms' }}><span>JOURNEY.</span></span></h2>
         <p className="hum-chapter mt-4 font-display text-lg tracking-wide text-lagoon-700" style={{ ['--d' as string]: '200ms' }}>MOMENTS OF SOLIDARITY.<span className="block">STORIES OF IMPACT.</span></p>
         <div className="mt-8 flex flex-wrap items-end justify-between gap-4">
-          <p className="max-w-xl text-sm text-ink-800">Founder-supplied archive of previous TOMI donation activities. Photographs are shown uncropped; individual dates and places are not stated here.</p>
+          <p className="hum-chapter max-w-xl text-sm text-ink-800" style={{ ['--d' as string]: '320ms' }}>Founder-supplied archive of previous TOMI donation activities. Photographs are shown uncropped; individual dates and places are not stated here.</p>
           <div className="flex gap-2">
-            <button type="button" onClick={() => scrollBy(-1)} aria-label="Previous photographs" className="grid h-11 w-11 place-items-center border border-lagoon-900/30 text-lagoon-900 hover:border-gold-500 hover:bg-lagoon-900 hover:text-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500" data-testid="button-gallery-prev"><ChevronLeft className="h-5 w-5" /></button>
-            <button type="button" onClick={() => scrollBy(1)} aria-label="Next photographs" className="grid h-11 w-11 place-items-center border border-lagoon-900/30 text-lagoon-900 hover:border-gold-500 hover:bg-lagoon-900 hover:text-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500" data-testid="button-gallery-next"><ChevronRight className="h-5 w-5" /></button>
+            <button type="button" onClick={() => scrollBy(-1)} aria-label="Previous photographs" className="tomi-cta grid h-11 w-11 place-items-center border border-lagoon-900/30 text-lagoon-900 hover:border-gold-500 hover:bg-lagoon-900 hover:text-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500" data-testid="button-gallery-prev"><ChevronLeft className="h-5 w-5" /></button>
+            <button type="button" onClick={() => scrollBy(1)} aria-label="Next photographs" className="tomi-cta grid h-11 w-11 place-items-center border border-lagoon-900/30 text-lagoon-900 hover:border-gold-500 hover:bg-lagoon-900 hover:text-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500" data-testid="button-gallery-next"><ChevronRight className="h-5 w-5" /></button>
           </div>
         </div>
       </div>

@@ -1,7 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'wouter';
 import HeroSurface from '@/components/HeroSurface';
-import GoldThread from '@/components/GoldThread';
 import SectionHeading from '@/components/SectionHeading';
 import { Button } from '@/components/ui/button';
 import MediaCatalogue from '@/components/partners/MediaCatalogue';
@@ -12,7 +11,7 @@ import MediaCenter from '@/components/media-center/MediaCenter';
 
 export default function MediaHub() {
   return (
-    <div className="bg-ivory-50 min-h-screen">
+    <div className="bg-ivory-50 min-h-[100dvh]">
       <Helmet>
         <title>Media Center — Press, television and coverage | TOMI</title>
         <meta name="description" content="Media center of The One Movement International: international press, television, magazines, newspapers, interviews, press releases, official announcements and media partnerships." />
@@ -23,13 +22,8 @@ export default function MediaHub() {
       {/* 1. MEDIA HERO */}
       <HeroSurface glowOrigin="bottom-center" minHeight="60vh">
         <div className="mx-auto w-full max-w-7xl px-6 py-section-lg">
-          <Reveal>
-            <p className="text-eyebrow text-gold-400 mb-6">MEDIA & PRESS</p>
-            <h1 className="text-display-xl text-ivory-100 uppercase" style={{ fontFamily: 'var(--font-display)' }}>
-              THE ONE MOVEMENT<br/>
-              <span className="text-gold-400">MEDIA</span>
-            </h1>
-            <GoldThread className="mt-8" length="200px" node />
+          <SectionHeading as="h1" eyebrow="MEDIA & PRESS" heading={'THE ONE MOVEMENT\nMEDIA'} size="xl" surface="dark" thread />
+          <Reveal delay={450}>
             <p className="mt-6 text-ivory-200 text-lg leading-relaxed max-w-2xl">
               International press, television, interviews, press releases and official announcements, with pathways for journalists and media partners.
             </p>
@@ -46,11 +40,7 @@ export default function MediaHub() {
       <section className="tomi-aurora-surface py-section-lg" aria-labelledby="media-reach-heading">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
-            <p className="text-eyebrow text-gold-400">INTERNATIONAL MEDIA REACH</p>
-            <h2 id="media-reach-heading" className="mt-4 max-w-3xl text-display-lg text-ivory-100" style={{ fontFamily: 'var(--font-display)' }}>
-              DISTRIBUTION CAPABILITY THROUGH TROPIK AGENCY.
-            </h2>
-            <GoldThread className="mt-8" length="220px" node />
+            <SectionHeading id="media-reach-heading" eyebrow="INTERNATIONAL MEDIA REACH" heading={'DISTRIBUTION CAPABILITY\nTHROUGH TROPIK AGENCY.'} surface="dark" thread />
           </Reveal>
           <div className="mt-12 grid gap-px bg-lagoon-600/50 sm:grid-cols-3">
             {[

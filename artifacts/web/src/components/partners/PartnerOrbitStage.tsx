@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { Pause, Play, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Pause, Play, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 import catalog from '@/assets/media/founder/catalog.json';
 import { usePrefersReducedMotion } from './util';
 import { DRC_AMBASSADOR_SOURCE, OFFICIAL_MEETINGS, meetingImageUrl } from './official-meetings';
 import GalleryActions from '../editorial/GalleryActions';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 
 type PhotoId = keyof typeof catalog.photos;
 
@@ -34,7 +35,9 @@ export default function PartnerOrbitStage() {
   const [failed, setFailed] = useState<Set<number>>(() => new Set());
   const [paused, setPaused] = useState(false);
   const [hoverHold, setHoverHold] = useState(false);
-  const running = hasVisiblePhoto && !reduced && !paused && !hoverHold;
+  const [viewerOpen, setViewerOpen] = useState(false);
+  const viewerTrigger = useRef<HTMLButtonElement | null>(null);
+  const running = hasVisiblePhoto && !reduced && !paused && !hoverHold && !viewerOpen;
   const timer = useRef<number | null>(null);
 
   // Load the requested slide; the current photo stays visible until it is decoded.
@@ -146,9 +149,10 @@ export default function PartnerOrbitStage() {
             </svg>
             <div aria-hidden className="absolute inset-[14%] rounded-full bg-[radial-gradient(circle,hsl(40_70%_55%/0.22),transparent_70%)]" />
              <div className="absolute inset-[9%] overflow-hidden rounded-full shadow-[0_40px_80px_-30px_hsl(187_60%_2%/0.9)]">
-               <div key={`p-${i}`} className="tomi-in h-full w-full">
+                <button key={`p-${i}`} ref={viewerTrigger} type="button" className="tomi-in relative h-full w-full cursor-zoom-in focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-gold-400" aria-label="Open partner photograph fullscreen" data-testid="button-partner-fullscreen" onClick={() => setViewerOpen(true)}>
                   <img src={srcOf(s)} width={1000} height={1000} alt={`${s.people} — ${caption}`} decoding="async" fetchPriority={i === 0 ? 'high' : 'auto'} className="h-full w-full object-cover" style={{ objectPosition: s.position ?? 'center 30%' }} data-testid={`img-official-meeting-${s.filename ?? s.id}`} />
-                </div>
+                   <span aria-hidden="true" className="absolute bottom-5 left-1/2 flex -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-full bg-ink-900/80 px-3 py-2 text-xs text-ivory-100"><Maximize2 size={14} />View photograph</span>
+                 </button>
                 {loading && <span className="absolute bottom-[12%] left-1/2 -translate-x-1/2 rounded-full bg-ink-900/70 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-ivory-100" role="status">Loading next photograph</span>}
             </div>
           </div>
@@ -184,6 +188,22 @@ export default function PartnerOrbitStage() {
             onSelect={n => { setTarget(n); setPaused(true); }} />
         </div>
       )}
+      <Dialog open={viewerOpen} onOpenChange={setViewerOpen}>
+        <DialogContent className="max-w-[min(96vw,1200px)] border-none bg-ink-900 p-4 text-ivory-100 sm:p-6"
+          onCloseAutoFocus={(e) => { e.preventDefault(); viewerTrigger.current?.focus({ preventScroll: true }); }}
+          onKeyDown={(e) => { if (e.key === 'ArrowRight') { e.preventDefault(); if (!loading) go(1); } if (e.key === 'ArrowLeft') { e.preventDefault(); if (!loading) go(-1); } }}>
+          <DialogTitle className="sr-only">Historical collaboration — {s.people}</DialogTitle>
+          <figure className="min-w-0">
+            <img src={srcOf(s)} alt={`${s.people} — ${caption}`} className="mx-auto max-h-[65dvh] w-full object-contain" />
+            <figcaption className="mt-3 text-center text-sm"><strong className="text-gold-400">{s.people}</strong><span className="mt-1 block">{caption}</span></figcaption>
+          </figure>
+          <div className="flex justify-center gap-3">
+            <button type="button" disabled={loading} onClick={() => go(-1)} aria-label="Previous partner photograph" className="tomi-cta grid h-11 w-11 place-items-center border border-gold-400/60 text-gold-400 disabled:opacity-40"><ChevronLeft aria-hidden="true" size={18} /></button>
+            <span className="self-center text-xs" aria-live="polite">{loading ? 'Loading photograph' : `${i + 1} / ${SLIDES.length}`}</span>
+            <button type="button" disabled={loading} onClick={() => go(1)} aria-label="Next partner photograph" className="tomi-cta grid h-11 w-11 place-items-center border border-gold-400/60 text-gold-400 disabled:opacity-40"><ChevronRight aria-hidden="true" size={18} /></button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }

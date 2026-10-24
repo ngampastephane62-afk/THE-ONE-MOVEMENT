@@ -6,7 +6,8 @@ import '@/styles/worlds.css';
 import Chapter from '../SectorWorldChapter';
 import WorldMotif from './WorldMotif';
 import OneKey from '../exhibition/OneKey';
-import { WORLD_CHAPTERS, getWorldConfig } from './world-config';
+import { WORLD_ARCHIVE_PHOTO, WORLD_CHAPTERS, getWorldConfig } from './world-config';
+import ArchivePhoto from '@/components/ArchivePhoto';
 import { SECTORS, type Sector } from '@/lib/sectors-data';
 import { PROGRAMS } from '@/lib/programs-data';
 import { ECOSYSTEM_RESOURCES } from '@/lib/ecosystem-resources';
@@ -90,6 +91,7 @@ export default function SectorWorld({ slug }: { slug: string }) {
     el.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'start' });
     el.focus({ preventScroll: true });
   };
+  const photo = WORLD_ARCHIVE_PHOTO[slug];
   const resources = ECOSYSTEM_RESOURCES.filter((r) => r.sectors.includes(slug)).slice(0, 3);
 
   return (
@@ -98,7 +100,10 @@ export default function SectorWorld({ slug }: { slug: string }) {
         <div className="lw-atmos" aria-hidden="true"><WorldMotif motif={cfg.motif} /></div>
         <div className="lw-hero-copy">
           <p className="text-eyebrow lw-accent">World {String(idx).padStart(2, '0')} of {SECTORS.length} · {sector.name}</p>
-          <h3 className="mt-3 text-display-lg text-ivory-100">{cfg.headline[0]}<br /><em className="lw-serif">{cfg.headline[1]}</em> {cfg.headline[2]}</h3>
+          <h3 className="lw-title mt-3 text-display-lg text-ivory-100">
+            <span className="lw-line"><span>{cfg.headline[0]}</span></span>
+            <span className="lw-line"><span><em className="lw-serif">{cfg.headline[1]}</em> {cfg.headline[2]}</span></span>
+          </h3>
           <p className="mt-4 max-w-md text-sm leading-relaxed text-ivory-200">{cfg.intro} Belonging is free.</p>
           <nav aria-label={`${sector.name} world chapters`} className="mt-6 flex flex-wrap gap-2">
             {WORLD_CHAPTERS.map((c, i) => (
@@ -118,6 +123,11 @@ export default function SectorWorld({ slug }: { slug: string }) {
       </header>
 
       <Chapter id={cid('discover')} n="01" eyebrow={`Discover ${sector.name}`} title={sector.descriptor}>
+        {photo && (
+          <figure className="lw-photo mb-6 max-w-3xl" data-testid={`world-photo-${slug}`}>
+            <ArchivePhoto id={photo.id} actions={false} sizes="(min-width: 1024px) 50vw, 92vw" caption={photo.note} captionClassName="text-ivory-300" tone="dark" />
+          </figure>
+        )}
         <div className="lw-grid" data-testid={`chapter-discover-${slug}`}>
           {cfg.discover.map((x) => (
             <article key={x.k} className="lw-card">

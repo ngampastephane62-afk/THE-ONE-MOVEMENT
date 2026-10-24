@@ -1,4 +1,5 @@
-import { Eyebrow, GeoBand, display } from './Pattern';
+import SectionHeading from '@/components/SectionHeading';
+import { Eyebrow, GeoBand } from './Pattern';
 import stillLife from '@/assets/media/programs/ecosystem-knowledge-still-life.jpg';
 import cabinet from '@/assets/media/programs/ecosystem-cabinet-of-cultures.jpg';
 
@@ -8,7 +9,7 @@ export default function GalaVision() {
       <div className="mx-auto grid max-w-7xl gap-12 px-6 md:grid-cols-12 md:items-center">
         <div className="md:col-span-5">
           <Eyebrow>Our vision</Eyebrow>
-          <h2 id="vision-heading" className="mt-6 text-[clamp(2.2rem,5.5vw,4.2rem)] leading-[0.95] text-ink-900" style={display}>EVERY NATION HAS A STORY TO SHARE.</h2>
+          <SectionHeading id="vision-heading" heading={'EVERY NATION HAS\nA STORY TO SHARE.'} className="mt-6" headingClassName="text-[clamp(2.2rem,5.5vw,4.2rem)] leading-[0.95]" />
           <GeoBand className="mt-8 max-w-[180px]" />
           <p className="mt-8 text-lg leading-relaxed text-ink-800">Heritage. Myth and science. Craft, music and medicine. Resources, media and trade. Every country carries all of them.</p>
           <p className="mt-4 leading-relaxed text-ink-700">The Gala opens a shared space where countries and communities present who they are, learn from one another, build relationships and explore collaboration.</p>

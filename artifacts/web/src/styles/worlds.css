@@ -76,3 +76,19 @@
 .pl-sponsored { color: hsl(19 65% 40%); border-color: hsl(19 72% 60%); }
 .pl-dark.pl-editorial { color: hsl(189 62% 60%); border-color: hsl(189 62% 45% / 0.6); }
 .pl-dark.pl-partner { color: hsl(43 80% 73%); background: hsl(39 52% 54% / 0.15); }
+
+/* Task 33 · synchronised world entry: visual reveals → title lines rise → tagline → gates open. Runs on mount (key=slug), never observer-gated. */
+.lw-line { display: block; overflow: hidden; padding-bottom: 0.08em; }
+.lw-line > span { display: block; }
+@keyframes lwLine { from { transform: translateY(105%); } to { transform: none; } }
+@keyframes lwArt { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0); } }
+@media (prefers-reduced-motion: no-preference) {
+  .lw-world .lw-art { animation: lwArt 1100ms cubic-bezier(0.65, 0, 0.35, 1) both; }
+  .lw-world .lw-hero-copy > .lw-title { animation: none; }
+  .lw-world .lw-line > span { animation: lwLine 1000ms cubic-bezier(0.19, 1, 0.22, 1) both; animation-delay: 260ms; }
+  .lw-world .lw-line:nth-child(2) > span { animation-delay: 400ms; }
+  .lw-world .lw-hero-copy > *:nth-child(3) { animation-delay: 560ms; }
+  .lw-world .lw-hero-copy > *:nth-child(4) { animation-delay: 680ms; }
+  .lw-world .lw-photo { animation: lwArt 1200ms cubic-bezier(0.65, 0, 0.35, 1) both 200ms; }
+}
+.eco-paused .lw-line > span, .eco-paused .lw-art, .eco-paused .lw-photo { animation: none !important; }

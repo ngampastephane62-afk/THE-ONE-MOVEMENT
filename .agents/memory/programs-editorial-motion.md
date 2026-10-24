@@ -49,3 +49,16 @@ sell nominations, promise selection, or infer confirmed Summit/Fashion Week
 appearances from an Awards nomination. Publish confirmed programme appearances
 separately. Preserve approved biography records while removing wealth estimates
 from nominee presentation.
+
+The Founder requires consistent cinematic treatment for all important public
+headings, not only the programme index. This includes Media, Partners,
+Humanitarian Action and each sector, with coordinated labels, titles, accents
+and media rather than the same generic fade everywhere.
+
+**Why:** The Founder explicitly repeated that static headings and inconsistent
+motion across pages remain unacceptable.
+
+**How to apply:** Reuse a shared heading/motion system, keep text immediately
+readable on mobile and in reduced-motion mode, and never leave headings hidden
+when an observer or an animation fails. Do not animate every paragraph letter
+by letter or apply the same cultural motif to every sector.

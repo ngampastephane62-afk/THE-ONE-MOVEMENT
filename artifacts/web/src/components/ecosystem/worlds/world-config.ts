@@ -99,6 +99,17 @@ export const WORLD_CONFIG: Record<string, WorldConfig> = {
     learn: [{ t: 'Humanitarian principles', d: 'Humanity, neutrality, impartiality, independence.' }, { t: 'Volunteering well', d: 'Preparation, humility and safety.' }, { t: 'Coordination', d: 'Working with official humanitarian channels.' }] },
 };
 
+/**
+ * Existing Founder-archive photographs (assets/media/founder/catalog.json) that genuinely depict
+ * this sector's activity at TOMI. Only sectors with a contextually correct archive photo are listed;
+ * every other world keeps its illustrative motif until approved sector photography is supplied.
+ */
+export const WORLD_ARCHIVE_PHOTO: Partial<Record<string, { id: 'runway-edition-five' | 'community-outreach' | 'diplomatic-encounter' | 'summit-goma'; note: string }>> = {
+  fashion: { id: 'runway-edition-five', note: 'Founder archive · The One Fashion Week, fifth edition. A record of a past TOMI event.' },
+  'humanitarian-action': { id: 'community-outreach', note: 'Founder archive · previous TOMI community outreach. Dates and places are not asserted.' },
+  diplomacy: { id: 'diplomatic-encounter', note: 'Founder archive · official meeting with the Ambassador of the DRC to the UAE, Abu Dhabi. Not a partnership claim beyond this meeting.' },
+};
+
 export function getWorldConfig(slug: string): WorldConfig | undefined {
   return WORLD_CONFIG[slug];
 }

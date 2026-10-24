@@ -1,3 +1,4 @@
+import SectionHeading from '@/components/SectionHeading';
 import { Link } from 'wouter';
 import { ArrowRight } from 'lucide-react';
 import { PARTNERSHIP_AREAS } from './data';
@@ -11,7 +12,7 @@ export default function GalaPartnerships({ onSelect }: { onSelect: (c: string) =
         <div className="grid gap-6 md:grid-cols-12 md:items-end">
           <div className="md:col-span-7">
             <Eyebrow>Partnerships</Eyebrow>
-            <h2 id="partners-heading" className="mt-6 text-[clamp(2.4rem,6vw,4.6rem)] leading-[0.92] text-ink-900" style={display}>BUILD BRIDGES WITH US.</h2>
+            <SectionHeading id="partners-heading" heading={'BUILD BRIDGES\nWITH US.'} className="mt-6" headingClassName="text-[clamp(2.4rem,6vw,4.6rem)] leading-[0.92]" />
           </div>
           <p className="text-ink-700 md:col-span-4 md:col-start-9">Areas open for conversation. Terms, partners and outcomes are agreed individually and announced only once confirmed.</p>
         </div>

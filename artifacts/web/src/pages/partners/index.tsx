@@ -8,7 +8,7 @@ import PartnerOrbitStage from '@/components/partners/PartnerOrbitStage';
 import BroadcasterAudience from '@/components/partners/BroadcasterAudience';
 import SectionHeading from '@/components/SectionHeading';
 import Reveal from '@/components/Reveal';
-import DocumentaryTeasers from '@/components/editorial/DocumentaryTeasers';
+import { AWARENESS_FILM, engagementId } from '@/lib/editorial-films';
 import NetworkMotif from '@/components/partners/NetworkMotif';
 import { mergeContent } from '@/lib/partner-directory';
 
@@ -61,7 +61,12 @@ export default function Partners() {
             <SectionHeading eyebrow="SINCE THE FIRST EDITION" heading="OUR DOCUMENTARY ARCHIVE" surface="light" size="lg" thread />
             <p id="archive-heading" className="mt-6 max-w-2xl leading-relaxed text-ink-800">Since its first edition, The One Movement has produced documentaries and magazines. Institutional history and press coverage remain available in <Link href="/media" className="font-semibold text-lagoon-700 underline underline-offset-4" data-testid="link-history-media">Media</Link> and <Link href="/news" className="font-semibold text-lagoon-700 underline underline-offset-4" data-testid="link-history-news">News</Link>.</p>
           </Reveal>
-          <DocumentaryTeasers />
+          {/* Task 33: the full awareness film lives in /the-one-documentary (#broadcast-films). Partners links to it instead of embedding a duplicate. */}
+          <div id="documentary-teasers" className="mt-10 scroll-mt-24 border-l-2 border-gold-500 pl-5" data-testid="section-documentary-teasers">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-gold-600">{AWARENESS_FILM.name}</p>
+            <p className="mt-2 font-display text-xl text-ink-900">{AWARENESS_FILM.title}</p>
+            <Link href={`/the-one-documentary?video=${engagementId(AWARENESS_FILM)}#broadcast-films`} className="tomi-cta mt-4 inline-flex min-h-12 items-center border border-lagoon-900 px-6 text-xs font-semibold uppercase tracking-[0.2em] text-lagoon-900" data-testid="link-awareness-film">Watch in the documentary collection</Link>
+          </div>
         </div>
       </section>
 

@@ -1,3 +1,4 @@
+import SectionHeading from '@/components/SectionHeading';
 import { useState } from 'react';
 import { ChevronDown, ArrowRight } from 'lucide-react';
 import pavilionImg from '@/assets/media/programs/gala-concept-pavilion.jpg';
@@ -13,7 +14,7 @@ export default function GalaPavilions({ onPropose }: { onPropose: (category: str
         <div className="grid gap-10 md:grid-cols-12 md:items-end">
           <div className="md:col-span-7">
             <Eyebrow dark>The heart of the Gala</Eyebrow>
-            <h2 id="pavilions-heading" className="mt-6 text-[clamp(2.6rem,7vw,5.5rem)] leading-[0.92]" style={display}>THE WORLD PAVILIONS</h2>
+            <SectionHeading id="pavilions-heading" heading={'THE WORLD\nPAVILIONS'} surface="dark" className="mt-6" headingClassName="text-[clamp(2.6rem,7vw,5.5rem)] leading-[0.92]" />
             <p className="mt-5 text-2xl text-gold-400" style={display}>Your country. Your culture. Your story.</p>
           </div>
           <p className="leading-relaxed text-ivory-200 md:col-span-4 md:col-start-9">Participating countries may have the opportunity to present a national pavilion: culture, creative industries, businesses, technology, traditions and community initiatives.</p>

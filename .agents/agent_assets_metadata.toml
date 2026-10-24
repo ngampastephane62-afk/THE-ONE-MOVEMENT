@@ -280,3 +280,17 @@ mtime_ms = 1792781917590
 storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/d49c7a4b-7bc0-41db-814b-6f4e7ecf2cda/cc5df14a-39c0-44eb-9b3f-fa41764da8b1"
 storage_version_token = "1792781939921266"
 content_type = "text/html"
+
+[[outputs]]
+id = "LBCcGdXmK1_uvaZGiZsGm"
+uri = "file://reports/prelaunch-founder-review.html"
+type = "html"
+title = "TOMI — Rapport de pré-lancement en 19 points"
+description = "Corrections livrées, contrôles mobile et desktop, résultats des tests, modules Founder indisponibles et points restant à valider."
+logical_id = "e393fd1b-6c97-4c17-be01-edb6a60b4542"
+content_hash = "sha256:b44fc641a8437b808c0d7f08910f3c7a6cf9103853f58c2191f95308bbf9f4cb"
+size = 21140
+mtime_ms = 1792810595727
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/e393fd1b-6c97-4c17-be01-edb6a60b4542/6e409788-3711-4136-8d10-e280db187a35"
+storage_version_token = "1792810638844420"
+content_type = "text/html"

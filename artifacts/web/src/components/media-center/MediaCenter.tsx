@@ -5,12 +5,13 @@ import SectionHeading from '@/components/SectionHeading';
 import Reveal from '@/components/Reveal';
 import { CATEGORIES, CATEGORY_LABEL } from '@/lib/media-center';
 import MediaPublicationCard from './MediaPublicationCard';
+import { uniquePublishedMedia } from '@/lib/media-publication-identity';
 
 export default function MediaCenter() {
   const [page, setPage] = useState(1);
   const [cat, setCat] = useState<MediaPublicationCategory | 'all'>('all');
   const q = useGetMediaPublications({ page }, { query: { queryKey: getGetMediaPublicationsQueryKey({ page }), refetchOnMount: 'always', refetchOnWindowFocus: true, refetchInterval: 60_000, placeholderData: (prev) => prev } });
-  const items = useMemo(() => (q.data?.items ?? []).filter((p) => p.status === 'published'), [q.data]);
+  const items = useMemo(() => uniquePublishedMedia(q.data?.items ?? []), [q.data]);
   const present = useMemo(() => CATEGORIES.filter((c) => items.some((p) => p.category === c)), [items]);
   const shown = cat === 'all' || !present.includes(cat) ? items : items.filter((p) => p.category === cat);
   const go = (n: number) => { setPage(n); setCat('all'); document.getElementById('media-center')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); };

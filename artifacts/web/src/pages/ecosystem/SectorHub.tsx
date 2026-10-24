@@ -19,6 +19,8 @@ import { programsForSector, resourcesForSector, sectorName, formatChecked } from
 import SectorEmblem from '@/components/ecosystem/SectorEmblem';
 import SectorWorld from '@/components/ecosystem/worlds/SectorWorld';
 import RealEstateWorld from '@/components/ecosystem/RealEstateWorld';
+import FashionConnections from '@/components/programs/FashionConnections';
+import PeaceVoices from '@/components/programs/PeaceVoices';
 import WorldMotif from '@/components/ecosystem/worlds/WorldMotif';
 import { getWorldConfig } from '@/components/ecosystem/worlds/world-config';
 
@@ -229,7 +231,7 @@ export default function SectorHub() {
       <Helmet><title>{`${sector.name} · Ecosystem world · TOMI`}</title><meta name="description" content={`${sector.descriptor}. ${sector.contributes}`} /></Helmet>
 
       <header className="tomi-weave-dark relative isolate overflow-hidden bg-lagoon-900 pb-14 pt-28 text-ivory-100">
-        {cfg && <div className="x-decor x-gates-ambient" aria-hidden="true"><WorldMotif motif={cfg.motif} /></div>}
+        {cfg && <div className="x-decor x-gates-ambient pointer-events-none absolute inset-0 -z-10 overflow-hidden [&>svg]:h-full [&>svg]:w-full" style={{ opacity: 0.14 }} aria-hidden="true"><WorldMotif motif={cfg.motif} /></div>}
         <div className="x-content relative mx-auto max-w-7xl px-5 sm:px-6">
           <Link href={`/ecosystem?sector=${sector.slug}#explore`} className="inline-flex min-h-[44px] items-center gap-2 text-xs uppercase tracking-[0.16em] text-ivory-300 hover:text-gold-400" data-testid="link-hub-back"><ArrowLeft className="h-4 w-4" aria-hidden="true" /> All seventeen gateways</Link>
           <div className="mt-6 flex items-start gap-4">
@@ -256,6 +258,20 @@ export default function SectorHub() {
         <p className="mt-6 text-sm text-ink-700">This sector is a permanent, ongoing world of the ecosystem. It is not an event, and it stays open between the official programmes it connects with.</p>
         <div className="mt-8 overflow-hidden">{sector.slug === 'real-estate' ? <RealEstateWorld /> : <SectorWorld slug={sector.slug} />}</div>
       </Area>
+
+      {sector.slug === 'fashion' && (
+        <>
+          {/* Moved from the Fashion Week programme page (Task 33): ongoing sector content, not event content. */}
+          <section aria-label="Fashion knowledge and training" className="border-t border-sand-200 bg-ivory-100 py-12" data-testid="section-fashion-sector-learning">
+            <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 md:flex-row md:items-center md:justify-between">
+              <p className="max-w-2xl text-ink-800">Pattern cutting, textile heritage, sustainable sourcing, fashion law, brand building and styling. Practitioners and educators can propose sessions or mentoring; proposals are reviewed before anything is announced.</p>
+              <Link href="/programs/fashion-week#apply" className="tomi-cta inline-flex min-h-12 shrink-0 items-center border border-lagoon-900 px-6 text-xs font-semibold uppercase tracking-[0.2em] text-lagoon-900" data-testid="link-fashion-sector-teach">Offer to teach or mentor</Link>
+            </div>
+          </section>
+          <FashionConnections />
+          <PeaceVoices />
+        </>
+      )}
 
       <Area id="community" n="02" title="Community" lead={<p>Members who chose {sector.name} and made their profile public themselves. Self-described, not endorsements or verified partnerships.</p>}>
         {membersQ.isLoading ? <div className="grid gap-3 sm:grid-cols-2" aria-busy="true" aria-label="Loading members">{[0, 1, 2, 3].map((i) => <div key={i} className="h-32 animate-pulse bg-ivory-200" />)}</div>

@@ -21,7 +21,22 @@ export default function MediaPublicationCard({ p, lead = false }: { p: MediaPubl
         <div className="mt-4 h-px w-10 bg-gold-500" aria-hidden="true" />
         <h3 className={`mt-4 text-ink-900 ${lead ? 'text-display-md' : 'text-xl'}`} style={{ fontFamily: 'var(--font-display)' }}>{p.title}</h3>
         <p className="mt-2 text-xs uppercase tracking-[0.18em] text-ink-500">{[p.publisher, date].filter(Boolean).join(' · ')}</p>
-        <p className={`mt-4 whitespace-pre-line text-sm leading-relaxed text-ink-700 ${lead ? '' : 'line-clamp-5'}`}>{p.description}</p>
+        {(() => {
+          // Task 33: only the lead paragraph is shown; any further source notes (e.g. third-party name lists) stay in optional archive details.
+          const [first, ...rest] = p.description.split(/\n\s*\n/);
+          return (
+            <>
+              <p className={`mt-4 whitespace-pre-line text-sm leading-relaxed text-ink-700 ${lead ? '' : 'line-clamp-4'}`}>{first}</p>
+              {rest.length > 0 && (
+                <details className="mt-3 text-sm text-ink-700">
+                  <summary className="min-h-10 cursor-pointer py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-lagoon-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500" data-testid={`button-source-details-${p.id}`}>Source record details</summary>
+                  <p className="mt-2 whitespace-pre-line leading-relaxed">{rest.join('\n\n')}</p>
+                  <p className="mt-2 text-xs text-ink-500">Names in source material are not TOMI ambassadors, partners or nominees unless stated elsewhere.</p>
+                </details>
+              )}
+            </>
+          );
+        })()}
         {href && (
           <a href={href} target="_blank" rel="noopener noreferrer" className="mt-auto inline-flex w-fit items-center gap-1.5 pt-6 text-xs font-semibold tracking-[0.15em] text-gold-600 underline underline-offset-4 hover:text-gold-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500" data-testid={`link-read-publication-${p.id}`}>
             READ PUBLICATION<ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span>

@@ -1,21 +1,26 @@
 import { cn } from '@/lib/utils';
-import GoldThread from './GoldThread';
+import { MaskLine, Rise, useInView } from '@/components/programs/editorial/motion';
 
 interface SectionHeadingProps {
   /** Eyebrow line — small, uppercase, gold, appears above heading */
   eyebrow?: string;
+  /** Use "\n" to split the heading into lines that reveal one by one. */
   heading: string;
   /** Optional subheading / body below the heading */
   subheading?: string;
-  /** Append a GoldThread below the heading */
+  /** Draw a gold rule beneath the heading */
   thread?: boolean;
-  /** Text alignment — asymmetric (start) is default per composition rules */
   align?: 'start' | 'center';
-  /** Heading size personality */
   size?: 'xl' | 'lg' | 'md';
-  /** Light or dark surface context — determines text colours */
   surface?: 'light' | 'dark';
+  /** Heading level (default h2). Use h1 for page heroes. */
+  as?: 'h1' | 'h2' | 'h3';
+  id?: string;
   className?: string;
+  /** Replaces the size class (bespoke page scales keep their layout). */
+  headingClassName?: string;
+  /** Colour the last line as an accent (e.g. 'text-gold-400'). */
+  lastLineClassName?: string;
 }
 
 const sizeMap = {
@@ -25,11 +30,11 @@ const sizeMap = {
 };
 
 /**
- * SectionHeading — eyebrow + display heading + optional thread.
- *
- * Composition rules: default alignment is start (left in LTR).
- * The eyebrow is always gold; it "introduces" the section before
- * the large heading lands.
+ * SectionHeading — the single shared cinematic heading system.
+ * Sequence: label draws in → heading lines rise from masks (staggered)
+ * → gold rule draws → supporting text rises. Scroll-triggered once.
+ * Text is never permanently hidden: IntersectionObserver absence and
+ * reduced-motion both resolve to the fully visible state.
  */
 export default function SectionHeading({
   eyebrow,
@@ -39,57 +44,43 @@ export default function SectionHeading({
   align = 'start',
   size = 'lg',
   surface = 'light',
+  as: Tag = 'h2',
+  id,
   className,
+  headingClassName,
+  lastLineClassName,
 }: SectionHeadingProps) {
   const isDark = surface === 'dark';
+  const [ref, shown] = useInView<HTMLDivElement>(0.15);
+  const lines = heading.split('\n');
 
   return (
     <div
-      className={cn(
-        'flex flex-col',
-        align === 'center' ? 'items-center text-center' : 'items-start text-start',
-        className,
-      )}
+      ref={ref}
+      className={cn('flex flex-col', align === 'center' ? 'items-center text-center' : 'items-start text-start', className)}
     >
       {eyebrow && (
-        <span
-          className={cn(
-            'text-eyebrow mb-3',
-            isDark ? 'text-gold-400' : 'text-gold-600',
-          )}
-        >
-          {eyebrow}
-        </span>
+        <Rise shown={shown} className="mb-3">
+          <span className={cn('text-eyebrow', shown && 'tomi-label', isDark ? 'text-gold-400' : 'text-gold-600')}>{eyebrow}</span>
+        </Rise>
       )}
 
-      <h2
-        className={cn(
-          sizeMap[size],
-          isDark ? 'text-ivory-100' : 'text-ink-900',
-          'font-display',
-        )}
+      <Tag
+        id={id}
+        className={cn(headingClassName ?? sizeMap[size], isDark ? 'text-ivory-100' : 'text-ink-900', 'font-display')}
         style={{ fontFamily: 'var(--font-display)' }}
       >
-        {heading}
-      </h2>
+        {lines.map((l, i) => (
+          <MaskLine key={i} shown={shown} delay={120 + i * 130} className={i === lines.length - 1 && lines.length > 1 ? lastLineClassName : undefined}>{l}</MaskLine>
+        ))}
+      </Tag>
 
-      {thread && (
-        <GoldThread
-          className={cn('mt-5', align === 'center' ? 'self-stretch' : '')}
-          length={align === 'center' ? '100%' : '200px'}
-          node
-        />
-      )}
+      {thread && <span aria-hidden="true" className={cn('tomi-head-rule mt-5', align === 'center' && 'is-center', shown && 'is-on')} />}
 
       {subheading && (
-        <p
-          className={cn(
-            'mt-4 max-w-xl leading-relaxed',
-            isDark ? 'text-ivory-200' : 'text-sand-400',
-          )}
-        >
+        <Rise shown={shown} delay={420} as="p" className={cn('mt-4 max-w-xl leading-relaxed', isDark ? 'text-ivory-200' : 'text-ink-700')}>
           {subheading}
-        </p>
+        </Rise>
       )}
     </div>
   );

@@ -20,9 +20,16 @@ export function useInView<T extends HTMLElement>(threshold = 0.2) {
   useEffect(() => {
     const el = ref.current;
     if (!el || typeof IntersectionObserver === 'undefined') { setShown(true); return; }
+    const inViewport = () => { const r = el.getBoundingClientRect(); return r.top < window.innerHeight && r.bottom > 0; };
     const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setShown(true); io.disconnect(); } }, { threshold, rootMargin: '0px 0px -8% 0px' });
     io.observe(el);
-    return () => io.disconnect();
+    // Safety nets: first-viewport content reveals on the next frame, and anything on screen
+    // (or a tall element the threshold can never satisfy) reveals after 1.6s if the observer never fires.
+    const raf = requestAnimationFrame(() => { if (inViewport()) setShown(true); });
+    const timer = window.setTimeout(() => { if (inViewport()) { setShown(true); io.disconnect(); } }, 1600);
+    const onScroll = () => { if (inViewport()) { window.setTimeout(() => setShown(true), 900); window.removeEventListener('scroll', onScroll); } };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => { io.disconnect(); cancelAnimationFrame(raf); window.clearTimeout(timer); window.removeEventListener('scroll', onScroll); };
   }, [threshold]);
   return [ref, shown] as const;
 }

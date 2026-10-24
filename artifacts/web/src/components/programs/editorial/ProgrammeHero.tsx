@@ -19,7 +19,7 @@ export default function ProgrammeHero({ theme, eyebrow, title, secondary, statem
       {motif}
       <div className="mx-auto grid min-h-[calc(100dvh-4rem)] max-w-7xl items-center gap-12 px-5 py-16 sm:px-8 lg:grid-cols-12 lg:py-20">
         <div className="lg:col-span-7">
-          <Rise shown={shown} as="p" className="text-[10px] font-semibold uppercase tracking-[0.32em]"><span style={{ color: theme.accent }}>{eyebrow}</span></Rise>
+          <Rise shown={shown} as="p" className="text-[10px] font-semibold uppercase tracking-[0.32em]"><span className="tomi-label" style={{ color: theme.accent }}>{eyebrow}</span></Rise>
           <h1 className="mt-6 text-[clamp(2.6rem,11vw,6.5rem)] leading-[0.9] tracking-[-0.02em]" style={{ fontFamily: 'var(--font-display)' }}>
             {title.map((l, i) => <MaskLine key={l} shown={shown} delay={120 + i * 140}>{l}</MaskLine>)}
           </h1>

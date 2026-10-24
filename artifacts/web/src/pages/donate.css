@@ -33,6 +33,10 @@
 .hum-track { scrollbar-width: thin; scrollbar-color: hsl(39 52% 54% / 0.5) transparent; overscroll-behavior-x: contain; scroll-padding-inline: 1.5rem; }
 .hum-armed .hum-photo { opacity: 0; transform: translateY(28px) scale(0.97); transition: opacity 1000ms ease var(--d, 0ms), transform 1200ms cubic-bezier(0.19, 1, 0.22, 1) var(--d, 0ms); }
 .hum-armed .hum-gallery.is-in .hum-photo { opacity: 1; transform: none; }
+/* Respectful settle: each photograph eases from a slight zoom; no flashes or sweeps. */
+.hum-armed .hum-photo img { transform: scale(1.04); transition: transform 1600ms cubic-bezier(0.19, 1, 0.22, 1) calc(var(--d, 0ms) + 200ms); }
+.hum-armed .hum-gallery.is-in .hum-photo img { transform: none; }
+.hum-track { scroll-padding-inline: 1.5rem; }
 
 /* Slow gold thread */
 .hum-thread { position: relative; height: 1px; }
@@ -47,5 +51,5 @@
   .hum-hero-line > span, .hum-hero-fade { animation: none; }
   .hum-armed .hum-mask > span, .hum-armed .hum-chapter, .hum-armed .hum-curtain,
   .hum-armed .hum-film-chapter .hum-film-text, .hum-armed .hum-film-chapter .hum-film-frame,
-  .hum-armed .hum-photo, .hum-armed .hum-thread > span { opacity: 1; transform: none; clip-path: none; transition: none; }
+  .hum-armed .hum-photo, .hum-armed .hum-photo img, .hum-armed .hum-thread > span { opacity: 1; transform: none; clip-path: none; transition: none; }
 }

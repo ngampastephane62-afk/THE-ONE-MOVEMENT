@@ -35,7 +35,7 @@ const buttonVariants = cva(
           'text-primary underline-offset-4 hover:underline p-0 h-auto',
         // Gold outline: gold border + text — prominent on dark/ink surfaces
         'gold-outline':
-          'rounded-[var(--radius)] border border-gold-500 text-gold-500 bg-transparent hover:bg-gold-500/10 font-semibold tracking-wide',
+          'tomi-cta rounded-[var(--radius)] border border-gold-500 text-gold-500 bg-transparent hover:bg-gold-500/10 font-semibold tracking-wide',
       },
       size: {
         default: 'min-h-10 px-5 py-2.5',

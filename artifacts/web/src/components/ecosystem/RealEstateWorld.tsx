@@ -75,7 +75,7 @@ export default function RealEstateWorld() {
         </div>
         <div className="sw-hero-copy">
           <p className="text-eyebrow text-gold-400">World {String(SECTORS.findIndex((s) => s.slug === 'real-estate') + 1).padStart(2, '0')} of {SECTORS.length} · Real Estate</p>
-          <h3 className="mt-3 text-display-lg text-ivory-100">The city is a<br /><em className="sw-serif">shared</em> drawing.</h3>
+          <h3 className="lw-title mt-3 text-display-lg text-ivory-100"><span className="lw-line"><span>The city is a</span></span><span className="lw-line"><span><em className="sw-serif">shared</em> drawing.</span></span></h3>
           <p className="mt-4 max-w-md text-sm leading-relaxed text-ivory-200">
             Architects, agents, developers and investors shape where humanity lives and works. Enter the world of architecture and cities, meet the professions, and find your place in it. Belonging is free.
           </p>

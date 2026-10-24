@@ -28,7 +28,12 @@ function useHumanitarianMotion() {
     el.classList.add('hum-armed');
     const io = new IntersectionObserver((entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
     el.querySelectorAll(OBSERVED).forEach((n) => io.observe(n));
-    return () => io.disconnect();
+    // Safety net: never leave on-screen content hidden if the observer fails to fire.
+    const sweep = () => el.querySelectorAll(OBSERVED).forEach((n) => { const r = n.getBoundingClientRect(); if (r.top < window.innerHeight && r.bottom > 0) n.classList.add('is-in'); });
+    const t = window.setTimeout(sweep, 1800);
+    const onScroll = () => window.setTimeout(sweep, 1200);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => { io.disconnect(); window.clearTimeout(t); window.removeEventListener('scroll', onScroll); };
   }, []);
   return root;
 }

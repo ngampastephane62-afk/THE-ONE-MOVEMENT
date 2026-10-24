@@ -12,8 +12,8 @@ import GalaCulture from './Culture';
 import GalaPartnerships from './Partnerships';
 import GalaClosing from './Closing';
 
-const TITLE = 'The One Diplomatic Gala — The World, Under One Roof | THE ONE MOVEMENT INTERNATIONAL';
-const DESC = 'A global gathering of nations, cultures, communities and opportunities. Explore the World Pavilions and express interest in representing your country.';
+const TITLE = 'The One Diplomatic Gala — Where Cultures Meet | THE ONE MOVEMENT INTERNATIONAL';
+const DESC = 'A cultural diplomacy initiative bringing together people, institutions and creative communities through dialogue, cultural expression and a shared commitment to peaceful coexistence.';
 
 export default function DiplomaticGalaPage() {
   const [category, setCategory] = useState('');
@@ -31,21 +31,21 @@ export default function DiplomaticGalaPage() {
       <Helmet>
         <title>{TITLE}</title>
         <meta name="description" content={DESC} />
-        <meta property="og:title" content="The One Diplomatic Gala — The World, Under One Roof" />
+        <meta property="og:title" content="The One Diplomatic Gala — Where Cultures Meet" />
         <meta property="og:description" content={DESC} />
         <meta property="og:type" content="website" />
         <link rel="canonical" href="/programs/diplomatic-gala" />
       </Helmet>
       <GalaHero onRepresent={() => goToForm()} />
       <BespokeLead slug="diplomatic-gala" />
-      <GalaVision />
-      <EverydayEcosystem programmeSlug="diplomatic-gala" />
-      <GalaPavilions onPropose={goToForm} />
       <GalaExperiences />
+      <GalaVision />
+      <GalaCulture />
+      <GalaPavilions onPropose={goToForm} />
       <GalaParticipants selected={category} onSelect={goToForm} />
       <GalaRepresent ref={headingRef} category={category} onCategoryChange={setCategory} />
-      <GalaCulture />
       <GalaPartnerships onSelect={goToForm} />
+      <EverydayEcosystem programmeSlug="diplomatic-gala" />
       <BespokeTail slug="diplomatic-gala" name="THE ONE DIPLOMATIC GALA" mediaEyebrow="OFFICIAL VIDEOS AND MEDIA" />
       <GalaClosing />
     </div>

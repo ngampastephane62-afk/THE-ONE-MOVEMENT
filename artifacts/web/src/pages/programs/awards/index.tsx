@@ -57,7 +57,7 @@ export default function AwardsPage() {
     setFilm(slug);
     filmsRef.current?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
   };
-  const btn = 'inline-flex min-h-12 items-center gap-2 px-5 text-xs font-semibold uppercase tracking-[0.18em] focus-visible:outline-none focus-visible:ring-2';
+  const btn = 'tomi-cta inline-flex min-h-12 items-center gap-2 px-5 text-xs font-semibold uppercase tracking-[0.18em] focus-visible:outline-none focus-visible:ring-2';
 
   return (
     <div data-testid="page-awards">

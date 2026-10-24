@@ -3,22 +3,17 @@ import { useRef, useState } from 'react';
 import { Link } from 'wouter';
 import HeroSurface from '@/components/HeroSurface';
 import GoldThread from '@/components/GoldThread';
-import ArchivePhoto from '@/components/ArchivePhoto';
 import FashionEditionNote from '@/components/FashionEditionNote';
 import ProgrammeCover from '@/components/programs/ProgrammeCover';
 import ProgrammeFilm from '@/components/programs/ProgrammeFilm';
-import PeaceVoices from '@/components/programs/PeaceVoices';
-import FashionConnections from '@/components/programs/FashionConnections';
 import InquiryForm from '@/pages/join/InquiryForm';
 import { FASHION_CATEGORIES } from '@/lib/fashion-participation';
-import DesignerPackages from './DesignerPackages';
 import FashionArchive from './FashionArchive';
 import { BespokeLead, BespokeTail } from '@/components/programs/editorial/BespokeFrame';
 import { inquiryHref } from '@/lib/programme-editorial';
-import EverydayEcosystem from '@/components/programs/EverydayEcosystem';
 
 const TITLE = 'The One Fashion Week International — Participation';
-const DESC = 'Be part of the global fashion movement. Designers, talent, stylists, press, production teams, partners and educators: choose your category, compare designer packages and apply to The One Fashion Week International.';
+const DESC = 'Be part of the global fashion movement. Designers, talent, stylists, press, production teams, partners and educators: choose your category and request participation information to The One Fashion Week International.';
 
 const PILLARS = [
   { n: 'I', h: 'Show', p: 'Collections that carry heritage and local craft onto an international runway.' },
@@ -72,15 +67,9 @@ export default function FashionWeekPage() {
               <p className="mt-7 max-w-xl font-display text-xl leading-snug text-ivory-100">
                 More than a runway. A platform for fashion, culture, creativity, business and international connections.
               </p>
-              <p className="mt-4 max-w-xl leading-relaxed text-ivory-200">
-                Designers, models, stylists, accessory creators, media, production teams, brands, partners and educators meet on one international platform. Whether you are an established house, an emerging designer or a professional with a skill to share, there is a place for you here.
-              </p>
-              <p className="mt-6 text-xs font-semibold uppercase tracking-[0.18em] text-gold-400">
-                Choose your category. Select your participation package. Become part of the movement.
-              </p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <a href="#categories" data-testid="link-hero-categories" className="inline-flex min-h-12 items-center bg-gold-500 px-6 text-xs font-semibold uppercase tracking-wider text-ink-900 hover:bg-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ivory-100">Choose your category</a>
-                <a href="#learning" data-testid="link-hero-learning" className="inline-flex min-h-12 items-center border border-gold-500/70 px-6 text-xs font-semibold uppercase tracking-wider text-gold-400 hover:bg-gold-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400">Share your knowledge</a>
+                <a href="#archive" data-testid="link-hero-archive" className="tomi-cta inline-flex min-h-12 items-center border border-gold-500/70 px-6 text-xs font-semibold uppercase tracking-wider text-gold-400 hover:bg-gold-500/10">Our previous editions</a>
+                <a href="#categories" data-testid="link-hero-categories" className="tomi-cta inline-flex min-h-12 items-center bg-gold-500 px-6 text-xs font-semibold uppercase tracking-wider text-ink-900 hover:bg-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ivory-100">Choose your category</a>
               </div>
             </div>
             <div className="lg:col-span-5">
@@ -90,6 +79,7 @@ export default function FashionWeekPage() {
         </div>
       </HeroSurface>
 
+      <FashionArchive />
       <BespokeLead slug="fashion-week" />
       {/* 2 · ECOSYSTEM */}
       <section className="bg-ivory-100 py-section-lg" aria-labelledby="eco-h">
@@ -112,16 +102,10 @@ export default function FashionWeekPage() {
               ))}
             </ol>
           </div>
-          <p className="mt-16 font-mono text-[11px] uppercase tracking-[0.3em] text-gold-600">Previous editions · archive</p>
-          <div className="mt-4 grid grid-cols-12 gap-3 sm:gap-5">
-            <div className="col-span-12 sm:col-span-7"><ArchivePhoto id="runway-cultural" caption sizes="(min-width: 640px) 55vw, 92vw" /></div>
-            <div className="col-span-6 sm:col-span-5"><ArchivePhoto id="designer-portrait" caption sizes="(min-width: 640px) 38vw, 46vw" /></div>
-            <div className="col-span-6 sm:hidden"><ArchivePhoto id="casting-portrait" caption sizes="46vw" /></div>
-          </div>
+          <Link href="/ecosystem/fashion" data-testid="link-fashion-ecosystem" className="tomi-cta mt-12 inline-flex min-h-12 items-center gap-2 border border-lagoon-900 px-6 text-xs font-semibold uppercase tracking-[0.2em] text-lagoon-900">Explore the fashion ecosystem</Link>
         </div>
       </section>
 
-      <EverydayEcosystem programmeSlug="fashion-week" />
       {/* 3 · CATEGORIES */}
       <section id="categories" className="scroll-mt-20 py-section-lg" style={{ backgroundColor: 'hsl(187 67% 12%)' }} aria-labelledby="cat-h">
         <div className="mx-auto max-w-7xl px-6">
@@ -140,7 +124,7 @@ export default function FashionWeekPage() {
                   <span className={`font-display text-xs ${on ? 'text-ink-900' : 'text-gold-400'}`}>{String(i + 1).padStart(2, '0')}</span>
                   <span className="mt-2 font-display text-lg leading-tight">{c.label}</span>
                   <span className={`mt-auto pt-3 text-[0.65rem] uppercase tracking-[0.16em] ${on ? 'text-ink-900' : 'text-ivory-300'}`}>
-                    {c.designerPackages ? 'Five annual packages' : c.value === 'sponsors-partners' ? 'Partnership route' : 'Apply for participation'}
+                    {c.designerPackages ? 'Request designer information' : c.value === 'sponsors-partners' ? 'Partnership route' : 'Apply for participation'}
                   </span>
                 </button>
               );
@@ -181,7 +165,7 @@ export default function FashionWeekPage() {
                     <Link href="/programs/summit#knowledge" data-testid="link-summit-knowledge" className="inline-flex min-h-12 items-center border border-lagoon-900 px-6 text-xs font-semibold uppercase tracking-wider text-lagoon-900 hover:bg-lagoon-900 hover:text-ivory-100">Summit knowledge resources</Link>
                   </>
                 ) : current.designerPackages ? (
-                  <a href="#designer-packages" data-testid="link-compare-packages" className="inline-flex min-h-12 items-center bg-lagoon-900 px-6 text-xs font-semibold uppercase tracking-wider text-ivory-100 hover:bg-lagoon-800">Compare packages</a>
+                  <button type="button" onClick={() => goToForm(current.value)} data-testid="button-request-designer-info" className="tomi-cta min-h-12 bg-lagoon-900 px-6 text-xs font-semibold uppercase tracking-wider text-ivory-100 hover:bg-lagoon-800">Request designer information</button>
                 ) : (
                   <button type="button" onClick={() => goToForm(current.value)} data-testid="button-apply-category" className="min-h-12 bg-lagoon-900 px-6 text-xs font-semibold uppercase tracking-wider text-ivory-100 hover:bg-lagoon-800">Apply for participation</button>
                 )}
@@ -192,37 +176,10 @@ export default function FashionWeekPage() {
             </div>
           </div>
           {current.designerPackages && (
-            <div id="designer-packages" className="scroll-mt-20">
-              <DesignerPackages onEnquire={() => goToForm(current.value)} />
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* 5 · LEARNING */}
-      <section id="learning" className="scroll-mt-20 py-section-lg" style={{ backgroundColor: 'hsl(40 71% 98%)', borderTop: '1px solid hsl(36 26% 84%)' }} aria-labelledby="learn-h">
-        <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-12 lg:items-center">
-          <div className="lg:col-span-5 order-2 lg:order-1">
-            <ArchivePhoto id="casting-group" caption sizes="(min-width: 1024px) 40vw, 92vw" />
-          </div>
-          <div className="order-1 lg:order-2 lg:col-span-6 lg:col-start-7">
-            <p className="text-eyebrow text-gold-600">Knowledge · open to anyone with a skill to share</p>
-            <h2 id="learn-h" className="mt-3 text-display-lg text-ink-900" style={{ fontFamily: 'var(--font-display)' }}>A FASHION WEEK THAT TEACHES.</h2>
-            <p className="mt-5 leading-relaxed text-ink-800">
-              Pattern cutting, textile heritage, sustainable sourcing, fashion law, brand building, styling for culture rather than costume. We invite brands, practitioners, experts and professors to propose sessions, masterclasses and mentoring. Proposals are reviewed and confirmed per edition; no programme is announced until it is.
+            <p id="designer-packages" className="mt-8 max-w-2xl scroll-mt-20 border-l-2 border-gold-500 pl-4 text-sm leading-relaxed text-ink-800" data-testid="text-designer-pathway">
+              Current designer participation information is shared on request after review. Send an inquiry and the Fashion Week team will reply with the approved package details. No outcome, exposure or placement is promised.
             </p>
-            <div className="mt-8 grid gap-px border border-sand-300 bg-sand-300 sm:grid-cols-3">
-              <button type="button" onClick={() => goToForm('experts-educators')} data-testid="button-learn-teach" className="bg-ivory-50 p-5 text-left hover:bg-ivory-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500">
-                <span className="font-display text-lg text-ink-900">Teach</span><span className="mt-1 block text-xs text-ink-700">Propose a session or masterclass</span>
-              </button>
-              <button type="button" onClick={() => goToForm('experts-educators')} data-testid="button-learn-mentor" className="bg-ivory-50 p-5 text-left hover:bg-ivory-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500">
-                <span className="font-display text-lg text-ink-900">Mentor</span><span className="mt-1 block text-xs text-ink-700">Guide an emerging designer</span>
-              </button>
-              <Link href="/programs/summit#knowledge" data-testid="link-learn-summit" className="bg-ivory-50 p-5 hover:bg-ivory-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500">
-                <span className="font-display text-lg text-ink-900">Learn</span><span className="mt-1 block text-xs text-ink-700">Summit knowledge resources</span>
-              </Link>
-            </div>
-          </div>
+          )}
         </div>
       </section>
 
@@ -246,10 +203,6 @@ export default function FashionWeekPage() {
         </div>
       </section>
 
-      <FashionArchive />
-      {/* 7 · DISCOVERY ACROSS CONTINENTS */}
-      <FashionConnections />
-      <PeaceVoices />
 
       {/* 8 · APPLICATION FORM */}
       <section id="apply" className="scroll-mt-16 py-section-lg" style={{ backgroundColor: 'hsl(187 67% 12%)' }} aria-labelledby="apply-h">

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TOMI — Revue ciblée avant lancement</title>
+<style>
+body{margin:0;background:#f6f3eb;color:#163438;font:16px/1.65 system-ui,sans-serif}main{max-width:1000px;margin:auto;padding:36px 22px 70px}h1,h2,h3{line-height:1.2}h1{font-size:clamp(28px,5vw,44px)}h2{font-size:23px;margin-top:36px}h3{margin-top:24px}a{color:#075e67}code{font-size:.86em;overflow-wrap:anywhere}.lead{padding:20px;background:#e0ebe3;border-left:4px solid #a5853e}.state{font-size:11px;font-weight:750;letter-spacing:.06em;color:#65501c}table{border-collapse:collapse;width:100%;font-size:14px}th,td{padding:10px 8px;border-bottom:1px solid #ccd2c9;text-align:left;vertical-align:top}th{color:#07535c}li{margin:6px 0}.note{padding:15px;background:#eee7d8}.files{columns:2;column-width:330px;font-size:13px}small{color:#465d5d}section{break-inside:avoid}
+</style></head><body><main>
+<p>TOMI · REVUE FOUNDER · DÉVELOPPEMENT</p>
+<h1>Corrections ciblées avant lancement</h1>
+<p class="lead"><strong>Livraison partielle, prête à être revue — pas une validation complète de mise en ligne.</strong> Les pages et médias existants ont été réutilisés. Aucun original supprimé, aucune dépendance ajoutée, aucune migration ou modification de compte, de permission, de paiement ou d’authentification dans ce lot. Aucun déploiement lancé par l’Agent.</p>
+<p>États employés : <strong>COMPLETED AND TESTED</strong>, <strong>PARTIALLY COMPLETED</strong>, <strong>AWAITING APPROVED ASSET</strong>, <strong>REQUIRES BACKEND APPROVAL</strong>, <strong>NOT IMPLEMENTED</strong>. Une correction de code, un test de contrat isolé et une transaction réelle ne constituent pas la même preuve.</p>
+
+<section><h2>1. Fichiers modifiés</h2>
+<p class="state">COMPLETED AND TESTED — INVENTAIRE DU LOT LIVRÉ</p>
+<p>Sous <code>artifacts/web/src/</code> :</p>
+<ul class="files">
+<li><code>components/SectionHeading.tsx</code></li>
+<li><code>components/programs/editorial/motion.tsx</code></li>
+<li><code>components/programs/editorial/ProgrammeHero.tsx</code></li>
+<li><code>components/ui/button.tsx</code></li>
+<li><code>components/founder/founder-workspace-config.ts</code></li>
+<li><code>components/partners/PartnerOrbitStage.tsx</code></li>
+<li><code>components/media-center/MediaCenter.tsx</code></li>
+<li><code>components/media-center/MediaPublicationCard.tsx</code></li>
+<li><code>components/humanitarian/HumanitarianGallery.tsx</code></li>
+<li><code>components/ecosystem/RealEstateWorld.tsx</code></li>
+<li><code>components/ecosystem/worlds/SectorWorld.tsx</code></li>
+<li><code>components/ecosystem/worlds/world-config.ts</code></li>
+<li><code>lib/media-publication-identity.ts</code></li>
+<li><code>pages/ecosystem/SectorHub.tsx</code></li>
+<li><code>pages/programs/fashion/index.tsx</code></li>
+<li><code>pages/programs/fashion/FashionArchive.tsx</code></li>
+<li><code>pages/programs/awards/index.tsx</code></li>
+<li><code>pages/programs/gala/index.tsx</code></li>
+<li><code>pages/programs/gala/Hero.tsx</code></li>
+<li><code>pages/programs/gala/Vision.tsx</code></li>
+<li><code>pages/programs/gala/Pavilions.tsx</code></li>
+<li><code>pages/programs/gala/Experiences.tsx</code></li>
+<li><code>pages/programs/gala/Culture.tsx</code></li>
+<li><code>pages/programs/gala/Participants.tsx</code></li>
+<li><code>pages/programs/gala/Partnerships.tsx</code></li>
+<li><code>pages/programs/gala/Closing.tsx</code></li>
+<li><code>pages/media/index.tsx</code></li>
+<li><code>pages/partners/index.tsx</code></li>
+<li><code>pages/donate.tsx</code> et <code>pages/donate.css</code></li>
+<li><code>styles/worlds.css</code> et <code>styles/sector-world.css</code></li>
+<li><code>index.css</code> et <code>main.tsx</code></li>
+</ul>
+<p>Tests ajoutés : <code>scripts/src/tests/founder-workspace-navigation.test.ts</code> et <code>scripts/src/tests/media-publication-identity.test.ts</code>. Inventaire et diagnostic initial : <code>reports/prelaunch-code-audit.md</code>. Note de continuité : <code>.agents/memory/programs-editorial-motion.md</code>. Captures de contrôle : <code>screenshots/prelaunch-gala-mobile.jpg</code> et <code>screenshots/prelaunch-real-estate-desktop.jpg</code>. Les captures générées sont exclues de Git et de la publication par <code>.gitignore</code> et <code>.replitignore</code>.</p></section>
+
+<section><h2>2. Pages corrigées</h2><p class="state">PARTIALLY COMPLETED</p>
+<p>Gala : mission culturelle, dialogue et paix dès l’ouverture, hiérarchie resserrée et participation dépliable. Fashion Week : archives immédiatement après le hero, demandes designer et lien vers le secteur. Awards : traitement des boutons. Media et Partners : présentation éditoriale et lien documentaire. Humanitaire : mouvement de la galerie existante. Secteurs : entrée animée, trois photographies contextualisées et décor sorti du flux pour que le titre reste dans le premier écran. Les gabarits déjà fonctionnels de Summit, Fashion Night et Investment Forum sont conservés.</p></section>
+
+<section><h2>3. Images retirées des emplacements incorrects</h2><p class="state">PARTIALLY COMPLETED</p>
+<p>Sur le Gala uniquement : retrait de la photo de performance culturelle en deux emplacements, de la réunion historique <code>gala-partner-meeting.webp</code> et du concept de pavillon dans Experiences. Le concept de salle du hero est remplacé par une audience d’une précédente activité TOMI, explicitement identifiée comme archive et non comme le prochain Gala.</p>
+<p>Les autres photos de poignée de main sont utilisées dans l’index Programs, pas dans le Gala : elles ne sont pas supprimées. Le portrait de mode isolé n’a pas été localisé dans le code Gala. Aucun retrait aveugle d’un autre média. Les concepts de Vision et Pavilions restent en attente de photographies patrimoniales autorisées.</p></section>
+
+<section><h2>4. Médias approuvés préservés</h2><p class="state">PARTIALLY COMPLETED</p>
+<p>Tous les fichiers originaux restent disponibles : archives Founder et Partenaires, images retirées du Gala, neuf photos humanitaires, films, documents designer et profils Awards. Les huit personnes présentes dans le snapshot public Awards ne sont pas assimilées à une ancienne collection de cinq candidats. Les nouvelles légendes n’inventent ni dates, ni éditions, ni partenariat public.</p></section>
+
+<section><h2>5. Médias dupliqués</h2><p class="state">PARTIALLY COMPLETED</p>
+<p>Le lecteur complet « United Against Hate Speech &amp; Disinformation » est retiré de Partners seulement et remplacé par un lien vers sa collection documentaire. Le film d’origine est conservé.</p>
+<p>Radio Okapi : aucun doublon de publication n’a été reproduit dans les données publiques de développement (centre médias vide, quatre archives presse distinctes). La protection d’affichage ne masque que les clones stricts d’une publication. Elle conserve les paramètres d’URL identifiant les articles, les dates, titres, captures et contextes différents. Les enregistrements et engagements en base ne sont pas modifiés. Ce n’est pas une preuve de correction d’un éventuel doublon en production.</p></section>
+
+<section><h2>6. Fashion Week séparé du secteur Fashion</h2><p class="state">PARTIALLY COMPLETED</p>
+<p>Les connexions professionnelles, le répertoire PeaceVoices et la formation générale ont été retirés de Fashion Week et placés dans <code>/ecosystem/fashion</code>. Le programme conserve la présentation événementielle, ses archives et ses demandes spécifiques. Les packages designer ne sont plus affichés en détail en ligne ; le visiteur passe par la demande existante. Les documents sous-jacents n’ont pas été supprimés ni rendus publics.</p>
+<p>Aucune collection obsolète distincte de cinq personnes n’a été identifiée. La suppression de profils Awards actuels aurait été injustifiée ; ils sont conservés.</p></section>
+
+<section><h2>7. Media &amp; Press</h2><p class="state">PARTIALLY COMPLETED</p>
+<p>Hero et titres partagés animés. Les descriptions longues des cartes sont repliées sous les détails du document source avec une distinction claire entre une personne citée et une affiliation TOMI. Aucune liste de célébrités tiers n’a été identifiée comme collection autonome sur la page. Les articles, crédits et archives sont conservés ; les données réelles du CMS continuent de contrôler leur présence.</p></section>
+
+<section><h2>8. Galerie Partners</h2><p class="state">PARTIALLY COMPLETED · REQUIRES BACKEND APPROVAL POUR L’ÉDITEUR HISTORIQUE</p>
+<p>La galerie historique animée existante, ses fichiers Founder, ses légendes et la règle de trois secondes après chargement sont conservés. Ajout d’un agrandissement accessible : image entière non recadrée, légende, précédent/suivant, flèches clavier, arrêt du diaporama pendant l’ouverture et retour du focus à la fermeture. Ouverture, changement de photo, arrêt pendant 5,2 secondes et retour du focus après Échap confirmés dans Chromium. Le film répété a laissé place à un lien. L’éditeur actuel des organisations reste distinct d’un futur éditeur de toutes les photographies et légendes historiques : ce dernier n’a pas été inventé dans ce lot.</p></section>
+
+<section><h2>9. Humanitaire</h2><p class="state">PARTIALLY COMPLETED</p>
+<p>Les neuf photographies authentiques restent dans la galerie horizontale existante. Titre en deux temps, révélation discrète des photos, commandes de navigation accessibles et mode statique en mouvement réduit. Le lecteur plein écran et les films gratuits sont préservés. Les premières et dernières photos répondent HTTP 200. L’envoi de nouvelles photos par Founder n’est pas ajouté sans infrastructure approuvée.</p></section>
+
+<section><h2>10. Identités des dix-sept secteurs</h2><p class="state">PARTIALLY COMPLETED · AWAITING APPROVED ASSET</p>
+<table><thead><tr><th>Secteur</th><th>Photographie / état</th></tr></thead><tbody>
+<tr><td>Fashion</td><td>Archive Founder : runway de la cinquième édition.</td></tr>
+<tr><td>Music</td><td>Photographie pertinente autorisée à fournir ; motif conservé.</td></tr>
+<tr><td>Dance</td><td>Photo de danse à fournir ; pas de fausse attribution d’une performance culturelle.</td></tr>
+<tr><td>Film</td><td>Photo de production à fournir ; motif conservé.</td></tr>
+<tr><td>Art</td><td>Photo d’art / galerie à fournir.</td></tr>
+<tr><td>Business</td><td>Photo professionnelle autorisée à fournir.</td></tr>
+<tr><td>Investment</td><td>Photo adaptée à fournir, sans prétendre à une opération réalisée.</td></tr>
+<tr><td>Tourism</td><td>Photographie de destination / hospitalité à fournir.</td></tr>
+<tr><td>Diplomacy</td><td>Archive Founder : rencontre sourcée avec l’ambassadrice de RDC aux Émirats ; pas une nouvelle alliance annoncée.</td></tr>
+<tr><td>Innovation</td><td>Photo recherche / innovation à fournir.</td></tr>
+<tr><td>Technology</td><td>Photo informatique / infrastructure à fournir.</td></tr>
+<tr><td>NGOs</td><td>Photo société civile à fournir ; pas de répétition automatique de la photo humanitaire.</td></tr>
+<tr><td>Media</td><td>Photo journalisme / studio à fournir.</td></tr>
+<tr><td>Education</td><td>Photo apprentissage / bibliothèque à fournir.</td></tr>
+<tr><td>Real Estate</td><td>Illustration architecturale existante conservée, photographie à fournir.</td></tr>
+<tr><td>Health &amp; Care</td><td>Photo de soin autorisée à fournir.</td></tr>
+<tr><td>Humanitarian Action</td><td>Archive Founder d’action communautaire, sans date ni lieu inventé.</td></tr>
+</tbody></table>
+<p>Trois secteurs enrichis, quatorze en attente de photographies adaptées et de leurs droits/crédits. Les illustrations restantes ne sont pas présentées comme de vraies activités. La clé, les accès et les tarifs restent inchangés.</p></section>
+
+<section><h2>11. Titres cinématiques</h2><p class="state">PARTIALLY COMPLETED</p>
+<p>Un seul composant partagé : label, lignes masquées, accent et texte d’appui échelonnés. Réutilisé sur les titres principaux concernés et les chapitres Gala. Les entrées des seize mondes et de Real Estate sont animées sans attente obligatoire de navigation. Les éléments visibles ont un repli d’affichage si l’observation échoue. Le mode de mouvement réduit reste statique.</p>
+<p>Les labels Programme et boutons reçoivent des contours et réactions discrets, accessibles au clavier et au toucher. Ce lot ne prétend pas avoir remplacé chaque titre secondaire de tout le site.</p></section>
+
+<section><h2>12. Influence Kuba</h2><p class="state">PARTIALLY COMPLETED · AWAITING APPROVED ASSET</p>
+<p>Ajout d’un entrelacement géométrique discret derrière le contenu, avec les couleurs existantes. Il s’agit d’une inspiration décorative, pas de la reproduction certifiée d’un textile Kuba. Aucun motif sacré ni objet historique fictif n’est revendiqué. Des références textiles approuvées restent nécessaires pour un enrichissement culturel plus précis.</p></section>
+
+<section><h2>13. Vérifications mobile</h2><p class="state">PARTIALLY COMPLETED</p>
+<p id="mobile-results">Chromium : onze routes publiques et dix-sept mondes visités à 390 px. Titre principal visible, aucune erreur fatale, aucune image visible terminée en échec. Aucun débordement horizontal du document sur les mondes. Gala, Fashion Week et Real Estate vérifiés aussi à 375 px. Les galeries horizontales restent volontairement défilantes. La session vérifie un navigateur redimensionné, pas un iPhone Safari réel.</p>
+<p>Fashion Week : défilement de la galerie confirmé après stabilisation (0 → 292 → 0 px), changement de photo en plein écran, Échap et restitution du focus corrigée puis confirmée. Menu mobile, lien de pied de page vers Ecosystem, clé d’entrée Real Estate, choix Designer et catégorie Artists &amp; Performers fonctionnels sans soumission. Humanitaire : neuf sources présentes, première et dernière photos chargées, galerie et fermeture plein écran confirmées. Les partages natifs et interactions nécessitant un compte ne sont pas validés.</p></section>
+<section><h2>14. Vérifications desktop et tablette</h2><p class="state">PARTIALLY COMPLETED</p>
+<p id="desktop-results">Gala, Fashion Week et Real Estate contrôlés à 768, 1280 et 1440 px : titres rendus, pas de débordement horizontal du document, pas d’image visible terminée en échec. Un défaut de décor plaçait le titre Real Estate à y≈1131 ; après correction, sa position y=276–336 à 1440×844 et l’absence de débordement ont été confirmées. Le décor est atténué pour ne pas concurrencer le texte.</p>
+<p>Partners : agrandissement testé séparément après correction. Toutes les combinaisons possibles de pages et de largeurs n’ont pas été contrôlées ; aucune certification desktop exhaustive n’est annoncée.</p></section>
+
+<section><h2>15. Corrections Founder</h2><p class="state">PARTIALLY COMPLETED</p>
+<p>Ajout des raccourcis manquants vers les outils existants de modération des membres suspendus et des campagnes de gratitude, et d’un panneau « Members &amp; Moderation ». Trois tests vérifient les destinations, les onglets autorisés et le maintien des gardes Founder. Aucun nouveau privilège. Les routes privées refusent les visiteurs ; cela ne prouve pas un parcours d’édition réussi dans une vraie session Founder.</p></section>
+
+<section><h2>16. Modules Founder encore indisponibles</h2><p class="state">NOT IMPLEMENTED · REQUIRES BACKEND APPROVAL</p>
+<ul><li>Édition de toutes les pages et de tous les textes / images.</li><li>Branding, historique global de publication et préférences Founder.</li><li>Gestion complète des archives Fashion Week par édition, année, lieu, galerie photo et vidéo.</li><li>Édition des légendes de toutes les photos historiques Partners et ajout de photos humanitaires.</li><li>Gestion générale des secteurs distincte de l’éditeur actuel de programmes.</li></ul>
+<p>Les outils existants News, médias, organisations partenaires, personnes / vidéos de programmes et demandes restent disponibles selon leurs droits. L’historique propre à News n’est pas l’historique global absent.</p></section>
+
+<section><h2>17. Limites et défauts non résolus</h2><p class="state">PARTIALLY COMPLETED</p>
+<ul><li>Pas de soumission réelle de demande, de création de compte, de modification utilisateur, de publication Founder ou de transaction pour les tests.</li><li>Pas de preuve d’édition / upload en session Founder sans session autorisée disponible.</li><li>Ancienne collection de cinq candidats et doublon Radio Okapi non reproduits dans les données publiques de développement : aucune suppression aveugle.</li><li>Nouveaux libellés anglais pas encore traduits dans les sept langues.</li><li>Illustrations conceptuelles Gala restantes et quatorze secteurs sans photographie adaptée.</li><li>Avertissement de flux média PassThrough déjà présent dans les logs : pas corrigé par une modification serveur dans ce lot.</li><li>Les deux parcours membres de choix des secteurs actifs et de confidentialité restent des travaux séparés ; aucune activation implicite ici.</li></ul>
+<p class="note"><strong>Contrôle nécessaire avant lancement :</strong> lors de la visite de <code>/sign-up</code>, le texte d’accueil était visible, mais aucun champ de création de compte n’a été observé. Le composant Clerk SignUp existe dans le code ; cela nécessite un diagnostic de rendu / fournisseur, pas l’invention d’une nouvelle authentification. Aucune configuration Clerk n’a été modifiée. L’inscription complète n’est donc pas validée.</p>
+<p>La sélection Gala place le focus sur le titre de la demande, pas sur un champ. Les erreurs de formulaire à la soumission restent non testées. Le lecteur MP4 d’archive est volontairement en attente de lecture ; le Chromium de test ne déclarait pas le codec H.264. Ce résultat ne prouve pas que le fichier est défectueux. Les WebM humanitaires répondent et sont reconnus, sans décodage complet testé.</p></section>
+
+<section><h2>18. Stripe</h2><p class="state">NOT IMPLEMENTED — VOLONTAIREMENT HORS DE CE LOT</p>
+<p>Le compte présenté par le Founder est suspendu en attente de justificatifs d’identité ; l’encaissement carte était désactivé lors du diagnostic. Le contrôle précédemment corrigé garde les paiements indisponibles. Aucun changement de secrets, de compte, de prestataire, de webhook ou de transaction dans cet audit. La finalisation Stripe sera traitée séparément.</p></section>
+
+<section><h2>19. Éléments nécessitant validation Founder</h2><p class="state">AWAITING APPROVED ASSET · REQUIRES BACKEND APPROVAL</p>
+<ul><li>Photographies patrimoniales / muséales légalement réutilisables pour le Gala et photos adaptées aux quatorze secteurs restants, avec crédits.</li><li>Références Kuba approuvées si une reproduction culturelle plus précise est souhaitée.</li><li>Identification exacte de l’ancienne collection de cinq candidats et du doublon Radio Okapi si présents dans une autre version.</li><li>Accord spécifique pour toute extension persistante de gestion des archives et légendes Founder.</li><li>Revue finale des nouvelles légendes et traduction des nouveaux libellés.</li><li>Autorisation explicite séparée avant tout déploiement.</li></ul></section>
+
+<section><h2>Preuves techniques et portée</h2>
+<p>TypeScript frontend : réussi. Six nouvelles vérifications de navigation Founder et d’identité des publications : réussies. Six suites API isolées : 45 tests réussis, couvrant programmes, partenaires, médias, News, proxy Clerk et confidentialité. Aucun de ces tests isolés ne vaut confirmation d’un encaissement, d’un envoi de courriel, d’une publication réelle ou d’un fonctionnement Safari matériel.</p>
+<p id="browser-evidence">Session Chromium avec blocage préventif des POST / PUT / PATCH / DELETE métier : zéro mutation tentée ou bloquée, aucune soumission réelle. Les routes Founder et Admin visitées aboutissent à la connexion sans fuite de contenu privé. La dernière actualité et les quatre archives correspondent aux réponses API ; les deux PDF gratuits du centre médias répondent HTTP 200 avec le type application/pdf, vérifiés par HEAD sans téléchargement. Aucun essai de paiement ni accès à un PDF payant.</p>
+<p>Les corrections de focus Fashion Week et d’agrandissement Partners ont été vérifiées sur leurs seuls parcours après correction, sans répéter la totalité de l’audit. Une vérification de mouvement réduit était prévue mais n’est pas confirmée dans les résultats navigateur : la prise en charge est présente dans le code, pas certifiée par ce test. Pas de contrôle matériel Safari / VoiceOver, ni de test authentifié réel.</p>
+</section>
+</main></body></html>
