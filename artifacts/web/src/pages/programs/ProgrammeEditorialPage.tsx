@@ -2,6 +2,7 @@ import type { ReactElement } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { ArrowDown } from 'lucide-react';
 import ProgramSuppliedImage from '@/components/programs/ProgramSuppliedImage';
+import FashionNightSlideshow from '@/components/programs/FashionNightSlideshow';
 import ProgrammeHero from '@/components/programs/editorial/ProgrammeHero';
 import Chapter from '@/components/programs/editorial/Chapter';
 import { ProgrammeMedia, ProgrammeParticipation, ProgrammePeople } from '@/components/programs/editorial/ProgrammeCommon';
@@ -66,7 +67,7 @@ export default function ProgrammeEditorialPage({ program }: { program: Program &
       <Chapter n="02" eyebrow="WHAT IS THIS PROGRAM?" title={id.whatTitle} tone="paper" theme={T}>
         <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
           <p className="whitespace-pre-line text-lg leading-relaxed lg:col-span-6">{pick(data?.description, program.overview)}</p>
-          {id.secondImage && <ProgramSuppliedImage slug={id.secondImage} className="mx-auto w-full max-w-xs lg:col-span-4 lg:col-start-9" frameClassName="aspect-[4/5] w-full" />}
+          {id.secondImage && <FashionNightSlideshow />}
         </div>
       </Chapter>
 

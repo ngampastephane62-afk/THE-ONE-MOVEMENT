@@ -76,3 +76,9 @@ when an observer or an animation fails. Do not animate every paragraph letter
 by letter. The later Founder correction explicitly requests a shared, very faint
 white watermark on green backgrounds; sector imagery and primary motion should
 still retain their own identities.
+
+The Fashion Night and Summit archive slideshows should show the supplied photographs at their natural proportions, without green letterboxing or a forced coloured frame. The Founder wants to add and edit each photograph's caption from his Founder workspace.
+
+**Why:** The Founder supplied separate photograph selections for these two placements and explicitly requested automatic animated slides, no green gaps above images, and access to add captions.
+
+**How to apply:** Keep the two selections separate and preserve the whole photograph, including visible photographer credits. Captions require durable editorial controls, not a decorative input or browser-only storage; preserve existing Founder authorization and programme publishing controls.

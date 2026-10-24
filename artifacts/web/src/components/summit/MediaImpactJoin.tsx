@@ -1,4 +1,5 @@
-import ArchivePhoto from '@/components/ArchivePhoto';
+import { ProgrammeArchiveSlideshow } from '@/components/programs/FashionNightSlideshow';
+import { SUMMIT_ENCOUNTER_PHOTOS } from '@/lib/programme-photo-archives';
 import { ActionLink, Eyebrow, SectionTitle } from './SummitUI';
 import { IMPACT_FOCUS, PATHWAYS, ROUTES } from './summit-data';
 
@@ -18,10 +19,8 @@ export function MediaSection() {
             </ul>
             <div className="mt-8"><ActionLink href={ROUTES.media} testId="link-media">Visit The One Media</ActionLink></div>
           </div>
-          <div className="grid grid-cols-2 gap-4 lg:col-span-6 lg:col-start-7">
-            <ArchivePhoto id="institutional-dialogue" caption sizes="(min-width: 1024px) 24vw, 46vw" frameClassName="aspect-[3/4]" actions={false} />
-            <div className="mt-10"><ArchivePhoto id="global-encounter" caption sizes="(min-width: 1024px) 24vw, 46vw" frameClassName="aspect-[3/4]" actions={false} /></div>
-          </div>
+          <ProgrammeArchiveSlideshow photos={SUMMIT_ENCOUNTER_PHOTOS} title="Meetings and encounters · supplied photographs"
+            className="mx-auto w-full max-w-lg lg:col-span-6 lg:col-start-7" testId="summit-encounters-slideshow" />
         </div>
       </div>
     </section>
