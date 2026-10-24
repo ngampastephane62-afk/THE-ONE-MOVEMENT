@@ -7,6 +7,8 @@ import SectorExplorer from '@/components/ecosystem/SectorExplorer';
 import MemberDirectory from '@/components/ecosystem/MemberDirectory';
 import GlobalDiscovery from '@/components/discovery/GlobalDiscovery';
 import EverydayEcosystem from '@/components/programs/EverydayEcosystem';
+import PillarGrid from '@/components/summit/PillarGrid';
+import { KnowledgeSection, MarketplaceSection } from '@/components/summit/MarketKnowledgeNetwork';
 import EcosystemConcepts from '@/components/ecosystem/EcosystemConcepts';
 import JoinPaths from '@/components/ecosystem/JoinPaths';
 import TomiGuideIntro from '@/components/ecosystem/exhibition/TomiGuideIntro';
@@ -43,7 +45,10 @@ export default function Ecosystem() {
       <KeyPassage paused={paused} />
       <TomiGuideIntro />
       <GlobalDiscovery paused={paused} />
+      <PillarGrid />
       <EverydayEcosystem programmeSlug="ecosystem" />
+      <MarketplaceSection />
+      <KnowledgeSection />
       <MemberDirectory />
       <EcosystemConcepts />
       <JoinPaths />

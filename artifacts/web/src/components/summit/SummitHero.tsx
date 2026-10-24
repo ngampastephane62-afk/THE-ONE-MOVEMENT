@@ -3,8 +3,7 @@ import { ActionLink } from './SummitUI';
 import { ROUTES } from './summit-data';
 
 const NAV = [
-  ['Ecosystem', '#ecosystem'], ['Learn every day', '#everyday'], ['Sectors', '#sectors'], ['Marketplace', '#marketplace'], ['Knowledge', '#knowledge'],
-  ['Network', '#network'], ['Summit', '#experience'], ['Media', '#media'], ['Impact', '#impact'], ['Join', '#participate'],
+  ['Summit', '#experience'], ['Media', '#media'], ['Impact', '#impact'], ['Join', '#participate'],
 ] as const;
 
 export default function SummitHero() {
@@ -30,7 +29,7 @@ export default function SummitHero() {
             Discover, learn, share expertise and build relationships all year. The annual Summit is where the ecosystem meets in person.
           </p>
           <div className="mt-9 flex flex-wrap gap-3 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-            <ActionLink href="#ecosystem" testId="link-hero-explore">Explore the ecosystem</ActionLink>
+            <ActionLink href="/ecosystem" testId="link-hero-explore">Explore the ecosystem</ActionLink>
             <ActionLink href={ROUTES.signUp} variant="ghost-dark" testId="link-hero-join">Join the network</ActionLink>
           </div>
           <p className="mt-8 text-xs text-ivory-300">Concept illustration · not a confirmed venue or event photograph.</p>

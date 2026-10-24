@@ -2,9 +2,12 @@ import { ActionLink, Eyebrow, SectionTitle, StatusPill } from './SummitUI';
 import { PILLARS } from './summit-data';
 
 /** Six pillars in an asymmetric editorial grid — two wide, four compact. */
+const ON_ECOSYSTEM: Record<string, string> = { '#network': '#directory', '#experience': '/programs/summit#experience', '#media': '/programs/summit#media', '#impact': '/programs/summit#impact' };
+const fix = (h: string) => ON_ECOSYSTEM[h] ?? h;
+
 export default function PillarGrid() {
   return (
-    <section id="ecosystem" aria-labelledby="ecosystem-title" className="scroll-mt-16 bg-ivory-100 py-section-lg">
+    <section id="ways-in" aria-labelledby="ecosystem-title" className="scroll-mt-16 bg-ivory-100 py-section-lg">
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid gap-6 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">
@@ -29,9 +32,9 @@ export default function PillarGrid() {
                 <p className={`mt-3 leading-relaxed ${dark ? 'text-ivory-200' : 'text-ink-800'}`}>{p.description}</p>
                 <p className={`mt-3 text-xs leading-relaxed ${dark ? 'text-ivory-300' : 'text-ink-700'}`}>{p.statusNote}</p>
                 <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3 pt-7">
-                  <ActionLink href={p.action.href} variant={dark ? 'solid' : 'outline'} testId={`link-pillar-${p.id}`}>{p.action.label}</ActionLink>
-                  {p.action.href !== p.anchor && (
-                    <a href={p.anchor} className={`text-xs underline underline-offset-4 ${dark ? 'text-ivory-300 hover:text-gold-300' : 'text-ink-700 hover:text-lagoon-700'} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500`} data-testid={`link-pillar-more-${p.id}`}>More below</a>
+                  <ActionLink href={fix(p.action.href)} variant={dark ? 'solid' : 'outline'} testId={`link-pillar-${p.id}`}>{p.action.label}</ActionLink>
+                  {fix(p.action.href) !== fix(p.anchor) && (
+                    <a href={fix(p.anchor)} className={`text-xs underline underline-offset-4 ${dark ? 'text-ivory-300 hover:text-gold-300' : 'text-ink-700 hover:text-lagoon-700'} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500`} data-testid={`link-pillar-more-${p.id}`}>More below</a>
                   )}
                 </div>
               </li>

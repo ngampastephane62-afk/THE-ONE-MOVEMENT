@@ -53,3 +53,11 @@
   .hum-armed .hum-film-chapter .hum-film-text, .hum-armed .hum-film-chapter .hum-film-frame,
   .hum-armed .hum-photo, .hum-armed .hum-photo img, .hum-armed .hum-thread > span { opacity: 1; transform: none; clip-path: none; transition: none; }
 }
+
+/* Humanitarian slideshow (HumanitarianGallery): crossfade + 3s progress, transform/opacity only. */
+@keyframes humSlideIn { from { opacity: 0; transform: scale(1.03); } to { opacity: 1; transform: none; } }
+@keyframes humProgress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.hum-slide { animation: humSlideIn .7s cubic-bezier(.22,1,.36,1) both; }
+.hum-progress { transform: scaleX(0); }
+.hum-progress[data-on='true'] { animation: humProgress 3s linear both; }
+@media (prefers-reduced-motion: reduce) { .hum-slide, .hum-progress { animation: none !important; } }

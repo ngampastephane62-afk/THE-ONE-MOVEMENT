@@ -62,3 +62,4 @@
   .sw-world .sw-hero-copy > p ~ p { animation-delay: 560ms; }
 }
 .eco-paused .sw-world .lw-line > span, .eco-paused .sw-world .sw-hero-art, .eco-paused .sw-world .sw-hero-copy > p { animation: none !important; }
+.sw-world { background-image: var(--tomi-kuba-watermark); background-size: 132px 128px; }

@@ -1,10 +1,6 @@
 import { BespokeLead, BespokeTail } from '@/components/programs/editorial/BespokeFrame';
 import { Helmet } from 'react-helmet-async';
 import SummitHero from '@/components/summit/SummitHero';
-import PillarGrid from '@/components/summit/PillarGrid';
-import EverydayEcosystem from '@/components/programs/EverydayEcosystem';
-import SectorDirectory from '@/components/summit/SectorDirectory';
-import { KnowledgeSection, MarketplaceSection, NetworkSection } from '@/components/summit/MarketKnowledgeNetwork';
 import SummitExperience from '@/components/summit/SummitExperience';
 import { FinalCTA, ImpactSection, MediaSection, ParticipationSection } from '@/components/summit/MediaImpactJoin';
 
@@ -26,12 +22,6 @@ export default function SummitEcosystem() {
       <SummitHero />
       <BespokeLead slug="summit" />
       <div>
-        <PillarGrid />
-        <EverydayEcosystem programmeSlug="summit" />
-        <SectorDirectory />
-        <MarketplaceSection />
-        <KnowledgeSection />
-        <NetworkSection />
         <SummitExperience />
         <MediaSection />
         <ImpactSection />

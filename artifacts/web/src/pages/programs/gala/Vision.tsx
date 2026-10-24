@@ -14,14 +14,14 @@ export default function GalaVision() {
           <p className="mt-8 text-lg leading-relaxed text-ink-800">Heritage. Myth and science. Craft, music and medicine. Resources, media and trade. Every country carries all of them.</p>
           <p className="mt-4 leading-relaxed text-ink-700">The Gala opens a shared space where countries and communities present who they are, learn from one another, build relationships and explore collaboration.</p>
         </div>
-        <div className="relative md:col-span-6 md:col-start-7">
-          <figure className="ml-auto w-[82%]">
+        <div className="grid gap-6 sm:grid-cols-[1.4fr_1fr] sm:items-end md:col-span-6 md:col-start-7" data-testid="gala-vision-figures">
+          <figure className="m-0 min-w-0">
             <img src={stillLife} alt="Illustration: woven textiles, a stringed instrument, a statue fragment, scientific instruments and mineral specimens arranged as a still life" loading="lazy" width={1024} height={1024} className="aspect-[4/3] w-full object-cover" />
             <figcaption className="mt-2 text-[11px] text-ink-700">Concept illustration · not an event photograph</figcaption>
           </figure>
-          <figure className="-mt-24 w-[46%] border-[6px] border-ivory-100 md:-mt-32">
+          <figure className="m-0 min-w-0">
             <img src={cabinet} alt="Illustration: gallery niches holding a mask, a globe, a stethoscope, a microphone, a dress form and a drum" loading="lazy" width={1024} height={1024} className="aspect-[3/4] w-full object-cover" />
-            <figcaption className="bg-ivory-100 pt-2 text-[11px] text-ink-700">Concept illustration · objects are imagined</figcaption>
+            <figcaption className="mt-2 text-[11px] text-ink-700">Concept illustration · objects are imagined</figcaption>
           </figure>
         </div>
       </div>

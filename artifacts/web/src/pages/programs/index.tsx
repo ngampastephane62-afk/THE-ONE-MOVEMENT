@@ -7,7 +7,8 @@ import { Link } from 'wouter';
 import MovementLink from '@/components/MovementLink';
 import { Button } from '@/components/ui/button';
 import HeroSurface from '@/components/HeroSurface';
-import { MotionToggle, WordLine, useProgramsMotion } from './ProgramsMotion';
+import { MotionToggle, WordLine, useHeroEntrance, useProgramsMotion } from './ProgramsMotion';
+import { KubaSectionDivider } from '@/components/kuba/KubaPatterns';
 import GoldThread from '@/components/GoldThread';
 import ArchivePhoto from '@/components/ArchivePhoto';
 import ProgramVision from '@/components/ProgramVision';
@@ -69,6 +70,7 @@ const NUMERALS = ['I', 'II', 'III', 'IV', 'V', 'VI'];
 
 export default function Programs() {
   const { rootRef, still, setStill } = useProgramsMotion();
+  const heroRef = useHeroEntrance<HTMLElement>();
   return (
     <div ref={rootRef} className="pgm programs-motion-page" data-still={still ? 'true' : 'false'}>
       <Helmet>
@@ -81,7 +83,7 @@ export default function Programs() {
       </Helmet>
 
       {/* 1. PROGRAMS HERO — local layered stage: background 0, depth plates 1, readability 2, content 3 */}
-      <section className="pgm-hero pgm-stack" data-pgm-loop aria-labelledby="programs-hero-heading">
+      <section ref={heroRef} className="pgm-hero pgm-stack" data-pgm-loop data-testid="section-programs-hero" aria-labelledby="programs-hero-heading">
         <div className="pgm-l0" aria-hidden="true" />
         <div className="pgm-l1" aria-hidden="true">
           <div className="pgm-plates-in absolute inset-0">
@@ -93,13 +95,14 @@ export default function Programs() {
           </div>
         </div>
         <div className="pgm-l2" aria-hidden="true" />
+        <div className="tomi-hero-watermark" aria-hidden="true" />
         <div className="pgm-l3 mx-auto w-full max-w-4xl px-5 py-24 text-center sm:px-6 sm:py-section-lg">
           <p className="pgm-hero-eyebrow text-eyebrow text-gold-400 mb-6">OFFICIAL PROGRAMS</p>
           <h1 id="programs-hero-heading" className="text-display-xl text-ivory-100" style={{ fontFamily: 'var(--font-display)', overflowWrap: 'break-word' }}>
             <WordLine text="THE HEARTBEAT OF" />
             <WordLine text="THE MOVEMENT." start={3} style={{ color: 'hsl(43 80% 73%)' }} />
           </h1>
-          <span className="pgm-hero-rule mt-8" aria-hidden="true" />
+          <KubaSectionDivider palette="gold" className="pgm-hero-kuba mx-auto mt-8 w-full max-w-[18rem]" />
           <p className="pgm-hero-sub mt-8 text-ivory-200 text-lg leading-relaxed max-w-2xl mx-auto">
              The six official programs set out the Movement&apos;s direction across
              culture, business, diplomacy and celebration. Dates, applications and

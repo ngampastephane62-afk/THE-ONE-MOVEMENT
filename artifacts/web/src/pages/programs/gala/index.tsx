@@ -3,7 +3,6 @@ import { BespokeLead, BespokeTail } from '@/components/programs/editorial/Bespok
 import { Helmet } from 'react-helmet-async';
 import GalaHero from './Hero';
 import GalaVision from './Vision';
-import EverydayEcosystem from '@/components/programs/EverydayEcosystem';
 import GalaPavilions from './Pavilions';
 import GalaExperiences from './Experiences';
 import GalaParticipants from './Participants';
@@ -45,7 +44,6 @@ export default function DiplomaticGalaPage() {
       <GalaParticipants selected={category} onSelect={goToForm} />
       <GalaRepresent ref={headingRef} category={category} onCategoryChange={setCategory} />
       <GalaPartnerships onSelect={goToForm} />
-      <EverydayEcosystem programmeSlug="diplomatic-gala" />
       <BespokeTail slug="diplomatic-gala" name="THE ONE DIPLOMATIC GALA" mediaEyebrow="OFFICIAL VIDEOS AND MEDIA" />
       <GalaClosing />
     </div>

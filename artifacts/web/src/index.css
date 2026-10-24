@@ -1328,3 +1328,29 @@ body {
   .kuba-drift { animation: kubaDrift 9s ease-in-out infinite; }
 }
 .eco-paused .kuba-reveal, .eco-paused .kuba-drift { animation: none !important; }
+
+
+/* Kuba watermark (Founder request): the reference geometry, white at ~2% stroke opacity, as a base background layer
+   on dark-green surfaces only. :where() keeps zero specificity so any gradient or image background still wins;
+   applied to section-level surfaces, never as an overlay on captions, photos or controls. Static, no animation. */
+:root { --tomi-kuba-watermark: url("./assets/kuba-watermark.svg"); }
+:where(.bg-lagoon-900, .bg-lagoon-800, .bg-lagoon-950),
+:where(section, footer, header, aside, .eco-hero, .pgm-hero .pgm-l0, .lw-world, .sw-world):where(.bg-lagoon-900, .bg-lagoon-800, .bg-lagoon-950, [style*="187 67% 12%"], [style*="187 67% 9%"], .eco-hero, .pgm-l0, .lw-world, .sw-world) {
+  background-image: var(--tomi-kuba-watermark);
+  background-size: 132px 128px;
+  background-repeat: repeat;
+}
+.tomi-hero-watermark {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: var(--tomi-kuba-watermark);
+  background-size: 132px 128px;
+}
+.x-hero > .tomi-hero-watermark {
+  -webkit-mask-image: linear-gradient(90deg, #000 25%, transparent 72%);
+  mask-image: linear-gradient(90deg, #000 25%, transparent 72%);
+}
+@media (forced-colors: active) { :where(section, footer, header, aside, .eco-hero, .lw-world, .sw-world) { background-image: none; } }
+@media (forced-colors: active) { .tomi-hero-watermark { display: none; } }

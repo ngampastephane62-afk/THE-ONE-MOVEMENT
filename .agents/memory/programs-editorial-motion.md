@@ -3,6 +3,18 @@ name: Programs editorial motion
 description: Founder constraints for cinematic refinements of the six official Programs.
 ---
 
+Programme pages must keep event-specific information, archives and relevant applications. General ecosystem pillars, sector directories, knowledge/learning material and cross-sector collaboration belong in the Ecosystem or the relevant sector, not inside programmes.
+
+**Why:** The Founder repeated this correction after screenshots still showed “Six ways in”, “Keep learning and connecting between editions”, “Knowledge organised by sector” and “Beyond one sector” in programme pages.
+
+**How to apply:** Move the actual blocks and their working destinations; adding a link elsewhere while leaving the generic content in the programme is not enough. Preserve the existing designer/model/photographer and other relevant event applications. Remove obsolete navigation anchors and avoid duplicate copies at the destination.
+
+The latest Gala correction asks to restore the former hall hero instead of the audience photograph, and to keep its two conceptual cultural illustrations without overlap.
+
+**Why:** The Founder corrected the previous hero replacement and identified illustrations covering one another and their captions on mobile.
+
+**How to apply:** Keep concept imagery explicitly labelled as illustration, never as a confirmed upcoming event photograph. Preserve original archive files when changing their placement.
+
 Programs animation upgrades must preserve the six official programmes, approved
 names and facts, selected Founder photographs and existing destinations.
 The supplied immersive clips are motion references only, not replacement
@@ -61,4 +73,6 @@ motion across pages remain unacceptable.
 **How to apply:** Reuse a shared heading/motion system, keep text immediately
 readable on mobile and in reduced-motion mode, and never leave headings hidden
 when an observer or an animation fails. Do not animate every paragraph letter
-by letter or apply the same cultural motif to every sector.
+by letter. The later Founder correction explicitly requests a shared, very faint
+white watermark on green backgrounds; sector imagery and primary motion should
+still retain their own identities.

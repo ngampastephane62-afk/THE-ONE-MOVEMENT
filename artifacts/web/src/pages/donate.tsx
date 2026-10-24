@@ -52,8 +52,9 @@ export default function Donate() {
       <PaymentReturn sessionId={sessionId} cancelled={cancelled} />
 
       {/* 01 HERO */}
-      <section className="tomi-aurora-surface text-ivory-100" aria-labelledby="hero-title">
-        <div className="mx-auto max-w-6xl px-6 py-20 lg:py-32">
+      <section className="relative isolate tomi-aurora-surface text-ivory-100" aria-labelledby="hero-title">
+        <div className="tomi-hero-watermark" aria-hidden="true" />
+        <div className="relative z-10 mx-auto max-w-6xl px-6 py-20 lg:py-32">
           <p className="hum-hero-fade text-eyebrow text-gold-400" style={{ ['--d' as string]: '0ms' }}>HUMANITARIAN ACTION · TOMI FUND</p>
           <h1 id="hero-title" className="mt-6 text-display-xl" data-testid="text-hero-title">
             <span className="hum-hero-line"><span style={{ ['--d' as string]: '200ms' }}>ONE FUND.</span></span>

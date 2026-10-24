@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { Pause, Play } from 'lucide-react';
 import './programs-motion.css';
 
@@ -103,4 +103,26 @@ export function MotionToggle({ still, onToggle }: { still: boolean; onToggle: ()
       <span>{still ? 'Play motion' : 'Pause motion'}</span>
     </button>
   );
+}
+
+/**
+ * Hero entrance that is actually seen: content is held (data-hero="wait") only from layout until the
+ * hero is visible and the route transition has settled, then plays once (data-hero="go").
+ * Reduced motion or no JS: attribute never set, content is static and readable. A 1.2s failsafe always releases.
+ */
+export function useHeroEntrance<T extends HTMLElement>() {
+  const ref = useRef<T>(null);
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+    el.setAttribute('data-hero', 'wait');
+    let done = false;
+    const go = () => { if (done) return; done = true; requestAnimationFrame(() => el.setAttribute('data-hero', 'go')); };
+    const settle = window.setTimeout(() => { if (document.visibilityState !== 'hidden') go(); }, 280);
+    const failsafe = window.setTimeout(go, 1200);
+    const onVis = () => { if (document.visibilityState === 'visible') go(); };
+    document.addEventListener('visibilitychange', onVis);
+    return () => { done = true; el.removeAttribute('data-hero'); window.clearTimeout(settle); window.clearTimeout(failsafe); document.removeEventListener('visibilitychange', onVis); };
+  }, []);
+  return ref;
 }

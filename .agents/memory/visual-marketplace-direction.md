@@ -15,6 +15,12 @@ The supplied chevron, diamond-eye and geometric-block motif must use the site's 
 
 **How to apply:** Preserve the shapes but use the established dark emerald/teal, gold and ivory palette. Use small decorative SVG details, never the whole reference image or unrelated people/furniture.
 
+Green surfaces across the site should also carry the motif as an extremely subdued white background watermark. The foreground divider can remain gold.
+
+**Why:** The Founder subsequently requested the pattern throughout the green backgrounds instead of leaving them plain, specifying white at very low intensity.
+
+**How to apply:** Keep the watermark behind readable content and preserve existing photographs and gradients. Never reduce the opacity of the entire content container or cover captions with decoration.
+
 The One Market remains a roadmap concept while the existing ecosystem is launched and stabilised.
 
 **Why:** The consolidated Founder directive explicitly says not to develop the marketplace, seller accounts or marketplace payments now.

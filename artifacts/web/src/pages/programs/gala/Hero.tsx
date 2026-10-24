@@ -1,10 +1,11 @@
+import hall from '@/assets/media/programs/gala-concept-hall.jpg';
 import { GeoBand, display } from './Pattern';
 
 export default function GalaHero({ onRepresent }: { onRepresent: () => void }) {
   return (
     <section className="relative isolate flex min-h-[100dvh] items-end overflow-hidden bg-lagoon-900 text-ivory-100" aria-labelledby="gala-title">
-      <img src="/brand-photos/founder/audience-800.webp" srcSet="/brand-photos/founder/audience-800.webp 800w, /brand-photos/founder/audience.webp 2000w" sizes="100vw" alt="" aria-hidden="true" fetchPriority="high" className="absolute inset-0 -z-20 h-full w-full object-cover motion-safe:animate-[galaZoom_18s_ease-out_both]" />
-      <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,hsl(187_67%_8%/0.55)_0%,hsl(187_67%_10%/0.35)_40%,hsl(187_67%_7%/0.96)_88%)]" />
+      <img src={hall} alt="" aria-hidden="true" fetchPriority="high" className="absolute inset-0 -z-20 h-full w-full object-cover object-[50%_35%] motion-safe:animate-[galaZoom_18s_ease-out_both]" />
+      <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,hsl(187_67%_8%/0.6)_0%,hsl(187_67%_10%/0.45)_40%,hsl(187_67%_7%/0.96)_88%)]" />
       <style>{`@keyframes galaZoom{from{transform:scale(1.08)}to{transform:scale(1)}}@keyframes galaRise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}`}</style>
       <div className="mx-auto w-full max-w-7xl px-6 pb-14 pt-32 md:pb-20">
         <p className="motion-safe:animate-[galaRise_.9s_ease-out_both] text-[0.7rem] font-semibold uppercase tracking-[0.32em] text-gold-400">The One Movement International presents</p>
@@ -23,8 +24,7 @@ export default function GalaHero({ onRepresent }: { onRepresent: () => void }) {
             <a href="#represent-country" onClick={(e) => { e.preventDefault(); onRepresent(); }} data-testid="link-represent-country" className="tomi-cta inline-flex min-h-12 items-center justify-center bg-gold-500 px-6 text-xs font-semibold tracking-[0.2em] text-ink-900 transition-colors hover:bg-gold-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400">EXPRESS INTEREST</a>
           </div>
         </div>
-        <a href="#everyday" className="mt-7 inline-flex min-h-11 items-center border-b border-gold-500 text-xs uppercase tracking-wider text-gold-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-400">Explore culture, science & creation</a>
-        <p className="mt-5 text-[11px] text-ivory-300">Audience at a previous TOMI event · Founder archive. Not a photograph of the upcoming Gala.</p>
+        <p className="mt-5 text-[11px] text-ivory-300">Concept illustration of a gala venue. Not a photograph of the upcoming Gala or of any past edition.</p>
       </div>
     </section>
   );

@@ -92,3 +92,4 @@
   .lw-world .lw-photo { animation: lwArt 1200ms cubic-bezier(0.65, 0, 0.35, 1) both 200ms; }
 }
 .eco-paused .lw-line > span, .eco-paused .lw-art, .eco-paused .lw-photo { animation: none !important; }
+.lw-world, .lw-chapter:not(.is-light) { background-image: var(--tomi-kuba-watermark); background-size: 132px 128px; }

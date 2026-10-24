@@ -23,6 +23,7 @@ export default function EcosystemHero({ paused, onTogglePause, motionLocked = fa
   return (
     <section ref={ref} {...attrs} className="x-hero" aria-labelledby="eco-hero-title">
       <HeroWorld />
+      <div className="tomi-hero-watermark" aria-hidden="true" />
       <div className="x-content mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 pb-16 pt-20 lg:grid-cols-12 lg:pb-24 lg:pt-28">
         <div className="lg:col-span-6">
           <p className="x-track text-eyebrow text-gold-400" style={d(250)}>
