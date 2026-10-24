@@ -109,7 +109,7 @@ function CompleteProfile({ me }: { me: Ctx['me'] }) {
 }
 
 const NAV = [
-  { href: '/member', label: 'Feed', icon: Home, exact: true },
+  { href: '/member', label: 'The One Feed', icon: Home, exact: true },
   { href: '/member/people', label: 'People', icon: Users },
   { href: '/member/messages', label: 'Messages', icon: MessageSquare },
   { href: '/member/certifications', label: 'Official', icon: Award },

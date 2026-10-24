@@ -69,7 +69,7 @@ export default function Feed() {
   return (
     <div className="flex flex-col gap-4 px-3 pt-4 md:px-0 md:pt-0 lg:flex-row lg:items-start">
       <div className="flex min-w-0 flex-1 flex-col gap-4">
-        <Chapter index="01" eyebrow="CONTRIBUTE" title="Community feed" lede="Stories, projects and offers shared by members of the movement." />
+        <Chapter index="01" eyebrow="CONTRIBUTE" title="The One Feed" lede="Stories, projects and offers shared by members of the movement. Official TOMI news is published separately below." />
         <EcosystemNews limit={1} />
         {me.founder || base.growth?.canPost ? <Composer /> : (
           <div className={`${card} flex flex-wrap items-center justify-between gap-2 p-3 text-sm`}>

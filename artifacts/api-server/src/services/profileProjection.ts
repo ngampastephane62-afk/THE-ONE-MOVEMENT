@@ -1,5 +1,6 @@
 import type { ecosystemMembersTable } from "@workspace/db";
 import type { MemberProfile, NetworkMember, PublicMember } from "@workspace/api-zod";
+import { visibleLocation } from "@workspace/shared";
 
 type MemberRow = typeof ecosystemMembersTable.$inferSelect;
 export type NetworkPresentation = Pick<NetworkMember,
@@ -16,7 +17,7 @@ function displayFields(row: MemberRow) {
     fullName: row.fullName,
     profession: row.profession,
     organization: row.organization,
-    country: row.country,
+    ...visibleLocation(row),
     bio: row.bio,
     offering: row.offering,
     lookingFor: row.lookingFor,
@@ -36,6 +37,15 @@ function displayFields(row: MemberRow) {
 export function projectOwnerProfile(row: MemberRow): MemberProfile {
   return {
     ...displayFields(row),
+    country: row.country,
+    cityRegion: row.cityRegion ?? "",
+    accountType: row.accountType ?? null,
+    organizationType: row.organizationType ?? null,
+    contactName: row.contactName ?? null,
+    mainSector: row.mainSector as MemberProfile["mainSector"] ?? null,
+    activeSectors: row.activeSectors ? [...row.activeSectors] as NonNullable<MemberProfile["activeSectors"]> : null,
+    locationVisibility: row.locationVisibility ?? "hidden",
+    otherProfessionalActivity: row.otherProfessionalActivity ?? null,
     savedItems: [...row.savedItems],
     publicMedia: row.publicMedia,
   };

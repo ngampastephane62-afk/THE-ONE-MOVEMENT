@@ -22,8 +22,16 @@ export interface ProfileDisplayFields {
   profession: string;
   /** @maxLength 150 */
   organization: string;
-  /** @maxLength 100 */
+  /**
+     * Empty when location sharing is disabled by the owner.
+     * @maxLength 100
+     */
   country: string;
+  /**
+     * Empty unless the owner explicitly shares country and city.
+     * @maxLength 120
+     */
+  cityRegion?: string;
   /** @maxLength 1000 */
   bio: string;
   /** @maxLength 500 */

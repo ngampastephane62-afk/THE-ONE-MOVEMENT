@@ -5,6 +5,7 @@ import { Show } from '@clerk/react';
 import SectorUniverse from './SectorUniverse';
 import HeroWorld from './exhibition/HeroWorld';
 import OneKey from './exhibition/OneKey';
+import { KubaSectionDivider } from '@/components/kuba/KubaPatterns';
 import { useStage } from './exhibition/useStage';
 
 interface Props {
@@ -32,7 +33,8 @@ export default function EcosystemHero({ paused, onTogglePause, motionLocked = fa
             <span className="x-line"><span style={d(760)}>IN ONE SHARED</span></span>
             <span className="x-line"><span style={d(970)}><em className="x-world-word">WORLD.</em></span></span>
           </h1>
-          <p className="x-fade mt-7 max-w-xl text-lg leading-relaxed text-ivory-200" style={d(1350)}>
+          <KubaSectionDivider palette="gold" animated className="mt-7 max-w-[15rem] opacity-90" />
+          <p className="x-fade mt-5 max-w-xl text-lg leading-relaxed text-ivory-200" style={d(1350)}>
             Artists and designers, investors and builders, care workers, NGOs and institutions.
           </p>
           <p className="x-fade mt-2 max-w-xl text-base leading-relaxed text-ivory-300" style={d(1520)}>

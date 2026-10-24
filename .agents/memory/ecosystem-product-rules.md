@@ -77,6 +77,18 @@ Members should be able to list Instagram, Facebook, TikTok and LinkedIn profiles
 
 **How to apply:** Treat a profile URL, an authorised account connection and a replicated post as separate capabilities. Preserve member choice and TOMI publishing eligibility; never describe an entered URL as a connected account or automatically copy content without authorisation.
 
+During the current free-access phase, each member has one primary sector and up to two additional active sectors, within one TOMI identity. Public exploration of all seventeen worlds remains available.
+
+**Why:** The consolidated Founder directive sets a three-active-sector policy and explicitly rejects separate accounts per sector.
+
+**How to apply:** Preserve older interests independently; do not truncate them or treat an interest as joining a sector. Future changes to the active limit require Founder configuration and an explicit review of existing constraints, not an invented paid tier.
+
+Members control whether their country and city/region are shown. Do not collect residential addresses, GPS coordinates or continuous location tracking.
+
+**Why:** The Founder explicitly requests privacy-conscious geographic discovery and location visibility choices.
+
+**How to apply:** Discovery must operate on permitted displayed locations, never infer a hidden place from private owner data or indirect filter results.
+
 An authenticated TOMI account has already joined the Movement. Never require a second membership application or generic expression of interest. Keep opportunity enquiries separate from membership, and network participation consent separate from both.
 
 **Why:** The later ecosystem architecture directive explicitly corrects duplicate membership journeys and calls for one member identity.

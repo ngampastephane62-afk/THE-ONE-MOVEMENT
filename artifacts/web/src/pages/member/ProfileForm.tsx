@@ -7,12 +7,13 @@ import {
   type MemberProfile,
   type MemberProfileInput,
   type MemberProfileInputSectorsItem,
+  type MemberProfileInputActiveSectorsItem,
 } from '@workspace/api-client-react';
 import { SECTORS } from '@/lib/sectors-data';
 import { useAuth, useUser } from '@clerk/react';
 import { MAX_PROFILE_SECTORS, recommendSectors } from '@/lib/sector-recommendations';
 import { getPendingSector, clearPendingSector } from '@/lib/network-invitations';
-import { SOCIAL_PROFILES, normalizeSocialProfile } from '@workspace/shared';
+import { SOCIAL_PROFILES, normalizeSocialProfile, ACTIVE_SECTOR_LIMIT, activeSectorIssue } from '@workspace/shared';
 import { profileInput, reconcileProfile, synchronizeProfile } from './profile-sync';
 
 interface Props {
@@ -32,10 +33,14 @@ function validate(v: MemberProfileInput, onboarding = false): Errors {
   const e: Errors = {};
   if (v.fullName.trim().length < 2) e.fullName = 'Enter at least 2 characters.';
   if (v.sectors.length > MAX_PROFILE_SECTORS) e.sectors = `Choose up to ${MAX_PROFILE_SECTORS} sectors.`;
+  const issue = activeSectorIssue({ mainSector: v.mainSector, activeSectors: v.activeSectors });
+  if (issue) e.activeSectors = issue;
   if (onboarding) {
+    if (!v.accountType) e.accountType = 'Choose an individual or organization account.';
+    if (v.activeSectors == null) e.activeSectors = 'Choose your primary sector.';
+    if (v.accountType === 'organization' && !(v.organizationType ?? '').trim()) e.organizationType = 'Add the type of organization.';
     if (v.profession.trim().length < 2) e.profession = 'Add your profession or role.';
     if (v.country.trim().length < 2) e.country = 'Add your country.';
-    if (v.sectors.length < 1) e.sectors = 'Choose at least one sector.';
   }
   for (const { field } of SOCIAL_PROFILES) {
     try { normalizeSocialProfile(field, v[field] ?? ''); }
@@ -81,6 +86,28 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
   const [errors, setErrors] = useState<Errors>({});
 
   const set = <K extends keyof MemberProfileInput>(k: K, val: MemberProfileInput[K]) => setV((p) => ({ ...p, [k]: val }));
+  type Active = MemberProfileInputActiveSectorsItem;
+  const [replaceFor, setReplaceFor] = useState<Active | null>(null);
+  const chooseMain = (slug: Active | '') => {
+    setReplaceFor(null);
+    if (!slug) return;
+    const active = latest.current.activeSectors;
+    if (!active) return setV((p) => ({ ...p, mainSector: slug, activeSectors: [slug] }));
+    if (active.includes(slug)) return setV((p) => ({ ...p, mainSector: slug }));
+    if (active.length < ACTIVE_SECTOR_LIMIT) return setV((p) => ({ ...p, mainSector: slug, activeSectors: [slug, ...active] }));
+    setReplaceFor(slug); // explicit decision required; nothing is dropped silently
+  };
+  const replaceActive = (out: Active) => {
+    if (!replaceFor) return;
+    const nextMain = replaceFor;
+    setV((p) => ({ ...p, mainSector: nextMain, activeSectors: [nextMain, ...(p.activeSectors ?? []).filter((a) => a !== out && a !== nextMain)] }));
+    setReplaceFor(null);
+  };
+  const toggleActive = (slug: Active) => setV((p) => {
+    const a = p.activeSectors ?? [];
+    if (slug === p.mainSector) return p;
+    return { ...p, activeSectors: a.includes(slug) ? a.filter((x) => x !== slug) : a.length < ACTIVE_SECTOR_LIMIT ? [...a, slug] : a };
+  });
   const toggleSector = (slug: MemberProfileInputSectorsItem) =>
     set('sectors', v.sectors.includes(slug) ? v.sectors.filter((s) => s !== slug) : [...v.sectors, slug]);
 
@@ -91,6 +118,8 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
     const payload: MemberProfileInput = {
       ...submitted,
       fullName: submitted.fullName.trim(), profession: submitted.profession.trim(), organization: submitted.organization.trim(),
+      cityRegion: (submitted.cityRegion ?? '').trim(), organizationType: (submitted.organizationType ?? '').trim(),
+      contactName: (submitted.contactName ?? '').trim(), otherProfessionalActivity: (submitted.otherProfessionalActivity ?? '').trim(),
       country: submitted.country.trim(), bio: submitted.bio.trim(), offering: submitted.offering.trim(), lookingFor: submitted.lookingFor.trim(), website: submitted.website.trim(),
     };
     const e = validate(payload, onboarding);
@@ -127,32 +156,113 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
   const req = (label: string) => onboarding ? <>{label} <span className="text-crimson-700" aria-hidden="true">*</span></> : <>{label} <span className="text-sand-400">(optional)</span></>;
   const err = (k: keyof MemberProfileInput) => errors[k] && <p className="mt-1 text-xs text-crimson-700" role="alert">{errors[k]}</p>;
 
+  const isOrg = v.accountType === 'organization';
+  const vis = v.locationVisibility ?? 'hidden';
+  const location = (
+    <div className="grid gap-4 sm:col-span-2 sm:grid-cols-2" data-testid="group-location">
+      <label className="text-sm text-ink-900">City or region <span className="text-sand-400">(optional)</span>
+        <input className={`${fieldCls} mt-1`} value={v.cityRegion ?? ''} maxLength={120} placeholder="e.g. Abu Dhabi" onChange={(e) => set('cityRegion', e.target.value)} data-testid="input-cityRegion" />
+      </label>
+      <fieldset className="text-sm text-ink-900">
+        <legend>Who can see my location</legend>
+        <div className="mt-1 grid gap-1" role="radiogroup">
+          {([['hidden', 'Hidden (default)'], ['country', 'Country only'], ['country_city', 'Country and city or region']] as const).map(([val, lab]) => (
+            <label key={val} className="flex min-h-[36px] cursor-pointer items-center gap-2">
+              <input type="radio" name="locationVisibility" checked={vis === val} onChange={() => set('locationVisibility', val)} className="accent-[hsl(187_67%_12%)]" data-testid={`radio-location-${val}`} /> {lab}
+            </label>
+          ))}
+        </div>
+      </fieldset>
+      <p className="text-xs leading-relaxed text-ink-700 sm:col-span-2">You always see your saved location here. Other members, and your public page if you make it public, see only what this setting allows.</p>
+    </div>
+  );
+
   return (
     <form onSubmit={submit} noValidate className="flex flex-col gap-8" data-testid="form-member-profile">
-      {onboarding ? <p className="text-sm leading-relaxed text-ink-700" data-testid="text-profile-completion-guidance">Four details help members recognise you and help us suggest relevant sectors: display name, profession, country and at least one sector. Everything else is optional. Saving does not activate the network or make your profile public.</p> :
+      {onboarding ? <p className="text-sm leading-relaxed text-ink-700" data-testid="text-profile-completion-guidance">A few details help members recognise you: account type, display name, profession, country and a primary sector. Everything else is optional. Saving does not activate the network or make your profile public.</p> :
       <p className="text-sm leading-relaxed text-ink-700" data-testid="text-profile-completion-guidance">Build your profile at your own pace: confirm your display name, add a photo from Settings, describe your profession, select sectors and write a short biography. These steps are optional for exploring TOMI; you can come back later. Saving never activates the network; visibility changes only if you choose those settings.</p>}
       {appearance && <AppearanceControls v={v} set={set} />}
       <fieldset className="grid gap-5 sm:grid-cols-2">
         <legend className="mb-4 text-eyebrow text-gold-700">THE ESSENTIALS</legend>
-        <label className="text-sm text-ink-900">Display name *
+        <fieldset className="sm:col-span-2" aria-invalid={!!errors.accountType}>
+          <legend className="text-sm text-ink-900">{onboarding ? req('Account type') : 'Account type'}</legend>
+          <div className="mt-2 flex flex-wrap gap-2" role="radiogroup">
+            {([['individual', 'Individual'], ['organization', 'Organization']] as const).map(([val, lab]) => (
+              <button key={val} type="button" role="radio" aria-checked={v.accountType === val} onClick={() => set('accountType', val)} data-testid={`radio-accountType-${val}`}
+                className={`min-h-[44px] border px-4 text-xs uppercase tracking-wider ${v.accountType === val ? 'border-lagoon-900 bg-lagoon-900 text-gold-400' : 'border-sand-300 text-ink-700 hover:border-lagoon-600'}`}>{lab}</button>
+            ))}
+          </div>
+          {!v.accountType && !onboarding && <p className="mt-1 text-xs text-ink-700">Not set yet. You can leave this unchanged and still save other details.</p>}
+          {err('accountType')}
+        </fieldset>
+        <label className="text-sm text-ink-900">{isOrg ? 'Organization display name *' : 'Display name *'}
           <input className={`${fieldCls} mt-1`} value={v.fullName} maxLength={100} onChange={(e) => set('fullName', e.target.value)} data-testid="input-fullName" />{err('fullName')}
           <span className="mt-1 block text-xs text-ink-700">Confirm the name you want members to see, or edit it here. Your chosen name is kept until you change it.</span>
         </label>
         <label className="text-sm text-ink-900">{req('Profession or role')}
           <input className={`${fieldCls} mt-1`} value={v.profession} maxLength={100} placeholder="e.g. Textile designer" onChange={(e) => set('profession', e.target.value)} data-testid="input-profession" aria-invalid={!!errors.profession} />{err('profession')}
         </label>
+        {isOrg && <>
+          <label className="text-sm text-ink-900">{onboarding ? req('Organization type') : 'Organization type'}
+            <input className={`${fieldCls} mt-1`} value={v.organizationType ?? ''} maxLength={100} placeholder="e.g. Foundation, studio, embassy" onChange={(e) => set('organizationType', e.target.value)} data-testid="input-organizationType" aria-invalid={!!errors.organizationType} />{err('organizationType')}
+          </label>
+          <label className="text-sm text-ink-900">Contact person <span className="text-sand-400">(private)</span>
+            <input className={`${fieldCls} mt-1`} value={v.contactName ?? ''} maxLength={100} onChange={(e) => set('contactName', e.target.value)} data-testid="input-contactName" />
+            <span className="mt-1 block text-xs text-ink-700">Kept private. Never shown on your profile or public page.</span>
+          </label>
+        </>}
         {onboarding && <label className="text-sm text-ink-900">{req('Country')}
           <input className={`${fieldCls} mt-1`} value={v.country} maxLength={100} placeholder="e.g. United Arab Emirates" onChange={(e) => set('country', e.target.value)} data-testid="input-country" aria-invalid={!!errors.country} />{err('country')}
         </label>}
+        {onboarding && location}
         {email && <div className="text-sm text-ink-900">Account email
           <p className="mt-1 border border-sand-200 bg-ivory-200/60 px-3 py-2.5 text-sm text-ink-700" data-testid="text-account-email">{email}</p>
           <span className="mt-1 block text-xs text-ink-700">From your sign-in account. Change it in account settings, not here.</span>
         </div>}
       </fieldset>
 
+      <fieldset data-testid="group-active-sectors">
+        <legend className="text-eyebrow text-gold-700">PRIMARY AND ACTIVE SECTORS <span className="normal-case tracking-normal text-sand-400">({v.activeSectors?.length ?? 0}/{ACTIVE_SECTOR_LIMIT} active)</span></legend>
+        <p className="mt-2 text-sm leading-relaxed text-ink-700">Choose one primary sector, then up to {ACTIVE_SECTOR_LIMIT - 1} more active sectors from the same seventeen. {v.activeSectors == null && !onboarding ? 'Not set yet: you can leave this unchanged and still save other details.' : ''}</p>
+        <label className="mt-3 block max-w-sm text-sm text-ink-900">{onboarding ? req('Primary sector') : 'Primary sector'}
+          <select className={`${fieldCls} mt-1`} value={v.mainSector ?? ''} onChange={(e) => chooseMain(e.target.value as Active | '')} data-testid="select-mainSector">
+            <option value="" disabled={v.mainSector != null}>Choose a sector</option>
+            {SECTORS.map((s) => <option key={s.slug} value={s.slug}>{s.name}</option>)}
+          </select>
+        </label>
+        {replaceFor && (
+          <div className="mt-3 border border-gold-500/60 bg-gold-500/10 p-3" role="alert" data-testid="panel-replace-active">
+            <p className="text-sm text-ink-900">You already have {ACTIVE_SECTOR_LIMIT} active sectors. To make {SECTORS.find((s) => s.slug === replaceFor)?.name} primary, choose which one it replaces:</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {(v.activeSectors ?? []).map((a) => (
+                <button key={a} type="button" onClick={() => replaceActive(a)} className="min-h-[40px] border border-lagoon-900 px-3 text-xs uppercase tracking-wider text-lagoon-900 hover:bg-lagoon-900 hover:text-gold-400" data-testid={`button-replace-${a}`}>Replace {SECTORS.find((s) => s.slug === a)?.name}</button>
+              ))}
+              <button type="button" onClick={() => setReplaceFor(null)} className="min-h-[40px] px-3 text-xs uppercase tracking-wider text-ink-700" data-testid="button-replace-cancel">Keep current</button>
+            </div>
+          </div>
+        )}
+        {v.mainSector && (
+          <div className="mt-3 flex flex-wrap gap-2">
+            {SECTORS.map((s) => {
+              const slug = s.slug as Active;
+              const on = (v.activeSectors ?? []).includes(slug);
+              const main = v.mainSector === slug;
+              return (
+                <button key={s.slug} type="button" aria-pressed={on} disabled={main || (!on && (v.activeSectors?.length ?? 0) >= ACTIVE_SECTOR_LIMIT)} onClick={() => toggleActive(slug)} data-testid={`toggle-active-${s.slug}`}
+                  className={`border px-3 py-2 text-xs uppercase tracking-wider disabled:cursor-default ${main ? 'border-gold-600 bg-gold-500 text-ink-900' : on ? 'border-lagoon-900 bg-lagoon-900 text-gold-400' : 'border-sand-300 text-ink-700 hover:border-lagoon-600 disabled:opacity-40'}`}>
+                  {s.name}{main && ' · primary'}
+                </button>
+              );
+            })}
+          </div>
+        )}
+        {err('activeSectors')}
+      </fieldset>
+
       <fieldset>
-        <legend className="text-eyebrow text-gold-700">YOUR SECTORS <span className="normal-case tracking-normal text-sand-400">({onboarding ? 'at least 1' : 'optional'}, {v.sectors.length}/{MAX_PROFILE_SECTORS} maximum)</span></legend>
-        {pendingSector && <p className="mt-2 text-sm text-lagoon-700" role="status">Your sector choice is ready to review below. Select up to eight sectors, then save to confirm.</p>}
+        <legend className="text-eyebrow text-gold-700">YOUR INTERESTS <span className="normal-case tracking-normal text-sand-400">(optional, {v.sectors.length}/{MAX_PROFILE_SECTORS} maximum)</span></legend>
+        <p className="mt-2 text-xs text-ink-700">Interests you saved earlier are kept as they are. They do not change your active sectors and nothing is joined automatically.</p>
+        {pendingSector && <p className="mt-2 text-sm text-lagoon-700" role="status">Your sector choice is ready to review below. Select up to eight interests, then save to confirm.</p>}
         {suggestions.length > 0 && v.sectors.length < MAX_PROFILE_SECTORS && (
           <div className="mt-3 border-l-2 border-gold-500/60 pl-3" data-testid="panel-sector-suggestions">
             <p className="text-xs text-ink-700">Suggested from what you have entered. Nothing is added unless you select it.</p>
@@ -191,6 +301,11 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
         {!onboarding && <label className="text-sm text-ink-900">Country
           <input className={`${fieldCls} mt-1`} value={v.country} maxLength={100} onChange={(e) => set('country', e.target.value)} data-testid="input-country" />
         </label>}
+        {!onboarding && location}
+        <label className="text-sm text-ink-900 sm:col-span-2">Other professional activity <span className="text-sand-400">(private)</span>
+          <textarea className={`${fieldCls} mt-1 min-h-16`} value={v.otherProfessionalActivity ?? ''} maxLength={300} onChange={(e) => set('otherProfessionalActivity', e.target.value)} data-testid="input-otherProfessionalActivity" />
+          <span className="mt-1 block text-xs text-ink-700">Helps TOMI understand your work. Not shown on your profile or public page.</span>
+        </label>
         <label className="text-sm text-ink-900 sm:col-span-2">Short bio
           <textarea className={`${fieldCls} mt-1 min-h-24`} value={v.bio} maxLength={1000} onChange={(e) => set('bio', e.target.value)} data-testid="input-bio" />
         </label>
@@ -222,7 +337,7 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
           <span>
             <span className="block text-sm font-semibold text-ink-900">Make my profile public (directory and shareable link)</span>
             <span className="mt-1 block text-xs leading-relaxed text-ink-700">
-               Off by default. If on, anyone, including people without an account, can see your name, profession, organization, country, bio, offering, looking for, website and sectors at your public profile link. Your photo and cover remain private unless you choose the option below. Your posts, comments, messages, email and saved items are never shown publicly. Switch this off at any time and the public link stops working.
+               Off by default. If on, anyone, including people without an account, can see your name, profession, organization, bio, offering, looking for, website and sectors at your public profile link. Your country and city appear only as your location setting allows, and your contact person, other professional activity and email are never shown. Your photo and cover are a separate choice below; public page and photos are switched independently. Your posts, comments, messages, email and saved items are never shown publicly. Switch this off at any time and the public link stops working.
             </span>
           </span>
         </label>

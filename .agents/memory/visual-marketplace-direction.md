@@ -9,6 +9,18 @@ The stakeholder wants an African identity inspired by Wakanda and Kuba textiles 
 
 **How to apply:** Keep patterns readable, motion pausable and reduced-motion aware. Do not imply Marvel affiliation or historical authenticity for original geometric artwork.
 
+The supplied chevron, diamond-eye and geometric-block motif must use the site's colours, not the reference image's bright turquoise and orange.
+
+**Why:** The Founder explicitly corrected the motif colours after providing the geometric reference.
+
+**How to apply:** Preserve the shapes but use the established dark emerald/teal, gold and ivory palette. Use small decorative SVG details, never the whole reference image or unrelated people/furniture.
+
+The One Market remains a roadmap concept while the existing ecosystem is launched and stabilised.
+
+**Why:** The consolidated Founder directive explicitly says not to develop the marketplace, seller accounts or marketplace payments now.
+
+**How to apply:** Preserve earlier commercial decisions as future requirements, not permission to activate them. Do not add marketplace payments or paid AI services without separate approval.
+
 The stakeholder supplied the standalone three-line THE ONE MOVEMENT INTERNATIONAL logo to replace the previous peace/slogan banner and the platform's generic icon plus typed name. Members must be able to explore the public site without signing out and return to their personal ecosystem; navigation must not trap them in their account.
 
 **Why:** Their screenshots identified both header treatments; they subsequently clarified that signed-in members must still be able to discover the public site. Subscription-dependent privileges do not require restricting public discovery.

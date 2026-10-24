@@ -5,11 +5,46 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+import type { MemberProfileInputAccountType } from './memberProfileInputAccountType';
+import type { MemberProfileInputActiveSectorsItem } from './memberProfileInputActiveSectorsItem';
+import type { MemberProfileInputLocationVisibility } from './memberProfileInputLocationVisibility';
+import type { MemberProfileInputMainSector } from './memberProfileInputMainSector';
 import type { MemberProfileInputPostsLayout } from './memberProfileInputPostsLayout';
 import type { MemberProfileInputProfileLayout } from './memberProfileInputProfileLayout';
 import type { MemberProfileInputSectorsItem } from './memberProfileInputSectorsItem';
 
 export interface MemberProfileInput {
+  /** @nullable */
+  accountType?: MemberProfileInputAccountType;
+  /**
+     * @maxLength 120
+     * @nullable
+     */
+  cityRegion?: string | null;
+  /**
+     * @maxLength 100
+     * @nullable
+     */
+  organizationType?: string | null;
+  /**
+     * @maxLength 100
+     * @nullable
+     */
+  contactName?: string | null;
+  /** @nullable */
+  mainSector?: MemberProfileInputMainSector;
+  /**
+     * @minItems 1
+     * @maxItems 3
+     * @nullable
+     */
+  activeSectors?: MemberProfileInputActiveSectorsItem[] | null;
+  locationVisibility?: MemberProfileInputLocationVisibility;
+  /**
+     * @maxLength 300
+     * @nullable
+     */
+  otherProfessionalActivity?: string | null;
   /**
      * @minLength 2
      * @maxLength 100

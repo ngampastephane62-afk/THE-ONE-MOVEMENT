@@ -16,8 +16,8 @@
 - [Dependency remediation](dependency-remediation.md) — remove unnecessary vulnerable chains rather than suppress advisories; verify production-only auth transport with loopback tests.
 - [Editorial boundaries](editorial-content-boundaries.md) — News archive, Founder-curated Media centre, documentary films, documented partners and campaign claims stay distinct.
 - [Localization transformations](localization-transforms.md) — bounded indexed translation rows prevent missing-phrase misalignment; use simple schemas with explicit coverage checks.
-- [Ecosystem product rules](ecosystem-product-rules.md) — free belonging, voluntary invitations for ordinary posting, separate commercial controls, native video and regional presentation.
-- [Visual and marketplace direction](visual-marketplace-direction.md) — Kuba identity, supplied programme covers, regional landmarks and a proposed seller-funded humanitarian marketplace.
+- [Ecosystem product rules](ecosystem-product-rules.md) — free belonging, three active sectors, private location, ordinary posting invitations and separate commercial controls.
+- [Visual and marketplace direction](visual-marketplace-direction.md) — Kuba motifs in TOMI colours, supplied programme covers, regional landmarks and a future humanitarian marketplace.
 - [Editorial portrait sourcing](editorial-portrait-sourcing.md) — preserve returned Wikimedia thumbnail URLs; unsupported width rewrites fail and biography requests can be throttled.
 - [Paid publication files](paid-publication-assets.md) — protect raw uploads in development as well as paid downloads; test payments never unlock the PDF.
 - [Partner presentation](partner-presentation.md) — institutions and banking before brands; media last, then source-labelled audiences; photos visible for three seconds.

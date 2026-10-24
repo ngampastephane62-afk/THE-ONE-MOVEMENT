@@ -31,7 +31,7 @@ function MemberCard({ m }: { m: PublicMember }) {
         ) : <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-lagoon-900 font-display text-sm text-gold-400" aria-hidden="true">{initials(m.fullName)}</span>}
         <div className="min-w-0">
           <h3 className="truncate font-display text-base text-ink-900">{m.fullName}</h3>
-          <p className="truncate text-xs text-ink-700">{[m.profession, m.organization, m.country].filter(Boolean).join(' · ')}</p>
+          <p className="truncate text-xs text-ink-700">{[m.profession, m.organization, [m.cityRegion?.trim(), m.country?.trim()].filter(Boolean).join(', ')].filter(Boolean).join(' · ')}</p>
         </div>
       </Link>
       {m.bio && <p className="text-sm leading-relaxed text-ink-700 line-clamp-3">{m.bio}</p>}
@@ -54,6 +54,8 @@ export default function MemberDirectory() {
   const { data, isLoading, isError, refetch, isFetching } = useGetEcosystemMembers({ query: { refetchInterval: 30000 } });
   const [q, setQ] = useState('');
   const [sector, setSector] = useState('');
+  const [countryQ, setCountryQ] = useState('');
+  const [cityQ, setCityQ] = useState('');
   const members = data?.members;
   useEffect(() => {
     const on = (e: Event) => {
@@ -73,10 +75,15 @@ export default function MemberDirectory() {
     const query = q.trim().toLowerCase();
     return list.filter((m) => {
       if (sector && !m.sectors.includes(sector as PublicMember['sectors'][number])) return false;
+      // Location filters match only the redacted strings the API returned; hidden locations arrive empty.
+      const cq = countryQ.trim().toLowerCase();
+      if (cq && !(m.country ?? '').toLowerCase().includes(cq)) return false;
+      const rq = cityQ.trim().toLowerCase();
+      if (rq && !(m.cityRegion ?? '').toLowerCase().includes(rq)) return false;
       if (!query) return true;
       return [m.fullName, m.profession, m.organization, m.country, m.bio, m.offering, m.lookingFor].join(' ').toLowerCase().includes(query);
     });
-  }, [members, q, sector]);
+  }, [members, q, sector, countryQ, cityQ]);
 
   return (
     <section id="directory" className="scroll-mt-20 bg-ivory-100 py-section-md border-t border-sand-200" aria-labelledby="directory-title">
@@ -101,6 +108,13 @@ export default function MemberDirectory() {
               {SECTORS.map((s) => <option key={s.slug} value={s.slug}>{s.name}</option>)}
             </select>
           </div>
+        </div>
+        <div className="mt-4 grid gap-2 sm:grid-cols-2 lg:max-w-2xl" data-testid="group-member-location-filters">
+          <input type="search" value={countryQ} onChange={(e) => setCountryQ(e.target.value)} placeholder="Country" aria-label="Filter by country" data-testid="input-member-country"
+            className="w-full border border-sand-300 bg-ivory-50 px-3 py-2.5 text-sm focus:border-lagoon-600 focus:outline-none" />
+          <input type="search" value={cityQ} onChange={(e) => setCityQ(e.target.value)} placeholder="City or region" aria-label="Filter by city or region" data-testid="input-member-city"
+            className="w-full border border-sand-300 bg-ivory-50 px-3 py-2.5 text-sm focus:border-lagoon-600 focus:outline-none" />
+          <p className="text-xs text-ink-700 sm:col-span-2">Matches only locations members chose to share. Members who keep their location hidden do not appear in location results.</p>
         </div>
 
         <div className="mt-10">
@@ -129,7 +143,7 @@ export default function MemberDirectory() {
               {filtered.map((m) => <MemberCard key={m.id} m={m} />)}
             </div>
           ) : (
-            <p className="text-sm text-ink-700">No public members match these filters. <button type="button" className="text-lagoon-600 underline" onClick={() => { setQ(''); setSector(''); }}>Clear filters</button></p>
+            <p className="text-sm text-ink-700">No public members match these filters. <button type="button" className="text-lagoon-600 underline" onClick={() => { setQ(''); setSector(''); setCountryQ(''); setCityQ(''); }}>Clear filters</button></p>
           )}
         </div>
       </div>

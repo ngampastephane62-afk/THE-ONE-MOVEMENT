@@ -294,3 +294,17 @@ mtime_ms = 1792810595727
 storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/e393fd1b-6c97-4c17-be01-edb6a60b4542/6e409788-3711-4136-8d10-e280db187a35"
 storage_version_token = "1792810638844420"
 content_type = "text/html"
+
+[[outputs]]
+id = "Taw-gpRIUrQ6iR0SbaLFk"
+uri = "file://reports/ecosystem-master-review.html"
+type = "html"
+title = "TOMI — Bilan des corrections et points restants"
+description = "Bilan en 21 points : modifications réalisées, vérifications et éléments encore à compléter ou à approuver."
+logical_id = "aac9d851-21fe-4d83-bdf0-3df350c0df71"
+content_hash = "sha256:5dd0218c11de49242a88e1055f9548607a38b973883eb63e028ad4313e46036e"
+size = 16000
+mtime_ms = 1792819846951
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/aac9d851-21fe-4d83-bdf0-3df350c0df71/e5ea41c6-45c3-4277-b899-89b00105557a"
+storage_version_token = "1792819861101526"
+content_type = "text/html"

@@ -3,7 +3,7 @@ import { Link, useLocation, useParams } from 'wouter';
 import { Ban, Copy, UserPlus, Flag, MessageSquare, Palette, Building2, LayoutGrid, List, FileText } from 'lucide-react';
 import type { NetworkPost } from '@workspace/api-client-react';
 import ProfileHero, { appearanceOf, onCoverBtn } from '@/components/network/ProfileHero';
-import { useGetNetworkState, getGetNetworkStateQueryKey } from '@workspace/api-client-react';
+import { useGetNetworkState, getGetNetworkStateQueryKey, useGetMemberProfile, getGetMemberProfileQueryKey } from '@workspace/api-client-react';
 import { SECTORS } from '@/lib/sectors-data';
 import PostCard from '@/components/network/PostCard';
 import ReportDialog, { type ReportTarget } from '@/components/network/ReportDialog';
@@ -73,6 +73,7 @@ export default function ProfilePage() {
               {p.lookingFor && <div className="rounded-xl bg-ivory-100 p-3"><p className="text-eyebrow text-gold-700">LOOKING FOR</p><p className="mt-1 text-sm text-ink-800">{p.lookingFor}</p></div>}
             </div>
           )}
+          {mine && <OwnerActiveSectors />}
           {sectors.length > 0 && <div className="mt-4 flex flex-wrap gap-1.5">{sectors.map((s) => <span key={s.slug} className="rounded-full bg-lagoon-900 px-2.5 py-1 text-[10px] uppercase tracking-wider text-gold-400">{s.name}</span>)}</div>}
           <Link href={mine ? '/member/business' : `/member/business/${p.id}`} className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-lagoon-700 hover:underline" data-testid="link-business-detail"><Building2 className="h-3.5 w-3.5" />{mine ? 'My company page and attestations' : 'Company page and attestations'}</Link>
           {mine && me.isPublic && <PublicLink id={me.id} />}
@@ -149,6 +150,29 @@ function PostGrid({ posts, onOpen }: { posts: NetworkPost[]; onOpen: (id: number
           </button>
         );
       })}
+    </div>
+  );
+}
+
+/** Owner-only: saved primary and active sectors from the private member profile. Never rendered for other members. */
+function OwnerActiveSectors() {
+  const q = useGetMemberProfile({ query: { queryKey: getGetMemberProfileQueryKey() } });
+  const p = q.data?.profile;
+  if (q.isLoading) return <div className="mt-4 h-6 w-48 animate-pulse bg-ivory-200" aria-hidden="true" />;
+  if (!p) return null;
+  const name = (slug: string) => SECTORS.find((s) => s.slug === slug)?.name ?? slug;
+  const active = p.activeSectors ?? null;
+  return (
+    <div className="mt-4 border-l-2 border-gold-500 pl-3" data-testid="panel-owner-active-sectors">
+      <p className="text-eyebrow text-gold-700">MY ACTIVE SECTORS <span className="normal-case tracking-normal text-sand-400">(visible to you)</span></p>
+      {active && p.mainSector ? (
+        <div className="mt-2 flex flex-wrap gap-1.5">
+          <span className="rounded-full bg-gold-500 px-2.5 py-1 text-[10px] uppercase tracking-wider text-ink-900" data-testid="text-owner-main-sector">{name(p.mainSector)} · primary</span>
+          {active.filter((a) => a !== p.mainSector).map((a) => <span key={a} className="rounded-full border border-lagoon-900 px-2.5 py-1 text-[10px] uppercase tracking-wider text-lagoon-900" data-testid={`text-owner-active-${a}`}>{name(a)}</span>)}
+        </div>
+      ) : (
+        <p className="mt-1 text-sm text-ink-700" data-testid="text-owner-active-unset">Not chosen yet. <Link href="/member/settings" className="font-semibold text-lagoon-700 hover:underline">Choose a primary sector</Link></p>
+      )}
     </div>
   );
 }

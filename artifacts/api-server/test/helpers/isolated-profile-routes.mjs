@@ -12,7 +12,8 @@ const validation = await build({
   bundle: true, write: false, platform: 'node', format: 'esm',
 });
 const validators = await import(`data:text/javascript;base64,${Buffer.from(validation.outputFiles[0].text).toString('base64')}`);
-export const projection = load(`${root}/src/services/profileProjection.ts`, {});
+export const policy = load(`${root}/../../lib/shared/src/memberProfilePolicy.ts`, {});
+export const projection = load(`${root}/src/services/profileProjection.ts`, { '@workspace/shared': policy });
 function load(path, dependencies) {
   const output = transformSync(readFileSync(path, 'utf8'), { loader: 'ts', format: 'cjs' }).code;
   const module = { exports: {} };
@@ -90,7 +91,7 @@ export function profileRoutes(memberRows, profileRows = [], uploadRows = []) {
       eq, and, or, isNull: x => c => value(x, c) == null,
       desc: x => x, sql: () => 0,
     },
-    '@workspace/shared': { SOCIAL_PROFILES: [], normalizeSocialProfile: forbid },
+    '@workspace/shared': { SOCIAL_PROFILES: [], normalizeSocialProfile: forbid, ...policy },
     '../middlewares/clerkProxyMiddleware': { getClerkProxyHost: () => 'fixture.invalid' },
     '../services/profileProjection': projection,
     '../services/networkAuth': { NetworkError, networkAuth: noop, networkEnabled: noop, networkWrite: noop, actor: forbid },

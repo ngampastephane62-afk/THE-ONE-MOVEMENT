@@ -4256,6 +4256,8 @@ export const getPublicNetworkProfileResponseProfileOneOrganizationMax = 150;
 
 export const getPublicNetworkProfileResponseProfileOneCountryMax = 100;
 
+export const getPublicNetworkProfileResponseProfileOneCityRegionMax = 120;
+
 export const getPublicNetworkProfileResponseProfileOneBioMax = 1000;
 
 export const getPublicNetworkProfileResponseProfileOneOfferingMax = 500;
@@ -4284,7 +4286,8 @@ export const GetPublicNetworkProfileResponse = zod.object({
   "fullName": zod.string().min(getPublicNetworkProfileResponseProfileOneFullNameMin).max(getPublicNetworkProfileResponseProfileOneFullNameMax),
   "profession": zod.string().max(getPublicNetworkProfileResponseProfileOneProfessionMax),
   "organization": zod.string().max(getPublicNetworkProfileResponseProfileOneOrganizationMax),
-  "country": zod.string().max(getPublicNetworkProfileResponseProfileOneCountryMax),
+  "country": zod.string().max(getPublicNetworkProfileResponseProfileOneCountryMax).describe('Empty when location sharing is disabled by the owner.'),
+  "cityRegion": zod.string().max(getPublicNetworkProfileResponseProfileOneCityRegionMax).optional().describe('Empty unless the owner explicitly shares country and city.'),
   "bio": zod.string().max(getPublicNetworkProfileResponseProfileOneBioMax),
   "offering": zod.string().max(getPublicNetworkProfileResponseProfileOneOfferingMax),
   "lookingFor": zod.string().max(getPublicNetworkProfileResponseProfileOneLookingForMax),
@@ -4345,6 +4348,8 @@ export const getNetworkStateResponseMeOneOneOrganizationMax = 150;
 
 export const getNetworkStateResponseMeOneOneCountryMax = 100;
 
+export const getNetworkStateResponseMeOneOneCityRegionMax = 120;
+
 export const getNetworkStateResponseMeOneOneBioMax = 1000;
 
 export const getNetworkStateResponseMeOneOneOfferingMax = 500;
@@ -4374,6 +4379,8 @@ export const getNetworkStateResponseFounderOneOneProfessionMax = 100;
 export const getNetworkStateResponseFounderOneOneOrganizationMax = 150;
 
 export const getNetworkStateResponseFounderOneOneCountryMax = 100;
+
+export const getNetworkStateResponseFounderOneOneCityRegionMax = 120;
 
 export const getNetworkStateResponseFounderOneOneBioMax = 1000;
 
@@ -4405,6 +4412,8 @@ export const getNetworkStateResponseMembersItemOneOrganizationMax = 150;
 
 export const getNetworkStateResponseMembersItemOneCountryMax = 100;
 
+export const getNetworkStateResponseMembersItemOneCityRegionMax = 120;
+
 export const getNetworkStateResponseMembersItemOneBioMax = 1000;
 
 export const getNetworkStateResponseMembersItemOneOfferingMax = 500;
@@ -4434,6 +4443,8 @@ export const getNetworkStateResponsePostsItemAuthorOneProfessionMax = 100;
 export const getNetworkStateResponsePostsItemAuthorOneOrganizationMax = 150;
 
 export const getNetworkStateResponsePostsItemAuthorOneCountryMax = 100;
+
+export const getNetworkStateResponsePostsItemAuthorOneCityRegionMax = 120;
 
 export const getNetworkStateResponsePostsItemAuthorOneBioMax = 1000;
 
@@ -4465,6 +4476,8 @@ export const getNetworkStateResponsePostsItemCommentsItemAuthorOneOrganizationMa
 
 export const getNetworkStateResponsePostsItemCommentsItemAuthorOneCountryMax = 100;
 
+export const getNetworkStateResponsePostsItemCommentsItemAuthorOneCityRegionMax = 120;
+
 export const getNetworkStateResponsePostsItemCommentsItemAuthorOneBioMax = 1000;
 
 export const getNetworkStateResponsePostsItemCommentsItemAuthorOneOfferingMax = 500;
@@ -4494,6 +4507,8 @@ export const getNetworkStateResponsePersonOneOneProfessionMax = 100;
 export const getNetworkStateResponsePersonOneOneOrganizationMax = 150;
 
 export const getNetworkStateResponsePersonOneOneCountryMax = 100;
+
+export const getNetworkStateResponsePersonOneOneCityRegionMax = 120;
 
 export const getNetworkStateResponsePersonOneOneBioMax = 1000;
 
@@ -4525,6 +4540,8 @@ export const getNetworkStateResponseThreadsItemOtherOneOrganizationMax = 150;
 
 export const getNetworkStateResponseThreadsItemOtherOneCountryMax = 100;
 
+export const getNetworkStateResponseThreadsItemOtherOneCityRegionMax = 120;
+
 export const getNetworkStateResponseThreadsItemOtherOneBioMax = 1000;
 
 export const getNetworkStateResponseThreadsItemOtherOneOfferingMax = 500;
@@ -4554,6 +4571,8 @@ export const getNetworkStateResponseCertificationsItemMemberOneProfessionMax = 1
 export const getNetworkStateResponseCertificationsItemMemberOneOrganizationMax = 150;
 
 export const getNetworkStateResponseCertificationsItemMemberOneCountryMax = 100;
+
+export const getNetworkStateResponseCertificationsItemMemberOneCityRegionMax = 120;
 
 export const getNetworkStateResponseCertificationsItemMemberOneBioMax = 1000;
 
@@ -4589,7 +4608,8 @@ export const GetNetworkStateResponse = zod.object({
   "fullName": zod.string().min(getNetworkStateResponseMeOneOneFullNameMin).max(getNetworkStateResponseMeOneOneFullNameMax),
   "profession": zod.string().max(getNetworkStateResponseMeOneOneProfessionMax),
   "organization": zod.string().max(getNetworkStateResponseMeOneOneOrganizationMax),
-  "country": zod.string().max(getNetworkStateResponseMeOneOneCountryMax),
+  "country": zod.string().max(getNetworkStateResponseMeOneOneCountryMax).describe('Empty when location sharing is disabled by the owner.'),
+  "cityRegion": zod.string().max(getNetworkStateResponseMeOneOneCityRegionMax).optional().describe('Empty unless the owner explicitly shares country and city.'),
   "bio": zod.string().max(getNetworkStateResponseMeOneOneBioMax),
   "offering": zod.string().max(getNetworkStateResponseMeOneOneOfferingMax),
   "lookingFor": zod.string().max(getNetworkStateResponseMeOneOneLookingForMax),
@@ -4625,7 +4645,8 @@ export const GetNetworkStateResponse = zod.object({
   "fullName": zod.string().min(getNetworkStateResponseFounderOneOneFullNameMin).max(getNetworkStateResponseFounderOneOneFullNameMax),
   "profession": zod.string().max(getNetworkStateResponseFounderOneOneProfessionMax),
   "organization": zod.string().max(getNetworkStateResponseFounderOneOneOrganizationMax),
-  "country": zod.string().max(getNetworkStateResponseFounderOneOneCountryMax),
+  "country": zod.string().max(getNetworkStateResponseFounderOneOneCountryMax).describe('Empty when location sharing is disabled by the owner.'),
+  "cityRegion": zod.string().max(getNetworkStateResponseFounderOneOneCityRegionMax).optional().describe('Empty unless the owner explicitly shares country and city.'),
   "bio": zod.string().max(getNetworkStateResponseFounderOneOneBioMax),
   "offering": zod.string().max(getNetworkStateResponseFounderOneOneOfferingMax),
   "lookingFor": zod.string().max(getNetworkStateResponseFounderOneOneLookingForMax),
@@ -4661,7 +4682,8 @@ export const GetNetworkStateResponse = zod.object({
   "fullName": zod.string().min(getNetworkStateResponseMembersItemOneFullNameMin).max(getNetworkStateResponseMembersItemOneFullNameMax),
   "profession": zod.string().max(getNetworkStateResponseMembersItemOneProfessionMax),
   "organization": zod.string().max(getNetworkStateResponseMembersItemOneOrganizationMax),
-  "country": zod.string().max(getNetworkStateResponseMembersItemOneCountryMax),
+  "country": zod.string().max(getNetworkStateResponseMembersItemOneCountryMax).describe('Empty when location sharing is disabled by the owner.'),
+  "cityRegion": zod.string().max(getNetworkStateResponseMembersItemOneCityRegionMax).optional().describe('Empty unless the owner explicitly shares country and city.'),
   "bio": zod.string().max(getNetworkStateResponseMembersItemOneBioMax),
   "offering": zod.string().max(getNetworkStateResponseMembersItemOneOfferingMax),
   "lookingFor": zod.string().max(getNetworkStateResponseMembersItemOneLookingForMax),
@@ -4699,7 +4721,8 @@ export const GetNetworkStateResponse = zod.object({
   "fullName": zod.string().min(getNetworkStateResponsePostsItemAuthorOneFullNameMin).max(getNetworkStateResponsePostsItemAuthorOneFullNameMax),
   "profession": zod.string().max(getNetworkStateResponsePostsItemAuthorOneProfessionMax),
   "organization": zod.string().max(getNetworkStateResponsePostsItemAuthorOneOrganizationMax),
-  "country": zod.string().max(getNetworkStateResponsePostsItemAuthorOneCountryMax),
+  "country": zod.string().max(getNetworkStateResponsePostsItemAuthorOneCountryMax).describe('Empty when location sharing is disabled by the owner.'),
+  "cityRegion": zod.string().max(getNetworkStateResponsePostsItemAuthorOneCityRegionMax).optional().describe('Empty unless the owner explicitly shares country and city.'),
   "bio": zod.string().max(getNetworkStateResponsePostsItemAuthorOneBioMax),
   "offering": zod.string().max(getNetworkStateResponsePostsItemAuthorOneOfferingMax),
   "lookingFor": zod.string().max(getNetworkStateResponsePostsItemAuthorOneLookingForMax),
@@ -4748,7 +4771,8 @@ export const GetNetworkStateResponse = zod.object({
   "fullName": zod.string().min(getNetworkStateResponsePostsItemCommentsItemAuthorOneFullNameMin).max(getNetworkStateResponsePostsItemCommentsItemAuthorOneFullNameMax),
   "profession": zod.string().max(getNetworkStateResponsePostsItemCommentsItemAuthorOneProfessionMax),
   "organization": zod.string().max(getNetworkStateResponsePostsItemCommentsItemAuthorOneOrganizationMax),
-  "country": zod.string().max(getNetworkStateResponsePostsItemCommentsItemAuthorOneCountryMax),
+  "country": zod.string().max(getNetworkStateResponsePostsItemCommentsItemAuthorOneCountryMax).describe('Empty when location sharing is disabled by the owner.'),
+  "cityRegion": zod.string().max(getNetworkStateResponsePostsItemCommentsItemAuthorOneCityRegionMax).optional().describe('Empty unless the owner explicitly shares country and city.'),
   "bio": zod.string().max(getNetworkStateResponsePostsItemCommentsItemAuthorOneBioMax),
   "offering": zod.string().max(getNetworkStateResponsePostsItemCommentsItemAuthorOneOfferingMax),
   "lookingFor": zod.string().max(getNetworkStateResponsePostsItemCommentsItemAuthorOneLookingForMax),
@@ -4791,7 +4815,8 @@ export const GetNetworkStateResponse = zod.object({
   "fullName": zod.string().min(getNetworkStateResponsePersonOneOneFullNameMin).max(getNetworkStateResponsePersonOneOneFullNameMax),
   "profession": zod.string().max(getNetworkStateResponsePersonOneOneProfessionMax),
   "organization": zod.string().max(getNetworkStateResponsePersonOneOneOrganizationMax),
-  "country": zod.string().max(getNetworkStateResponsePersonOneOneCountryMax),
+  "country": zod.string().max(getNetworkStateResponsePersonOneOneCountryMax).describe('Empty when location sharing is disabled by the owner.'),
+  "cityRegion": zod.string().max(getNetworkStateResponsePersonOneOneCityRegionMax).optional().describe('Empty unless the owner explicitly shares country and city.'),
   "bio": zod.string().max(getNetworkStateResponsePersonOneOneBioMax),
   "offering": zod.string().max(getNetworkStateResponsePersonOneOneOfferingMax),
   "lookingFor": zod.string().max(getNetworkStateResponsePersonOneOneLookingForMax),
@@ -4829,7 +4854,8 @@ export const GetNetworkStateResponse = zod.object({
   "fullName": zod.string().min(getNetworkStateResponseThreadsItemOtherOneFullNameMin).max(getNetworkStateResponseThreadsItemOtherOneFullNameMax),
   "profession": zod.string().max(getNetworkStateResponseThreadsItemOtherOneProfessionMax),
   "organization": zod.string().max(getNetworkStateResponseThreadsItemOtherOneOrganizationMax),
-  "country": zod.string().max(getNetworkStateResponseThreadsItemOtherOneCountryMax),
+  "country": zod.string().max(getNetworkStateResponseThreadsItemOtherOneCountryMax).describe('Empty when location sharing is disabled by the owner.'),
+  "cityRegion": zod.string().max(getNetworkStateResponseThreadsItemOtherOneCityRegionMax).optional().describe('Empty unless the owner explicitly shares country and city.'),
   "bio": zod.string().max(getNetworkStateResponseThreadsItemOtherOneBioMax),
   "offering": zod.string().max(getNetworkStateResponseThreadsItemOtherOneOfferingMax),
   "lookingFor": zod.string().max(getNetworkStateResponseThreadsItemOtherOneLookingForMax),
@@ -4881,7 +4907,8 @@ export const GetNetworkStateResponse = zod.object({
   "fullName": zod.string().min(getNetworkStateResponseCertificationsItemMemberOneFullNameMin).max(getNetworkStateResponseCertificationsItemMemberOneFullNameMax),
   "profession": zod.string().max(getNetworkStateResponseCertificationsItemMemberOneProfessionMax),
   "organization": zod.string().max(getNetworkStateResponseCertificationsItemMemberOneOrganizationMax),
-  "country": zod.string().max(getNetworkStateResponseCertificationsItemMemberOneCountryMax),
+  "country": zod.string().max(getNetworkStateResponseCertificationsItemMemberOneCountryMax).describe('Empty when location sharing is disabled by the owner.'),
+  "cityRegion": zod.string().max(getNetworkStateResponseCertificationsItemMemberOneCityRegionMax).optional().describe('Empty unless the owner explicitly shares country and city.'),
   "bio": zod.string().max(getNetworkStateResponseCertificationsItemMemberOneBioMax),
   "offering": zod.string().max(getNetworkStateResponseCertificationsItemMemberOneOfferingMax),
   "lookingFor": zod.string().max(getNetworkStateResponseCertificationsItemMemberOneLookingForMax),
@@ -5039,6 +5066,8 @@ export const getMemberProfileResponseProfileOneOneOrganizationMax = 150;
 
 export const getMemberProfileResponseProfileOneOneCountryMax = 100;
 
+export const getMemberProfileResponseProfileOneOneCityRegionMax = 120;
+
 export const getMemberProfileResponseProfileOneOneBioMax = 1000;
 
 export const getMemberProfileResponseProfileOneOneOfferingMax = 500;
@@ -5060,6 +5089,8 @@ export const getMemberProfileResponseProfileOneOneSectorsMax = 8;
 export const getMemberProfileResponseProfileOneOneCoverPositionMin = 0;
 export const getMemberProfileResponseProfileOneOneCoverPositionMax = 100;
 
+export const getMemberProfileResponseProfileOneTwoCityRegionMax = 120;
+
 
 
 export const GetMemberProfileResponse = zod.object({
@@ -5067,7 +5098,8 @@ export const GetMemberProfileResponse = zod.object({
   "fullName": zod.string().min(getMemberProfileResponseProfileOneOneFullNameMin).max(getMemberProfileResponseProfileOneOneFullNameMax),
   "profession": zod.string().max(getMemberProfileResponseProfileOneOneProfessionMax),
   "organization": zod.string().max(getMemberProfileResponseProfileOneOneOrganizationMax),
-  "country": zod.string().max(getMemberProfileResponseProfileOneOneCountryMax),
+  "country": zod.string().max(getMemberProfileResponseProfileOneOneCountryMax).describe('Empty when location sharing is disabled by the owner.'),
+  "cityRegion": zod.string().max(getMemberProfileResponseProfileOneOneCityRegionMax).optional().describe('Empty unless the owner explicitly shares country and city.'),
   "bio": zod.string().max(getMemberProfileResponseProfileOneOneBioMax),
   "offering": zod.string().max(getMemberProfileResponseProfileOneOneOfferingMax),
   "lookingFor": zod.string().max(getMemberProfileResponseProfileOneOneLookingForMax),
@@ -5082,6 +5114,14 @@ export const GetMemberProfileResponse = zod.object({
   "coverPosition": zod.number().int().min(getMemberProfileResponseProfileOneOneCoverPositionMin).max(getMemberProfileResponseProfileOneOneCoverPositionMax).optional(),
   "postsLayout": zod.enum(['grid', 'list']).optional()
 }).describe('Explicit shared display allowlist. Never add owner-only or private input fields here. Independent of MemberProfileInput.').and(zod.object({
+  "accountType": zod.union([zod.literal('individual'),zod.literal('organization'),zod.literal(null)]).nullish(),
+  "cityRegion": zod.string().max(getMemberProfileResponseProfileOneTwoCityRegionMax).optional().describe('The owner\'s saved city, independent of display privacy.'),
+  "organizationType": zod.string().nullish(),
+  "contactName": zod.string().nullish(),
+  "mainSector": zod.union([zod.literal('fashion'),zod.literal('music'),zod.literal('dance'),zod.literal('film'),zod.literal('art'),zod.literal('business'),zod.literal('investment'),zod.literal('tourism'),zod.literal('diplomacy'),zod.literal('innovation'),zod.literal('technology'),zod.literal('ngos'),zod.literal('media'),zod.literal('education'),zod.literal('real-estate'),zod.literal('health-care'),zod.literal('humanitarian-action'),zod.literal(null)]).nullish(),
+  "activeSectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'real-estate', 'health-care', 'humanitarian-action'])).nullish(),
+  "locationVisibility": zod.enum(['hidden', 'country', 'country_city']).optional(),
+  "otherProfessionalActivity": zod.string().nullish(),
   "id": zod.number().int(),
   "avatarUrl": zod.string().nullish().describe('Optional legacy response property; owner photos use the existing network media flow.'),
   "enabled": zod.boolean().optional().describe('Optional legacy response property; profile editing never activates the network.'),
@@ -5094,6 +5134,16 @@ export const GetMemberProfileResponse = zod.object({
 /**
  * @summary Create or update only the authenticated member's profile
  */
+export const saveMemberProfileBodyCityRegionMax = 120;
+
+export const saveMemberProfileBodyOrganizationTypeMax = 100;
+
+export const saveMemberProfileBodyContactNameMax = 100;
+
+export const saveMemberProfileBodyActiveSectorsMax = 3;
+
+export const saveMemberProfileBodyOtherProfessionalActivityMax = 300;
+
 export const saveMemberProfileBodyFullNameMin = 2;
 export const saveMemberProfileBodyFullNameMax = 100;
 
@@ -5127,6 +5177,14 @@ export const saveMemberProfileBodyCoverPositionMax = 100;
 
 
 export const SaveMemberProfileBody = zod.object({
+  "accountType": zod.union([zod.literal('individual'),zod.literal('organization'),zod.literal(null)]).nullish(),
+  "cityRegion": zod.string().max(saveMemberProfileBodyCityRegionMax).nullish(),
+  "organizationType": zod.string().max(saveMemberProfileBodyOrganizationTypeMax).nullish(),
+  "contactName": zod.string().max(saveMemberProfileBodyContactNameMax).nullish(),
+  "mainSector": zod.union([zod.literal('fashion'),zod.literal('music'),zod.literal('dance'),zod.literal('film'),zod.literal('art'),zod.literal('business'),zod.literal('investment'),zod.literal('tourism'),zod.literal('diplomacy'),zod.literal('innovation'),zod.literal('technology'),zod.literal('ngos'),zod.literal('media'),zod.literal('education'),zod.literal('real-estate'),zod.literal('health-care'),zod.literal('humanitarian-action'),zod.literal(null)]).nullish(),
+  "activeSectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'real-estate', 'health-care', 'humanitarian-action'])).min(1).max(saveMemberProfileBodyActiveSectorsMax).nullish(),
+  "locationVisibility": zod.enum(['hidden', 'country', 'country_city']).optional(),
+  "otherProfessionalActivity": zod.string().max(saveMemberProfileBodyOtherProfessionalActivityMax).nullish(),
   "fullName": zod.string().min(saveMemberProfileBodyFullNameMin).max(saveMemberProfileBodyFullNameMax),
   "profession": zod.string().max(saveMemberProfileBodyProfessionMax),
   "organization": zod.string().max(saveMemberProfileBodyOrganizationMax),
@@ -5156,6 +5214,8 @@ export const saveMemberProfileResponseProfileOneOneOrganizationMax = 150;
 
 export const saveMemberProfileResponseProfileOneOneCountryMax = 100;
 
+export const saveMemberProfileResponseProfileOneOneCityRegionMax = 120;
+
 export const saveMemberProfileResponseProfileOneOneBioMax = 1000;
 
 export const saveMemberProfileResponseProfileOneOneOfferingMax = 500;
@@ -5177,6 +5237,8 @@ export const saveMemberProfileResponseProfileOneOneSectorsMax = 8;
 export const saveMemberProfileResponseProfileOneOneCoverPositionMin = 0;
 export const saveMemberProfileResponseProfileOneOneCoverPositionMax = 100;
 
+export const saveMemberProfileResponseProfileOneTwoCityRegionMax = 120;
+
 
 
 export const SaveMemberProfileResponse = zod.object({
@@ -5184,7 +5246,8 @@ export const SaveMemberProfileResponse = zod.object({
   "fullName": zod.string().min(saveMemberProfileResponseProfileOneOneFullNameMin).max(saveMemberProfileResponseProfileOneOneFullNameMax),
   "profession": zod.string().max(saveMemberProfileResponseProfileOneOneProfessionMax),
   "organization": zod.string().max(saveMemberProfileResponseProfileOneOneOrganizationMax),
-  "country": zod.string().max(saveMemberProfileResponseProfileOneOneCountryMax),
+  "country": zod.string().max(saveMemberProfileResponseProfileOneOneCountryMax).describe('Empty when location sharing is disabled by the owner.'),
+  "cityRegion": zod.string().max(saveMemberProfileResponseProfileOneOneCityRegionMax).optional().describe('Empty unless the owner explicitly shares country and city.'),
   "bio": zod.string().max(saveMemberProfileResponseProfileOneOneBioMax),
   "offering": zod.string().max(saveMemberProfileResponseProfileOneOneOfferingMax),
   "lookingFor": zod.string().max(saveMemberProfileResponseProfileOneOneLookingForMax),
@@ -5199,6 +5262,14 @@ export const SaveMemberProfileResponse = zod.object({
   "coverPosition": zod.number().int().min(saveMemberProfileResponseProfileOneOneCoverPositionMin).max(saveMemberProfileResponseProfileOneOneCoverPositionMax).optional(),
   "postsLayout": zod.enum(['grid', 'list']).optional()
 }).describe('Explicit shared display allowlist. Never add owner-only or private input fields here. Independent of MemberProfileInput.').and(zod.object({
+  "accountType": zod.union([zod.literal('individual'),zod.literal('organization'),zod.literal(null)]).nullish(),
+  "cityRegion": zod.string().max(saveMemberProfileResponseProfileOneTwoCityRegionMax).optional().describe('The owner\'s saved city, independent of display privacy.'),
+  "organizationType": zod.string().nullish(),
+  "contactName": zod.string().nullish(),
+  "mainSector": zod.union([zod.literal('fashion'),zod.literal('music'),zod.literal('dance'),zod.literal('film'),zod.literal('art'),zod.literal('business'),zod.literal('investment'),zod.literal('tourism'),zod.literal('diplomacy'),zod.literal('innovation'),zod.literal('technology'),zod.literal('ngos'),zod.literal('media'),zod.literal('education'),zod.literal('real-estate'),zod.literal('health-care'),zod.literal('humanitarian-action'),zod.literal(null)]).nullish(),
+  "activeSectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'real-estate', 'health-care', 'humanitarian-action'])).nullish(),
+  "locationVisibility": zod.enum(['hidden', 'country', 'country_city']).optional(),
+  "otherProfessionalActivity": zod.string().nullish(),
   "id": zod.number().int(),
   "avatarUrl": zod.string().nullish().describe('Optional legacy response property; owner photos use the existing network media flow.'),
   "enabled": zod.boolean().optional().describe('Optional legacy response property; profile editing never activates the network.'),
@@ -5229,6 +5300,8 @@ export const toggleMemberSavedItemResponseProfileOneOneOrganizationMax = 150;
 
 export const toggleMemberSavedItemResponseProfileOneOneCountryMax = 100;
 
+export const toggleMemberSavedItemResponseProfileOneOneCityRegionMax = 120;
+
 export const toggleMemberSavedItemResponseProfileOneOneBioMax = 1000;
 
 export const toggleMemberSavedItemResponseProfileOneOneOfferingMax = 500;
@@ -5250,6 +5323,8 @@ export const toggleMemberSavedItemResponseProfileOneOneSectorsMax = 8;
 export const toggleMemberSavedItemResponseProfileOneOneCoverPositionMin = 0;
 export const toggleMemberSavedItemResponseProfileOneOneCoverPositionMax = 100;
 
+export const toggleMemberSavedItemResponseProfileOneTwoCityRegionMax = 120;
+
 
 
 export const ToggleMemberSavedItemResponse = zod.object({
@@ -5257,7 +5332,8 @@ export const ToggleMemberSavedItemResponse = zod.object({
   "fullName": zod.string().min(toggleMemberSavedItemResponseProfileOneOneFullNameMin).max(toggleMemberSavedItemResponseProfileOneOneFullNameMax),
   "profession": zod.string().max(toggleMemberSavedItemResponseProfileOneOneProfessionMax),
   "organization": zod.string().max(toggleMemberSavedItemResponseProfileOneOneOrganizationMax),
-  "country": zod.string().max(toggleMemberSavedItemResponseProfileOneOneCountryMax),
+  "country": zod.string().max(toggleMemberSavedItemResponseProfileOneOneCountryMax).describe('Empty when location sharing is disabled by the owner.'),
+  "cityRegion": zod.string().max(toggleMemberSavedItemResponseProfileOneOneCityRegionMax).optional().describe('Empty unless the owner explicitly shares country and city.'),
   "bio": zod.string().max(toggleMemberSavedItemResponseProfileOneOneBioMax),
   "offering": zod.string().max(toggleMemberSavedItemResponseProfileOneOneOfferingMax),
   "lookingFor": zod.string().max(toggleMemberSavedItemResponseProfileOneOneLookingForMax),
@@ -5272,6 +5348,14 @@ export const ToggleMemberSavedItemResponse = zod.object({
   "coverPosition": zod.number().int().min(toggleMemberSavedItemResponseProfileOneOneCoverPositionMin).max(toggleMemberSavedItemResponseProfileOneOneCoverPositionMax).optional(),
   "postsLayout": zod.enum(['grid', 'list']).optional()
 }).describe('Explicit shared display allowlist. Never add owner-only or private input fields here. Independent of MemberProfileInput.').and(zod.object({
+  "accountType": zod.union([zod.literal('individual'),zod.literal('organization'),zod.literal(null)]).nullish(),
+  "cityRegion": zod.string().max(toggleMemberSavedItemResponseProfileOneTwoCityRegionMax).optional().describe('The owner\'s saved city, independent of display privacy.'),
+  "organizationType": zod.string().nullish(),
+  "contactName": zod.string().nullish(),
+  "mainSector": zod.union([zod.literal('fashion'),zod.literal('music'),zod.literal('dance'),zod.literal('film'),zod.literal('art'),zod.literal('business'),zod.literal('investment'),zod.literal('tourism'),zod.literal('diplomacy'),zod.literal('innovation'),zod.literal('technology'),zod.literal('ngos'),zod.literal('media'),zod.literal('education'),zod.literal('real-estate'),zod.literal('health-care'),zod.literal('humanitarian-action'),zod.literal(null)]).nullish(),
+  "activeSectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'real-estate', 'health-care', 'humanitarian-action'])).nullish(),
+  "locationVisibility": zod.enum(['hidden', 'country', 'country_city']).optional(),
+  "otherProfessionalActivity": zod.string().nullish(),
   "id": zod.number().int(),
   "avatarUrl": zod.string().nullish().describe('Optional legacy response property; owner photos use the existing network media flow.'),
   "enabled": zod.boolean().optional().describe('Optional legacy response property; profile editing never activates the network.'),
@@ -5292,6 +5376,8 @@ export const getEcosystemMembersResponseMembersItemOneProfessionMax = 100;
 export const getEcosystemMembersResponseMembersItemOneOrganizationMax = 150;
 
 export const getEcosystemMembersResponseMembersItemOneCountryMax = 100;
+
+export const getEcosystemMembersResponseMembersItemOneCityRegionMax = 120;
 
 export const getEcosystemMembersResponseMembersItemOneBioMax = 1000;
 
@@ -5321,7 +5407,8 @@ export const GetEcosystemMembersResponse = zod.object({
   "fullName": zod.string().min(getEcosystemMembersResponseMembersItemOneFullNameMin).max(getEcosystemMembersResponseMembersItemOneFullNameMax),
   "profession": zod.string().max(getEcosystemMembersResponseMembersItemOneProfessionMax),
   "organization": zod.string().max(getEcosystemMembersResponseMembersItemOneOrganizationMax),
-  "country": zod.string().max(getEcosystemMembersResponseMembersItemOneCountryMax),
+  "country": zod.string().max(getEcosystemMembersResponseMembersItemOneCountryMax).describe('Empty when location sharing is disabled by the owner.'),
+  "cityRegion": zod.string().max(getEcosystemMembersResponseMembersItemOneCityRegionMax).optional().describe('Empty unless the owner explicitly shares country and city.'),
   "bio": zod.string().max(getEcosystemMembersResponseMembersItemOneBioMax),
   "offering": zod.string().max(getEcosystemMembersResponseMembersItemOneOfferingMax),
   "lookingFor": zod.string().max(getEcosystemMembersResponseMembersItemOneLookingForMax),

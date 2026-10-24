@@ -1317,3 +1317,14 @@ body {
 }
 /* Kuba-inspired restrained interlace band (geometric reference only, behind content) */
 .tomi-kuba-band{background-image:repeating-linear-gradient(45deg,hsl(39 52% 54% / .14) 0 2px,transparent 2px 14px),repeating-linear-gradient(-45deg,hsl(39 52% 54% / .14) 0 2px,transparent 2px 14px);pointer-events:none}
+
+/* Kuba reference motifs (components/kuba/KubaPatterns.tsx). Transform/opacity only. */
+.kuba-svg { display: block; flex: none; }
+.kuba-divider { overflow: hidden; line-height: 0; }
+@keyframes kubaReveal { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: none; } }
+@keyframes kubaDrift { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@media (prefers-reduced-motion: no-preference) {
+  .kuba-reveal { animation: kubaReveal 900ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .kuba-drift { animation: kubaDrift 9s ease-in-out infinite; }
+}
+.eco-paused .kuba-reveal, .eco-paused .kuba-drift { animation: none !important; }

@@ -1,11 +1,13 @@
 import SectionHeading from '@/components/SectionHeading';
 import { CULTURAL_EXPERIENCE } from './data';
 import { Eyebrow, GeoBand, display } from './Pattern';
+import { KubaCluster } from '@/components/kuba/KubaPatterns';
 
 export default function GalaCulture() {
   return (
     <section id="cultural-experience" className="scroll-mt-16 bg-ivory-50 py-24 md:py-32" aria-labelledby="culture-heading">
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="relative mx-auto max-w-7xl px-6">
+        <KubaCluster palette="emerald" height={200} className="pointer-events-none absolute right-6 top-0 hidden opacity-60 md:flex" />
         <Eyebrow>The cultural experience</Eyebrow>
         <SectionHeading id="culture-heading" heading={'WHAT THE ROOM\nCOULD HOLD.'} className="mt-6 max-w-4xl" headingClassName="text-[clamp(2.2rem,5.5vw,4rem)] leading-[0.95]" />
         <div className="mt-6 inline-flex items-center gap-2 border border-gold-600 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-gold-700">

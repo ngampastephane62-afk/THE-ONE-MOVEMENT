@@ -4,7 +4,7 @@ import { db, ecosystemMembersTable as members, networkProfiles, networkUploads }
 import { SaveMemberProfileBody, ToggleMemberSavedItemBody } from "@workspace/api-zod";
 import { desc, eq, sql, and, or, isNull } from "drizzle-orm";
 import { getClerkProxyHost } from "../middlewares/clerkProxyMiddleware";
-import { SOCIAL_PROFILES, normalizeSocialProfile } from "@workspace/shared";
+import { SOCIAL_PROFILES, normalizeSocialProfile, activeSectorIssue } from "@workspace/shared";
 import { projectOwnerProfile, projectPublicProfile } from "../services/profileProjection";
 
 const router = Router();
@@ -80,10 +80,16 @@ router.get("/member/profile", memberAuth, async (req, res) => {
 router.put("/member/profile", memberAuth, memberWrite, async (req, res) => {
   const parsed = SaveMemberProfileBody.strict().safeParse(req.body);
   if (!parsed.success) {
-    res.status(400).json({ error: "Check your profile fields and choose up to eight sectors." });
+    res.status(400).json({ error: "Check your profile fields. Choose up to three active sectors and up to eight interests." });
     return;
   }
   const input = parsed.data;
+  if (input.mainSector !== undefined || input.activeSectors !== undefined) {
+    const [current] = await db.select({ mainSector: members.mainSector, activeSectors: members.activeSectors })
+      .from(members).where(eq(members.clerkId, getAuth(req).userId!)).limit(1);
+    const issue = activeSectorIssue(input, current);
+    if (issue) { res.status(400).json({ error: issue }); return; }
+  }
   for (const { field } of SOCIAL_PROFILES) {
     // Omission preserves existing links for older clients; an empty string clears one.
     if (input[field] === undefined) continue;
@@ -104,6 +110,10 @@ router.put("/member/profile", memberAuth, memberWrite, async (req, res) => {
     lookingFor: input.lookingFor.trim(),
     website: input.website.trim(),
     sectors: [...new Set(input.sectors)],
+    ...(input.cityRegion !== undefined ? { cityRegion: input.cityRegion?.trim() ?? null } : {}),
+    ...(input.organizationType !== undefined ? { organizationType: input.organizationType?.trim() ?? null } : {}),
+    ...(input.contactName !== undefined ? { contactName: input.contactName?.trim() ?? null } : {}),
+    ...(input.otherProfessionalActivity !== undefined ? { otherProfessionalActivity: input.otherProfessionalActivity?.trim() ?? null } : {}),
   };
   if (data.fullName.length < 2) {
     res.status(400).json({ error: "Your name needs at least two characters." });

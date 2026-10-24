@@ -1796,8 +1796,16 @@ export interface ProfileDisplayFields {
   profession: string;
   /** @maxLength 150 */
   organization: string;
-  /** @maxLength 100 */
+  /**
+     * Empty when location sharing is disabled by the owner.
+     * @maxLength 100
+     */
   country: string;
+  /**
+     * Empty unless the owner explicitly shares country and city.
+     * @maxLength 120
+     */
+  cityRegion?: string;
   /** @maxLength 1000 */
   bio: string;
   /** @maxLength 500 */
@@ -1995,6 +2003,75 @@ export interface SavedItemInput {
   saved: boolean;
 }
 
+/**
+ * @nullable
+ */
+export type MemberProfileInputAccountType = typeof MemberProfileInputAccountType[keyof typeof MemberProfileInputAccountType] | null;
+
+
+export const MemberProfileInputAccountType = {
+  individual: 'individual',
+  organization: 'organization',
+} as const;
+
+/**
+ * @nullable
+ */
+export type MemberProfileInputMainSector = typeof MemberProfileInputMainSector[keyof typeof MemberProfileInputMainSector] | null;
+
+
+export const MemberProfileInputMainSector = {
+  fashion: 'fashion',
+  music: 'music',
+  dance: 'dance',
+  film: 'film',
+  art: 'art',
+  business: 'business',
+  investment: 'investment',
+  tourism: 'tourism',
+  diplomacy: 'diplomacy',
+  innovation: 'innovation',
+  technology: 'technology',
+  ngos: 'ngos',
+  media: 'media',
+  education: 'education',
+  'real-estate': 'real-estate',
+  'health-care': 'health-care',
+  'humanitarian-action': 'humanitarian-action',
+} as const;
+
+export type MemberProfileInputActiveSectorsItem = typeof MemberProfileInputActiveSectorsItem[keyof typeof MemberProfileInputActiveSectorsItem];
+
+
+export const MemberProfileInputActiveSectorsItem = {
+  fashion: 'fashion',
+  music: 'music',
+  dance: 'dance',
+  film: 'film',
+  art: 'art',
+  business: 'business',
+  investment: 'investment',
+  tourism: 'tourism',
+  diplomacy: 'diplomacy',
+  innovation: 'innovation',
+  technology: 'technology',
+  ngos: 'ngos',
+  media: 'media',
+  education: 'education',
+  'real-estate': 'real-estate',
+  'health-care': 'health-care',
+  'humanitarian-action': 'humanitarian-action',
+} as const;
+
+export type MemberProfileInputLocationVisibility = typeof MemberProfileInputLocationVisibility[keyof typeof MemberProfileInputLocationVisibility];
+
+
+export const MemberProfileInputLocationVisibility = {
+  hidden: 'hidden',
+  country: 'country',
+  country_city: 'country_city',
+} as const;
+
 export type MemberProfileInputSectorsItem = typeof MemberProfileInputSectorsItem[keyof typeof MemberProfileInputSectorsItem];
 
 
@@ -2036,6 +2113,37 @@ export const MemberProfileInputPostsLayout = {
 } as const;
 
 export interface MemberProfileInput {
+  /** @nullable */
+  accountType?: MemberProfileInputAccountType;
+  /**
+     * @maxLength 120
+     * @nullable
+     */
+  cityRegion?: string | null;
+  /**
+     * @maxLength 100
+     * @nullable
+     */
+  organizationType?: string | null;
+  /**
+     * @maxLength 100
+     * @nullable
+     */
+  contactName?: string | null;
+  /** @nullable */
+  mainSector?: MemberProfileInputMainSector;
+  /**
+     * @minItems 1
+     * @maxItems 3
+     * @nullable
+     */
+  activeSectors?: MemberProfileInputActiveSectorsItem[] | null;
+  locationVisibility?: MemberProfileInputLocationVisibility;
+  /**
+     * @maxLength 300
+     * @nullable
+     */
+  otherProfessionalActivity?: string | null;
   /**
      * @minLength 2
      * @maxLength 100
@@ -2101,7 +2209,94 @@ export type PublicMember = ProfileDisplayFields & ({
   enabled?: boolean;
 });
 
+/**
+ * @nullable
+ */
+export type MemberProfileAccountType = typeof MemberProfileAccountType[keyof typeof MemberProfileAccountType] | null;
+
+
+export const MemberProfileAccountType = {
+  individual: 'individual',
+  organization: 'organization',
+} as const;
+
+/**
+ * @nullable
+ */
+export type MemberProfileMainSector = typeof MemberProfileMainSector[keyof typeof MemberProfileMainSector] | null;
+
+
+export const MemberProfileMainSector = {
+  fashion: 'fashion',
+  music: 'music',
+  dance: 'dance',
+  film: 'film',
+  art: 'art',
+  business: 'business',
+  investment: 'investment',
+  tourism: 'tourism',
+  diplomacy: 'diplomacy',
+  innovation: 'innovation',
+  technology: 'technology',
+  ngos: 'ngos',
+  media: 'media',
+  education: 'education',
+  'real-estate': 'real-estate',
+  'health-care': 'health-care',
+  'humanitarian-action': 'humanitarian-action',
+} as const;
+
+export type MemberProfileActiveSectorsItem = typeof MemberProfileActiveSectorsItem[keyof typeof MemberProfileActiveSectorsItem];
+
+
+export const MemberProfileActiveSectorsItem = {
+  fashion: 'fashion',
+  music: 'music',
+  dance: 'dance',
+  film: 'film',
+  art: 'art',
+  business: 'business',
+  investment: 'investment',
+  tourism: 'tourism',
+  diplomacy: 'diplomacy',
+  innovation: 'innovation',
+  technology: 'technology',
+  ngos: 'ngos',
+  media: 'media',
+  education: 'education',
+  'real-estate': 'real-estate',
+  'health-care': 'health-care',
+  'humanitarian-action': 'humanitarian-action',
+} as const;
+
+export type MemberProfileLocationVisibility = typeof MemberProfileLocationVisibility[keyof typeof MemberProfileLocationVisibility];
+
+
+export const MemberProfileLocationVisibility = {
+  hidden: 'hidden',
+  country: 'country',
+  country_city: 'country_city',
+} as const;
+
 export type MemberProfile = ProfileDisplayFields & ({
+  /** @nullable */
+  accountType?: MemberProfileAccountType;
+  /**
+     * The owner's saved city, independent of display privacy.
+     * @maxLength 120
+     */
+  cityRegion?: string;
+  /** @nullable */
+  organizationType?: string | null;
+  /** @nullable */
+  contactName?: string | null;
+  /** @nullable */
+  mainSector?: MemberProfileMainSector;
+  /** @nullable */
+  activeSectors?: MemberProfileActiveSectorsItem[] | null;
+  locationVisibility?: MemberProfileLocationVisibility;
+  /** @nullable */
+  otherProfessionalActivity?: string | null;
   id: number;
   /**
      * Optional legacy response property; owner photos use the existing network media flow.

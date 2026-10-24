@@ -2505,6 +2505,35 @@ components:
       additionalProperties: false
       required: [fullName, profession, organization, country, bio, offering, lookingFor, website, sectors, isPublic]
       properties:
+        accountType:
+          type: [string, "null"]
+          enum: [individual, organization, null]
+        cityRegion:
+          type: [string, "null"]
+          maxLength: 120
+        organizationType:
+          type: [string, "null"]
+          maxLength: 100
+        contactName:
+          type: [string, "null"]
+          maxLength: 100
+        mainSector:
+          type: [string, "null"]
+          enum: [fashion, music, dance, film, art, business, investment, tourism, diplomacy, innovation, technology, ngos, media, education, real-estate, health-care, humanitarian-action, null]
+        activeSectors:
+          type: [array, "null"]
+          minItems: 1
+          maxItems: 3
+          uniqueItems: true
+          items:
+            type: string
+            enum: [fashion, music, dance, film, art, business, investment, tourism, diplomacy, innovation, technology, ngos, media, education, real-estate, health-care, humanitarian-action]
+        locationVisibility:
+          type: string
+          enum: [hidden, country, country_city]
+        otherProfessionalActivity:
+          type: [string, "null"]
+          maxLength: 300
         fullName:
           type: string
           minLength: 2
@@ -2584,6 +2613,11 @@ components:
         country:
           type: string
           maxLength: 100
+          description: Empty when location sharing is disabled by the owner.
+        cityRegion:
+          type: string
+          maxLength: 120
+          description: Empty unless the owner explicitly shares country and city.
         bio:
           type: string
           maxLength: 1000
@@ -2653,6 +2687,30 @@ components:
         - type: object
           required: [id, savedItems, publicMedia]
           properties:
+            accountType:
+              type: [string, "null"]
+              enum: [individual, organization, null]
+            cityRegion:
+              type: string
+              maxLength: 120
+              description: The owner's saved city, independent of display privacy.
+            organizationType:
+              type: [string, "null"]
+            contactName:
+              type: [string, "null"]
+            mainSector:
+              type: [string, "null"]
+              enum: [fashion, music, dance, film, art, business, investment, tourism, diplomacy, innovation, technology, ngos, media, education, real-estate, health-care, humanitarian-action, null]
+            activeSectors:
+              type: [array, "null"]
+              items:
+                type: string
+                enum: [fashion, music, dance, film, art, business, investment, tourism, diplomacy, innovation, technology, ngos, media, education, real-estate, health-care, humanitarian-action]
+            locationVisibility:
+              type: string
+              enum: [hidden, country, country_city]
+            otherProfessionalActivity:
+              type: [string, "null"]
             id:
               type: integer
             avatarUrl:

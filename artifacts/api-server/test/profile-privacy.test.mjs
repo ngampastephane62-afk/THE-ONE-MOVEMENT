@@ -1,16 +1,17 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { beforeEach, test } from 'node:test';
-import { projection, profileRoutes } from './helpers/isolated-profile-routes.mjs';
+import { projection, profileRoutes, policy } from './helpers/isolated-profile-routes.mjs';
 import { network, member } from './helpers/isolated-network.mjs';
 
 const plain = x => JSON.parse(JSON.stringify(x));
 const displayKeys = [
-  'id', 'fullName', 'profession', 'organization', 'country', 'bio', 'offering', 'lookingFor', 'website',
+  'id', 'fullName', 'profession', 'organization', 'country', 'cityRegion', 'bio', 'offering', 'lookingFor', 'website',
   'instagramUrl', 'facebookUrl', 'tiktokUrl', 'linkedinUrl', 'sectors', 'isPublic',
   'profileLayout', 'coverPosition', 'postsLayout',
 ].sort();
-const forbidden = ['clerkId', 'savedItems', 'publicMedia', 'email', 'phone', 'stripeCustomerId', 'privateSentinel', 'createdAt', 'updatedAt'];
+const ownerKeys = ['savedItems', 'publicMedia', 'accountType', 'organizationType', 'contactName', 'mainSector', 'activeSectors', 'locationVisibility', 'otherProfessionalActivity'];
+const forbidden = ['clerkId', ...ownerKeys, 'email', 'phone', 'stripeCustomerId', 'privateSentinel', 'createdAt', 'updatedAt'];
 const row = (extra = {}) => ({
   id: 1, clerkId: 'fixture-owner', fullName: 'Chosen Name', profession: '', organization: '',
   country: 'Unconfirmed legacy country', bio: '', offering: '', lookingFor: '', website: '',
@@ -27,6 +28,63 @@ const details = {
   badges: [{ role: 'speaker', program: 'summit', expiresAt: null, privateSentinel: 'private evidence' }],
   privateSentinel: 'never spread arbitrary presentation input',
 };
+function ownerInput(value) {
+  const { id, savedItems, ...input } = plain(projection.projectOwnerProfile(value));
+  return input;
+}
+
+test('location disclosure is opt-in across every public and network projection', () => {
+  for (const [visibility, country, city] of [
+    [undefined, '', ''], ['hidden', '', ''], ['country', 'Chosen country', ''],
+    ['country_city', 'Chosen country', 'Chosen city'],
+  ]) {
+    const input = row({ country: 'Chosen country', cityRegion: 'Chosen city', locationVisibility: visibility,
+      contactName: 'Private contact', organizationType: 'Private organization detail',
+      otherProfessionalActivity: 'Private activity', activeSectors: ['art'], mainSector: 'art' });
+    for (const project of [projection.projectPublicProfile, projection.projectNetworkMember, projection.projectPublicNetworkProfile]) {
+      const actual = project(input, details);
+      assert.equal(actual.country, country);
+      assert.equal(actual.cityRegion, city);
+      assertFiltered(actual);
+    }
+    assert.equal(projection.projectOwnerProfile(input).cityRegion, 'Chosen city');
+  }
+});
+
+test('active sectors enforce the three-sector policy without truncating legacy interests', async () => {
+  const existing = row({ sectors: ['fashion', 'music', 'dance', 'film', 'art', 'business', 'tourism', 'education'] });
+  const api = profileRoutes([existing]);
+  const response = await api.request('put', '/member/profile', { identity: 'fixture-owner', body: {
+    ...ownerInput(existing), accountType: 'organization', contactName: 'Private contact',
+    mainSector: 'art', activeSectors: ['art', 'film', 'fashion'], locationVisibility: 'country_city', cityRegion: 'Chosen city',
+  } });
+  assert.equal(response.statusCode, 200);
+  assert.deepEqual(plain(response.payload.profile.activeSectors), ['art', 'film', 'fashion']);
+  assert.equal(existing.sectors.length, 8);
+  assert.equal(response.payload.profile.contactName, 'Private contact');
+  for (const changes of [
+    { activeSectors: ['art', 'film', 'fashion', 'music'] },
+    { activeSectors: ['art', 'art'] }, { activeSectors: [] },
+    { mainSector: 'music' }, { activeSectors: ['not-a-sector'] },
+    { locationVisibility: 'gps' },
+  ]) {
+    const failed = await api.request('put', '/member/profile', { identity: 'fixture-owner', body: { ...ownerInput(existing), ...changes } });
+    assert.equal(failed.statusCode, 400, JSON.stringify(changes));
+  }
+  assert.deepEqual(plain(existing.activeSectors), ['art', 'film', 'fashion']);
+});
+
+test('legacy clients omit new fields without clearing saved private preferences', async () => {
+  const existing = row({ mainSector: 'art', activeSectors: ['art', 'fashion'], locationVisibility: 'hidden', cityRegion: 'Private city' });
+  const api = profileRoutes([existing]);
+  const body = { fullName: 'Updated name', profession: '', organization: '', country: existing.country, bio: '',
+    offering: '', lookingFor: '', website: '', sectors: ['art'], isPublic: true };
+  const response = await api.request('put', '/member/profile', { identity: 'fixture-owner', body });
+  assert.equal(response.statusCode, 200);
+  assert.deepEqual(plain(existing.activeSectors), ['art', 'fashion']);
+  assert.equal(existing.cityRegion, 'Private city');
+  assert.equal(policy.activeSectorIssue({ mainSector: 'music' }, existing), 'Your primary sector must be one of your active sectors.');
+});
 function assertFiltered(value) {
   for (const key of forbidden) assert.equal(Object.hasOwn(value, key), false, key);
   assert.equal(JSON.stringify(value).includes('privateSentinel'), false);
@@ -41,10 +99,11 @@ beforeEach(() => {
 test('owner projection preserves every existing output field and only owner extras', () => {
   const input = row();
   const owner = projection.projectOwnerProfile(input);
-  assert.deepEqual(Object.keys(owner).sort(), [...displayKeys, 'savedItems', 'publicMedia'].sort());
+  assert.deepEqual(Object.keys(owner).sort(), [...displayKeys, ...ownerKeys].sort());
+  assert.equal(owner.country, input.country);
   assert.deepEqual(plain(owner.savedItems), input.savedItems);
   assert.equal(owner.publicMedia, true);
-  for (const key of forbidden.filter(k => !['savedItems', 'publicMedia'].includes(k))) assert.equal(Object.hasOwn(owner, key), false);
+  for (const key of forbidden.filter(k => !ownerKeys.includes(k))) assert.equal(Object.hasOwn(owner, key), false);
   owner.savedItems.push('local');
   owner.sectors.push('music');
   assert.equal(input.savedItems.length, 1);
@@ -54,7 +113,8 @@ test('owner projection preserves every existing output field and only owner extr
 test('public projection matches the existing allowlist, ignoring all extra row data', () => {
   const value = projection.projectPublicProfile(row());
   assert.deepEqual(Object.keys(value).sort(), displayKeys);
-  assert.equal(value.country, 'Unconfirmed legacy country');
+  assert.equal(value.country, '');
+  assert.equal(value.cityRegion, '');
   assertFiltered(value);
 });
 
@@ -81,7 +141,7 @@ test('owner endpoint denies anonymous access and scopes authenticated reads to C
 test('existing profile editing returns the owned confirmed shape and rejects unknown fields', async () => {
   const existing = row();
   const routes = profileRoutes([existing]);
-  const { id, ...body } = plain(projection.projectPublicProfile(existing));
+  const { id, savedItems, ...body } = plain(projection.projectOwnerProfile(existing));
   const save = await routes.request('put', '/member/profile', {
     identity: 'fixture-owner', body: { ...body, fullName: '  Confirmed Name  ', publicMedia: false },
   });

@@ -5,9 +5,31 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+import type { MemberProfileAccountType } from './memberProfileAccountType';
+import type { MemberProfileActiveSectorsItem } from './memberProfileActiveSectorsItem';
+import type { MemberProfileLocationVisibility } from './memberProfileLocationVisibility';
+import type { MemberProfileMainSector } from './memberProfileMainSector';
 import type { ProfileDisplayFields } from './profileDisplayFields';
 
 export type MemberProfile = ProfileDisplayFields & ({
+  /** @nullable */
+  accountType?: MemberProfileAccountType;
+  /**
+     * The owner's saved city, independent of display privacy.
+     * @maxLength 120
+     */
+  cityRegion?: string;
+  /** @nullable */
+  organizationType?: string | null;
+  /** @nullable */
+  contactName?: string | null;
+  /** @nullable */
+  mainSector?: MemberProfileMainSector;
+  /** @nullable */
+  activeSectors?: MemberProfileActiveSectorsItem[] | null;
+  locationVisibility?: MemberProfileLocationVisibility;
+  /** @nullable */
+  otherProfessionalActivity?: string | null;
   id: number;
   /**
      * Optional legacy response property; owner photos use the existing network media flow.

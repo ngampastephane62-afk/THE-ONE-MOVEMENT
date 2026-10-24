@@ -6,6 +6,7 @@ import {
 } from '@workspace/api-client-react';
 import { appearanceOf } from '@/components/network/ProfileHero';
 import { STATE_PREFIX } from '@/components/network/kit';
+import { visibleLocation } from '@workspace/shared';
 
 /** Only editable fields: never copy identity, media or activation into a draft. */
 export function profileInput(profile: MemberProfile | null, defaultName = ''): MemberProfileInput {
@@ -14,6 +15,14 @@ export function profileInput(profile: MemberProfile | null, defaultName = ''): M
     fullName: profile?.fullName ?? defaultName,
     profession: profile?.profession ?? '', organization: profile?.organization ?? '',
     country: profile?.country ?? '', bio: profile?.bio ?? '',
+    accountType: profile?.accountType ?? null,
+    cityRegion: profile?.cityRegion ?? '',
+    organizationType: profile?.organizationType ?? '',
+    contactName: profile?.contactName ?? '',
+    mainSector: profile?.mainSector ?? null,
+    activeSectors: profile?.activeSectors ? [...profile.activeSectors] : null,
+    locationVisibility: profile?.locationVisibility ?? 'hidden',
+    otherProfessionalActivity: profile?.otherProfessionalActivity ?? '',
     offering: profile?.offering ?? '', lookingFor: profile?.lookingFor ?? '',
     website: profile?.website ?? '', instagramUrl: profile?.instagramUrl ?? '',
     facebookUrl: profile?.facebookUrl ?? '', tiktokUrl: profile?.tiktokUrl ?? '',
@@ -55,7 +64,7 @@ export async function synchronizeProfile(qc: QueryClient, profile: MemberProfile
       ...state.me,
       // Explicit network-cache allowlist, independent of future owner inputs.
       fullName: fields.fullName, profession: fields.profession,
-      organization: fields.organization, country: fields.country, bio: fields.bio,
+      organization: fields.organization, ...visibleLocation(fields), bio: fields.bio,
       offering: fields.offering, lookingFor: fields.lookingFor, website: fields.website,
       instagramUrl: fields.instagramUrl, facebookUrl: fields.facebookUrl,
       tiktokUrl: fields.tiktokUrl, linkedinUrl: fields.linkedinUrl,
