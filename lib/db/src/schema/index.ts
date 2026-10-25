@@ -21,3 +21,5 @@ export * from "./professional";
 export * from "./magazine";
 export * from "./news";
 export * from "./gratitude";
+export * from "./siteVisitSessions";
+export * from "./memberProfileReminders";
