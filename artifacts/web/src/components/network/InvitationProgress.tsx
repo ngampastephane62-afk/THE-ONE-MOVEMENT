@@ -1,10 +1,12 @@
 import { useRef, useState } from 'react';
+import { useProfileReadiness, ReadinessLock } from '@/components/network/readiness';
 import { Check, Copy, Share2, Unlock } from 'lucide-react';
 import type { NetworkGrowth } from '@workspace/api-client-react';
 import { inviteUrl } from '@/lib/network-invitations';
 import { btn, btnGhost, card } from './kit';
 
 export default function InvitationProgress({ growth, founder, compact }: { growth: NetworkGrowth | null; founder?: boolean; compact?: boolean }) {
+  const ready = useProfileReadiness();
   const [copied, setCopied] = useState<'ok' | 'fail' | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -13,6 +15,9 @@ export default function InvitationProgress({ growth, founder, compact }: { growt
   }
   if (!growth) {
     return <div className={`${card} p-4 text-sm text-ink-700`} data-testid="growth-unavailable">Your invitation link appears once your member profile is complete.</div>;
+  }
+  if (ready.locked) {
+    return <div className={`${card} p-4`} data-testid="growth-locked"><p className="mb-2 text-sm text-ink-700">Your invitation link is kept until your essential profile is complete.</p><ReadinessLock action="share or send invitations" /></div>;
   }
   const link = inviteUrl(growth.inviteCode);
 

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useProfileReadiness, ReadinessLock } from '@/components/network/readiness';
 import { useUser } from '@clerk/react';
 import { UserPlus, X } from 'lucide-react';
 import { useMe } from '@/pages/member/ctx';
@@ -22,6 +23,7 @@ export default function PendingInvitation() {
   const { user } = useUser();
   const { me, base } = useMe();
   const { run, pending } = useAct();
+  const ready = useProfileReadiness();
   const [invite, setInvite] = useState<PendingInvite | null>(null);
   const [follow, setFollow] = useState<PendingFollow | null>(null);
   const [err, setErr] = useState<{ msg: string; fatal: boolean } | null>(null);
@@ -52,8 +54,10 @@ export default function PendingInvitation() {
             <p className="mt-1 text-xs leading-relaxed text-ink-700">You do not need invitations for ordinary publishing. Accepting makes you follow the member who invited you and credits their invitation. It only works for new accounts created within the last 24 hours, and each account can be credited once. You can unfollow later.</p>
             {err && <p className="mt-2 text-xs text-crimson-700" role="alert" data-testid="text-invite-error">{err.msg}</p>}
             <div className="mt-3 flex flex-wrap gap-2">
+              {ready.locked && <ReadinessLock action="accept this invitation" className="w-full" />}
               {!err?.fatal && (
-                <button className={btn} disabled={pending} data-testid="button-accept-invite" onClick={() => {
+                <button className={btn} disabled={pending || ready.locked} data-testid="button-accept-invite" onClick={() => {
+                  if (ready.locked) return;
                   setErr(null);
                   run({ action: 'referral.claim', kind: invite.code, accepted: true })
                     .then(() => { clearPendingInvite(); setInvite(null); setDone('Invitation accepted. You now follow the member who invited you.'); })
@@ -73,7 +77,9 @@ export default function PendingInvitation() {
       <div className="mx-3 mb-4 mt-4 flex flex-wrap items-center gap-3 rounded-2xl border border-sand-200 bg-ivory-50 p-4 md:mx-0 md:mt-0" data-testid="panel-pending-follow">
         <p className="min-w-0 flex-1 text-sm text-ink-800">Follow <b>{follow.name}</b>, whose public profile you visited?</p>
         {err && <p className="w-full text-xs text-crimson-700" role="alert">{err.msg}</p>}
-        <button className={btn} disabled={pending} data-testid="button-accept-follow" onClick={() => {
+        {ready.locked && <ReadinessLock action="follow this member" className="w-full" />}
+        <button className={btn} disabled={pending || ready.locked} data-testid="button-accept-follow" onClick={() => {
+          if (ready.locked) return;
           setErr(null);
           run({ action: 'follow', targetId: follow.memberId, accepted: true })
             .then(() => { clearPendingFollow(); setFollow(null); setDone(`You now follow ${follow.name}.`); })

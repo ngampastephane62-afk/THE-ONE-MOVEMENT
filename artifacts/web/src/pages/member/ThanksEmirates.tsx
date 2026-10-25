@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react';
+import { useProfileReadiness, ReadinessLock } from '@/components/network/readiness';
 import { Link } from 'wouter';
 import { CheckCircle2, Loader2 } from 'lucide-react';
 import { useAct, useUploads, UploadTray, card, btn, btnGhost, field } from '@/components/network/kit';
@@ -10,6 +11,7 @@ const MIN = 20;
 export default function ThanksEmiratesForm() {
   const { me } = useMe();
   const { run, pending } = useAct();
+  const ready = useProfileReadiness();
   const u = useUploads(1);
   const [text, setText] = useState('');
   const [consent, setConsent] = useState(false);
@@ -21,7 +23,7 @@ export default function ThanksEmiratesForm() {
   const videoTypeOk = u.items.every((x) => x.file.type.startsWith('video/'));
   const uploadsOk = !u.busy && videoTypeOk && u.items.every((x) => x.status === 'done');
   const meaningful = t.length >= MIN || hasVideo;
-  const canSubmit = meaningful && consent && uploadsOk && !pending;
+  const canSubmit = meaningful && consent && uploadsOk && !pending && ready.complete;
 
   async function submit(e: FormEvent) {
     e.preventDefault();
@@ -76,6 +78,7 @@ export default function ThanksEmiratesForm() {
           <span>I agree that my story will be visible to signed-in TOMI members. I understand it is not automatically published on the public website and is not sent to any broadcaster.</span>
         </label>
         {err && <p className="text-sm text-crimson-700" role="alert" data-testid="text-error">{err}</p>}
+        <ReadinessLock action="submit your story" />
         <button type="submit" disabled={!canSubmit} className={`${btn} w-fit`} data-testid="button-submit-story">
           {pending && <Loader2 className="h-4 w-4 animate-spin" />}Share my story
         </button>

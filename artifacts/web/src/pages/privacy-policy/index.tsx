@@ -237,10 +237,20 @@ export default function PrivacyPolicy() {
             operational and legal safeguards available for that processing.
           </p>
           <p>
-            At the time of publication, the current public site has no
-            intentionally configured advertising trackers or analytics tools.
-            This statement does not cover a future service added after this
-            policy is updated.
+            The public site has no advertising trackers or third-party
+            analytics tools. It offers one optional, first-party visit counter
+            that runs only after you choose Accept in the visit counting
+            notice. When accepted, your browser tab creates a random session
+            number, kept only for that tab, and sends it with each public page
+            you open (never member, sign-in or sign-up pages). We do not send
+            the page address, your name, email or account with it. The number
+            is used only to count sessions and page views per day, and records
+            are kept for up to 90 days. Your choice is remembered on your
+            device for 90 days; you can change it at any time with the
+            &ldquo;Visit counting choice&rdquo; link in the site footer, and
+            refusing deletes the session number and stops counting. Visits
+            before this counter was introduced, or from people who did not
+            accept, are not measured.
           </p>
         </LegalSection>
 

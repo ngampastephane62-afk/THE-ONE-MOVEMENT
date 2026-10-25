@@ -15,7 +15,7 @@ export default function AuthShell({ eyebrow, title, children, variant }: { eyebr
           </div>
           <p className="mt-8 text-eyebrow text-gold-400">{eyebrow}</p>
           <h1 className="mt-3 text-display-lg text-ivory-100">{title}</h1>
-           <p className="mt-5 max-w-md text-ivory-200 leading-relaxed">Your private space across seventeen sectors: tailored programmes, official knowledge, saved bookmarks and an optional public profile. After sign-in you land straight in the feed; your profile can be completed whenever you like. Your account is free. Optional professional subscriptions and annual event packages are separate.</p>
+           <p className="mt-5 max-w-md text-ivory-200 leading-relaxed">Your private space across seventeen sectors: tailored programmes, official knowledge, saved bookmarks and an optional public profile. After sign-in your member home guides you step by step: essential profile, sectors, then an explicit choice to activate the network before posting, following or inviting. Your account is free. Optional professional subscriptions and annual event packages are separate.</p>
           <p className="mt-6 text-sm text-gold-400/80">WE ARE ONE · <span lang="ar">نحن واحد</span></p>
         </div>
         <div className="flex min-w-0 justify-center">{children}</div>
@@ -39,7 +39,7 @@ function SignUpDetails() {
         ))}
       </ul>
       <p className="mt-4 text-sm text-ivory-200/85">Optional paid services are separate.</p>
-      <p className="mt-3 text-xs text-ivory-200/70">After verification you land straight in The One Feed. Your profile is optional and can be completed whenever you like.</p>
+      <p className="mt-3 text-xs text-ivory-200/70">After verification: complete your essential profile, choose 1 to 3 sectors, then decide whether to activate the network. Browsing stays open the whole time.</p>
     </>
   );
 }
@@ -47,8 +47,8 @@ function SignUpDetails() {
 export function EmailGuidance({ signingUp = false }: { signingUp?: boolean }) {
   return (
     <div className="w-full rounded-2xl border border-gold-500/30 bg-lagoon-900/60 px-4 py-3 text-sm leading-relaxed text-ivory-200" data-testid="text-email-guidance">
-      <p className="font-semibold text-ivory-50">Use your own email address.</p>
-      <p className="mt-1 text-xs">iCloud, Outlook, Yahoo, Gmail or your work email — no Google account required.</p>
+      <p className="font-semibold text-ivory-50">Use email, or continue with Google when available.</p>
+      <p className="mt-1 text-xs" data-testid="text-google-guidance">Google opens its own sign-in page; TOMI never receives your Gmail password. With email registration, choose a separate TOMI password. iCloud, Gmail, Outlook and work emails are accepted.</p>
       {signingUp ? (
         <p className="mt-2 text-xs">Create your free account below, then verify your email using the message sent to your inbox. Google is optional.</p>
       ) : (

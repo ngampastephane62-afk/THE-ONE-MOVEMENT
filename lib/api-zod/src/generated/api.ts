@@ -8,6 +8,123 @@
 import * as zod from 'zod';
 
 
+export const getMembershipDashboardQueryPageDefault = 1;
+
+export const getMembershipDashboardQuerySearchMax = 120;
+
+export const getMembershipDashboardQueryStatusDefault = `all`;
+export const getMembershipDashboardQueryDaysDefault = 30;
+
+export const GetMembershipDashboardQueryParams = zod.object({
+  "page": zod.coerce.number().int().min(1).default(getMembershipDashboardQueryPageDefault),
+  "search": zod.coerce.string().max(getMembershipDashboardQuerySearchMax).optional(),
+  "status": zod.enum(['all', 'no_profile', 'incomplete', 'complete', 'active']).default(getMembershipDashboardQueryStatusDefault),
+  "days": zod.union([zod.literal(7),zod.literal(30),zod.literal(90)]).default(getMembershipDashboardQueryDaysDefault)
+})
+
+export const GetMembershipDashboardResponse = zod.object({
+  "refreshedAt": zod.string(),
+  "environment": zod.enum(['development', 'production']),
+  "totals": zod.object({
+  "accounts": zod.number().int(),
+  "noProfile": zod.number().int(),
+  "incomplete": zod.number().int(),
+  "complete": zod.number().int(),
+  "active": zod.number().int()
+}),
+  "accounts": zod.array(zod.object({
+  "clerkId": zod.string(),
+  "name": zod.string(),
+  "email": zod.string(),
+  "emailVerified": zod.boolean(),
+  "createdAt": zod.string(),
+  "lastSignInAt": zod.string().nullable(),
+  "profileStatus": zod.enum(['no_profile', 'incomplete', 'complete']),
+  "missingFields": zod.array(zod.string()),
+  "sectors": zod.array(zod.string()),
+  "networkEnabled": zod.boolean(),
+  "suspended": zod.boolean(),
+  "lastReminderAt": zod.string().nullable(),
+  "reminderStatus": zod.string().nullable(),
+  "remindersOptedOut": zod.boolean()
+})),
+  "page": zod.number().int(),
+  "pages": zod.number().int(),
+  "filteredCount": zod.number().int(),
+  "emailSetup": zod.object({
+  "configured": zod.boolean(),
+  "message": zod.string()
+}),
+  "traffic": zod.object({
+  "days": zod.number().int(),
+  "sessions": zod.number().int(),
+  "pageViews": zod.number().int(),
+  "measurementStartedAt": zod.string().nullable(),
+  "daily": zod.array(zod.object({
+  "day": zod.string(),
+  "sessions": zod.number().int(),
+  "pageViews": zod.number().int()
+}))
+})
+})
+
+
+export const previewProfileReminderPathClerkIdMax = 100;
+
+
+
+export const PreviewProfileReminderParams = zod.object({
+  "clerkId": zod.coerce.string().max(previewProfileReminderPathClerkIdMax)
+})
+
+export const PreviewProfileReminderResponse = zod.object({
+  "clerkId": zod.string(),
+  "recipient": zod.string(),
+  "subject": zod.string(),
+  "text": zod.string(),
+  "canSend": zod.boolean(),
+  "reason": zod.string(),
+  "previewToken": zod.string()
+})
+
+
+export const sendProfileReminderPathClerkIdMax = 100;
+
+
+
+export const SendProfileReminderParams = zod.object({
+  "clerkId": zod.coerce.string().max(sendProfileReminderPathClerkIdMax)
+})
+
+export const sendProfileReminderBodyPreviewTokenMax = 200;
+
+
+
+export const SendProfileReminderBody = zod.object({
+  "confirmed": zod.literal(true),
+  "previewToken": zod.string().max(sendProfileReminderBodyPreviewTokenMax)
+})
+
+export const SendProfileReminderResponse = zod.object({
+  "status": zod.enum(['accepted']),
+  "acceptedAt": zod.string()
+})
+
+
+export const recordSiteVisitBodySessionIdMax = 36;
+
+
+export const recordSiteVisitBodySessionIdRegExp = new RegExp('^[a-fA-F0-9-]{36}$');
+
+
+export const RecordSiteVisitBody = zod.object({
+  "sessionId": zod.string().max(recordSiteVisitBodySessionIdMax).regex(recordSiteVisitBodySessionIdRegExp),
+  "consent": zod.literal(true)
+})
+
+export const RecordSiteVisitResponse = zod.void()
+
+
 export const getHomeEditorialResponseSectionsItemIdMax = 80;
 
 

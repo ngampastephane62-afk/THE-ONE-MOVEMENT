@@ -51,7 +51,7 @@ be presented as a definitive failure or immediately retried.
 - No new Clerk identity, alternative authentication system or foreign-key
   dependency on legacy user tables is introduced.
 - No extension, webhook, trigger, background task or email call is created.
-- Existing application code does not query these proposed tables.
+- Other application modules do not depend on these new tables.
 - New dashboard APIs must enforce the existing Founder gate server-side and
   return private, non-cacheable account data. Public visit collection must not
   expose either table or accept account/contact identifiers.

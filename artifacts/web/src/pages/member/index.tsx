@@ -25,10 +25,12 @@ import Admin from './Admin';
 import FounderWorkspace from './FounderWorkspace';
 import FounderNews from './FounderNews';
 import FounderMedia from './FounderMedia';
+import FounderMembers from './FounderMembers';
 import FounderPartners from './FounderPartners';
 import FounderPrograms from './FounderPrograms';
 import FounderPages from './FounderPages';
 import SettingsPage from './Settings';
+import JourneyProgress, { useJourney } from './JourneyProgress';
 import MemberWelcome from './MemberWelcome';
 import MemberOnboarding from './Onboarding';
 import Connections from './Connections';
@@ -82,8 +84,17 @@ function Onboard({ title, eyebrow, children }: { title: string; eyebrow: string;
 function ActivationPrompt() {
   const { run, pending } = useAct();
   const [err, setErr] = useState(false);
+  const journey = useJourney();
+  if (journey.profileQ.isLoading) return null;
+  if (!journey.complete) return (
+    <section id="panel-activate" className="mx-3 mb-4 rounded-2xl border border-sand-200 bg-ivory-50 p-4 md:mx-0" data-testid="panel-activate-locked">
+      <p className="text-eyebrow text-gold-700">NEXT STEP: ESSENTIAL PROFILE</p>
+      <p className="mt-1 text-sm leading-relaxed text-ink-800">Network activation becomes available once your essential profile and sectors are saved. You can keep browsing, reading and using privacy, blocking and reporting tools meanwhile. No payment, invitations or public listing are required.</p>
+      <Link href="/member/onboarding" className={`${btn} mt-3`} data-testid="link-activate-complete-profile">Complete profile</Link>
+    </section>
+  );
   return (
-    <section className="mx-3 mb-4 rounded-2xl border border-gold-500/40 bg-lagoon-900 p-4 text-ivory-100 md:mx-0" data-testid="panel-activate">
+    <section id="panel-activate" className="mx-3 mb-4 rounded-2xl border border-gold-500/40 bg-lagoon-900 p-4 text-ivory-100 md:mx-0" data-testid="panel-activate">
       <p className="text-eyebrow text-gold-400">YOU BELONG — NETWORK ACTIVATION IS YOUR CHOICE</p>
       <p className="mt-1 text-sm leading-relaxed text-ivory-200">Your membership is free, even while browsing. Read the feed, discover people and explore programmes without activating. To participate, explicitly activate your network profile. Activation makes your name and network profile visible to signed-in TOMI members only, not to the public internet. Your public directory setting does not change. Activation alone does not unlock every specialized service or messaging feature.</p>
       {err && <p className="mt-2 text-xs text-coral-500" role="alert">Activation failed. Please try again.</p>}
@@ -98,11 +109,12 @@ function ActivationPrompt() {
 function CompleteProfile({ me }: { me: Ctx['me'] }) {
   const key = `tomi-complete-dismissed-${me.id}`;
   const [hidden, setHidden] = useState(() => { try { return localStorage.getItem(key) === '1'; } catch { return false; } });
-  if (hidden || !me.enabled || (me.profession && me.sectors.length && me.bio)) return null;
+  const journey = useJourney();
+  if (hidden || !me.enabled || journey.profileQ.isLoading || journey.complete) return null;
   return (
     <div className="mx-3 mb-4 flex flex-wrap items-center gap-3 rounded-2xl border border-sand-200 bg-ivory-50 p-3 md:mx-0" data-testid="panel-complete-profile">
       <Avatar m={me} size={36} />
-      <p className="min-w-0 flex-1 text-sm text-ink-800">Complete your profile only if you wish: add your role, sectors, photo and a short description. Your saved sectors also help you find related programmes and resources in Workspace. You can explore without completing your profile.</p>
+      <p className="min-w-0 flex-1 text-sm text-ink-800">Some essential details are missing from your profile. Posting, following and inviting need a complete essential profile; browsing does not.</p>
       <Link href="/member/onboarding" className={btn} data-testid="link-complete-profile">Complete profile</Link>
       <button type="button" className="text-xs text-sand-400 hover:text-ink-800" onClick={() => { try { localStorage.setItem(key, '1'); } catch { /* ignore */ } setHidden(true); }} data-testid="button-dismiss-complete">Later</button>
     </div>
@@ -190,7 +202,7 @@ function AppShell({ me, base, children }: Ctx & { children: ReactNode }) {
             <span>Thanks the World · Your stories</span><Globe2 className="h-4 w-4 shrink-0 text-gold-700" />
           </Link>
           <div className="tomi-member-path mx-3 mb-4 md:mx-0" aria-label="Belong, discover, connect, contribute, grow" data-testid="member-path"><span>Belong</span><span>Discover</span><span>Connect</span><span>Contribute</span><span>Grow</span></div>
-          {(loc === '/member' || loc === '/member/') && <MemberWelcome />}
+          {(loc === '/member' || loc === '/member/') && <><JourneyProgress compact /><MemberWelcome /></>}
           {me.enabled ? <PendingInvitation /> : !personalPage && <ActivationPrompt />}{!personalPage && <CompleteProfile me={me} />}{!personalPage && <PendingSector />}{children}
         </main>
       </div>
@@ -226,7 +238,7 @@ function NetworkGate() {
   if (!state.me) {
     return (
       <Onboard eyebrow="WELCOME" title="Create your member profile">
-        <p className="mb-6 text-sm text-ink-700">Membership is free. Add your name, profession, country and at least one sector to set up your profile. Creating a profile does not activate network participation, make you public or grant official certification.</p>
+        <p className="mb-6 text-sm text-ink-700">Membership is free. Add your account type, name, profession, country, a primary sector and 1 to 3 active sectors. Creating a profile does not activate network participation, make you public or grant official certification.</p>
         <ProfileForm onboarding initial={profileQ.data?.profile ?? null} defaultName={user?.fullName ?? ''} onDone={() => stateQ.refetch()} />
       </Onboard>
     );
@@ -250,6 +262,7 @@ function NetworkGate() {
           <Route path="/member/founder/partners">{me.founder ? <FounderPartners /> : <Redirect to="/member" replace />}</Route>
           <Route path="/member/founder/programs">{me.founder ? <FounderPrograms /> : <Redirect to="/member" replace />}</Route>
           <Route path="/member/founder/pages">{me.founder ? <FounderPages /> : <Redirect to="/member" replace />}</Route>
+          <Route path="/member/founder/members">{me.founder ? <FounderMembers /> : <Redirect to="/member" replace />}</Route>
           <Route path="/member/founder/media">{me.founder ? <FounderMedia /> : <Redirect to="/member" replace />}</Route>
           <Route path="/member/founder">{me.founder ? <FounderWorkspace /> : <Redirect to="/member" replace />}</Route>
           <Route path="/member/invite"><div className="flex flex-col gap-4 px-3 pt-4 md:px-0 md:pt-0"><h1 className="font-display text-2xl text-ink-900">Invite your community</h1><InvitationProgress growth={state.growth} founder={me.founder} /></div></Route>

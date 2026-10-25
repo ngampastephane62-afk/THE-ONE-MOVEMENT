@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useProfileReadiness, ReadinessLock } from '@/components/network/readiness';
 import { Link } from 'wouter';
 import { Briefcase, Clapperboard, Loader2, Newspaper } from 'lucide-react';
 import { useGetNetworkState, getGetNetworkStateQueryKey, type GetNetworkStateFeed, type NetworkPost } from '@workspace/api-client-react';
@@ -23,6 +24,8 @@ function Composer() {
   const [text, setText] = useState('');
   const [kind, setKind] = useState('post');
   const [err, setErr] = useState(false);
+  const ready = useProfileReadiness();
+  if (ready.locked) return <div className={`${card} p-4`} data-testid="composer-locked"><ReadinessLock action="publish posts" /></div>;
   const canPost = (text.trim() || u.ids.length) && !u.busy && !pending && !u.items.some((i) => i.status === 'error');
   return (
     <form className={`${card} p-4`} onSubmit={(e) => {
@@ -124,11 +127,12 @@ export default function Feed() {
 function SuggestRow({ id }: { id: number }) {
   const { base } = useMe();
   const { run, pending } = useAct();
+  const ready = useProfileReadiness();
   const m = base.members.find((x) => x.id === id)!;
   return (
     <div className="flex items-center gap-2">
       <Link href={`/member/profile/${m.id}`} className="flex min-w-0 flex-1 items-center gap-2"><Avatar m={m} size={34} /><span className="min-w-0"><span className="block truncate text-sm font-semibold text-ink-900">{m.fullName}</span><span className="block truncate text-xs text-sand-400">{m.profession}</span></span></Link>
-      <button className="rounded-full border border-lagoon-700 px-3 py-1 text-xs font-semibold text-lagoon-700 hover:bg-lagoon-700 hover:text-ivory-50" disabled={pending} onClick={() => run({ action: 'follow', targetId: m.id, accepted: true }).catch(() => undefined)} data-testid={`button-follow-${m.id}`}>Follow</button>
+      <button className="rounded-full border border-lagoon-700 px-3 py-1 text-xs font-semibold text-lagoon-700 hover:bg-lagoon-700 hover:text-ivory-50" disabled={pending || ready.locked} title={ready.locked ? 'Complete your essential profile to follow' : undefined} onClick={() => { if (!ready.locked) run({ action: 'follow', targetId: m.id, accepted: true }).catch(() => undefined); }} data-testid={`button-follow-${m.id}`}>Follow</button>
     </div>
   );
 }

@@ -5,6 +5,108 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+export type MembershipAccountProfileStatus = typeof MembershipAccountProfileStatus[keyof typeof MembershipAccountProfileStatus];
+
+
+export const MembershipAccountProfileStatus = {
+  no_profile: 'no_profile',
+  incomplete: 'incomplete',
+  complete: 'complete',
+} as const;
+
+export interface MembershipAccount {
+  clerkId: string;
+  name: string;
+  email: string;
+  emailVerified: boolean;
+  createdAt: string;
+  /** @nullable */
+  lastSignInAt: string | null;
+  profileStatus: MembershipAccountProfileStatus;
+  missingFields: string[];
+  sectors: string[];
+  networkEnabled: boolean;
+  suspended: boolean;
+  /** @nullable */
+  lastReminderAt: string | null;
+  /** @nullable */
+  reminderStatus: string | null;
+  remindersOptedOut: boolean;
+}
+
+export type MembershipDashboardEnvironment = typeof MembershipDashboardEnvironment[keyof typeof MembershipDashboardEnvironment];
+
+
+export const MembershipDashboardEnvironment = {
+  development: 'development',
+  production: 'production',
+} as const;
+
+export type MembershipDashboardTotals = {
+  accounts: number;
+  noProfile: number;
+  incomplete: number;
+  complete: number;
+  active: number;
+};
+
+export type MembershipDashboardEmailSetup = {
+  configured: boolean;
+  message: string;
+};
+
+export type MembershipDashboardTrafficDailyItem = {
+  day: string;
+  sessions: number;
+  pageViews: number;
+};
+
+export type MembershipDashboardTraffic = {
+  days: number;
+  sessions: number;
+  pageViews: number;
+  /** @nullable */
+  measurementStartedAt: string | null;
+  daily: MembershipDashboardTrafficDailyItem[];
+};
+
+export interface MembershipDashboard {
+  refreshedAt: string;
+  environment: MembershipDashboardEnvironment;
+  totals: MembershipDashboardTotals;
+  accounts: MembershipAccount[];
+  page: number;
+  pages: number;
+  filteredCount: number;
+  emailSetup: MembershipDashboardEmailSetup;
+  traffic: MembershipDashboardTraffic;
+}
+
+export interface ProfileReminderPreview {
+  clerkId: string;
+  recipient: string;
+  subject: string;
+  text: string;
+  canSend: boolean;
+  reason: string;
+  previewToken: string;
+}
+
+export interface SendProfileReminderInput {
+  confirmed: true;
+  /** @maxLength 200 */
+  previewToken: string;
+}
+
+export interface SiteVisitInput {
+  /**
+     * @maxLength 36
+     * @pattern ^[a-fA-F0-9-]{36}$
+     */
+  sessionId: string;
+  consent: true;
+}
+
 export type HomeEditorialStatus = typeof HomeEditorialStatus[keyof typeof HomeEditorialStatus];
 
 
@@ -2450,6 +2552,51 @@ export interface DetailedHealthStatus {
   status: string;
   database: string;
 }
+
+export type GetMembershipDashboardParams = {
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @maxLength 120
+ */
+search?: string;
+status?: GetMembershipDashboardStatus;
+days?: GetMembershipDashboardDays;
+};
+
+export type GetMembershipDashboardStatus = typeof GetMembershipDashboardStatus[keyof typeof GetMembershipDashboardStatus];
+
+
+export const GetMembershipDashboardStatus = {
+  all: 'all',
+  no_profile: 'no_profile',
+  incomplete: 'incomplete',
+  complete: 'complete',
+  active: 'active',
+} as const;
+
+export type GetMembershipDashboardDays = typeof GetMembershipDashboardDays[keyof typeof GetMembershipDashboardDays];
+
+
+export const GetMembershipDashboardDays = {
+  NUMBER_7: 7,
+  NUMBER_30: 30,
+  NUMBER_90: 90,
+} as const;
+
+export type SendProfileReminder200Status = typeof SendProfileReminder200Status[keyof typeof SendProfileReminder200Status];
+
+
+export const SendProfileReminder200Status = {
+  accepted: 'accepted',
+} as const;
+
+export type SendProfileReminder200 = {
+  status: SendProfileReminder200Status;
+  acceptedAt: string;
+};
 
 export type GetMediaPublicationsParams = {
 /**

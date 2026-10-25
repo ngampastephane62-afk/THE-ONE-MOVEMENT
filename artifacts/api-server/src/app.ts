@@ -49,7 +49,9 @@ app.use(
         return {
           id: req.id,
           method: req.method,
-          url: req.url?.split("?")[0],
+          url: req.url?.startsWith("/api/profile-reminders/preferences/")
+            ? "/api/profile-reminders/preferences/[redacted]"
+            : req.url?.split("?")[0],
         };
       },
       res(res) {

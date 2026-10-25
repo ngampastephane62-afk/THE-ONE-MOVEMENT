@@ -47,6 +47,7 @@ import type {
   GetHumanitarianPaymentStatusParams,
   GetMediaEngagementParams,
   GetMediaPublicationsParams,
+  GetMembershipDashboardParams,
   GetMyGratitudeStoriesParams,
   GetNetworkPaymentStatusParams,
   GetNetworkStateParams,
@@ -87,6 +88,7 @@ import type {
   MediaPublicationSave,
   MemberProfileInput,
   MemberProfileResponse,
+  MembershipDashboard,
   NetworkActionInput,
   NetworkActionResult,
   NetworkPaymentStatus,
@@ -116,6 +118,7 @@ import type {
   ProfessionalBusiness,
   ProfessionalIntroductionInput,
   ProfessionalState,
+  ProfileReminderPreview,
   ProgramEditorial,
   ProgramEditorialSave,
   ProgramInquiry,
@@ -124,6 +127,9 @@ import type {
   RequestGratitudeUpload201,
   RunGratitudeAction200,
   SavedItemInput,
+  SendProfileReminder200,
+  SendProfileReminderInput,
+  SiteVisitInput,
   UpdateHumanitarianOffer200,
   UpdateMediaEngagementParams,
   VideoEngagement,
@@ -156,6 +162,368 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   }
   return result;
 };
+
+export const getGetMembershipDashboardUrl = (params?: GetMembershipDashboardParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/founder/membership-dashboard?${stringifiedParams}` : `/api/founder/membership-dashboard`
+}
+
+export const getMembershipDashboard = async (params?: GetMembershipDashboardParams, options?: Parameters<typeof customFetch>[1]): Promise<MembershipDashboard> => {
+
+  return customFetch<MembershipDashboard>(getGetMembershipDashboardUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetMembershipDashboardQueryKey = (params?: GetMembershipDashboardParams,) => {
+    return [
+    `/api/founder/membership-dashboard`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getGetMembershipDashboardQueryOptions = <TData = Awaited<ReturnType<typeof getMembershipDashboard>>, TError = ErrorType<unknown>>(params?: GetMembershipDashboardParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMembershipDashboard>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMembershipDashboardQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMembershipDashboard>>> = ({ signal }) => getMembershipDashboard(params, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMembershipDashboard>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMembershipDashboardQueryResult = NonNullable<Awaited<ReturnType<typeof getMembershipDashboard>>>
+export type GetMembershipDashboardQueryError = ErrorType<unknown>
+
+
+export function useGetMembershipDashboard<TData = Awaited<ReturnType<typeof getMembershipDashboard>>, TError = ErrorType<unknown>>(
+ params: undefined |  GetMembershipDashboardParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMembershipDashboard>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMembershipDashboard>>,
+          TError,
+          Awaited<ReturnType<typeof getMembershipDashboard>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMembershipDashboard<TData = Awaited<ReturnType<typeof getMembershipDashboard>>, TError = ErrorType<unknown>>(
+ params?: GetMembershipDashboardParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMembershipDashboard>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMembershipDashboard>>,
+          TError,
+          Awaited<ReturnType<typeof getMembershipDashboard>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMembershipDashboard<TData = Awaited<ReturnType<typeof getMembershipDashboard>>, TError = ErrorType<unknown>>(
+ params?: GetMembershipDashboardParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMembershipDashboard>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetMembershipDashboard<TData = Awaited<ReturnType<typeof getMembershipDashboard>>, TError = ErrorType<unknown>>(
+ params?: GetMembershipDashboardParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMembershipDashboard>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMembershipDashboardQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getPreviewProfileReminderUrl = (clerkId: string,) => {
+
+
+
+
+  return `/api/founder/profile-reminders/${clerkId}`
+}
+
+export const previewProfileReminder = async (clerkId: string, options?: Parameters<typeof customFetch>[1]): Promise<ProfileReminderPreview> => {
+
+  return customFetch<ProfileReminderPreview>(getPreviewProfileReminderUrl(clerkId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getPreviewProfileReminderQueryKey = (clerkId: string,) => {
+    return [
+    `/api/founder/profile-reminders/${clerkId}`
+    ] as const;
+    }
+
+
+export const getPreviewProfileReminderQueryOptions = <TData = Awaited<ReturnType<typeof previewProfileReminder>>, TError = ErrorType<unknown>>(clerkId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof previewProfileReminder>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getPreviewProfileReminderQueryKey(clerkId);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof previewProfileReminder>>> = ({ signal }) => previewProfileReminder(clerkId, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: clerkId !== null && clerkId !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof previewProfileReminder>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type PreviewProfileReminderQueryResult = NonNullable<Awaited<ReturnType<typeof previewProfileReminder>>>
+export type PreviewProfileReminderQueryError = ErrorType<unknown>
+
+
+export function usePreviewProfileReminder<TData = Awaited<ReturnType<typeof previewProfileReminder>>, TError = ErrorType<unknown>>(
+ clerkId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof previewProfileReminder>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof previewProfileReminder>>,
+          TError,
+          Awaited<ReturnType<typeof previewProfileReminder>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function usePreviewProfileReminder<TData = Awaited<ReturnType<typeof previewProfileReminder>>, TError = ErrorType<unknown>>(
+ clerkId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof previewProfileReminder>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof previewProfileReminder>>,
+          TError,
+          Awaited<ReturnType<typeof previewProfileReminder>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function usePreviewProfileReminder<TData = Awaited<ReturnType<typeof previewProfileReminder>>, TError = ErrorType<unknown>>(
+ clerkId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof previewProfileReminder>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function usePreviewProfileReminder<TData = Awaited<ReturnType<typeof previewProfileReminder>>, TError = ErrorType<unknown>>(
+ clerkId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof previewProfileReminder>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getPreviewProfileReminderQueryOptions(clerkId,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getSendProfileReminderUrl = (clerkId: string,) => {
+
+
+
+
+  return `/api/founder/profile-reminders/${clerkId}`
+}
+
+export const sendProfileReminder = async (clerkId: string,
+    sendProfileReminderInput: SendProfileReminderInput, options?: Parameters<typeof customFetch>[1]): Promise<SendProfileReminder200> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<SendProfileReminder200>(getSendProfileReminderUrl(clerkId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(sendProfileReminderInput)
+  }
+);}
+
+
+
+
+
+export const getSendProfileReminderMutationKey = () => ['sendProfileReminder'] as const;
+
+export const getSendProfileReminderMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof sendProfileReminder>>, TError,SendProfileReminderMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof sendProfileReminder>>, TError,SendProfileReminderMutationVariables, TContext> => {
+
+const mutationKey = getSendProfileReminderMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof sendProfileReminder>>, SendProfileReminderMutationVariables> = (props) => {
+          const {clerkId,data} = props ?? {};
+
+          return  sendProfileReminder(clerkId,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type SendProfileReminderMutationResult = NonNullable<Awaited<ReturnType<typeof sendProfileReminder>>>
+    export type SendProfileReminderMutationBody = BodyType<SendProfileReminderInput>
+    export type SendProfileReminderMutationError = ErrorType<unknown>
+    export type SendProfileReminderMutationVariables = {clerkId: string;data: BodyType<SendProfileReminderInput>}
+
+    export const useSendProfileReminder = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof sendProfileReminder>>, TError,SendProfileReminderMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof sendProfileReminder>>,
+        TError,
+        SendProfileReminderMutationVariables,
+        TContext
+      > => {
+      return useMutation(getSendProfileReminderMutationOptions(options), queryClient);
+    }
+
+export const getRecordSiteVisitUrl = () => {
+
+
+
+
+  return `/api/site-visits`
+}
+
+export const recordSiteVisit = async (siteVisitInput: SiteVisitInput, options?: Parameters<typeof customFetch>[1]): Promise<void> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<void>(getRecordSiteVisitUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(siteVisitInput)
+  }
+);}
+
+
+
+
+
+export const getRecordSiteVisitMutationKey = () => ['recordSiteVisit'] as const;
+
+export const getRecordSiteVisitMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof recordSiteVisit>>, TError,RecordSiteVisitMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof recordSiteVisit>>, TError,RecordSiteVisitMutationVariables, TContext> => {
+
+const mutationKey = getRecordSiteVisitMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof recordSiteVisit>>, RecordSiteVisitMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  recordSiteVisit(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type RecordSiteVisitMutationResult = NonNullable<Awaited<ReturnType<typeof recordSiteVisit>>>
+    export type RecordSiteVisitMutationBody = BodyType<SiteVisitInput>
+    export type RecordSiteVisitMutationError = ErrorType<unknown>
+    export type RecordSiteVisitMutationVariables = {data: BodyType<SiteVisitInput>}
+
+    export const useRecordSiteVisit = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof recordSiteVisit>>, TError,RecordSiteVisitMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof recordSiteVisit>>,
+        TError,
+        RecordSiteVisitMutationVariables,
+        TContext
+      > => {
+      return useMutation(getRecordSiteVisitMutationOptions(options), queryClient);
+    }
 
 export const getGetHomeEditorialUrl = () => {
 

@@ -127,6 +127,10 @@ test("explicit network activation (isolated HTTP regression suite)", async t => 
     ...(body === undefined ? {} : { body: JSON.stringify(body) }),
   });
   const profile = id => state.profiles.find(p => p.memberId === state.members.find(m => m.clerkId === id)?.id);
+  const complete = id => Object.assign(state.members.find(m => m.clerkId === id), {
+    accountType: "individual", fullName: "Fixture Member", profession: "Designer",
+    country: "United Arab Emirates", mainSector: "fashion", activeSectors: ["fashion"],
+  });
   const join = { action: "join", accepted: true };
 
   await t.test("anonymous activation and browsing require authentication", async () => {
@@ -164,6 +168,13 @@ test("explicit network activation (isolated HTTP regression suite)", async t => 
       { origin: "https://other.fixture.invalid" }, { origin: "" }, { "sec-fetch-site": "cross-site" },
     ]) assert.equal((await request("new", join, headers)).status, 403);
     assert.equal(profile("new").enabled, false);
+  });
+  await t.test("verified accounts must finish essential setup before activation", async () => {
+    const response = await request("new", join);
+    assert.equal(response.status, 409);
+    assert.match((await response.json()).error, /Complete your profile/);
+    assert.equal(profile("new").enabled, false);
+    complete("new");
   });
   await t.test("activation affects only the authenticated member, not a supplied target", async () => {
     identity("other");
@@ -207,6 +218,8 @@ test("explicit network activation (isolated HTTP regression suite)", async t => 
     assert.equal((await request("new", { ...post, text: "" })).status, 400);
     assert.equal(state.posts.length, before);
     identity("writer");
+    await request("writer");
+    complete("writer");
     await request("writer", join);
     assert.equal((await request("writer", { ...post, action: "post.edit", id: state.posts[0].id })).status, 404);
     assert.equal(state.posts[0].text, "Edited fixture");
@@ -215,6 +228,7 @@ test("explicit network activation (isolated HTTP regression suite)", async t => 
     assert.equal(state.posts.length, before);
   });
   await t.test("activation preserves both public visibility choices and public media consent", async () => {
+    complete("other");
     for (const isPublic of [false, true]) {
       const member = state.members.find(m => m.clerkId === "other");
       Object.assign(member, { isPublic, publicMedia: isPublic });
@@ -224,6 +238,23 @@ test("explicit network activation (isolated HTTP regression suite)", async t => 
       assert.equal((await request("other", { action: "join", accepted: false })).status, 200);
       assert.deepEqual(member, before);
     }
+  });
+  await t.test("already activated incomplete profiles cannot publish, follow or claim invitations, but may leave", async () => {
+    const member = state.members.find(m => m.clerkId === "new");
+    const before = member.mainSector;
+    member.mainSector = null;
+    for (const body of [
+      { action: "post.create", kind: "post", text: "Must not publish" },
+      { action: "follow", targetId: 2, accepted: true },
+      { action: "referral.claim", accepted: true, kind: "11111111-1111-4111-8111-111111111111" },
+    ]) {
+      const response = await request("new", body);
+      assert.equal(response.status, 409);
+      assert.match((await response.json()).error, /Complete your profile/);
+    }
+    assert.equal((await request("new", { action: "join", accepted: false })).status, 200);
+    member.mainSector = before;
+    assert.equal((await request("new", join)).status, 200);
   });
   await t.test("pre-existing active and inactive profiles retain their state on authentication", async () => {
     for (const enabled of [false, true]) {
@@ -249,6 +280,7 @@ test("explicit network activation (isolated HTTP regression suite)", async t => 
     assert.equal((await request("founder")).status, 200);
     assert.equal(profile("founder").enabled, false);
     assert.equal(profile("founder").founder, true);
+    complete("founder");
     assert.doesNotThrow(() => requireFounder({ locals: { actor: { founder: true } } }));
     assert.throws(() => requireFounder({ locals: { actor: { founder: false } } }), e => e.status === 403);
     profile("founder").suspended = true;

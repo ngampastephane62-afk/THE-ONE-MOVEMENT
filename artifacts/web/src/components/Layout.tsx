@@ -4,6 +4,8 @@ import { Link, useLocation } from 'wouter';
 import { navItems } from '@/lib/navigation';
 import { Show } from '@clerk/react';
 import MovementLink from '@/components/MovementLink';
+import MembershipInvitation from '@/components/MembershipInvitation';
+import VisitConsent, { openVisitConsent } from '@/components/VisitConsent';
 import tomiLogo from '@/assets/media/home/tomi-official-logo.png';
 
 /**
@@ -209,7 +211,10 @@ export default function Layout({ children }: LayoutProps) {
       </header>
 
       {/* ── Page content ───────────────────────────────────────────────────── */}
+      <MembershipInvitation variant="strip" />
       <main className="flex-1">{children}</main>
+
+      <VisitConsent />
 
       {/* ── Footer ─────────────────────────────────────────────────────────── */}
       <footer
@@ -224,6 +229,7 @@ export default function Layout({ children }: LayoutProps) {
 
         <span className="kuba-field kuba-field-steps" aria-hidden="true" />
         <div className="relative mx-auto max-w-7xl px-6 py-14">
+          <MembershipInvitation variant="footer" />
           <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
             {/* Column 1 — Identity */}
             <div className="lg:col-span-1">
@@ -360,9 +366,12 @@ export default function Layout({ children }: LayoutProps) {
             <p className="text-xs" style={{ color: 'hsl(36 20% 60%)' }}>
               &copy; {new Date().getFullYear()} The One Movement International. All rights reserved.
             </p>
-            <p className="text-xs" style={{ color: 'hsl(36 20% 58%)' }}>
-              One World. One Purpose. One Movement.
-            </p>
+<div className="flex flex-wrap items-center gap-4">
+              <button type="button" onClick={openVisitConsent} className="text-xs underline underline-offset-4 hover:text-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400" style={{ color: 'hsl(36 20% 68%)' }} data-testid="button-footer-visit-consent">Visit counting choice</button>
+              <p className="text-xs" style={{ color: 'hsl(36 20% 58%)' }}>
+                One World. One Purpose. One Movement.
+              </p>
+            </div>
           </div>
         </div>
       </footer>

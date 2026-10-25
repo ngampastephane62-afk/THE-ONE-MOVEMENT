@@ -37,7 +37,9 @@ function validate(v: MemberProfileInput, onboarding = false): Errors {
   if (issue) e.activeSectors = issue;
   if (onboarding) {
     if (!v.accountType) e.accountType = 'Choose an individual or organization account.';
-    if (v.activeSectors == null) e.activeSectors = 'Choose your primary sector.';
+    if (!v.mainSector) e.mainSector = 'Choose your primary sector.';
+    if (!v.activeSectors?.length) e.activeSectors = 'Choose 1 to 3 distinct active sectors, including your primary sector.';
+    if (v.accountType === 'organization' && (v.contactName ?? '').trim().length < 2) e.contactName = 'Add a contact person (at least 2 characters).';
     if (v.accountType === 'organization' && !(v.organizationType ?? '').trim()) e.organizationType = 'Add the type of organization.';
     if (v.profession.trim().length < 2) e.profession = 'Add your profession or role.';
     if (v.country.trim().length < 2) e.country = 'Add your country.';
@@ -179,7 +181,7 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
 
   return (
     <form onSubmit={submit} noValidate className="flex flex-col gap-8" data-testid="form-member-profile">
-      {onboarding ? <p className="text-sm leading-relaxed text-ink-700" data-testid="text-profile-completion-guidance">A few details help members recognise you: account type, display name, profession, country and a primary sector. Everything else is optional. Saving does not activate the network or make your profile public.</p> :
+      {onboarding ? <p className="text-sm leading-relaxed text-ink-700" data-testid="text-profile-completion-guidance">A few details help members recognise you: account type, display name, profession, country, a primary sector and 1 to 3 active sectors (organizations also add their type and a private contact person). Photo, biography, social links, public directory and payment are optional. Saving does not activate the network or make your profile public.</p> :
       <p className="text-sm leading-relaxed text-ink-700" data-testid="text-profile-completion-guidance">Build your profile at your own pace: confirm your display name, add a photo from Settings, describe your profession, select sectors and write a short biography. These steps are optional for exploring TOMI; you can come back later. Saving never activates the network; visibility changes only if you choose those settings.</p>}
       {appearance && <AppearanceControls v={v} set={set} />}
       <fieldset className="grid gap-5 sm:grid-cols-2">
@@ -206,8 +208,8 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
           <label className="text-sm text-ink-900">{onboarding ? req('Organization type') : 'Organization type'}
             <input className={`${fieldCls} mt-1`} value={v.organizationType ?? ''} maxLength={100} placeholder="e.g. Foundation, studio, embassy" onChange={(e) => set('organizationType', e.target.value)} data-testid="input-organizationType" aria-invalid={!!errors.organizationType} />{err('organizationType')}
           </label>
-          <label className="text-sm text-ink-900">Contact person <span className="text-sand-400">(private)</span>
-            <input className={`${fieldCls} mt-1`} value={v.contactName ?? ''} maxLength={100} onChange={(e) => set('contactName', e.target.value)} data-testid="input-contactName" />
+          <label className="text-sm text-ink-900">{onboarding ? req('Contact person') : 'Contact person'} <span className="text-sand-400">(private)</span>
+            <input className={`${fieldCls} mt-1`} value={v.contactName ?? ''} maxLength={100} onChange={(e) => set('contactName', e.target.value)} data-testid="input-contactName" aria-invalid={!!errors.contactName} />{err('contactName')}
             <span className="mt-1 block text-xs text-ink-700">Kept private. Never shown on your profile or public page.</span>
           </label>
         </>}
@@ -256,7 +258,7 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
             })}
           </div>
         )}
-        {err('activeSectors')}
+        {err('mainSector')}{err('activeSectors')}
       </fieldset>
 
       <fieldset>

@@ -9,3 +9,4 @@ export * from "./partnerDirectory";
 export * from "./gratitude";
 export * from "./memberProfilePolicy";
 export * from "./homeEditorial";
+export * from "./profileCompletion";

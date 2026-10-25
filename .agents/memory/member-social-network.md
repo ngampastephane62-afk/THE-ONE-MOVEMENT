@@ -21,7 +21,7 @@ The member network must retain visible The One Movement International branding w
 
 **How to apply:** Keep the brand accessible on mobile as well as desktop; show descriptions members actually entered, never invented biographies, and preserve consent-based messaging.
 
-New members may join, publish, follow people, like and comment after their email is verified and they activate network membership; they do not wait for individual CEO approval or buy an event package. Invitations are optional, with no referral threshold for publishing. Official certifications remain a separate approval process.
+New members may join, publish, follow people, like and comment after their email is verified, their essential profile and sector choices are complete, and they explicitly activate network membership; they do not wait for individual CEO approval or buy an event package. Invitations are optional, with no referral threshold for publishing. Official certifications remain a separate approval process.
 
 **Why:** On 2026-10-16 the stakeholder explicitly selected “Tous les membres vérifiés” and authorized removing the previous 11-person invitation condition. This supersedes the earlier referral-gated publishing requirement.
 
@@ -31,7 +31,7 @@ During community trials, publishing is open to all signed-in members, including 
 
 **Why:** The Founder asked to let everyone post during trials and explicitly chose “Tous les membres connectés” rather than visitors without accounts.
 
-**How to apply:** Apply the trial opening to community publishing only, not official editorial pages, certifications or other paid services. Preserve verified identity, voluntary network activation, suspension, media ownership, blocking and moderation. Do not automatically change existing account visibility or activate memberships.
+**How to apply:** Apply the trial opening to community publishing only, not official editorial pages, certifications or other paid services. Preserve verified identity, essential-profile completion before participation, voluntary network activation, suspension, media ownership, blocking and moderation. Do not automatically change existing account visibility or activate memberships.
 
 Creating a free account must not itself activate network participation. A correction to new-profile activation defaults must preserve existing members' activation choices, independently of public visibility.
 
@@ -39,9 +39,9 @@ Creating a free account must not itself activate network participation. A correc
 
 **How to apply:** Require the member's explicit activation action; do not retrospectively treat existing activation as missing consent or change existing accounts without separate approval.
 
-Verified users must be able to explore the feed immediately after signing in, before filling in their profile. Profession, sectors, biography and other details can be completed later. Members should easily open their followers and following lists.
+Verified users can explore after signing in without completing a blocking profile form. Essential profile details and sector selection must be finished before posting, following or inviting; a biography, photo and social links remain optional. Members should easily open their followers and following lists.
 
-**Why:** The Founder relayed user feedback that the compulsory profile form caused visitors to leave before seeing the platform.
+**Why:** The Founder previously relayed that compulsory forms discouraged exploration, then explicitly requested account → completed profile → sectors → participation so membership can be accurately reported to partners.
 
 **How to apply:** Use progressive onboarding without a blocking profile form. After registration or sign-in, prioritize the member network over a previously visited public page; already signed-in visitors opening an auth page should return to their interface. Keep member-space access visible on mobile without opening a menu. Preserve explicit consent before making a profile discoverable to other members; do not confuse this with optional public-internet visibility. Never promise that Google or a new-device security check can always be skipped.
 

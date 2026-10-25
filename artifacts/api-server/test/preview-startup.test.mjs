@@ -63,7 +63,7 @@ test("undocumented environment labels do not override explicit editor and deploy
 });
 
 function runEntry(env, { failPayments = false } = {}) {
-  const calls = { initialize: 0, listen: 0, timers: 0, warnings: [], infos: [], errors: [] };
+  const calls = { initialize: 0, listen: 0, retention: 0, timers: 0, warnings: [], infos: [], errors: [] };
   const module = { exports: {} };
   runInNewContext(compile(resolve(root, "index.ts")), {
     module, exports: module.exports, process: { env: { PORT: "8080", ...env } },
@@ -74,6 +74,7 @@ function runEntry(env, { failPayments = false } = {}) {
     },
     require(id) {
       if (id === "./lib/previewStartup") return { stripeStartupMode: mode };
+      if (id === "./services/siteVisits") return { startVisitRetention() { calls.retention++; } };
       if (id === "./app") return { default: { listen(port, callback) { calls.listen++; assert.equal(port, 8080); callback(); } } };
       if (id === "./lib/logger") return { logger: {
         info: (...args) => calls.infos.push(args), warn: message => calls.warnings.push(message),
@@ -93,6 +94,7 @@ test("preview entrypoint opens the API but never initializes payments or schedul
   const calls = runEntry(preview, { failPayments: true });
   await Promise.resolve();
   assert.equal(calls.listen, 1);
+  assert.equal(calls.retention, 1);
   assert.equal(calls.initialize, 0);
   assert.equal(calls.timers, 0);
   assert.match(calls.warnings[0], /disabled explicitly/);

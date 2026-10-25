@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useProfileReadiness, ReadinessLock } from '@/components/network/readiness';
 import { Link } from 'wouter';
 import { Eye, Flag, Heart, MessageCircle, MoreHorizontal, Pencil, Trash2 } from 'lucide-react';
 import type { NetworkPost } from '@workspace/api-client-react';
@@ -8,6 +9,7 @@ const viewed = new Set<number>();
 
 export default function PostCard({ post, meId, onReport }: { post: NetworkPost; meId: number; onReport: (postId: number, memberId: number) => void }) {
   const { run, pending } = useAct();
+  const ready = useProfileReadiness();
   const ref = useRef<HTMLElement>(null);
   const mine = post.author.id === meId;
   const [menu, setMenu] = useState(false);
@@ -62,8 +64,9 @@ export default function PostCard({ post, meId, onReport }: { post: NetworkPost; 
         <div className="mt-3 flex flex-col gap-2">
           <label className="sr-only" htmlFor={`edit-${post.id}`}>Edit post</label>
           <textarea id={`edit-${post.id}`} className={`${field} min-h-24`} value={text} maxLength={5000} onChange={(e) => setText(e.target.value)} />
-          <div className="flex gap-2">
-            <button type="button" className={btn} disabled={pending || !text.trim()} onClick={() => act(run({ action: 'post.edit', id: post.id, text: text.trim(), kind: post.kind, mediaIds: post.media.map((m) => m.id) }), () => setEditing(false))} data-testid={`button-save-post-${post.id}`}>Save</button>
+          <div className="flex flex-wrap gap-2">
+            <ReadinessLock action="save post edits" className="w-full" />
+            <button type="button" className={btn} disabled={pending || !text.trim() || ready.locked} onClick={() => ready.complete && act(run({ action: 'post.edit', id: post.id, text: text.trim(), kind: post.kind, mediaIds: post.media.map((m) => m.id) }), () => setEditing(false))} data-testid={`button-save-post-${post.id}`}>Save</button>
             <button type="button" className={btnGhost} onClick={() => { setEditing(false); setText(post.text); }}>Cancel</button>
           </div>
         </div>

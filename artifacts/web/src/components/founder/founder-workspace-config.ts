@@ -32,19 +32,20 @@ export const FOUNDER_TOOLS: Record<string, FounderTool> = {
   certs: { id: 'certs', label: 'Certifications', href: '/member/admin?tab=certs', description: 'Review official role and programme certification requests.' },
   reports: { id: 'reports', label: 'Moderation reports', href: '/member/admin?tab=reports', description: 'Review member reports and moderation actions.' },
   offers: { id: 'offers', label: 'Humanitarian offers', href: '/member/admin?tab=offers', description: 'Review humanitarian offers submitted by members.' },
+  membershipDashboard: { id: 'membershipDashboard', label: 'Membership dashboard', href: '/member/founder/members', description: 'Accounts by profile status, consented daily visit counts and single, confirmed profile reminders.' },
   members: { id: 'members', label: 'Member moderation', href: '/member/admin?tab=members', description: 'Review suspended member accounts and the existing moderation controls. This is not a general profile editor.' },
   gratitude: { id: 'gratitude', label: 'Gratitude campaign moderation', href: '/member/admin?tab=gratitude', description: 'Review contributions and moderation for the existing gratitude campaigns.' },
   magazine: { id: 'magazine', label: 'Magazine proposals', href: '~/tropik-magazine/contribute#founder-review', description: 'Review contributions proposed for Tropik Magazine.' },
 };
 
 export const FOUNDER_SECTIONS: FounderSection[] = [
-  { id: 'overview', label: 'Overview', status: 'available', summary: 'Your workspace foundation and the founder tools available today.', toolIds: ['pagesHome', 'newsEditor', 'news', 'mediaCenter', 'partnersManager', 'programsManager', 'media', 'intros', 'certs', 'reports', 'members', 'gratitude', 'offers', 'magazine'] },
+  { id: 'overview', label: 'Overview', status: 'available', summary: 'Your workspace foundation and the founder tools available today.', toolIds: ['pagesHome', 'newsEditor', 'news', 'mediaCenter', 'partnersManager', 'programsManager', 'media', 'intros', 'certs', 'reports', 'membershipDashboard', 'members', 'gratitude', 'offers', 'magazine'] },
   { id: 'pages', label: 'Pages', status: 'partial', summary: 'Edit the public homepage: text, media, links, sections and presentation.', unavailableNote: 'Only the homepage is editable. Other public pages are still updated by the TOMI technical team.', toolIds: ['pagesHome'] },
   { id: 'news', label: 'News & Articles', status: 'available', summary: 'Write, preview and publish News articles. The historical press archive remains a separate tool.', toolIds: ['newsEditor', 'news', 'magazine'] },
   { id: 'partners', label: 'Partners', status: 'available', summary: 'Manage the public partner directory and page text, and review partner introduction requests.', toolIds: ['partnersManager', 'intros'] },
   { id: 'media', label: 'Media Management', status: 'available', summary: 'Publish press coverage, television, interviews and announcements to the public Media page. Media requests remain a separate tool for press enquiries.', toolIds: ['mediaCenter', 'media'] },
   { id: 'programs', label: 'Programs & Events', status: 'available', summary: 'Manage the six official programs, their people, videos and announcements, and review program inquiries.', toolIds: ['programsManager'] },
-  { id: 'members', label: 'Members & Moderation', status: 'available', summary: 'Open existing member, report and gratitude moderation tools. These actions remain protected by Founder permissions.', toolIds: ['members', 'reports', 'gratitude', 'certs'] },
+  { id: 'members', label: 'Members & Moderation', status: 'available', summary: 'Open existing member, report and gratitude moderation tools. These actions remain protected by Founder permissions.', toolIds: ['membershipDashboard', 'members', 'reports', 'gratitude', 'certs'] },
   { id: 'branding', label: 'Branding', status: 'unavailable', summary: 'Logos, colours and brand assets.', unavailableNote: 'Brand management is coming soon.', toolIds: [] },
   { id: 'history', label: 'Publishing History', status: 'unavailable', summary: 'A record of what has been published and when.', unavailableNote: 'Publishing history is not yet available. No history is recorded in this phase.', toolIds: [] },
   { id: 'settings', label: 'Founder Settings', status: 'unavailable', summary: 'Workspace preferences for the Founder.', unavailableNote: 'Founder settings are coming soon. Your account settings remain in member settings.', toolIds: [] },

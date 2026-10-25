@@ -11,6 +11,63 @@ tags:
   - name: health
     description: Health operations
 paths:
+  /founder/membership-dashboard:
+    get:
+      operationId: getMembershipDashboard
+      tags: [MembershipDashboard]
+      parameters:
+        - { in: query, name: page, schema: { type: integer, minimum: 1, default: 1 } }
+        - { in: query, name: search, schema: { type: string, maxLength: 120 } }
+        - { in: query, name: status, schema: { type: string, enum: [all, no_profile, incomplete, complete, active], default: all } }
+        - { in: query, name: days, schema: { type: integer, enum: [7, 30, 90], default: 30 } }
+      responses:
+        '200':
+          description: Founder-only account and consent-based traffic statistics.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/MembershipDashboard' }
+  /founder/profile-reminders/{clerkId}:
+    parameters:
+      - { in: path, name: clerkId, required: true, schema: { type: string, maxLength: 100 } }
+    get:
+      operationId: previewProfileReminder
+      tags: [MembershipDashboard]
+      responses:
+        '200':
+          description: Fresh eligibility and exact proposed email; does not send.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ProfileReminderPreview' }
+    post:
+      operationId: sendProfileReminder
+      tags: [MembershipDashboard]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/SendProfileReminderInput' }
+      responses:
+        '200':
+          description: Provider accepted the reminder, not proof of delivery.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status, acceptedAt]
+                properties:
+                  status: { type: string, enum: [accepted] }
+                  acceptedAt: { type: string }
+  /site-visits:
+    post:
+      operationId: recordSiteVisit
+      tags: [MembershipDashboard]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/SiteVisitInput' }
+      responses:
+        '204': { description: Consented anonymous page view recorded. }
   /home-editorial:
     get:
       operationId: getHomeEditorial
@@ -1400,6 +1457,91 @@ paths:
                 $ref: "#/components/schemas/DetailedHealthStatus"
 components:
   schemas:
+    MembershipAccount:
+      type: object
+      required: [clerkId, name, email, emailVerified, createdAt, lastSignInAt, profileStatus, missingFields, sectors, networkEnabled, suspended, lastReminderAt, reminderStatus, remindersOptedOut]
+      properties:
+        clerkId: { type: string }
+        name: { type: string }
+        email: { type: string }
+        emailVerified: { type: boolean }
+        createdAt: { type: string }
+        lastSignInAt: { type: [string, 'null'] }
+        profileStatus: { type: string, enum: [no_profile, incomplete, complete] }
+        missingFields: { type: array, items: { type: string } }
+        sectors: { type: array, items: { type: string } }
+        networkEnabled: { type: boolean }
+        suspended: { type: boolean }
+        lastReminderAt: { type: [string, 'null'] }
+        reminderStatus: { type: [string, 'null'] }
+        remindersOptedOut: { type: boolean }
+    MembershipDashboard:
+      type: object
+      required: [refreshedAt, environment, totals, accounts, page, pages, filteredCount, traffic, emailSetup]
+      properties:
+        refreshedAt: { type: string }
+        environment: { type: string, enum: [development, production] }
+        totals:
+          type: object
+          required: [accounts, noProfile, incomplete, complete, active]
+          properties:
+            accounts: { type: integer }
+            noProfile: { type: integer }
+            incomplete: { type: integer }
+            complete: { type: integer }
+            active: { type: integer }
+        accounts: { type: array, items: { $ref: '#/components/schemas/MembershipAccount' } }
+        page: { type: integer }
+        pages: { type: integer }
+        filteredCount: { type: integer }
+        emailSetup:
+          type: object
+          required: [configured, message]
+          properties:
+            configured: { type: boolean }
+            message: { type: string }
+        traffic:
+          type: object
+          required: [days, sessions, pageViews, measurementStartedAt, daily]
+          properties:
+            days: { type: integer }
+            sessions: { type: integer }
+            pageViews: { type: integer }
+            measurementStartedAt: { type: [string, 'null'] }
+            daily:
+              type: array
+              items:
+                type: object
+                required: [day, sessions, pageViews]
+                properties:
+                  day: { type: string }
+                  sessions: { type: integer }
+                  pageViews: { type: integer }
+    ProfileReminderPreview:
+      type: object
+      required: [clerkId, recipient, subject, text, canSend, reason, previewToken]
+      properties:
+        clerkId: { type: string }
+        recipient: { type: string }
+        subject: { type: string }
+        text: { type: string }
+        canSend: { type: boolean }
+        reason: { type: string }
+        previewToken: { type: string }
+    SendProfileReminderInput:
+      type: object
+      additionalProperties: false
+      required: [confirmed, previewToken]
+      properties:
+        confirmed: { type: boolean, const: true }
+        previewToken: { type: string, maxLength: 200 }
+    SiteVisitInput:
+      type: object
+      additionalProperties: false
+      required: [sessionId, consent]
+      properties:
+        sessionId: { type: string, pattern: '^[a-fA-F0-9-]{36}$', maxLength: 36 }
+        consent: { type: boolean, const: true }
     HomeEditorial:
       type: object
       required: [updatedAt, status, sections]

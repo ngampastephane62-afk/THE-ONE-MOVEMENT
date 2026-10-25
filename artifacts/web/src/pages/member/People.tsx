@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useProfileReadiness } from '@/components/network/readiness';
 import { Link, useSearch } from 'wouter';
 import { Search } from 'lucide-react';
 import { useGetNetworkState, getGetNetworkStateQueryKey } from '@workspace/api-client-react';
@@ -11,6 +12,7 @@ import MemberIdentityStrip from '@/components/network/MemberIdentityStrip';
 export default function People() {
   const { me } = useMe();
   const { run, pending } = useAct();
+  const ready = useProfileReadiness();
   const search = useSearch();
   const initialQ = (new URLSearchParams(search).get('q') ?? '').trim().slice(0, 100);
   const [input, setInput] = useState(initialQ);
@@ -52,7 +54,7 @@ export default function People() {
                 <span>{m.followers} followers</span>
                 <div className="flex gap-2">
                   <Link href={`/member/profile/${m.id}`} className="rounded-full px-3 py-1.5 font-semibold text-ink-700 hover:bg-ivory-200">View & connect</Link>
-                  {!m.blocked && <button disabled={pending} onClick={() => run({ action: 'follow', targetId: m.id, accepted: !m.followed }).catch(() => undefined)} className={`rounded-full px-3 py-1.5 font-semibold ${m.followed ? 'border border-sand-300 text-ink-700' : 'bg-lagoon-900 text-ivory-50'}`} data-testid={`button-follow-${m.id}`}>{m.followed ? 'Following' : 'Follow'}</button>}
+                  {!m.blocked && <button disabled={pending || (!m.followed && ready.locked)} title={!m.followed && ready.locked ? 'Complete your essential profile to follow' : undefined} onClick={() => { if (!m.followed && ready.locked) return; run({ action: 'follow', targetId: m.id, accepted: !m.followed }).catch(() => undefined); }} className={`rounded-full px-3 py-1.5 font-semibold ${m.followed ? 'border border-sand-300 text-ink-700' : 'bg-lagoon-900 text-ivory-50'}`} data-testid={`button-follow-${m.id}`}>{m.followed ? 'Following' : 'Follow'}</button>}
                 </div>
               </div>
             </li>

@@ -12,6 +12,7 @@ import { ownedMedia, completeUpload } from "./networkFiles";
 import { visibleMember, visiblePost, ownThread, ROLES, PROGRAMS, isBlocked } from "./networkState";
 import { startOrdinaryThread } from "./ordinaryMessaging";
 import { checkout, PACKAGE_DEFINITIONS, customPackages } from "./networkPayments";
+import { missingProfileEssentials, PROFILE_REQUIREMENTS } from "@workspace/shared";
 
 function number(value: unknown) {
   if (!Number.isSafeInteger(value) || Number(value) < 1) throw new NetworkError(400, "Choose a valid record.");
@@ -30,7 +31,14 @@ export async function networkAction(req: Request, res: Response) {
   const parsed = NetworkActionBody.strict().safeParse(req.body);
   if (!parsed.success) throw new NetworkError(400, "Invalid network action.");
   const input: NetworkActionInput = parsed.data;
-   const who = actor(res, !["join", "upload.complete", "profile.media", "post.view"].includes(input.action));
+  const who = actor(res, !["join", "upload.complete", "profile.media", "post.view"].includes(input.action));
+  const requiresCompleteProfile = ["post.create", "post.edit", "referral.claim"].includes(input.action) ||
+    (["join", "follow"].includes(input.action) && input.accepted === true);
+  if (requiresCompleteProfile) {
+    const missing = missingProfileEssentials(who.member);
+    if (missing.length) throw new NetworkError(409,
+      `Complete your profile before participating: ${missing.map(k => PROFILE_REQUIREMENTS[k]).join(", ")}. Open My Space → Complete profile.`);
+  }
   const self = who.member.id;
   const id = () => number(input.id);
   const target = () => number(input.targetId);
