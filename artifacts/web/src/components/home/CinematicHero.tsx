@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'wouter';
-import MovementLink from '@/components/MovementLink';
+import EditorialCta from './EditorialCta';
 import { Pause, Play } from 'lucide-react';
 import './cinematic-hero.css';
 import officialLogo from '@/assets/media/home/tomi-official-logo.png';
+import type { SectionView } from '@/lib/home-editorial';
 
 export const INTRO_KEY = 'tomi:home-intro-seen';
 /** Intro timeline in seconds (mirrors cinematic-hero.css delays). */
@@ -68,9 +69,11 @@ export interface CinematicHeroProps {
    * Omit until supplied: no invented volcano image or broken request.
    */
   originAsset?: { file: string; alt: string; width: number; height: number };
+  /** Founder homepage editorial overrides (defaults keep the shipped hero unchanged). */
+  ed?: SectionView;
 }
 
-export default function CinematicHero({ phase = 'globe-bearer', className = '', originAsset }: CinematicHeroProps) {
+export default function CinematicHero({ phase = 'globe-bearer', className = '', originAsset, ed }: CinematicHeroProps) {
   const [paused, setPaused] = useState(false);
   const [reduced, setReduced] = useState(() =>
     typeof window !== 'undefined' && !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
@@ -105,7 +108,7 @@ export default function CinematicHero({ phase = 'globe-bearer', className = '', 
       {/* Layer 0 — Founder-supplied artwork (not a documentary photograph): desert dunes,
           sun, Dubai skyline and supplied teal/gold motifs. Kuba provenance not established. */}
       <div className="tch-bg" aria-hidden="true">
-        <img
+        {ed?.m('background') ? <img src={ed.m('background')!.src} alt="" style={{ objectFit: 'cover', width: '100%', height: '100%' }} /> : <img
           src={media('desert-dubai-1024.webp')}
           srcSet={`${media('desert-dubai-640.webp')} 640w, ${media('desert-dubai-1024.webp')} 1024w`}
           sizes="100vw"
@@ -113,7 +116,7 @@ export default function CinematicHero({ phase = 'globe-bearer', className = '', 
           height={683}
           alt=""
           fetchPriority="high"
-        />
+        />}
       </div>
       {/* Reserved origin layer. No volcano is claimed or rendered without an approved asset. */}
       {originAsset && (
@@ -134,7 +137,7 @@ export default function CinematicHero({ phase = 'globe-bearer', className = '', 
 
       {/* Layer 2 — foreground: the globe bearer */}
       <figure className="tch-bearer" data-testid="img-hero-globe-bearer">
-        <img
+        {ed?.m('bearer') ? <img src={ed.m('bearer')!.src} alt={ed.m('bearer')!.alt} /> : <img
           src={media('globe-bearer-479.webp')}
           srcSet={`${media('globe-bearer-360.webp')} 360w, ${media('globe-bearer-479.webp')} 479w`}
           sizes="(min-width: 768px) 360px, 72vw"
@@ -142,7 +145,7 @@ export default function CinematicHero({ phase = 'globe-bearer', className = '', 
           height={1024}
           alt="TOMI model in black and gold holding a golden globe, a symbol of global unity"
           fetchPriority="high"
-        />
+        />}
         <span className="tch-globe-flare" aria-hidden="true" />
         <span className="tch-globe-light" aria-hidden="true">
           <svg className="tch-globe-connections" viewBox="0 0 100 100" focusable="false">
@@ -156,8 +159,8 @@ export default function CinematicHero({ phase = 'globe-bearer', className = '', 
       <div className="tch-copy">
         <div className="tch-brand">
           <p className="tch-motto" data-testid="text-hero-motto">
-            <strong>We Are One</strong>
-            <span>For Peace &amp; Unity</span>
+            <strong>{ed ? ed.t('mottoStrong') : 'We Are One'}</strong>
+            <span>{ed ? ed.t('mottoSub') : 'For Peace & Unity'}</span>
           </p>
           <h1 id="tch-title" className="tch-logo-wrap" data-testid="text-hero-title">
             <span className="tch-logo-beam" aria-hidden="true" />
@@ -176,9 +179,9 @@ export default function CinematicHero({ phase = 'globe-bearer', className = '', 
           className="tch-actions"
           onAnimationEnd={(e) => { if (e.target === e.currentTarget && intro) finishIntro(); }}
         >
-          <MovementLink className="tch-btn tch-btn--solid" data-testid="link-hero-join" />
-          <Link href="/ecosystem" className="tch-btn tch-btn--ghost" data-testid="link-hero-ecosystem">
-            Explore the Ecosystem
+          <EditorialCta ed={ed} className="tch-btn tch-btn--solid" testId="link-hero-join" />
+          <Link href={ed ? ed.href('secondaryHref') : '/ecosystem'} className="tch-btn tch-btn--ghost" data-testid="link-hero-ecosystem">
+            {ed ? ed.t('secondaryLabel') : 'Explore the Ecosystem'}
           </Link>
         </div>
       </div>

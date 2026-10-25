@@ -59,6 +59,8 @@ import type {
   GratitudeStory,
   GratitudeUploadInput,
   HealthStatus,
+  HomeEditorial,
+  HomeEditorialInput,
   HumanitarianCheckoutInput,
   HumanitarianOfferInput,
   HumanitarianOfferStatusInput,
@@ -154,6 +156,278 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   }
   return result;
 };
+
+export const getGetHomeEditorialUrl = () => {
+
+
+
+
+  return `/api/home-editorial`
+}
+
+export const getHomeEditorial = async ( options?: Parameters<typeof customFetch>[1]): Promise<HomeEditorial> => {
+
+  return customFetch<HomeEditorial>(getGetHomeEditorialUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetHomeEditorialQueryKey = () => {
+    return [
+    `/api/home-editorial`
+    ] as const;
+    }
+
+
+export const getGetHomeEditorialQueryOptions = <TData = Awaited<ReturnType<typeof getHomeEditorial>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHomeEditorial>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetHomeEditorialQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getHomeEditorial>>> = ({ signal }) => getHomeEditorial({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getHomeEditorial>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetHomeEditorialQueryResult = NonNullable<Awaited<ReturnType<typeof getHomeEditorial>>>
+export type GetHomeEditorialQueryError = ErrorType<unknown>
+
+
+export function useGetHomeEditorial<TData = Awaited<ReturnType<typeof getHomeEditorial>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHomeEditorial>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getHomeEditorial>>,
+          TError,
+          Awaited<ReturnType<typeof getHomeEditorial>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetHomeEditorial<TData = Awaited<ReturnType<typeof getHomeEditorial>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHomeEditorial>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getHomeEditorial>>,
+          TError,
+          Awaited<ReturnType<typeof getHomeEditorial>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetHomeEditorial<TData = Awaited<ReturnType<typeof getHomeEditorial>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHomeEditorial>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetHomeEditorial<TData = Awaited<ReturnType<typeof getHomeEditorial>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHomeEditorial>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetHomeEditorialQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getGetFounderHomeEditorialUrl = () => {
+
+
+
+
+  return `/api/founder/home-editorial`
+}
+
+export const getFounderHomeEditorial = async ( options?: Parameters<typeof customFetch>[1]): Promise<HomeEditorial> => {
+
+  return customFetch<HomeEditorial>(getGetFounderHomeEditorialUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetFounderHomeEditorialQueryKey = () => {
+    return [
+    `/api/founder/home-editorial`
+    ] as const;
+    }
+
+
+export const getGetFounderHomeEditorialQueryOptions = <TData = Awaited<ReturnType<typeof getFounderHomeEditorial>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderHomeEditorial>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetFounderHomeEditorialQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getFounderHomeEditorial>>> = ({ signal }) => getFounderHomeEditorial({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getFounderHomeEditorial>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetFounderHomeEditorialQueryResult = NonNullable<Awaited<ReturnType<typeof getFounderHomeEditorial>>>
+export type GetFounderHomeEditorialQueryError = ErrorType<unknown>
+
+
+export function useGetFounderHomeEditorial<TData = Awaited<ReturnType<typeof getFounderHomeEditorial>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderHomeEditorial>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getFounderHomeEditorial>>,
+          TError,
+          Awaited<ReturnType<typeof getFounderHomeEditorial>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetFounderHomeEditorial<TData = Awaited<ReturnType<typeof getFounderHomeEditorial>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderHomeEditorial>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getFounderHomeEditorial>>,
+          TError,
+          Awaited<ReturnType<typeof getFounderHomeEditorial>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetFounderHomeEditorial<TData = Awaited<ReturnType<typeof getFounderHomeEditorial>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderHomeEditorial>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetFounderHomeEditorial<TData = Awaited<ReturnType<typeof getFounderHomeEditorial>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderHomeEditorial>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetFounderHomeEditorialQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getSaveHomeEditorialUrl = () => {
+
+
+
+
+  return `/api/founder/home-editorial`
+}
+
+export const saveHomeEditorial = async (homeEditorialInput: HomeEditorialInput, options?: Parameters<typeof customFetch>[1]): Promise<HomeEditorial> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<HomeEditorial>(getSaveHomeEditorialUrl(),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(homeEditorialInput)
+  }
+);}
+
+
+
+
+
+export const getSaveHomeEditorialMutationKey = () => ['saveHomeEditorial'] as const;
+
+export const getSaveHomeEditorialMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof saveHomeEditorial>>, TError,SaveHomeEditorialMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof saveHomeEditorial>>, TError,SaveHomeEditorialMutationVariables, TContext> => {
+
+const mutationKey = getSaveHomeEditorialMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof saveHomeEditorial>>, SaveHomeEditorialMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  saveHomeEditorial(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type SaveHomeEditorialMutationResult = NonNullable<Awaited<ReturnType<typeof saveHomeEditorial>>>
+    export type SaveHomeEditorialMutationBody = BodyType<HomeEditorialInput>
+    export type SaveHomeEditorialMutationError = ErrorType<void>
+    export type SaveHomeEditorialMutationVariables = {data: BodyType<HomeEditorialInput>}
+
+    export const useSaveHomeEditorial = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof saveHomeEditorial>>, TError,SaveHomeEditorialMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof saveHomeEditorial>>,
+        TError,
+        SaveHomeEditorialMutationVariables,
+        TContext
+      > => {
+      return useMutation(getSaveHomeEditorialMutationOptions(options), queryClient);
+    }
 
 export const getGetProgramEditorialUrl = (slug: string,) => {
 

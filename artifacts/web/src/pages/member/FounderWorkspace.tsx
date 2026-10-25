@@ -31,7 +31,7 @@ function Unavailable({ s }: { s: FounderSection }) {
   return (
     <div className="flex items-start gap-3 rounded-2xl border border-dashed border-sand-200 bg-ivory-100 p-4" data-testid={`status-unavailable-${s.id}`}>
       <Clock className="mt-0.5 h-4 w-4 shrink-0 text-gold-700" aria-hidden="true" />
-      <div><p className="text-sm font-semibold text-ink-900">Not yet available</p><p className="mt-1 text-xs leading-relaxed text-ink-700">{s.unavailableNote}</p></div>
+      <div><p className="text-sm font-semibold text-ink-900">{s.status === 'partial' ? 'Partly available' : 'Not yet available'}</p><p className="mt-1 text-xs leading-relaxed text-ink-700">{s.unavailableNote}</p></div>
     </div>
   );
 }

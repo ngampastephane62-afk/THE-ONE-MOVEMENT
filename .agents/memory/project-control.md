@@ -7,6 +7,12 @@ Le Founder doit avoir « la possibilité de modifier tous les textes, images, et
 
 **Why:** The Founder repeated this requirement when authorizing partner management.
 
+The Founder chose the homepage first for a genuine page editor, including texts, photos, videos, links, adding/removing/reordering sections, layout, colours and presentation.
+
+**Why:** They clarified that adding content alone is insufficient and selected all three editing categories for « Accueil ».
+
+**How to apply:** Connect controls to the actual public page through a private draft and explicit publication. Keep the current homepage intact by default; do not present a content-only form or a detached preview as a full page editor.
+
 **How to apply:** Build real editorial controls with durable storage in the authorized module rather than leaving its content code-only. Keep broader site-wide editing as an explicit product requirement; do not claim a single module provides whole-site coverage or silently extend a scoped backend authorization.
 
 The project stakeholder requires sole control and validation of work, including Stripe and other accounts associated with The One Movement.

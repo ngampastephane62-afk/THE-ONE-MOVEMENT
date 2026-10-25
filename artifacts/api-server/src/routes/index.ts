@@ -19,6 +19,7 @@ import mediaCenterRouter from "./mediaCenter";
 import partnerDirectoryRouter from "./partnerDirectory";
 import gratitudeRouter from "./gratitude";
 import programEditorialRouter from "./programEditorial";
+import homeEditorialRouter from "./homeEditorial";
 
 const router: IRouter = Router();
 
@@ -42,5 +43,6 @@ router.use(mediaCenterRouter);
 router.use(partnerDirectoryRouter);
 router.use(gratitudeRouter);
 router.use(programEditorialRouter);
+router.use(homeEditorialRouter);
 
 export default router;

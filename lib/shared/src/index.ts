@@ -8,3 +8,4 @@ export * from "./socialProfiles";
 export * from "./partnerDirectory";
 export * from "./gratitude";
 export * from "./memberProfilePolicy";
+export * from "./homeEditorial";

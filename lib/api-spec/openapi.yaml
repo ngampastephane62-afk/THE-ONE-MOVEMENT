@@ -11,6 +11,42 @@ tags:
   - name: health
     description: Health operations
 paths:
+  /home-editorial:
+    get:
+      operationId: getHomeEditorial
+      tags: [HomeEditorial]
+      responses:
+        '200':
+          description: Published homepage only.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/HomeEditorial' }
+  /founder/home-editorial:
+    get:
+      operationId: getFounderHomeEditorial
+      tags: [HomeEditorial]
+      responses:
+        '200':
+          description: Founder-only homepage draft.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/HomeEditorial' }
+    put:
+      operationId: saveHomeEditorial
+      tags: [HomeEditorial]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/HomeEditorialInput' }
+      responses:
+        '200':
+          description: Saved draft or explicitly published homepage.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/HomeEditorial' }
+        '409':
+          description: Revision conflict; no changes applied.
   /program-editorial/{slug}:
     get:
       operationId: getProgramEditorial
@@ -1364,6 +1400,55 @@ paths:
                 $ref: "#/components/schemas/DetailedHealthStatus"
 components:
   schemas:
+    HomeEditorial:
+      type: object
+      required: [updatedAt, status, sections]
+      properties:
+        updatedAt: { type: [string, 'null'] }
+        status: { type: string, enum: [draft, published] }
+        sections:
+          type: array
+          maxItems: 30
+          items: { $ref: '#/components/schemas/HomeSection' }
+    HomeEditorialInput:
+      type: object
+      additionalProperties: false
+      required: [expectedUpdatedAt, content]
+      properties:
+        expectedUpdatedAt: { type: [string, 'null'] }
+        content: { $ref: '#/components/schemas/HomeEditorial' }
+    HomeSection:
+      type: object
+      additionalProperties: false
+      required: [id, type, enabled, layout, theme, alignment, spacing, fields, media]
+      properties:
+        id: { type: string, minLength: 1, maxLength: 80, pattern: '^[a-z0-9-]+$' }
+        type: { type: string, enum: [hero, universe, programmes, movement, origin, archive, paths, join, custom] }
+        enabled: { type: boolean }
+        layout: { type: string, enum: [original, stack, media-left, media-right] }
+        theme: { type: string, enum: [original, ivory, lagoon] }
+        alignment: { type: string, enum: [left, center] }
+        spacing: { type: string, enum: [compact, normal, large] }
+        fields:
+          type: object
+          maxProperties: 100
+          additionalProperties: { type: string, maxLength: 5000 }
+        media:
+          type: array
+          maxItems: 20
+          items: { $ref: '#/components/schemas/HomeMedia' }
+    HomeMedia:
+      type: object
+      additionalProperties: false
+      required: [key, uploadId, kind, url, alt, credit, rightsConfirmed]
+      properties:
+        key: { type: string, minLength: 1, maxLength: 80, pattern: '^[a-zA-Z][a-zA-Z0-9-]*$' }
+        uploadId: { type: string, pattern: '^[0-9a-fA-F-]{36}$' }
+        kind: { type: string, enum: [image, video] }
+        url: { type: [string, 'null'], maxLength: 1000 }
+        alt: { type: string, maxLength: 500 }
+        credit: { type: string, maxLength: 500 }
+        rightsConfirmed: { type: boolean }
     ProgramVideo:
       type: object
       required: [id, title, description, credit, uploadId, assetKey, url, published, rightsConfirmed, order]

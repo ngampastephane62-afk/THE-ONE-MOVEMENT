@@ -107,6 +107,8 @@ app.post("/api/stripe/webhook", express.raw({ type: "application/json", limit: "
 });
 // Editorial structured text is bounded separately; all other APIs retain 32 KiB.
 app.use("/api/founder/news/actions", express.json({ limit: "768kb" }));
+// Homepage documents contain bounded text and file references, never file bytes.
+app.use("/api/founder/home-editorial", express.json({ limit: "768kb" }));
 app.use(express.json({ limit: "32kb" }));
 app.use(express.urlencoded({ extended: false, limit: "16kb" }));
 

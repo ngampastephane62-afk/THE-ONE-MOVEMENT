@@ -8,6 +8,200 @@
 import * as zod from 'zod';
 
 
+export const getHomeEditorialResponseSectionsItemIdMax = 80;
+
+
+export const getHomeEditorialResponseSectionsItemIdRegExp = new RegExp('^[a-z0-9-]+$');
+export const getHomeEditorialResponseSectionsItemFieldsMaxOne = 5000;
+
+export const getHomeEditorialResponseSectionsItemMediaItemKeyMax = 80;
+
+
+export const getHomeEditorialResponseSectionsItemMediaItemKeyRegExp = new RegExp('^[a-zA-Z][a-zA-Z0-9-]*$');
+export const getHomeEditorialResponseSectionsItemMediaItemUploadIdRegExp = new RegExp('^[0-9a-fA-F-]{36}$');
+export const getHomeEditorialResponseSectionsItemMediaItemUrlMax = 1000;
+
+export const getHomeEditorialResponseSectionsItemMediaItemAltMax = 500;
+
+export const getHomeEditorialResponseSectionsItemMediaItemCreditMax = 500;
+
+export const getHomeEditorialResponseSectionsItemMediaMax = 20;
+
+export const getHomeEditorialResponseSectionsMax = 30;
+
+
+
+export const GetHomeEditorialResponse = zod.object({
+  "updatedAt": zod.string().nullable(),
+  "status": zod.enum(['draft', 'published']),
+  "sections": zod.array(zod.object({
+  "id": zod.string().min(1).max(getHomeEditorialResponseSectionsItemIdMax).regex(getHomeEditorialResponseSectionsItemIdRegExp),
+  "type": zod.enum(['hero', 'universe', 'programmes', 'movement', 'origin', 'archive', 'paths', 'join', 'custom']),
+  "enabled": zod.boolean(),
+  "layout": zod.enum(['original', 'stack', 'media-left', 'media-right']),
+  "theme": zod.enum(['original', 'ivory', 'lagoon']),
+  "alignment": zod.enum(['left', 'center']),
+  "spacing": zod.enum(['compact', 'normal', 'large']),
+  "fields": zod.record(zod.string(), zod.string().max(getHomeEditorialResponseSectionsItemFieldsMaxOne)),
+  "media": zod.array(zod.object({
+  "key": zod.string().min(1).max(getHomeEditorialResponseSectionsItemMediaItemKeyMax).regex(getHomeEditorialResponseSectionsItemMediaItemKeyRegExp),
+  "uploadId": zod.string().regex(getHomeEditorialResponseSectionsItemMediaItemUploadIdRegExp),
+  "kind": zod.enum(['image', 'video']),
+  "url": zod.string().max(getHomeEditorialResponseSectionsItemMediaItemUrlMax).nullable(),
+  "alt": zod.string().max(getHomeEditorialResponseSectionsItemMediaItemAltMax),
+  "credit": zod.string().max(getHomeEditorialResponseSectionsItemMediaItemCreditMax),
+  "rightsConfirmed": zod.boolean()
+})).max(getHomeEditorialResponseSectionsItemMediaMax)
+})).max(getHomeEditorialResponseSectionsMax)
+})
+
+
+export const getFounderHomeEditorialResponseSectionsItemIdMax = 80;
+
+
+export const getFounderHomeEditorialResponseSectionsItemIdRegExp = new RegExp('^[a-z0-9-]+$');
+export const getFounderHomeEditorialResponseSectionsItemFieldsMaxOne = 5000;
+
+export const getFounderHomeEditorialResponseSectionsItemMediaItemKeyMax = 80;
+
+
+export const getFounderHomeEditorialResponseSectionsItemMediaItemKeyRegExp = new RegExp('^[a-zA-Z][a-zA-Z0-9-]*$');
+export const getFounderHomeEditorialResponseSectionsItemMediaItemUploadIdRegExp = new RegExp('^[0-9a-fA-F-]{36}$');
+export const getFounderHomeEditorialResponseSectionsItemMediaItemUrlMax = 1000;
+
+export const getFounderHomeEditorialResponseSectionsItemMediaItemAltMax = 500;
+
+export const getFounderHomeEditorialResponseSectionsItemMediaItemCreditMax = 500;
+
+export const getFounderHomeEditorialResponseSectionsItemMediaMax = 20;
+
+export const getFounderHomeEditorialResponseSectionsMax = 30;
+
+
+
+export const GetFounderHomeEditorialResponse = zod.object({
+  "updatedAt": zod.string().nullable(),
+  "status": zod.enum(['draft', 'published']),
+  "sections": zod.array(zod.object({
+  "id": zod.string().min(1).max(getFounderHomeEditorialResponseSectionsItemIdMax).regex(getFounderHomeEditorialResponseSectionsItemIdRegExp),
+  "type": zod.enum(['hero', 'universe', 'programmes', 'movement', 'origin', 'archive', 'paths', 'join', 'custom']),
+  "enabled": zod.boolean(),
+  "layout": zod.enum(['original', 'stack', 'media-left', 'media-right']),
+  "theme": zod.enum(['original', 'ivory', 'lagoon']),
+  "alignment": zod.enum(['left', 'center']),
+  "spacing": zod.enum(['compact', 'normal', 'large']),
+  "fields": zod.record(zod.string(), zod.string().max(getFounderHomeEditorialResponseSectionsItemFieldsMaxOne)),
+  "media": zod.array(zod.object({
+  "key": zod.string().min(1).max(getFounderHomeEditorialResponseSectionsItemMediaItemKeyMax).regex(getFounderHomeEditorialResponseSectionsItemMediaItemKeyRegExp),
+  "uploadId": zod.string().regex(getFounderHomeEditorialResponseSectionsItemMediaItemUploadIdRegExp),
+  "kind": zod.enum(['image', 'video']),
+  "url": zod.string().max(getFounderHomeEditorialResponseSectionsItemMediaItemUrlMax).nullable(),
+  "alt": zod.string().max(getFounderHomeEditorialResponseSectionsItemMediaItemAltMax),
+  "credit": zod.string().max(getFounderHomeEditorialResponseSectionsItemMediaItemCreditMax),
+  "rightsConfirmed": zod.boolean()
+})).max(getFounderHomeEditorialResponseSectionsItemMediaMax)
+})).max(getFounderHomeEditorialResponseSectionsMax)
+})
+
+
+export const saveHomeEditorialBodyContentSectionsItemIdMax = 80;
+
+
+export const saveHomeEditorialBodyContentSectionsItemIdRegExp = new RegExp('^[a-z0-9-]+$');
+export const saveHomeEditorialBodyContentSectionsItemFieldsMaxOne = 5000;
+
+export const saveHomeEditorialBodyContentSectionsItemMediaItemKeyMax = 80;
+
+
+export const saveHomeEditorialBodyContentSectionsItemMediaItemKeyRegExp = new RegExp('^[a-zA-Z][a-zA-Z0-9-]*$');
+export const saveHomeEditorialBodyContentSectionsItemMediaItemUploadIdRegExp = new RegExp('^[0-9a-fA-F-]{36}$');
+export const saveHomeEditorialBodyContentSectionsItemMediaItemUrlMax = 1000;
+
+export const saveHomeEditorialBodyContentSectionsItemMediaItemAltMax = 500;
+
+export const saveHomeEditorialBodyContentSectionsItemMediaItemCreditMax = 500;
+
+export const saveHomeEditorialBodyContentSectionsItemMediaMax = 20;
+
+export const saveHomeEditorialBodyContentSectionsMax = 30;
+
+
+
+export const SaveHomeEditorialBody = zod.object({
+  "expectedUpdatedAt": zod.string().nullable(),
+  "content": zod.object({
+  "updatedAt": zod.string().nullable(),
+  "status": zod.enum(['draft', 'published']),
+  "sections": zod.array(zod.object({
+  "id": zod.string().min(1).max(saveHomeEditorialBodyContentSectionsItemIdMax).regex(saveHomeEditorialBodyContentSectionsItemIdRegExp),
+  "type": zod.enum(['hero', 'universe', 'programmes', 'movement', 'origin', 'archive', 'paths', 'join', 'custom']),
+  "enabled": zod.boolean(),
+  "layout": zod.enum(['original', 'stack', 'media-left', 'media-right']),
+  "theme": zod.enum(['original', 'ivory', 'lagoon']),
+  "alignment": zod.enum(['left', 'center']),
+  "spacing": zod.enum(['compact', 'normal', 'large']),
+  "fields": zod.record(zod.string(), zod.string().max(saveHomeEditorialBodyContentSectionsItemFieldsMaxOne)),
+  "media": zod.array(zod.object({
+  "key": zod.string().min(1).max(saveHomeEditorialBodyContentSectionsItemMediaItemKeyMax).regex(saveHomeEditorialBodyContentSectionsItemMediaItemKeyRegExp),
+  "uploadId": zod.string().regex(saveHomeEditorialBodyContentSectionsItemMediaItemUploadIdRegExp),
+  "kind": zod.enum(['image', 'video']),
+  "url": zod.string().max(saveHomeEditorialBodyContentSectionsItemMediaItemUrlMax).nullable(),
+  "alt": zod.string().max(saveHomeEditorialBodyContentSectionsItemMediaItemAltMax),
+  "credit": zod.string().max(saveHomeEditorialBodyContentSectionsItemMediaItemCreditMax),
+  "rightsConfirmed": zod.boolean()
+})).max(saveHomeEditorialBodyContentSectionsItemMediaMax)
+})).max(saveHomeEditorialBodyContentSectionsMax)
+})
+})
+
+export const saveHomeEditorialResponseSectionsItemIdMax = 80;
+
+
+export const saveHomeEditorialResponseSectionsItemIdRegExp = new RegExp('^[a-z0-9-]+$');
+export const saveHomeEditorialResponseSectionsItemFieldsMaxOne = 5000;
+
+export const saveHomeEditorialResponseSectionsItemMediaItemKeyMax = 80;
+
+
+export const saveHomeEditorialResponseSectionsItemMediaItemKeyRegExp = new RegExp('^[a-zA-Z][a-zA-Z0-9-]*$');
+export const saveHomeEditorialResponseSectionsItemMediaItemUploadIdRegExp = new RegExp('^[0-9a-fA-F-]{36}$');
+export const saveHomeEditorialResponseSectionsItemMediaItemUrlMax = 1000;
+
+export const saveHomeEditorialResponseSectionsItemMediaItemAltMax = 500;
+
+export const saveHomeEditorialResponseSectionsItemMediaItemCreditMax = 500;
+
+export const saveHomeEditorialResponseSectionsItemMediaMax = 20;
+
+export const saveHomeEditorialResponseSectionsMax = 30;
+
+
+
+export const SaveHomeEditorialResponse = zod.object({
+  "updatedAt": zod.string().nullable(),
+  "status": zod.enum(['draft', 'published']),
+  "sections": zod.array(zod.object({
+  "id": zod.string().min(1).max(saveHomeEditorialResponseSectionsItemIdMax).regex(saveHomeEditorialResponseSectionsItemIdRegExp),
+  "type": zod.enum(['hero', 'universe', 'programmes', 'movement', 'origin', 'archive', 'paths', 'join', 'custom']),
+  "enabled": zod.boolean(),
+  "layout": zod.enum(['original', 'stack', 'media-left', 'media-right']),
+  "theme": zod.enum(['original', 'ivory', 'lagoon']),
+  "alignment": zod.enum(['left', 'center']),
+  "spacing": zod.enum(['compact', 'normal', 'large']),
+  "fields": zod.record(zod.string(), zod.string().max(saveHomeEditorialResponseSectionsItemFieldsMaxOne)),
+  "media": zod.array(zod.object({
+  "key": zod.string().min(1).max(saveHomeEditorialResponseSectionsItemMediaItemKeyMax).regex(saveHomeEditorialResponseSectionsItemMediaItemKeyRegExp),
+  "uploadId": zod.string().regex(saveHomeEditorialResponseSectionsItemMediaItemUploadIdRegExp),
+  "kind": zod.enum(['image', 'video']),
+  "url": zod.string().max(saveHomeEditorialResponseSectionsItemMediaItemUrlMax).nullable(),
+  "alt": zod.string().max(saveHomeEditorialResponseSectionsItemMediaItemAltMax),
+  "credit": zod.string().max(saveHomeEditorialResponseSectionsItemMediaItemCreditMax),
+  "rightsConfirmed": zod.boolean()
+})).max(saveHomeEditorialResponseSectionsItemMediaMax)
+})).max(saveHomeEditorialResponseSectionsMax)
+})
+
+
 export const GetProgramEditorialParams = zod.object({
   "slug": zod.coerce.string()
 })

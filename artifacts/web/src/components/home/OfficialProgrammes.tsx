@@ -5,6 +5,8 @@ import MediaActions from '@/components/editorial/MediaActions';
 import ProgrammeFilm from '@/components/programs/ProgrammeFilm';
 import SectionHeading from '@/components/SectionHeading';
 import HomeReveal from './HomeReveal';
+import { defaultView, type SectionView } from '@/lib/home-editorial';
+import EditorialFigure from './EditorialFigure';
 import './home-patterns.css';
 
 /**
@@ -32,20 +34,24 @@ function Media({ slug }: { slug: (typeof ITEMS)[number]['slug'] }) {
   return <ProgrammeFilm id="fashion-knight-2026" presentation="home" className="w-full" caption="Official artwork · Dubai, 22 December 2026" />;
 }
 
-export default function OfficialProgrammes() {
+export default function OfficialProgrammes({ ed = defaultView('programmes') }: { ed?: SectionView } = {}) {
+  const feature = ed.m('feature');
   return (
     <section className="thp-programmes bg-ivory-50 py-section-lg" aria-labelledby="program-preview-heading" data-testid="section-official-programmes">
       <div className="mx-auto max-w-7xl px-6">
+        <div className={feature ? 'he-grid' : undefined}>
         <HomeReveal variant="rise">
           <div className="flex flex-col gap-7 sm:flex-row sm:items-end sm:justify-between">
             <div id="program-preview-heading">
-              <SectionHeading eyebrow="OFFICIAL PROGRAMS" heading="WHERE THE MOVEMENT MEETS" surface="light" size="lg" thread />
+              <SectionHeading eyebrow={ed.t('eyebrow')} heading={ed.t('heading')} surface="light" size="lg" thread />
             </div>
-            <Link href="/programs" className="inline-flex min-h-[44px] items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-gold-700 hover:text-ink-900" data-testid="link-home-all-programs">
-              All programs <ArrowUpRight size={14} aria-hidden="true" />
-            </Link>
+            {ed.t('allLabel').trim() && <Link href={ed.href('allHref')} className="inline-flex min-h-[44px] items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-gold-700 hover:text-ink-900" data-testid="link-home-all-programs">
+              {ed.t('allLabel')} <ArrowUpRight size={14} aria-hidden="true" />
+            </Link>}
           </div>
         </HomeReveal>
+        {feature && <EditorialFigure media={feature} className="he-media" />}
+        </div>
         <ol className="thp-events mt-14">
           {ITEMS.map((p, i) => (
             <li key={p.slug} className={`thp-event thp-event--${p.slug}`} data-testid={`card-home-program-${p.slug}`}>

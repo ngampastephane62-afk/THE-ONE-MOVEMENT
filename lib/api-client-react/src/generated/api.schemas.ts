@@ -5,6 +5,129 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+export type HomeEditorialStatus = typeof HomeEditorialStatus[keyof typeof HomeEditorialStatus];
+
+
+export const HomeEditorialStatus = {
+  draft: 'draft',
+  published: 'published',
+} as const;
+
+export type HomeSectionType = typeof HomeSectionType[keyof typeof HomeSectionType];
+
+
+export const HomeSectionType = {
+  hero: 'hero',
+  universe: 'universe',
+  programmes: 'programmes',
+  movement: 'movement',
+  origin: 'origin',
+  archive: 'archive',
+  paths: 'paths',
+  join: 'join',
+  custom: 'custom',
+} as const;
+
+export type HomeSectionLayout = typeof HomeSectionLayout[keyof typeof HomeSectionLayout];
+
+
+export const HomeSectionLayout = {
+  original: 'original',
+  stack: 'stack',
+  'media-left': 'media-left',
+  'media-right': 'media-right',
+} as const;
+
+export type HomeSectionTheme = typeof HomeSectionTheme[keyof typeof HomeSectionTheme];
+
+
+export const HomeSectionTheme = {
+  original: 'original',
+  ivory: 'ivory',
+  lagoon: 'lagoon',
+} as const;
+
+export type HomeSectionAlignment = typeof HomeSectionAlignment[keyof typeof HomeSectionAlignment];
+
+
+export const HomeSectionAlignment = {
+  left: 'left',
+  center: 'center',
+} as const;
+
+export type HomeSectionSpacing = typeof HomeSectionSpacing[keyof typeof HomeSectionSpacing];
+
+
+export const HomeSectionSpacing = {
+  compact: 'compact',
+  normal: 'normal',
+  large: 'large',
+} as const;
+
+export type HomeMediaKind = typeof HomeMediaKind[keyof typeof HomeMediaKind];
+
+
+export const HomeMediaKind = {
+  image: 'image',
+  video: 'video',
+} as const;
+
+export interface HomeMedia {
+  /**
+     * @minLength 1
+     * @maxLength 80
+     * @pattern ^[a-zA-Z][a-zA-Z0-9-]*$
+     */
+  key: string;
+  /** @pattern ^[0-9a-fA-F-]{36}$ */
+  uploadId: string;
+  kind: HomeMediaKind;
+  /**
+     * @maxLength 1000
+     * @nullable
+     */
+  url: string | null;
+  /** @maxLength 500 */
+  alt: string;
+  /** @maxLength 500 */
+  credit: string;
+  rightsConfirmed: boolean;
+}
+
+export type HomeSectionFields = {[key: string]: string};
+
+export interface HomeSection {
+  /**
+     * @minLength 1
+     * @maxLength 80
+     * @pattern ^[a-z0-9-]+$
+     */
+  id: string;
+  type: HomeSectionType;
+  enabled: boolean;
+  layout: HomeSectionLayout;
+  theme: HomeSectionTheme;
+  alignment: HomeSectionAlignment;
+  spacing: HomeSectionSpacing;
+  fields: HomeSectionFields;
+  /** @maxItems 20 */
+  media: HomeMedia[];
+}
+
+export interface HomeEditorial {
+  /** @nullable */
+  updatedAt: string | null;
+  status: HomeEditorialStatus;
+  /** @maxItems 30 */
+  sections: HomeSection[];
+}
+
+export interface HomeEditorialInput {
+  /** @nullable */
+  expectedUpdatedAt: string | null;
+  content: HomeEditorial;
+}
+
 export interface ProgramVideo {
   /**
      * @minLength 1

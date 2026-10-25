@@ -1,0 +1,34 @@
+/* Founder homepage presentation choices. Only applied when a section leaves 'original'. */
+.he-section { position: relative; }
+.he-section[data-theme='ivory'] > section,
+.he-section[data-theme='ivory'] > div > section { background: var(--color-ivory-100) !important; }
+.he-section[data-theme='ivory'] :is(h2, h3, p, blockquote, span, li) { color: hsl(30 37% 12%); }
+.he-section[data-theme='lagoon'] > section:not(.tch),
+.he-section[data-theme='lagoon'] > div > section { background: var(--color-lagoon-900) !important; }
+.he-section[data-theme='lagoon'] :is(h2, h3, p, li) { color: var(--color-ivory-100); }
+.he-section[data-theme] .thp-pattern, .he-section[data-theme] .tomi-surface-grid { opacity: .35; }
+
+.he-section[data-spacing='compact'] > section:not(.tch) { padding-block: clamp(2.5rem, 5vw, 4rem) !important; }
+.he-section[data-spacing='large'] > section:not(.tch) { padding-block: clamp(6rem, 13vw, 11rem) !important; }
+
+.he-section[data-align='center'] :is(h2, h3, p) { text-align: center; margin-inline: auto; }
+.he-section[data-align='center'] .he-grid, .he-section[data-align='center'] .he-actions { justify-items: center; justify-content: center; }
+
+.he-grid { display: grid; gap: 2.5rem; }
+@media (min-width: 1024px) {
+  .he-grid { grid-template-columns: 1fr 1fr; align-items: center; }
+  .he-section[data-layout='stack'] .he-grid { grid-template-columns: 1fr; }
+  .he-section[data-layout='media-left'] .he-grid > .he-media { order: -1; }
+  .he-section[data-layout='media-right'] .he-grid > .he-media { order: 2; }
+  .he-section:is([data-layout='media-left'], [data-layout='media-right']) .he-grid > * { grid-column: auto !important; grid-column-start: auto !important; }
+}
+.he-section[data-layout='stack'] .he-grid { display: flex; flex-direction: column; align-items: stretch; }
+.he-section[data-layout='stack'] .he-grid > * { width: 100%; max-width: 48rem; margin-inline: auto; }
+.he-section[data-layout='stack'] .he-media { order: 2; }
+.he-figure { margin: 0; }
+.he-credit { margin-top: .5rem; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; opacity: .7; }
+
+/* Hero: supported choices only (theme original/lagoon, spacing). Artwork stays untouched. */
+.he-section[data-type='hero'][data-theme='lagoon'] .tch-scrim { background: linear-gradient(90deg, hsl(187 67% 12% / .9) 0%, hsl(187 67% 12% / .7) 45%, hsl(187 67% 12% / .35) 100%); }
+.he-section[data-type='hero'][data-spacing='compact'] .tch-copy { padding: 1.5rem 0 2rem; }
+.he-section[data-type='hero'][data-spacing='large'] .tch-copy { padding: 8rem 0 9rem; }

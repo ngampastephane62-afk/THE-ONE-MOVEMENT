@@ -26,6 +26,7 @@ export const FOUNDER_TOOLS: Record<string, FounderTool> = {
   mediaCenter: { id: 'media-management', label: 'MEDIA MANAGEMENT', href: '/member/founder/media', description: 'Create, edit, order, publish, archive and delete press and media publications on the public Media page.' },
   media: { id: 'media', label: 'Media requests', href: '/member/admin?tab=media', description: 'Review incoming media and press requests. This is not a media library.' },
   partnersManager: { id: 'manage-partners', label: 'MANAGE PARTNERS', href: '/member/founder/partners', description: 'Edit partner names, logos, categories, relationships and the public Partners page text.' },
+  pagesHome: { id: 'pages-home', label: "PAGE D'ACCUEIL", href: '/member/founder/pages', description: "Modifier les textes, medias, liens, sections et la presentation de la page d'accueil, avec brouillon, apercu et publication confirmee." },
   programsManager: { id: 'manage-programs', label: 'MANAGE PROGRAMS', href: '/member/founder/programs', description: 'Edit the six official programs: introduction, hero media, nominees, confirmed speakers, videos, categories, announcements, and review program inquiries.' },
   intros: { id: 'intros', label: 'Partner introductions', href: '/member/admin?tab=intros', description: 'Review partner introduction requests. Partner profiles cannot be edited here.' },
   certs: { id: 'certs', label: 'Certifications', href: '/member/admin?tab=certs', description: 'Review official role and programme certification requests.' },
@@ -37,8 +38,8 @@ export const FOUNDER_TOOLS: Record<string, FounderTool> = {
 };
 
 export const FOUNDER_SECTIONS: FounderSection[] = [
-  { id: 'overview', label: 'Overview', status: 'available', summary: 'Your workspace foundation and the founder tools available today.', toolIds: ['newsEditor', 'news', 'mediaCenter', 'partnersManager', 'programsManager', 'media', 'intros', 'certs', 'reports', 'members', 'gratitude', 'offers', 'magazine'] },
-  { id: 'pages', label: 'Pages', status: 'unavailable', summary: 'Editing public website pages.', unavailableNote: 'Page editing is not yet available. Public pages are currently updated by the TOMI technical team.', toolIds: [] },
+  { id: 'overview', label: 'Overview', status: 'available', summary: 'Your workspace foundation and the founder tools available today.', toolIds: ['pagesHome', 'newsEditor', 'news', 'mediaCenter', 'partnersManager', 'programsManager', 'media', 'intros', 'certs', 'reports', 'members', 'gratitude', 'offers', 'magazine'] },
+  { id: 'pages', label: 'Pages', status: 'partial', summary: 'Edit the public homepage: text, media, links, sections and presentation.', unavailableNote: 'Only the homepage is editable. Other public pages are still updated by the TOMI technical team.', toolIds: ['pagesHome'] },
   { id: 'news', label: 'News & Articles', status: 'available', summary: 'Write, preview and publish News articles. The historical press archive remains a separate tool.', toolIds: ['newsEditor', 'news', 'magazine'] },
   { id: 'partners', label: 'Partners', status: 'available', summary: 'Manage the public partner directory and page text, and review partner introduction requests.', toolIds: ['partnersManager', 'intros'] },
   { id: 'media', label: 'Media Management', status: 'available', summary: 'Publish press coverage, television, interviews and announcements to the public Media page. Media requests remain a separate tool for press enquiries.', toolIds: ['mediaCenter', 'media'] },

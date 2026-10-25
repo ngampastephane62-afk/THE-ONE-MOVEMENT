@@ -27,6 +27,7 @@ import FounderNews from './FounderNews';
 import FounderMedia from './FounderMedia';
 import FounderPartners from './FounderPartners';
 import FounderPrograms from './FounderPrograms';
+import FounderPages from './FounderPages';
 import SettingsPage from './Settings';
 import MemberWelcome from './MemberWelcome';
 import MemberOnboarding from './Onboarding';
@@ -248,6 +249,7 @@ function NetworkGate() {
           <Route path="/member/founder/news">{me.founder ? <FounderNews /> : <Redirect to="/member" replace />}</Route>
           <Route path="/member/founder/partners">{me.founder ? <FounderPartners /> : <Redirect to="/member" replace />}</Route>
           <Route path="/member/founder/programs">{me.founder ? <FounderPrograms /> : <Redirect to="/member" replace />}</Route>
+          <Route path="/member/founder/pages">{me.founder ? <FounderPages /> : <Redirect to="/member" replace />}</Route>
           <Route path="/member/founder/media">{me.founder ? <FounderMedia /> : <Redirect to="/member" replace />}</Route>
           <Route path="/member/founder">{me.founder ? <FounderWorkspace /> : <Redirect to="/member" replace />}</Route>
           <Route path="/member/invite"><div className="flex flex-col gap-4 px-3 pt-4 md:px-0 md:pt-0"><h1 className="font-display text-2xl text-ink-900">Invite your community</h1><InvitationProgress growth={state.growth} founder={me.founder} /></div></Route>
