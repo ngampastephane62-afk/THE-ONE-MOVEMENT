@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'wouter';
 import { ArrowUpRight, BadgeCheck, BookOpen, Building2, Compass, Handshake, Lock, MessageSquare, Newspaper, Users } from 'lucide-react';
 import { useGetProfessionalState, getGetProfessionalStateQueryKey } from '@workspace/api-client-react';
-import { ErrorBox, Skeleton, card } from '@/components/network/kit';
+import { ErrorBox, errStatus, card } from '@/components/network/kit';
 import EcosystemNews from '@/components/network/EcosystemNews';
 import { useMe } from './ctx';
 import Chapter from '@/components/editorial/Chapter';
@@ -37,16 +37,17 @@ export default function Ecosystem() {
   const t = (en: string, f: string) => (fr ? f : en);
   const q = useGetProfessionalState({ query: { queryKey: getGetProfessionalStateQueryKey(), retry: false, refetchOnMount: true, refetchInterval: 120000, refetchIntervalInBackground: false } });
 
-  if (q.isLoading) return <div className="p-3 md:p-0" data-testid="status-ecosystem-loading"><Skeleton rows={4} /></div>;
-  if (q.isError || !q.data) return <div className="p-3 md:p-0"><ErrorBox onRetry={() => q.refetch()} msg={t('Your ecosystem access did not load.', 'Votre accès à l’écosystème n’a pas pu être chargé.')} /></div>;
-
-  const m = q.data.membership;
+  // A paid-services lookup must not hide free discovery or infer a paid entitlement.
+  const checked = !!q.data && !q.isError;
+  const m = checked ? q.data?.membership : undefined;
   const active = !!m?.active;
   const founder = !!me.founder;
   const paid = founder || active;
   const biz = founder || (active && m?.tier === 'business');
   const open = (n: Need) => n === 'free' || (n === 'paid' ? paid : biz);
-  const status = founder ? t('Founder access', 'Accès fondateur') : active ? (m!.tier === 'business' ? 'Business / Sponsor' : 'Professional') : t('Free member', 'Membre gratuit');
+  const status = founder ? t('Founder access', 'Accès fondateur')
+    : !checked ? t('Professional access not verified', 'Accès professionnel non vérifié')
+    : active ? (m!.tier === 'business' ? 'Business / Sponsor' : 'Professional') : t('Free member', 'Membre gratuit');
 
   return (
     <div className="flex flex-col gap-5 px-3 pt-4 md:px-0 md:pt-0" data-testid="page-ecosystem">
@@ -58,6 +59,8 @@ export default function Ecosystem() {
           </span>} />
       </div>
 
+      {q.isLoading && <p role="status" className="text-sm text-ink-700" data-testid="status-ecosystem-loading">{t('Checking professional services. Free services remain available.', 'Vérification des services professionnels. Les services gratuits restent accessibles.')}</p>}
+      {(q.isError || (!q.isLoading && !q.data)) && <ErrorBox onRetry={() => q.refetch()} msg={`${t('Professional services could not be checked. Free services remain available.', 'Les services professionnels n’ont pas pu être vérifiés. Les services gratuits restent accessibles.')}${errStatus(q.error) ? ` (HTTP ${errStatus(q.error)})` : ''}`} />}
       <EcosystemNews limit={2} />
       <Link translate="no" href="/ecosystem" className="inline-flex min-h-[44px] items-center gap-2 self-start rounded-full bg-lagoon-900 px-4 text-xs font-semibold text-gold-400" data-testid="link-explore-public">{t('Explore the public ecosystem — you stay signed in', 'Explorer l’écosystème public — vous restez connecté')}<ArrowUpRight className="h-3.5 w-3.5" /></Link>
       <div translate="no" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

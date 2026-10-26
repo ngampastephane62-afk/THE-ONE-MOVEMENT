@@ -15,6 +15,12 @@ Check generated string-format validators against the installed Zod major before 
 
 **How to apply:** Until generation targets a compatible Zod API, keep email constraints explicit in the server validator and the browser form; do not hand-edit generated files to hide the incompatibility.
 
+Numeric query enums need HTTP round-trip checks even when Orval query-number coercion is enabled.
+
+**Why:** The generator emits a union of numeric literals for integer enums without coercion. The generated client correctly serializes numbers as query strings, but the generated server validator rejects those strings.
+
+**How to apply:** Normalize only supported scalar wire values at the server boundary before generated validation, leaving invalid or repeated values rejected. Test actual generated URLs through URLSearchParams and the server parser, not only numeric fixture objects. Do not hand-edit generated validators.
+
 Do not rely on generator auto-detection of library majors in this workspace; pnpm catalog version references can prevent it from resolving the intended Zod and React Query majors.
 
 **Why:** After upgrading Orval, generation silently targeted Zod 4 despite the validation package using Zod 3. A successful generation alone was not evidence of compatibility.

@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { db, memberProfileRemindersTable as reminders } from "@workspace/db";
 import { eq } from "drizzle-orm";
-import { GetMembershipDashboardQueryParams, SendProfileReminderBody, RecordSiteVisitBody } from "@workspace/api-zod";
+import { SendProfileReminderBody, RecordSiteVisitBody } from "@workspace/api-zod";
+import { parseMembershipDashboardQuery } from "../lib/membershipDashboardQuery";
 import { networkAuth, networkWrite, requireFounder, actor, NetworkError } from "../services/networkAuth";
 import { memberAccountSnapshot, accountTotals, trafficSummary, reminderConfiguration, invalidateMemberDashboard } from "../services/membershipDashboard";
 import { previewReminder, sendReminder, optOutSignature, safeEqual } from "../services/profileReminders";
@@ -12,7 +13,7 @@ const router = Router();
 router.get("/founder/membership-dashboard", networkAuth, async (req, res) => {
   requireFounder(res);
   res.set("Cache-Control", "private, no-store");
-  const parsed = GetMembershipDashboardQueryParams.safeParse(req.query);
+  const parsed = parseMembershipDashboardQuery(req.query);
   if (!parsed.success) throw new NetworkError(400, "Filtres invalides.");
   const { search = "", status = "all", days = 30, page = 1 } = parsed.data;
   try {
