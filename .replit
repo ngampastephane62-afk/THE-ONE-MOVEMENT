@@ -33,5 +33,9 @@ TOMI_PREVIEW_SKIP_STRIPE_INIT = "1"
 TOMI_HUMANITARIAN_TEST_AUTHORIZED = "true"
 TOMI_PROFILE_REMINDER_FROM = "yuston@theonemovementinternational.ae"
 
+[userenv.production]
+TOMI_PROFILE_REMINDER_FROM = "yuston@theonemovementinternational.ae"
+TOMI_PUBLIC_SITE_URL = "https://theonemovementinternational.ae"
+
 [objectStorage]
 defaultBucketID = "replit-objstore-dff55171-2234-4344-b2ab-09e947c5c215"
