@@ -34,14 +34,19 @@ function ReminderPanel({ account, onClose }: { account: MembershipAccount; onClo
   const preview = usePreviewProfileReminder(account.clerkId, { query: { enabled: !!account.clerkId, queryKey: getPreviewProfileReminderQueryKey(account.clerkId), retry: false, staleTime: 0 } });
   const send = useSendProfileReminder({ mutation: { retry: false } });
   const [confirming, setConfirming] = useState(false);
+  const [domainVerified, setDomainVerified] = useState(false);
   const [result, setResult] = useState<{ ok: true; at: string } | { ok: false; msg: string } | null>(null);
   const p = preview.data;
+  useEffect(() => {
+    setDomainVerified(false);
+    setConfirming(false);
+  }, [p?.previewToken]);
 
   async function doSend() {
-    if (!p || !p.canSend || send.isPending) return;
+    if (!p || !p.canSend || (p.domainVerification === 'manual_check' && !domainVerified) || send.isPending) return;
     setResult(null);
     try {
-      const r = await send.mutateAsync({ clerkId: account.clerkId, data: { confirmed: true, previewToken: p.previewToken } });
+      const r = await send.mutateAsync({ clerkId: account.clerkId, data: { confirmed: true, previewToken: p.previewToken, domainVerifiedByFounder: domainVerified } });
       setResult({ ok: true, at: r.acceptedAt });
       setConfirming(false);
       qc.invalidateQueries({ queryKey: ['/api/founder/membership-dashboard'] });
@@ -69,6 +74,9 @@ function ReminderPanel({ account, onClose }: { account: MembershipAccount; onClo
               <div><dt className="text-xs text-ink-700">Message (exact text)</dt><dd><pre className="mt-1 max-h-64 overflow-auto whitespace-pre-wrap rounded-xl border border-sand-200 bg-ivory-100 p-3 font-sans text-xs leading-relaxed text-ink-800" data-testid="text-reminder-body">{p.text}</pre></dd></div>
             </dl>
             {!p.canSend && <p className="mt-3 rounded-xl border border-sand-300 bg-ivory-100 p-3 text-xs text-ink-800" data-testid="text-reminder-blocked"><span className="font-semibold">Sending unavailable.</span> {p.reason}</p>}
+            {p.domainVerification === 'manual_check' && p.canSend && <p className="mt-3 rounded-xl border border-gold-500/50 bg-ivory-100 p-3 text-xs leading-relaxed text-ink-800" data-testid="text-reminder-domain-manual">
+              {p.reason}
+            </p>}
             {result?.ok === true && <p role="status" className="mt-3 rounded-xl bg-lagoon-900 p-3 text-xs text-ivory-100" data-testid="status-reminder-accepted">Accepted by the email provider at {fmt(result.at)}. Acceptance does not confirm delivery to the inbox.</p>}
             {result?.ok === false && <p role="alert" className="mt-3 text-xs text-crimson-700" data-testid="error-reminder-send">{result.msg}</p>}
             {result?.ok !== true && (
@@ -77,8 +85,12 @@ function ReminderPanel({ account, onClose }: { account: MembershipAccount; onClo
                   <button type="button" disabled={!p.canSend} onClick={() => setConfirming(true)} className="inline-flex items-center gap-1.5 rounded-full border border-lagoon-900 px-4 py-2 text-xs font-semibold text-lagoon-900 hover:bg-lagoon-900 hover:text-gold-400 disabled:cursor-not-allowed disabled:opacity-40" data-testid="button-prepare-reminder"><Mail className="h-3.5 w-3.5" />Prepare to send</button>
                 ) : (
                   <>
+                    {p.domainVerification === 'manual_check' && <label className="flex basis-full items-start gap-2 rounded-xl border border-sand-300 bg-ivory-100 p-3 text-xs leading-relaxed text-ink-800">
+                      <input type="checkbox" className="mt-0.5 accent-[#c49a4a]" checked={domainVerified} onChange={event => setDomainVerified(event.target.checked)} data-testid="checkbox-reminder-domain-verified" />
+                      <span>I checked in Resend that <strong>{p.senderDomain}</strong> is marked Verified.</span>
+                    </label>}
                     <span className="text-xs text-ink-800">Send this one email to {p.recipient}?</span>
-                    <button type="button" disabled={send.isPending} onClick={doSend} className="rounded-full bg-gold-500 px-4 py-2 text-xs font-semibold text-ink-900 hover:bg-gold-400 disabled:opacity-50" data-testid="button-confirm-send-reminder">{send.isPending ? 'Sending…' : 'Confirm and send'}</button>
+                    <button type="button" disabled={send.isPending || (p.domainVerification === 'manual_check' && !domainVerified)} onClick={doSend} className="rounded-full bg-gold-500 px-4 py-2 text-xs font-semibold text-ink-900 hover:bg-gold-400 disabled:opacity-50" data-testid="button-confirm-send-reminder">{send.isPending ? 'Sending…' : 'Confirm and send'}</button>
                     <button type="button" disabled={send.isPending} onClick={() => setConfirming(false)} className="text-xs font-semibold text-ink-700 underline" data-testid="button-cancel-send-reminder">Cancel</button>
                   </>
                 )}

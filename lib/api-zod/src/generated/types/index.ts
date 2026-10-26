@@ -213,6 +213,7 @@ export * from './profileDisplayFieldsPostsLayout';
 export * from './profileDisplayFieldsProfileLayout';
 export * from './profileDisplayFieldsSectorsItem';
 export * from './profileReminderPreview';
+export * from './profileReminderPreviewDomainVerification';
 export * from './programEditorial';
 export * from './programEditorialParticipationRolesItem';
 export * from './programEditorialSave';

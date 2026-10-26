@@ -1519,10 +1519,12 @@ components:
                   pageViews: { type: integer }
     ProfileReminderPreview:
       type: object
-      required: [clerkId, recipient, subject, text, canSend, reason, previewToken]
+      required: [clerkId, recipient, senderDomain, domainVerification, subject, text, canSend, reason, previewToken]
       properties:
         clerkId: { type: string }
         recipient: { type: string }
+        senderDomain: { type: string }
+        domainVerification: { type: string, enum: [verified, manual_check, unavailable] }
         subject: { type: string }
         text: { type: string }
         canSend: { type: boolean }
@@ -1531,10 +1533,11 @@ components:
     SendProfileReminderInput:
       type: object
       additionalProperties: false
-      required: [confirmed, previewToken]
+      required: [confirmed, previewToken, domainVerifiedByFounder]
       properties:
         confirmed: { type: boolean, const: true }
         previewToken: { type: string, maxLength: 200 }
+        domainVerifiedByFounder: { type: boolean }
     SiteVisitInput:
       type: object
       additionalProperties: false

@@ -5,10 +5,13 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+import type { ProfileReminderPreviewDomainVerification } from './profileReminderPreviewDomainVerification';
 
 export interface ProfileReminderPreview {
   clerkId: string;
   recipient: string;
+  senderDomain: string;
+  domainVerification: ProfileReminderPreviewDomainVerification;
   subject: string;
   text: string;
   canSend: boolean;

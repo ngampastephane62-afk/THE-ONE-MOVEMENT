@@ -10,4 +10,5 @@ export interface SendProfileReminderInput {
   confirmed: true;
   /** @maxLength 200 */
   previewToken: string;
+  domainVerifiedByFounder: boolean;
 }

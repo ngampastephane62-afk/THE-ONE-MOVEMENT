@@ -48,7 +48,7 @@ router.post("/founder/profile-reminders/:clerkId", networkAuth, networkWrite, as
   res.set("Cache-Control", "private, no-store");
   const parsed = SendProfileReminderBody.strict().safeParse(req.body);
   if (!parsed.success || parsed.data.confirmed !== true) throw new NetworkError(400, "Confirmez explicitement l’aperçu de cet email.");
-  res.json(await sendReminder(String(req.params.clerkId), actor(res, false).clerkId, parsed.data.previewToken));
+  res.json(await sendReminder(String(req.params.clerkId), actor(res, false).clerkId, parsed.data.previewToken, parsed.data.domainVerifiedByFounder));
 });
 
 const windows = new Map<string, { start: number; count: number }>();

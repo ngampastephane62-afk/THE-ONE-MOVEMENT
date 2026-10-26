@@ -80,6 +80,8 @@ export const PreviewProfileReminderParams = zod.object({
 export const PreviewProfileReminderResponse = zod.object({
   "clerkId": zod.string(),
   "recipient": zod.string(),
+  "senderDomain": zod.string(),
+  "domainVerification": zod.enum(['verified', 'manual_check', 'unavailable']),
   "subject": zod.string(),
   "text": zod.string(),
   "canSend": zod.boolean(),
@@ -102,7 +104,8 @@ export const sendProfileReminderBodyPreviewTokenMax = 200;
 
 export const SendProfileReminderBody = zod.object({
   "confirmed": zod.literal(true),
-  "previewToken": zod.string().max(sendProfileReminderBodyPreviewTokenMax)
+  "previewToken": zod.string().max(sendProfileReminderBodyPreviewTokenMax),
+  "domainVerifiedByFounder": zod.boolean()
 })
 
 export const SendProfileReminderResponse = zod.object({

@@ -45,9 +45,9 @@ async function recipient(clerkId: string) {
   };
 }
 type Recipient = Awaited<ReturnType<typeof recipient>>;
-function tokenFor(who: Recipient, issued: number, preferenceId: string) {
+function tokenFor(who: Recipient, issued: number, preferenceId: string, providerMode: ProviderMode) {
   const config = reminderConfiguration();
-  return `${issued}.${preferenceId}.${digest(JSON.stringify(["profile-preview", issued, preferenceId, who.state?.id ?? null, who.clerkId, who.email, who.name, who.missing, who.updatedAt, config.from, config.site]))}`;
+  return `${issued}.${preferenceId}.${providerMode}.${digest(JSON.stringify(["profile-preview", issued, preferenceId, providerMode, who.state?.id ?? null, who.clerkId, who.email, who.name, who.missing, who.updatedAt, config.from, config.site]))}`;
 }
 function message(who: Recipient, optOutUrl?: string) {
   const config = reminderConfiguration();
@@ -57,39 +57,63 @@ function message(who: Recipient, optOutUrl?: string) {
     text: `Hello ${who.name},\n\nYour free The One Movement account is ready. To finish your essential profile, please add: ${who.missing.join(", ")}.\n\nContinue here: ${profileUrl}\n\nChoose your primary sector and up to two additional active sectors. When your profile is complete, you can explicitly activate your network profile to share your work, follow members and invite others. Your public directory visibility remains your choice. Programme participation follows each programme’s own application and approval process; an account is not an automatic acceptance.\n\nPhotos, a biography and social links are optional. No subscription or referral quota is required for ordinary participation.\n\n${optOutUrl ? `To stop profile reminders, review your preference here: ${optOutUrl}` : "Each email includes a link to stop profile reminders."}\n\nThe One Movement International`,
   };
 }
-async function providerReady() {
+type ProviderMode = "verified" | "manual_check" | "unavailable";
+type ProviderReadiness = { available: boolean; mode: ProviderMode; reason: string };
+async function providerReady(): Promise<ProviderReadiness> {
   const config = reminderConfiguration();
-  if (!config.configured) return config.message;
+  if (!config.configured) return { available: false, mode: "unavailable", reason: config.message };
   try {
     const response = await connectors.proxy("resend", "/domains", { method: "GET" });
-    if (!response.ok) return "Resend refuse la connexion ou la vérification du domaine. Corrigez la clé et ses permissions avant l’envoi.";
+    if (!response.ok) {
+      let providerMessage = "";
+      try {
+        const body = await response.clone().json() as { message?: string; error?: string };
+        providerMessage = `${body.message ?? ""} ${body.error ?? ""}`;
+      } catch { /* Keep provider response content private and fail closed. */ }
+      if (response.status === 401 && /restricted.*only send emails|only send emails/i.test(providerMessage))
+        return { available: true, mode: "manual_check", reason: "Cette clé Resend autorise uniquement l’envoi et ne peut pas vérifier les domaines. Avant de confirmer, vérifiez dans Resend que le domaine de l’expéditeur est marqué Verified." };
+      return { available: false, mode: "unavailable", reason: "Resend ne permet pas de vérifier le domaine de l’expéditeur. La configuration doit être corrigée avant l’envoi." };
+    }
     const body = await response.json() as { data?: { name: string; status: string }[] };
     const domain = config.from.split("@")[1].toLowerCase();
     if (!body.data?.some(d => d.name.toLowerCase() === domain && d.status === "verified"))
-      return "Le domaine de l’expéditeur doit être vérifié dans Resend.";
-    return "";
-  } catch { return "La connexion Resend est indisponible. Aucun envoi n’est possible."; }
+      return { available: false, mode: "unavailable", reason: "Le domaine de l’expéditeur doit être vérifié dans Resend." };
+    return { available: true, mode: "verified", reason: "" };
+  } catch { return { available: false, mode: "unavailable", reason: "La connexion Resend est indisponible. Aucun envoi n’est possible." }; }
 }
 export async function previewReminder(clerkId: string) {
   const who = await recipient(clerkId);
-  const reason = who.restricted ? "Ce compte est restreint ; aucune relance n’est autorisée." :
-    reminderBlock(who.state, who.missing, who.verified) || await providerReady();
+  const accountBlock = who.restricted ? "Ce compte est restreint ; aucune relance n’est autorisée." :
+    reminderBlock(who.state, who.missing, who.verified);
+  const provider = accountBlock
+    ? { available: false, mode: "unavailable" as const, reason: "" }
+    : await providerReady();
+  const reason = accountBlock || provider.reason;
   const preferenceId = who.state?.id ?? randomUUID();
   const preferences = reminderConfiguration().configured
     ? new URL(`/api/profile-reminders/preferences/${preferenceId}/${optOutSignature(preferenceId)}`, reminderConfiguration().site).toString() : undefined;
-  return { clerkId, recipient: who.email, ...message(who, preferences), canSend: !reason, reason,
-    previewToken: process.env.SESSION_SECRET ? tokenFor(who, Date.now(), preferenceId) : "" };
+  const senderDomain = reminderConfiguration().from.split("@")[1] ?? "";
+  return { clerkId, recipient: who.email, senderDomain, domainVerification: provider.mode,
+    ...message(who, preferences), canSend: !accountBlock && provider.available, reason,
+    previewToken: process.env.SESSION_SECRET ? tokenFor(who, Date.now(), preferenceId, provider.mode) : "" };
 }
-export async function sendReminder(clerkId: string, requestedBy: string, previewToken: string) {
+export async function sendReminder(clerkId: string, requestedBy: string, previewToken: string, domainVerifiedByFounder: boolean) {
   const who = await recipient(clerkId);
-  const issued = Number(previewToken.split(".")[0]);
-  const preferenceId = previewToken.split(".")[1] ?? "";
+  const [issuedText, preferenceId = "", previewMode = "unavailable"] = previewToken.split(".");
+  const issued = Number(issuedText);
+  const provider = await providerReady();
   if (!Number.isSafeInteger(issued) || issued > Date.now() || Date.now() - issued > 15 * 60_000 ||
     !/^[a-f0-9-]{36}$/.test(preferenceId) ||
-    !safeEqual(tokenFor(who, issued, preferenceId), previewToken)) throw new NetworkError(409, "Le compte ou l’aperçu a changé. Ouvrez un nouvel aperçu avant de confirmer.");
+    !["verified", "manual_check", "unavailable"].includes(previewMode) ||
+    previewMode !== provider.mode ||
+    !safeEqual(tokenFor(who, issued, preferenceId, previewMode as ProviderMode), previewToken))
+    throw new NetworkError(409, "Le compte ou l’aperçu a changé. Ouvrez un nouvel aperçu avant de confirmer.");
   if (who.restricted) throw new NetworkError(409, "Compte restreint.");
-  const blocked = reminderBlock(who.state, who.missing, who.verified) || await providerReady();
+  const blocked = reminderBlock(who.state, who.missing, who.verified);
   if (blocked) throw new NetworkError(409, blocked);
+  if (!provider.available) throw new NetworkError(409, provider.reason || "La connexion d’envoi n’est pas disponible.");
+  if (provider.mode === "manual_check" && domainVerifiedByFounder !== true)
+    throw new NetworkError(409, "Vérifiez que le domaine d’expédition est marqué Verified dans Resend et confirmez cette vérification.");
   const reserved = await db.transaction(async tx => {
     await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${`profile-reminder:${clerkId}`}, 0))`);
     const [current] = await tx.select().from(reminders).where(eq(reminders.clerkId, clerkId)).limit(1);

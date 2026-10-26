@@ -27,7 +27,12 @@ export const db={
 export const clerkClient={users:{getUser:async id=>{const user=state.users.get(id);if(!user)throw Error("Unknown fixture");return user;}}};
 export class ReplitConnectors{async proxy(connector,path,options){
  if(connector!=="resend")throw Error("Unexpected connector");
- if(path==="/domains")return state.provider==="invalid-key"?new Response("{}",{status:400}):Response.json({data:[{name:"fixture.invalid",status:"verified"}]});
+ if(path==="/domains"){
+  if(state.provider==="invalid-key")return new Response("{}",{status:400});
+  if(state.provider==="send-only")return Response.json({message:"This API key is restricted to only send emails"},{status:401});
+  if(state.provider==="unverified-domain")return Response.json({data:[{name:"fixture.invalid",status:"not_started"}]});
+  return Response.json({data:[{name:"fixture.invalid",status:"verified"}]});
+ }
  if(path!=="/emails"||options.method!=="POST")throw Error("Unexpected integration call");
  const data=JSON.parse(options.body);state.emails.push({data,key:options.headers["Idempotency-Key"]});
  if(state.provider==="timeout")throw Error("Ambiguous fixture send");
@@ -63,7 +68,7 @@ function setup() {
   state.users.set("user_fixture", { id:"user_fixture",firstName:"Fixture",lastName:"Member",primaryEmailAddressId:"primary",
     emailAddresses:[{id:"primary",emailAddress:"recipient@fixture.invalid",verification:{status:"verified"}}], banned:false,locked:false });
 }
-const send = token => sendReminder("user_fixture","user_founder",token);
+const send = (token, domainVerifiedByFounder = false) => sendReminder("user_fixture","user_founder",token,domainVerifiedByFounder);
 
 test("preview is read-only and explicit sending uses the exact verified recipient and text once under concurrent confirmation", async()=>{
   setup();
@@ -78,6 +83,30 @@ test("preview is read-only and explicit sending uses the exact verified recipien
   assert.match(state.emails[0].key,/^profile-reminder\/[a-f0-9-]{36}$/);
   assert.equal(state.reminders[0].status,"accepted");
   assert.equal((await previewReminder("user_fixture")).canSend,false);
+});
+test("send-only API keys require an explicit, signed Founder attestation of the Resend domain",async()=>{
+ setup();state.provider="send-only";
+ const preview=await previewReminder("user_fixture");
+ assert.equal(preview.canSend,true);
+ assert.equal(preview.domainVerification,"manual_check");
+ assert.equal(preview.senderDomain,"fixture.invalid");
+ assert.match(preview.reason,/marqué Verified/);
+ assert.equal(state.emails.length,0);assert.equal(state.reminders.length,0);
+ await assert.rejects(()=>send(preview.previewToken),e=>e.status===409);
+ assert.equal(state.emails.length,0);assert.equal(state.reminders.length,0);
+ await send(preview.previewToken,true);
+ assert.equal(state.emails.length,1);assert.equal(state.reminders[0].status,"accepted");
+
+ setup();state.provider="send-only";
+ const stale=await previewReminder("user_fixture");state.provider="ok";
+ await assert.rejects(()=>send(stale.previewToken,true),e=>e.status===409);
+ assert.equal(state.emails.length,0);assert.equal(state.reminders.length,0);
+
+ setup();state.provider="unverified-domain";
+ const unverified=await previewReminder("user_fixture");
+ assert.equal(unverified.canSend,false);
+ assert.equal(unverified.domainVerification,"unavailable");
+ assert.equal(state.emails.length,0);
 });
 test("profile or recipient changes after preview require a new confirmation and send nothing", async()=>{
   setup();const preview=await previewReminder("user_fixture");

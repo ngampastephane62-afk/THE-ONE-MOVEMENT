@@ -36,3 +36,17 @@ from the environment-specific profile and visit records.
 service and completion/activity as belonging to the current application
 environment. Do not claim published accounts are excluded without verifying
 the identity-provider configuration.
+
+Resend send-only API keys cannot read the domain list. When the integration
+explicitly reports this limited permission, retain the narrower key and require
+the Founder to attest that the sender domain is Verified in Resend before
+confirming an individual reminder; bind that attestation to the signed preview.
+
+**Why:** Requiring broader account-management permissions just to inspect
+domains would violate least privilege, while silently treating the sender as
+verified could produce failed mail or unintended sends.
+
+**How to apply:** Keep reminder sends individually confirmed and fail closed
+when credentials, sender address, domain verification, or the destination
+environment are unresolved. Development unsubscribe links must not point at
+production state.

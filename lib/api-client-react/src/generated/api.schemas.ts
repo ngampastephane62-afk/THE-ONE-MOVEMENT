@@ -82,9 +82,20 @@ export interface MembershipDashboard {
   traffic: MembershipDashboardTraffic;
 }
 
+export type ProfileReminderPreviewDomainVerification = typeof ProfileReminderPreviewDomainVerification[keyof typeof ProfileReminderPreviewDomainVerification];
+
+
+export const ProfileReminderPreviewDomainVerification = {
+  verified: 'verified',
+  manual_check: 'manual_check',
+  unavailable: 'unavailable',
+} as const;
+
 export interface ProfileReminderPreview {
   clerkId: string;
   recipient: string;
+  senderDomain: string;
+  domainVerification: ProfileReminderPreviewDomainVerification;
   subject: string;
   text: string;
   canSend: boolean;
@@ -96,6 +107,7 @@ export interface SendProfileReminderInput {
   confirmed: true;
   /** @maxLength 200 */
   previewToken: string;
+  domainVerifiedByFounder: boolean;
 }
 
 export interface SiteVisitInput {
