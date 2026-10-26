@@ -31,6 +31,7 @@ TOMI_FOUNDER_EMAIL = "yustonnessybush@gmail.com"
 [userenv.development]
 TOMI_PREVIEW_SKIP_STRIPE_INIT = "1"
 TOMI_HUMANITARIAN_TEST_AUTHORIZED = "true"
+TOMI_PROFILE_REMINDER_FROM = "yuston@theonemovementinternational.ae"
 
 [objectStorage]
 defaultBucketID = "replit-objstore-dff55171-2234-4344-b2ab-09e947c5c215"
