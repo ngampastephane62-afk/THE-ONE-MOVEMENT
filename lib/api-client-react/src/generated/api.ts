@@ -52,7 +52,6 @@ import type {
   GetNetworkPaymentStatusParams,
   GetNetworkStateParams,
   GetProfessionalResource200,
-  GetProfileReminderTargetParams,
   GetPublishedNewsArticlesParams,
   GratitudeAction,
   GratitudeFounder,
@@ -120,7 +119,6 @@ import type {
   ProfessionalIntroductionInput,
   ProfessionalState,
   ProfileReminderPreview,
-  ProfileReminderTarget,
   ProgramEditorial,
   ProgramEditorialSave,
   ProgramInquiry,
@@ -164,108 +162,6 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   }
   return result;
 };
-
-export const getGetProfileReminderTargetUrl = (params: GetProfileReminderTargetParams,) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/api/member/profile-reminder?${stringifiedParams}` : `/api/member/profile-reminder`
-}
-
-export const getProfileReminderTarget = async (params: GetProfileReminderTargetParams, options?: Parameters<typeof customFetch>[1]): Promise<ProfileReminderTarget> => {
-
-  return customFetch<ProfileReminderTarget>(getGetProfileReminderTargetUrl(params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
-
-export const getGetProfileReminderTargetQueryKey = (params?: GetProfileReminderTargetParams,) => {
-    return [
-    `/api/member/profile-reminder`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getGetProfileReminderTargetQueryOptions = <TData = Awaited<ReturnType<typeof getProfileReminderTarget>>, TError = ErrorType<void>>(params: GetProfileReminderTargetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfileReminderTarget>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetProfileReminderTargetQueryKey(params);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getProfileReminderTarget>>> = ({ signal }) => getProfileReminderTarget(params, { signal, ...requestOptions });
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getProfileReminderTarget>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetProfileReminderTargetQueryResult = NonNullable<Awaited<ReturnType<typeof getProfileReminderTarget>>>
-export type GetProfileReminderTargetQueryError = ErrorType<void>
-
-
-export function useGetProfileReminderTarget<TData = Awaited<ReturnType<typeof getProfileReminderTarget>>, TError = ErrorType<void>>(
- params: GetProfileReminderTargetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfileReminderTarget>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getProfileReminderTarget>>,
-          TError,
-          Awaited<ReturnType<typeof getProfileReminderTarget>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customFetch>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetProfileReminderTarget<TData = Awaited<ReturnType<typeof getProfileReminderTarget>>, TError = ErrorType<void>>(
- params: GetProfileReminderTargetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfileReminderTarget>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getProfileReminderTarget>>,
-          TError,
-          Awaited<ReturnType<typeof getProfileReminderTarget>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customFetch>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetProfileReminderTarget<TData = Awaited<ReturnType<typeof getProfileReminderTarget>>, TError = ErrorType<void>>(
- params: GetProfileReminderTargetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfileReminderTarget>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-
-export function useGetProfileReminderTarget<TData = Awaited<ReturnType<typeof getProfileReminderTarget>>, TError = ErrorType<void>>(
- params: GetProfileReminderTargetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfileReminderTarget>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getGetProfileReminderTargetQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-
-
-
-
-
 
 export const getGetMembershipDashboardUrl = (params?: GetMembershipDashboardParams,) => {
   const normalizedParams = new URLSearchParams();

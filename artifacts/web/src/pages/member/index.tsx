@@ -82,13 +82,26 @@ function Onboard({ title, eyebrow, children }: { title: string; eyebrow: string;
 }
 
 function ActivationPrompt() {
+  const { run, pending } = useAct();
+  const [err, setErr] = useState(false);
   const journey = useJourney();
   if (journey.profileQ.isLoading) return null;
-  return (
+  if (!journey.complete) return (
     <section id="panel-activate" className="mx-3 mb-4 rounded-2xl border border-sand-200 bg-ivory-50 p-4 md:mx-0" data-testid="panel-activate-locked">
       <p className="text-eyebrow text-gold-700">NEXT STEP: ESSENTIAL PROFILE</p>
-      <p className="mt-1 text-sm leading-relaxed text-ink-800">Add your name, professional identity, country and primary sector. Once your email is verified and these basics are saved, community access opens automatically. No separate activation, payment, invitations or public listing are required.</p>
+      <p className="mt-1 text-sm leading-relaxed text-ink-800">Network activation becomes available once your essential profile and sectors are saved. You can keep browsing, reading and using privacy, blocking and reporting tools meanwhile. No payment, invitations or public listing are required.</p>
       <Link href="/member/onboarding" className={`${btn} mt-3`} data-testid="link-activate-complete-profile">Complete profile</Link>
+    </section>
+  );
+  return (
+    <section id="panel-activate" className="mx-3 mb-4 rounded-2xl border border-gold-500/40 bg-lagoon-900 p-4 text-ivory-100 md:mx-0" data-testid="panel-activate">
+      <p className="text-eyebrow text-gold-400">YOU BELONG — NETWORK ACTIVATION IS YOUR CHOICE</p>
+      <p className="mt-1 text-sm leading-relaxed text-ivory-200">Your membership is free, even while browsing. Read the feed, discover people and explore programmes without activating. To participate, explicitly activate your network profile. Activation makes your name and network profile visible to signed-in TOMI members only, not to the public internet. Your public directory setting does not change. Activation alone does not unlock every specialized service or messaging feature.</p>
+      {err && <p className="mt-2 text-xs text-coral-500" role="alert">Activation failed. Please try again.</p>}
+      <div className="mt-3 flex flex-wrap gap-2">
+        <button className="inline-flex items-center rounded-full bg-gold-500 px-4 py-2 text-xs font-semibold text-ink-900 hover:bg-gold-400 disabled:opacity-50" disabled={pending} onClick={() => { setErr(false); run({ action: 'join', accepted: true }).catch(() => setErr(true)); }} data-testid="button-activate">Activate my network profile</button>
+        <Link href="/member/settings" className="inline-flex items-center rounded-full border border-ivory-200/40 px-4 py-2 text-xs font-semibold text-ivory-100 hover:border-gold-400" data-testid="link-edit-before-activate">Edit my profile first</Link>
+      </div>
     </section>
   );
 }

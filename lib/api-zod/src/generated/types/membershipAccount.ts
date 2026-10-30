@@ -6,7 +6,6 @@
  * OpenAPI spec version: 0.1.0
  */
 import type { MembershipAccountProfileStatus } from './membershipAccountProfileStatus';
-import type { PublicMember } from './publicMember';
 
 export interface MembershipAccount {
   clerkId: string;
@@ -20,12 +19,6 @@ export interface MembershipAccount {
   missingFields: string[];
   sectors: string[];
   networkEnabled: boolean;
-  directoryVisible: boolean;
-  publiclyDiscoverable: boolean;
-  hasPosted: boolean;
-  /** @nullable */
-  memberId?: number | null;
-  profileDetails?: PublicMember | null;
   suspended: boolean;
   /** @nullable */
   lastReminderAt: string | null;

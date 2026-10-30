@@ -16,8 +16,6 @@ import type { NetworkReport } from './networkReport';
 import type { NetworkThread } from './networkThread';
 
 export interface NetworkState {
-  /** Owner's consent to listing in the signed-in member directory. Independent of public internet visibility and community access. */
-  directoryVisible: boolean;
   growth: NetworkGrowth | null;
   me: NetworkMember | null;
   founder: NetworkMember | null;

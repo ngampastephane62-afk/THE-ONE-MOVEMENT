@@ -8,19 +8,6 @@
 import * as zod from 'zod';
 
 
-export const getProfileReminderTargetQueryTokenMax = 180;
-
-
-
-export const GetProfileReminderTargetQueryParams = zod.object({
-  "token": zod.coerce.string().max(getProfileReminderTargetQueryTokenMax)
-})
-
-export const GetProfileReminderTargetResponse = zod.object({
-  "matches": zod.boolean()
-})
-
-
 export const getMembershipDashboardQueryPageDefault = 1;
 
 export const getMembershipDashboardQuerySearchMax = 120;
@@ -31,43 +18,9 @@ export const getMembershipDashboardQueryDaysDefault = 30;
 export const GetMembershipDashboardQueryParams = zod.object({
   "page": zod.coerce.number().int().min(1).default(getMembershipDashboardQueryPageDefault),
   "search": zod.coerce.string().max(getMembershipDashboardQuerySearchMax).optional(),
-  "status": zod.enum(['all', 'no_profile', 'incomplete', 'complete', 'active', 'verified', 'discoverable', 'public', 'posted', 'inactive']).default(getMembershipDashboardQueryStatusDefault),
+  "status": zod.enum(['all', 'no_profile', 'incomplete', 'complete', 'active']).default(getMembershipDashboardQueryStatusDefault),
   "days": zod.union([zod.literal(7),zod.literal(30),zod.literal(90)]).default(getMembershipDashboardQueryDaysDefault)
 })
-
-export const getMembershipDashboardResponseAccountsItemProfileDetailsOneOneFullNameMin = 2;
-export const getMembershipDashboardResponseAccountsItemProfileDetailsOneOneFullNameMax = 100;
-
-export const getMembershipDashboardResponseAccountsItemProfileDetailsOneOneProfessionMax = 100;
-
-export const getMembershipDashboardResponseAccountsItemProfileDetailsOneOneOrganizationMax = 150;
-
-export const getMembershipDashboardResponseAccountsItemProfileDetailsOneOneCountryMax = 100;
-
-export const getMembershipDashboardResponseAccountsItemProfileDetailsOneOneCityRegionMax = 120;
-
-export const getMembershipDashboardResponseAccountsItemProfileDetailsOneOneBioMax = 1000;
-
-export const getMembershipDashboardResponseAccountsItemProfileDetailsOneOneOfferingMax = 500;
-
-export const getMembershipDashboardResponseAccountsItemProfileDetailsOneOneLookingForMax = 500;
-
-export const getMembershipDashboardResponseAccountsItemProfileDetailsOneOneWebsiteMax = 500;
-
-export const getMembershipDashboardResponseAccountsItemProfileDetailsOneOneInstagramUrlMax = 500;
-
-export const getMembershipDashboardResponseAccountsItemProfileDetailsOneOneFacebookUrlMax = 500;
-
-export const getMembershipDashboardResponseAccountsItemProfileDetailsOneOneTiktokUrlMax = 500;
-
-export const getMembershipDashboardResponseAccountsItemProfileDetailsOneOneLinkedinUrlMax = 500;
-
-export const getMembershipDashboardResponseAccountsItemProfileDetailsOneOneSectorsMax = 8;
-
-export const getMembershipDashboardResponseAccountsItemProfileDetailsOneOneCoverPositionMin = 0;
-export const getMembershipDashboardResponseAccountsItemProfileDetailsOneOneCoverPositionMax = 100;
-
-
 
 export const GetMembershipDashboardResponse = zod.object({
   "refreshedAt": zod.string(),
@@ -77,12 +30,7 @@ export const GetMembershipDashboardResponse = zod.object({
   "noProfile": zod.number().int(),
   "incomplete": zod.number().int(),
   "complete": zod.number().int(),
-  "active": zod.number().int(),
-  "emailVerified": zod.number().int(),
-  "discoverable": zod.number().int(),
-  "publicProfiles": zod.number().int(),
-  "posted": zod.number().int(),
-  "recentlySignedIn": zod.number().int()
+  "active": zod.number().int()
 }),
   "accounts": zod.array(zod.object({
   "clerkId": zod.string(),
@@ -95,35 +43,6 @@ export const GetMembershipDashboardResponse = zod.object({
   "missingFields": zod.array(zod.string()),
   "sectors": zod.array(zod.string()),
   "networkEnabled": zod.boolean(),
-  "directoryVisible": zod.boolean(),
-  "publiclyDiscoverable": zod.boolean(),
-  "hasPosted": zod.boolean(),
-  "memberId": zod.number().int().nullish(),
-  "profileDetails": zod.union([zod.object({
-  "fullName": zod.string().min(getMembershipDashboardResponseAccountsItemProfileDetailsOneOneFullNameMin).max(getMembershipDashboardResponseAccountsItemProfileDetailsOneOneFullNameMax),
-  "profession": zod.string().max(getMembershipDashboardResponseAccountsItemProfileDetailsOneOneProfessionMax),
-  "organization": zod.string().max(getMembershipDashboardResponseAccountsItemProfileDetailsOneOneOrganizationMax),
-  "country": zod.string().max(getMembershipDashboardResponseAccountsItemProfileDetailsOneOneCountryMax).describe('Empty when location sharing is disabled by the owner.'),
-  "cityRegion": zod.string().max(getMembershipDashboardResponseAccountsItemProfileDetailsOneOneCityRegionMax).optional().describe('Empty unless the owner explicitly shares country and city.'),
-  "bio": zod.string().max(getMembershipDashboardResponseAccountsItemProfileDetailsOneOneBioMax),
-  "offering": zod.string().max(getMembershipDashboardResponseAccountsItemProfileDetailsOneOneOfferingMax),
-  "lookingFor": zod.string().max(getMembershipDashboardResponseAccountsItemProfileDetailsOneOneLookingForMax),
-  "website": zod.string().max(getMembershipDashboardResponseAccountsItemProfileDetailsOneOneWebsiteMax),
-  "instagramUrl": zod.string().max(getMembershipDashboardResponseAccountsItemProfileDetailsOneOneInstagramUrlMax).optional().describe('Optional Instagram profile link; not an OAuth connection.'),
-  "facebookUrl": zod.string().max(getMembershipDashboardResponseAccountsItemProfileDetailsOneOneFacebookUrlMax).optional().describe('Optional Facebook profile or page link.'),
-  "tiktokUrl": zod.string().max(getMembershipDashboardResponseAccountsItemProfileDetailsOneOneTiktokUrlMax).optional().describe('Optional TikTok profile link.'),
-  "linkedinUrl": zod.string().max(getMembershipDashboardResponseAccountsItemProfileDetailsOneOneLinkedinUrlMax).optional().describe('Optional LinkedIn profile or company link.'),
-  "sectors": zod.array(zod.enum(['fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'humanitarian-action', 'real-estate', 'health-care'])).max(getMembershipDashboardResponseAccountsItemProfileDetailsOneOneSectorsMax),
-  "isPublic": zod.boolean(),
-  "profileLayout": zod.enum(['immersive', 'centered', 'editorial']).optional(),
-  "coverPosition": zod.number().int().min(getMembershipDashboardResponseAccountsItemProfileDetailsOneOneCoverPositionMin).max(getMembershipDashboardResponseAccountsItemProfileDetailsOneOneCoverPositionMax).optional(),
-  "postsLayout": zod.enum(['grid', 'list']).optional()
-}).describe('Explicit shared display allowlist. Never add owner-only or private input fields here. Independent of MemberProfileInput.').and(zod.object({
-  "id": zod.number().int(),
-  "publicMedia": zod.boolean().optional().describe('Optional legacy response property; actual media exposure remains server-controlled.'),
-  "avatarUrl": zod.string().nullish().describe('Public profile photo only when the member explicitly permits public media.'),
-  "enabled": zod.boolean().optional().describe('Whether this public member has joined the signed-in social network.')
-})),zod.null()]).optional(),
   "suspended": zod.boolean(),
   "lastReminderAt": zod.string().nullable(),
   "reminderStatus": zod.string().nullable(),
@@ -165,7 +84,6 @@ export const PreviewProfileReminderResponse = zod.object({
   "domainVerification": zod.enum(['verified', 'manual_check', 'unavailable']),
   "subject": zod.string(),
   "text": zod.string(),
-  "html": zod.string().optional(),
   "canSend": zod.boolean(),
   "reason": zod.string(),
   "previewToken": zod.string()
@@ -5006,7 +4924,6 @@ export const getNetworkStateResponseCertificationsItemMemberOneCoverPositionMax 
 
 
 export const GetNetworkStateResponse = zod.object({
-  "directoryVisible": zod.boolean().describe('Owner\'s consent to listing in the signed-in member directory. Independent of public internet visibility and community access.'),
   "growth": zod.union([zod.object({
   "inviteCode": zod.string(),
   "qualifiedInvites": zod.number().int(),
@@ -5402,7 +5319,7 @@ export const networkActionBodyMediaIdsMax = 6;
 
 
 export const NetworkActionBody = zod.object({
-  "action": zod.enum(['join', 'directory.visibility', 'referral.claim', 'post.create', 'post.edit', 'post.delete', 'post.like', 'post.view', 'comment.create', 'comment.delete', 'follow', 'block', 'thread.start', 'thread.accept', 'thread.decline', 'message.send', 'message.read', 'upload.complete', 'profile.media', 'certification.request', 'certification.decide', 'report', 'moderate.post', 'moderate.member', 'report.resolve', 'checkout']),
+  "action": zod.enum(['join', 'referral.claim', 'post.create', 'post.edit', 'post.delete', 'post.like', 'post.view', 'comment.create', 'comment.delete', 'follow', 'block', 'thread.start', 'thread.accept', 'thread.decline', 'message.send', 'message.read', 'upload.complete', 'profile.media', 'certification.request', 'certification.decide', 'report', 'moderate.post', 'moderate.member', 'report.resolve', 'checkout']),
   "id": zod.number().int().optional(),
   "targetId": zod.number().int().optional(),
   "text": zod.string().max(networkActionBodyTextMax).optional(),

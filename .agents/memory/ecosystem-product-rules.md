@@ -19,7 +19,7 @@ Ordinary member-to-member messaging must be free. Accepted conversations must no
 
 **Why:** The Founder authorized limited free-messaging implementation with these exact first-contact protections, without migrations or new persistent infrastructure.
 
-**How to apply:** Preserve authentication, verification, consent, blocking, moderation and account restrictions. The later member-experience directive replaces separate network activation with automatic ordinary access after verified basic profile completion; directory consent remains independent. Only ordinary first-contact creation loses its subscription gate; specialized commercial gates remain separate. If reliable counting and concurrent-creation protection cannot be preserved, stop rather than opening unprotected first contact. Source implementation approval does not authorize runtime verification or deployment.
+**How to apply:** Preserve authentication, verification, explicit activation, consent, blocking, moderation and account restrictions. Only ordinary first-contact creation loses its subscription gate; specialized commercial gates remain separate. If reliable counting and concurrent-creation protection cannot be preserved, stop rather than opening unprotected first contact. Source implementation approval does not authorize runtime verification or deployment.
 
 Nationality must be supplied explicitly by the member, never inferred from IP address, device location, residence, language, name or ethnicity. Nationality and residence need distinct meanings and clear visibility controls; private account contact details must never be published automatically.
 

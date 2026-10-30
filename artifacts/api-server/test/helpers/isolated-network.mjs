@@ -35,22 +35,7 @@ export const inArray = (a, list) => c => list.includes(value(a, c));
 export const isNull = a => c => value(a, c) == null;
 export const and = (...args) => c => args.filter(Boolean).every(p => p(c));
 export const or = (...args) => c => args.filter(Boolean).some(p => p(c));
-export const sql = (strings, ...values) => {
-  const expression = strings.join(" ");
-  if (/coalesce/i.test(expression))
-    return c => value(values[0], c) ?? value(values[1], c);
-  if (/^exists/i.test(expression.trim())) return c => {
-    const source = values[0].table;
-    return state[source].some(row => {
-      const context = { ...c, [source]: row };
-      if (source === "posts")
-        return value(values[1], context) === value(values[2], context) && value(values[3], context) === false;
-      return (value(values[1], context) === value(values[2], context) && value(values[3], context) === value(values[4], context)) ||
-        (value(values[5], context) === value(values[6], context) && value(values[7], context) === value(values[8], context));
-    });
-  };
-  return { count: true, strings: expression, values };
-};
+export const sql = (strings, ...values) => ({ count: true, strings: strings.join(" "), values });
 export const desc = column => column;
 const rowLocks = new Map();
 function mutation(execute) {
@@ -167,7 +152,7 @@ const output = await build({
     contents: `
       export { networkAuth, networkEnabled, networkWrite } from "./src/services/networkAuth";
       export { networkAction } from "./src/services/networkActions";
-      export { networkState, visibleMember, qualifiedInviteCount } from "./src/services/networkState";
+      export { networkState, qualifiedInviteCount } from "./src/services/networkState";
       export { state } from "@workspace/db";
     `,
     resolveDir: root,

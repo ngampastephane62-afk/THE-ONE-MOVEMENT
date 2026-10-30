@@ -11,7 +11,6 @@ export type NetworkActionInputAction = typeof NetworkActionInputAction[keyof typ
 
 export const NetworkActionInputAction = {
   join: 'join',
-  directoryvisibility: 'directory.visibility',
   referralclaim: 'referral.claim',
   postcreate: 'post.create',
   postedit: 'post.edit',

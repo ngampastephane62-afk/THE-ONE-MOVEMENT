@@ -12,9 +12,4 @@ export type MembershipDashboardTotals = {
   incomplete: number;
   complete: number;
   active: number;
-  emailVerified: number;
-  discoverable: number;
-  publicProfiles: number;
-  posted: number;
-  recentlySignedIn: number;
 };

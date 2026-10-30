@@ -1,1 +1,0 @@
-ALTER TABLE "network_profiles" ADD COLUMN "directory_visible" boolean;

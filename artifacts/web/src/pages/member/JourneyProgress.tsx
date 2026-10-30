@@ -29,8 +29,10 @@ export default function JourneyProgress({ compact = false }: { compact?: boolean
   const label = (ks: string[]) => ks.map((k) => PROFILE_REQUIREMENTS[k as keyof typeof PROFILE_REQUIREMENTS]).join(', ');
   const steps: Step[] = [
     { key: 'account', label: 'Account created', detail: 'Signed in with your own credentials.', done: true },
-    { key: 'profile', label: 'Basic profile', detail: j.missing.length ? `Still to add: ${label(j.missing)}.` : 'Name, professional identity, country and primary sector saved.', done: j.complete, href: '/member/onboarding', cta: 'Complete profile' },
-    { key: 'participate', label: 'Post, connect, invite', detail: j.activated ? 'Open to you now. No separate activation.' : 'Access opens automatically after verified basic completion.', done: j.activated, href: j.activated ? '/member/invite' : undefined, cta: j.activated ? 'Invite' : undefined },
+    { key: 'profile', label: 'Essential profile', detail: j.coreMissing.length ? `Still to add: ${label(j.coreMissing)}.` : 'Account type, name, profession and country saved.', done: !j.coreMissing.length, href: '/member/onboarding', cta: 'Complete profile' },
+    { key: 'sectors', label: 'Choose sectors', detail: j.sectorMissing.length ? 'Pick a primary sector and 1 to 3 active sectors.' : 'Primary and active sectors saved.', done: !j.sectorMissing.length, href: '/member/onboarding', cta: 'Choose sectors' },
+    { key: 'activate', label: 'Activate the network', detail: j.activated ? 'Visible to signed-in members.' : j.complete ? 'Your explicit choice. Nothing is activated automatically.' : 'Available once your essentials are saved.', done: j.activated },
+    { key: 'participate', label: 'Post, follow, invite', detail: j.activated ? 'Open to you now.' : 'Unlocked after activation.', done: j.activated, href: j.activated ? '/member/invite' : undefined, cta: j.activated ? 'Invite' : undefined },
   ];
   const next = steps.find((s) => !s.done);
   const doneCount = steps.filter((s) => s.done).length;
@@ -42,7 +44,7 @@ export default function JourneyProgress({ compact = false }: { compact?: boolean
         <span className="font-mono text-xs text-ink-700" data-testid="text-journey-count">{doneCount}/{steps.length} steps</span>
       </div>
       <div className="mt-2 h-1 overflow-hidden rounded-full bg-sand-100" aria-hidden="true"><div className="h-full origin-left bg-gold-500 transition-transform duration-500 motion-reduce:transition-none" style={{ transform: `scaleX(${doneCount / steps.length})` }} /></div>
-      <ol className="mt-4 grid gap-2 sm:grid-cols-3">
+      <ol className="mt-4 grid gap-2 sm:grid-cols-5">
         {steps.map((s, i) => {
           const current = s === next;
           return (
@@ -52,6 +54,7 @@ export default function JourneyProgress({ compact = false }: { compact?: boolean
                 <span className="block text-sm font-semibold text-ink-900">{s.label}</span>
                 <span className="block text-xs leading-snug text-ink-700">{s.detail}</span>
                 {current && s.href && s.cta && <Link href={s.href} className="mt-1.5 inline-block text-xs font-semibold text-lagoon-700 underline underline-offset-4" data-testid={`link-journey-${s.key}`}>{s.cta}</Link>}
+                {current && s.key === 'activate' && <a href="#panel-activate" className="mt-1.5 inline-block text-xs font-semibold text-lagoon-700 underline underline-offset-4" data-testid="link-journey-activate">Review activation</a>}
               </span>
             </li>
           );

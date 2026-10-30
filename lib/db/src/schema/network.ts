@@ -4,9 +4,6 @@ import { ecosystemMembersTable as members } from "./ecosystemMembers";
 export const networkProfiles = pgTable("network_profiles", {
   memberId: integer("member_id").primaryKey().references(() => members.id, { onDelete: "cascade" }),
   enabled: boolean("enabled").notNull().default(false),
-  // Null preserves the legacy enabled-as-directory-consent choice. Resolve
-  // that choice before changing enabled; new profiles explicitly start hidden.
-  directoryVisible: boolean("directory_visible"),
   founder: boolean("founder").notNull().default(false),
   inviteCode: uuid("invite_code").notNull().defaultRandom().unique(),
   referredBy: integer("referred_by").references(() => members.id, { onDelete: "set null" }),

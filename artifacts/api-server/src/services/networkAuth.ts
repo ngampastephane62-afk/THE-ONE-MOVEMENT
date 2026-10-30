@@ -1,8 +1,7 @@
 import { clerkClient, getAuth } from "@clerk/express";
 import type { Request, Response, NextFunction } from "express";
 import { db, ecosystemMembersTable as members, networkProfiles } from "@workspace/db";
-import { eq, sql } from "drizzle-orm";
-import { hasCommunityAccess } from "./memberAccess";
+import { eq } from "drizzle-orm";
 import { getClerkProxyHost } from "../middlewares/clerkProxyMiddleware";
 
 export class NetworkError extends Error {
@@ -15,7 +14,7 @@ export type NetworkActor = {
   accountCreatedAt: number;
   founder: boolean;
 };
-const identities = new Map<string, { email: string; fullName: string; verified: boolean; restricted: boolean; accountCreatedAt: number; expires: number }>();
+const identities = new Map<string, { email: string; fullName: string; verified: boolean; accountCreatedAt: number; expires: number }>();
 export async function networkAuth(req: Request, res: Response, next: NextFunction) {
   res.set("Cache-Control", "no-store");
   const clerkId = getAuth(req).userId;
@@ -29,7 +28,6 @@ export async function networkAuth(req: Request, res: Response, next: NextFunctio
         email: primary?.emailAddress.toLowerCase() ?? "",
         fullName: [user.firstName, user.lastName].filter(Boolean).join(" "),
         verified: primary?.verification?.status === "verified",
-        restricted: user.banned || user.locked,
         accountCreatedAt: user.createdAt,
         expires: Date.now() + 60_000,
       };
@@ -40,7 +38,6 @@ export async function networkAuth(req: Request, res: Response, next: NextFunctio
     }
   }
   if (!identity.verified) return void res.status(403).json({ error: "Verify your primary email before joining the network." });
-  if (identity.restricted) return void res.status(403).json({ error: "This account is restricted. Contact TOMI for assistance." });
   const founder = !!process.env.TOMI_FOUNDER_EMAIL &&
     identity.email === process.env.TOMI_FOUNDER_EMAIL.trim().toLowerCase();
   let [member] = await db.select().from(members).where(eq(members.clerkId, clerkId)).limit(1);
@@ -55,16 +52,10 @@ export async function networkAuth(req: Request, res: Response, next: NextFunctio
     if (!member) [member] = await db.select().from(members).where(eq(members.clerkId, clerkId)).limit(1);
   }
   if (member) {
-    await db.insert(networkProfiles).values({ memberId: member.id, founder, enabled: false, directoryVisible: false })
+    await db.insert(networkProfiles).values({ memberId: member.id, founder, enabled: false })
       .onConflictDoUpdate({ target: networkProfiles.memberId, set: { founder } });
     const [profile] = await db.select().from(networkProfiles).where(eq(networkProfiles.memberId, member.id));
     if (profile?.suspended && !founder) return void res.status(403).json({ error: "This network account is suspended. Contact TOMI through the inquiry pathway." });
-    await db.update(networkProfiles).set({
-      // SQL evaluates both expressions against the old row, preserving legacy
-      // privacy even when simultaneous requests activate an existing account.
-      directoryVisible: sql`coalesce(${networkProfiles.directoryVisible}, ${networkProfiles.enabled})`,
-      enabled: founder || hasCommunityAccess(member, identity.verified, !!profile?.suspended),
-    }).where(eq(networkProfiles.memberId, member.id));
   }
   res.locals.actor = { member: member ?? null, clerkId, email: identity.email, accountCreatedAt: identity.accountCreatedAt, founder } satisfies NetworkActor;
   next();
@@ -72,7 +63,7 @@ export async function networkAuth(req: Request, res: Response, next: NextFunctio
 export function actor(res: Response, enabled = true) {
   const value = res.locals.actor as NetworkActor;
   if (!value.member) throw new NetworkError(409, "Your member space could not be opened. Please try again.");
-  if (enabled && !res.locals.networkEnabled) throw new NetworkError(409, "Complete your basic profile to take part. No separate activation is required.");
+  if (enabled && !res.locals.networkEnabled) throw new NetworkError(409, "Join the member network before taking part.");
   return { ...value, member: value.member };
 }
 export async function networkEnabled(_req: Request, res: Response, next: NextFunction) {

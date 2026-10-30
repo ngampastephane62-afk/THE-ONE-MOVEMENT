@@ -13,9 +13,6 @@ import { errStatus } from '@/components/network/kit';
 const STATUS_FILTERS: { v: GetMembershipDashboardStatus; label: string }[] = [
   { v: 'all', label: 'All accounts' }, { v: 'no_profile', label: 'No profile' }, { v: 'incomplete', label: 'Incomplete' },
   { v: 'complete', label: 'Complete' }, { v: 'active', label: 'Active' },
-  { v: 'verified', label: 'Email verified' }, { v: 'discoverable', label: 'Member directory' },
-  { v: 'public', label: 'Public profiles' }, { v: 'posted', label: 'Have posted' },
-  { v: 'inactive', label: 'No sign-in in 30 days' },
 ];
 const DAYS: GetMembershipDashboardDays[] = [7, 30, 90];
 const PROFILE_LABEL = { no_profile: 'No profile', incomplete: 'Incomplete', complete: 'Complete' } as const;
@@ -75,7 +72,6 @@ function ReminderPanel({ account, onClose }: { account: MembershipAccount; onClo
               <div><dt className="text-xs text-ink-700">Recipient</dt><dd className="font-mono text-ink-900" data-testid="text-reminder-recipient">{p.recipient}</dd></div>
               <div><dt className="text-xs text-ink-700">Subject</dt><dd className="font-semibold text-ink-900" data-testid="text-reminder-subject">{p.subject}</dd></div>
               <div><dt className="text-xs text-ink-700">Message (exact text)</dt><dd><pre className="mt-1 max-h-64 overflow-auto whitespace-pre-wrap rounded-xl border border-sand-200 bg-ivory-100 p-3 font-sans text-xs leading-relaxed text-ink-800" data-testid="text-reminder-body">{p.text}</pre></dd></div>
-              {p.html && <div><dt className="text-xs text-ink-700">Formatted email preview</dt><dd><iframe title="Formatted profile reminder" sandbox="" srcDoc={p.html} className="mt-1 h-80 w-full rounded-xl border border-sand-200" /></dd></div>}
             </dl>
             {!p.canSend && <p className="mt-3 rounded-xl border border-sand-300 bg-ivory-100 p-3 text-xs text-ink-800" data-testid="text-reminder-blocked"><span className="font-semibold">Sending unavailable.</span> {p.reason}</p>}
             {p.domainVerification === 'manual_check' && p.canSend && <p className="mt-3 rounded-xl border border-gold-500/50 bg-ivory-100 p-3 text-xs leading-relaxed text-ink-800" data-testid="text-reminder-domain-manual">
@@ -153,15 +149,10 @@ export default function FounderMembers() {
               <h2 id="fm-accounts" className="sr-only">Account totals</h2>
               <dl className="grid grid-cols-2 gap-3 lg:grid-cols-5">
                 <Metric testid="accounts" label="All accounts" value={n(d.totals.accounts)} note="Accounts in the configured sign-in service." />
-                <Metric testid="verified" label="Email verified" value={n(d.totals.emailVerified)} note="Current primary email verified by our sign-in provider." />
-                <Metric testid="no-profile" label="No profile" value={n(d.totals.noProfile)} note="Account exists, no basic profile details saved yet." />
+                <Metric testid="no-profile" label="No profile" value={n(d.totals.noProfile)} note="Account exists, no member profile saved." />
                 <Metric testid="incomplete" label="Incomplete" value={n(d.totals.incomplete)} note="Profile saved, essentials missing." />
-                <Metric testid="complete" label="Complete" value={n(d.totals.complete)} note="Name, professional identity, country and a primary sector saved." />
-                <Metric testid="active" label="Community access" value={n(d.totals.active)} note="Verified, basic profile complete and not restricted. Access is automatic; this is not a visitor count." />
-                <Metric testid="directory" label="Member directory" value={n(d.totals.discoverable)} note="Eligible members who chose listing for signed-in members." />
-                <Metric testid="public" label="Public profiles" value={n(d.totals.publicProfiles)} note="Owner opted into public internet listing; excludes restricted accounts." />
-                <Metric testid="posted" label="Have posted" value={n(d.totals.posted)} note="Members with an existing post, including moderated posts; deleted posts are not counted." />
-                <Metric testid="signed-in" label="Signed in · 30 days" value={n(d.totals.recentlySignedIn)} note="Accounts with a recorded sign-in in the last 30 days. Not unique website visitors." />
+                <Metric testid="complete" label="Complete" value={n(d.totals.complete)} note="All essentials saved, activated or not." />
+                <Metric testid="active" label="Active" value={n(d.totals.active)} note="Complete, voluntarily activated, not suspended." />
               </dl>
             </section>
 
@@ -226,20 +217,7 @@ export default function FounderMembers() {
                         <div><dt className="inline">Sectors </dt><dd className="inline text-ink-900">{a.sectors.length ? a.sectors.join(', ') : '—'}</dd></div>
                         <div><dt className="inline">Last reminder </dt><dd className="inline text-ink-900">{a.lastReminderAt ? `${fmt(a.lastReminderAt)}${a.reminderStatus ? ` (${a.reminderStatus})` : ''}` : '—'}</dd></div>
                       </dl>
-                      <div className="mt-3 flex items-center gap-2 text-xs text-ink-700"><progress max={4} value={Math.max(0, 4 - a.missingFields.length)} aria-label={`Basic profile completion for ${a.name}`} className="h-2 w-32 accent-[#10383b]" />{Math.max(0, 4 - a.missingFields.length)}/4 basics complete</div>
                       {a.missingFields.length > 0 && <p className="mt-1 text-xs text-ink-700">Missing: {a.missingFields.join(', ')}</p>}
-                      {a.profileDetails && <details className="mt-2 text-xs text-ink-700" data-testid={`account-profile-${a.clerkId}`}>
-                        <summary className="cursor-pointer font-semibold text-lagoon-700 underline">View saved professional profile</summary>
-                        <dl className="mt-2 grid gap-2 rounded-lg border border-sand-200 p-3">
-                          <div><dt className="font-semibold">Profession</dt><dd>{a.profileDetails.profession || 'Not supplied'}</dd></div>
-                          <div><dt className="font-semibold">Organization</dt><dd>{a.profileDetails.organization || 'Not supplied'}</dd></div>
-                          <div><dt className="font-semibold">Shared country</dt><dd>{a.profileDetails.country || 'Private or not supplied'}</dd></div>
-                          <div><dt className="font-semibold">Biography</dt><dd className="whitespace-pre-wrap">{a.profileDetails.bio || 'Not supplied'}</dd></div>
-                          <div><dt className="font-semibold">Offering</dt><dd>{a.profileDetails.offering || 'Not supplied'}</dd></div>
-                          <div><dt className="font-semibold">Looking for</dt><dd>{a.profileDetails.lookingFor || 'Not supplied'}</dd></div>
-                          <div><dt className="font-semibold">Directory choices</dt><dd>Member listing: {a.directoryVisible ? 'on' : 'off'} · Public internet: {a.publiclyDiscoverable ? 'on' : 'off'}</dd></div>
-                        </dl>
-                      </details>}
                       {a.profileStatus !== 'complete' && (
                         a.remindersOptedOut ? <p className="mt-2 text-xs text-ink-700" data-testid={`text-optout-${a.clerkId}`}>Opted out of reminders.</p>
                           : <button type="button" onClick={() => setReminderFor(a)} className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-lagoon-700 underline underline-offset-4" data-testid={`button-preview-reminder-${a.clerkId}`}><Mail className="h-3.5 w-3.5" />Preview reminder</button>

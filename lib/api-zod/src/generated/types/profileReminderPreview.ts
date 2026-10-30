@@ -14,7 +14,6 @@ export interface ProfileReminderPreview {
   domainVerification: ProfileReminderPreviewDomainVerification;
   subject: string;
   text: string;
-  html?: string;
   canSend: boolean;
   reason: string;
   previewToken: string;

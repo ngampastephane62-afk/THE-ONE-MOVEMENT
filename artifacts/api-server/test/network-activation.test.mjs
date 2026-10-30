@@ -12,7 +12,7 @@ const require = createRequire(import.meta.url);
 const fixture = `
 export const state = { members: [], profiles: [], posts: [], identities: new Map() };
 export const ecosystemMembersTable = { table: "members", clerkId: "clerkId", id: "id" };
-export const networkProfiles = { table: "profiles", memberId: "memberId", directoryVisible: "directoryVisible", enabled: "enabled" };
+export const networkProfiles = { table: "profiles", memberId: "memberId" };
 export const networkUploads = {}, networkPosts = { table: "posts", id: "id", authorId: "authorId" }, networkComments = {},
   networkLikes = {}, networkViews = {}, networkFollows = {}, networkBlocks = {},
   networkThreads = {}, networkMessages = {}, networkCertifications = {},
@@ -51,10 +51,7 @@ export const db = {
   } }),
   update: table => ({ set: values => ({ where: async condition => {
     const matches = (row, c) => c.conditions ? c.conditions.every(child => matches(row, child)) : row[c.column] === c.value;
-    for (const row of rows(table)) if (matches(row, condition)) {
-      const resolved = Object.fromEntries(Object.entries(values).map(([key, value]) => [key, value?.coalesce ? row[value.columns[0]] ?? row[value.columns[1]] : value]));
-      Object.assign(row, resolved);
-    }
+    for (const row of rows(table)) if (matches(row, condition)) Object.assign(row, values);
   } }) }),
 };
 export const getAuth = req => ({ userId: req.headers["x-fixture-identity"] ?? null });
@@ -104,7 +101,7 @@ const output = await build({
         contents: path === "identity-and-db" ? fixture : path === "unrelated" ? failClosed
           : path === "origin" ? `export const getClerkProxyHost = req => req.get("host");`
             : `export const eq = (column, value) => ({ column, value });
-               export const and = (...conditions) => ({ conditions }), inArray = () => {}, or = () => {}, ne = () => {}, isNull = () => {}, sql = (strings, ...columns) => ({coalesce:true,columns});`,
+               export const and = (...conditions) => ({ conditions }), inArray = () => {}, or = () => {}, ne = () => {}, isNull = () => {}, sql = () => {};`,
       }));
       b.onResolve({ filter: /^express$/ }, args => ({
         path: pathToFileURL(require.resolve(args.path)).href, external: true,
@@ -116,7 +113,7 @@ const { router, networkErrors, requireFounder, state } = await import(
   `data:text/javascript;base64,${Buffer.from(output.outputFiles[0].text).toString("base64")}`
 );
 
-test("automatic community access and independent directory consent (isolated HTTP regression suite)", async t => {
+test("explicit network activation (isolated HTTP regression suite)", async t => {
   const app = express();
   app.use(express.json(), router, networkErrors);
   const server = app.listen(0, "127.0.0.1");
@@ -154,10 +151,10 @@ test("automatic community access and independent directory consent (isolated HTT
     assert.equal(profile("new").enabled, false);
     assert.equal(state.members.length, 1);
   });
-  await t.test("participation is rejected server-side before basic completion", async () => {
+  await t.test("participation is rejected server-side before activation", async () => {
     const response = await request("new", { action: "follow", targetId: 2, accepted: true });
     assert.equal(response.status, 409);
-    assert.match((await response.json()).error, /Complete your basic profile/);
+    assert.match((await response.json()).error, /Join the member network/);
   });
   await t.test("missing, malformed consent or unrecognised identity fields cannot activate", async () => {
     for (const body of [
@@ -188,7 +185,7 @@ test("automatic community access and independent directory consent (isolated HTT
     assert.equal((await request("other", { ...join, targetId: profile("new").memberId, accepted: false })).status, 200);
     assert.equal(profile("new").enabled, true);
   });
-  await t.test("legacy directory consent is idempotent and survives later authenticated requests", async () => {
+  await t.test("explicit activation is idempotent and survives later authenticated requests", async () => {
     const before = structuredClone(profile("new"));
     assert.equal((await request("new", join)).status, 200);
     assert.equal((await request("new")).status, 200);
@@ -244,8 +241,8 @@ test("automatic community access and independent directory consent (isolated HTT
   });
   await t.test("already activated incomplete profiles cannot publish, follow or claim invitations, but may leave", async () => {
     const member = state.members.find(m => m.clerkId === "new");
-    const before = member.profession;
-    member.profession = "";
+    const before = member.mainSector;
+    member.mainSector = null;
     for (const body of [
       { action: "post.create", kind: "post", text: "Must not publish" },
       { action: "follow", targetId: 2, accepted: true },
@@ -253,25 +250,22 @@ test("automatic community access and independent directory consent (isolated HTT
     ]) {
       const response = await request("new", body);
       assert.equal(response.status, 409);
-      assert.match((await response.json()).error, /Complete your (basic )?profile/);
+      assert.match((await response.json()).error, /Complete your profile/);
     }
     assert.equal((await request("new", { action: "join", accepted: false })).status, 200);
-    member.profession = before;
+    member.mainSector = before;
     assert.equal((await request("new", join)).status, 200);
   });
-  await t.test("existing complete profiles gain access while legacy directory consent and public choices are preserved", async () => {
+  await t.test("pre-existing active and inactive profiles retain their state on authentication", async () => {
     for (const enabled of [false, true]) {
       const id = `existing-${enabled}`;
       identity(id);
       const memberId = state.members.length + 1;
       state.members.push({ id: memberId, clerkId: id, isPublic: true, publicMedia: false });
       state.profiles.push({ memberId, enabled, suspended: false, founder: false });
-      complete(id);
       const before = structuredClone(profile(id));
       assert.equal((await request(id)).status, 200);
-      assert.deepEqual(profile(id), { ...before, enabled: true, directoryVisible: enabled });
-      assert.equal(state.members.find(m => m.clerkId === id).isPublic, true);
-      assert.equal(state.members.find(m => m.clerkId === id).publicMedia, false);
+      assert.deepEqual(profile(id), before);
     }
   });
   await t.test("suspended members cannot reactivate, and suspension is unchanged", async () => {
@@ -281,10 +275,10 @@ test("automatic community access and independent directory consent (isolated HTT
     assert.equal((await request("other")).status, 403);
     assert.deepEqual(profile("other"), before);
   });
-  await t.test("Founder administration remains accessible and ordinary members still cannot become Founder", async () => {
+  await t.test("Founder identity and existing suspension exception stay intact without auto-activation", async () => {
     identity("founder", { email: "founder@fixture.invalid" });
     assert.equal((await request("founder")).status, 200);
-    assert.equal(profile("founder").enabled, true);
+    assert.equal(profile("founder").enabled, false);
     assert.equal(profile("founder").founder, true);
     complete("founder");
     assert.doesNotThrow(() => requireFounder({ locals: { actor: { founder: true } } }));
@@ -294,20 +288,5 @@ test("automatic community access and independent directory consent (isolated HTT
     assert.equal(profile("founder").enabled, true);
     assert.equal(profile("founder").suspended, true);
     assert.equal((await request("founder")).status, 200);
-  });
-  await t.test("verified basic completion alone unlocks participation, never directory consent, across refreshes", async () => {
-    identity("automatic");
-    assert.equal((await request("automatic")).status, 200);
-    assert.equal(profile("automatic").enabled, false);
-    complete("automatic");
-    assert.equal((await request("automatic")).status, 200);
-    assert.equal(profile("automatic").enabled, true);
-    assert.equal(profile("automatic").directoryVisible, false);
-    for (const visible of [true, false]) {
-      assert.equal((await request("automatic", { action: "directory.visibility", accepted: visible })).status, 200);
-      assert.equal((await request("automatic")).status, 200);
-      assert.equal(profile("automatic").directoryVisible, visible);
-      assert.equal(profile("automatic").enabled, true);
-    }
   });
 });

@@ -7,7 +7,6 @@ import {randomUUID} from "node:crypto";
 export const state={members:[],networks:[],reminders:[],emails:[],provider:"ok",users:new Map()};
 export const ecosystemMembersTable={table:"members",clerkId:"clerkId"};
 export const networkProfiles={table:"networks",memberId:"memberId"};
-export const networkPosts={};
 export const memberProfileRemindersTable={table:"reminders",clerkId:"clerkId",attemptId:"attemptId",id:"id"};
 export const siteVisitSessionsTable={};
 let queue=Promise.resolve();
@@ -44,7 +43,7 @@ export class ReplitConnectors{async proxy(connector,path,options){
 }}
 `;
 const bundle = await build({
-  stdin: { contents: `export {previewReminder,sendReminder,checkReminderTarget} from "./src/services/profileReminders";export {state} from "@workspace/db";`, resolveDir: process.cwd() },
+  stdin: { contents: `export {previewReminder,sendReminder} from "./src/services/profileReminders";export {state} from "@workspace/db";`, resolveDir: process.cwd() },
   platform: "node", format: "esm", bundle: true, write: false,
   define: {
     "process.env.SESSION_SECRET": JSON.stringify("fixture-secret-never-real"),
@@ -63,7 +62,7 @@ const bundle = await build({
     },
   }],
 });
-const { previewReminder, sendReminder, checkReminderTarget, state } = await import(`data:text/javascript;base64,${Buffer.from(bundle.outputFiles[0].text).toString("base64")}`);
+const { previewReminder, sendReminder, state } = await import(`data:text/javascript;base64,${Buffer.from(bundle.outputFiles[0].text).toString("base64")}`);
 function setup() {
   state.members.length=0;state.networks.length=0;state.reminders.length=0;state.emails.length=0;state.users.clear();state.provider="ok";
   state.users.set("user_fixture", { id:"user_fixture",firstName:"Fixture",lastName:"Member",primaryEmailAddressId:"primary",
@@ -81,15 +80,6 @@ test("preview is read-only and explicit sending uses the exact verified recipien
   assert.equal(state.emails.length,1);
   assert.deepEqual(state.emails[0].data.to,["recipient@fixture.invalid"]);
   assert.equal(state.emails[0].data.text,preview.text);
-  assert.equal(state.emails[0].data.html,preview.html);
-  const profileLink = new URL(state.emails[0].data.text.match(/https:\/\/\S+\/member\/onboarding\?reminder=\S+/)[0]);
-  const token = profileLink.searchParams.get("reminder");
-  assert.deepEqual(await checkReminderTarget(token, "user_fixture"), { matches: true });
-  assert.deepEqual(await checkReminderTarget(token, "user_other"), { matches: false });
-  await assert.rejects(() => checkReminderTarget(`${token}forged`, "user_fixture"), error => error.status === 404);
-  assert.equal(preview.subject,"Complete Your Profile — The One Movement");
-  assert.match(preview.html,/COMPLETE MY PROFILE/);
-  assert.doesNotMatch(preview.text,/explicitly activate/i);
   assert.match(state.emails[0].key,/^profile-reminder\/[a-f0-9-]{36}$/);
   assert.equal(state.reminders[0].status,"accepted");
   assert.equal((await previewReminder("user_fixture")).canSend,false);

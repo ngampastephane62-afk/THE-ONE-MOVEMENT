@@ -10,7 +10,6 @@ import Workspace from './Workspace';
 import Chapter from '@/components/editorial/Chapter';
 import { useMe } from './ctx';
 import { profileInput } from './profile-sync';
-import DirectoryPrivacy from '@/components/network/DirectoryPrivacy';
 
 function MediaPicker({ kind, pickerId }: { kind: 'avatar' | 'cover'; pickerId: string }) {
   const u = useUploads(1);
@@ -85,9 +84,8 @@ export default function SettingsPage() {
       {q.isLoading ? <Skeleton rows={2} /> : q.isError && !q.data?.profile ? <ErrorBox onRetry={() => q.refetch()} /> : !q.data?.profile ? <ErrorBox onRetry={() => q.refetch()} msg="Profile not found." /> : (
         <>
         <div hidden={tab !== 'profile'} className={`${card} p-5 sm:p-7`} data-testid="panel-profile-editor">
-          <p className="mb-5 text-sm text-ink-700">Choose your professional details here. Member-directory listing is optional below; posting and connecting share your professional identity with those members. The public-website switch is separate and remains under your control.</p>
+          <p className="mb-5 text-sm text-ink-700">These details appear on your network page for signed-in members. The public-directory switch below controls only the public website.</p>
           {saved && !dirty && <p className="mb-4 flex flex-wrap items-center gap-3 rounded-lg bg-lagoon-600/10 p-2 text-sm text-lagoon-700" role="status">Page saved. <Link href={`/member/profile/${me.id}`} className="font-semibold underline" data-testid="link-view-saved">See it live</Link></p>}
-          <div className="mb-5"><DirectoryPrivacy /></div>
           <ProfileForm key={formKey} appearance initial={q.data.profile} defaultName={user?.fullName ?? ''} onDraft={(d) => { setDraft(d); }}
             onCancel={dirty ? () => { setDraft(null); setSaved(false); setFormKey((k) => k + 1); } : undefined}
             onDone={(hasNewerEdits) => { setSaved(!hasNewerEdits); }} />

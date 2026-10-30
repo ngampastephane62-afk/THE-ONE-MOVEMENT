@@ -36,7 +36,11 @@ function validate(v: MemberProfileInput, onboarding = false): Errors {
   const issue = activeSectorIssue({ mainSector: v.mainSector, activeSectors: v.activeSectors });
   if (issue) e.activeSectors = issue;
   if (onboarding) {
-    if (!v.mainSector && !v.activeSectors?.length && !v.sectors.length) e.mainSector = 'Choose your primary sector.';
+    if (!v.accountType) e.accountType = 'Choose an individual or organization account.';
+    if (!v.mainSector) e.mainSector = 'Choose your primary sector.';
+    if (!v.activeSectors?.length) e.activeSectors = 'Choose 1 to 3 distinct active sectors, including your primary sector.';
+    if (v.accountType === 'organization' && (v.contactName ?? '').trim().length < 2) e.contactName = 'Add a contact person (at least 2 characters).';
+    if (v.accountType === 'organization' && !(v.organizationType ?? '').trim()) e.organizationType = 'Add the type of organization.';
     if (v.profession.trim().length < 2) e.profession = 'Add your profession or role.';
     if (v.country.trim().length < 2) e.country = 'Add your country.';
   }
@@ -177,12 +181,12 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
 
   return (
     <form onSubmit={submit} noValidate className="flex flex-col gap-8" data-testid="form-member-profile">
-      {onboarding ? <p className="text-sm leading-relaxed text-ink-700" data-testid="text-profile-completion-guidance">Just four essentials: name, profession or member identity, country and primary sector. After email verification, saving these opens free community participation automatically—no activation button, payment or Founder approval. Add a photo, biography, company and extra sectors later in Settings. Directory listing remains your choice.</p> :
-      <p className="text-sm leading-relaxed text-ink-700" data-testid="text-profile-completion-guidance">Update your professional profile at your own pace. A verified basic profile opens ordinary free community participation automatically. Directory listing and public internet visibility remain separate choices.</p>}
+      {onboarding ? <p className="text-sm leading-relaxed text-ink-700" data-testid="text-profile-completion-guidance">A few details help members recognise you: account type, display name, profession, country, a primary sector and 1 to 3 active sectors (organizations also add their type and a private contact person). Photo, biography, social links, public directory and payment are optional. Saving does not activate the network or make your profile public.</p> :
+      <p className="text-sm leading-relaxed text-ink-700" data-testid="text-profile-completion-guidance">Build your profile at your own pace: confirm your display name, add a photo from Settings, describe your profession, select sectors and write a short biography. These steps are optional for exploring TOMI; you can come back later. Saving never activates the network; visibility changes only if you choose those settings.</p>}
       {appearance && <AppearanceControls v={v} set={set} />}
       <fieldset className="grid gap-5 sm:grid-cols-2">
         <legend className="mb-4 text-eyebrow text-gold-700">THE ESSENTIALS</legend>
-        {!onboarding && <fieldset className="sm:col-span-2" aria-invalid={!!errors.accountType}>
+        <fieldset className="sm:col-span-2" aria-invalid={!!errors.accountType}>
           <legend className="text-sm text-ink-900">{onboarding ? req('Account type') : 'Account type'}</legend>
           <div className="mt-2 flex flex-wrap gap-2" role="radiogroup">
             {([['individual', 'Individual'], ['organization', 'Organization']] as const).map(([val, lab]) => (
@@ -192,7 +196,7 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
           </div>
           {!v.accountType && !onboarding && <p className="mt-1 text-xs text-ink-700">Not set yet. You can leave this unchanged and still save other details.</p>}
           {err('accountType')}
-        </fieldset>}
+        </fieldset>
         <label className="text-sm text-ink-900">{isOrg ? 'Organization display name *' : 'Display name *'}
           <input className={`${fieldCls} mt-1`} value={v.fullName} maxLength={100} onChange={(e) => set('fullName', e.target.value)} data-testid="input-fullName" />{err('fullName')}
           <span className="mt-1 block text-xs text-ink-700">Confirm the name you want members to see, or edit it here. Your chosen name is kept until you change it.</span>
@@ -200,7 +204,7 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
         <label className="text-sm text-ink-900">{req('Profession or role')}
           <input className={`${fieldCls} mt-1`} value={v.profession} maxLength={100} placeholder="e.g. Textile designer" onChange={(e) => set('profession', e.target.value)} data-testid="input-profession" aria-invalid={!!errors.profession} />{err('profession')}
         </label>
-        {!onboarding && isOrg && <>
+        {isOrg && <>
           <label className="text-sm text-ink-900">{onboarding ? req('Organization type') : 'Organization type'}
             <input className={`${fieldCls} mt-1`} value={v.organizationType ?? ''} maxLength={100} placeholder="e.g. Foundation, studio, embassy" onChange={(e) => set('organizationType', e.target.value)} data-testid="input-organizationType" aria-invalid={!!errors.organizationType} />{err('organizationType')}
           </label>
@@ -212,6 +216,7 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
         {onboarding && <label className="text-sm text-ink-900">{req('Country')}
           <input className={`${fieldCls} mt-1`} value={v.country} maxLength={100} placeholder="e.g. United Arab Emirates" onChange={(e) => set('country', e.target.value)} data-testid="input-country" aria-invalid={!!errors.country} />{err('country')}
         </label>}
+        {onboarding && location}
         {email && <div className="text-sm text-ink-900">Account email
           <p className="mt-1 border border-sand-200 bg-ivory-200/60 px-3 py-2.5 text-sm text-ink-700" data-testid="text-account-email">{email}</p>
           <span className="mt-1 block text-xs text-ink-700">From your sign-in account. Change it in account settings, not here.</span>
@@ -219,8 +224,8 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
       </fieldset>
 
       <fieldset data-testid="group-active-sectors">
-        <legend className="text-eyebrow text-gold-700">{onboarding ? 'PRIMARY SECTOR' : 'PRIMARY AND ACTIVE SECTORS'}</legend>
-        <p className="mt-2 text-sm leading-relaxed text-ink-700">{onboarding ? 'Choose one sector to start. You can add more later. A saved legacy sector already counts toward your basic profile.' : `Choose one primary sector, then up to ${ACTIVE_SECTOR_LIMIT - 1} more active sectors from the same seventeen.`}</p>
+        <legend className="text-eyebrow text-gold-700">PRIMARY AND ACTIVE SECTORS <span className="normal-case tracking-normal text-sand-400">({v.activeSectors?.length ?? 0}/{ACTIVE_SECTOR_LIMIT} active)</span></legend>
+        <p className="mt-2 text-sm leading-relaxed text-ink-700">Choose one primary sector, then up to {ACTIVE_SECTOR_LIMIT - 1} more active sectors from the same seventeen. {v.activeSectors == null && !onboarding ? 'Not set yet: you can leave this unchanged and still save other details.' : ''}</p>
         <label className="mt-3 block max-w-sm text-sm text-ink-900">{onboarding ? req('Primary sector') : 'Primary sector'}
           <select className={`${fieldCls} mt-1`} value={v.mainSector ?? ''} onChange={(e) => chooseMain(e.target.value as Active | '')} data-testid="select-mainSector">
             <option value="" disabled={v.mainSector != null}>Choose a sector</option>
@@ -238,7 +243,7 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
             </div>
           </div>
         )}
-        {v.mainSector && !onboarding && (
+        {v.mainSector && (
           <div className="mt-3 flex flex-wrap gap-2">
             {SECTORS.map((s) => {
               const slug = s.slug as Active;
@@ -256,7 +261,6 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
         {err('mainSector')}{err('activeSectors')}
       </fieldset>
 
-      {!onboarding && <>
       <fieldset>
         <legend className="text-eyebrow text-gold-700">YOUR INTERESTS <span className="normal-case tracking-normal text-sand-400">(optional, {v.sectors.length}/{MAX_PROFILE_SECTORS} maximum)</span></legend>
         <p className="mt-2 text-xs text-ink-700">Interests you saved earlier are kept as they are. They do not change your active sectors and nothing is joined automatically.</p>
@@ -345,8 +349,6 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
         </label>
       </div>
 
-      </>}
-      {onboarding && <p className="text-xs text-ink-700">Your existing optional details and privacy choices are preserved. You can edit them in Settings after joining.</p>}
       {save.isError && (
         <div className="flex flex-wrap items-center gap-3 border border-crimson-700/30 bg-crimson-700/5 p-4" role="alert">
           <p className="text-sm text-crimson-700">Your profile could not be saved. Check your connection and try again.</p>
