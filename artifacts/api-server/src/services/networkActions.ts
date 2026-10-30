@@ -31,7 +31,7 @@ export async function networkAction(req: Request, res: Response) {
   const parsed = NetworkActionBody.strict().safeParse(req.body);
   if (!parsed.success) throw new NetworkError(400, "Invalid network action.");
   const input: NetworkActionInput = parsed.data;
-  const who = actor(res, !["join", "upload.complete", "profile.media", "post.view"].includes(input.action));
+  const who = actor(res, !["join", "directory.visibility", "upload.complete", "profile.media", "post.view", "block", "report"].includes(input.action));
   const requiresCompleteProfile = ["post.create", "post.edit", "referral.claim"].includes(input.action) ||
     (["join", "follow"].includes(input.action) && input.accepted === true);
   if (requiresCompleteProfile) {
@@ -45,7 +45,13 @@ export async function networkAction(req: Request, res: Response) {
   let resultId: number | undefined;
   switch (input.action) {
     case "join": {
-      await db.update(profiles).set({ enabled: accepted(input.accepted) }).where(eq(profiles.memberId, self));
+      // Compatibility for older clients: this used to combine participation
+      // with directory consent. Membership itself is now automatic.
+      await db.update(profiles).set({ directoryVisible: accepted(input.accepted) }).where(eq(profiles.memberId, self));
+      break;
+    }
+    case "directory.visibility": {
+      await db.update(profiles).set({ directoryVisible: accepted(input.accepted) }).where(eq(profiles.memberId, self));
       break;
     }
     case "referral.claim": {

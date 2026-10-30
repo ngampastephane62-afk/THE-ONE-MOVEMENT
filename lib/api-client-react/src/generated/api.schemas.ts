@@ -5,6 +5,10 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+export interface ProfileReminderTarget {
+  matches: boolean;
+}
+
 export type MembershipAccountProfileStatus = typeof MembershipAccountProfileStatus[keyof typeof MembershipAccountProfileStatus];
 
 
@@ -13,6 +17,122 @@ export const MembershipAccountProfileStatus = {
   incomplete: 'incomplete',
   complete: 'complete',
 } as const;
+
+export type ProfileDisplayFieldsSectorsItem = typeof ProfileDisplayFieldsSectorsItem[keyof typeof ProfileDisplayFieldsSectorsItem];
+
+
+export const ProfileDisplayFieldsSectorsItem = {
+  fashion: 'fashion',
+  music: 'music',
+  dance: 'dance',
+  film: 'film',
+  art: 'art',
+  business: 'business',
+  investment: 'investment',
+  tourism: 'tourism',
+  diplomacy: 'diplomacy',
+  innovation: 'innovation',
+  technology: 'technology',
+  ngos: 'ngos',
+  media: 'media',
+  education: 'education',
+  'humanitarian-action': 'humanitarian-action',
+  'real-estate': 'real-estate',
+  'health-care': 'health-care',
+} as const;
+
+export type ProfileDisplayFieldsProfileLayout = typeof ProfileDisplayFieldsProfileLayout[keyof typeof ProfileDisplayFieldsProfileLayout];
+
+
+export const ProfileDisplayFieldsProfileLayout = {
+  immersive: 'immersive',
+  centered: 'centered',
+  editorial: 'editorial',
+} as const;
+
+export type ProfileDisplayFieldsPostsLayout = typeof ProfileDisplayFieldsPostsLayout[keyof typeof ProfileDisplayFieldsPostsLayout];
+
+
+export const ProfileDisplayFieldsPostsLayout = {
+  grid: 'grid',
+  list: 'list',
+} as const;
+
+/**
+ * Explicit shared display allowlist. Never add owner-only or private input fields here. Independent of MemberProfileInput.
+ */
+export interface ProfileDisplayFields {
+  /**
+     * @minLength 2
+     * @maxLength 100
+     */
+  fullName: string;
+  /** @maxLength 100 */
+  profession: string;
+  /** @maxLength 150 */
+  organization: string;
+  /**
+     * Empty when location sharing is disabled by the owner.
+     * @maxLength 100
+     */
+  country: string;
+  /**
+     * Empty unless the owner explicitly shares country and city.
+     * @maxLength 120
+     */
+  cityRegion?: string;
+  /** @maxLength 1000 */
+  bio: string;
+  /** @maxLength 500 */
+  offering: string;
+  /** @maxLength 500 */
+  lookingFor: string;
+  /** @maxLength 500 */
+  website: string;
+  /**
+     * Optional Instagram profile link; not an OAuth connection.
+     * @maxLength 500
+     */
+  instagramUrl?: string;
+  /**
+     * Optional Facebook profile or page link.
+     * @maxLength 500
+     */
+  facebookUrl?: string;
+  /**
+     * Optional TikTok profile link.
+     * @maxLength 500
+     */
+  tiktokUrl?: string;
+  /**
+     * Optional LinkedIn profile or company link.
+     * @maxLength 500
+     */
+  linkedinUrl?: string;
+  /** @maxItems 8 */
+  sectors: ProfileDisplayFieldsSectorsItem[];
+  isPublic: boolean;
+  profileLayout?: ProfileDisplayFieldsProfileLayout;
+  /**
+     * @minimum 0
+     * @maximum 100
+     */
+  coverPosition?: number;
+  postsLayout?: ProfileDisplayFieldsPostsLayout;
+}
+
+export type PublicMember = ProfileDisplayFields & ({
+  id: number;
+  /** Optional legacy response property; actual media exposure remains server-controlled. */
+  publicMedia?: boolean;
+  /**
+     * Public profile photo only when the member explicitly permits public media.
+     * @nullable
+     */
+  avatarUrl?: string | null;
+  /** Whether this public member has joined the signed-in social network. */
+  enabled?: boolean;
+});
 
 export interface MembershipAccount {
   clerkId: string;
@@ -26,6 +146,12 @@ export interface MembershipAccount {
   missingFields: string[];
   sectors: string[];
   networkEnabled: boolean;
+  directoryVisible: boolean;
+  publiclyDiscoverable: boolean;
+  hasPosted: boolean;
+  /** @nullable */
+  memberId?: number | null;
+  profileDetails?: PublicMember | null;
   suspended: boolean;
   /** @nullable */
   lastReminderAt: string | null;
@@ -48,6 +174,11 @@ export type MembershipDashboardTotals = {
   incomplete: number;
   complete: number;
   active: number;
+  emailVerified: number;
+  discoverable: number;
+  publicProfiles: number;
+  posted: number;
+  recentlySignedIn: number;
 };
 
 export type MembershipDashboardEmailSetup = {
@@ -98,6 +229,7 @@ export interface ProfileReminderPreview {
   domainVerification: ProfileReminderPreviewDomainVerification;
   subject: string;
   text: string;
+  html?: string;
   canSend: boolean;
   reason: string;
   previewToken: string;
@@ -1906,6 +2038,7 @@ export type NetworkActionInputAction = typeof NetworkActionInputAction[keyof typ
 
 export const NetworkActionInputAction = {
   join: 'join',
+  directoryvisibility: 'directory.visibility',
   referralclaim: 'referral.claim',
   postcreate: 'post.create',
   postedit: 'post.edit',
@@ -1984,109 +2117,6 @@ export interface NetworkBadge {
   program: string;
   /** @nullable */
   expiresAt: string | null;
-}
-
-export type ProfileDisplayFieldsSectorsItem = typeof ProfileDisplayFieldsSectorsItem[keyof typeof ProfileDisplayFieldsSectorsItem];
-
-
-export const ProfileDisplayFieldsSectorsItem = {
-  fashion: 'fashion',
-  music: 'music',
-  dance: 'dance',
-  film: 'film',
-  art: 'art',
-  business: 'business',
-  investment: 'investment',
-  tourism: 'tourism',
-  diplomacy: 'diplomacy',
-  innovation: 'innovation',
-  technology: 'technology',
-  ngos: 'ngos',
-  media: 'media',
-  education: 'education',
-  'humanitarian-action': 'humanitarian-action',
-  'real-estate': 'real-estate',
-  'health-care': 'health-care',
-} as const;
-
-export type ProfileDisplayFieldsProfileLayout = typeof ProfileDisplayFieldsProfileLayout[keyof typeof ProfileDisplayFieldsProfileLayout];
-
-
-export const ProfileDisplayFieldsProfileLayout = {
-  immersive: 'immersive',
-  centered: 'centered',
-  editorial: 'editorial',
-} as const;
-
-export type ProfileDisplayFieldsPostsLayout = typeof ProfileDisplayFieldsPostsLayout[keyof typeof ProfileDisplayFieldsPostsLayout];
-
-
-export const ProfileDisplayFieldsPostsLayout = {
-  grid: 'grid',
-  list: 'list',
-} as const;
-
-/**
- * Explicit shared display allowlist. Never add owner-only or private input fields here. Independent of MemberProfileInput.
- */
-export interface ProfileDisplayFields {
-  /**
-     * @minLength 2
-     * @maxLength 100
-     */
-  fullName: string;
-  /** @maxLength 100 */
-  profession: string;
-  /** @maxLength 150 */
-  organization: string;
-  /**
-     * Empty when location sharing is disabled by the owner.
-     * @maxLength 100
-     */
-  country: string;
-  /**
-     * Empty unless the owner explicitly shares country and city.
-     * @maxLength 120
-     */
-  cityRegion?: string;
-  /** @maxLength 1000 */
-  bio: string;
-  /** @maxLength 500 */
-  offering: string;
-  /** @maxLength 500 */
-  lookingFor: string;
-  /** @maxLength 500 */
-  website: string;
-  /**
-     * Optional Instagram profile link; not an OAuth connection.
-     * @maxLength 500
-     */
-  instagramUrl?: string;
-  /**
-     * Optional Facebook profile or page link.
-     * @maxLength 500
-     */
-  facebookUrl?: string;
-  /**
-     * Optional TikTok profile link.
-     * @maxLength 500
-     */
-  tiktokUrl?: string;
-  /**
-     * Optional LinkedIn profile or company link.
-     * @maxLength 500
-     */
-  linkedinUrl?: string;
-  /** @maxItems 8 */
-  sectors: ProfileDisplayFieldsSectorsItem[];
-  isPublic: boolean;
-  profileLayout?: ProfileDisplayFieldsProfileLayout;
-  /**
-     * @minimum 0
-     * @maximum 100
-     */
-  coverPosition?: number;
-  postsLayout?: ProfileDisplayFieldsPostsLayout;
 }
 
 export type NetworkMember = ProfileDisplayFields & ({
@@ -2219,6 +2249,8 @@ export interface NetworkGrowth {
 }
 
 export interface NetworkState {
+  /** Owner's consent to listing in the signed-in member directory. Independent of public internet visibility and community access. */
+  directoryVisible: boolean;
   growth: NetworkGrowth | null;
   me: NetworkMember | null;
   founder: NetworkMember | null;
@@ -2439,19 +2471,6 @@ export interface MemberProfileInput {
   postsLayout?: MemberProfileInputPostsLayout;
 }
 
-export type PublicMember = ProfileDisplayFields & ({
-  id: number;
-  /** Optional legacy response property; actual media exposure remains server-controlled. */
-  publicMedia?: boolean;
-  /**
-     * Public profile photo only when the member explicitly permits public media.
-     * @nullable
-     */
-  avatarUrl?: string | null;
-  /** Whether this public member has joined the signed-in social network. */
-  enabled?: boolean;
-});
-
 /**
  * @nullable
  */
@@ -2565,6 +2584,13 @@ export interface DetailedHealthStatus {
   database: string;
 }
 
+export type GetProfileReminderTargetParams = {
+/**
+ * @maxLength 180
+ */
+token: string;
+};
+
 export type GetMembershipDashboardParams = {
 /**
  * @minimum 1
@@ -2587,6 +2613,11 @@ export const GetMembershipDashboardStatus = {
   incomplete: 'incomplete',
   complete: 'complete',
   active: 'active',
+  verified: 'verified',
+  discoverable: 'discoverable',
+  public: 'public',
+  posted: 'posted',
+  inactive: 'inactive',
 } as const;
 
 export type GetMembershipDashboardDays = typeof GetMembershipDashboardDays[keyof typeof GetMembershipDashboardDays];

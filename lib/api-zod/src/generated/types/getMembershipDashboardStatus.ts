@@ -15,4 +15,9 @@ export const GetMembershipDashboardStatus = {
   incomplete: 'incomplete',
   complete: 'complete',
   active: 'active',
+  verified: 'verified',
+  discoverable: 'discoverable',
+  public: 'public',
+  posted: 'posted',
+  inactive: 'inactive',
 } as const;

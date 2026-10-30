@@ -100,6 +100,7 @@ export function profileRoutes(memberRows, profileRows = [], uploadRows = []) {
     '../services/networkFiles': { requestUpload: forbid, objectFile: forbid },
     '../services/mediaIsolation': load(`${root}/src/services/mediaIsolation.ts`, {}),
     '../services/networkPayments': { DOCUMENTS: [], paymentStatus: forbid },
+    '../services/networkMediaStream': { streamNetworkVideo: forbid },
   };
   load(`${root}/src/routes/member.ts`, deps);
   load(`${root}/src/routes/network.ts`, deps);

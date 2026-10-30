@@ -11,6 +11,19 @@ import { type NetworkActor, NetworkError } from "./networkAuth";
 import { catalog, DOCUMENTS, stripeReady } from "./networkPayments";
 import { mediaDto } from "./networkFiles";
 import { projectNetworkMember } from "./profileProjection";
+import { directoryChoice } from "./memberAccess";
+
+// Hidden directory profiles are not exposed through guessed IDs. Deliberately
+// posting or connecting shares professional identity with the relevant members.
+function profileVisibleTo(viewerId: number) {
+  return or(
+    sql`coalesce(${profiles.directoryVisible}, ${profiles.enabled})`,
+    eq(members.id, viewerId),
+    sql`exists (select 1 from ${posts} where ${posts.authorId} = ${members.id} and ${posts.hidden} = false)`,
+    sql`exists (select 1 from ${follows} where (${follows.followerId} = ${viewerId} and ${follows.followingId} = ${members.id}) or (${follows.followingId} = ${viewerId} and ${follows.followerId} = ${members.id}))`,
+    sql`exists (select 1 from ${threads} where (${threads.memberA} = ${viewerId} and ${threads.memberB} = ${members.id}) or (${threads.memberB} = ${viewerId} and ${threads.memberA} = ${members.id}))`,
+  );
+}
 
 export const ROLES = new Set(["business", "partner", "sponsor", "media-partner", "official-model", "exhibitor", "speaker", "designer", "investor"]);
 export const PROGRAMS = new Set(["ecosystem", "diplomatic-gala", "summit", "fashion-week", "awards", "fashion-night", "investment-forum"]);
@@ -34,7 +47,7 @@ export async function isBlocked(a: number, b: number) {
 }
 export async function visibleMember(id: number, viewerId: number) {
   const [row] = await db.select({ member: members }).from(members).innerJoin(profiles, eq(members.id, profiles.memberId))
-    .where(and(eq(members.id, id), eq(profiles.enabled, true), eq(profiles.suspended, false))).limit(1);
+    .where(and(eq(members.id, id), eq(profiles.enabled, true), eq(profiles.suspended, false), profileVisibleTo(viewerId))).limit(1);
   if (!row || (id !== viewerId && await isBlocked(id, viewerId))) throw new NetworkError(404, "This profile is not available.");
   return row.member;
 }
@@ -53,14 +66,14 @@ export async function ownThread(id: number, memberId: number) {
 }
 export async function networkState(context: NetworkActor, query: Record<string, unknown>): Promise<NetworkState> {
   const empty: NetworkState = {
-    me: null, founder: null, members: [], posts: [], nextCursor: null, person: null,
+    me: null, directoryVisible: false, founder: null, members: [], posts: [], nextCursor: null, person: null,
     threads: [], messages: [], certifications: [], reports: [], packages: [], documents: [], stripeReady, growth: null,
   };
   const self = context.member;
   if (!self) return empty;
   const rows = await db.select({ member: members, profile: profiles }).from(members)
     .innerJoin(profiles, eq(members.id, profiles.memberId))
-    .where(or(eq(profiles.enabled, true), eq(members.id, self.id))).limit(2000);
+    .where(and(or(eq(profiles.enabled, true), eq(members.id, self.id)), profileVisibleTo(self.id))).limit(2000);
   const blockedRows = await db.select().from(blocks).where(or(eq(blocks.blockerId, self.id), eq(blocks.blockedId, self.id)));
   const blockedIds = new Set(blockedRows.map(b => b.blockerId === self.id ? b.blockedId : b.blockerId));
   const myBlocks = new Set(blockedRows.filter(b => b.blockerId === self.id).map(b => b.blockedId));
@@ -132,7 +145,7 @@ export async function networkState(context: NetworkActor, query: Record<string, 
     .map(f => query.connections === "followers" ? f.followerId : f.followingId)) : null;
   // An unavailable target must not reveal its relationships through this filter.
   const connectionTargetVisible = !query.connections || (!!targetId && eligibleIds.includes(targetId));
-  const memberList = (context.founder && !query.connections ? usableRows : eligible).filter(r => r.profile.enabled && connectionTargetVisible &&
+  const memberList = (context.founder && !query.connections ? usableRows : eligible).filter(r => r.profile.enabled && (query.connections || directoryChoice(r.profile)) && connectionTargetVisible &&
     (!query.connections || connectionIds?.has(r.member.id))).map(r => dto.get(r.member.id)!)
     .filter(m => (!sector || m.sectors.includes(sector as NetworkMember["sectors"][number])) &&
       (!q || searchTerms.some(term => [m.fullName, m.profession, m.organization, m.country, m.bio, m.offering, m.lookingFor].join(" ").toLowerCase().includes(term))));
@@ -159,7 +172,7 @@ export async function networkState(context: NetworkActor, query: Record<string, 
   const reportRows = context.founder ? await db.select().from(reports).orderBy(desc(reports.id)).limit(100) : [];
   return {
     growth,
-    me, founder: [...dto.values()].find(m => m.founder && m.enabled && !blockedIds.has(m.id)) ?? null,
+    me, directoryVisible: directoryChoice(myProfile), founder: [...dto.values()].find(m => m.founder && m.enabled && !blockedIds.has(m.id)) ?? null,
     members: memberList.slice(0, 200), person: targetId && !blockedIds.has(targetId) ? dto.get(targetId) ?? null :
       targetId && myBlocks.has(targetId) ? dto.get(targetId) ?? null : null,
     posts: postDtos, nextCursor: postRows.length > 30 ? page.at(-1)!.id : null,

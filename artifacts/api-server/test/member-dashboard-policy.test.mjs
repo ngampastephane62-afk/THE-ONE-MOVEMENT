@@ -19,7 +19,7 @@ const result = await build({
       b.onResolve({ filter: /^@replit\/connectors-sdk$/ }, () => ({ path: "connectors", namespace: "fixture" }));
       b.onLoad({ filter: /.*/, namespace: "fixture" }, ({ path }) => ({ contents: path === "db" ? `
         export const db = new Proxy({}, {get(){throw Error("Unexpected database access")}});
-        export const ecosystemMembersTable={},networkProfiles={},memberProfileRemindersTable={},siteVisitSessionsTable={};
+        export const ecosystemMembersTable={},networkProfiles={},networkPosts={},memberProfileRemindersTable={},siteVisitSessionsTable={};
       ` : path === "clerk" ? `
         export const clerkClient = {users:new Proxy({}, {get(){throw Error("Unexpected identity API access")}})};
         export const getAuth = () => {throw Error("Unexpected auth access")};
@@ -30,7 +30,7 @@ const result = await build({
   }],
 });
 const policy = await import(`data:text/javascript;base64,${Buffer.from(result.outputFiles[0].text).toString("base64")}`);
-const essentials = { accountType: "individual", fullName: "Fixture Member", profession: "Designer",
+const essentials = { accountType: "individual", fullName: "Fixture Member", profession: "Designer", sectors: [],
   country: "AE", mainSector: "fashion", activeSectors: ["fashion"] };
 
 test("essential profile completion agrees across individual, organization and all seventeen sectors", () => {
@@ -41,10 +41,12 @@ test("essential profile completion agrees across individual, organization and al
     assert.deepEqual(policy.missingProfileEssentials({ ...essentials, mainSector: sector, activeSectors: [sector] }), []);
   }
   const organization = { ...essentials, accountType: "organization" };
-  assert.deepEqual(policy.missingProfileEssentials(organization), ["organizationType", "contactName"]);
+  assert.deepEqual(policy.missingProfileEssentials(organization), []);
   assert.deepEqual(policy.missingProfileEssentials({ ...organization, organizationType: "Association", contactName: "Fixture Contact" }), []);
   for (const activeSectors of [[], ["fashion", "fashion"], ["fashion", "music", "dance", "art"], ["unknown"]])
-    assert.ok(policy.missingProfileEssentials({ ...essentials, activeSectors }).includes("activeSectors"));
+    assert.deepEqual(policy.missingProfileEssentials({ ...essentials, activeSectors }), []);
+  assert.deepEqual(policy.missingProfileEssentials({ fullName: "Legacy Member", profession: "Designer", country: "UAE", sectors: ["fashion"] }), []);
+  assert.deepEqual(policy.missingProfileEssentials({ fullName: "New Member", profession: "Designer", country: "UAE", mainSector: "fashion" }), []);
   assert.ok(policy.missingProfileEssentials({ ...essentials, mainSector: "unknown" }).includes("mainSector"));
 });
 
@@ -67,7 +69,7 @@ test("account totals use current identities, not orphan profiles, and separate c
     { memberId: 4, enabled: true, suspended: false },
     { memberId: 5, enabled: true, suspended: true },
   ], []);
-  assert.deepEqual(policy.accountTotals(accounts), { accounts: 5, noProfile: 1, incomplete: 1, complete: 3, active: 1 });
+  assert.deepEqual(policy.accountTotals(accounts), { accounts: 5, noProfile: 1, incomplete: 1, complete: 3, active: 2, emailVerified: 5, discoverable: 1, publicProfiles: 0, posted: 0, recentlySignedIn: 0 });
   assert.equal(accounts.length, 5);
   assert.equal(accounts.some(a => "passwordSecret" in a || "bio" in a), false);
   assert.equal(accounts.find(a => a.clerkId === "new").profileStatus, "no_profile");
@@ -80,7 +82,8 @@ test("reminders reject complete, unverified, opted-out and recent/ambiguous atte
   assert.ok(policy.reminderBlock(undefined, ["country"], false, now));
   assert.ok(policy.reminderBlock({ ...state, optOutAt: new Date(now) }, ["country"], true, now));
   for (const status of ["sending", "accepted", "unknown"]) assert.ok(policy.reminderBlock({ ...state, status }, ["country"], true, now));
-  assert.equal(policy.reminderBlock({ ...state, status: "failed" }, ["country"], true, now), "");
+  assert.ok(policy.reminderBlock({ ...state, status: "failed" }, ["country"], true, now));
+  assert.equal(policy.reminderBlock({ ...state, status: "failed", lastAttemptAt: new Date(now - 60_001) }, ["country"], true, now), "");
   assert.equal(policy.reminderBlock({ ...state, lastAttemptAt: new Date(now - policy.REMINDER_INTERVAL) }, ["country"], true, now), "");
   assert.equal(policy.safeEqual("abc", "abc"), true);
   assert.equal(policy.safeEqual("abc", "abé"), false);

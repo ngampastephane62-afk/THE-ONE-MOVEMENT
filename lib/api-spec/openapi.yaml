@@ -11,6 +11,20 @@ tags:
   - name: health
     description: Health operations
 paths:
+  /member/profile-reminder:
+    get:
+      operationId: getProfileReminderTarget
+      tags: [MembershipDashboard]
+      parameters:
+        - { in: query, name: token, required: true, schema: { type: string, maxLength: 180 } }
+      responses:
+        '200':
+          description: Confirms that the signed reminder belongs to the authenticated account. Does not grant sign-in access.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ProfileReminderTarget' }
+        '401': { description: Sign-in required }
+        '404': { description: Invalid reminder }
   /founder/membership-dashboard:
     get:
       operationId: getMembershipDashboard
@@ -18,7 +32,7 @@ paths:
       parameters:
         - { in: query, name: page, schema: { type: integer, minimum: 1, default: 1 } }
         - { in: query, name: search, schema: { type: string, maxLength: 120 } }
-        - { in: query, name: status, schema: { type: string, enum: [all, no_profile, incomplete, complete, active], default: all } }
+        - { in: query, name: status, schema: { type: string, enum: [all, no_profile, incomplete, complete, active, verified, discoverable, public, posted, inactive], default: all } }
         - { in: query, name: days, schema: { type: integer, enum: [7, 30, 90], default: 30 } }
       responses:
         '200':
@@ -1457,9 +1471,14 @@ paths:
                 $ref: "#/components/schemas/DetailedHealthStatus"
 components:
   schemas:
+    ProfileReminderTarget:
+      type: object
+      required: [matches]
+      properties:
+        matches: {type: boolean}
     MembershipAccount:
       type: object
-      required: [clerkId, name, email, emailVerified, createdAt, lastSignInAt, profileStatus, missingFields, sectors, networkEnabled, suspended, lastReminderAt, reminderStatus, remindersOptedOut]
+      required: [clerkId, name, email, emailVerified, createdAt, lastSignInAt, profileStatus, missingFields, sectors, networkEnabled, directoryVisible, publiclyDiscoverable, hasPosted, suspended, lastReminderAt, reminderStatus, remindersOptedOut]
       properties:
         clerkId: { type: string }
         name: { type: string }
@@ -1471,6 +1490,11 @@ components:
         missingFields: { type: array, items: { type: string } }
         sectors: { type: array, items: { type: string } }
         networkEnabled: { type: boolean }
+        directoryVisible: { type: boolean }
+        publiclyDiscoverable: { type: boolean }
+        hasPosted: { type: boolean }
+        memberId: { type: [integer, 'null'] }
+        profileDetails: { anyOf: [{$ref: '#/components/schemas/PublicMember'}, {type: 'null'}] }
         suspended: { type: boolean }
         lastReminderAt: { type: [string, 'null'] }
         reminderStatus: { type: [string, 'null'] }
@@ -1483,13 +1507,18 @@ components:
         environment: { type: string, enum: [development, production] }
         totals:
           type: object
-          required: [accounts, noProfile, incomplete, complete, active]
+          required: [accounts, noProfile, incomplete, complete, active, emailVerified, discoverable, publicProfiles, posted, recentlySignedIn]
           properties:
             accounts: { type: integer }
             noProfile: { type: integer }
             incomplete: { type: integer }
             complete: { type: integer }
             active: { type: integer }
+            emailVerified: { type: integer }
+            discoverable: { type: integer }
+            publicProfiles: { type: integer }
+            posted: { type: integer }
+            recentlySignedIn: { type: integer }
         accounts: { type: array, items: { $ref: '#/components/schemas/MembershipAccount' } }
         page: { type: integer }
         pages: { type: integer }
@@ -1527,6 +1556,7 @@ components:
         domainVerification: { type: string, enum: [verified, manual_check, unavailable] }
         subject: { type: string }
         text: { type: string }
+        html: { type: string }
         canSend: { type: boolean }
         reason: { type: string }
         previewToken: { type: string }
@@ -2520,7 +2550,7 @@ components:
       additionalProperties: false
       required: [action]
       properties:
-        action: {type: string, enum: [join, referral.claim, post.create, post.edit, post.delete, post.like, post.view, comment.create, comment.delete, follow, block, thread.start, thread.accept, thread.decline, message.send, message.read, upload.complete, profile.media, certification.request, certification.decide, report, moderate.post, moderate.member, report.resolve, checkout]}
+        action: {type: string, enum: [join, directory.visibility, referral.claim, post.create, post.edit, post.delete, post.like, post.view, comment.create, comment.delete, follow, block, thread.start, thread.accept, thread.decline, message.send, message.read, upload.complete, profile.media, certification.request, certification.decide, report, moderate.post, moderate.member, report.resolve, checkout]}
         id: {type: integer}
         targetId: {type: integer}
         text: {type: string, maxLength: 5000}
@@ -2700,8 +2730,9 @@ components:
         currency: {type: string}
     NetworkState:
       type: object
-      required: [me, founder, members, posts, nextCursor, person, threads, messages, certifications, reports, packages, documents, stripeReady, growth]
+      required: [me, directoryVisible, founder, members, posts, nextCursor, person, threads, messages, certifications, reports, packages, documents, stripeReady, growth]
       properties:
+        directoryVisible: {type: boolean, description: "Owner's consent to listing in the signed-in member directory. Independent of public internet visibility and community access."}
         growth: {anyOf: [{$ref: "#/components/schemas/NetworkGrowth"}, {type: "null"}]}
         me: {anyOf: [{$ref: "#/components/schemas/NetworkMember"}, {type: "null"}]}
         founder: {anyOf: [{$ref: "#/components/schemas/NetworkMember"}, {type: "null"}]}

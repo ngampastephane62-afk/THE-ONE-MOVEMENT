@@ -6,6 +6,7 @@ import { missingProfileEssentials, PROFILE_REQUIREMENTS } from "@workspace/share
 import { eq, sql } from "drizzle-orm";
 import { NetworkError } from "./networkAuth";
 import { invalidateMemberDashboard, reminderConfiguration } from "./membershipDashboard";
+import { profileReminderMessage } from "./profileReminderMessage";
 
 export const REMINDER_INTERVAL = 7 * 24 * 60 * 60 * 1000;
 const connectors = new ReplitConnectors();
@@ -23,6 +24,8 @@ export function reminderBlock(state: Reminder | undefined, missing: string[], ve
   if (!missing.length) return "Ce profil est déjà complet.";
   if (!verified) return "L’adresse principale doit être vérifiée avant une relance.";
   if (state?.optOutAt) return "Ce membre a choisi de ne plus recevoir de rappels.";
+  if (state?.status === "failed" && now - state.lastAttemptAt.getTime() < 60_000)
+    return "Attendez une minute avant de réessayer cette relance.";
   if (state && state.status !== "failed" && now - state.lastAttemptAt.getTime() < REMINDER_INTERVAL)
     return "Une relance a déjà été acceptée ou reste à vérifier. Attendez sept jours avant une nouvelle tentative.";
   return "";
@@ -40,6 +43,7 @@ async function recipient(clerkId: string) {
   return {
     clerkId, email: email?.emailAddress ?? "", verified: email?.verification?.status === "verified",
     name: member?.fullName || [user.firstName, user.lastName].filter(Boolean).join(" ") || "TOMI member",
+    firstName: user.firstName?.trim() || member?.fullName?.trim().split(/\s+/)[0] || "TOMI member",
     missing, state, updatedAt: member?.updatedAt.toISOString() ?? "",
     restricted: user.banned || user.locked || !!network?.suspended,
   };
@@ -47,19 +51,20 @@ async function recipient(clerkId: string) {
 type Recipient = Awaited<ReturnType<typeof recipient>>;
 function tokenFor(who: Recipient, issued: number, preferenceId: string, providerMode: ProviderMode) {
   const config = reminderConfiguration();
-  return `${issued}.${preferenceId}.${providerMode}.${digest(JSON.stringify(["profile-preview", issued, preferenceId, providerMode, who.state?.id ?? null, who.clerkId, who.email, who.name, who.missing, who.updatedAt, config.from, config.site]))}`;
+  return `${issued}.${preferenceId}.${providerMode}.${digest(JSON.stringify(["profile-preview", issued, preferenceId, providerMode, who.state?.id ?? null, who.clerkId, who.email, who.name, who.firstName, who.missing, who.updatedAt, config.from, config.site]))}`;
 }
-function message(who: Recipient, optOutUrl?: string) {
+function message(who: Recipient, optOutUrl?: string, preferenceId?: string) {
   const config = reminderConfiguration();
-  const profileUrl = config.configured ? new URL("/member/onboarding", config.site).toString() : "[Lien vers la page officielle de complétion — adresse du site à configurer]";
-  return {
-    subject: "The One Movement — complete your member profile",
-    text: `Hello ${who.name},\n\nYour free The One Movement account is ready. To finish your essential profile, please add: ${who.missing.join(", ")}.\n\nContinue here: ${profileUrl}\n\nChoose your primary sector and up to two additional active sectors. When your profile is complete, you can explicitly activate your network profile to share your work, follow members and invite others. Your public directory visibility remains your choice. Programme participation follows each programme’s own application and approval process; an account is not an automatic acceptance.\n\nPhotos, a biography and social links are optional. No subscription or referral quota is required for ordinary participation.\n\n${optOutUrl ? `To stop profile reminders, review your preference here: ${optOutUrl}` : "Each email includes a link to stop profile reminders."}\n\nThe One Movement International`,
-  };
+  const url = config.configured ? new URL("/member/onboarding", config.site) : null;
+  if (url && preferenceId) url.searchParams.set("reminder", `${preferenceId}.${digest(`profile-reminder-target:${preferenceId}`)}`);
+  return profileReminderMessage({
+    firstName: who.firstName, email: who.email, profileUrl: url?.toString() ?? "[Official profile link — site configuration required]",
+    site: config.site, contact: config.from, preferencesUrl: optOutUrl,
+  });
 }
 type ProviderMode = "verified" | "manual_check" | "unavailable";
 type ProviderReadiness = { available: boolean; mode: ProviderMode; reason: string };
-async function providerReady(): Promise<ProviderReadiness> {
+export async function reminderProviderStatus(): Promise<ProviderReadiness> {
   const config = reminderConfiguration();
   if (!config.configured) return { available: false, mode: "unavailable", reason: config.message };
   try {
@@ -70,7 +75,9 @@ async function providerReady(): Promise<ProviderReadiness> {
         const body = await response.clone().json() as { message?: string; error?: string };
         providerMessage = `${body.message ?? ""} ${body.error ?? ""}`;
       } catch { /* Keep provider response content private and fail closed. */ }
-      if (response.status === 401 && /restricted.*only send emails|only send emails/i.test(providerMessage))
+      if (/API key is invalid|invalid api key/i.test(providerMessage))
+        return { available: false, mode: "unavailable", reason: "La clé de l’intégration Resend est invalide. Corrigez-la dans les intégrations ; aucun email n’a été envoyé." };
+      if ((response.status === 401 || response.status === 403) && /restricted.*only send emails|only send emails/i.test(providerMessage))
         return { available: true, mode: "manual_check", reason: "Cette clé Resend autorise uniquement l’envoi et ne peut pas vérifier les domaines. Avant de confirmer, vérifiez dans Resend que le domaine de l’expéditeur est marqué Verified." };
       return { available: false, mode: "unavailable", reason: "Resend ne permet pas de vérifier le domaine de l’expéditeur. La configuration doit être corrigée avant l’envoi." };
     }
@@ -87,21 +94,21 @@ export async function previewReminder(clerkId: string) {
     reminderBlock(who.state, who.missing, who.verified);
   const provider = accountBlock
     ? { available: false, mode: "unavailable" as const, reason: "" }
-    : await providerReady();
+    : await reminderProviderStatus();
   const reason = accountBlock || provider.reason;
   const preferenceId = who.state?.id ?? randomUUID();
   const preferences = reminderConfiguration().configured
     ? new URL(`/api/profile-reminders/preferences/${preferenceId}/${optOutSignature(preferenceId)}`, reminderConfiguration().site).toString() : undefined;
   const senderDomain = reminderConfiguration().from.split("@")[1] ?? "";
   return { clerkId, recipient: who.email, senderDomain, domainVerification: provider.mode,
-    ...message(who, preferences), canSend: !accountBlock && provider.available, reason,
+    ...message(who, preferences, preferenceId), canSend: !accountBlock && provider.available, reason,
     previewToken: process.env.SESSION_SECRET ? tokenFor(who, Date.now(), preferenceId, provider.mode) : "" };
 }
 export async function sendReminder(clerkId: string, requestedBy: string, previewToken: string, domainVerifiedByFounder: boolean) {
   const who = await recipient(clerkId);
   const [issuedText, preferenceId = "", previewMode = "unavailable"] = previewToken.split(".");
   const issued = Number(issuedText);
-  const provider = await providerReady();
+  const provider = await reminderProviderStatus();
   if (!Number.isSafeInteger(issued) || issued > Date.now() || Date.now() - issued > 15 * 60_000 ||
     !/^[a-f0-9-]{36}$/.test(preferenceId) ||
     !["verified", "manual_check", "unavailable"].includes(previewMode) ||
@@ -130,7 +137,7 @@ export async function sendReminder(clerkId: string, requestedBy: string, preview
   });
   const config = reminderConfiguration();
   const preferences = new URL(`/api/profile-reminders/preferences/${reserved.id}/${optOutSignature(reserved.id)}`, config.site).toString();
-  const content = message(who, preferences);
+  const content = message(who, preferences, reserved.id);
   const setStatus = async (status: "failed" | "unknown" | "accepted", id?: string) => {
     await db.update(reminders).set({ status, providerMessageId: id ?? null,
       ...(status === "accepted" ? { acceptedAt: new Date() } : {}), updatedAt: new Date() }).where(eq(reminders.attemptId, reserved.attemptId));
@@ -141,7 +148,7 @@ export async function sendReminder(clerkId: string, requestedBy: string, preview
     response = await connectors.proxy("resend", "/emails", {
       method: "POST",
       headers: { "Content-Type": "application/json", "Idempotency-Key": `profile-reminder/${reserved.attemptId}` },
-      body: JSON.stringify({ from: `The One Movement <${config.from}>`, to: [who.email], ...content }),
+      body: JSON.stringify({ from: `The One Movement International <${config.from}>`, to: [who.email], reply_to: config.from, ...content }),
     });
   } catch {
     await setStatus("unknown");
@@ -158,4 +165,12 @@ export async function sendReminder(clerkId: string, requestedBy: string, preview
   if (!id) { await setStatus("unknown"); throw new NetworkError(503, "Résultat d’envoi à vérifier ; aucune relance automatique."); }
   await setStatus("accepted", id);
   return { status: "accepted" as const, acceptedAt: new Date().toISOString() };
+}
+
+export async function checkReminderTarget(token: string, clerkId: string) {
+  const [id = "", signature = "", extra] = token.split(".");
+  if (extra || !/^[a-f0-9-]{36}$/.test(id) || !safeEqual(signature, digest(`profile-reminder-target:${id}`)))
+    throw new NetworkError(404, "Ce lien de rappel est invalide.");
+  const [row] = await db.select().from(reminders).where(eq(reminders.id, id)).limit(1);
+  return { matches: !!row && row.clerkId === clerkId };
 }

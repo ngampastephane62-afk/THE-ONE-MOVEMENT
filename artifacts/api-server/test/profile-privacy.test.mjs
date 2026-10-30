@@ -239,6 +239,24 @@ test('network state filters all nested representations without introducing owner
   assertFiltered(blocked.person);
 });
 
+test('hidden-directory membership remains usable without leaking inactive professional identities', async () => {
+  const viewer = member(), hidden = member(), discoverable = member();
+  hidden.profile.directoryVisible = false;
+  discoverable.profile.directoryVisible = true;
+  const context = { member: viewer.row, clerkId: viewer.identity, founder: false };
+  const before = await network.networkState(context, { person: hidden.id });
+  assert.equal(before.person, null);
+  assert.equal(before.members.some(p => p.id === hidden.id), false);
+  assert.ok(before.members.some(p => p.id === discoverable.id));
+  await assert.rejects(() => network.visibleMember(hidden.id, viewer.id), error => error.status === 404);
+  network.state.posts.push({ id: 31, authorId: hidden.id, hidden: false, kind: 'post', text: 'Intentionally shared', mediaIds: [], createdAt: new Date(), updatedAt: new Date() });
+  const posted = await network.networkState(context, { person: hidden.id });
+  assert.equal(posted.person?.id, hidden.id);
+  assert.equal(posted.posts.find(p => p.id === 31)?.author.id, hidden.id);
+  assert.equal(posted.members.some(p => p.id === hidden.id), false);
+  assert.equal((await network.visibleMember(hidden.id, viewer.id)).id, hidden.id);
+});
+
 test('response contracts never inherit from write input or from owner responses', () => {
   const spec = readFileSync(new URL('../../../lib/api-spec/openapi.yaml', import.meta.url), 'utf8');
   for (const name of ['PublicMember', 'NetworkMember', 'MemberProfile']) {

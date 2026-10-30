@@ -5,11 +5,17 @@ import { SendProfileReminderBody, RecordSiteVisitBody } from "@workspace/api-zod
 import { parseMembershipDashboardQuery } from "../lib/membershipDashboardQuery";
 import { networkAuth, networkWrite, requireFounder, actor, NetworkError } from "../services/networkAuth";
 import { memberAccountSnapshot, accountTotals, trafficSummary, reminderConfiguration, invalidateMemberDashboard } from "../services/membershipDashboard";
-import { previewReminder, sendReminder, optOutSignature, safeEqual } from "../services/profileReminders";
+import { previewReminder, sendReminder, optOutSignature, safeEqual, checkReminderTarget, reminderProviderStatus } from "../services/profileReminders";
 import { recordVisit, pruneVisits } from "../services/siteVisits";
 import { getClerkProxyHost } from "../middlewares/clerkProxyMiddleware";
 
 const router = Router();
+router.get("/member/profile-reminder", networkAuth, async (req, res) => {
+  const token = req.query.token;
+  if (typeof token !== "string" || token.length > 180) throw new NetworkError(400, "Lien de rappel invalide.");
+  res.set("Cache-Control", "private, no-store");
+  res.json(await checkReminderTarget(token, actor(res, false).clerkId));
+});
 router.get("/founder/membership-dashboard", networkAuth, async (req, res) => {
   requireFounder(res);
   res.set("Cache-Control", "private, no-store");
@@ -22,16 +28,22 @@ router.get("/founder/membership-dashboard", networkAuth, async (req, res) => {
     const q = search.trim().toLowerCase();
     const filtered = snapshot.accounts.filter(a =>
       (!q || `${a.name} ${a.email}`.toLowerCase().includes(q)) &&
-      (status === "all" || (status === "active"
-        ? a.profileStatus === "complete" && a.networkEnabled && !a.suspended : a.profileStatus === status)));
+      (status === "all" || (status === "active" ? a.networkEnabled :
+        status === "verified" ? a.emailVerified :
+        status === "discoverable" ? a.directoryVisible :
+        status === "public" ? a.publiclyDiscoverable :
+        status === "posted" ? a.hasPosted :
+        status === "inactive" ? !a.lastSignInAt || new Date(a.lastSignInAt).getTime() < Date.now() - 30 * 86400_000 :
+        a.profileStatus === status)));
     const pages = Math.max(1, Math.ceil(filtered.length / 25));
     const currentPage = Math.min(page, pages);
     const config = reminderConfiguration();
+    const provider = await reminderProviderStatus();
     res.json({
       refreshedAt: snapshot.refreshedAt, environment: process.env.REPLIT_DEPLOYMENT === "1" ? "production" : "development",
       totals: accountTotals(snapshot.accounts), accounts: filtered.slice((currentPage - 1) * 25, currentPage * 25),
       page: currentPage, pages, filteredCount: filtered.length, traffic,
-      emailSetup: { configured: config.configured, message: config.message },
+      emailSetup: { configured: config.configured && provider.available, message: provider.reason || config.message },
     });
   } catch (error) {
     if (error instanceof NetworkError) throw error;
