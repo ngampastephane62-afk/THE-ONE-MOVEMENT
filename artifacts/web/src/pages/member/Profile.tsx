@@ -8,7 +8,7 @@ import { useGetNetworkState, getGetNetworkStateQueryKey, useGetMemberProfile, ge
 import { SECTORS } from '@/lib/sectors-data';
 import PostCard from '@/components/network/PostCard';
 import ReportDialog, { type ReportTarget } from '@/components/network/ReportDialog';
-import { Empty, ErrorBox, Skeleton, btn, btnGhost, card, field, useAct } from '@/components/network/kit';
+import { Empty, ErrorBox, NetworkVideo, Skeleton, btn, btnGhost, card, field, useAct } from '@/components/network/kit';
 import { useMe } from './ctx';
 import { publicProfileUrl } from '@/lib/network-invitations';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
@@ -147,7 +147,7 @@ function PostGrid({ posts, onOpen }: { posts: NetworkPost[]; onOpen: (id: number
         return (
           <button key={x.id} type="button" onClick={() => onOpen(x.id)} className="group relative aspect-square overflow-hidden rounded-md bg-lagoon-900 text-left sm:rounded-xl" aria-label={`Open post: ${x.text.slice(0, 60) || 'media'}`} data-testid={`tile-post-${x.id}`}>
             {img ? <img src={img.url} alt="" loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
-              : vid ? <video src={vid.url} muted playsInline preload="metadata" className="h-full w-full object-contain" />
+              : vid ? <NetworkVideo src={vid.url} controls={false} muted compact className="h-full w-full object-contain" />
               : <span className="flex h-full flex-col justify-between bg-[linear-gradient(150deg,hsl(187_67%_12%),hsl(189_74%_24%))] p-2.5 sm:p-4"><FileText className="h-4 w-4 text-gold-400" /><span className="line-clamp-4 font-display text-[11px] leading-snug text-ivory-100 sm:text-sm">{x.text}</span></span>}
             <span className="absolute inset-x-0 bottom-0 flex gap-3 bg-gradient-to-t from-lagoon-900/80 to-transparent px-2 pb-1.5 pt-6 text-[10px] font-semibold text-ivory-50 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">{x.likes} likes · {x.comments.length} comments</span>
           </button>

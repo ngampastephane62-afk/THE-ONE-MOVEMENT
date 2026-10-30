@@ -119,7 +119,7 @@ export function MediaView({ media, grid = true }: { media: NetworkMedia[]; grid?
         <div className={grid && visual.length > 1 ? 'grid grid-cols-2 gap-1 overflow-hidden rounded-xl' : 'overflow-hidden rounded-xl'}>
           {visual.map((x) => x.contentType.startsWith('image/')
             ? <img key={x.id} src={x.url} alt={x.filename} loading="lazy" className="max-h-[32rem] w-full bg-ivory-200 object-cover" />
-            : <video key={x.id} src={x.url} controls playsInline preload="metadata" className="max-h-[36rem] w-full bg-ink-900" />)}
+            : <NetworkVideo key={x.id} src={x.url} className="max-h-[36rem] w-full bg-ink-900" />)}
         </div>
       )}
       {other.map((x) => (
@@ -131,6 +131,72 @@ export function MediaView({ media, grid = true }: { media: NetworkMedia[]; grid?
           {x.contentType.startsWith('audio/') && <audio src={x.url} controls className="w-full" />}
         </div>
       ))}
+    </div>
+  );
+}
+
+function networkVideoError(code: number | undefined) {
+  if (code === 1) return 'Video loading was interrupted. Retry playback.';
+  if (code === 2) return 'The video could not be loaded. Check your connection and retry.';
+  if (code === 3) return 'The video reached the player but could not be decoded on this device.';
+  if (code === 4) return 'This browser cannot play the video format.';
+  return 'The video could not be played. Retry or try another browser.';
+}
+
+export function NetworkVideo({
+  src,
+  className,
+  controls = true,
+  muted = false,
+  compact = false,
+}: {
+  src: string;
+  className: string;
+  controls?: boolean;
+  muted?: boolean;
+  compact?: boolean;
+}) {
+  const [attempt, setAttempt] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const video = (
+    <video
+      key={attempt}
+      src={src}
+      controls={controls}
+      muted={muted}
+      playsInline
+      preload="metadata"
+      className={className}
+      onLoadStart={() => { setLoading(true); setError(null); }}
+      onLoadedMetadata={() => setLoading(false)}
+      onCanPlay={() => setLoading(false)}
+      onError={(event) => {
+        setLoading(false);
+        setError(networkVideoError(event.currentTarget.error?.code));
+      }}
+    />
+  );
+
+  if (compact) {
+    return (
+      <>
+        {video}
+        {error && <span role="alert" className="absolute inset-x-1 bottom-1 rounded bg-ink-900/90 px-1.5 py-1 text-center text-[9px] leading-tight text-ivory-50">Video unavailable</span>}
+      </>
+    );
+  }
+
+  return (
+    <div className="w-full">
+      {video}
+      {loading && !error && <p role="status" className="px-2 py-1 text-xs text-sand-400">Loading video…</p>}
+      {error && (
+        <div role="alert" className="flex flex-wrap items-center justify-between gap-2 border-t border-sand-200 bg-ivory-100 px-3 py-2 text-xs text-ink-800">
+          <span>{error}</span>
+          <button type="button" onClick={() => { setError(null); setLoading(true); setAttempt((value) => value + 1); }} className={btnGhost}>Retry</button>
+        </div>
+      )}
     </div>
   );
 }

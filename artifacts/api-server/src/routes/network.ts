@@ -9,6 +9,7 @@ import { networkAuth, networkEnabled, networkWrite, actor, NetworkError, type Ne
 import { networkAction } from "../services/networkActions";
 import { networkState, activeBadge, visibleMember } from "../services/networkState";
 import { requestUpload, objectFile } from "../services/networkFiles";
+import { handleNetworkMediaStreamError } from "../services/networkMediaStream";
 import { DOCUMENTS, paymentStatus } from "../services/networkPayments";
 import type { Request, Response, NextFunction } from "express";
 import { projectPublicNetworkProfile } from "../services/profileProjection";
@@ -155,9 +156,8 @@ router.get("/network/media/:id", async (req, res) => {
   if (req.method === "HEAD") return void res.end();
   // Do not cancel the GCS source on an early browser abort: its sidecar request
   // may not yet have an HTTP response (see curated-reel storage constraints).
-  file.createReadStream({ start, end }).on("error", () => {
-    if (!res.headersSent) res.status(502).end();
-    else if (!res.destroyed) res.end();
+  file.createReadStream({ start, end }).on("error", (error) => {
+    handleNetworkMediaStreamError(req, res, error);
   }).pipe(res);
 });
 export function networkErrors(error: unknown, _req: Request, res: Response, next: NextFunction) {
