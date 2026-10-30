@@ -5,11 +5,19 @@ description: Owner's central My Space statistics, member follow-up and ecosystem
 
 The Founder requires a dashboard in My Space showing visitors, all created accounts, completed and incomplete profiles, and everyone in the ecosystem. Incomplete profiles need an email-reminder action explaining how to finish and what comes next: presenting their work and choosing sectors.
 
-The owner requests convenient Google sign-in alongside email registration, followed by essential profile completion, sector selection and voluntary ecosystem participation. Google authentication must happen on Google's own page; TOMI must never ask for a Gmail password.
+The owner requests convenient Google sign-in alongside email registration. The 2026-10-30 member-experience directive supersedes separate voluntary network activation: verified accounts with the basic name, professional identity, primary sector and country should gain ordinary free community access automatically. Google authentication must happen on Google's own page; TOMI must never ask for a Gmail password.
 
 **Why:** The owner repeated this sequence to obtain reliable account and ecosystem counts for partners.
 
-**How to apply:** Keep account creation, complete profiles and active ecosystem membership separate in both onboarding and reporting. Maintain a nonblocking sign-in/create-account invitation for anonymous visitors. Do not auto-activate, auto-publicize profiles or auto-accept programme applications.
+**How to apply:** Keep account creation, verification, completion, activity and discoverability separately measured. Remove the extra activation step for ordinary free participation, but preserve existing directory privacy choices and obtain directory-visibility consent independently. Never auto-publicize profiles or auto-approve official roles, certifications, commercial partnerships or programme applications.
+
+**Why:** The updated directive explicitly requests automatic community access while retaining privacy and official approval boundaries; the former combined activation/visibility consent must not become implicit publication consent.
+
+Use only the organization's confirmed domain, theonemovementinternational.ae, for the current email setup; do not substitute d1movementinternational.ai.
+
+**Why:** On 2026-10-30 the owner said they do not control the proposed .ai domain and explicitly corrected the domain to the organization's .ae domain.
+
+**How to apply:** Verify the sender domain through Resend before sending; domain ownership alone does not establish sending verification. Do not invent DKIM records or claim delivery before an authorized single-recipient test succeeds.
 
 **Why:** The owner repeated that content-management tools alone do not meet their need to see and follow up with members.
 
