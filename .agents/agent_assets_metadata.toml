@@ -308,3 +308,17 @@ mtime_ms = 1792819846951
 storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/aac9d851-21fe-4d83-bdf0-3df350c0df71/e5ea41c6-45c3-4277-b899-89b00105557a"
 storage_version_token = "1792819861101526"
 content_type = "text/html"
+
+[[outputs]]
+id = "cj9GPK6VTqLc91h5Ti3l0"
+uri = "file://generated-artifacts/video-compatible/Shooting-Time-Khaleej-Times-H264-SDR.mp4"
+type = "video"
+title = "Shooting Time — browser-compatible MP4"
+description = "H.264 8-bit SDR, 720 × 1280, 30 fps, 56.8 seconds. Original AAC audio preserved unchanged. Fast-start enabled; full decode verified. Separate copy only—original and published post unchanged."
+logical_id = "193703cf-a120-4387-8745-dfca7a1bd78c"
+content_hash = "sha256:bcc82d4c54c95bdb6ea5d423651a8df5fdaa1c14c61e05731bf4c7ba27a546aa"
+size = 24019107
+mtime_ms = 1793321111453
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:d3267147-d6b2-4c3b-8664-c70358357490/193703cf-a120-4387-8745-dfca7a1bd78c/d0505dd5-3094-493a-9429-826e7606fa94"
+storage_version_token = "1793321170549765"
+content_type = "video/mp4"
