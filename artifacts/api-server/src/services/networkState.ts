@@ -6,18 +6,26 @@ import {
   networkCertifications as certifications, networkReports as reports,
 } from "@workspace/db";
 import { and, desc, eq, inArray, lt, or, sql } from "drizzle-orm";
-import type { NetworkMember, NetworkPost, NetworkState } from "@workspace/api-zod";
+import type { NetworkMember, NetworkPost, NetworkPostAuthor, NetworkState } from "@workspace/api-zod";
 import { type NetworkActor, NetworkError } from "./networkAuth";
 import { catalog, DOCUMENTS, stripeReady } from "./networkPayments";
 import { mediaDto } from "./networkFiles";
 import { projectNetworkMember } from "./profileProjection";
+import { canViewPost, projectPostAuthor } from "./networkVisibility";
+
+type AllowedActiveSector = NetworkState["myActiveSectors"][number];
+const ACTIVE_SECTORS = new Set<AllowedActiveSector>([
+  "fashion", "music", "dance", "film", "art", "business", "investment", "tourism",
+  "diplomacy", "innovation", "technology", "ngos", "media", "education",
+  "real-estate", "health-care", "humanitarian-action",
+]);
 
 export const ROLES = new Set(["business", "partner", "sponsor", "media-partner", "official-model", "exhibitor", "speaker", "designer", "investor"]);
 export const PROGRAMS = new Set(["ecosystem", "diplomatic-gala", "summit", "fashion-week", "awards", "fashion-night", "investment-forum"]);
 export async function qualifiedInviteCount(memberId: number) {
   const [count] = await db.select({ value: sql<number>`count(*)::integer` }).from(profiles)
     .innerJoin(follows, and(eq(follows.followerId, profiles.memberId), eq(follows.followingId, memberId)))
-    .where(and(eq(profiles.referredBy, memberId), eq(profiles.enabled, true), eq(profiles.suspended, false)));
+    .where(and(eq(profiles.referredBy, memberId), eq(profiles.suspended, false)));
   return count?.value ?? 0;
 }
 export function activeBadge(row: typeof certifications.$inferSelect) {
@@ -38,11 +46,29 @@ export async function visibleMember(id: number, viewerId: number) {
   if (!row || (id !== viewerId && await isBlocked(id, viewerId))) throw new NetworkError(404, "This profile is not available.");
   return row.member;
 }
-export async function visiblePost(id: number, viewerId: number) {
-  const [row] = await db.select().from(posts).where(and(eq(posts.id, id), eq(posts.hidden, false))).limit(1);
-  if (!row) throw new NetworkError(404, "This publication is not available.");
-  await visibleMember(row.authorId, viewerId);
-  return row;
+export async function visiblePost(id: number, viewerId: number, viewerFounder = false) {
+  const [row] = await db.select({ post: posts, authorProfile: profiles }).from(posts)
+    .innerJoin(profiles, eq(profiles.memberId, posts.authorId))
+    .where(and(eq(posts.id, id), eq(posts.hidden, false))).limit(1);
+  if (!row || (row.authorProfile.suspended && row.post.authorId !== viewerId)) {
+    throw new NetworkError(404, "This publication is not available.");
+  }
+  if (row.post.authorId !== viewerId && await isBlocked(row.post.authorId, viewerId)) {
+    throw new NetworkError(404, "This publication is not available.");
+  }
+  const [viewer] = await db.select({ activeSectors: members.activeSectors }).from(members).where(eq(members.id, viewerId)).limit(1);
+  const [follow] = row.post.authorId === viewerId ? [] : await db.select({ id: follows.id }).from(follows)
+    .where(and(eq(follows.followerId, viewerId), eq(follows.followingId, row.post.authorId))).limit(1);
+  if (!canViewPost({
+    visibility: row.post.visibility,
+    visibilitySector: row.post.visibilitySector,
+    authorId: row.post.authorId,
+    viewerId,
+    followsAuthor: !!follow,
+    activeSectors: viewer?.activeSectors ?? [],
+    founder: viewerFounder,
+  })) throw new NetworkError(404, "This publication is not available.");
+  return row.post;
 }
 export async function ownThread(id: number, memberId: number) {
   const [row] = await db.select().from(threads).where(and(eq(threads.id, id), or(eq(threads.memberA, memberId), eq(threads.memberB, memberId)))).limit(1);
@@ -55,12 +81,14 @@ export async function networkState(context: NetworkActor, query: Record<string, 
   const empty: NetworkState = {
     me: null, founder: null, members: [], posts: [], nextCursor: null, person: null,
     threads: [], messages: [], certifications: [], reports: [], packages: [], documents: [], stripeReady, growth: null,
+    myActiveSectors: [],
   };
   const self = context.member;
   if (!self) return empty;
+  const myActiveSectors = (self.activeSectors ?? [])
+    .filter((sector): sector is AllowedActiveSector => ACTIVE_SECTORS.has(sector as AllowedActiveSector));
   const rows = await db.select({ member: members, profile: profiles }).from(members)
-    .innerJoin(profiles, eq(members.id, profiles.memberId))
-    .where(or(eq(profiles.enabled, true), eq(members.id, self.id))).limit(2000);
+    .innerJoin(profiles, eq(members.id, profiles.memberId)).limit(2000);
   const blockedRows = await db.select().from(blocks).where(or(eq(blocks.blockerId, self.id), eq(blocks.blockedId, self.id)));
   const blockedIds = new Set(blockedRows.map(b => b.blockerId === self.id ? b.blockedId : b.blockerId));
   const myBlocks = new Set(blockedRows.filter(b => b.blockerId === self.id).map(b => b.blockedId));
@@ -70,6 +98,7 @@ export async function networkState(context: NetworkActor, query: Record<string, 
   const usableRows = rows.filter(r => context.founder || !r.profile.suspended || r.member.id === self.id);
   const eligible = usableRows.filter(r => r.member.id === self.id || (!r.profile.suspended && !blockedIds.has(r.member.id)));
   const eligibleIds = eligible.map(r => r.member.id);
+  const eligibleById = new Map(eligible.map(r => [r.member.id, r]));
   const followedIds = allFollows.filter(f => f.followerId === self.id).map(f => f.followingId);
   const targetId = Number(query.person) || null;
   const before = Number(query.before) || null;
@@ -77,6 +106,20 @@ export async function networkState(context: NetworkActor, query: Record<string, 
     eq(posts.hidden, false),
     inArray(posts.authorId, eligibleIds.length ? eligibleIds : [-1]),
   ];
+  const sectorVisibility = context.founder
+    ? eq(posts.visibility, "sector")
+    : myActiveSectors.length
+      ? and(eq(posts.visibility, "sector"), inArray(posts.visibilitySector, myActiveSectors))
+      : sql`false`;
+  const followingVisibility = followedIds.length
+    ? and(eq(posts.visibility, "followers"), inArray(posts.authorId, followedIds))
+    : sql`false`;
+  postFilters.push(or(
+    eq(posts.authorId, self.id),
+    eq(posts.visibility, "community"),
+    followingVisibility,
+    sectorVisibility,
+  )!);
   if (targetId) postFilters.push(eq(posts.authorId, targetId));
   if (before) postFilters.push(lt(posts.id, before));
   if (query.feed === "following") postFilters.push(inArray(posts.authorId, followedIds.length ? followedIds : [-1]));
@@ -91,14 +134,16 @@ export async function networkState(context: NetworkActor, query: Record<string, 
     db.select().from(comments).where(inArray(comments.postId, postIds)).orderBy(desc(comments.id)).limit(1000),
   ]) : [[], [], []];
   const neededMedia = new Set([
-    ...eligible.flatMap(r => [r.profile.avatarId, r.profile.coverId].filter((x): x is string => !!x)),
+    ...eligible.filter(r => r.profile.enabled || r.member.id === self.id || context.founder)
+      .flatMap(r => [r.profile.avatarId, r.profile.coverId].filter((x): x is string => !!x)),
     ...page.flatMap(p => p.mediaIds),
     ...certs.filter(c => context.founder || c.memberId === self.id).flatMap(c => c.evidenceIds),
   ]);
   const mediaRows = neededMedia.size ? await db.select().from(uploads).where(and(eq(uploads.ready, true), inArray(uploads.id, [...neededMedia]))) : [];
   const media = new Map(mediaRows.map(u => [u.id, mediaDto(u)]));
   const dto = new Map<number, NetworkMember>();
-  for (const { member: m, profile: p } of usableRows) {
+  const profileRows = usableRows.filter(r => r.profile.enabled || r.member.id === self.id || context.founder);
+  for (const { member: m, profile: p } of profileRows) {
     const badges = certs.filter(c => c.memberId === m.id && activeBadge(c)).map(c => ({
       role: c.role, program: c.program, expiresAt: c.expiresAt?.toISOString() ?? null,
     }));
@@ -111,12 +156,26 @@ export async function networkState(context: NetworkActor, query: Record<string, 
       followed: followedIds.includes(m.id), blocked: myBlocks.has(m.id), badges, suspended: p.suspended,
     }));
   }
+  const postAuthor = (memberId: number, forComment = false): NetworkPostAuthor | null => {
+    const row = eligibleById.get(memberId);
+    if (!row) return null;
+    const visible = row.profile.enabled ? dto.get(memberId) : undefined;
+    if (row.profile.enabled && !visible) return null;
+    return projectPostAuthor({
+      id: memberId,
+      fullName: visible?.fullName ?? row.member.fullName,
+      profileVisible: row.profile.enabled,
+      profession: visible?.profession,
+      avatarUrl: visible?.avatarUrl,
+      founder: visible?.founder,
+    }, forComment);
+  };
   const me = dto.get(self.id)!;
   if (!me) return empty;
   const qualifiedInvites = await qualifiedInviteCount(self.id);
   const growth = {
     inviteCode: myProfile!.inviteCode, qualifiedInvites, requiredInvites: 0,
-    canPost: me.enabled,
+    canPost: !me.suspended,
   };
   const q = String(query.q ?? "").trim().slice(0, 100).toLowerCase();
   const roleTerms: Record<string, string[]> = {
@@ -136,16 +195,31 @@ export async function networkState(context: NetworkActor, query: Record<string, 
     (!query.connections || connectionIds?.has(r.member.id))).map(r => dto.get(r.member.id)!)
     .filter(m => (!sector || m.sectors.includes(sector as NetworkMember["sectors"][number])) &&
       (!q || searchTerms.some(term => [m.fullName, m.profession, m.organization, m.country, m.bio, m.offering, m.lookingFor].join(" ").toLowerCase().includes(term))));
-  const postDtos: NetworkPost[] = page.filter(p => dto.has(p.authorId)).map(p => ({
-    id: p.id, author: dto.get(p.authorId)!, text: p.text, kind: p.kind, createdAt: p.createdAt.toISOString(),
+  const postDtos: NetworkPost[] = page.filter(p => {
+    if (!eligibleById.has(p.authorId)) return false;
+    const followsAuthor = followedIds.includes(p.authorId);
+    return canViewPost({
+      visibility: p.visibility, visibilitySector: p.visibilitySector,
+      authorId: p.authorId, viewerId: self.id, followsAuthor,
+      activeSectors: myActiveSectors, founder: context.founder,
+    });
+  }).flatMap(p => {
+    const author = postAuthor(p.authorId);
+    if (!author) return [];
+    return [{
+    id: p.id, author, text: p.text, kind: p.kind, visibility: p.visibility, visibilitySector: p.visibilitySector as NetworkPost["visibilitySector"], createdAt: p.createdAt.toISOString(),
     edited: p.updatedAt.getTime() > p.createdAt.getTime(),
     media: p.mediaIds.flatMap(id => media.has(id) ? [media.get(id)!] : []),
     likes: likeRows.filter(l => l.postId === p.id).length,
     views: viewRows.filter(v => v.postId === p.id).length,
     liked: likeRows.some(l => l.postId === p.id && l.memberId === self.id),
-    comments: commentRows.filter(c => c.postId === p.id && dto.has(c.authorId) && !blockedIds.has(c.authorId)).slice(0, 30).reverse()
-      .map(c => ({ id: c.id, author: dto.get(c.authorId)!, text: c.text, createdAt: c.createdAt.toISOString() })),
-  }));
+    comments: commentRows.filter(c => c.postId === p.id && eligibleById.has(c.authorId) && !blockedIds.has(c.authorId)).slice(0, 30).reverse()
+      .flatMap(c => {
+        const commentAuthor = postAuthor(c.authorId, true);
+        return commentAuthor ? [{ id: c.id, author: commentAuthor, text: c.text, createdAt: c.createdAt.toISOString() }] : [];
+      }),
+    }];
+  });
   const ownThreads = await db.select().from(threads).where(or(eq(threads.memberA, self.id), eq(threads.memberB, self.id))).orderBy(desc(threads.updatedAt)).limit(100);
   const allowedThreads = ownThreads.filter(t => {
     const other = t.memberA === self.id ? t.memberB : t.memberA;
@@ -160,6 +234,7 @@ export async function networkState(context: NetworkActor, query: Record<string, 
   return {
     growth,
     me, founder: [...dto.values()].find(m => m.founder && m.enabled && !blockedIds.has(m.id)) ?? null,
+    myActiveSectors,
     members: memberList.slice(0, 200), person: targetId && !blockedIds.has(targetId) ? dto.get(targetId) ?? null :
       targetId && myBlocks.has(targetId) ? dto.get(targetId) ?? null : null,
     posts: postDtos, nextCursor: postRows.length > 30 ? page.at(-1)!.id : null,

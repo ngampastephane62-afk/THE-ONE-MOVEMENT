@@ -625,6 +625,8 @@ export interface MediaPublicationSave {
   publicationDate: string;
   /** @maxLength 2000 */
   externalUrl: string;
+  /** @maxLength 2000 */
+  instagramUrl: string;
   embed: MediaPublicationEmbed | null;
   /**
      * @minimum 0
@@ -667,6 +669,7 @@ export interface MediaPublication {
   category: MediaPublicationCategory;
   publicationDate: string;
   externalUrl: string;
+  instagramUrl: string;
   embed: MediaPublicationEmbed | null;
   priority: number;
   status: MediaPublicationStatus;
@@ -1932,6 +1935,42 @@ export const NetworkActionInputAction = {
   checkout: 'checkout',
 } as const;
 
+export type NetworkActionInputVisibility = typeof NetworkActionInputVisibility[keyof typeof NetworkActionInputVisibility];
+
+
+export const NetworkActionInputVisibility = {
+  community: 'community',
+  followers: 'followers',
+  sector: 'sector',
+  draft: 'draft',
+} as const;
+
+/**
+ * @nullable
+ */
+export type NetworkActionInputVisibilitySector = typeof NetworkActionInputVisibilitySector[keyof typeof NetworkActionInputVisibilitySector] | null;
+
+
+export const NetworkActionInputVisibilitySector = {
+  fashion: 'fashion',
+  music: 'music',
+  dance: 'dance',
+  film: 'film',
+  art: 'art',
+  business: 'business',
+  investment: 'investment',
+  tourism: 'tourism',
+  diplomacy: 'diplomacy',
+  innovation: 'innovation',
+  technology: 'technology',
+  ngos: 'ngos',
+  media: 'media',
+  education: 'education',
+  'real-estate': 'real-estate',
+  'health-care': 'health-care',
+  'humanitarian-action': 'humanitarian-action',
+} as const;
+
 export interface NetworkActionInput {
   action: NetworkActionInputAction;
   id?: number;
@@ -1941,6 +1980,9 @@ export interface NetworkActionInput {
   kind?: string;
   /** @maxItems 6 */
   mediaIds?: string[];
+  visibility?: NetworkActionInputVisibility;
+  /** @nullable */
+  visibilitySector?: NetworkActionInputVisibilitySector;
   role?: string;
   program?: string;
   packageSlug?: string;
@@ -2091,6 +2133,7 @@ export interface ProfileDisplayFields {
 
 export type NetworkMember = ProfileDisplayFields & ({
   id: number;
+  joinedAt: string;
   /** Optional legacy response property; not authorization to serve media. */
   publicMedia?: boolean;
   enabled: boolean;
@@ -2107,18 +2150,67 @@ export type NetworkMember = ProfileDisplayFields & ({
   badges: NetworkBadge[];
 });
 
+export interface NetworkPostAuthor {
+  id: number;
+  fullName: string;
+  profileVisible: boolean;
+  profession?: string;
+  /** @nullable */
+  avatarUrl?: string | null;
+  founder?: boolean;
+}
+
 export interface NetworkComment {
   id: number;
-  author: NetworkMember;
+  author: NetworkPostAuthor;
   text: string;
   createdAt: string;
 }
 
+export type NetworkPostVisibility = typeof NetworkPostVisibility[keyof typeof NetworkPostVisibility];
+
+
+export const NetworkPostVisibility = {
+  community: 'community',
+  followers: 'followers',
+  sector: 'sector',
+  draft: 'draft',
+} as const;
+
+/**
+ * @nullable
+ */
+export type NetworkPostVisibilitySector = typeof NetworkPostVisibilitySector[keyof typeof NetworkPostVisibilitySector] | null;
+
+
+export const NetworkPostVisibilitySector = {
+  fashion: 'fashion',
+  music: 'music',
+  dance: 'dance',
+  film: 'film',
+  art: 'art',
+  business: 'business',
+  investment: 'investment',
+  tourism: 'tourism',
+  diplomacy: 'diplomacy',
+  innovation: 'innovation',
+  technology: 'technology',
+  ngos: 'ngos',
+  media: 'media',
+  education: 'education',
+  'real-estate': 'real-estate',
+  'health-care': 'health-care',
+  'humanitarian-action': 'humanitarian-action',
+} as const;
+
 export interface NetworkPost {
   id: number;
-  author: NetworkMember;
+  author: NetworkPostAuthor;
   text: string;
   kind: string;
+  visibility: NetworkPostVisibility;
+  /** @nullable */
+  visibilitySector: NetworkPostVisibilitySector;
   media: NetworkMedia[];
   likes: number;
   views: number;
@@ -2211,6 +2303,29 @@ export interface DonationCampaign {
   currency: string;
 }
 
+export type NetworkStateMyActiveSectorsItem = typeof NetworkStateMyActiveSectorsItem[keyof typeof NetworkStateMyActiveSectorsItem];
+
+
+export const NetworkStateMyActiveSectorsItem = {
+  fashion: 'fashion',
+  music: 'music',
+  dance: 'dance',
+  film: 'film',
+  art: 'art',
+  business: 'business',
+  investment: 'investment',
+  tourism: 'tourism',
+  diplomacy: 'diplomacy',
+  innovation: 'innovation',
+  technology: 'technology',
+  ngos: 'ngos',
+  media: 'media',
+  education: 'education',
+  'real-estate': 'real-estate',
+  'health-care': 'health-care',
+  'humanitarian-action': 'humanitarian-action',
+} as const;
+
 export interface NetworkGrowth {
   inviteCode: string;
   qualifiedInvites: number;
@@ -2220,6 +2335,7 @@ export interface NetworkGrowth {
 
 export interface NetworkState {
   growth: NetworkGrowth | null;
+  myActiveSectors: NetworkStateMyActiveSectorsItem[];
   me: NetworkMember | null;
   founder: NetworkMember | null;
   members: NetworkMember[];

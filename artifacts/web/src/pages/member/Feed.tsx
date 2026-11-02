@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useProfileReadiness, ReadinessLock } from '@/components/network/readiness';
 import { Link } from 'wouter';
 import { Briefcase, Clapperboard, Loader2, Newspaper } from 'lucide-react';
-import { useGetNetworkState, getGetNetworkStateQueryKey, type GetNetworkStateFeed, type NetworkPost } from '@workspace/api-client-react';
+import { useGetNetworkState, getGetNetworkStateQueryKey, type GetNetworkStateFeed, type NetworkActionInput, type NetworkPost } from '@workspace/api-client-react';
+import { SECTORS } from '@/lib/sectors-data';
 import EcosystemNews from '@/components/network/EcosystemNews';
 import PostCard from '@/components/network/PostCard';
 import ReportDialog, { type ReportTarget } from '@/components/network/ReportDialog';
@@ -18,19 +18,24 @@ const KINDS = [
 ];
 
 function Composer() {
-  const { me } = useMe();
+  const { me, base } = useMe();
   const { run, pending } = useAct();
   const u = useUploads(6);
   const [text, setText] = useState('');
   const [kind, setKind] = useState('post');
+  const [visibility, setVisibility] = useState<'community' | 'followers' | 'sector' | 'draft'>('community');
+  type SectorSlug = NonNullable<NetworkActionInput['visibilitySector']>;
+  const [visibilitySector, setVisibilitySector] = useState<SectorSlug | ''>('');
   const [err, setErr] = useState(false);
-  const ready = useProfileReadiness();
-  if (ready.locked) return <div className={`${card} p-4`} data-testid="composer-locked"><ReadinessLock action="publish posts" /></div>;
-  const canPost = (text.trim() || u.ids.length) && !u.busy && !pending && !u.items.some((i) => i.status === 'error');
+  const availableSectors = (me.founder ? SECTORS : SECTORS.filter((sector) => base.myActiveSectors.includes(sector.slug as SectorSlug))) as { slug: SectorSlug; name: string }[];
+  const canPost = (text.trim() || u.ids.length) && !u.busy && !pending && !u.items.some((i) => i.status === 'error') &&
+    (visibility !== 'sector' || !!visibilitySector);
   return (
     <form className={`${card} p-4`} onSubmit={(e) => {
       e.preventDefault(); setErr(false);
-      run({ action: 'post.create', text: text.trim(), kind, mediaIds: u.ids }).then(() => { setText(''); u.clear(); setKind('post'); }).catch(() => setErr(true));
+      run({ action: 'post.create', text: text.trim(), kind, mediaIds: u.ids, visibility, visibilitySector: visibility === 'sector' ? visibilitySector || null : null })
+        .then(() => { setText(''); u.clear(); setKind('post'); setVisibility('community'); setVisibilitySector(''); })
+        .catch(() => setErr(true));
     }}>
       <div className="flex gap-3">
         <Avatar m={me} size={44} />
@@ -42,6 +47,24 @@ function Composer() {
       </div>
       <p className="mt-3 text-xs text-ink-700" data-testid="text-trial-posting">Community trials: updates, Business posts and reels are free. No subscription or invitations required.</p>
       <div className="mt-3"><UploadTray u={u} label="Photo, video, audio or PDF" testId="post-upload" /></div>
+      <div className="mt-3 grid gap-2 sm:grid-cols-2">
+        <label className="text-xs font-semibold text-ink-700">Who can see this post?
+          <select className="mt-1 w-full rounded-xl border border-sand-300 bg-ivory-50 px-3 py-2 text-sm" value={visibility} onChange={(e) => { setVisibility(e.target.value as typeof visibility); if (e.target.value !== 'sector') setVisibilitySector(''); }} data-testid="select-post-visibility">
+            <option value="community">All verified members</option>
+            <option value="followers">People who follow you</option>
+            {availableSectors.length > 0 && <option value="sector">One of my sectors</option>}
+            <option value="draft">Only me · save as draft</option>
+          </select>
+        </label>
+        {visibility === 'sector' && (
+          <label className="text-xs font-semibold text-ink-700">Choose a sector
+            <select className="mt-1 w-full rounded-xl border border-sand-300 bg-ivory-50 px-3 py-2 text-sm" value={visibilitySector} onChange={(e) => setVisibilitySector(e.target.value as SectorSlug | '')} data-testid="select-post-sector">
+              <option value="">Select a sector</option>
+              {availableSectors.map((sector) => <option key={sector.slug} value={sector.slug}>{sector.name}</option>)}
+            </select>
+          </label>
+        )}
+      </div>
       {err && <p className="mt-2 text-xs text-crimson-700" role="alert">Not published. Your draft is kept — try again.</p>}
       <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-sand-100 pt-3">
         <div className="flex gap-1" role="radiogroup" aria-label="Post type">
@@ -75,14 +98,7 @@ export default function Feed() {
       <div className="flex min-w-0 flex-1 flex-col gap-4">
         <Chapter index="01" eyebrow="CONTRIBUTE" title="The One Feed" lede="Stories, projects and offers shared by members of the movement. Official TOMI news is published separately below." />
         <EcosystemNews limit={1} />
-        {me.founder || base.growth?.canPost ? <Composer /> : (
-          <div className={`${card} flex flex-wrap items-center justify-between gap-2 p-3 text-sm`}>
-            <p className="text-ink-700">Explore the feed freely. Activate your verified membership to publish. No invitations are required.</p>
-            <Link href="/member/settings" className="text-xs font-semibold text-lagoon-700 hover:underline" data-testid="link-feed-profile">
-              Review my profile
-            </Link>
-          </div>
-        )}
+        <Composer />
         <div className="flex gap-1 overflow-x-auto rounded-full bg-ivory-200 p-1" role="tablist">
           {TABS.map((t) => <button key={t.id} role="tab" aria-selected={feed === t.id} onClick={() => switchFeed(t.id)} className={`flex-1 whitespace-nowrap rounded-full px-3 py-1.5 text-xs ${feed === t.id ? 'bg-ivory-50 font-semibold text-lagoon-900 shadow-sm' : 'text-ink-700'}`} data-testid={`tab-feed-${t.id}`}>{t.label}</button>)}
         </div>
@@ -92,7 +108,7 @@ export default function Feed() {
           </Empty>
         ) : (
           <>
-            {posts.map((p) => <PostCard key={p.id} post={p} meId={me.id} onReport={(postId, memberId) => setReport({ postId, memberId })} />)}
+            {posts.map((p) => <PostCard key={p.id} post={p} meId={me.id} sectors={(me.founder ? SECTORS : SECTORS.filter((sector) => base.myActiveSectors.includes(sector.slug as NonNullable<NetworkActionInput['visibilitySector']>))) as { slug: NonNullable<NetworkActionInput['visibilitySector']>; name: string }[]} onReport={(postId, memberId) => setReport({ postId, memberId })} />)}
             {q.data?.nextCursor ? (
               <button className={`${btnGhost} self-center`} disabled={q.isFetching} onClick={() => { if (before) setOlder((o) => [...o, ...(q.data?.posts ?? [])]); setBefore(q.data!.nextCursor!); }} data-testid="button-load-more">{q.isFetching && <Loader2 className="h-4 w-4 animate-spin" />}Load older posts</button>
             ) : <p className="py-4 text-center text-xs text-sand-400">You are all caught up.</p>}
@@ -127,12 +143,11 @@ export default function Feed() {
 function SuggestRow({ id }: { id: number }) {
   const { base } = useMe();
   const { run, pending } = useAct();
-  const ready = useProfileReadiness();
   const m = base.members.find((x) => x.id === id)!;
   return (
     <div className="flex items-center gap-2">
       <Link href={`/member/profile/${m.id}`} className="flex min-w-0 flex-1 items-center gap-2"><Avatar m={m} size={34} /><span className="min-w-0"><span className="block truncate text-sm font-semibold text-ink-900">{m.fullName}</span><span className="block truncate text-xs text-sand-400">{m.profession}</span></span></Link>
-      <button className="rounded-full border border-lagoon-700 px-3 py-1 text-xs font-semibold text-lagoon-700 hover:bg-lagoon-700 hover:text-ivory-50" disabled={pending || ready.locked} title={ready.locked ? 'Complete your essential profile to follow' : undefined} onClick={() => { if (!ready.locked) run({ action: 'follow', targetId: m.id, accepted: true }).catch(() => undefined); }} data-testid={`button-follow-${m.id}`}>Follow</button>
+      <button className="rounded-full border border-lagoon-700 px-3 py-1 text-xs font-semibold text-lagoon-700 hover:bg-lagoon-700 hover:text-ivory-50" disabled={pending} onClick={() => run({ action: 'follow', targetId: m.id, accepted: true }).catch(() => undefined)} data-testid={`button-follow-${m.id}`}>Follow</button>
     </div>
   );
 }

@@ -15,7 +15,7 @@ const kind = eq(publications.type, MEDIA_CENTER_TYPE);
 function dto(row: Row, admin = false): MediaPublication {
   const p = metadata(row);
   return {
-    ...p, id: row.id, title: row.title, status: row.status as MediaPublication["status"],
+    ...p, instagramUrl: p.instagramUrl ?? "", id: row.id, title: row.title, status: row.status as MediaPublication["status"],
     coverUrl: p.coverUploadId ? `/api/media-center/${row.id}/assets/cover` : null,
     logoUrl: p.logoUploadId ? `/api/media-center/${row.id}/assets/logo` : null,
     coverUploadId: admin ? p.coverUploadId : null,

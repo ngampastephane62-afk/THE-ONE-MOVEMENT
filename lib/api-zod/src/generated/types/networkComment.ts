@@ -5,11 +5,11 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
-import type { NetworkMember } from './networkMember';
+import type { NetworkPostAuthor } from './networkPostAuthor';
 
 export interface NetworkComment {
   id: number;
-  author: NetworkMember;
+  author: NetworkPostAuthor;
   text: string;
   createdAt: string;
 }

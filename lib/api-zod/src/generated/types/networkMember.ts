@@ -10,6 +10,7 @@ import type { ProfileDisplayFields } from './profileDisplayFields';
 
 export type NetworkMember = ProfileDisplayFields & ({
   id: number;
+  joinedAt: Date;
   /** Optional legacy response property; not authorization to serve media. */
   publicMedia?: boolean;
   enabled: boolean;

@@ -7,7 +7,7 @@ import { and, eq, sql, or, isNull } from "drizzle-orm";
 import { GetNetworkStateQueryParams, RequestNetworkUploadBody } from "@workspace/api-zod";
 import { networkAuth, networkEnabled, networkWrite, actor, NetworkError, type NetworkActor } from "../services/networkAuth";
 import { networkAction } from "../services/networkActions";
-import { networkState, activeBadge, visibleMember } from "../services/networkState";
+import { networkState, activeBadge, visibleMember, visiblePost } from "../services/networkState";
 import { requestUpload, objectFile } from "../services/networkFiles";
 import { handleNetworkMediaStreamError } from "../services/networkMediaStream";
 import { DOCUMENTS, paymentStatus } from "../services/networkPayments";
@@ -118,16 +118,24 @@ router.get("/network/media/:id", async (req, res) => {
   if (!upload || isCampaignPath(upload.objectPath)) throw new NetworkError(404, "Media not found.");
   let allowed = upload.ownerId === who.member.id;
   if (!allowed) {
-    const [profile] = await db.select().from(profiles).where(and(eq(profiles.memberId, upload.ownerId), eq(profiles.enabled, true), eq(profiles.suspended, false)));
-    if (profile) {
+    const [profile] = await db.select().from(profiles).where(and(eq(profiles.memberId, upload.ownerId), eq(profiles.suspended, false)));
+    if (profile?.enabled) {
       try {
         await visibleMember(upload.ownerId, who.member.id);
         allowed = profile.avatarId === upload.id || profile.coverId === upload.id;
-        if (!allowed) {
-          const [post] = await db.select({ id: posts.id }).from(posts).where(and(eq(posts.authorId, upload.ownerId), eq(posts.hidden, false), sql`${upload.id} = ANY(${posts.mediaIds})`)).limit(1);
-          allowed = !!post;
-        }
       } catch { /* A blocked profile does not authorize media delivery. */ }
+    }
+    if (!allowed && profile) {
+      const authoredPosts = await db.select({ id: posts.id }).from(posts)
+        .where(and(eq(posts.authorId, upload.ownerId), eq(posts.hidden, false), sql`${upload.id} = ANY(${posts.mediaIds})`))
+        .orderBy(sql`${posts.id} DESC`).limit(100);
+      for (const post of authoredPosts) {
+        try {
+          await visiblePost(post.id, who.member.id, who.founder);
+          allowed = true;
+          break;
+        } catch { /* A post only authorizes media for its own visible audience. */ }
+      }
     }
     if (!allowed && who.founder) {
       const [evidence] = await db.select({ id: certificates.id }).from(certificates).where(sql`${upload.id} = ANY(${certificates.evidenceIds})`).limit(1);

@@ -17,6 +17,7 @@ export interface MediaPublication {
   category: MediaPublicationCategory;
   publicationDate: string;
   externalUrl: string;
+  instagramUrl: string;
   embed: MediaPublicationEmbed | null;
   priority: number;
   status: MediaPublicationStatus;

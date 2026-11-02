@@ -31,8 +31,8 @@ export default function JourneyProgress({ compact = false }: { compact?: boolean
     { key: 'account', label: 'Account created', detail: 'Signed in with your own credentials.', done: true },
     { key: 'profile', label: 'Essential profile', detail: j.coreMissing.length ? `Still to add: ${label(j.coreMissing)}.` : 'Account type, name, profession and country saved.', done: !j.coreMissing.length, href: '/member/onboarding', cta: 'Complete profile' },
     { key: 'sectors', label: 'Choose sectors', detail: j.sectorMissing.length ? 'Pick a primary sector and 1 to 3 active sectors.' : 'Primary and active sectors saved.', done: !j.sectorMissing.length, href: '/member/onboarding', cta: 'Choose sectors' },
-    { key: 'activate', label: 'Activate the network', detail: j.activated ? 'Visible to signed-in members.' : j.complete ? 'Your explicit choice. Nothing is activated automatically.' : 'Available once your essentials are saved.', done: j.activated },
-    { key: 'participate', label: 'Post, follow, invite', detail: j.activated ? 'Open to you now.' : 'Unlocked after activation.', done: j.activated, href: j.activated ? '/member/invite' : undefined, cta: j.activated ? 'Invite' : undefined },
+    { key: 'activate', label: 'Choose directory visibility', detail: j.activated ? 'Your profile is listed in People.' : 'Optional. Posting and following are already open.', done: j.activated },
+    { key: 'participate', label: 'Post, follow, invite', detail: 'Available to verified members. Profile completion and invitations are optional.', done: true, href: '/member/invite', cta: 'Invite' },
   ];
   const next = steps.find((s) => !s.done);
   const doneCount = steps.filter((s) => s.done).length;
@@ -54,7 +54,7 @@ export default function JourneyProgress({ compact = false }: { compact?: boolean
                 <span className="block text-sm font-semibold text-ink-900">{s.label}</span>
                 <span className="block text-xs leading-snug text-ink-700">{s.detail}</span>
                 {current && s.href && s.cta && <Link href={s.href} className="mt-1.5 inline-block text-xs font-semibold text-lagoon-700 underline underline-offset-4" data-testid={`link-journey-${s.key}`}>{s.cta}</Link>}
-                {current && s.key === 'activate' && <a href="#panel-activate" className="mt-1.5 inline-block text-xs font-semibold text-lagoon-700 underline underline-offset-4" data-testid="link-journey-activate">Review activation</a>}
+                {current && s.key === 'activate' && <a href="#panel-activate" className="mt-1.5 inline-block text-xs font-semibold text-lagoon-700 underline underline-offset-4" data-testid="link-journey-activate">Review directory listing</a>}
               </span>
             </li>
           );

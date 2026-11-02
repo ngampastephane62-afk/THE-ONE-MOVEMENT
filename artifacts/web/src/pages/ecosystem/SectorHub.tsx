@@ -134,7 +134,9 @@ function useSignedInAreas(sector: Sector): [ReactNode, ReactNode] {
   const netQ = useGetNetworkState(params, { query: { enabled, queryKey: getGetNetworkStateQueryKey(params), retry: false } });
   const profile = profileQ.data?.profile ?? null;
   const following = !!profile?.sectors.includes(sector.slug as (typeof profile.sectors)[number]);
-  const posts = useMemo(() => (netQ.data?.posts ?? []).filter((p) => p.author.sectors.includes(sector.slug as (typeof p.author.sectors)[number])).slice(0, 6), [netQ.data, sector.slug]);
+  const posts = useMemo(() => (netQ.data?.posts ?? []).filter((p) =>
+    p.visibility === 'community' || (p.visibility === 'sector' && p.visibilitySector === sector.slug)
+  ).slice(0, 6), [netQ.data, sector.slug]);
   const networkMembers = useMemo(() => (netQ.data?.members ?? []).filter((m) => m.id !== netQ.data?.me?.id).slice(0, 6), [netQ.data]);
 
   const postsArea = (

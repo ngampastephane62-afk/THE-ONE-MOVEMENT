@@ -25,7 +25,7 @@ export default function MemberOnboarding() {
         <h1 id="onboarding-title" className="mt-2 font-display text-2xl text-ink-900 sm:text-3xl">Complete your profile</h1>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-700">
           {q.isLoading ? 'Loading your saved details.' : missing.length === 0
-            ? 'Your essentials are complete. Saving here never activates the network or lists you publicly; activation is a separate, explicit step on your member home.'
+            ? 'Your profile details are complete. Saving here does not list you in People or in the public directory; those visibility choices are separate.'
             : `Still to add: ${missing.join(', ')}. Your existing details are already filled in below.`}
         </p>
       </header>

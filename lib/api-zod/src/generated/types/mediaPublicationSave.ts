@@ -24,6 +24,8 @@ export interface MediaPublicationSave {
   publicationDate: string;
   /** @maxLength 2000 */
   externalUrl: string;
+  /** @maxLength 2000 */
+  instagramUrl: string;
   embed: MediaPublicationEmbed | null;
   /**
      * @minimum 0

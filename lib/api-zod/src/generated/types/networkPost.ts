@@ -7,13 +7,18 @@
  */
 import type { NetworkComment } from './networkComment';
 import type { NetworkMedia } from './networkMedia';
-import type { NetworkMember } from './networkMember';
+import type { NetworkPostAuthor } from './networkPostAuthor';
+import type { NetworkPostVisibility } from './networkPostVisibility';
+import type { NetworkPostVisibilitySector } from './networkPostVisibilitySector';
 
 export interface NetworkPost {
   id: number;
-  author: NetworkMember;
+  author: NetworkPostAuthor;
   text: string;
   kind: string;
+  visibility: NetworkPostVisibility;
+  /** @nullable */
+  visibilitySector: NetworkPostVisibilitySector;
   media: NetworkMedia[];
   likes: number;
   views: number;

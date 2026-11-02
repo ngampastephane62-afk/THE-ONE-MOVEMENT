@@ -1785,7 +1785,7 @@ components:
     MediaPublicationSave:
       type: object
       additionalProperties: false
-      required: [title, publisher, description, category, publicationDate, externalUrl, embed, priority, status, coverUploadId, logoUploadId, rightsConfirmed, expectedUpdatedAt]
+      required: [title, publisher, description, category, publicationDate, externalUrl, instagramUrl, embed, priority, status, coverUploadId, logoUploadId, rightsConfirmed, expectedUpdatedAt]
       properties:
         title: { type: string, minLength: 2, maxLength: 240 }
         publisher: { type: string, maxLength: 140 }
@@ -1793,6 +1793,7 @@ components:
         category: { $ref: '#/components/schemas/MediaPublicationCategory' }
         publicationDate: { type: string, maxLength: 10 }
         externalUrl: { type: string, maxLength: 2000 }
+        instagramUrl: { type: string, maxLength: 2000 }
         embed:
           allOf: [{ $ref: '#/components/schemas/MediaPublicationEmbed' }]
           nullable: true
@@ -1804,7 +1805,7 @@ components:
         expectedUpdatedAt: { type: string, nullable: true, maxLength: 40 }
     MediaPublication:
       type: object
-      required: [id, title, publisher, description, category, publicationDate, externalUrl, embed, priority, status, coverUrl, logoUrl, coverUploadId, logoUploadId, rightsConfirmed, updatedAt]
+      required: [id, title, publisher, description, category, publicationDate, externalUrl, instagramUrl, embed, priority, status, coverUrl, logoUrl, coverUploadId, logoUploadId, rightsConfirmed, updatedAt]
       properties:
         id: { type: integer }
         title: { type: string }
@@ -1813,6 +1814,7 @@ components:
         category: { $ref: '#/components/schemas/MediaPublicationCategory' }
         publicationDate: { type: string }
         externalUrl: { type: string }
+        instagramUrl: { type: string }
         embed:
           allOf: [{ $ref: '#/components/schemas/MediaPublicationEmbed' }]
           nullable: true
@@ -2526,6 +2528,8 @@ components:
         text: {type: string, maxLength: 5000}
         kind: {type: string}
         mediaIds: {type: array, maxItems: 6, items: {type: string}}
+        visibility: {type: string, enum: [community, followers, sector, draft]}
+        visibilitySector: {type: [string, "null"], enum: [fashion, music, dance, film, art, business, investment, tourism, diplomacy, innovation, technology, ngos, media, education, real-estate, health-care, humanitarian-action, null]}
         role: {type: string}
         program: {type: string}
         packageSlug: {type: string}
@@ -2573,9 +2577,10 @@ components:
       allOf:
         - {$ref: "#/components/schemas/ProfileDisplayFields"}
         - type: object
-          required: [id, enabled, founder, avatarUrl, coverUrl, followers, following, followed, blocked, badges, suspended]
+          required: [id, joinedAt, enabled, founder, avatarUrl, coverUrl, followers, following, followed, blocked, badges, suspended]
           properties:
             id: {type: integer}
+            joinedAt: {type: string, format: date-time}
             publicMedia:
               type: boolean
               description: Optional legacy response property; not authorization to serve media.
@@ -2594,17 +2599,29 @@ components:
       required: [id, author, text, createdAt]
       properties:
         id: {type: integer}
-        author: {$ref: "#/components/schemas/NetworkMember"}
+        author: {$ref: "#/components/schemas/NetworkPostAuthor"}
         text: {type: string}
         createdAt: {type: string}
-    NetworkPost:
+    NetworkPostAuthor:
       type: object
-      required: [id, author, text, kind, media, likes, views, liked, comments, createdAt, edited]
+      required: [id, fullName, profileVisible]
       properties:
         id: {type: integer}
-        author: {$ref: "#/components/schemas/NetworkMember"}
+        fullName: {type: string}
+        profileVisible: {type: boolean}
+        profession: {type: string}
+        avatarUrl: {type: [string, "null"]}
+        founder: {type: boolean}
+    NetworkPost:
+      type: object
+      required: [id, author, text, kind, visibility, visibilitySector, media, likes, views, liked, comments, createdAt, edited]
+      properties:
+        id: {type: integer}
+        author: {$ref: "#/components/schemas/NetworkPostAuthor"}
         text: {type: string}
         kind: {type: string}
+        visibility: {type: string, enum: [community, followers, sector, draft]}
+        visibilitySector: {type: [string, "null"], enum: [fashion, music, dance, film, art, business, investment, tourism, diplomacy, innovation, technology, ngos, media, education, real-estate, health-care, humanitarian-action, null]}
         media: {type: array, items: {$ref: "#/components/schemas/NetworkMedia"}}
         likes: {type: integer}
         views: {type: integer}
@@ -2700,9 +2717,10 @@ components:
         currency: {type: string}
     NetworkState:
       type: object
-      required: [me, founder, members, posts, nextCursor, person, threads, messages, certifications, reports, packages, documents, stripeReady, growth]
+      required: [me, founder, members, posts, nextCursor, person, threads, messages, certifications, reports, packages, documents, stripeReady, growth, myActiveSectors]
       properties:
         growth: {anyOf: [{$ref: "#/components/schemas/NetworkGrowth"}, {type: "null"}]}
+        myActiveSectors: {type: array, items: {type: string, enum: [fashion, music, dance, film, art, business, investment, tourism, diplomacy, innovation, technology, ngos, media, education, real-estate, health-care, humanitarian-action]}}
         me: {anyOf: [{$ref: "#/components/schemas/NetworkMember"}, {type: "null"}]}
         founder: {anyOf: [{$ref: "#/components/schemas/NetworkMember"}, {type: "null"}]}
         members: {type: array, items: {$ref: "#/components/schemas/NetworkMember"}}

@@ -114,7 +114,7 @@ export default function FounderMedia() {
                     <button type="button" onClick={() => choose({ mode: 'edit', entry: p, k: Date.now() })} aria-current={active ? 'true' : undefined}
                       className={`${card} flex w-full items-center gap-3 p-3 text-left transition-colors hover:border-gold-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 ${active ? 'border-gold-500' : ''}`} data-testid={`row-media-${p.id}`}>
                       <span className="grid h-14 w-20 shrink-0 place-items-center overflow-hidden rounded-lg bg-lagoon-900">
-                        {p.coverUrl ? <img src={p.coverUrl} alt="" className="h-full w-full object-cover" loading="lazy" /> : <span className="text-[10px] text-gold-400">#{p.priority}</span>}
+                        {p.coverUrl ? <img src={p.coverUrl} alt="" className={`h-full w-full ${p.category === 'magazine' ? 'bg-ivory-100 object-contain' : 'object-cover'}`} loading="lazy" /> : <span className="text-[10px] text-gold-400">#{p.priority}</span>}
                       </span>
                       <span className="min-w-0 flex-1">
                         <span className="block truncate text-sm font-semibold text-ink-900">{p.title}</span>

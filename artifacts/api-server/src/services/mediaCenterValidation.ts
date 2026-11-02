@@ -23,6 +23,7 @@ export function mediaPublicationInput(raw: unknown): MediaPublicationSave {
   p.publisher = p.publisher.trim();
   p.description = p.description.trim();
   p.externalUrl = p.externalUrl.trim();
+  p.instagramUrl = p.instagramUrl.trim();
   if (p.title.length < 2) throw new NetworkError(400, "Enter a title with at least two characters.");
   if (p.externalUrl) {
     let url: URL;
@@ -31,6 +32,14 @@ export function mediaPublicationInput(raw: unknown): MediaPublicationSave {
       throw new NetworkError(400, "Use a public http:// or https:// link without credentials.");
     }
     p.externalUrl = url.toString();
+  }
+  if (p.instagramUrl) {
+    let url: URL;
+    try { url = new URL(p.instagramUrl); } catch { throw new NetworkError(400, "Enter a full Instagram post or reel link."); }
+    if (url.protocol !== "https:" || !["instagram.com", "www.instagram.com"].includes(url.hostname.toLowerCase()) || url.username || url.password) {
+      throw new NetworkError(400, "Use a public https://www.instagram.com link without credentials.");
+    }
+    p.instagramUrl = url.toString();
   }
   if (p.embed) {
     if (Object.keys(p.embed).some((k) => !["provider", "videoId"].includes(k))) throw new NetworkError(400, "Unsupported video embed fields.");

@@ -86,21 +86,14 @@ function ActivationPrompt() {
   const [err, setErr] = useState(false);
   const journey = useJourney();
   if (journey.profileQ.isLoading) return null;
-  if (!journey.complete) return (
-    <section id="panel-activate" className="mx-3 mb-4 rounded-2xl border border-sand-200 bg-ivory-50 p-4 md:mx-0" data-testid="panel-activate-locked">
-      <p className="text-eyebrow text-gold-700">NEXT STEP: ESSENTIAL PROFILE</p>
-      <p className="mt-1 text-sm leading-relaxed text-ink-800">Network activation becomes available once your essential profile and sectors are saved. You can keep browsing, reading and using privacy, blocking and reporting tools meanwhile. No payment, invitations or public listing are required.</p>
-      <Link href="/member/onboarding" className={`${btn} mt-3`} data-testid="link-activate-complete-profile">Complete profile</Link>
-    </section>
-  );
   return (
     <section id="panel-activate" className="mx-3 mb-4 rounded-2xl border border-gold-500/40 bg-lagoon-900 p-4 text-ivory-100 md:mx-0" data-testid="panel-activate">
-      <p className="text-eyebrow text-gold-400">YOU BELONG — NETWORK ACTIVATION IS YOUR CHOICE</p>
-      <p className="mt-1 text-sm leading-relaxed text-ivory-200">Your membership is free, even while browsing. Read the feed, discover people and explore programmes without activating. To participate, explicitly activate your network profile. Activation makes your name and network profile visible to signed-in TOMI members only, not to the public internet. Your public directory setting does not change. Activation alone does not unlock every specialized service or messaging feature.</p>
-      {err && <p className="mt-2 text-xs text-coral-500" role="alert">Activation failed. Please try again.</p>}
+      <p className="text-eyebrow text-gold-400">YOUR PROFILE LISTING IS OPTIONAL</p>
+      <p className="mt-1 text-sm leading-relaxed text-ivory-200">All verified members can post, follow and explore the community. Choose whether your profile appears in the member directory below. This does not change your separate public-directory or media privacy settings; an incomplete profile is never a barrier to participating.</p>
+      {err && <p className="mt-2 text-xs text-coral-500" role="alert">The profile visibility setting could not be saved. Try again.</p>}
       <div className="mt-3 flex flex-wrap gap-2">
-        <button className="inline-flex items-center rounded-full bg-gold-500 px-4 py-2 text-xs font-semibold text-ink-900 hover:bg-gold-400 disabled:opacity-50" disabled={pending} onClick={() => { setErr(false); run({ action: 'join', accepted: true }).catch(() => setErr(true)); }} data-testid="button-activate">Activate my network profile</button>
-        <Link href="/member/settings" className="inline-flex items-center rounded-full border border-ivory-200/40 px-4 py-2 text-xs font-semibold text-ivory-100 hover:border-gold-400" data-testid="link-edit-before-activate">Edit my profile first</Link>
+        <button className="inline-flex items-center rounded-full bg-gold-500 px-4 py-2 text-xs font-semibold text-ink-900 hover:bg-gold-400 disabled:opacity-50" disabled={pending} onClick={() => { setErr(false); run({ action: 'join', accepted: !journey.activated }).catch(() => setErr(true)); }} data-testid="button-activate">{journey.activated ? 'Remove my profile from People' : 'Show my profile in People'}</button>
+        <Link href="/member/settings" className="inline-flex items-center rounded-full border border-ivory-200/40 px-4 py-2 text-xs font-semibold text-ivory-100 hover:border-gold-400" data-testid="link-edit-before-activate">Manage profile and privacy</Link>
       </div>
     </section>
   );
@@ -114,7 +107,7 @@ function CompleteProfile({ me }: { me: Ctx['me'] }) {
   return (
     <div className="mx-3 mb-4 flex flex-wrap items-center gap-3 rounded-2xl border border-sand-200 bg-ivory-50 p-3 md:mx-0" data-testid="panel-complete-profile">
       <Avatar m={me} size={36} />
-      <p className="min-w-0 flex-1 text-sm text-ink-800">Some essential details are missing from your profile. Posting, following and inviting need a complete essential profile; browsing does not.</p>
+      <p className="min-w-0 flex-1 text-sm text-ink-800">Adding a profession, country and sectors helps people understand your work. You can keep participating while you complete them; public listing stays under your control.</p>
       <Link href="/member/onboarding" className={btn} data-testid="link-complete-profile">Complete profile</Link>
       <button type="button" className="text-xs text-sand-400 hover:text-ink-800" onClick={() => { try { localStorage.setItem(key, '1'); } catch { /* ignore */ } setHidden(true); }} data-testid="button-dismiss-complete">Later</button>
     </div>
@@ -238,7 +231,7 @@ function NetworkGate() {
   if (!state.me) {
     return (
       <Onboard eyebrow="WELCOME" title="Create your member profile">
-        <p className="mb-6 text-sm text-ink-700">Membership is free. Add your account type, name, profession, country, a primary sector and 1 to 3 active sectors. Creating a profile does not activate network participation, make you public or grant official certification.</p>
+        <p className="mb-6 text-sm text-ink-700">Membership is free. A verified account can participate while your profile is in progress. Add your account type, name, profession, country and sectors when ready; profile completion, directory listing and official certification are separate choices.</p>
         <ProfileForm onboarding initial={profileQ.data?.profile ?? null} defaultName={user?.fullName ?? ''} onDone={() => stateQ.refetch()} />
       </Onboard>
     );

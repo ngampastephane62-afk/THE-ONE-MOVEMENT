@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useProfileReadiness } from '@/components/network/readiness';
 import { Link, useLocation, useParams } from 'wouter';
 import { Ban, Copy, UserPlus, Flag, MessageSquare, Palette, Building2, LayoutGrid, List, FileText } from 'lucide-react';
 import type { NetworkPost } from '@workspace/api-client-react';
@@ -19,9 +18,9 @@ export default function ProfilePage() {
   const { id } = useParams<{ id: string }>();
   const pid = Number(id);
   const { me, base } = useMe();
+  const postSectors = (me.founder ? SECTORS : SECTORS.filter((sector) => base.myActiveSectors.includes(sector.slug as NonNullable<NetworkPost['visibilitySector']>))) as { slug: NonNullable<NetworkPost['visibilitySector']>; name: string }[];
   const [, nav] = useLocation();
   const { run, pending } = useAct();
-  const ready = useProfileReadiness();
   const [report, setReport] = useState<ReportTarget | null>(null);
   const [asking, setAsking] = useState(false);
   const [intro, setIntro] = useState('');
@@ -49,8 +48,7 @@ export default function ProfilePage() {
   const actions = mine ? <><Link href="/member/settings" className={primary} data-testid="link-edit-profile"><Palette className="h-3.5 w-3.5" />Customize page</Link><Link href="/member/invite" className={ghost} data-testid="link-growth"><UserPlus className="h-3.5 w-3.5" />Invite</Link></> : p.blocked ? (
     <button className={ghost} disabled={pending} onClick={() => doAct(run({ action: 'block', targetId: p.id, accepted: false }))} data-testid="button-unblock">Unblock</button>
   ) : (<>
-    <button className={p.followed ? ghost : primary} disabled={pending || (!p.followed && ready.locked)} title={!p.followed && ready.locked ? 'Complete your essential profile to follow' : undefined} onClick={() => { if (!p.followed && ready.locked) return; doAct(run({ action: 'follow', targetId: p.id, accepted: !p.followed })); }} data-testid="button-follow">{p.followed ? 'Following' : 'Follow'}</button>
-    {!p.followed && ready.locked && !ready.loading && <Link href="/member/onboarding" className={ghost} data-testid="link-follow-complete-profile">Complete profile to follow</Link>}
+    <button className={p.followed ? ghost : primary} disabled={pending} onClick={() => doAct(run({ action: 'follow', targetId: p.id, accepted: !p.followed }))} data-testid="button-follow">{p.followed ? 'Following' : 'Follow'}</button>
     {thread ? <Link href={`/member/messages/${thread.id}`} className={ghost} data-testid="link-thread"><MessageSquare className="h-3.5 w-3.5" />{thread.accepted ? 'Message' : thread.declined && thread.requestedByMe ? 'Request declined' : thread.requestedByMe ? 'Request pending' : 'Respond to request'}</Link>
       : <button className={ghost} onClick={() => setAsking(true)} data-testid="button-request-message"><MessageSquare className="h-3.5 w-3.5" />Request to message</button>}
   </>);
@@ -106,13 +104,13 @@ export default function ProfilePage() {
         <div className="flex items-center justify-between"><h2 className="font-display text-lg text-ink-900">Posts</h2><span className="inline-flex items-center gap-1 text-xs text-sand-400">{ap.posts === 'grid' ? <LayoutGrid className="h-3.5 w-3.5" /> : <List className="h-3.5 w-3.5" />}{ap.posts === 'grid' ? 'Gallery' : 'List'}</span></div>
         {posts.length === 0 ? <Empty title={mine ? 'Share your first post' : 'No posts yet'} body={mine ? 'Show the network what you build, design or defend.' : `${p.fullName} has not published yet.`}>{mine && <Link href="/member" className={btn}>Write a post</Link>}</Empty>
           : ap.posts === 'grid' ? <PostGrid posts={posts} onOpen={setOpenPost} />
-          : posts.map((x) => <PostCard key={x.id} post={x} meId={me.id} onReport={(postId, memberId) => setReport({ postId, memberId })} />)}
+          : posts.map((x) => <PostCard key={x.id} post={x} meId={me.id} sectors={postSectors} onReport={(postId, memberId) => setReport({ postId, memberId })} />)}
       </section>
       {opened && (
         <Dialog open onOpenChange={(value) => { if (!value) setOpenPost(null); }}>
           <DialogContent className="w-[95vw] max-w-2xl border-0 bg-ivory-50 px-2 pb-2 pt-10" aria-describedby={undefined} data-testid="dialog-post">
             <DialogTitle className="sr-only">Post by {opened.author.fullName}</DialogTitle>
-            <PostCard post={opened} meId={me.id} onReport={(postId, memberId) => setReport({ postId, memberId })} />
+            <PostCard post={opened} meId={me.id} sectors={postSectors} onReport={(postId, memberId) => setReport({ postId, memberId })} />
           </DialogContent>
         </Dialog>
       )}

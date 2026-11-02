@@ -32,7 +32,7 @@ const input = (changes = {}) => ({
   title: "International press publication", publisher: "Publisher",
   description: "The original reported publication and its context.",
   category: "international-press", publicationDate: "2026-10-23",
-  externalUrl: "https://example.org/article", embed: null, priority: 5,
+  externalUrl: "https://example.org/article", instagramUrl: "", embed: null, priority: 5,
   status: "published", coverUploadId: null, logoUploadId: null,
   rightsConfirmed: true, expectedUpdatedAt: null, ...changes,
 });
@@ -42,6 +42,7 @@ test("media validation accepts all eight categories, real dates, optional source
     assert.equal(validator.mediaPublicationInput(input({ category })).category, category);
   }
   assert.equal(validator.mediaPublicationInput(input({ externalUrl: "" })).externalUrl, "");
+  assert.equal(validator.mediaPublicationInput(input({ instagramUrl: "https://www.instagram.com/p/example/" })).instagramUrl, "https://www.instagram.com/p/example/");
   assert.equal(validator.mediaPublicationInput(input({ embed: { provider: "youtube", videoId: "dQw4w9WgXcQ" } })).embed.provider, "youtube");
   assert.equal(validator.mediaPublicationInput(input({ embed: { provider: "vimeo", videoId: "76979871" } })).embed.provider, "vimeo");
   assert.equal(validator.mediaPublicationInput(input({ status: "draft", description: "", publicationDate: "", rightsConfirmed: false })).status, "draft");
@@ -53,6 +54,8 @@ test("publication rejects malformed dates, links, embeds, priorities, rights and
     { rightsConfirmed: false }, { description: "" }, { priority: -1 },
     { priority: 1.5 }, { priority: 100001 }, { category: "anything" },
     { externalUrl: "javascript:alert(1)" }, { externalUrl: "https://user:password@example.org" },
+    { instagramUrl: "http://instagram.com/p/example/" }, { instagramUrl: "https://example.org/instagram" },
+    { instagramUrl: "https://user:password@instagram.com/p/example/" },
     { embed: { provider: "youtube", videoId: "https://youtube.com" } },
     { embed: { provider: "vimeo", videoId: "bad" } },
     { embed: { provider: "youtube", videoId: "dQw4w9WgXcQ", src: "https://evil.test" } },

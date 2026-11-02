@@ -12,7 +12,13 @@ import { ownedMedia, completeUpload } from "./networkFiles";
 import { visibleMember, visiblePost, ownThread, ROLES, PROGRAMS, isBlocked } from "./networkState";
 import { startOrdinaryThread } from "./ordinaryMessaging";
 import { checkout, PACKAGE_DEFINITIONS, customPackages } from "./networkPayments";
-import { missingProfileEssentials, PROFILE_REQUIREMENTS } from "@workspace/shared";
+
+const ACTIVE_SECTORS = new Set([
+  "fashion", "music", "dance", "film", "art", "business", "investment", "tourism",
+  "diplomacy", "innovation", "technology", "ngos", "media", "education",
+  "real-estate", "health-care", "humanitarian-action",
+]);
+const POST_VISIBILITIES = new Set(["community", "followers", "sector", "draft"]);
 
 function number(value: unknown) {
   if (!Number.isSafeInteger(value) || Number(value) < 1) throw new NetworkError(400, "Choose a valid record.");
@@ -31,30 +37,41 @@ export async function networkAction(req: Request, res: Response) {
   const parsed = NetworkActionBody.strict().safeParse(req.body);
   if (!parsed.success) throw new NetworkError(400, "Invalid network action.");
   const input: NetworkActionInput = parsed.data;
-  const who = actor(res, !["join", "upload.complete", "profile.media", "post.view"].includes(input.action));
-  const requiresCompleteProfile = ["post.create", "post.edit", "referral.claim"].includes(input.action) ||
-    (["join", "follow"].includes(input.action) && input.accepted === true);
-  if (requiresCompleteProfile) {
-    const missing = missingProfileEssentials(who.member);
-    if (missing.length) throw new NetworkError(409,
-      `Complete your profile before participating: ${missing.map(k => PROFILE_REQUIREMENTS[k]).join(", ")}. Open My Space → Complete profile.`);
-  }
+  const requiresActiveNetworkProfile = ["certification.request", "checkout"].includes(input.action);
+  const who = actor(res, requiresActiveNetworkProfile);
   const self = who.member.id;
   const id = () => number(input.id);
   const target = () => number(input.targetId);
   let resultId: number | undefined;
+  const postVisibility = (existing?: { visibility: string; visibilitySector: string | null }) => {
+    const visibility = input.visibility ?? existing?.visibility ?? "community";
+    const visibilitySector = input.visibilitySector === undefined
+      ? input.visibility === undefined
+        ? existing?.visibilitySector ?? null
+        : visibility === "sector" ? existing?.visibilitySector ?? null : null
+      : input.visibilitySector;
+    if (!POST_VISIBILITIES.has(visibility)) throw new NetworkError(400, "Choose a supported post visibility.");
+    if (visibility === "sector") {
+      if (!visibilitySector || !ACTIVE_SECTORS.has(visibilitySector)) throw new NetworkError(400, "Choose one of the 17 recognized sectors.");
+      if (!who.founder && !who.member.activeSectors?.includes(visibilitySector)) {
+        throw new NetworkError(403, "Choose a sector you have joined.");
+      }
+    } else if (visibilitySector !== null) {
+      throw new NetworkError(400, "A sector can only be set for a sector-only post.");
+    }
+    return { visibility: visibility as "community" | "followers" | "sector" | "draft", visibilitySector };
+  };
   switch (input.action) {
     case "join": {
       await db.update(profiles).set({ enabled: accepted(input.accepted) }).where(eq(profiles.memberId, self));
       break;
     }
     case "referral.claim": {
-      if (!res.locals.networkEnabled) throw new NetworkError(409, "Join the network before accepting an invitation.");
       if (input.accepted !== true) throw new NetworkError(400, "Accept the invitation and follow explicitly.");
       const code = input.kind ?? "";
       if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(code)) throw new NetworkError(400, "Invalid invitation.");
       const [inviter] = await db.select().from(profiles).where(eq(profiles.inviteCode, code)).limit(1);
-      if (!inviter || !inviter.enabled || inviter.suspended || inviter.memberId === self) throw new NetworkError(404, "This invitation is unavailable.");
+      if (!inviter || inviter.suspended || inviter.memberId === self) throw new NetworkError(404, "This invitation is unavailable.");
       // A referral only credits a newly created, verified account that did not
       // exist when the invitation became available. Each account has one sponsor.
       if (who.accountCreatedAt < inviter.createdAt.getTime() || who.accountCreatedAt < Date.now() - 24 * 60 * 60 * 1000) {
@@ -63,7 +80,7 @@ export async function networkAction(req: Request, res: Response) {
       if (await isBlocked(self, inviter.memberId)) throw new NetworkError(403, "This member cannot be followed.");
       await db.transaction(async tx => {
         const [credited] = await tx.update(profiles).set({ referredBy: inviter.memberId })
-          .where(and(eq(profiles.memberId, self), isNull(profiles.referredBy), eq(profiles.enabled, true))).returning({ memberId: profiles.memberId });
+          .where(and(eq(profiles.memberId, self), isNull(profiles.referredBy))).returning({ memberId: profiles.memberId });
         if (!credited) throw new NetworkError(409, "This account already accepted an invitation.");
         await tx.insert(follows).values({ followerId: self, followingId: inviter.memberId }).onConflictDoNothing();
       });
@@ -88,17 +105,17 @@ export async function networkAction(req: Request, res: Response) {
       const media = await ownedMedia(self, input.mediaIds);
       if (!content && !media.length) throw new NetworkError(400, "Write something or attach media.");
       const kind = input.kind ?? "post";
-      // Community trials: all post types share the verified, voluntarily active
-      // member gate above. Paid services and official roles remain separate.
       if (!["post", "business", "reel"].includes(kind)) throw new NetworkError(400, "Choose post, business or reel.");
       if (kind === "reel" && !media.some(m => m.contentType.startsWith("video/"))) throw new NetworkError(400, "A reel needs an uploaded video.");
       if (input.action === "post.edit") {
         const [row] = await db.select().from(posts).where(and(eq(posts.id, id()), eq(posts.authorId, self)));
         if (!row) throw new NetworkError(404, "Your publication was not found.");
-        await db.update(posts).set({ text: content, mediaIds: media.map(m => m.id), kind, updatedAt: new Date() }).where(eq(posts.id, row.id));
+        const visibility = postVisibility(row);
+        await db.update(posts).set({ text: content, mediaIds: media.map(m => m.id), kind, ...visibility, updatedAt: new Date() }).where(eq(posts.id, row.id));
         resultId = row.id;
       } else {
-        const [row] = await db.insert(posts).values({ authorId: self, text: content, mediaIds: media.map(m => m.id), kind }).returning();
+        const visibility = postVisibility();
+        const [row] = await db.insert(posts).values({ authorId: self, text: content, mediaIds: media.map(m => m.id), kind, ...visibility }).returning();
         resultId = row!.id;
       }
       break;
@@ -110,18 +127,18 @@ export async function networkAction(req: Request, res: Response) {
       break;
     }
     case "post.like": {
-      const post = await visiblePost(id(), self);
+      const post = await visiblePost(id(), self, who.founder);
       if (accepted(input.accepted)) await db.insert(likes).values({ postId: post.id, memberId: self }).onConflictDoNothing();
       else await db.delete(likes).where(and(eq(likes.postId, post.id), eq(likes.memberId, self)));
       break;
     }
     case "post.view": {
-      const post = await visiblePost(id(), self);
+      const post = await visiblePost(id(), self, who.founder);
       if (post.authorId !== self) await db.insert(views).values({ postId: post.id, memberId: self }).onConflictDoNothing();
       break;
     }
     case "comment.create": {
-      const post = await visiblePost(id(), self);
+      const post = await visiblePost(id(), self, who.founder);
       const [row] = await db.insert(comments).values({ postId: post.id, authorId: self, text: text(input.text, 2000) }).returning();
       resultId = row!.id;
       break;
@@ -227,7 +244,7 @@ export async function networkAction(req: Request, res: Response) {
       const postId = input.id ? number(input.id) : null;
       const memberId = input.targetId ? number(input.targetId) : null;
       if (!postId && !memberId) throw new NetworkError(400, "Choose a publication or member to report.");
-      if (postId) await visiblePost(postId, self);
+      if (postId) await visiblePost(postId, self, who.founder);
       if (memberId) {
         // Reporting is not communication. Retain target eligibility without
         // applying the block filter used for discovery and conversations.

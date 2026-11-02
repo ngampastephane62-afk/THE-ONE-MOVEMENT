@@ -1,4 +1,5 @@
-import { pgTable, serial, text, timestamp, integer, boolean, uniqueIndex, index, uuid } from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
+import { pgTable, serial, text, timestamp, integer, boolean, uniqueIndex, index, uuid, check } from "drizzle-orm/pg-core";
 import { ecosystemMembersTable as members } from "./ecosystemMembers";
 
 export const networkProfiles = pgTable("network_profiles", {
@@ -29,10 +30,21 @@ export const networkPosts = pgTable("network_posts", {
   text: text("text").notNull().default(""),
   kind: text("kind").notNull().default("post"),
   mediaIds: text("media_ids").array().notNull().default([]),
+  visibility: text("visibility").$type<"community" | "followers" | "sector" | "draft">().notNull().default("community"),
+  visibilitySector: text("visibility_sector"),
   hidden: boolean("hidden").notNull().default(false),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
-}, t => [index("network_posts_feed_idx").on(t.id), index("network_posts_author_idx").on(t.authorId)]);
+}, t => [
+  index("network_posts_feed_idx").on(t.id),
+  index("network_posts_author_idx").on(t.authorId),
+  index("network_posts_visibility_feed_idx").on(t.visibility, t.visibilitySector, t.id),
+  check("network_posts_visibility_check", sql`${t.visibility} IN ('community', 'followers', 'sector', 'draft')`),
+  check("network_posts_visibility_sector_check", sql`(
+    (${t.visibility} = 'sector' AND ${t.visibilitySector} IS NOT NULL AND ${t.visibilitySector} IN ('fashion', 'music', 'dance', 'film', 'art', 'business', 'investment', 'tourism', 'diplomacy', 'innovation', 'technology', 'ngos', 'media', 'education', 'real-estate', 'health-care', 'humanitarian-action'))
+    OR (${t.visibility} <> 'sector' AND ${t.visibilitySector} IS NULL)
+  )`),
+]);
 export const networkLikes = pgTable("network_likes", {
   id: serial("id").primaryKey(),
   postId: integer("post_id").notNull().references(() => networkPosts.id, { onDelete: "cascade" }),

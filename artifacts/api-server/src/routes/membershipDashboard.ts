@@ -23,7 +23,7 @@ router.get("/founder/membership-dashboard", networkAuth, async (req, res) => {
     const filtered = snapshot.accounts.filter(a =>
       (!q || `${a.name} ${a.email}`.toLowerCase().includes(q)) &&
       (status === "all" || (status === "active"
-        ? a.profileStatus === "complete" && a.networkEnabled && !a.suspended : a.profileStatus === status)));
+        ? a.networkEnabled && !a.suspended : a.profileStatus === status)));
     const pages = Math.max(1, Math.ceil(filtered.length / 25));
     const currentPage = Math.min(page, pages);
     const config = reminderConfiguration();

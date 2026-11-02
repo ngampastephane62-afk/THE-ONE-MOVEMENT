@@ -108,8 +108,12 @@ export default function MediaEditor({ entry, onDone, onDirty, onBusy }: {
           <input type="number" inputMode="numeric" min={0} max={100000} step={1} className={`${field} mt-1`} value={form.priority} onChange={(e) => set('priority', e.target.value)} data-testid="input-media-priority" />
           <span className="mt-1 block font-normal text-ink-700">Lower numbers appear first (0 is top). Equal numbers sort newest date first.</span>
         </label>
-        <label className="text-xs font-semibold text-ink-800 sm:col-span-2">External publication link
+        <label className="text-xs font-semibold text-ink-800 sm:col-span-2">Publication / source link
           <input type="url" className={`${field} mt-1`} maxLength={2000} value={form.externalUrl} onChange={(e) => set('externalUrl', e.target.value)} placeholder="https://" data-testid="input-media-url" />
+        </label>
+        <label className="text-xs font-semibold text-ink-800 sm:col-span-2">Direct Instagram link
+          <input type="url" className={`${field} mt-1`} maxLength={2000} value={form.instagramUrl} onChange={(e) => set('instagramUrl', e.target.value)} placeholder="https://www.instagram.com/p/…" data-testid="input-media-instagram-url" />
+          <span className="mt-1 block font-normal text-ink-700">Optional. Use the exact public post or reel link; it appears separately from the publication source.</span>
         </label>
         <label className="text-xs font-semibold text-ink-800 sm:col-span-2">YouTube or Vimeo video (optional)
           <input className={`${field} mt-1`} maxLength={300} value={form.embedInput} onChange={(e) => set('embedInput', e.target.value)} placeholder="https://www.youtube.com/watch?v=… or https://vimeo.com/…" data-testid="input-media-embed" />
@@ -120,7 +124,7 @@ export default function MediaEditor({ entry, onDone, onDirty, onBusy }: {
       </fieldset>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <ImageSlot name="Cover" u={cover} value={form.coverUploadId} original={entry?.coverUploadId ?? null} originalUrl={entry?.coverUrl ?? null} onChange={(id) => set('coverUploadId', id)} disabled={saving} />
+        <ImageSlot name="Cover" u={cover} value={form.coverUploadId} original={entry?.coverUploadId ?? null} originalUrl={entry?.coverUrl ?? null} onChange={(id) => set('coverUploadId', id)} disabled={saving} contain={form.category === 'magazine'} />
         <ImageSlot name="Logo" u={logo} value={form.logoUploadId} original={entry?.logoUploadId ?? null} originalUrl={entry?.logoUrl ?? null} onChange={(id) => set('logoUploadId', id)} disabled={saving} />
       </div>
 

@@ -181,8 +181,8 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
 
   return (
     <form onSubmit={submit} noValidate className="flex flex-col gap-8" data-testid="form-member-profile">
-      {onboarding ? <p className="text-sm leading-relaxed text-ink-700" data-testid="text-profile-completion-guidance">A few details help members recognise you: account type, display name, profession, country, a primary sector and 1 to 3 active sectors (organizations also add their type and a private contact person). Photo, biography, social links, public directory and payment are optional. Saving does not activate the network or make your profile public.</p> :
-      <p className="text-sm leading-relaxed text-ink-700" data-testid="text-profile-completion-guidance">Build your profile at your own pace: confirm your display name, add a photo from Settings, describe your profession, select sectors and write a short biography. These steps are optional for exploring TOMI; you can come back later. Saving never activates the network; visibility changes only if you choose those settings.</p>}
+      {onboarding ? <p className="text-sm leading-relaxed text-ink-700" data-testid="text-profile-completion-guidance">A few details help members recognise you: account type, display name, profession, country, a primary sector and 1 to 3 active sectors (organizations also add their type and a private contact person). Photo, biography, social links and public directory remain optional. Saving does not list you in People or in the public directory.</p> :
+      <p className="text-sm leading-relaxed text-ink-700" data-testid="text-profile-completion-guidance">Build your profile at your own pace: confirm your display name, add a photo from Settings, describe your profession, select sectors and write a short biography. These details are optional for participating; you can come back later. Saving never changes your People or public-directory visibility.</p>}
       {appearance && <AppearanceControls v={v} set={set} />}
       <fieldset className="grid gap-5 sm:grid-cols-2">
         <legend className="mb-4 text-eyebrow text-gold-700">THE ESSENTIALS</legend>

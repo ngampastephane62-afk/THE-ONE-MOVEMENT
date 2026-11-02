@@ -1,12 +1,10 @@
 import { useRef, useState } from 'react';
-import { useProfileReadiness, ReadinessLock } from '@/components/network/readiness';
 import { Check, Copy, Share2, Unlock } from 'lucide-react';
 import type { NetworkGrowth } from '@workspace/api-client-react';
 import { inviteUrl } from '@/lib/network-invitations';
 import { btn, btnGhost, card } from './kit';
 
 export default function InvitationProgress({ growth, founder, compact }: { growth: NetworkGrowth | null; founder?: boolean; compact?: boolean }) {
-  const ready = useProfileReadiness();
   const [copied, setCopied] = useState<'ok' | 'fail' | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -14,10 +12,7 @@ export default function InvitationProgress({ growth, founder, compact }: { growt
     return <div className={`${card} p-4 text-sm text-ink-700`} data-testid="growth-founder"><Unlock className="mr-1 inline h-4 w-4 text-gold-700" />Founder accounts can publish without referrals.</div>;
   }
   if (!growth) {
-    return <div className={`${card} p-4 text-sm text-ink-700`} data-testid="growth-unavailable">Your invitation link appears once your member profile is complete.</div>;
-  }
-  if (ready.locked) {
-    return <div className={`${card} p-4`} data-testid="growth-locked"><p className="mb-2 text-sm text-ink-700">Your invitation link is kept until your essential profile is complete.</p><ReadinessLock action="share or send invitations" /></div>;
+    return <div className={`${card} p-4 text-sm text-ink-700`} data-testid="growth-unavailable">Your member invitation link is not available right now.</div>;
   }
   const link = inviteUrl(growth.inviteCode);
 
@@ -46,12 +41,12 @@ export default function InvitationProgress({ growth, founder, compact }: { growt
           <span className="font-display text-4xl text-gold-400" data-testid="text-growth-count">{growth.qualifiedInvites}</span>
           <span className="text-xs text-ivory-300">verified referral followers · invitations are optional</span>
         </div>
-        <p className="mt-2 text-xs text-ivory-200" data-testid="text-growth-status">{growth.canPost ? 'Ordinary posting is open for you. No invitations are required.' : 'Activate your verified membership to publish ordinary posts. No invitations are required.'}</p>
+        <p className="mt-2 text-xs text-ivory-200" data-testid="text-growth-status">Posting is open to verified members. Sharing this invitation is optional.</p>
       </div>
       <div className="flex flex-col gap-3 p-5">
         {!compact && (
           <div className="flex flex-col gap-1.5 text-sm leading-relaxed text-ink-700">
-            <p>During community trials, updates, Business posts and reels are free for all verified members who activate the network. No invitations or subscription are required to publish. Paid services and official certifications remain separate.</p>
+            <p>During community trials, updates, Business posts and reels are free for all verified members. No profile completion, invitations or subscription are required to publish. Paid services and official certifications remain separate.</p>
             <p>An invitation counts when someone opens your link, creates a new verified account (less than 24 hours old) and accepts your invitation, which makes them follow you. Each account can be credited once.</p>
             <p>The count reflects invited members who currently follow you and are active. Only real, currently active followers count; the number is never estimated. Packages, events, humanitarian films and donations are separate.</p>
           </div>

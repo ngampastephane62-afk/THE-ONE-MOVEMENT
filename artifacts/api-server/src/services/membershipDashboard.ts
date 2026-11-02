@@ -45,7 +45,7 @@ export function accountTotals(accounts: MembershipAccount[]) {
     noProfile: accounts.filter(a => a.profileStatus === "no_profile").length,
     incomplete: accounts.filter(a => a.profileStatus === "incomplete").length,
     complete: accounts.filter(a => a.profileStatus === "complete").length,
-    active: accounts.filter(a => a.profileStatus === "complete" && a.networkEnabled && !a.suspended).length,
+    active: accounts.filter(a => a.networkEnabled && !a.suspended).length,
   };
 }
 

@@ -13,10 +13,12 @@ import type { NetworkMessage } from './networkMessage';
 import type { NetworkPackage } from './networkPackage';
 import type { NetworkPost } from './networkPost';
 import type { NetworkReport } from './networkReport';
+import type { NetworkStateMyActiveSectorsItem } from './networkStateMyActiveSectorsItem';
 import type { NetworkThread } from './networkThread';
 
 export interface NetworkState {
   growth: NetworkGrowth | null;
+  myActiveSectors: NetworkStateMyActiveSectorsItem[];
   me: NetworkMember | null;
   founder: NetworkMember | null;
   members: NetworkMember[];

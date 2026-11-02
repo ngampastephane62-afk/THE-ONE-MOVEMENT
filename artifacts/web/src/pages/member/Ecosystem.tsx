@@ -11,7 +11,7 @@ type Need = 'free' | 'paid' | 'business';
 type Svc = { id: string; href: string; need: Need; icon: typeof Users; en: [string, string]; fr: [string, string] };
 
 const SERVICES: Svc[] = [
-  { id: 'feed', href: '/member', need: 'free', icon: Newspaper, en: ['Member feed', 'Read the network. Activate your membership to publish ordinary posts, with no invitations required.'], fr: ['Fil des membres', 'Lisez le réseau. Activez votre participation pour publier normalement, sans invitation obligatoire.'] },
+  { id: 'feed', href: '/member', need: 'free', icon: Newspaper, en: ['Member feed', 'Read and post in the network after email verification. No profile completion, directory listing or invitations are required.'], fr: ['Fil des membres', 'Lisez et publiez dans le réseau après vérification de votre e-mail. Aucun profil complet, référencement ni invitation ne sont requis.'] },
   { id: 'people', href: '/member/people', need: 'free', icon: Users, en: ['People', 'Find and follow members across the network.'], fr: ['Membres', 'Trouvez et suivez les membres du réseau.'] },
   { id: 'messages', href: '/member/messages', need: 'free', icon: MessageSquare, en: ['Messages', 'Private conversations with members.'], fr: ['Messages', 'Conversations privées avec les membres.'] },
   { id: 'sectors', href: '/ecosystem', need: 'free', icon: Compass, en: ['Sector discovery', 'Public map of the TOMI ecosystem sectors.'], fr: ['Découverte des secteurs', 'Carte publique des secteurs de l’écosystème TOMI.'] },
@@ -86,7 +86,7 @@ export default function Ecosystem() {
       </div>
 
       <p translate="no" className="rounded-xl border border-sand-300 p-3 text-xs leading-relaxed text-ink-700" data-testid="text-ecosystem-rules">
-        {t('During community trials, updates, Business posts and reels require no invitations or subscription. Verify your email and activate the network to publish. Specialized paid services retain their existing access controls. Payment does not replace licence approval or identity certification.', 'Pendant les essais communautaires, les publications, les publications Business et les Reels ne nécessitent ni invitation ni abonnement. Vérifiez votre adresse e-mail et activez le réseau pour publier. Les services payants spécialisés conservent leurs contrôles d’accès. Le paiement ne remplace ni l’approbation de licence ni la certification d’identité.')}
+        {t('During community trials, verified members can publish updates, Business posts and reels without completing a profile, joining the directory, inviting anyone or subscribing. Specialized paid services retain their existing access controls. Payment does not replace licence approval or identity certification.', 'Pendant les essais communautaires, les membres vérifiés peuvent publier des actualités, des publications Business et des Reels sans terminer leur profil, rejoindre l’annuaire, inviter qui que ce soit ni s’abonner. Les services payants spécialisés conservent leurs contrôles d’accès. Le paiement ne remplace ni l’approbation de licence ni la certification d’identité.')}
       </p>
     </div>
   );

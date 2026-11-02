@@ -6,9 +6,9 @@ import { checkMediaImage, MEDIA_IMG_TYPES } from '@/lib/media-center';
 type U = ReturnType<typeof useUploads>;
 
 /** One image slot (cover or logo). Retained upload stays until removed or replaced. */
-export default function ImageSlot({ name, u, value, original, originalUrl, onChange, disabled }: {
+export default function ImageSlot({ name, u, value, original, originalUrl, onChange, disabled, contain = false }: {
   name: string; u: U; value: string | null; original: string | null; originalUrl: string | null;
-  onChange: (id: string | null) => void; disabled?: boolean;
+  onChange: (id: string | null) => void; disabled?: boolean; contain?: boolean;
 }) {
   const [err, setErr] = useState('');
   const cb = useRef(onChange); cb.current = onChange;
@@ -35,7 +35,7 @@ export default function ImageSlot({ name, u, value, original, originalUrl, onCha
     <div className="flex flex-col gap-2 rounded-2xl border border-sand-200 bg-ivory-100 p-3" data-testid={`slot-${slug}`}>
       <p className="text-xs font-semibold text-ink-900">{name}</p>
       <div className={`grid place-items-center overflow-hidden rounded-xl border border-dashed border-sand-300 bg-ivory-50 ${slug === 'logo' ? 'h-24' : 'aspect-[16/10]'}`}>
-        {preview ? <img src={preview} alt={`${name} preview`} className={slug === 'logo' ? 'max-h-20 max-w-[80%] object-contain' : 'h-full w-full object-cover'} />
+        {preview ? <img src={preview} alt={`${name} preview`} className={slug === 'logo' ? 'max-h-20 max-w-[80%] object-contain' : contain ? 'h-full w-full object-contain' : 'h-full w-full object-cover'} />
           : value ? <span className="px-3 text-center text-xs text-ink-700">Image retained. Preview available after reload.</span>
           : <span className="flex flex-col items-center gap-1 text-xs text-sand-400"><ImageOff className="h-5 w-5" />No {slug}</span>}
       </div>

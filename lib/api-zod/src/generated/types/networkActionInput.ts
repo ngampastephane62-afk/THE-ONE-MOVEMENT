@@ -6,6 +6,8 @@
  * OpenAPI spec version: 0.1.0
  */
 import type { NetworkActionInputAction } from './networkActionInputAction';
+import type { NetworkActionInputVisibility } from './networkActionInputVisibility';
+import type { NetworkActionInputVisibilitySector } from './networkActionInputVisibilitySector';
 
 export interface NetworkActionInput {
   action: NetworkActionInputAction;
@@ -16,6 +18,9 @@ export interface NetworkActionInput {
   kind?: string;
   /** @maxItems 6 */
   mediaIds?: string[];
+  visibility?: NetworkActionInputVisibility;
+  /** @nullable */
+  visibilitySector?: NetworkActionInputVisibilitySector;
   role?: string;
   program?: string;
   packageSlug?: string;

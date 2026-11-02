@@ -75,11 +75,11 @@ function presentationFields(value: NetworkPresentation): NetworkPresentation {
 }
 
 export function projectNetworkMember(row: MemberRow, value: NetworkPresentation): NetworkMember {
-  return { ...displayFields(row), ...presentationFields(value) };
+  return { ...displayFields(row), joinedAt: row.createdAt, ...presentationFields(value) };
 }
 
 // A distinct public entry point prevents future network-only additions from
 // silently entering shareable public profiles. No owner projection is reused.
 export function projectPublicNetworkProfile(row: MemberRow, value: NetworkPresentation): NetworkMember {
-  return { ...projectPublicProfile(row), ...presentationFields(value) };
+  return { ...projectPublicProfile(row), joinedAt: row.createdAt, ...presentationFields(value) };
 }

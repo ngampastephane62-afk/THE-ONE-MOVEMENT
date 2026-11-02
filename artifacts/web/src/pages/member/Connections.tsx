@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useProfileReadiness } from '@/components/network/readiness';
 import { Link, useParams } from 'wouter';
 import { ArrowLeft } from 'lucide-react';
 import { useGetNetworkState, getGetNetworkStateQueryKey, type GetNetworkStateConnections } from '@workspace/api-client-react';
@@ -14,7 +13,6 @@ export default function Connections() {
   const kind: GetNetworkStateConnections = conn === 'following' ? 'following' : 'followers';
   const { me } = useMe();
   const { run, pending } = useAct();
-  const ready = useProfileReadiness();
   const [busy, setBusy] = useState<number | null>(null);
   const [err, setErr] = useState('');
   const params = { person: pid, connections: kind };
@@ -29,7 +27,6 @@ export default function Connections() {
   const p = q.data?.person;
   const list = (q.data?.members ?? []).filter((m) => m.id !== p?.id);
   const toggle = (mid: number, followed: boolean) => {
-    if (!followed && ready.locked) { setErr('Complete your essential profile before following members.'); return; }
     setErr(''); setBusy(mid);
     run({ action: 'follow', targetId: mid, accepted: !followed }).catch(() => setErr('That action failed. Try again.')).finally(() => setBusy(null));
   };

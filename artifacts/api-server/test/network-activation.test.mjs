@@ -66,6 +66,7 @@ export const clerkClient = { users: { getUser: async id => {
 } } };
 `;
 const failClosed = `
+import { state } from "@workspace/db";
 const forbidden = () => { throw Error("Unrelated service must not run in activation tests"); };
 export async function ownedMedia(memberId, ids = []) {
   return ids.map(id => {
@@ -74,10 +75,15 @@ export async function ownedMedia(memberId, ids = []) {
   });
 }
 export const requestUpload = forbidden, objectFile = forbidden,
-  completeUpload = forbidden, activeBadge = forbidden, visibleMember = forbidden,
+  completeUpload = forbidden, activeBadge = forbidden,
   visiblePost = forbidden, ownThread = forbidden, isBlocked = forbidden,
   qualifiedInviteCount = forbidden, requireMonthly = forbidden, checkout = forbidden,
   paymentStatus = forbidden, customPackages = forbidden;
+export async function visibleMember(memberId) {
+  const profile = state.profiles.find(row => row.memberId === memberId);
+  if (!profile?.enabled || profile.suspended) throw Error("Member is not listed.");
+  return true;
+}
 export const ROLES = new Set(), PROGRAMS = new Set(), DOCUMENTS = [], PACKAGE_DEFINITIONS = [];
 export async function networkState(context) { return { me: context.member }; }
 `;
@@ -151,10 +157,13 @@ test("explicit network activation (isolated HTTP regression suite)", async t => 
     assert.equal(profile("new").enabled, false);
     assert.equal(state.members.length, 1);
   });
-  await t.test("participation is rejected server-side before activation", async () => {
-    const response = await request("new", { action: "follow", targetId: 2, accepted: true });
-    assert.equal(response.status, 409);
-    assert.match((await response.json()).error, /Join the member network/);
+  await t.test("verified members can participate before choosing People listing", async () => {
+    identity("target");
+    await request("target");
+    await request("target", join);
+    const response = await request("new", { action: "follow", targetId: profile("target").memberId, accepted: true });
+    assert.equal(response.status, 200, await response.clone().text());
+    assert.equal(profile("new").enabled, false);
   });
   await t.test("missing, malformed consent or unrecognised identity fields cannot activate", async () => {
     for (const body of [
@@ -169,11 +178,11 @@ test("explicit network activation (isolated HTTP regression suite)", async t => 
     ]) assert.equal((await request("new", join, headers)).status, 403);
     assert.equal(profile("new").enabled, false);
   });
-  await t.test("verified accounts must finish essential setup before activation", async () => {
+  await t.test("directory listing is optional and separate from profile completion", async () => {
     const response = await request("new", join);
-    assert.equal(response.status, 409);
-    assert.match((await response.json()).error, /Complete your profile/);
-    assert.equal(profile("new").enabled, false);
+    assert.equal(response.status, 200);
+    assert.equal(profile("new").enabled, true);
+    assert.equal(state.members.find(m => m.clerkId === "new").isPublic, false);
     complete("new");
   });
   await t.test("activation affects only the authenticated member, not a supplied target", async () => {
@@ -206,17 +215,17 @@ test("explicit network activation (isolated HTTP regression suite)", async t => 
     }
     // Referral and billing mocks throw if called; success proves neither ran.
   });
-  await t.test("posting preserves authentication, activation, origin, ownership and reel validation", async () => {
+  await t.test("posting preserves authentication, origin, ownership and reel validation", async () => {
     const before = state.posts.length;
     const post = { action: "post.create", kind: "business", text: "Must not publish" };
     assert.equal((await request(null, post)).status, 401);
     assert.equal((await request("unverified", post)).status, 403);
-    assert.equal((await request("other", post)).status, 409);
+    assert.equal((await request("other", post)).status, 200);
     assert.equal((await request("new", post, { origin: "https://other.fixture.invalid" })).status, 403);
     assert.equal((await request("new", { ...post, kind: "reel" })).status, 400);
     assert.equal((await request("new", { ...post, kind: "official" })).status, 400);
     assert.equal((await request("new", { ...post, text: "" })).status, 400);
-    assert.equal(state.posts.length, before);
+    assert.equal(state.posts.length, before + 1);
     identity("writer");
     await request("writer");
     complete("writer");
@@ -225,7 +234,7 @@ test("explicit network activation (isolated HTTP regression suite)", async t => 
     assert.equal(state.posts[0].text, "Edited fixture");
     profile("writer").suspended = true;
     assert.equal((await request("writer", post)).status, 403);
-    assert.equal(state.posts.length, before);
+    assert.equal(state.posts.length, before + 1);
   });
   await t.test("activation preserves both public visibility choices and public media consent", async () => {
     complete("other");
@@ -239,19 +248,12 @@ test("explicit network activation (isolated HTTP regression suite)", async t => 
       assert.deepEqual(member, before);
     }
   });
-  await t.test("already activated incomplete profiles cannot publish, follow or claim invitations, but may leave", async () => {
+  await t.test("incomplete profiles can participate and independently leave People listing", async () => {
     const member = state.members.find(m => m.clerkId === "new");
     const before = member.mainSector;
     member.mainSector = null;
-    for (const body of [
-      { action: "post.create", kind: "post", text: "Must not publish" },
-      { action: "follow", targetId: 2, accepted: true },
-      { action: "referral.claim", accepted: true, kind: "11111111-1111-4111-8111-111111111111" },
-    ]) {
-      const response = await request("new", body);
-      assert.equal(response.status, 409);
-      assert.match((await response.json()).error, /Complete your profile/);
-    }
+    assert.equal((await request("new", { action: "post.create", kind: "post", text: "Incomplete profile trial" })).status, 200);
+    assert.equal((await request("new", { action: "follow", targetId: profile("target").memberId, accepted: true })).status, 200);
     assert.equal((await request("new", { action: "join", accepted: false })).status, 200);
     member.mainSector = before;
     assert.equal((await request("new", join)).status, 200);

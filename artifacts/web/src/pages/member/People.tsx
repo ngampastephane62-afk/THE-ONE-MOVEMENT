@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { useProfileReadiness } from '@/components/network/readiness';
 import { Link, useSearch } from 'wouter';
 import { Search } from 'lucide-react';
 import { useGetNetworkState, getGetNetworkStateQueryKey } from '@workspace/api-client-react';
@@ -12,7 +11,6 @@ import MemberIdentityStrip from '@/components/network/MemberIdentityStrip';
 export default function People() {
   const { me } = useMe();
   const { run, pending } = useAct();
-  const ready = useProfileReadiness();
   const search = useSearch();
   const initialQ = (new URLSearchParams(search).get('q') ?? '').trim().slice(0, 100);
   const [input, setInput] = useState(initialQ);
@@ -20,11 +18,29 @@ export default function People() {
   useEffect(() => { setInput(initialQ); setQ(initialQ); }, [initialQ]);
   const [sector, setSector] = useState('');
   const [onlyFollowing, setOnlyFollowing] = useState(false);
+  const [country, setCountry] = useState('');
+  const [profession, setProfession] = useState('');
+  const [recentOnly, setRecentOnly] = useState(false);
+  const [newMemberUpdates, setNewMemberUpdates] = useState(false);
+  useEffect(() => {
+    try { setNewMemberUpdates(localStorage.getItem(`tomi-new-member-updates-${me.id}`) === '1'); }
+    catch { setNewMemberUpdates(false); }
+  }, [me.id]);
   const t = useRef<number | undefined>(undefined);
   useEffect(() => { window.clearTimeout(t.current); t.current = window.setTimeout(() => setQ(input.trim()), 350); return () => window.clearTimeout(t.current); }, [input]);
   const params = { ...(q ? { q } : {}), ...(sector ? { sector } : {}) };
   const s = useGetNetworkState(params, { query: { queryKey: getGetNetworkStateQueryKey(params) } });
-  const list = (s.data?.members ?? []).filter((m) => m.id !== me.id && (!onlyFollowing || m.followed));
+  const members = s.data?.members ?? [];
+  const countries = [...new Set(members.map((m) => m.country?.trim()).filter((x): x is string => !!x))].sort();
+  const professions = [...new Set(members.map((m) => m.profession?.trim()).filter((x): x is string => !!x))].sort();
+  const recentCutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
+  const recentMembers = members.filter((m) => m.id !== me.id && Date.parse(m.joinedAt) >= recentCutoff).slice(0, 5);
+  const list = members
+    .filter((m) => m.id !== me.id && (!onlyFollowing || m.followed))
+    .filter((m) => !country || m.country === country)
+    .filter((m) => !profession || m.profession === profession)
+    .filter((m) => !recentOnly || Date.parse(m.joinedAt) >= recentCutoff)
+    .sort((a, b) => Date.parse(b.joinedAt) - Date.parse(a.joinedAt));
 
   return (
     <div className="flex flex-col gap-4 px-3 pt-4 md:px-0 md:pt-0">
@@ -40,8 +56,37 @@ export default function People() {
         <button onClick={() => setSector('')} aria-pressed={!sector} className={`shrink-0 rounded-full border px-3 py-1.5 text-xs ${!sector ? 'border-lagoon-900 bg-lagoon-900 text-gold-400' : 'border-sand-300 text-ink-700'}`}>All sectors</button>
         {SECTORS.map((x) => <button key={x.slug} onClick={() => setSector(x.slug)} aria-pressed={sector === x.slug} className={`shrink-0 rounded-full border px-3 py-1.5 text-xs ${sector === x.slug ? 'border-lagoon-900 bg-lagoon-900 text-gold-400' : 'border-sand-300 text-ink-700'}`} data-testid={`filter-sector-${x.slug}`}>{x.name}</button>)}
       </div>
+      <div className="grid gap-2 sm:grid-cols-3">
+        <label className="text-xs font-semibold text-ink-700">Country
+          <select className={`${field} mt-1`} value={country} onChange={(e) => setCountry(e.target.value)} data-testid="filter-country">
+            <option value="">All countries</option>{countries.map((x) => <option key={x} value={x}>{x}</option>)}
+          </select>
+        </label>
+        <label className="text-xs font-semibold text-ink-700">Profession / category
+          <select className={`${field} mt-1`} value={profession} onChange={(e) => setProfession(e.target.value)} data-testid="filter-profession">
+            <option value="">All professions</option>{professions.map((x) => <option key={x} value={x}>{x}</option>)}
+          </select>
+        </label>
+        <label className="flex items-end gap-2 rounded-xl border border-sand-200 bg-ivory-50 px-3 py-2 text-xs text-ink-700">
+          <input type="checkbox" checked={recentOnly} onChange={(e) => setRecentOnly(e.target.checked)} data-testid="filter-recent" />
+          Joined in the last 30 days
+        </label>
+      </div>
+      <section className="rounded-2xl border border-sand-200 bg-ivory-50 p-3" aria-label="New member updates">
+        <label className="flex items-center gap-2 text-sm font-semibold text-ink-800">
+          <input type="checkbox" checked={newMemberUpdates} onChange={(e) => {
+            const enabled = e.target.checked;
+            setNewMemberUpdates(enabled);
+            try { localStorage.setItem(`tomi-new-member-updates-${me.id}`, enabled ? '1' : '0'); } catch { /* preference remains local when storage is unavailable */ }
+          }} data-testid="toggle-new-member-updates" />
+          Show a quiet new-member update here
+        </label>
+        {newMemberUpdates && <div className="mt-2 text-xs text-ink-700" data-testid="new-member-updates">
+          {recentMembers.length ? `Recently joined: ${recentMembers.map((m) => m.fullName).join(' · ')}` : 'No new listed members in the last 30 days.'}
+        </div>}
+      </section>
       {s.isLoading ? <Skeleton /> : s.isError ? <ErrorBox onRetry={() => s.refetch()} /> : list.length === 0 ? (
-        <Empty title={q || sector || onlyFollowing ? 'No match' : 'The network is just opening'} body={q || sector || onlyFollowing ? 'Try another name, sector or clear your filters.' : 'As verified members join, they will appear here. Invite a peer whose work deserves to be seen.'} />
+        <Empty title={q || sector || onlyFollowing || country || profession || recentOnly ? 'No match' : 'The network is just opening'} body={q || sector || onlyFollowing || country || profession || recentOnly ? 'Try another name, sector or clear your filters.' : 'As verified members join, they will appear here. Invite a peer whose work deserves to be seen.'} />
       ) : (
         <ul className="grid gap-3 sm:grid-cols-2">
           {list.map((m) => (
@@ -54,7 +99,7 @@ export default function People() {
                 <span>{m.followers} followers</span>
                 <div className="flex gap-2">
                   <Link href={`/member/profile/${m.id}`} className="rounded-full px-3 py-1.5 font-semibold text-ink-700 hover:bg-ivory-200">View & connect</Link>
-                  {!m.blocked && <button disabled={pending || (!m.followed && ready.locked)} title={!m.followed && ready.locked ? 'Complete your essential profile to follow' : undefined} onClick={() => { if (!m.followed && ready.locked) return; run({ action: 'follow', targetId: m.id, accepted: !m.followed }).catch(() => undefined); }} className={`rounded-full px-3 py-1.5 font-semibold ${m.followed ? 'border border-sand-300 text-ink-700' : 'bg-lagoon-900 text-ivory-50'}`} data-testid={`button-follow-${m.id}`}>{m.followed ? 'Following' : 'Follow'}</button>}
+                  {!m.blocked && <button disabled={pending} onClick={() => run({ action: 'follow', targetId: m.id, accepted: !m.followed }).catch(() => undefined)} className={`rounded-full px-3 py-1.5 font-semibold ${m.followed ? 'border border-sand-300 text-ink-700' : 'bg-lagoon-900 text-ivory-50'}`} data-testid={`button-follow-${m.id}`}>{m.followed ? 'Following' : 'Follow'}</button>}
                 </div>
               </div>
             </li>

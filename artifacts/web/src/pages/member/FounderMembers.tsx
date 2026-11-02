@@ -12,7 +12,7 @@ import { errStatus } from '@/components/network/kit';
 
 const STATUS_FILTERS: { v: GetMembershipDashboardStatus; label: string }[] = [
   { v: 'all', label: 'All accounts' }, { v: 'no_profile', label: 'No profile' }, { v: 'incomplete', label: 'Incomplete' },
-  { v: 'complete', label: 'Complete' }, { v: 'active', label: 'Active' },
+  { v: 'complete', label: 'Complete' }, { v: 'active', label: 'Listed in People' },
 ];
 const DAYS: GetMembershipDashboardDays[] = [7, 30, 90];
 const PROFILE_LABEL = { no_profile: 'No profile', incomplete: 'Incomplete', complete: 'Complete' } as const;
@@ -151,8 +151,8 @@ export default function FounderMembers() {
                 <Metric testid="accounts" label="All accounts" value={n(d.totals.accounts)} note="Accounts in the configured sign-in service." />
                 <Metric testid="no-profile" label="No profile" value={n(d.totals.noProfile)} note="Account exists, no member profile saved." />
                 <Metric testid="incomplete" label="Incomplete" value={n(d.totals.incomplete)} note="Profile saved, essentials missing." />
-                <Metric testid="complete" label="Complete" value={n(d.totals.complete)} note="All essentials saved, activated or not." />
-                <Metric testid="active" label="Active" value={n(d.totals.active)} note="Complete, voluntarily activated, not suspended." />
+                <Metric testid="complete" label="Complete" value={n(d.totals.complete)} note="All profile essentials saved; directory listing is separate." />
+                <Metric testid="active" label="Listed in People" value={n(d.totals.active)} note="Opted into the member directory and not suspended." />
               </dl>
             </section>
 
@@ -207,7 +207,7 @@ export default function FounderMembers() {
                         </div>
                         <div className="flex flex-wrap gap-1 text-[11px] font-semibold uppercase tracking-wider">
                           <span className={`rounded-full px-2 py-0.5 ${a.profileStatus === 'complete' ? 'bg-lagoon-900 text-gold-400' : 'border border-sand-300 text-ink-700'}`} data-testid={`status-profile-${a.clerkId}`}>{PROFILE_LABEL[a.profileStatus]}</span>
-                          {a.networkEnabled && <span className="rounded-full bg-gold-500/20 px-2 py-0.5 text-gold-700">Network on</span>}
+                          {a.networkEnabled && <span className="rounded-full bg-gold-500/20 px-2 py-0.5 text-gold-700">In People</span>}
                           {a.suspended && <span className="rounded-full bg-crimson-700 px-2 py-0.5 text-ivory-50">Suspended</span>}
                         </div>
                       </div>

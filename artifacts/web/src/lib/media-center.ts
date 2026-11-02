@@ -55,6 +55,13 @@ export const safeEmbedSrc = (e: MediaPublicationEmbed | null) => (e ? embedSrc(e
 export function safeHttpUrl(v: string): string | null {
   try { const u = new URL(v); return u.protocol === 'https:' || u.protocol === 'http:' ? u.href : null; } catch { return null; }
 }
+export function safeInstagramUrl(v: string): string | null {
+  try {
+    const u = new URL(v);
+    return u.protocol === 'https:' && ['instagram.com', 'www.instagram.com'].includes(u.hostname.toLowerCase()) && !u.username && !u.password
+      ? u.href : null;
+  } catch { return null; }
+}
 
 export const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 export function validDate(v: string) {
@@ -69,14 +76,14 @@ export function formatPubDate(v: string) {
 
 export interface MediaForm {
   title: string; publisher: string; description: string; category: MediaPublicationCategory;
-  publicationDate: string; externalUrl: string; embedInput: string; priority: string;
+  publicationDate: string; externalUrl: string; instagramUrl: string; embedInput: string; priority: string;
   coverUploadId: string | null; logoUploadId: string | null; rightsConfirmed: boolean;
 }
 export function emptyForm(): MediaForm {
-  return { title: '', publisher: '', description: '', category: 'international-press', publicationDate: '', externalUrl: '', embedInput: '', priority: '100', coverUploadId: null, logoUploadId: null, rightsConfirmed: false };
+  return { title: '', publisher: '', description: '', category: 'international-press', publicationDate: '', externalUrl: '', instagramUrl: '', embedInput: '', priority: '100', coverUploadId: null, logoUploadId: null, rightsConfirmed: false };
 }
 export function formFrom(p: MediaPublication): MediaForm {
-  return { title: p.title, publisher: p.publisher, description: p.description, category: p.category, publicationDate: p.publicationDate, externalUrl: p.externalUrl, embedInput: embedToInput(p.embed), priority: String(p.priority), coverUploadId: p.coverUploadId, logoUploadId: p.logoUploadId, rightsConfirmed: p.rightsConfirmed };
+  return { title: p.title, publisher: p.publisher, description: p.description, category: p.category, publicationDate: p.publicationDate, externalUrl: p.externalUrl, instagramUrl: p.instagramUrl ?? '', embedInput: embedToInput(p.embed), priority: String(p.priority), coverUploadId: p.coverUploadId, logoUploadId: p.logoUploadId, rightsConfirmed: p.rightsConfirmed };
 }
 
 export function formIssues(f: MediaForm, status: MediaPublicationSave['status']): string[] {
@@ -86,6 +93,7 @@ export function formIssues(f: MediaForm, status: MediaPublicationSave['status'])
   if (f.publisher.length > 140) out.push('Publisher must be 140 characters or fewer.');
   if (f.description.length > 6000) out.push('Description must be 6,000 characters or fewer.');
   if (f.externalUrl.trim() && !safeHttpUrl(f.externalUrl.trim())) out.push('Publication link must start with http:// or https://.');
+  if (f.instagramUrl.trim() && !safeInstagramUrl(f.instagramUrl.trim())) out.push('Instagram link must be an https:// link on instagram.com.');
   if (f.embedInput.trim() && !parseEmbed(f.embedInput)) out.push('Video must be a valid YouTube or Vimeo link.');
   const pr = Number(f.priority);
   if (!Number.isInteger(pr) || pr < 0 || pr > 100000) out.push('Order must be a whole number from 0 to 100000.');
@@ -102,7 +110,7 @@ export function formIssues(f: MediaForm, status: MediaPublicationSave['status'])
 export function toSave(f: MediaForm, status: MediaPublicationSave['status'], expectedUpdatedAt: string | null): MediaPublicationSave {
   return {
     title: f.title.trim(), publisher: f.publisher.trim(), description: f.description.trim(), category: f.category,
-    publicationDate: f.publicationDate, externalUrl: f.externalUrl.trim(), embed: parseEmbed(f.embedInput),
+    publicationDate: f.publicationDate, externalUrl: f.externalUrl.trim(), instagramUrl: f.instagramUrl.trim(), embed: parseEmbed(f.embedInput),
     priority: Number(f.priority), status, coverUploadId: f.coverUploadId, logoUploadId: f.logoUploadId,
     rightsConfirmed: f.rightsConfirmed, expectedUpdatedAt,
   };

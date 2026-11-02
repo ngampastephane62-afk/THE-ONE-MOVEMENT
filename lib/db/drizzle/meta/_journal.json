@@ -134,6 +134,13 @@
       "when": 1792967218329,
       "tag": "0018_aspiring_captain_stacy",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1793653052981,
+      "tag": "0019_fat_joshua_kane",
+      "breakpoints": true
     }
   ]
 }
