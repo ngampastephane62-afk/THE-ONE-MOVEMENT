@@ -10,15 +10,15 @@ import express from "express";
 // Unrelated services fail closed: no storage, payments, migrations or startup.
 const require = createRequire(import.meta.url);
 const fixture = `
-export const state = { members: [], profiles: [], posts: [], identities: new Map() };
+export const state = { members: [], profiles: [], posts: [], follows: [], identities: new Map() };
 export const ecosystemMembersTable = { table: "members", clerkId: "clerkId", id: "id" };
 export const networkProfiles = { table: "profiles", memberId: "memberId" };
 export const networkUploads = {}, networkPosts = { table: "posts", id: "id", authorId: "authorId" }, networkComments = {},
-  networkLikes = {}, networkViews = {}, networkFollows = {}, networkBlocks = {},
+  networkLikes = {}, networkViews = {}, networkFollows = { table: "follows" }, networkBlocks = {},
   networkThreads = {}, networkMessages = {}, networkCertifications = {},
   networkReports = {}, networkAudit = {};
 function rows(table) {
-  if (!["members", "profiles", "posts"].includes(table.table)) throw Error("Unexpected table");
+  if (!["members", "profiles", "posts", "follows"].includes(table.table)) throw Error("Unexpected table");
   return state[table.table];
 }
 export const db = {
@@ -29,6 +29,10 @@ export const db = {
   } }) }),
   insert: table => ({ values: values => {
     const execute = conflict => {
+      if (table.table === "follows") {
+        if (!state.follows.some(row => row.followerId === values.followerId && row.followingId === values.followingId)) state.follows.push({ ...values });
+        return [];
+      }
       const key = table.table === "members" ? "clerkId" : "memberId";
       const existing = rows(table).find(row => row[key] === values[key]);
       if (existing) { if (conflict) Object.assign(existing, conflict.set); return []; }
@@ -45,7 +49,7 @@ export const db = {
         state.posts.push(row);
         return [row];
       },
-      onConflictDoNothing: () => ({ returning: async () => execute() }),
+      onConflictDoNothing: () => ({ returning: async () => execute(), then: (resolve, reject) => Promise.resolve().then(() => execute()).then(resolve, reject) }),
       onConflictDoUpdate: async conflict => execute(conflict),
     };
   } }),
@@ -164,6 +168,8 @@ test("explicit network activation (isolated HTTP regression suite)", async t => 
     const response = await request("new", { action: "follow", targetId: profile("target").memberId, accepted: true });
     assert.equal(response.status, 200, await response.clone().text());
     assert.equal(profile("new").enabled, false);
+    assert.ok(state.follows.some(row => row.followerId === profile("new").memberId && row.followingId === profile("target").memberId));
+    assert.equal((await request("new", { action: "thread.start", targetId: profile("target").memberId })).status, 409);
   });
   await t.test("missing, malformed consent or unrecognised identity fields cannot activate", async () => {
     for (const body of [
@@ -290,5 +296,15 @@ test("explicit network activation (isolated HTTP regression suite)", async t => 
     assert.equal(profile("founder").enabled, true);
     assert.equal(profile("founder").suspended, true);
     assert.equal((await request("founder")).status, 200);
+  });
+  await t.test("ordinary sector posting is restricted while Founder can publish in all 17 sectors", async () => {
+    const body = { action: "post.create", kind: "post", text: "Sector fixture", visibility: "sector" };
+    assert.equal((await request("new", { ...body, visibilitySector: "technology" })).status, 403);
+    assert.equal((await request("new", { ...body, visibilitySector: "fashion" })).status, 200);
+    state.members.find(member => member.clerkId === "founder").activeSectors = [];
+    for (const visibilitySector of ["fashion", "music", "dance", "film", "art", "business", "investment", "tourism", "diplomacy", "innovation", "technology", "ngos", "media", "education", "real-estate", "health-care", "humanitarian-action"]) {
+      assert.equal((await request("founder", { ...body, visibilitySector })).status, 200, visibilitySector);
+    }
+    assert.deepEqual(state.members.find(member => member.clerkId === "founder").activeSectors, []);
   });
 });

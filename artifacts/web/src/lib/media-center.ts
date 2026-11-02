@@ -58,8 +58,8 @@ export function safeHttpUrl(v: string): string | null {
 export function safeInstagramUrl(v: string): string | null {
   try {
     const u = new URL(v);
-    return u.protocol === 'https:' && ['instagram.com', 'www.instagram.com'].includes(u.hostname.toLowerCase()) && !u.username && !u.password
-      ? u.href : null;
+    return u.protocol === 'https:' && ['instagram.com', 'www.instagram.com'].includes(u.hostname.toLowerCase()) && !u.username && !u.password && /^\/(?:p|reel)\/[A-Za-z0-9_-]+\/?$/.test(u.pathname)
+      ? v : null;
   } catch { return null; }
 }
 
@@ -93,7 +93,7 @@ export function formIssues(f: MediaForm, status: MediaPublicationSave['status'])
   if (f.publisher.length > 140) out.push('Publisher must be 140 characters or fewer.');
   if (f.description.length > 6000) out.push('Description must be 6,000 characters or fewer.');
   if (f.externalUrl.trim() && !safeHttpUrl(f.externalUrl.trim())) out.push('Publication link must start with http:// or https://.');
-  if (f.instagramUrl.trim() && !safeInstagramUrl(f.instagramUrl.trim())) out.push('Instagram link must be an https:// link on instagram.com.');
+  if (f.instagramUrl.trim() && !safeInstagramUrl(f.instagramUrl.trim())) out.push('Use the exact https://www.instagram.com/p/… or /reel/… publication link, not an account profile.');
   if (f.embedInput.trim() && !parseEmbed(f.embedInput)) out.push('Video must be a valid YouTube or Vimeo link.');
   const pr = Number(f.priority);
   if (!Number.isInteger(pr) || pr < 0 || pr > 100000) out.push('Order must be a whole number from 0 to 100000.');

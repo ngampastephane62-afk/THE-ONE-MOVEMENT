@@ -55,6 +55,7 @@ test("publication rejects malformed dates, links, embeds, priorities, rights and
     { priority: 1.5 }, { priority: 100001 }, { category: "anything" },
     { externalUrl: "javascript:alert(1)" }, { externalUrl: "https://user:password@example.org" },
     { instagramUrl: "http://instagram.com/p/example/" }, { instagramUrl: "https://example.org/instagram" },
+    { instagramUrl: "https://www.instagram.com/tropikagency/" },
     { instagramUrl: "https://user:password@instagram.com/p/example/" },
     { embed: { provider: "youtube", videoId: "https://youtube.com" } },
     { embed: { provider: "vimeo", videoId: "bad" } },

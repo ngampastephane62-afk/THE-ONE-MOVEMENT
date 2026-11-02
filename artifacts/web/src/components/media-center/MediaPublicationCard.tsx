@@ -4,14 +4,17 @@ import { CATEGORY_LABEL, formatPubDate, safeHttpUrl, safeInstagramUrl } from '@/
 import MediaEmbed from './MediaEmbed';
 
 export default function MediaPublicationCard({ p, lead = false }: { p: MediaPublication; lead?: boolean }) {
-  const href = p.externalUrl ? safeHttpUrl(p.externalUrl) : null;
-  const instagram = p.instagramUrl ? safeInstagramUrl(p.instagramUrl) : null;
+  const external = p.externalUrl ? safeHttpUrl(p.externalUrl) : null;
+  const externalIsInstagram = !!external && ['instagram.com', 'www.instagram.com'].includes(new URL(external).hostname.toLowerCase());
+  // Legacy account-profile URLs must not masquerade as a specific publication.
+  const href = externalIsInstagram ? null : external;
+  const instagram = p.instagramUrl ? safeInstagramUrl(p.instagramUrl) : externalIsInstagram && external ? safeInstagramUrl(external) : null;
   const date = formatPubDate(p.publicationDate);
   return (
     <article className={`group flex h-full flex-col border border-sand-200 bg-ivory-50 shadow-sm transition-colors duration-200 hover:border-gold-500/60 ${lead ? 'lg:grid lg:grid-cols-12' : ''}`} data-testid={`card-media-publication-${p.id}`}>
       <div className={`relative overflow-hidden bg-lagoon-900 ${lead ? 'lg:col-span-7' : ''}`}>
         {p.embed ? <MediaEmbed embed={p.embed} title={p.title} poster={p.coverUrl} />
-          : p.coverUrl ? <img src={p.coverUrl} alt="" loading="lazy" className={`w-full ${p.category === 'magazine' ? 'bg-ivory-100 object-contain' : 'object-cover'} ${lead ? 'aspect-[16/10] lg:h-full' : 'aspect-[16/10]'}`} />
+          : p.coverUrl ? <img src={p.coverUrl} alt={p.category === 'magazine' ? `${p.title} — complete magazine cover` : ''} loading="lazy" className={`w-full ${p.category === 'magazine' ? 'aspect-[3/4] bg-ivory-100 object-contain' : `object-cover ${lead ? 'aspect-[16/10] lg:h-full' : 'aspect-[16/10]'}`}`} />
           : <div className="flex aspect-[16/10] items-center justify-center tomi-aurora-surface"><span className="text-eyebrow text-gold-400">{CATEGORY_LABEL[p.category]}</span></div>}
       </div>
       <div className={`flex flex-1 flex-col p-6 ${lead ? 'lg:col-span-5 lg:p-10' : ''}`}>
@@ -40,10 +43,10 @@ export default function MediaPublicationCard({ p, lead = false }: { p: MediaPubl
         })()}
         {(href || instagram) && <div className="mt-auto flex flex-wrap gap-x-5 gap-y-2 pt-6">
           {href && <a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex w-fit items-center gap-1.5 text-xs font-semibold tracking-[0.15em] text-gold-600 underline underline-offset-4 hover:text-gold-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500" data-testid={`link-read-publication-${p.id}`}>
-            READ PUBLICATION<ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span>
+            READ FULL ARTICLE<ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span>
           </a>}
           {instagram && <a href={instagram} target="_blank" rel="noopener noreferrer" className="inline-flex w-fit items-center gap-1.5 text-xs font-semibold tracking-[0.15em] text-lagoon-700 underline underline-offset-4 hover:text-lagoon-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500" data-testid={`link-instagram-publication-${p.id}`}>
-            VIEW ON INSTAGRAM<ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span>
+            VIEW ORIGINAL INSTAGRAM POST<ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span>
           </a>}
         </div>}
       </div>

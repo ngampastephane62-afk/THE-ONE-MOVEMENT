@@ -37,7 +37,10 @@ export async function networkAction(req: Request, res: Response) {
   const parsed = NetworkActionBody.strict().safeParse(req.body);
   if (!parsed.success) throw new NetworkError(400, "Invalid network action.");
   const input: NetworkActionInput = parsed.data;
-  const requiresActiveNetworkProfile = ["certification.request", "checkout"].includes(input.action);
+  // Open feed/follow/invitations without altering the existing private-message
+  // authorization model or specialized commercial and official approvals.
+  const requiresActiveNetworkProfile = ["certification.request", "checkout"].includes(input.action)
+    || input.action.startsWith("thread.") || input.action.startsWith("message.");
   const who = actor(res, requiresActiveNetworkProfile);
   const self = who.member.id;
   const id = () => number(input.id);

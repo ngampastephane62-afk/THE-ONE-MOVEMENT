@@ -9,6 +9,12 @@ Permanent TOMI membership is free. The Founder says “WE DO NOT SELL BELONGING.
 
 **How to apply:** The existing US$29 and US$99 monthly prices are NOT approved commercial pricing. Do not change pricing or Stripe without separate authorization. A possible ten-day trial concerns selected optional premium tools only, subject to later approval; it must not limit permanent free membership. Paid promotion must be labelled and cannot buy certification, institutional credibility or guaranteed programme participation.
 
+Verified, eligible accounts may browse, publish ordinary community posts, follow across sectors and invite without completing a profile or opting into People. Directory listing remains voluntary. For an unlisted author, the Founder chose “Show name only on post”; do not expose their avatar, profession or profile link through that post.
+
+**Why:** The Founder's Global Access mandate separates ordinary membership, profile completeness, discoverability and specialized approvals; the Founder explicitly confirmed the name-only exception for community posts.
+
+**How to apply:** Never mass-enable directory visibility to repair community access. Preserve suspended-account, blocking and audience restrictions; keep drafts private and official certifications/commercial approvals separate.
+
 Each event has its own income-generating professional participation services; participants need not buy a sponsor package. The owner sets the non-sponsor Summit speaker fee at US$10,000. Designers/stylists, models, hair stylists and makeup artists also need distinct service offers, but their fees have not been provided.
 
 **Why:** The owner explicitly distinguishes impact, speaking, photo/video, branding, highlights, media opportunities and networking from purchasing sponsorship.
@@ -19,18 +25,18 @@ Ordinary member-to-member messaging must be free. Accepted conversations must no
 
 **Why:** The Founder authorized limited free-messaging implementation with these exact first-contact protections, without migrations or new persistent infrastructure.
 
-**How to apply:** Preserve authentication, verification, explicit activation, consent, blocking, moderation and account restrictions. Only ordinary first-contact creation loses its subscription gate; specialized commercial gates remain separate. If reliable counting and concurrent-creation protection cannot be preserved, stop rather than opening unprotected first contact. Source implementation approval does not authorize runtime verification or deployment.
+**How to apply:** Preserve authentication, verification, conversation consent, blocking, moderation and account restrictions. Free feed access does not authorize expanding access to private conversations. Specialized commercial gates remain separate. If reliable counting and concurrent-creation protection cannot be preserved, stop rather than opening unprotected first contact. Source implementation approval does not authorize deployment.
 
 Nationality must be supplied explicitly by the member, never inferred from IP address, device location, residence, language, name or ethnicity. Nationality and residence need distinct meanings and clear visibility controls; private account contact details must never be published automatically.
 
 **Why:** The Founder explicitly requires voluntary identity information, data minimization and protection against accidental phone-number exposure.
 
-**How to apply:** Reuse the existing member identity rather than creating duplicate profile tables. Do not reinterpret an ambiguous country field as nationality, copy private contacts into public profiles, or automatically activate the network during profile initialization.
+**How to apply:** Reuse the existing member identity rather than creating duplicate profile tables. Do not reinterpret an ambiguous country field as nationality, copy private contacts into public profiles, or automatically opt members into directory visibility during initialization.
 
-During the current free-access phase, the Founder requires one primary sector
-and up to two additional active sectors per member, while all seventeen worlds
+For members who choose their active sectors, the Founder requires one primary sector
+and up to two additional active sectors per ordinary member, while all seventeen worlds
 remain publicly discoverable. General interests are distinct from active sector
-membership; never erase or silently truncate existing member preferences.
+membership; never erase or silently truncate existing member preferences. Selecting sectors is not a prerequisite for general community participation. The Founder has server-authorized access to all seventeen sectors.
 
 **Why:** The Founder explicitly revised the sector-access rule and requires one
 identity with three active sectors, not separate registrations.

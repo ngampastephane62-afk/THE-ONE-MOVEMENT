@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { Link } from 'wouter';
 import { ChevronLeft, ChevronRight, RotateCw } from 'lucide-react';
 import { useGetMediaPublications, getGetMediaPublicationsQueryKey, type MediaPublicationCategory } from '@workspace/api-client-react';
 import SectionHeading from '@/components/SectionHeading';
@@ -22,6 +23,10 @@ export default function MediaCenter() {
         <Reveal>
           <div id="media-center-heading"><SectionHeading eyebrow="MEDIA CENTER" heading="PRESS / COVERAGE" surface="light" thread /></div>
           <p className="mt-6 max-w-2xl leading-relaxed text-ink-700">International press, television, magazines, interviews and official announcements about The One Movement International. Each entry is published by the Founder's office.</p>
+          <div className="mt-6 max-w-2xl border-l-2 border-gold-500 pl-5">
+            <Link href="/join#institutional-inquiry" className="inline-flex min-h-11 items-center bg-gold-500 px-5 text-xs font-semibold tracking-[0.15em] text-ink-900" data-testid="link-get-featured">GET FEATURED</Link>
+            <p className="mt-3 text-sm leading-relaxed text-ink-700">Share your work, company or story and ask the team about interviews, articles or media services. Commercial services, where offered, are identified separately. An inquiry does not guarantee editorial approval or publication.</p>
+          </div>
         </Reveal>
 
         {present.length > 1 && (
