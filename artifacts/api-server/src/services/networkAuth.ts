@@ -14,7 +14,8 @@ export type NetworkActor = {
   accountCreatedAt: number;
   founder: boolean;
 };
-const identities = new Map<string, { email: string; fullName: string; verified: boolean; accountCreatedAt: number; expires: number }>();
+const identities = new Map<string, { email: string; fullName: string; verified: boolean; restricted: boolean; accountCreatedAt: number; expires: number }>();
+export function invalidateNetworkIdentity(clerkId: string) { identities.delete(clerkId); }
 export async function networkAuth(req: Request, res: Response, next: NextFunction) {
   res.set("Cache-Control", "no-store");
   const clerkId = getAuth(req).userId;
@@ -28,6 +29,7 @@ export async function networkAuth(req: Request, res: Response, next: NextFunctio
         email: primary?.emailAddress.toLowerCase() ?? "",
         fullName: [user.firstName, user.lastName].filter(Boolean).join(" "),
         verified: primary?.verification?.status === "verified",
+        restricted: user.banned || user.locked,
         accountCreatedAt: user.createdAt,
         expires: Date.now() + 60_000,
       };
@@ -38,6 +40,7 @@ export async function networkAuth(req: Request, res: Response, next: NextFunctio
     }
   }
   if (!identity.verified) return void res.status(403).json({ error: "Verify your primary email before joining the network." });
+  if (identity.restricted) return void res.status(403).json({ error: "This account is restricted by the authentication service." });
   const founder = !!process.env.TOMI_FOUNDER_EMAIL &&
     identity.email === process.env.TOMI_FOUNDER_EMAIL.trim().toLowerCase();
   let [member] = await db.select().from(members).where(eq(members.clerkId, clerkId)).limit(1);

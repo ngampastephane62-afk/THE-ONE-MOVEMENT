@@ -23,3 +23,4 @@ export * from "./news";
 export * from "./gratitude";
 export * from "./siteVisitSessions";
 export * from "./memberProfileReminders";
+export * from "./founderControl";

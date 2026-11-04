@@ -29,7 +29,7 @@ function Metric({ label, value, note, testid }: { label: string; value: string; 
   );
 }
 
-function ReminderPanel({ account, onClose }: { account: MembershipAccount; onClose: () => void }) {
+export function ReminderPanel({ account, onClose }: { account: MembershipAccount; onClose: () => void }) {
   const qc = useQueryClient();
   const preview = usePreviewProfileReminder(account.clerkId, { query: { enabled: !!account.clerkId, queryKey: getPreviewProfileReminderQueryKey(account.clerkId), retry: false, staleTime: 0 } });
   const send = useSendProfileReminder({ mutation: { retry: false } });
@@ -111,7 +111,7 @@ export default function FounderMembers() {
   const [page, setPage] = useState(1);
   const [reminderFor, setReminderFor] = useState<MembershipAccount | null>(null);
   const params: GetMembershipDashboardParams = { page, status, days, ...(search ? { search } : {}) };
-  const q = useGetMembershipDashboard(params, { query: { queryKey: getGetMembershipDashboardQueryKey(params), staleTime: 60_000, refetchOnMount: true, refetchOnWindowFocus: true, refetchInterval: 5 * 60_000, placeholderData: (prev) => prev } });
+  const q = useGetMembershipDashboard(params, { query: { queryKey: getGetMembershipDashboardQueryKey(params), staleTime: 60_000, refetchOnMount: true, refetchOnWindowFocus: true, refetchInterval: 30_000, placeholderData: (prev) => prev } });
   const d = q.data;
   useEffect(() => { if (d && page > Math.max(1, d.pages)) setPage(Math.max(1, d.pages)); }, [d, page]);
 
@@ -120,12 +120,13 @@ export default function FounderMembers() {
 
   return (
     <section className="flex flex-col gap-5 px-3 pt-4 md:px-0 md:pt-0" aria-labelledby="fm-title" data-testid="page-founder-members">
-      <Helmet><title>Membership dashboard — Founder</title></Helmet>
-      <Link href="/member/founder" className="inline-flex items-center gap-1 text-xs font-semibold text-lagoon-700" data-testid="link-back-founder"><ArrowLeft className="h-3.5 w-3.5" />Founder workspace</Link>
+      <Helmet><title>All Registered Members — Founder</title></Helmet>
+      <Link href="/member/founder" className="inline-flex items-center gap-1 text-xs font-semibold text-lagoon-700" data-testid="link-back-founder"><ArrowLeft className="h-3.5 w-3.5" />Founder Command Center</Link>
       <header className="flex flex-wrap items-end justify-between gap-3 border-b border-sand-200 pb-4">
         <div>
           <p className="text-eyebrow text-gold-700">FOUNDER · MEMBERSHIP</p>
-          <h1 id="fm-title" className="mt-1 font-display text-2xl text-ink-900 sm:text-3xl">Members and visits</h1>
+          <h1 id="fm-title" className="mt-1 font-display text-2xl text-ink-900 sm:text-3xl">All Registered Members</h1>
+          <p className="mt-1 text-xs text-ink-700">Every account in the sign-in service, including private profiles. Not the People directory.</p>
           {d && <p className="mt-2 text-xs text-ink-700" data-testid="text-refreshed-at">Data as of <time dateTime={d.refreshedAt}>{fmt(d.refreshedAt)}</time> ({d.refreshedAt} UTC source)</p>}
         </div>
         <div className="flex items-center gap-2">
@@ -181,13 +182,13 @@ export default function FounderMembers() {
             </section>
 
             <section aria-labelledby="fm-list" className="flex flex-col gap-3">
-              <h2 id="fm-list" className="font-display text-lg text-ink-900">Accounts</h2>
+              <h2 id="fm-list" className="font-display text-lg text-ink-900">All registered accounts</h2>
               <p className={`rounded-xl p-3 text-xs ${d.emailSetup.configured ? 'bg-ivory-50 text-ink-800 border border-sand-200' : 'border border-coral-600/40 bg-ivory-50 text-ink-800'}`} data-testid="text-email-setup"><span className="font-semibold">Email reminders: {d.emailSetup.configured ? 'configured' : 'not configured'}.</span> {d.emailSetup.message} Reminders are sent one at a time, only after you confirm.</p>
               <div className="flex flex-wrap items-center gap-2">
                 <div role="group" aria-label="Profile status" className="flex flex-wrap gap-1">{STATUS_FILTERS.map((f) => <button key={f.v} type="button" aria-pressed={status === f.v} onClick={() => { setStatus(f.v); setPage(1); }} className={`rounded-full px-3 py-1.5 text-xs font-semibold ${status === f.v ? 'bg-lagoon-900 text-gold-400' : 'border border-sand-300 text-ink-700 hover:border-lagoon-600'}`} data-testid={`filter-status-${f.v}`}>{f.label}</button>)}</div>
                 <form onSubmit={onSearch} role="search" className="flex min-w-0 flex-1 gap-2 sm:max-w-sm sm:ml-auto">
-                  <label htmlFor="fm-search" className="sr-only">Search name or email</label>
-                  <input id="fm-search" value={draft} maxLength={120} onChange={(e) => setDraft(e.target.value)} placeholder="Name or email" className="min-w-0 flex-1 border border-sand-300 bg-ivory-50 px-3 py-2 text-sm focus:border-lagoon-600 focus:outline-none" data-testid="input-search-members" />
+                  <label htmlFor="fm-search" className="sr-only">Search name, email or Clerk ID</label>
+                  <input id="fm-search" value={draft} maxLength={120} onChange={(e) => setDraft(e.target.value)} placeholder="Name, email or Clerk ID" className="min-w-0 flex-1 border border-sand-300 bg-ivory-50 px-3 py-2 text-sm focus:border-lagoon-600 focus:outline-none" data-testid="input-search-members" />
                   <button type="submit" className="rounded-full bg-gold-500 px-4 text-xs font-semibold text-ink-900" data-testid="button-search-members">Search</button>
                   {search && <button type="button" onClick={() => { setDraft(''); setSearch(''); setPage(1); }} className="text-xs text-ink-700 underline" data-testid="button-clear-search">Clear</button>}
                 </form>
@@ -218,6 +219,7 @@ export default function FounderMembers() {
                         <div><dt className="inline">Last reminder </dt><dd className="inline text-ink-900">{a.lastReminderAt ? `${fmt(a.lastReminderAt)}${a.reminderStatus ? ` (${a.reminderStatus})` : ''}` : '—'}</dd></div>
                       </dl>
                       {a.missingFields.length > 0 && <p className="mt-1 text-xs text-ink-700">Missing: {a.missingFields.join(', ')}</p>}
+                      <Link href={`/member/founder/members/${encodeURIComponent(a.clerkId)}`} className="mr-4 mt-2 inline-flex min-h-9 items-center text-xs font-semibold text-lagoon-900 underline underline-offset-4" data-testid={`link-member-detail-${a.clerkId}`}>Open account details</Link>
                       {a.profileStatus !== 'complete' && (
                         a.remindersOptedOut ? <p className="mt-2 text-xs text-ink-700" data-testid={`text-optout-${a.clerkId}`}>Opted out of reminders.</p>
                           : <button type="button" onClick={() => setReminderFor(a)} className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-lagoon-700 underline underline-offset-4" data-testid={`button-preview-reminder-${a.clerkId}`}><Mail className="h-3.5 w-3.5" />Preview reminder</button>

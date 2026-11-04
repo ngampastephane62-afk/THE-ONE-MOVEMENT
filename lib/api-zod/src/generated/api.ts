@@ -8,6 +8,204 @@
 import * as zod from 'zod';
 
 
+export const GetFounderCommandCenterResponse = zod.object({
+  "environment": zod.enum(['development', 'production']),
+  "refreshedAt": zod.string(),
+  "initializedAt": zod.string(),
+  "totals": zod.record(zod.string(), zod.number().int()),
+  "sectors": zod.array(zod.object({
+  "slug": zod.string(),
+  "participants": zod.number().int(),
+  "newMembers": zod.number().int(),
+  "posts": zod.number().int(),
+  "pendingCertifications": zod.number().int(),
+  "pendingReports": zod.number().int()
+})),
+  "notifications": zod.array(zod.object({
+  "id": zod.number().int(),
+  "kind": zod.string(),
+  "title": zod.string(),
+  "targetClerkId": zod.string().nullable(),
+  "occurredAt": zod.string(),
+  "detail": zod.record(zod.string(), zod.unknown())
+})),
+  "unread": zod.number().int(),
+  "enabledKinds": zod.array(zod.string())
+})
+
+
+export const GetFounderRegisteredMemberParams = zod.object({
+  "clerkId": zod.coerce.string()
+})
+
+export const GetFounderRegisteredMemberResponse = zod.object({
+  "account": zod.object({
+  "clerkId": zod.string(),
+  "name": zod.string(),
+  "email": zod.string(),
+  "emailVerified": zod.boolean(),
+  "createdAt": zod.string(),
+  "lastSignInAt": zod.string().nullable(),
+  "profileStatus": zod.enum(['no_profile', 'incomplete', 'complete']),
+  "missingFields": zod.array(zod.string()),
+  "sectors": zod.array(zod.string()),
+  "networkEnabled": zod.boolean(),
+  "suspended": zod.boolean(),
+  "lastReminderAt": zod.string().nullable(),
+  "reminderStatus": zod.string().nullable(),
+  "remindersOptedOut": zod.boolean()
+}),
+  "memberId": zod.number().int().nullable(),
+  "profile": zod.record(zod.string(), zod.string()),
+  "discoverable": zod.boolean(),
+  "publicProfile": zod.boolean(),
+  "banned": zod.boolean(),
+  "locked": zod.boolean(),
+  "lastActivityAt": zod.string().nullable(),
+  "followAllowed": zod.boolean(),
+  "certifications": zod.array(zod.object({
+  "id": zod.number().int(),
+  "role": zod.string(),
+  "program": zod.string(),
+  "status": zod.string(),
+  "note": zod.string(),
+  "agreementConfirmed": zod.boolean(),
+  "paymentConfirmed": zod.boolean(),
+  "expiresAt": zod.string().nullable()
+})),
+  "audit": zod.array(zod.object({
+  "id": zod.number().int(),
+  "action": zod.string(),
+  "actor": zod.string(),
+  "createdAt": zod.string(),
+  "reason": zod.string(),
+  "status": zod.string()
+})),
+  "serviceMessages": zod.array(zod.object({
+  "id": zod.number().int(),
+  "text": zod.string(),
+  "fromAdministration": zod.boolean(),
+  "createdAt": zod.string(),
+  "readAt": zod.string().nullable()
+}))
+})
+
+
+export const ActOnFounderMemberParams = zod.object({
+  "clerkId": zod.coerce.string()
+})
+
+export const actOnFounderMemberBodyReasonMin = 10;
+export const actOnFounderMemberBodyReasonMax = 3000;
+
+
+
+
+export const ActOnFounderMemberBody = zod.object({
+  "action": zod.enum(['suspend', 'restore', 'send_message', 'certification_decide']),
+  "confirmed": zod.literal(true),
+  "reason": zod.string().min(actOnFounderMemberBodyReasonMin).max(actOnFounderMemberBodyReasonMax),
+  "requestId": zod.string().uuid(),
+  "certificationId": zod.number().int().min(1).optional(),
+  "decision": zod.enum(['approved', 'rejected', 'revoked']).optional()
+})
+
+export const ActOnFounderMemberResponse = zod.object({
+  "ok": zod.boolean()
+})
+
+
+
+
+
+export const SaveFounderControlPreferencesBody = zod.object({
+  "enabledKinds": zod.array(zod.enum(['registration', 'email_verified', 'profile_complete', 'certification', 'report', 'request', 'service_reply'])).optional(),
+  "readThrough": zod.number().int().min(1).optional()
+})
+
+export const SaveFounderControlPreferencesResponse = zod.object({
+  "ok": zod.boolean()
+})
+
+
+export const GetFounderSectorParams = zod.object({
+  "slug": zod.coerce.string()
+})
+
+export const GetFounderSectorResponse = zod.object({
+  "summary": zod.object({
+  "slug": zod.string(),
+  "participants": zod.number().int(),
+  "newMembers": zod.number().int(),
+  "posts": zod.number().int(),
+  "pendingCertifications": zod.number().int(),
+  "pendingReports": zod.number().int()
+}),
+  "accounts": zod.array(zod.object({
+  "clerkId": zod.string(),
+  "name": zod.string(),
+  "email": zod.string(),
+  "emailVerified": zod.boolean(),
+  "createdAt": zod.string(),
+  "lastSignInAt": zod.string().nullable(),
+  "profileStatus": zod.enum(['no_profile', 'incomplete', 'complete']),
+  "missingFields": zod.array(zod.string()),
+  "sectors": zod.array(zod.string()),
+  "networkEnabled": zod.boolean(),
+  "suspended": zod.boolean(),
+  "lastReminderAt": zod.string().nullable(),
+  "reminderStatus": zod.string().nullable(),
+  "remindersOptedOut": zod.boolean()
+})),
+  "activity": zod.array(zod.object({
+  "id": zod.number().int(),
+  "authorId": zod.number().int(),
+  "text": zod.string(),
+  "kind": zod.string(),
+  "createdAt": zod.string()
+})),
+  "certifications": zod.array(zod.object({
+  "id": zod.number().int(),
+  "role": zod.string(),
+  "program": zod.string(),
+  "status": zod.string(),
+  "note": zod.string(),
+  "agreementConfirmed": zod.boolean(),
+  "paymentConfirmed": zod.boolean(),
+  "expiresAt": zod.string().nullable()
+})),
+  "reports": zod.number().int()
+})
+
+
+export const GetAdministrativeServiceMessagesResponse = zod.object({
+  "messages": zod.array(zod.object({
+  "id": zod.number().int(),
+  "text": zod.string(),
+  "fromAdministration": zod.boolean(),
+  "createdAt": zod.string(),
+  "readAt": zod.string().nullable()
+})),
+  "unread": zod.number().int()
+})
+
+
+export const replyToAdministrativeServiceMessageBodyTextMax = 3000;
+
+
+
+
+export const ReplyToAdministrativeServiceMessageBody = zod.object({
+  "text": zod.string().min(1).max(replyToAdministrativeServiceMessageBodyTextMax).optional(),
+  "requestId": zod.string().uuid().optional(),
+  "readThrough": zod.number().int().min(1).optional()
+})
+
+export const ReplyToAdministrativeServiceMessageResponse = zod.object({
+  "ok": zod.boolean()
+})
+
+
 export const getMembershipDashboardQueryPageDefault = 1;
 
 export const getMembershipDashboardQuerySearchMax = 120;

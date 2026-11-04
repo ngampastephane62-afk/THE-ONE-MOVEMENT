@@ -11,6 +11,89 @@ tags:
   - name: health
     description: Health operations
 paths:
+  /founder/command-center:
+    get:
+      operationId: getFounderCommandCenter
+      responses:
+        '200':
+          description: Verified Founder only; exact identity totals with separate application-environment metrics.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/FounderCommandOverview' }
+  /founder/registered-members/{clerkId}:
+    get:
+      operationId: getFounderRegisteredMember
+      parameters:
+        - { in: path, name: clerkId, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: Private administrative account projection; never credentials or ordinary conversations.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/FounderAdminMember' }
+  /founder/registered-members/{clerkId}/actions:
+    post:
+      operationId: actOnFounderMember
+      parameters:
+        - { in: path, name: clerkId, required: true, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/FounderMemberAction' }
+      responses:
+        '200':
+          description: Confirmed action completed and durably audited.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/FounderActionResult' }
+  /founder/command-center/preferences:
+    post:
+      operationId: saveFounderControlPreferences
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/FounderPreferenceInput' }
+      responses:
+        '200':
+          description: In-app preferences saved; no emails sent.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/FounderActionResult' }
+  /founder/sectors/{slug}:
+    get:
+      operationId: getFounderSector
+      parameters:
+        - { in: path, name: slug, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: Authorized administrative sector overview; excludes others' drafts and follower-only posts.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/FounderSectorDetail' }
+  /network/service-messages:
+    get:
+      operationId: getAdministrativeServiceMessages
+      responses:
+        '200':
+          description: Only the current account's administrative service channel, not personal conversations.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/FounderServiceInbox' }
+    post:
+      operationId: replyToAdministrativeServiceMessage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/FounderServiceReplyInput' }
+      responses:
+        '200':
+          description: Reply to a previously opened administrative service channel, or read acknowledgement.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/FounderActionResult' }
   /founder/membership-dashboard:
     get:
       operationId: getMembershipDashboard
@@ -1457,6 +1540,140 @@ paths:
                 $ref: "#/components/schemas/DetailedHealthStatus"
 components:
   schemas:
+    FounderPreferenceInput:
+      type: object
+      properties:
+        enabledKinds: { type: array, items: { type: string, enum: [registration, email_verified, profile_complete, certification, report, request, service_reply] } }
+        readThrough: { type: integer, minimum: 1 }
+    FounderServiceReplyInput:
+      type: object
+      properties:
+        text: { type: string, minLength: 1, maxLength: 3000 }
+        requestId: { type: string, format: uuid }
+        readThrough: { type: integer, minimum: 1 }
+    FounderActionResult:
+      type: object
+      required: [ok]
+      properties:
+        ok: { type: boolean }
+    FounderMemberAction:
+      type: object
+      required: [action, confirmed, reason, requestId]
+      properties:
+        action: { type: string, enum: [suspend, restore, send_message, certification_decide] }
+        confirmed: { type: boolean, const: true }
+        reason: { type: string, minLength: 10, maxLength: 3000 }
+        requestId: { type: string, format: uuid }
+        certificationId: { type: integer, minimum: 1 }
+        decision: { type: string, enum: [approved, rejected, revoked] }
+    FounderNotification:
+      type: object
+      required: [id, kind, title, targetClerkId, occurredAt, detail]
+      properties:
+        id: { type: integer }
+        kind: { type: string }
+        title: { type: string }
+        targetClerkId: { type: [string, 'null'] }
+        occurredAt: { type: string }
+        detail:
+          type: object
+          additionalProperties: true
+    FounderServiceMessage:
+      type: object
+      required: [id, text, fromAdministration, createdAt, readAt]
+      properties:
+        id: { type: integer }
+        text: { type: string }
+        fromAdministration: { type: boolean }
+        createdAt: { type: string }
+        readAt: { type: [string, 'null'] }
+    FounderServiceInbox:
+      type: object
+      required: [messages, unread]
+      properties:
+        messages: { type: array, items: { $ref: '#/components/schemas/FounderServiceMessage' } }
+        unread: { type: integer }
+    FounderSectorSummary:
+      type: object
+      required: [slug, participants, newMembers, posts, pendingCertifications, pendingReports]
+      properties:
+        slug: { type: string }
+        participants: { type: integer }
+        newMembers: { type: integer }
+        posts: { type: integer }
+        pendingCertifications: { type: integer }
+        pendingReports: { type: integer }
+    FounderCommandOverview:
+      type: object
+      required: [environment, refreshedAt, totals, sectors, notifications, unread, enabledKinds, initializedAt]
+      properties:
+        environment: { type: string, enum: [development, production] }
+        refreshedAt: { type: string }
+        initializedAt: { type: string }
+        totals: { type: object, additionalProperties: { type: integer } }
+        sectors: { type: array, items: { $ref: '#/components/schemas/FounderSectorSummary' } }
+        notifications: { type: array, items: { $ref: '#/components/schemas/FounderNotification' } }
+        unread: { type: integer }
+        enabledKinds: { type: array, items: { type: string } }
+    FounderCertification:
+      type: object
+      required: [id, role, program, status, note, agreementConfirmed, paymentConfirmed, expiresAt]
+      properties:
+        id: { type: integer }
+        role: { type: string }
+        program: { type: string }
+        status: { type: string }
+        note: { type: string }
+        agreementConfirmed: { type: boolean }
+        paymentConfirmed: { type: boolean }
+        expiresAt: { type: [string, 'null'] }
+    FounderAuditEntry:
+      type: object
+      required: [id, action, actor, createdAt, reason, status]
+      properties:
+        id: { type: integer }
+        action: { type: string }
+        actor: { type: string }
+        createdAt: { type: string }
+        reason: { type: string }
+        status: { type: string }
+    FounderAdminMember:
+      type: object
+      required: [account, memberId, profile, discoverable, publicProfile, banned, locked, certifications, audit, serviceMessages, followAllowed, lastActivityAt]
+      properties:
+        account: { $ref: '#/components/schemas/MembershipAccount' }
+        memberId: { type: [integer, 'null'] }
+        profile:
+          type: object
+          additionalProperties: { type: string }
+        discoverable: { type: boolean }
+        publicProfile: { type: boolean }
+        banned: { type: boolean }
+        locked: { type: boolean }
+        lastActivityAt: { type: [string, 'null'] }
+        followAllowed: { type: boolean }
+        certifications: { type: array, items: { $ref: '#/components/schemas/FounderCertification' } }
+        audit: { type: array, items: { $ref: '#/components/schemas/FounderAuditEntry' } }
+        serviceMessages: { type: array, items: { $ref: '#/components/schemas/FounderServiceMessage' } }
+    FounderSectorDetail:
+      type: object
+      required: [summary, accounts, activity, certifications, reports]
+      properties:
+        summary: { $ref: '#/components/schemas/FounderSectorSummary' }
+        accounts: { type: array, items: { $ref: '#/components/schemas/MembershipAccount' } }
+        activity:
+          type: array
+          items:
+            type: object
+            required: [id, authorId, text, kind, createdAt]
+            properties:
+              id: { type: integer }
+              authorId: { type: integer }
+              text: { type: string }
+              kind: { type: string }
+              createdAt: { type: string }
+        certifications: { type: array, items: { $ref: '#/components/schemas/FounderCertification' } }
+        reports: { type: integer }
     MembershipAccount:
       type: object
       required: [clerkId, name, email, emailVerified, createdAt, lastSignInAt, profileStatus, missingFields, sectors, networkEnabled, suspended, lastReminderAt, reminderStatus, remindersOptedOut]

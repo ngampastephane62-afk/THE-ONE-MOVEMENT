@@ -3,6 +3,7 @@ import { logger } from "./lib/logger";
 import { initializeStripe } from "./services/networkPayments";
 import { stripeStartupMode } from "./lib/previewStartup";
 import { startVisitRetention } from "./services/siteVisits";
+import { startFounderObserver } from "./services/founderReconciliation";
 
 // Validate before opening a port or scheduling any payment initialization.
 const paymentStartup = stripeStartupMode(process.env);
@@ -29,6 +30,7 @@ app.listen(port, (err) => {
 
   logger.info({ port }, "Server listening");
   startVisitRetention(() => logger.warn("Visit retention cleanup unavailable; retrying on the next scheduled pass."));
+  startFounderObserver();
 });
 
 async function startPayments() {

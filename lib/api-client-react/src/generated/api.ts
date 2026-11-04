@@ -33,6 +33,14 @@ import type {
   CreateProfessionalIntroduction201,
   DetailedHealthStatus,
   DonationCampaign,
+  FounderActionResult,
+  FounderAdminMember,
+  FounderCommandOverview,
+  FounderMemberAction,
+  FounderPreferenceInput,
+  FounderSectorDetail,
+  FounderServiceInbox,
+  FounderServiceReplyInput,
   GetAdminMediaPublicationsParams,
   GetDocumentaryAccess200,
   GetEcosystemMembers200,
@@ -162,6 +170,633 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   }
   return result;
 };
+
+export const getGetFounderCommandCenterUrl = () => {
+
+
+
+
+  return `/api/founder/command-center`
+}
+
+export const getFounderCommandCenter = async ( options?: Parameters<typeof customFetch>[1]): Promise<FounderCommandOverview> => {
+
+  return customFetch<FounderCommandOverview>(getGetFounderCommandCenterUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetFounderCommandCenterQueryKey = () => {
+    return [
+    `/api/founder/command-center`
+    ] as const;
+    }
+
+
+export const getGetFounderCommandCenterQueryOptions = <TData = Awaited<ReturnType<typeof getFounderCommandCenter>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderCommandCenter>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetFounderCommandCenterQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getFounderCommandCenter>>> = ({ signal }) => getFounderCommandCenter({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getFounderCommandCenter>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetFounderCommandCenterQueryResult = NonNullable<Awaited<ReturnType<typeof getFounderCommandCenter>>>
+export type GetFounderCommandCenterQueryError = ErrorType<unknown>
+
+
+export function useGetFounderCommandCenter<TData = Awaited<ReturnType<typeof getFounderCommandCenter>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderCommandCenter>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getFounderCommandCenter>>,
+          TError,
+          Awaited<ReturnType<typeof getFounderCommandCenter>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetFounderCommandCenter<TData = Awaited<ReturnType<typeof getFounderCommandCenter>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderCommandCenter>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getFounderCommandCenter>>,
+          TError,
+          Awaited<ReturnType<typeof getFounderCommandCenter>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetFounderCommandCenter<TData = Awaited<ReturnType<typeof getFounderCommandCenter>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderCommandCenter>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetFounderCommandCenter<TData = Awaited<ReturnType<typeof getFounderCommandCenter>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderCommandCenter>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetFounderCommandCenterQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getGetFounderRegisteredMemberUrl = (clerkId: string,) => {
+
+
+
+
+  return `/api/founder/registered-members/${clerkId}`
+}
+
+export const getFounderRegisteredMember = async (clerkId: string, options?: Parameters<typeof customFetch>[1]): Promise<FounderAdminMember> => {
+
+  return customFetch<FounderAdminMember>(getGetFounderRegisteredMemberUrl(clerkId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetFounderRegisteredMemberQueryKey = (clerkId: string,) => {
+    return [
+    `/api/founder/registered-members/${clerkId}`
+    ] as const;
+    }
+
+
+export const getGetFounderRegisteredMemberQueryOptions = <TData = Awaited<ReturnType<typeof getFounderRegisteredMember>>, TError = ErrorType<unknown>>(clerkId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderRegisteredMember>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetFounderRegisteredMemberQueryKey(clerkId);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getFounderRegisteredMember>>> = ({ signal }) => getFounderRegisteredMember(clerkId, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: clerkId !== null && clerkId !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getFounderRegisteredMember>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetFounderRegisteredMemberQueryResult = NonNullable<Awaited<ReturnType<typeof getFounderRegisteredMember>>>
+export type GetFounderRegisteredMemberQueryError = ErrorType<unknown>
+
+
+export function useGetFounderRegisteredMember<TData = Awaited<ReturnType<typeof getFounderRegisteredMember>>, TError = ErrorType<unknown>>(
+ clerkId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderRegisteredMember>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getFounderRegisteredMember>>,
+          TError,
+          Awaited<ReturnType<typeof getFounderRegisteredMember>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetFounderRegisteredMember<TData = Awaited<ReturnType<typeof getFounderRegisteredMember>>, TError = ErrorType<unknown>>(
+ clerkId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderRegisteredMember>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getFounderRegisteredMember>>,
+          TError,
+          Awaited<ReturnType<typeof getFounderRegisteredMember>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetFounderRegisteredMember<TData = Awaited<ReturnType<typeof getFounderRegisteredMember>>, TError = ErrorType<unknown>>(
+ clerkId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderRegisteredMember>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetFounderRegisteredMember<TData = Awaited<ReturnType<typeof getFounderRegisteredMember>>, TError = ErrorType<unknown>>(
+ clerkId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderRegisteredMember>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetFounderRegisteredMemberQueryOptions(clerkId,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getActOnFounderMemberUrl = (clerkId: string,) => {
+
+
+
+
+  return `/api/founder/registered-members/${clerkId}/actions`
+}
+
+export const actOnFounderMember = async (clerkId: string,
+    founderMemberAction: FounderMemberAction, options?: Parameters<typeof customFetch>[1]): Promise<FounderActionResult> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<FounderActionResult>(getActOnFounderMemberUrl(clerkId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(founderMemberAction)
+  }
+);}
+
+
+
+
+
+export const getActOnFounderMemberMutationKey = () => ['actOnFounderMember'] as const;
+
+export const getActOnFounderMemberMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof actOnFounderMember>>, TError,ActOnFounderMemberMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof actOnFounderMember>>, TError,ActOnFounderMemberMutationVariables, TContext> => {
+
+const mutationKey = getActOnFounderMemberMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof actOnFounderMember>>, ActOnFounderMemberMutationVariables> = (props) => {
+          const {clerkId,data} = props ?? {};
+
+          return  actOnFounderMember(clerkId,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type ActOnFounderMemberMutationResult = NonNullable<Awaited<ReturnType<typeof actOnFounderMember>>>
+    export type ActOnFounderMemberMutationBody = BodyType<FounderMemberAction>
+    export type ActOnFounderMemberMutationError = ErrorType<unknown>
+    export type ActOnFounderMemberMutationVariables = {clerkId: string;data: BodyType<FounderMemberAction>}
+
+    export const useActOnFounderMember = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof actOnFounderMember>>, TError,ActOnFounderMemberMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof actOnFounderMember>>,
+        TError,
+        ActOnFounderMemberMutationVariables,
+        TContext
+      > => {
+      return useMutation(getActOnFounderMemberMutationOptions(options), queryClient);
+    }
+
+export const getSaveFounderControlPreferencesUrl = () => {
+
+
+
+
+  return `/api/founder/command-center/preferences`
+}
+
+export const saveFounderControlPreferences = async (founderPreferenceInput: FounderPreferenceInput, options?: Parameters<typeof customFetch>[1]): Promise<FounderActionResult> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<FounderActionResult>(getSaveFounderControlPreferencesUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(founderPreferenceInput)
+  }
+);}
+
+
+
+
+
+export const getSaveFounderControlPreferencesMutationKey = () => ['saveFounderControlPreferences'] as const;
+
+export const getSaveFounderControlPreferencesMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof saveFounderControlPreferences>>, TError,SaveFounderControlPreferencesMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof saveFounderControlPreferences>>, TError,SaveFounderControlPreferencesMutationVariables, TContext> => {
+
+const mutationKey = getSaveFounderControlPreferencesMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof saveFounderControlPreferences>>, SaveFounderControlPreferencesMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  saveFounderControlPreferences(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type SaveFounderControlPreferencesMutationResult = NonNullable<Awaited<ReturnType<typeof saveFounderControlPreferences>>>
+    export type SaveFounderControlPreferencesMutationBody = BodyType<FounderPreferenceInput>
+    export type SaveFounderControlPreferencesMutationError = ErrorType<unknown>
+    export type SaveFounderControlPreferencesMutationVariables = {data: BodyType<FounderPreferenceInput>}
+
+    export const useSaveFounderControlPreferences = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof saveFounderControlPreferences>>, TError,SaveFounderControlPreferencesMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof saveFounderControlPreferences>>,
+        TError,
+        SaveFounderControlPreferencesMutationVariables,
+        TContext
+      > => {
+      return useMutation(getSaveFounderControlPreferencesMutationOptions(options), queryClient);
+    }
+
+export const getGetFounderSectorUrl = (slug: string,) => {
+
+
+
+
+  return `/api/founder/sectors/${slug}`
+}
+
+export const getFounderSector = async (slug: string, options?: Parameters<typeof customFetch>[1]): Promise<FounderSectorDetail> => {
+
+  return customFetch<FounderSectorDetail>(getGetFounderSectorUrl(slug),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetFounderSectorQueryKey = (slug: string,) => {
+    return [
+    `/api/founder/sectors/${slug}`
+    ] as const;
+    }
+
+
+export const getGetFounderSectorQueryOptions = <TData = Awaited<ReturnType<typeof getFounderSector>>, TError = ErrorType<unknown>>(slug: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderSector>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetFounderSectorQueryKey(slug);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getFounderSector>>> = ({ signal }) => getFounderSector(slug, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: slug !== null && slug !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getFounderSector>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetFounderSectorQueryResult = NonNullable<Awaited<ReturnType<typeof getFounderSector>>>
+export type GetFounderSectorQueryError = ErrorType<unknown>
+
+
+export function useGetFounderSector<TData = Awaited<ReturnType<typeof getFounderSector>>, TError = ErrorType<unknown>>(
+ slug: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderSector>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getFounderSector>>,
+          TError,
+          Awaited<ReturnType<typeof getFounderSector>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetFounderSector<TData = Awaited<ReturnType<typeof getFounderSector>>, TError = ErrorType<unknown>>(
+ slug: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderSector>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getFounderSector>>,
+          TError,
+          Awaited<ReturnType<typeof getFounderSector>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetFounderSector<TData = Awaited<ReturnType<typeof getFounderSector>>, TError = ErrorType<unknown>>(
+ slug: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderSector>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetFounderSector<TData = Awaited<ReturnType<typeof getFounderSector>>, TError = ErrorType<unknown>>(
+ slug: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderSector>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetFounderSectorQueryOptions(slug,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getGetAdministrativeServiceMessagesUrl = () => {
+
+
+
+
+  return `/api/network/service-messages`
+}
+
+export const getAdministrativeServiceMessages = async ( options?: Parameters<typeof customFetch>[1]): Promise<FounderServiceInbox> => {
+
+  return customFetch<FounderServiceInbox>(getGetAdministrativeServiceMessagesUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetAdministrativeServiceMessagesQueryKey = () => {
+    return [
+    `/api/network/service-messages`
+    ] as const;
+    }
+
+
+export const getGetAdministrativeServiceMessagesQueryOptions = <TData = Awaited<ReturnType<typeof getAdministrativeServiceMessages>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAdministrativeServiceMessages>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetAdministrativeServiceMessagesQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAdministrativeServiceMessages>>> = ({ signal }) => getAdministrativeServiceMessages({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAdministrativeServiceMessages>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetAdministrativeServiceMessagesQueryResult = NonNullable<Awaited<ReturnType<typeof getAdministrativeServiceMessages>>>
+export type GetAdministrativeServiceMessagesQueryError = ErrorType<unknown>
+
+
+export function useGetAdministrativeServiceMessages<TData = Awaited<ReturnType<typeof getAdministrativeServiceMessages>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAdministrativeServiceMessages>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAdministrativeServiceMessages>>,
+          TError,
+          Awaited<ReturnType<typeof getAdministrativeServiceMessages>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAdministrativeServiceMessages<TData = Awaited<ReturnType<typeof getAdministrativeServiceMessages>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAdministrativeServiceMessages>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAdministrativeServiceMessages>>,
+          TError,
+          Awaited<ReturnType<typeof getAdministrativeServiceMessages>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAdministrativeServiceMessages<TData = Awaited<ReturnType<typeof getAdministrativeServiceMessages>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAdministrativeServiceMessages>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetAdministrativeServiceMessages<TData = Awaited<ReturnType<typeof getAdministrativeServiceMessages>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAdministrativeServiceMessages>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetAdministrativeServiceMessagesQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getReplyToAdministrativeServiceMessageUrl = () => {
+
+
+
+
+  return `/api/network/service-messages`
+}
+
+export const replyToAdministrativeServiceMessage = async (founderServiceReplyInput: FounderServiceReplyInput, options?: Parameters<typeof customFetch>[1]): Promise<FounderActionResult> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<FounderActionResult>(getReplyToAdministrativeServiceMessageUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(founderServiceReplyInput)
+  }
+);}
+
+
+
+
+
+export const getReplyToAdministrativeServiceMessageMutationKey = () => ['replyToAdministrativeServiceMessage'] as const;
+
+export const getReplyToAdministrativeServiceMessageMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof replyToAdministrativeServiceMessage>>, TError,ReplyToAdministrativeServiceMessageMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof replyToAdministrativeServiceMessage>>, TError,ReplyToAdministrativeServiceMessageMutationVariables, TContext> => {
+
+const mutationKey = getReplyToAdministrativeServiceMessageMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof replyToAdministrativeServiceMessage>>, ReplyToAdministrativeServiceMessageMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  replyToAdministrativeServiceMessage(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type ReplyToAdministrativeServiceMessageMutationResult = NonNullable<Awaited<ReturnType<typeof replyToAdministrativeServiceMessage>>>
+    export type ReplyToAdministrativeServiceMessageMutationBody = BodyType<FounderServiceReplyInput>
+    export type ReplyToAdministrativeServiceMessageMutationError = ErrorType<unknown>
+    export type ReplyToAdministrativeServiceMessageMutationVariables = {data: BodyType<FounderServiceReplyInput>}
+
+    export const useReplyToAdministrativeServiceMessage = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof replyToAdministrativeServiceMessage>>, TError,ReplyToAdministrativeServiceMessageMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof replyToAdministrativeServiceMessage>>,
+        TError,
+        ReplyToAdministrativeServiceMessageMutationVariables,
+        TContext
+      > => {
+      return useMutation(getReplyToAdministrativeServiceMessageMutationOptions(options), queryClient);
+    }
 
 export const getGetMembershipDashboardUrl = (params?: GetMembershipDashboardParams,) => {
   const normalizedParams = new URLSearchParams();

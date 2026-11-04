@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link, Redirect } from 'wouter';
 import { ArrowUpRight, Clock, Globe, LayoutDashboard } from 'lucide-react';
 import { useMe } from './ctx';
+import CommandOverview from '@/components/founder/CommandOverview';
 import {
   FOUNDER_SECTIONS, FOUNDER_TOOLS, PHASE_LABEL, type FounderSection, type FounderSectionId,
 } from '@/components/founder/founder-workspace-config';
@@ -46,6 +47,7 @@ function Panel({ s, name }: { s: FounderSection; name: string }) {
       </div>
       <p className="-mt-2 text-sm leading-relaxed text-ink-700">{s.summary}</p>
       {s.id === 'overview' && <p className="text-xs leading-relaxed text-ink-700">This workspace gathers the founder tools that already exist. Each link opens the working tool; nothing here duplicates or changes them.</p>}
+      {s.id === 'overview' && <CommandOverview />}
       {s.status !== 'available' && s.unavailableNote && <Unavailable s={s} />}
       {s.toolIds.length > 0 && (
         <div>
@@ -89,11 +91,11 @@ export default function FounderWorkspace() {
 
   return (
     <div className="flex min-w-0 flex-col gap-5 px-3 pt-4 [overflow-wrap:anywhere] md:px-0 md:pt-0" data-testid="page-founder-workspace">
-      <Helmet><title>Founder Workspace — TOMI</title><meta name="robots" content="noindex, nofollow" /></Helmet>
+      <Helmet><title>Founder Command Center — TOMI</title><meta name="robots" content="noindex, nofollow" /></Helmet>
       <style>{`.founder-fade{animation:founderIn .28s ease-out}@keyframes founderIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}@media (prefers-reduced-motion:reduce){.founder-fade{animation:none}}`}</style>
       <header className="relative overflow-hidden rounded-3xl bg-lagoon-900 p-5 text-ivory-100 sm:p-7">
         <p className="text-eyebrow text-gold-400" data-testid="text-founder-phase">{PHASE_LABEL}</p>
-        <h1 className="mt-2 font-display text-2xl tracking-[0.03em] text-ivory-50 sm:text-3xl">Founder Workspace</h1>
+        <h1 className="mt-2 font-display text-2xl tracking-[0.03em] text-ivory-50 sm:text-3xl">Founder Command Center</h1>
         <div className="mt-3 h-px w-16 bg-gold-400" aria-hidden="true" />
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ivory-200">A private place to steer The One Movement International. Signed in as <span className="font-semibold text-ivory-50" data-testid="text-founder-name">{me.fullName}</span>.</p>
         <div className="mt-4 flex flex-wrap gap-2">

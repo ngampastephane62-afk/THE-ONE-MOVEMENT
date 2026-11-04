@@ -77,7 +77,7 @@ async function readAccounts() {
       db.select().from(reminders).where(inArray(reminders.clerkId, ids)),
     ]) : [[], [], []];
     const accounts = accountDataset(identities, profiles, networks, reminderStates);
-    return { accounts, refreshedAt: new Date().toISOString(), expires: Date.now() + 60_000 };
+    return { accounts, refreshedAt: new Date().toISOString(), expires: Date.now() + 20_000 };
   }
   throw new NetworkError(503, "La liste des comptes évolue pendant le chargement. Actualisez ; aucun chiffre incomplet n’est présenté comme un total.");
 }

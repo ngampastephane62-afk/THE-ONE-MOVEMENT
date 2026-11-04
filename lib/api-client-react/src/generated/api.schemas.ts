@@ -5,6 +5,152 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+export type FounderPreferenceInputEnabledKindsItem = typeof FounderPreferenceInputEnabledKindsItem[keyof typeof FounderPreferenceInputEnabledKindsItem];
+
+
+export const FounderPreferenceInputEnabledKindsItem = {
+  registration: 'registration',
+  email_verified: 'email_verified',
+  profile_complete: 'profile_complete',
+  certification: 'certification',
+  report: 'report',
+  request: 'request',
+  service_reply: 'service_reply',
+} as const;
+
+export interface FounderPreferenceInput {
+  enabledKinds?: FounderPreferenceInputEnabledKindsItem[];
+  /** @minimum 1 */
+  readThrough?: number;
+}
+
+export interface FounderServiceReplyInput {
+  /**
+     * @minLength 1
+     * @maxLength 3000
+     */
+  text?: string;
+  requestId?: string;
+  /** @minimum 1 */
+  readThrough?: number;
+}
+
+export interface FounderActionResult {
+  ok: boolean;
+}
+
+export type FounderMemberActionAction = typeof FounderMemberActionAction[keyof typeof FounderMemberActionAction];
+
+
+export const FounderMemberActionAction = {
+  suspend: 'suspend',
+  restore: 'restore',
+  send_message: 'send_message',
+  certification_decide: 'certification_decide',
+} as const;
+
+export type FounderMemberActionDecision = typeof FounderMemberActionDecision[keyof typeof FounderMemberActionDecision];
+
+
+export const FounderMemberActionDecision = {
+  approved: 'approved',
+  rejected: 'rejected',
+  revoked: 'revoked',
+} as const;
+
+export interface FounderMemberAction {
+  action: FounderMemberActionAction;
+  confirmed: true;
+  /**
+     * @minLength 10
+     * @maxLength 3000
+     */
+  reason: string;
+  requestId: string;
+  /** @minimum 1 */
+  certificationId?: number;
+  decision?: FounderMemberActionDecision;
+}
+
+export type FounderNotificationDetail = { [key: string]: unknown };
+
+export interface FounderNotification {
+  id: number;
+  kind: string;
+  title: string;
+  /** @nullable */
+  targetClerkId: string | null;
+  occurredAt: string;
+  detail: FounderNotificationDetail;
+}
+
+export interface FounderServiceMessage {
+  id: number;
+  text: string;
+  fromAdministration: boolean;
+  createdAt: string;
+  /** @nullable */
+  readAt: string | null;
+}
+
+export interface FounderServiceInbox {
+  messages: FounderServiceMessage[];
+  unread: number;
+}
+
+export interface FounderSectorSummary {
+  slug: string;
+  participants: number;
+  newMembers: number;
+  posts: number;
+  pendingCertifications: number;
+  pendingReports: number;
+}
+
+export type FounderCommandOverviewEnvironment = typeof FounderCommandOverviewEnvironment[keyof typeof FounderCommandOverviewEnvironment];
+
+
+export const FounderCommandOverviewEnvironment = {
+  development: 'development',
+  production: 'production',
+} as const;
+
+export type FounderCommandOverviewTotals = {[key: string]: number};
+
+export interface FounderCommandOverview {
+  environment: FounderCommandOverviewEnvironment;
+  refreshedAt: string;
+  initializedAt: string;
+  totals: FounderCommandOverviewTotals;
+  sectors: FounderSectorSummary[];
+  notifications: FounderNotification[];
+  unread: number;
+  enabledKinds: string[];
+}
+
+export interface FounderCertification {
+  id: number;
+  role: string;
+  program: string;
+  status: string;
+  note: string;
+  agreementConfirmed: boolean;
+  paymentConfirmed: boolean;
+  /** @nullable */
+  expiresAt: string | null;
+}
+
+export interface FounderAuditEntry {
+  id: number;
+  action: string;
+  actor: string;
+  createdAt: string;
+  reason: string;
+  status: string;
+}
+
+export type FounderAdminMemberProfile = {[key: string]: string};
+
 export type MembershipAccountProfileStatus = typeof MembershipAccountProfileStatus[keyof typeof MembershipAccountProfileStatus];
 
 
@@ -32,6 +178,39 @@ export interface MembershipAccount {
   /** @nullable */
   reminderStatus: string | null;
   remindersOptedOut: boolean;
+}
+
+export interface FounderAdminMember {
+  account: MembershipAccount;
+  /** @nullable */
+  memberId: number | null;
+  profile: FounderAdminMemberProfile;
+  discoverable: boolean;
+  publicProfile: boolean;
+  banned: boolean;
+  locked: boolean;
+  /** @nullable */
+  lastActivityAt: string | null;
+  followAllowed: boolean;
+  certifications: FounderCertification[];
+  audit: FounderAuditEntry[];
+  serviceMessages: FounderServiceMessage[];
+}
+
+export type FounderSectorDetailActivityItem = {
+  id: number;
+  authorId: number;
+  text: string;
+  kind: string;
+  createdAt: string;
+};
+
+export interface FounderSectorDetail {
+  summary: FounderSectorSummary;
+  accounts: MembershipAccount[];
+  activity: FounderSectorDetailActivityItem[];
+  certifications: FounderCertification[];
+  reports: number;
 }
 
 export type MembershipDashboardEnvironment = typeof MembershipDashboardEnvironment[keyof typeof MembershipDashboardEnvironment];

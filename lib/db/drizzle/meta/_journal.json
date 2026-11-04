@@ -141,6 +141,13 @@
       "when": 1793653052981,
       "tag": "0019_fat_joshua_kane",
       "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1793756766100,
+      "tag": "0020_lowly_king_cobra",
+      "breakpoints": true
     }
   ]
 }

@@ -26,6 +26,9 @@ import FounderWorkspace from './FounderWorkspace';
 import FounderNews from './FounderNews';
 import FounderMedia from './FounderMedia';
 import FounderMembers from './FounderMembers';
+import FounderMemberDetail from './FounderMemberDetail';
+import FounderSectors from './FounderSectors';
+import { FounderAlertBadge } from '@/components/founder/CommandOverview';
 import FounderPartners from './FounderPartners';
 import FounderPrograms from './FounderPrograms';
 import FounderPages from './FounderPages';
@@ -138,6 +141,7 @@ function AppShell({ me, base, children }: Ctx & { children: ReactNode }) {
           </Link>
           <div className="flex items-center gap-1">
             <LanguageSwitcher />
+            {me.founder && <FounderAlertBadge />}
                         <Link href="/member/messages" className="relative rounded-full p-2 text-ivory-200 hover:text-gold-400 md:hidden" aria-label={`Messages${unread ? `, ${unread} need attention` : ''}`}>
               <Bell className="h-5 w-5" />{unread > 0 && <span className="absolute right-0.5 top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-coral-500 px-1 text-[10px] font-bold text-ink-900">{unread}</span>}
             </Link>
@@ -171,7 +175,7 @@ function AppShell({ me, base, children }: Ctx & { children: ReactNode }) {
           ))}
           {me.founder && (
             <Link href="/member/founder" aria-current={active('/member/founder') ? 'page' : undefined} className={`flex min-h-11 items-center gap-3 rounded-xl px-4 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 ${active('/member/founder') ? 'bg-lagoon-900 font-semibold text-gold-400' : 'border border-gold-500/35 text-lagoon-900 hover:bg-ivory-200'}`} data-testid="nav-founder-workspace">
-              <Shield className="h-4 w-4 shrink-0" />Founder Workspace
+              <Shield className="h-4 w-4 shrink-0" />Founder Command Center
             </Link>
           )}
           <Link href="/member/invite" className={`flex items-center gap-3 rounded-full px-4 py-2.5 text-sm ${active('/member/invite') ? 'bg-lagoon-900 font-semibold text-gold-400' : 'text-ink-800 hover:bg-ivory-200'}`} data-testid="nav-invite"><UserPlus className="h-4 w-4" />Invite{base.growth && !me.founder && <span className="ml-auto text-[10px] text-sand-400">{base.growth.qualifiedInvites}</span>}</Link>
@@ -185,7 +189,7 @@ function AppShell({ me, base, children }: Ctx & { children: ReactNode }) {
         <main className="min-w-0 flex-1">
           {me.founder && (
             <Link href="/member/founder" aria-current={active('/member/founder') ? 'page' : undefined} className="mx-3 mb-3 flex min-h-12 items-center justify-between gap-3 rounded-xl border border-gold-500/40 bg-lagoon-900 px-4 py-3 text-sm font-semibold text-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 md:hidden" data-testid="nav-founder-workspace-mobile">
-              Founder Workspace<Shield className="h-4 w-4 shrink-0" />
+              Founder Command Center<Shield className="h-4 w-4 shrink-0" />
             </Link>
           )}
           <Link href="/member/thanks-emirates" className="mx-3 mt-4 mb-3 flex items-center justify-between gap-3 rounded-xl border border-gold-500/40 bg-lagoon-900 px-4 py-3 text-xs text-ivory-100 md:hidden" data-testid="nav-thanks-emirates-mobile">
@@ -255,6 +259,9 @@ function NetworkGate() {
           <Route path="/member/founder/partners">{me.founder ? <FounderPartners /> : <Redirect to="/member" replace />}</Route>
           <Route path="/member/founder/programs">{me.founder ? <FounderPrograms /> : <Redirect to="/member" replace />}</Route>
           <Route path="/member/founder/pages">{me.founder ? <FounderPages /> : <Redirect to="/member" replace />}</Route>
+          <Route path="/member/founder/members/:clerkId">{me.founder ? <FounderMemberDetail /> : <Redirect to="/member" replace />}</Route>
+          <Route path="/member/founder/sectors/:slug">{me.founder ? <FounderSectors /> : <Redirect to="/member" replace />}</Route>
+          <Route path="/member/founder/sectors">{me.founder ? <FounderSectors /> : <Redirect to="/member" replace />}</Route>
           <Route path="/member/founder/members">{me.founder ? <FounderMembers /> : <Redirect to="/member" replace />}</Route>
           <Route path="/member/founder/media">{me.founder ? <FounderMedia /> : <Redirect to="/member" replace />}</Route>
           <Route path="/member/founder">{me.founder ? <FounderWorkspace /> : <Redirect to="/member" replace />}</Route>

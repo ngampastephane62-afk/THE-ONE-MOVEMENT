@@ -21,8 +21,8 @@ export interface FounderSection {
 
 /** Links to existing working founder tools. Admin tabs are allowlisted by the main integration. */
 export const FOUNDER_TOOLS: Record<string, FounderTool> = {
-  allPeople: { id: 'all-people', label: 'ALL MEMBERS · PEOPLE', href: '/member/people', description: 'Browse members who opted into People. All registered accounts, including private profiles, remain in the protected membership dashboard.' },
-  allSectors: { id: 'all-sectors', label: 'ALL 17 SECTORS', href: '~/ecosystem', description: 'Explore every sector. Founder sector publication access is validated on the server and is not limited to three sectors.' },
+  allPeople: { id: 'all-people', label: 'ALL REGISTERED MEMBERS', href: '/member/founder/members', description: 'Every registered account, including private profiles, with details, audit and confirmed administrative actions. The People directory is separate.' },
+  allSectors: { id: 'all-sectors', label: 'ALL 17 SECTORS', href: '/member/founder/sectors', description: 'Participants, new members, activity, certifications and reports for each of the 17 sectors.' },
   communityFeed: { id: 'community-feed', label: 'THE ONE FEED', href: '/member', description: 'Publish community updates or choose a sector audience. Private drafts and follower-only visibility remain protected.' },
   businessOpportunities: { id: 'business-opportunities', label: 'BUSINESS OPPORTUNITIES', href: '~/opportunities', description: 'Browse existing opportunities and inquiry routes without changing commercial approvals.' },
   newsEditor: { id: 'news-editor', label: 'News editor', href: '/member/founder/news', description: 'Write private drafts, preview them, and explicitly publish articles to the public News page.' },
@@ -43,7 +43,7 @@ export const FOUNDER_TOOLS: Record<string, FounderTool> = {
 };
 
 export const FOUNDER_SECTIONS: FounderSection[] = [
-  { id: 'overview', label: 'Founder Overview', status: 'available', summary: 'One connected community with access to all 17 sectors. Private conversations, private drafts and member visibility choices stay protected.', toolIds: ['membershipDashboard', 'allPeople', 'allSectors', 'communityFeed', 'businessOpportunities', 'mediaCenter', 'reports', 'programsManager', 'pagesHome', 'newsEditor', 'news', 'partnersManager', 'media', 'intros', 'certs', 'members', 'gratitude', 'offers', 'magazine'] },
+  { id: 'overview', label: 'Command Center', status: 'available', summary: 'One connected community with access to all 17 sectors. Private conversations, private drafts and member visibility choices stay protected.', toolIds: ['membershipDashboard', 'allPeople', 'allSectors', 'communityFeed', 'businessOpportunities', 'mediaCenter', 'reports', 'programsManager', 'pagesHome', 'newsEditor', 'news', 'partnersManager', 'media', 'intros', 'certs', 'members', 'gratitude', 'offers', 'magazine'] },
   { id: 'pages', label: 'Pages', status: 'partial', summary: 'Edit the public homepage: text, media, links, sections and presentation.', unavailableNote: 'Only the homepage is editable. Other public pages are still updated by the TOMI technical team.', toolIds: ['pagesHome'] },
   { id: 'news', label: 'News & Articles', status: 'available', summary: 'Write, preview and publish News articles. The historical press archive remains a separate tool.', toolIds: ['newsEditor', 'news', 'magazine'] },
   { id: 'partners', label: 'Partners', status: 'available', summary: 'Manage the public partner directory and page text, and review partner introduction requests.', toolIds: ['partnersManager', 'intros'] },
@@ -55,4 +55,4 @@ export const FOUNDER_SECTIONS: FounderSection[] = [
   { id: 'settings', label: 'Founder Settings', status: 'unavailable', summary: 'Workspace preferences for the Founder.', unavailableNote: 'Founder settings are coming soon. Your account settings remain in member settings.', toolIds: [] },
 ];
 
-export const PHASE_LABEL = 'Phase A · Workspace foundation';
+export const PHASE_LABEL = 'Founder Command Center · Private';

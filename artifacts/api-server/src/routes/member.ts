@@ -6,6 +6,7 @@ import { desc, eq, sql, and, or, isNull } from "drizzle-orm";
 import { getClerkProxyHost } from "../middlewares/clerkProxyMiddleware";
 import { SOCIAL_PROFILES, normalizeSocialProfile, activeSectorIssue } from "@workspace/shared";
 import { projectOwnerProfile, projectPublicProfile } from "../services/profileProjection";
+import { invalidateMemberDashboard } from "../services/membershipDashboard";
 
 const router = Router();
 const savedIds = new Set([
@@ -135,6 +136,7 @@ router.put("/member/profile", memberAuth, memberWrite, async (req, res) => {
       target: members.clerkId,
       set: { ...data, updatedAt: new Date() },
     }).returning();
+  invalidateMemberDashboard();
   res.json({ profile: projectOwnerProfile(row!) });
 });
 

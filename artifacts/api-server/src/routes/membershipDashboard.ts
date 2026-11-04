@@ -21,7 +21,7 @@ router.get("/founder/membership-dashboard", networkAuth, async (req, res) => {
     const [snapshot, traffic] = await Promise.all([memberAccountSnapshot(), trafficSummary(days)]);
     const q = search.trim().toLowerCase();
     const filtered = snapshot.accounts.filter(a =>
-      (!q || `${a.name} ${a.email}`.toLowerCase().includes(q)) &&
+      (!q || `${a.name} ${a.email} ${a.clerkId}`.toLowerCase().includes(q)) &&
       (status === "all" || (status === "active"
         ? a.networkEnabled && !a.suspended : a.profileStatus === status)));
     const pages = Math.max(1, Math.ceil(filtered.length / 25));

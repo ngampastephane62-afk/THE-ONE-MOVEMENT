@@ -21,6 +21,7 @@ import gratitudeRouter from "./gratitude";
 import programEditorialRouter from "./programEditorial";
 import homeEditorialRouter from "./homeEditorial";
 import membershipDashboardRouter from "./membershipDashboard";
+import founderControlRouter from "./founderControl";
 
 const router: IRouter = Router();
 
@@ -46,5 +47,6 @@ router.use(gratitudeRouter);
 router.use(programEditorialRouter);
 router.use(homeEditorialRouter);
 router.use(membershipDashboardRouter);
+router.use(founderControlRouter);
 
 export default router;

@@ -5,6 +5,23 @@ description: Owner's central My Space statistics, member follow-up and ecosystem
 
 The Founder requires a dashboard in My Space showing visitors, all created accounts, completed and incomplete profiles, and everyone in the ecosystem. Incomplete profiles need an email-reminder action explaining how to finish and what comes next: presenting their work and choosing sectors.
 
+The Founder requires a dedicated administrative directory of **all registered
+authentication accounts**, including unverified, profile-less, incomplete,
+unlisted and suspended accounts, rather than a renamed People directory.
+Administrative account visibility does not imply public discoverability.
+
+**Why:** The Founder explicitly requested a professional Command Center and
+reported that the ordinary discoverable directory was insufficient.
+
+**How to apply:** Resolve identities from the authentication provider, keep
+production and development figures clearly distinguished, and reconcile rather
+than hardcode approximate account totals. Founder oversight covers all seventeen
+sectors without changing ordinary membership selections. Administrative service
+contact must be clearly identified and separate from personal conversations;
+it must not bypass personal blocks to create ordinary social messages. Sensitive
+actions require explicit confirmation and a durable actor/target/time audit.
+Never expose passwords, secrets or unrestricted private conversations.
+
 The owner requests convenient Google sign-in alongside email registration, followed by essential profile completion, sector selection and voluntary ecosystem participation. Google authentication must happen on Google's own page; TOMI must never ask for a Gmail password.
 
 **Why:** The owner repeated this sequence to obtain reliable account and ecosystem counts for partners.
