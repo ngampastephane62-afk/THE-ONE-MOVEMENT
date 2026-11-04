@@ -43,13 +43,12 @@ async function reconcile() {
         .onConflictDoUpdate({ target: observations.clerkId, set: { verified: account.emailVerified, complete: account.profileStatus === "complete", observedAt: new Date() } });
     }
     const byMember = new Map([...profiles.values()].map(p => [p.id, p.clerkId]));
-    const [applications, flags, requests, institutional, commercial] = await Promise.all([
-      tx.select().from(certs).where(gte(certs.createdAt, baseline!.createdAt)),
-      tx.select().from(reports).where(gte(reports.createdAt, baseline!.createdAt)),
-      tx.select().from(joins).where(gte(joins.createdAt, baseline!.createdAt)),
-      tx.select().from(inquiries).where(gte(inquiries.createdAt, baseline!.createdAt)),
-      tx.select().from(businesses).where(gte(businesses.submittedAt, baseline!.createdAt)),
-    ]);
+    // A transaction owns one pg connection; avoid concurrent query dispatch.
+    const applications = await tx.select().from(certs).where(gte(certs.createdAt, baseline!.createdAt));
+    const flags = await tx.select().from(reports).where(gte(reports.createdAt, baseline!.createdAt));
+    const requests = await tx.select().from(joins).where(gte(joins.createdAt, baseline!.createdAt));
+    const institutional = await tx.select().from(inquiries).where(gte(inquiries.createdAt, baseline!.createdAt));
+    const commercial = await tx.select().from(businesses).where(gte(businesses.submittedAt, baseline!.createdAt));
     for (const c of applications) await tx.insert(notifications).values({
       eventKey: `certification:${c.id}`, kind: "certification", title: "Demande de certification officielle",
       targetClerkId: byMember.get(c.memberId) ?? null, occurredAt: c.createdAt, detail: { applicationId: c.id, role: c.role, program: c.program },

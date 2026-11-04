@@ -6,7 +6,7 @@ const output = await build({
   entryPoints: ["src/services/founderControlPolicy.ts"], bundle: true,
   write: false, platform: "node", format: "esm",
 });
-const { commandTotals, registrationEvents, certificationDecisionIssue, ADMIN_SECTORS } = await import(
+const { commandTotals, registrationEvents, publishedPostCount, certificationDecisionIssue, ADMIN_SECTORS } = await import(
   `data:text/javascript;base64,${Buffer.from(output.outputFiles[0].text).toString("base64")}`
 );
 const now = Date.parse("2026-11-04T12:00:00Z");
@@ -16,6 +16,13 @@ const base = {
   profileStatus: "no_profile", missingFields: [], sectors: [], networkEnabled: false,
   suspended: false, lastReminderAt: null, reminderStatus: null, remindersOptedOut: false,
 };
+test("published aggregate includes followers without exposing content and excludes drafts and hidden posts", () => {
+  assert.equal(publishedPostCount([
+    { hidden: false, visibility: "community" }, { hidden: false, visibility: "sector" },
+    { hidden: false, visibility: "followers" }, { hidden: false, visibility: "draft" },
+    { hidden: true, visibility: "community" },
+  ]), 3);
+});
 test("exact identity totals include unverified and profile-less accounts; activity is not discoverability", () => {
   const totals = commandTotals([
     base,

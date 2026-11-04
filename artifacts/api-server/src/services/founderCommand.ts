@@ -10,7 +10,7 @@ import type { FounderAdminMember, FounderCommandOverview, FounderSectorDetail, F
 import { accountDataset, memberAccountSnapshot } from "./membershipDashboard";
 import { NetworkError } from "./networkAuth";
 import { isBlocked } from "./networkState";
-import { ADMIN_SECTORS, commandTotals, FOUNDER_NOTIFICATION_KINDS } from "./founderControlPolicy";
+import { ADMIN_SECTORS, commandTotals, publishedPostCount, FOUNDER_NOTIFICATION_KINDS } from "./founderControlPolicy";
 import { reconcileFounderEvents } from "./founderReconciliation";
 
 export const serviceMessageDto = (r: typeof messages.$inferSelect): FounderServiceMessage => ({
@@ -44,7 +44,7 @@ async function commandDataset() {
       pendingReports: allReports.filter(r => !r.resolved && ((r.memberId && participantIds.has(r.memberId)) || (r.postId && postIds.has(r.postId)))).length,
     };
   });
-  return { snapshot, allMembers, allCerts, allReports, visiblePosts, memberAccounts, sectors };
+  return { snapshot, allMembers, allPosts, allCerts, allReports, visiblePosts, memberAccounts, sectors };
 }
 export async function founderOverview(clerkId: string): Promise<FounderCommandOverview> {
   await reconcileFounderEvents();
@@ -59,10 +59,12 @@ export async function founderOverview(clerkId: string): Promise<FounderCommandOv
   return {
     environment: process.env.REPLIT_DEPLOYMENT === "1" ? "production" : "development", refreshedAt: data.snapshot.refreshedAt,
     initializedAt: baseline[0]!.createdAt.toISOString(),
-    totals: { ...commandTotals(data.snapshot.accounts), posts: data.visiblePosts.length,
+    totals: { ...commandTotals(data.snapshot.accounts), posts: publishedPostCount(data.allPosts),
       pendingCertifications: data.allCerts.filter(c => c.status === "pending").length,
       pendingReports: data.allReports.filter(r => !r.resolved).length,
-      mediaInquiries: inquiryCount[0]!.n, commercialApplications: commercialCount[0]!.n, administrativeRequests: joinCount[0]!.n },
+      mediaInquiries: inquiryCount[0]!.n,
+      commercialApplications: commercialCount[0]!.n + data.allCerts.filter(c => c.status === "pending" && ["partner", "sponsor", "designer", "exhibitor"].includes(c.role)).length,
+      administrativeRequests: joinCount[0]!.n },
     sectors: data.sectors, enabledKinds: prefs.enabledKinds, unread: shown.filter(e => e.id > prefs.readThrough).length,
     notifications: shown.slice(0, 100).map(e => ({
       id: e.id, kind: e.kind, title: e.title, targetClerkId: e.targetClerkId, detail: e.detail, occurredAt: e.occurredAt.toISOString(),

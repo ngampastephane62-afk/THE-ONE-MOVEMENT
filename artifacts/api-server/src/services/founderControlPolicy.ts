@@ -2,6 +2,10 @@ import { SECTOR_SLUGS } from "@workspace/shared";
 import type { MembershipAccount } from "@workspace/api-zod";
 
 export const FOUNDER_NOTIFICATION_KINDS = ["registration", "email_verified", "profile_complete", "certification", "report", "request", "service_reply"] as const;
+export function publishedPostCount(posts: { hidden: boolean; visibility: string }[]) {
+  // Authorized aggregate only; this never exposes follower-only post content.
+  return posts.filter(p => !p.hidden && ["community", "sector", "followers"].includes(p.visibility)).length;
+}
 export function commandTotals(accounts: MembershipAccount[], now = Date.now()) {
   return {
     accounts: accounts.length,

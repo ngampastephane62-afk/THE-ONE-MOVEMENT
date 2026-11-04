@@ -4,7 +4,8 @@ import { build } from "esbuild";
 
 const fixture = `
 import {randomUUID} from "node:crypto";
-export const state={members:[],networks:[],reminders:[],emails:[],provider:"ok",users:new Map()};
+export const state={members:[],networks:[],reminders:[],emails:[],audit:[],provider:"ok",users:new Map()};
+export const auditLogTable={table:"audit"};
 export const ecosystemMembersTable={table:"members",clerkId:"clerkId"};
 export const networkProfiles={table:"networks",memberId:"memberId"};
 export const memberProfileRemindersTable={table:"reminders",clerkId:"clerkId",attemptId:"attemptId",id:"id"};
@@ -12,7 +13,7 @@ export const siteVisitSessionsTable={};
 let queue=Promise.resolve();
 export const db={
  select:()=>({from:table=>({where:condition=>({limit:async()=>state[table.table].filter(r=>r[condition.column]===condition.value).slice(0,1)})})}),
- insert:table=>({values:values=>({onConflictDoUpdate:conflict=>({returning:async()=>{
+ insert:table=>({values:values=>table.table==="audit"?Promise.resolve(state.audit.push({...values,createdAt:new Date()})):({onConflictDoUpdate:conflict=>({returning:async()=>{
   let row=state[table.table].find(r=>r.clerkId===values.clerkId);
   if(row)Object.assign(row,conflict.set);
   else{row={id:randomUUID(),optOutAt:null,acceptedAt:null,createdAt:new Date(),...values};state[table.table].push(row);}

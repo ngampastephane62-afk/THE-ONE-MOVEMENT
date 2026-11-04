@@ -1,7 +1,7 @@
 import { createHmac, randomUUID, timingSafeEqual } from "node:crypto";
 import { clerkClient } from "@clerk/express";
 import { ReplitConnectors } from "@replit/connectors-sdk";
-import { db, ecosystemMembersTable as members, memberProfileRemindersTable as reminders, networkProfiles } from "@workspace/db";
+import { db, ecosystemMembersTable as members, memberProfileRemindersTable as reminders, networkProfiles, auditLogTable as audit } from "@workspace/db";
 import { missingProfileEssentials, PROFILE_REQUIREMENTS } from "@workspace/shared";
 import { eq, sql } from "drizzle-orm";
 import { NetworkError } from "./networkAuth";
@@ -126,14 +126,20 @@ export async function sendReminder(clerkId: string, requestedBy: string, preview
     const [row] = await tx.insert(reminders).values({ id: preferenceId, clerkId, ...values }).onConflictDoUpdate({
       target: reminders.clerkId, set: values,
     }).returning();
+    await tx.insert(audit).values({ action: "founder.profile_reminder.confirmed", targetType: "clerk_account",
+      details: { actorClerkId: requestedBy, targetClerkId: clerkId, reason: "Rappel de profil confirmé après aperçu signé", status: "sending", attemptId: values.attemptId } });
     return row!;
   });
   const config = reminderConfiguration();
   const preferences = new URL(`/api/profile-reminders/preferences/${reserved.id}/${optOutSignature(reserved.id)}`, config.site).toString();
   const content = message(who, preferences);
   const setStatus = async (status: "failed" | "unknown" | "accepted", id?: string) => {
-    await db.update(reminders).set({ status, providerMessageId: id ?? null,
-      ...(status === "accepted" ? { acceptedAt: new Date() } : {}), updatedAt: new Date() }).where(eq(reminders.attemptId, reserved.attemptId));
+    await db.transaction(async tx => {
+      await tx.update(reminders).set({ status, providerMessageId: id ?? null,
+        ...(status === "accepted" ? { acceptedAt: new Date() } : {}), updatedAt: new Date() }).where(eq(reminders.attemptId, reserved.attemptId));
+      await tx.insert(audit).values({ action: `founder.profile_reminder.${status}`, targetType: "clerk_account",
+        details: { actorClerkId: requestedBy, targetClerkId: clerkId, reason: "Résultat du rappel de profil", status, attemptId: reserved.attemptId } });
+    });
     invalidateMemberDashboard();
   };
   let response: Response;

@@ -15,11 +15,11 @@ export const TOTAL_LABELS: Record<string, { label: string; note: string }> = {
   discoverable: { label: 'Listed in People', note: 'Opted into the member directory. Counted separately from activity.' },
   newMembers: { label: 'New · 7 days', note: 'Accounts created in the last 7 days.' },
   suspended: { label: 'Suspended', note: 'Accounts currently suspended.' },
-  posts: { label: 'Community posts', note: 'Visible community and sector posts. Excludes hidden posts, drafts and follower-only posts.' },
+  posts: { label: 'Published posts', note: 'Aggregate of community, sector and follower-only publications. Hidden posts and drafts excluded; private content is not exposed.' },
   pendingCertifications: { label: 'Pending certifications', note: 'Official role applications awaiting review.' },
   pendingReports: { label: 'Open reports', note: 'Moderation reports awaiting review.' },
-  mediaInquiries: { label: 'Media inquiries', note: 'Institutional press and media requests only.' },
-  commercialApplications: { label: 'Company applications', note: 'Business listings pending review.' },
+  mediaInquiries: { label: 'New media inquiries', note: 'New institutional press and media requests only.' },
+  commercialApplications: { label: 'Commercial applications', note: 'Pending business listings and commercial-role applications; separate requests, not unique members.' },
   administrativeRequests: { label: 'Join requests', note: 'Pending interest submissions from the Join page.' },
 };
 export const humanize = (k: string) => k.replace(/([A-Z])/g, ' $1').replace(/[_-]/g, ' ').replace(/^./, (c) => c.toUpperCase());

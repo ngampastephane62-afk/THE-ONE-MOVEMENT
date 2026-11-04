@@ -1,4 +1,5 @@
-import { useState, type ReactNode } from 'react';
+import { useLayoutEffect, useState, type ReactNode } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import InvitationProgress from '@/components/network/InvitationProgress';
 import PendingInvitation from '@/components/network/PendingInvitation';
 import { Helmet } from 'react-helmet-async';
@@ -216,10 +217,18 @@ function AppShell({ me, base, children }: Ctx & { children: ReactNode }) {
 }
 
 function NetworkGate() {
-  const { isSignedIn } = useAuth();
+  const { isSignedIn, userId } = useAuth();
+  const queryClient = useQueryClient();
   const { user } = useUser();
-  const profileQ = useGetMemberProfile({ query: { enabled: !!isSignedIn, queryKey: getGetMemberProfileQueryKey() } });
-  const stateQ = useGetNetworkState(undefined, { query: { enabled: !!isSignedIn, queryKey: getGetNetworkStateQueryKey(), refetchInterval: 25000 } });
+  const identityKey = { memberIdentity: userId };
+  const profileQ = useGetMemberProfile({ query: { enabled: !!isSignedIn, queryKey: [...getGetMemberProfileQueryKey(), identityKey] } });
+  const stateQ = useGetNetworkState(undefined, { query: { enabled: !!isSignedIn, queryKey: [...getGetNetworkStateQueryKey(), identityKey], refetchInterval: 25000 } });
+  useLayoutEffect(() => {
+    // Clear private child-query caches before painting a newly signed-in
+    // identity; a former Founder's cached records must not survive account switching.
+    queryClient.removeQueries({ predicate: q => q.queryKey.some(k => typeof k === 'string' && /^\/api\/(founder|network|member)(\/|$)/.test(k))
+      && !q.queryKey.some(k => !!k && typeof k === 'object' && 'memberIdentity' in k && k.memberIdentity === userId) });
+  }, [userId, queryClient]);
 
   if (profileQ.isLoading || stateQ.isLoading) return <Frame><div className="mx-auto max-w-2xl px-4 py-10"><Skeleton rows={4} /></div></Frame>;
   if (stateQ.isError) {

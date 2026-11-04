@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useParams } from 'wouter';
 import { useQueryClient } from '@tanstack/react-query';
@@ -11,6 +11,7 @@ import { STATE_PREFIX, errStatus, useAct } from '@/components/network/kit';
 import ConfirmActionDialog, { clearDraft, type ConfirmSpec } from '@/components/founder/ConfirmActionDialog';
 import { POLL, fmt, humanize, rid, sectorName } from '@/components/founder/command-helpers';
 import { ReminderPanel } from './FounderMembers';
+import { errMsg } from './proHooks';
 
 type Pending = { spec: ConfirmSpec; body: Omit<FounderMemberAction, 'reason' | 'requestId' | 'confirmed'> };
 const PRIVATE_KEYS = /location|address|city|country|region|phone|birth/i;
@@ -24,6 +25,7 @@ export default function FounderMemberDetail() {
   const { run, pending: followPending } = useAct();
   const [act, setAct] = useState<Pending | null>(null);
   const [busy, setBusy] = useState(false);
+  const attempt = useRef<{ key: string; id: string } | null>(null);
   const [err, setErr] = useState('');
   const [ok, setOk] = useState('');
   const [reminder, setReminder] = useState(false);
@@ -47,7 +49,10 @@ export default function FounderMemberDetail() {
     if (!act) return;
     setBusy(true); setErr('');
     try {
-      await actOnFounderMember(clerkId, { ...act.body, confirmed: true, reason, requestId: rid() });
+      const key = JSON.stringify([clerkId, act.body, reason]);
+      if (attempt.current?.key !== key) attempt.current = { key, id: rid() };
+      await actOnFounderMember(clerkId, { ...act.body, confirmed: true, reason, requestId: attempt.current.id });
+      attempt.current = null;
       clearDraft(act.spec.draftKey);
       setOk(`Done: ${act.spec.verb}.`);
       setAct(null);
@@ -57,7 +62,7 @@ export default function FounderMemberDetail() {
       qc.invalidateQueries({ queryKey: STATE_PREFIX });
     } catch (e) {
       const s = errStatus(e);
-      setErr(s === 409 ? 'The account changed since this page loaded. Nothing was applied.' : s === 403 ? 'This action is not permitted.' : `The action failed${s ? ` (HTTP ${s})` : ''}. Nothing was applied.`);
+      setErr(errMsg(e, s === 409 ? 'Review the current account and application status before trying again.' : s === 403 ? 'This action is not permitted.' : `The action could not be confirmed${s ? ` (HTTP ${s})` : ''}.`));
     } finally { setBusy(false); }
   }
   const certActions = (c: FounderCertification) => {
@@ -82,7 +87,7 @@ export default function FounderMemberDetail() {
         <h1 className="mt-1 font-display text-2xl text-ivory-50" data-testid="text-member-name">{name}</h1>
         <p className="mt-1 break-all font-mono text-xs text-ivory-300" data-testid="text-member-clerk-id">{clerkId}</p>
         <div className="mt-3 flex flex-wrap gap-1.5 text-[11px] font-semibold uppercase tracking-wider">
-          <span className={`rounded-full px-2 py-0.5 ${a.suspended || d.banned || d.locked ? 'bg-crimson-700 text-ivory-50' : 'bg-gold-500 text-ink-900'}`} data-testid="status-account">{d.banned ? 'Banned' : a.suspended ? 'Suspended' : d.locked ? 'Locked' : 'Active account'}</span>
+          <span className={`rounded-full px-2 py-0.5 ${a.suspended || d.banned || d.locked ? 'bg-crimson-700 text-ivory-50' : 'bg-gold-500 text-ink-900'}`} data-testid="status-account">{d.banned ? 'Banned' : d.locked ? 'Locked' : a.suspended ? 'Suspended' : 'Unrestricted account'}</span>
           <span className="rounded-full border border-ivory-100/30 px-2 py-0.5">{a.emailVerified ? 'Email verified' : 'Email unverified'}</span>
           <span className="rounded-full border border-ivory-100/30 px-2 py-0.5">Profile: {completion}</span>
           {d.discoverable && <span className="rounded-full border border-gold-400 px-2 py-0.5 text-gold-400">Listed in People</span>}

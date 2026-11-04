@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { ShieldCheck } from 'lucide-react';
 import {
@@ -15,6 +15,7 @@ export default function AdministrativeServiceInbox() {
   const q = useGetAdministrativeServiceMessages({ query: { queryKey: getGetAdministrativeServiceMessagesQueryKey(), refetchInterval: 30_000, retry: false } });
   const [text, setText] = useState('');
   const [busy, setBusy] = useState(false);
+  const attempt = useRef<{ text: string; id: string } | null>(null);
   const [msg, setMsg] = useState<{ ok: boolean; t: string } | null>(null);
   const [open, setOpen] = useState(true);
   const d = q.data;
@@ -43,12 +44,14 @@ export default function AdministrativeServiceInbox() {
     if (!body || busy) return;
     setBusy(true); setMsg(null);
     try {
-      await replyToAdministrativeServiceMessage({ text: body, requestId: rid() });
+      if (attempt.current?.text !== body) attempt.current = { text: body, id: rid() };
+      await replyToAdministrativeServiceMessage({ text: body, requestId: attempt.current.id });
+      attempt.current = null;
       setText('');
       setMsg({ ok: true, t: 'Reply sent to the administration.' });
       qc.invalidateQueries({ queryKey: getGetAdministrativeServiceMessagesQueryKey() });
     } catch (e) {
-      setMsg({ ok: false, t: `Your reply was not sent${errStatus(e) ? ` (HTTP ${errStatus(e)})` : ''}. Your text is kept.` });
+      setMsg({ ok: false, t: `Your reply could not be confirmed${errStatus(e) ? ` (HTTP ${errStatus(e)})` : ''}. Your text is kept; retrying will not duplicate it.` });
     } finally { setBusy(false); }
   }
 
