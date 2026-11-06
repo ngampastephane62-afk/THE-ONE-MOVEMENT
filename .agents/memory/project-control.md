@@ -3,6 +3,17 @@ name: Project control and Tropik licensing
 description: Approval boundaries for development, financial accounts, and legal ownership of TOMI.
 ---
 
+For the independent-account migration, the user confirmed that this workspace is
+the original project, not the Founder's new destination.
+
+**Why:** The migration directive described the intended destination, but the user
+explicitly clarified the actual environment after the readiness assessment.
+
+**How to apply:** Preserve the original deployment and connected resources.
+Do not treat credentials, databases or media available here as proof of a
+completed transfer. Confirm the destination separately before restoration;
+domain cutover and retirement of the original require explicit authorization.
+
 Le Founder doit avoir « la possibilité de modifier tous les textes, images, etc. sur le site » sans modifier le code.
 
 **Why:** The Founder repeated this requirement when authorizing partner management.
