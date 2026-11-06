@@ -1,6 +1,6 @@
 # TOMI — Dossier de transfert GitHub
 
-## État : préparation, transfert suspendu avant commit et push
+## État : conservation approuvée, prêt pour envoi sécurisé
 
 Ce document est un inventaire de transfert, pas une autorisation de déploiement.
 L’application originale, ses données, son DNS et ses comptes externes restent inchangés.
@@ -17,11 +17,12 @@ L’application originale, ses données, son DNS et ses comptes externes restent
 - Arbre de travail propre avant création de ce dossier ; aucun fichier source non suivi détecté.
 - Lecture distante et simulation de push réussies. Une simulation ne garantit pas
   l’acceptation effective des hooks, du transfert LFS ou des protections GitHub.
-- **Commit final de transfert : non créé. Push effectif : non effectué.**
+- **Commit final de transfert et résultat effectif du push : voir le rapport
+  de livraison et la branche distante après l’envoi.**
   Le SHA définitif sera fourni dans le rapport après commit et vérification distante.
   Un document ne peut pas contenir littéralement le SHA du commit qui le crée.
 
-## Blocage sécurité et fichiers volumineux
+## Décision de conservation et fichiers volumineux
 
 Le dépôt suit déjà 306 fichiers sous `attached_assets/`, dont :
 
@@ -31,9 +32,10 @@ Le dépôt suit déjà 306 fichiers sous `attached_assets/`, dont :
   Son répertoire contient 138 entrées, dont images, vidéos et un PDF.
 
 Ces deux fichiers sont également présents dans l’arbre du commit distant inspecté.
-Leur caractère public et l’absence de données personnelles dans leurs contenus
-ne sont pas établis. Aucun contenu de ces documents n’a été reproduit ici.
-Ne pas transmettre de nouveaux commits avant résolution de cette vérification.
+Informé de leur présence et du risque de confidentialité, le demandeur a répondu
+« rien exclure ». Tous les fichiers déjà suivis sont donc conservés sans retrait.
+Cette décision ne certifie pas l’absence de données personnelles dans les anciens
+documents. Aucun contenu de ces documents n’a été reproduit ici.
 Ne pas effacer ou réécrire l’historique sans autorisation explicite.
 Un retrait d’un futur commit ne retire pas les anciennes versions de l’historique.
 
@@ -41,7 +43,10 @@ Un contrôle par motifs des fichiers texte suivis de moins de 8 Mio n’a trouv�
 aucune clé privée, clé Resend, clé secrète Stripe/Clerk, jeton GitHub ou URL de
 base avec mot de passe selon les motifs recherchés. Ce contrôle limité n’est
 pas un audit exhaustif : historique, documents binaires, images et archives
-nécessitent une revue séparée avant certification du transfert.
+nécessitent une revue séparée avant certification exhaustive du transfert.
+Un contrôle supplémentaire des 224 blobs texte nouveaux dans les commits
+locaux à envoyer n’a détecté aucun de ces motifs ; aucun blob nouveau n’a
+été écarté de ce contrôle pour taille ou format binaire.
 
 Six chemins sont actuellement suivis par LFS, avec des fichiers locaux de
 54 Mio à 1,52 Gio. Vérifier les objets LFS distants et les droits/quotas du compte
@@ -175,7 +180,7 @@ toute bascule ultérieure, autorisée séparément.
 
 - [ ] Revue confidentialité des documents et médias suivis, y compris archive.
 - [ ] Contrôle des secrets et données personnelles de tous les commits à envoyer.
-- [ ] Résolution approuvée de tout fichier privé sans réécriture non autorisée.
+- [x] Décision explicite de conserver les fichiers déjà suivis, sans réécriture.
 - [ ] Vérification des fichiers ignorés nécessaires à l’exécution.
 - [ ] Objets LFS disponibles pour le compte destinataire.
 - [ ] Accès GitHub du Founder confirmé ; visibilité du dépôt vérifiée.
@@ -189,5 +194,6 @@ toute bascule ultérieure, autorisée séparément.
 - [ ] Aucune action de paiement, email réel, déploiement ou bascule DNS involontaire.
 
 Les contrôles fonctionnels antérieurs ne certifient pas un nouveau compte cible.
-À ce stade, aucun import, transfert de données, envoi effectif GitHub ni
-déploiement n’a été réalisé dans cette opération.
+La vérification de l’envoi effectif GitHub est fournie dans le rapport final.
+Aucun import cible, transfert de données, déploiement ni bascule DNS n’est
+autorisé ou réalisé par cette opération de conservation du code.
