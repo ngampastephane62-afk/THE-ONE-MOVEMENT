@@ -22,7 +22,7 @@ import SectionHeading from '@/components/SectionHeading';
 // Legacy hero retained for rollback: '@/components/home/HomeBrandHero'
 import CinematicHero from '@/components/home/CinematicHero';
 import HomeArchiveCarousel from '@/components/home/HomeArchiveCarousel';
-import { isOriginalPresentation, normalizeDoc, savedResolver, viewOf, type MediaResolver, type SectionView } from '@/lib/home-editorial';
+import { REEL_KEYS, isOriginalPresentation, normalizeDoc, savedResolver, viewOf, type MediaResolver, type SectionView } from '@/lib/home-editorial';
 import movementReel from '@/assets/media/home/TOMI_HOME_MOVEMENT_REEL_01.mp4';
 import movementReelFallback from '@/assets/media/home/TOMI_HOME_MOVEMENT_REEL_01.webm';
 import movementReelPoster from '@/assets/media/home/TOMI_HOME_MOVEMENT_REEL_01-poster.webp';
@@ -104,6 +104,9 @@ function Movement({ ed, g }: { ed: SectionView; g: boolean }) {
 
 function Origin({ ed, g }: { ed: SectionView; g: boolean }) {
   const feature = ed.m('feature');
+  // Story in Motion: Founder-uploaded reels, in slot order. Curated reels remain when none are saved.
+  const uploads = REEL_KEYS.map((k) => ed.m(k)).filter((m): m is NonNullable<typeof m> => !!m && m.kind === 'video')
+    .map((m, i) => ({ uploadId: m.uploadId, src: m.src, title: m.alt.trim() || `The One Movement · Story in Motion ${i + 1}` }));
   const body = ed.ov('body');
   return (
     <section className="bg-ivory-100 py-section-lg tomi-editorial-chapter" data-chapter="THE ORIGIN" aria-labelledby="fashion-proof-heading">
@@ -114,7 +117,7 @@ function Origin({ ed, g }: { ed: SectionView; g: boolean }) {
 
         <div className={`tomi-fashion-editorial mt-12 grid overflow-hidden rounded-sharp border border-sand-200 bg-ivory-50 lg:grid-cols-12${g ? ' he-grid' : ''}`}>
           <Reveal direction="left" className="he-media tomi-fashion-media lg:col-span-6 flex flex-col items-center justify-center">
-            {feature ? <EditorialFigure media={feature} className="w-full p-4" /> : <HomeReelStrip actionsLayout="row" />}
+            {feature ? <EditorialFigure media={feature} className="w-full p-4" /> : <HomeReelStrip actionsLayout="row" uploads={uploads} />}
           </Reveal>
           <Reveal delay={100} direction="right" className="flex flex-col justify-center p-7 sm:p-10 lg:col-span-6">
             <p className="text-eyebrow text-gold-600">{ed.t('kicker')}</p>

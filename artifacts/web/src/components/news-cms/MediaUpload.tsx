@@ -15,7 +15,7 @@ export function useNewsUpload() {
     const types: readonly string[] = kind === 'image' ? IMAGE_TYPES : VIDEO_TYPES;
     const max = kind === 'image' ? IMAGE_MAX : VIDEO_MAX;
     if (!types.includes(file.type)) throw new Error(kind === 'image' ? 'Use a JPEG, PNG, WebP or GIF image.' : 'Use an MP4, WebM or QuickTime video.');
-    if (file.size > max) throw new Error(`This file is larger than ${kind === 'image' ? '20' : '100'} MiB.`);
+    if (file.size > max) throw new Error(`This file is larger than ${Math.round(max / (1024 * 1024))} MiB.`);
     let ticket;
     try { ticket = await request.mutateAsync({ data: { filename: file.name.slice(0, 200) || 'upload', contentType: file.type as NewsUploadInputContentType, size: file.size } }); }
     catch (e) { throw new Error(errMsg(e, 'The upload could not be prepared.')); }

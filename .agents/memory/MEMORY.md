@@ -32,3 +32,4 @@
 - [Programs editorial motion](programs-editorial-motion.md) — programme-only content, actual relocation to sectors, latest Gala image correction and pausable editorial motion.
 - [News editorial priority](news-editorial-priority.md) — newest published story first; coordinated editorial motion, source-labelled media and preserved historical archive last.
 - [Founder membership dashboard](founder-membership-dashboard.md) — central My Space counts, complete/incomplete profiles, email follow-up and clear ecosystem entry guidance.
+- [Founder editorial authoring](editorial-authoring-rules.md) — multilingual public text control, Tropik articles, reels, past Fashion Week videos, original image ratios and 500 MiB videos.

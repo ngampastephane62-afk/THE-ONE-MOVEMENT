@@ -49,7 +49,7 @@ function CoversPage() {
       <div className="mt-[5%] grid flex-1 grid-cols-3 content-start gap-[3%]">
         {rest.map((c) => (
           <figure key={c.n}>
-            <img src={ART(c.n)} alt={`Tropik Magazine cover featuring ${c.name}`} draggable={false} className="aspect-[3/4] w-full object-cover" loading="lazy" />
+            <img src={ART(c.n)} alt={`Tropik Magazine cover featuring ${c.name}`} draggable={false} className="aspect-[3/4] w-full object-contain" loading="lazy" />
             <figcaption className="mt-1 truncate text-[clamp(8px,1vw,11px)] text-ivory-200" translate="no">{c.name}</figcaption>
           </figure>
         ))}

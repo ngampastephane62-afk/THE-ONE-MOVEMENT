@@ -10,7 +10,7 @@ import {
 import { ErrorBox, Skeleton, btn, btnGhost, card, errStatus, field } from '@/components/network/kit';
 import HomeMediaSlot from '@/components/founder/pages/HomeMediaSlot';
 import { HomeExperienceView } from '@/pages/home/HomeExperience';
-import { AUTO_HREF, DEFAULT_TYPES, HOME_LINK_TARGETS, HOME_REGISTRY, homeAssetUrl, newSection, normalizeDoc, presentationOf, publishIssues, type MediaResolver } from '@/lib/home-editorial';
+import { REEL_MAX, isReelKey, reelIndex, AUTO_HREF, DEFAULT_TYPES, HOME_LINK_TARGETS, HOME_REGISTRY, homeAssetUrl, newSection, normalizeDoc, presentationOf, publishIssues, type MediaResolver } from '@/lib/home-editorial';
 import { useLeaveGuard } from '@/components/founder/pages/useLeaveGuard';
 import { useMe } from './ctx';
 
@@ -41,6 +41,62 @@ function Segmented<K extends keyof typeof CHOICES>({ k, value, onChange, allowed
       </div>
       {disabledNote && <p className="mt-1 text-[11px] text-ink-700">{disabledNote}</p>}
     </fieldset>
+  );
+}
+
+/** Story in Motion: ordered upload slots reel-1..reel-12. Keys stay contiguous so slot number = order on the page. */
+function ReelManager({ s, resolve, onChange, onBusy }: { s: HomeSection; resolve: MediaResolver; onChange: (s: HomeSection, localFile?: { uploadId: string; file: File }) => void; onBusy: (key: string, b: boolean) => void }) {
+  const def = HOME_REGISTRY[s.type];
+  const reels = s.media.filter((m) => isReelKey(m.key)).sort((a, b) => reelIndex(a.key) - reelIndex(b.key));
+  const [adding, setAdding] = useState(false);
+  const [busy, setBusy] = useState<Record<string, boolean>>({});
+  const anyBusy = Object.values(busy).some(Boolean);
+  const write = (list: HomeMedia[], localFile?: { uploadId: string; file: File }) => {
+    const others = s.media.filter((m) => !isReelKey(m.key));
+    onChange({ ...s, media: [...others, ...list.map((m, i) => ({ ...m, key: `reel-${i + 1}` }))] }, localFile);
+  };
+  const move = (i: number, d: -1 | 1) => { const j = i + d; if (j < 0 || j >= reels.length) return; const n = [...reels]; [n[i], n[j]] = [n[j], n[i]]; write(n); };
+  const remove = (i: number) => { if (window.confirm(`Retirer le reel ${i + 1} du brouillon ? Le fichier original n'est pas supprime.`)) write(reels.filter((_, k) => k !== i)); };
+  const track = (k: string, b: boolean) => { setBusy((x) => (x[k] === b ? x : { ...x, [k]: b })); onBusy(`${s.id}:${k}`, b); };
+  const nextKey = `reel-${reels.length + 1}`;
+  const slotDef = (k: string) => def.media.find((m) => m.key === k)!;
+
+  return (
+    <div className="rounded-2xl border border-lagoon-600/30 bg-lagoon-900/[0.03] p-3 sm:p-4" data-testid="reel-manager">
+      <div className="flex flex-wrap items-end justify-between gap-2">
+        <div>
+          <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-gold-700">Story in Motion</p>
+          <p className="mt-1 text-xs text-ink-700">{reels.length ? `${reels.length} / ${REEL_MAX} reels televerses remplacent les reels d'origine, dans cet ordre.` : "Aucun reel televerse : les reels d'origine restent affiches."} Le media principal ci-dessus, s'il existe, reste prioritaire.</p>
+        </div>
+        <span className="font-mono text-[11px] text-lagoon-700" data-testid="text-reel-count">{String(reels.length).padStart(2, '0')}/{REEL_MAX}</span>
+      </div>
+      <ol className="mt-3 flex flex-col gap-3">
+        {reels.map((m, i) => (
+          <li key={m.uploadId} className="flex flex-col gap-2" data-testid={`row-reel-${i + 1}`}>
+            <div className="flex items-center gap-1.5">
+              <span className="font-mono text-[11px] text-gold-700">{String(i + 1).padStart(2, '0')}</span>
+              <span className="flex-1" />
+              <button type="button" aria-label={`Monter le reel ${i + 1}`} disabled={i === 0 || anyBusy} onClick={() => move(i, -1)} className="grid h-11 w-11 place-items-center rounded-full border border-sand-300 disabled:opacity-30" data-testid={`button-reel-up-${i + 1}`}><ArrowUp className="h-4 w-4" /></button>
+              <button type="button" aria-label={`Descendre le reel ${i + 1}`} disabled={i === reels.length - 1 || anyBusy} onClick={() => move(i, 1)} className="grid h-11 w-11 place-items-center rounded-full border border-sand-300 disabled:opacity-30" data-testid={`button-reel-down-${i + 1}`}><ArrowDown className="h-4 w-4" /></button>
+              <button type="button" aria-label={`Retirer le reel ${i + 1}`} disabled={anyBusy} onClick={() => remove(i)} className="grid h-11 w-11 place-items-center rounded-full border border-sand-300 text-coral-500 disabled:opacity-30" data-testid={`button-reel-remove-${i + 1}`}><Trash2 className="h-4 w-4" /></button>
+            </div>
+            <HomeMediaSlot idBase={`${s.id}-${m.key}`} def={slotDef(m.key)} value={m} previewSrc={resolve(m)}
+              onChange={(v, file) => { if (!v) { write(reels.filter((_, k) => k !== i)); return; } const n = [...reels]; n[i] = v; write(n, file ? { uploadId: v.uploadId, file } : undefined); }}
+              onBusy={(b) => track(m.key, b)} />
+          </li>
+        ))}
+      </ol>
+      {adding && reels.length < REEL_MAX ? (
+        <div className="mt-3">
+          <HomeMediaSlot key={nextKey} idBase={`${s.id}-${nextKey}-new`} def={slotDef(nextKey)} value={undefined} previewSrc={null}
+            onChange={(v, file) => { if (v) { write([...reels, v], file ? { uploadId: v.uploadId, file } : undefined); setAdding(false); track('new', false); } }}
+            onBusy={(b) => track('new', b)} />
+          <button type="button" className={`${btnGhost} mt-2 min-h-11`} disabled={!!busy.new} onClick={() => setAdding(false)}>Annuler l'ajout</button>
+        </div>
+      ) : (
+        <button type="button" className={`${btn} mt-3 min-h-11`} disabled={reels.length >= REEL_MAX || anyBusy} onClick={() => setAdding(true)} data-testid="button-add-reel"><Plus className="h-3.5 w-3.5" />Ajouter un reel</button>
+      )}
+    </div>
   );
 }
 
@@ -99,9 +155,10 @@ function SectionEditor({ s, onChange, onBusy, resolve }: { s: HomeSection; onCha
 
       <section aria-labelledby={`med-${s.id}`} className="flex flex-col gap-3">
         <h3 id={`med-${s.id}`} className="text-xs font-bold uppercase tracking-[0.16em] text-lagoon-700">Medias</h3>
-        {def.media.map((m) => (
+        {def.media.filter((m) => !isReelKey(m.key)).map((m) => (
           <HomeMediaSlot key={m.key} idBase={`${s.id}-${m.key}`} def={m} value={s.media.find((x) => x.key === m.key)} previewSrc={(() => { const v = s.media.find((x) => x.key === m.key); return v ? resolve(v) : null; })()} onChange={(v, file) => setMedia(m.key, v, file)} onBusy={(b) => onBusy(`${s.id}:${m.key}`, b)} />
         ))}
+        {def.media.some((m) => isReelKey(m.key)) && <ReelManager s={s} resolve={resolve} onChange={onChange} onBusy={onBusy} />}
       </section>
 
       <section aria-labelledby={`pres-${s.id}`} className="flex flex-col gap-4">
@@ -317,8 +374,13 @@ export default function FounderPages() {
         <p className="mt-2 text-eyebrow text-gold-400">FONDATEUR · PAGES · ACCUEIL</p>
         <h1 className="mt-2 font-display text-2xl tracking-[0.03em] text-ivory-50 sm:text-3xl">Modifier la page d'accueil</h1>
         <div className="mt-3 h-px w-16 bg-gold-400" aria-hidden="true" />
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ivory-200">Textes, medias, liens, ordre des sections et presentation. Enregistrer garde le brouillon prive ; Publier met a jour la page publique apres confirmation. Seule la page d'accueil est modifiable ici pour le moment.</p>
-        <Link href="~/" target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex min-h-11 items-center gap-1.5 text-xs font-semibold text-gold-400 underline underline-offset-4" data-testid="link-home-public"><ExternalLink className="h-3.5 w-3.5" />Voir la page publique</Link>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ivory-200">Textes, medias, liens, ordre des sections et presentation. Enregistrer garde le brouillon prive ; Publier met a jour la page publique apres confirmation. Les textes des autres pages publiques, en sept langues, se modifient dans Textes du site.</p>
+        <div className="mt-3 flex flex-wrap gap-x-5">
+          <Link href="/member/founder/site-pages" className="inline-flex min-h-11 items-center gap-1.5 text-xs font-semibold text-gold-400 underline underline-offset-4" data-testid="link-site-pages"><PencilLine className="h-3.5 w-3.5" />Textes du site (toutes les pages, 7 langues)</Link>
+          <Link href="/member/founder/tropik" className="inline-flex min-h-11 items-center gap-1.5 text-xs font-semibold text-gold-400 underline underline-offset-4" data-testid="link-tropik-editor">Articles Tropik</Link>
+          <Link href="/member/founder/programs?program=fashion-week" className="inline-flex min-h-11 items-center gap-1.5 text-xs font-semibold text-gold-400 underline underline-offset-4" data-testid="link-fashion-week-editor">Fashion Week : videos des editions</Link>
+        </div>
+        <Link href="~/" target="_blank" rel="noopener noreferrer" className="mt-1 inline-flex min-h-11 items-center gap-1.5 text-xs font-semibold text-gold-400 underline underline-offset-4" data-testid="link-home-public"><ExternalLink className="h-3.5 w-3.5" />Voir la page publique</Link>
       </header>
       {q.isLoading ? <Skeleton rows={6} />
         : q.isError || !q.data ? <ErrorBox onRetry={() => q.refetch()} msg="Le contenu de la page d'accueil n'a pas pu etre charge." />

@@ -33,6 +33,7 @@ import { FounderAlertBadge } from '@/components/founder/CommandOverview';
 import FounderPartners from './FounderPartners';
 import FounderPrograms from './FounderPrograms';
 import FounderPages from './FounderPages';
+import FounderSitePages from './FounderSitePages';
 import SettingsPage from './Settings';
 import JourneyProgress, { useJourney } from './JourneyProgress';
 import MemberWelcome from './MemberWelcome';
@@ -264,9 +265,11 @@ function NetworkGate() {
           <Route path="/member/packages" component={Packages} />
           <Route path="/member/certifications" component={Certifications} />
           <Route path="/member/admin">{me.founder ? <Admin /> : <Redirect to="/member" replace />}</Route>
-          <Route path="/member/founder/news">{me.founder ? <FounderNews /> : <Redirect to="/member" replace />}</Route>
+          <Route path="/member/founder/news">{me.founder ? <FounderNews key="news" /> : <Redirect to="/member" replace />}</Route>
           <Route path="/member/founder/partners">{me.founder ? <FounderPartners /> : <Redirect to="/member" replace />}</Route>
           <Route path="/member/founder/programs">{me.founder ? <FounderPrograms /> : <Redirect to="/member" replace />}</Route>
+          <Route path="/member/founder/site-pages">{me.founder ? <FounderSitePages /> : <Redirect to="/member" replace />}</Route>
+          <Route path="/member/founder/tropik">{me.founder ? <FounderNews key="tropik" collection="tropik" /> : <Redirect to="/member" replace />}</Route>
           <Route path="/member/founder/pages">{me.founder ? <FounderPages /> : <Redirect to="/member" replace />}</Route>
           <Route path="/member/founder/members/:clerkId">{me.founder ? <FounderMemberDetail /> : <Redirect to="/member" replace />}</Route>
           <Route path="/member/founder/sectors/:slug">{me.founder ? <FounderSectors /> : <Redirect to="/member" replace />}</Route>

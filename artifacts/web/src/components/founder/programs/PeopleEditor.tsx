@@ -3,7 +3,7 @@ import { ChevronDown, Plus } from 'lucide-react';
 import type { ProgramPerson } from '@workspace/api-client-react';
 import { btnGhost, field } from '@/components/network/kit';
 import { portraitOf } from '@/lib/use-programme-editorial';
-import { Field, OrderControls, Text, Toggle, UploadButton, move, newId } from './fields';
+import { Field, OrderControls, Text, Toggle, UploadButton, IMAGE_MB, move, newId } from './fields';
 import VideoListEditor from './VideoListEditor';
 
 const KIND_LABEL: Record<ProgramPerson['kind'], string> = { nominee: 'Nominee', speaker: 'Speaker', participant: 'Participant' };
@@ -66,7 +66,7 @@ export default function PeopleEditor({ people, onChange, onBusy }: { people: Pro
                     <div className="md:col-span-2"><Text label="Biography (verified achievements and impact only)" value={p.biography} onChange={(v) => set(p.id, { biography: v })} max={3000} rows={4} testId={`input-person-bio-${p.id}`} /></div>
                   </div>
                   <div className="flex flex-wrap items-start gap-4">
-                    <UploadButton kind="image" label={img ? 'Replace portrait / poster' : 'Upload portrait / poster (5 MB)'} onUploaded={(id) => set(p.id, { portraitUploadId: id })} onBusy={onBusy} testId={`upload-portrait-${p.id}`} />
+                    <UploadButton kind="image" label={img ? 'Replace portrait / poster' : `Upload portrait / poster (${IMAGE_MB} MB)`} onUploaded={(id) => set(p.id, { portraitUploadId: id })} onBusy={onBusy} testId={`upload-portrait-${p.id}`} />
                     {p.portraitKey && <span className="text-xs text-ink-700">Existing official poster retained (read-only).</span>}
                     <div className="flex flex-col">
                       <Toggle label={p.kind === 'nominee' ? 'Nomination verified' : 'Confirmed by the Founder'} checked={p.confirmed} onChange={(b) => set(p.id, { confirmed: b })} testId={`toggle-person-confirmed-${p.id}`} />

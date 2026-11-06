@@ -1,5 +1,6 @@
 import { useRef, useState, type ReactNode } from 'react';
 import { Link } from 'wouter';
+import { UPLOAD_LIMITS, maxUploadBytes } from '@workspace/shared';
 import { useQueryClient } from '@tanstack/react-query';
 import { Download, FileText, Loader2, Paperclip, RotateCw, ShieldCheck, Star, X } from 'lucide-react';
 import {
@@ -208,10 +209,11 @@ export const ACCEPT_ALL = [...IMG, ...VID, ...AUD, 'application/pdf'].join(',');
 export const ACCEPT_IMG = IMG.join(',');
 export const ACCEPT_EVIDENCE = [...IMG, 'application/pdf'].join(',');
 
+const mb = (n: number) => Math.round(n / (1024 * 1024));
 function check(f: File): string | null {
   const t = f.type;
-  if (VID.includes(t)) return f.size > 100 * 1024 * 1024 ? 'Videos must be 100 MB or less.' : null;
-  if ([...IMG, ...AUD, 'application/pdf'].includes(t)) return f.size > 20 * 1024 * 1024 ? 'Images, audio and PDFs must be 20 MB or less.' : null;
+  if (VID.includes(t)) return f.size > maxUploadBytes(t) ? `Videos must be ${mb(UPLOAD_LIMITS.videoBytes)} MB or less.` : null;
+  if ([...IMG, ...AUD, 'application/pdf'].includes(t)) return f.size > maxUploadBytes(t) ? `Images, audio and PDFs must be ${mb(UPLOAD_LIMITS.fileBytes)} MB or less.` : null;
   return 'Unsupported format. Use JPEG, PNG, WEBP, GIF, MP4, WEBM, MOV, MP3, WAV, OGG or PDF.';
 }
 

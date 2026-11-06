@@ -1,10 +1,13 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 import { ArrowDown, ArrowUp, Trash2, Upload } from 'lucide-react';
 import { useUploads, field, btnGhost } from '@/components/network/kit';
+import { UPLOAD_LIMITS } from '@workspace/shared';
 
 export const IMAGE_ACCEPT = 'image/jpeg,image/png,image/webp';
 export const VIDEO_ACCEPT = 'video/mp4,video/webm,video/quicktime';
-const MAX_IMG = 5 * 1024 * 1024;
+const MAX_IMG = UPLOAD_LIMITS.fileBytes;
+export const IMAGE_MB = Math.round(UPLOAD_LIMITS.fileBytes / (1024 * 1024));
+export const VIDEO_MB = Math.round(UPLOAD_LIMITS.videoBytes / (1024 * 1024));
 
 export const newId = (p: string) => `${p}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
 
@@ -81,7 +84,8 @@ export function UploadButton({ kind, label, onUploaded, onBusy, testId }: { kind
           const f = e.target.files?.[0];
           e.target.value = '';
           if (!f) return;
-          if (kind === 'image' && f.size > MAX_IMG) { window.alert('Images must be 5 MB or less.'); return; }
+          if (kind === 'image' && f.size > MAX_IMG) { window.alert(`Images must be ${IMAGE_MB} MB or less.`); return; }
+          if (kind === 'video' && f.size > UPLOAD_LIMITS.videoBytes) { window.alert(`Videos must be ${VIDEO_MB} MB or less. The original file is never compressed.`); return; }
           u.clear(); u.add([f]);
         }} data-testid={`input-${testId}`} />
       <button type="button" className={btnGhost} onClick={() => ref.current?.click()} disabled={u.busy} data-testid={`button-${testId}`}>

@@ -25,15 +25,17 @@ interface Props {
   history?: HistoryPaging;
   onBusyChange?: (b: boolean) => void;
   onReload?: () => Promise<NewsFounderArticle | undefined>;
+  /** New articles only: prefilled category (e.g. Tropik collection). */
+  defaultCategory?: NewsSnapshot['category'];
 }
 
-export default function ArticleEditor({ article, options, onCommitted, onDirtyChange, history, onBusyChange, onReload }: Props) {
+export default function ArticleEditor({ article, options, onCommitted, onDirtyChange, history, onBusyChange, onReload, defaultCategory }: Props) {
   const qc = useQueryClient();
   const run = useRunFounderNewsAction();
-  const [snap, setSnap] = useState<NewsSnapshot>(() => article?.draft ?? article?.published ?? emptySnapshot());
+  const [snap, setSnap] = useState<NewsSnapshot>(() => article?.draft ?? article?.published ?? emptySnapshot(defaultCategory));
   const [slug, setSlug] = useState(article?.slug ?? '');
   const [slugTouched, setSlugTouched] = useState(!!article);
-  const [base, setBase] = useState(() => JSON.stringify({ s: article?.draft ?? article?.published ?? emptySnapshot(), slug: article?.slug ?? '' }));
+  const [base, setBase] = useState(() => JSON.stringify({ s: article?.draft ?? article?.published ?? emptySnapshot(defaultCategory), slug: article?.slug ?? '' }));
   const [tab, setTab] = useState<'edit' | 'preview' | 'history'>('edit');
   const [pending, setPending] = useState<Pending>(null);
   const [error, setError] = useState('');

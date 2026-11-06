@@ -12,7 +12,7 @@ export interface NetworkUploadInput {
   contentType: string;
   /**
      * @minimum 1
-     * @maximum 104857600
+     * @maximum 524288000
      */
   size: number;
 }

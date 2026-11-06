@@ -2,7 +2,7 @@ import { Router, type NextFunction, type Request, type Response } from "express"
 import { and, desc, eq, sql } from "drizzle-orm";
 import { db, networkUploads, institutionalInquiriesTable as inquiries } from "@workspace/db";
 import { networkAuth, networkWrite, requireFounder, actor, NetworkError } from "../services/networkAuth";
-import { objectFile } from "../services/networkFiles";
+import { streamEditorialUpload } from "../services/editorialStream";
 import { PROGRAM_NAMES, programSlug, programDocument, programDTO, saveProgram, referencedUploads } from "../services/programEditorial";
 
 const router = Router();
@@ -31,20 +31,7 @@ router.get("/founder/program-editorial/:slug/inquiries", networkAuth, async (req
 async function asset(req: Request, res: Response, id: string) {
   const [upload] = await db.select().from(networkUploads).where(and(eq(networkUploads.id, id), eq(networkUploads.ready, true)));
   if (!upload) throw new NetworkError(404, "Media not found.");
-  let start = 0, end = upload.size - 1;
-  if (req.headers.range) {
-    const m = /^bytes=(\d*)-(\d*)$/.exec(req.headers.range);
-    if (!m || (!m[1] && !m[2])) return void res.status(416).set("Content-Range", `bytes */${upload.size}`).end();
-    if (!m[1]) start = Math.max(0, upload.size - Number(m[2]));
-    else { start = Number(m[1]); if (m[2]) end = Math.min(end, Number(m[2])); }
-    if (!Number.isSafeInteger(start) || !Number.isSafeInteger(end) || start > end || start >= upload.size) return void res.status(416).set("Content-Range", `bytes */${upload.size}`).end();
-  }
-  const [bytes] = await objectFile(upload.objectPath).download({ start, end });
-  if (res.destroyed) return;
-  res.set({ "Content-Type": upload.contentType, "Content-Length": String(bytes.length), "Accept-Ranges": "bytes",
-    "Cache-Control": "private,no-store", "X-Content-Type-Options": "nosniff", "Content-Security-Policy": "default-src 'none'; sandbox" });
-  if (req.headers.range) res.status(206).set("Content-Range", `bytes ${start}-${end}/${upload.size}`);
-  res.send(bytes);
+  streamEditorialUpload(req, res, upload);
 }
 router.get("/program-editorial/:slug/assets/:id", async (req, res, next: NextFunction) => {
   const slug = programSlug(req.params.slug), id = String(req.params.id);

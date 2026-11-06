@@ -41,7 +41,7 @@ export async function processGratitudeFile(
       ...base, "-vf", "scale=w='min(2560,iw)':h=-2", "-frames:v", "1", "-q:v", "3", "-y", playback,
     ]);
     const size = (await stat(playback)).size;
-    if (!size || size > 100 * 1024 * 1024) throw new NetworkError(400, "The processed media exceeds the allowed size.");
+    if (!size || size > 500 * 1024 * 1024) throw new NetworkError(400, "The processed media exceeds the allowed size.");
     let thumbnail: string | null = null;
     if (kind === "video") {
       thumbnail = path.join(directory, "thumbnail.jpg");

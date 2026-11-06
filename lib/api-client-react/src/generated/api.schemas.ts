@@ -5,6 +5,62 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+export interface SiteCopyEntry {
+  /**
+     * @minLength 1
+     * @maxLength 6000
+     */
+  source: string;
+  /** @maxLength 6000 */
+  value: string;
+}
+
+export type SiteLanguageCopyLanguage = typeof SiteLanguageCopyLanguage[keyof typeof SiteLanguageCopyLanguage];
+
+
+export const SiteLanguageCopyLanguage = {
+  en: 'en',
+  fr: 'fr',
+  ar: 'ar',
+  es: 'es',
+  pt: 'pt',
+  sw: 'sw',
+  zh: 'zh',
+} as const;
+
+export interface SiteLanguageCopy {
+  language: SiteLanguageCopyLanguage;
+  /** @maxItems 1000 */
+  entries: SiteCopyEntry[];
+}
+
+export type SitePageDocumentStatus = typeof SitePageDocumentStatus[keyof typeof SitePageDocumentStatus];
+
+
+export const SitePageDocumentStatus = {
+  draft: 'draft',
+  published: 'published',
+} as const;
+
+export interface SitePageDocument {
+  /**
+     * @minLength 1
+     * @maxLength 100
+     */
+  pageKey: string;
+  /** @nullable */
+  updatedAt: string | null;
+  status: SitePageDocumentStatus;
+  /** @maxItems 7 */
+  copies: SiteLanguageCopy[];
+}
+
+export interface SitePageInput {
+  /** @nullable */
+  expectedUpdatedAt: string | null;
+  content: SitePageDocument;
+}
+
 export type FounderPreferenceInputEnabledKindsItem = typeof FounderPreferenceInputEnabledKindsItem[keyof typeof FounderPreferenceInputEnabledKindsItem];
 
 
@@ -890,7 +946,7 @@ export interface GratitudeUploadInput {
   contentType: GratitudeUploadInputContentType;
   /**
      * @minimum 1
-     * @maximum 104857600
+     * @maximum 524288000
      */
   size: number;
   /** @maxLength 500 */
@@ -1203,6 +1259,7 @@ export const NewsSnapshotCategory = {
   'event-announcement': 'event-announcement',
   'humanitarian-update': 'humanitarian-update',
   'ecosystem-update': 'ecosystem-update',
+  'tropik-article': 'tropik-article',
 } as const;
 
 export interface NewsSnapshot {
@@ -1312,7 +1369,7 @@ export interface NewsUploadInput {
   contentType: NewsUploadInputContentType;
   /**
      * @minimum 1
-     * @maximum 104857600
+     * @maximum 524288000
      */
   size: number;
 }
@@ -2183,7 +2240,7 @@ export interface NetworkUploadInput {
   contentType: string;
   /**
      * @minimum 1
-     * @maximum 104857600
+     * @maximum 524288000
      */
   size: number;
 }
@@ -2975,14 +3032,30 @@ export type GetPublishedNewsArticlesParams = {
  * @minimum 1
  */
 page?: number;
+category?: GetPublishedNewsArticlesCategory;
 };
+
+export type GetPublishedNewsArticlesCategory = typeof GetPublishedNewsArticlesCategory[keyof typeof GetPublishedNewsArticlesCategory];
+
+
+export const GetPublishedNewsArticlesCategory = {
+  'tropik-article': 'tropik-article',
+} as const;
 
 export type GetFounderNewsParams = {
 /**
  * @minimum 1
  */
 page?: number;
+category?: GetFounderNewsCategory;
 };
+
+export type GetFounderNewsCategory = typeof GetFounderNewsCategory[keyof typeof GetFounderNewsCategory];
+
+
+export const GetFounderNewsCategory = {
+  'tropik-article': 'tropik-article',
+} as const;
 
 export type GetFounderNewsOptions200 = {
   partners: NewsReference[];

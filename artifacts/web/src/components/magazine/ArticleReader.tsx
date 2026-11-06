@@ -13,8 +13,8 @@ type Tone = (typeof ACCENT)[keyof typeof ACCENT];
 
 function Art({ n, alt, className = '' }: { n: number; alt: string; className?: string }) {
   const [ok, setOk] = useState(true);
-  if (!ok) return <div className={`flex aspect-[4/5] items-end bg-lagoon-900 p-5 text-xs text-ivory-200 ${className}`}>{alt}</div>;
-  return <img src={ART(n)} alt={alt} loading="lazy" onError={() => setOk(false)} className={`w-full bg-ivory-200 object-cover ${className}`} />;
+  if (!ok) return <div className={`flex min-h-48 items-end bg-lagoon-900 p-5 text-xs text-ivory-200 ${className}`}>{alt}</div>;
+  return <img src={ART(n)} alt={alt} loading="lazy" onError={() => setOk(false)} className={`block h-auto w-full bg-ivory-200 object-contain ${className}`} />;
 }
 
 function BlockView({ b, tone }: { b: Block; tone: Tone }) {
@@ -156,7 +156,7 @@ export function CoverWall() {
       <ul className="mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-4 md:mx-auto md:max-w-7xl md:grid md:grid-cols-4 md:overflow-visible lg:grid-cols-7 lg:gap-4">
         {COVERS.map((c) => (
           <li key={c.n} className="w-[62vw] shrink-0 snap-start md:w-auto" data-testid={`cover-${c.n}`}>
-            <Art n={c.n} alt={`Tropik Magazine cover featuring ${c.name}`} className="aspect-[3/4]" />
+            <Art n={c.n} alt={`Tropik Magazine cover featuring ${c.name}`} />
             <p className="mt-3 font-display text-lg" translate="no">{c.name}</p>
             <p className="text-[10px] uppercase tracking-[0.22em] text-gold-400">{c.note}</p>
             <PhotoActions source={ART(c.n)} title={`Tropik Magazine cover · ${c.name}`} tone="dark" />

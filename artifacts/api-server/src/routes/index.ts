@@ -1,5 +1,6 @@
 import { Router, type IRouter } from "express";
 import healthRouter from "./health";
+import sitePagesRouter from "./sitePages";
 import joinInterestRouter from "./joinInterest";
 import institutionalInquiryRouter from "./institutionalInquiry";
 import homeReelsRouter from "./homeReels";
@@ -26,6 +27,7 @@ import founderControlRouter from "./founderControl";
 const router: IRouter = Router();
 
 router.use(healthRouter);
+router.use(sitePagesRouter);
 router.use(joinInterestRouter);
 router.use(institutionalInquiryRouter);
 router.use(homeReelsRouter);

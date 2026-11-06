@@ -137,6 +137,8 @@ import type {
   SavedItemInput,
   SendProfileReminder200,
   SendProfileReminderInput,
+  SitePageDocument,
+  SitePageInput,
   SiteVisitInput,
   UpdateHumanitarianOffer200,
   UpdateMediaEngagementParams,
@@ -170,6 +172,279 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   }
   return result;
 };
+
+export const getGetSitePageUrl = (pageKey: string,) => {
+
+
+
+
+  return `/api/site-pages/${pageKey}`
+}
+
+export const getSitePage = async (pageKey: string, options?: Parameters<typeof customFetch>[1]): Promise<SitePageDocument> => {
+
+  return customFetch<SitePageDocument>(getGetSitePageUrl(pageKey),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetSitePageQueryKey = (pageKey: string,) => {
+    return [
+    `/api/site-pages/${pageKey}`
+    ] as const;
+    }
+
+
+export const getGetSitePageQueryOptions = <TData = Awaited<ReturnType<typeof getSitePage>>, TError = ErrorType<unknown>>(pageKey: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getSitePage>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetSitePageQueryKey(pageKey);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getSitePage>>> = ({ signal }) => getSitePage(pageKey, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: pageKey !== null && pageKey !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getSitePage>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetSitePageQueryResult = NonNullable<Awaited<ReturnType<typeof getSitePage>>>
+export type GetSitePageQueryError = ErrorType<unknown>
+
+
+export function useGetSitePage<TData = Awaited<ReturnType<typeof getSitePage>>, TError = ErrorType<unknown>>(
+ pageKey: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getSitePage>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getSitePage>>,
+          TError,
+          Awaited<ReturnType<typeof getSitePage>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetSitePage<TData = Awaited<ReturnType<typeof getSitePage>>, TError = ErrorType<unknown>>(
+ pageKey: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getSitePage>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getSitePage>>,
+          TError,
+          Awaited<ReturnType<typeof getSitePage>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetSitePage<TData = Awaited<ReturnType<typeof getSitePage>>, TError = ErrorType<unknown>>(
+ pageKey: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getSitePage>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetSitePage<TData = Awaited<ReturnType<typeof getSitePage>>, TError = ErrorType<unknown>>(
+ pageKey: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getSitePage>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetSitePageQueryOptions(pageKey,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getGetFounderSitePageUrl = (pageKey: string,) => {
+
+
+
+
+  return `/api/founder/site-pages/${pageKey}`
+}
+
+export const getFounderSitePage = async (pageKey: string, options?: Parameters<typeof customFetch>[1]): Promise<SitePageDocument> => {
+
+  return customFetch<SitePageDocument>(getGetFounderSitePageUrl(pageKey),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetFounderSitePageQueryKey = (pageKey: string,) => {
+    return [
+    `/api/founder/site-pages/${pageKey}`
+    ] as const;
+    }
+
+
+export const getGetFounderSitePageQueryOptions = <TData = Awaited<ReturnType<typeof getFounderSitePage>>, TError = ErrorType<unknown>>(pageKey: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderSitePage>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetFounderSitePageQueryKey(pageKey);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getFounderSitePage>>> = ({ signal }) => getFounderSitePage(pageKey, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: pageKey !== null && pageKey !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getFounderSitePage>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetFounderSitePageQueryResult = NonNullable<Awaited<ReturnType<typeof getFounderSitePage>>>
+export type GetFounderSitePageQueryError = ErrorType<unknown>
+
+
+export function useGetFounderSitePage<TData = Awaited<ReturnType<typeof getFounderSitePage>>, TError = ErrorType<unknown>>(
+ pageKey: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderSitePage>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getFounderSitePage>>,
+          TError,
+          Awaited<ReturnType<typeof getFounderSitePage>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetFounderSitePage<TData = Awaited<ReturnType<typeof getFounderSitePage>>, TError = ErrorType<unknown>>(
+ pageKey: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderSitePage>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getFounderSitePage>>,
+          TError,
+          Awaited<ReturnType<typeof getFounderSitePage>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetFounderSitePage<TData = Awaited<ReturnType<typeof getFounderSitePage>>, TError = ErrorType<unknown>>(
+ pageKey: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderSitePage>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetFounderSitePage<TData = Awaited<ReturnType<typeof getFounderSitePage>>, TError = ErrorType<unknown>>(
+ pageKey: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getFounderSitePage>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetFounderSitePageQueryOptions(pageKey,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getSaveSitePageUrl = (pageKey: string,) => {
+
+
+
+
+  return `/api/founder/site-pages/${pageKey}`
+}
+
+export const saveSitePage = async (pageKey: string,
+    sitePageInput: SitePageInput, options?: Parameters<typeof customFetch>[1]): Promise<SitePageDocument> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<SitePageDocument>(getSaveSitePageUrl(pageKey),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(sitePageInput)
+  }
+);}
+
+
+
+
+
+export const getSaveSitePageMutationKey = () => ['saveSitePage'] as const;
+
+export const getSaveSitePageMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof saveSitePage>>, TError,SaveSitePageMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof saveSitePage>>, TError,SaveSitePageMutationVariables, TContext> => {
+
+const mutationKey = getSaveSitePageMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof saveSitePage>>, SaveSitePageMutationVariables> = (props) => {
+          const {pageKey,data} = props ?? {};
+
+          return  saveSitePage(pageKey,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type SaveSitePageMutationResult = NonNullable<Awaited<ReturnType<typeof saveSitePage>>>
+    export type SaveSitePageMutationBody = BodyType<SitePageInput>
+    export type SaveSitePageMutationError = ErrorType<void>
+    export type SaveSitePageMutationVariables = {pageKey: string;data: BodyType<SitePageInput>}
+
+    export const useSaveSitePage = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof saveSitePage>>, TError,SaveSitePageMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof saveSitePage>>,
+        TError,
+        SaveSitePageMutationVariables,
+        TContext
+      > => {
+      return useMutation(getSaveSitePageMutationOptions(options), queryClient);
+    }
 
 export const getGetFounderCommandCenterUrl = () => {
 

@@ -5,10 +5,12 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+import type { GetPublishedNewsArticlesCategory } from './getPublishedNewsArticlesCategory';
 
 export type GetPublishedNewsArticlesParams = {
 /**
  * @minimum 1
  */
 page?: number;
+category?: GetPublishedNewsArticlesCategory;
 };

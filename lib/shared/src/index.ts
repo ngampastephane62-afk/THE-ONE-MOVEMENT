@@ -10,3 +10,5 @@ export * from "./gratitude";
 export * from "./memberProfilePolicy";
 export * from "./homeEditorial";
 export * from "./profileCompletion";
+export * from "./sitePages";
+export * from "./uploadLimits";

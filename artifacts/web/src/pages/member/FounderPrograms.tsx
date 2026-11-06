@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link, Redirect } from 'wouter';
+import { Link, Redirect, useSearch } from 'wouter';
 import { ExternalLink, RotateCw } from 'lucide-react';
 import { useGetFounderProgramEditorial, getGetFounderProgramEditorialQueryKey, useGetProgramInquiries, getGetProgramInquiriesQueryKey } from '@workspace/api-client-react';
 import { Empty, ErrorBox, Skeleton, btnGhost, card } from '@/components/network/kit';
@@ -48,11 +48,25 @@ function Inquiries({ slug }: { slug: string }) {
 
 export default function FounderPrograms() {
   const { me } = useMe();
-  const [slug, setSlug] = useState<string>('awards');
+  const search = useSearch();
+  const asked = new URLSearchParams(search).get('program');
+  const valid = (s: string | null) => !!s && PROGRAMMES.some((p) => p.slug === s);
+  const [slug, setSlug] = useState<string>(() => (valid(asked) ? asked! : 'awards'));
   const [k, setK] = useState(0);
   const dirtyRef = useRef(false);
   const busyRef = useRef(false);
   const q = useGetFounderProgramEditorial(slug, { query: { queryKey: getGetFounderProgramEditorialQueryKey(slug), enabled: !!me?.founder, refetchOnWindowFocus: false } });
+
+  // Deep links such as ?program=fashion-week select that programme (unsaved work is protected).
+  const lastAsked = useRef(asked);
+  useEffect(() => {
+    if (lastAsked.current === asked) return;
+    lastAsked.current = asked;
+    if (!valid(asked) || asked === slug) return;
+    if (busyRef.current || (dirtyRef.current && !window.confirm(LEAVE))) return;
+    dirtyRef.current = false; setSlug(asked!); setK((x) => x + 1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [asked]);
 
   useEffect(() => {
     const before = (e: BeforeUnloadEvent) => { if (dirtyRef.current || busyRef.current) { e.preventDefault(); e.returnValue = ''; } };

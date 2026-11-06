@@ -6,7 +6,7 @@ import {
   type ProgramEditorial, type ProgramEditorialParticipationRolesItem,
 } from '@workspace/api-client-react';
 import { btn, btnGhost, card, errStatus, field } from '@/components/network/kit';
-import { Field, Text, Toggle, UploadButton } from './fields';
+import { Field, Text, Toggle, UploadButton, IMAGE_MB, VIDEO_MB } from './fields';
 import PeopleEditor from './PeopleEditor';
 import VideoListEditor from './VideoListEditor';
 import ProgramPreview from './ProgramPreview';
@@ -29,6 +29,7 @@ export default function ProgramEditor({ initial, programmeName, onDirty, onBusy,
 }) {
   const qc = useQueryClient();
   const [draft, setDraft] = useState<ProgramEditorial>(initial);
+  const fashion = initial.slug === 'fashion-week';
   const [dirty, setDirty] = useState(false);
   const [uploading, setUploading] = useState(0);
   const [msg, setMsg] = useState<{ tone: 'ok' | 'err' | 'conflict'; text: string } | null>(null);
@@ -88,7 +89,7 @@ export default function ProgramEditor({ initial, programmeName, onDirty, onBusy,
 
       <PhotoCaptionEditor programme={draft.slug} captions={draft.photoCaptions ?? {}} onChange={photoCaptions => update({ photoCaptions })} />
 
-      <Panel title="Hero media" hint="Images up to 5 MB, videos up to 100 MB. Videos never autoplay with sound.">
+      <Panel title="Hero media" hint={`Images up to ${IMAGE_MB} MB, videos up to ${VIDEO_MB} MB. Original files are kept unaltered. Videos never autoplay with sound.`}>
         <div className="grid gap-4 md:grid-cols-2">
           <div className="flex flex-col gap-2">
             <span className="text-xs font-semibold text-ink-800">Hero image</span>
@@ -127,8 +128,9 @@ export default function ProgramEditor({ initial, programmeName, onDirty, onBusy,
         <PeopleEditor people={draft.people} onChange={(people) => update({ people })} onBusy={busy} />
       </Panel>
 
-      <Panel title="Official programme videos and media" hint="Programme-level films, archive footage and approved press videos.">
-        <VideoListEditor videos={draft.media} onChange={(media) => update({ media })} onBusy={busy} scope="programme" />
+      <Panel title={fashion ? 'Previous edition videos' : 'Official programme videos and media'} hint={fashion ? `Upload films from past Fashion Week editions (Bukavu, Goma, Kinshasa...), up to ${VIDEO_MB} MB each, original file unaltered. Confirm rights, mark Published, then Publish changes.` : 'Programme-level films, archive footage and approved press videos.'}>
+        {fashion && <p className="mb-3 rounded-xl border border-gold-500/40 bg-gold-500/10 p-3 text-xs text-ink-800" data-testid="text-fashion-previous-edition">Each film below appears on the public Fashion Week page once rights are confirmed, it is marked Published, and the programme is published.</p>}
+        <VideoListEditor videos={draft.media} onChange={(media) => update({ media })} onBusy={busy} scope="programme" addLabel={fashion ? 'Add previous edition video' : undefined} newTitle={fashion ? 'Previous edition film' : undefined} />
       </Panel>
     </div>
   );

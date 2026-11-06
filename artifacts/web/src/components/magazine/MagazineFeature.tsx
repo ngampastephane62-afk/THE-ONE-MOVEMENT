@@ -17,11 +17,11 @@ export default function MagazineFeature() {
       <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-6 md:grid-cols-12">
         <Link href="/tropik-magazine" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} onFocus={() => setHover(true)} onBlur={() => setHover(false)}
           className="relative mx-auto block aspect-[1.25] w-full max-w-lg md:col-span-6" style={{ perspective: 1800 }} aria-label="Open the Tropik digital magazine" data-testid="link-magazine-open">
-          <div className="absolute bottom-0 left-0 w-[42%] rotate-[-6deg]">{img(HERITAGE(2), 'Printed cover of The One Fashion Week magazine', 'aspect-[3/4] w-full object-cover opacity-80 shadow-2xl')}</div>
+          <div className="absolute bottom-0 left-0 w-[42%] rotate-[-6deg]">{img(HERITAGE(2), 'Printed cover of The One Fashion Week magazine', 'h-auto w-full object-contain opacity-80 shadow-2xl')}</div>
           <div className="absolute right-[6%] top-[4%] w-[46%]" style={{ transformStyle: 'preserve-3d' }}>
             <div className="aspect-[4/5] w-full bg-[hsl(40_38%_95%)] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)]">{img(ART(7), 'Tropik Magazine page: Her Story', 'h-full w-full object-contain')}</div>
             <motion.div className="absolute inset-0 origin-left" animate={reduce ? {} : { rotateY: hover ? -38 : -8 }} transition={{ duration: 0.9, ease: [0.65, 0.02, 0.25, 1] }} style={{ transformStyle: 'preserve-3d' }}>
-              {img(ART(12), 'Tropik Magazine cover featuring Carine Nanikian', 'h-full w-full object-cover shadow-[0_30px_60px_-20px_rgba(0,0,0,0.7)]')}
+              {img(ART(12), 'Tropik Magazine cover featuring Carine Nanikian', 'h-full w-full object-contain shadow-[0_30px_60px_-20px_rgba(0,0,0,0.7)]')}
             </motion.div>
           </div>
         </Link>

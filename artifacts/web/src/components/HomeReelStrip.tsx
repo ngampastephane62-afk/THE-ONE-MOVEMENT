@@ -1,10 +1,18 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import { ArrowLeft, ArrowRight, Pause, Play, Volume2, VolumeX } from 'lucide-react';
 import VideoActions from './editorial/VideoActions';
 
 const NEW_REEL_ID = 'home-we-are-one-2026';
-function initialReels() {
+
+/** A Founder-uploaded Story in Motion reel (saved home editorial media). */
+export interface UploadedReel { uploadId: string; src: string; title: string }
+type Reel = { number: number; id: string; title: string; video: string; webm?: string; poster?: string; duration: number; uploaded?: boolean };
+
+function uploadedReels(list: UploadedReel[]): Reel[] {
+  return list.map((r, i) => ({ number: i + 1, id: `home-upload--${r.uploadId}`, title: r.title, video: r.src, duration: 30000, uploaded: true }));
+}
+function initialReels(): Reel[] {
   const requested = new URLSearchParams(window.location.search).get('video') ||
     window.location.hash.replace(/^#video-/, '');
   // Historical links retain the original film and its own reactions.
@@ -36,8 +44,11 @@ function initialReels() {
   }))];
 }
 
-export default function HomeReelStrip({ actionsLayout }: { /** Opt-in compact one-row reactions (Home). */ actionsLayout?: 'default' | 'row' } = {}) {
-  const [reels] = useState(initialReels);
+export default function HomeReelStrip({ actionsLayout, uploads }: { /** Opt-in compact one-row reactions (Home). */ actionsLayout?: 'default' | 'row'; /** Founder uploads replace the curated reels when present. */ uploads?: UploadedReel[] } = {}) {
+  const uploadKey = (uploads ?? []).map((u) => `${u.uploadId}|${u.src}|${u.title}`).join(',');
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const reels = useMemo(() => (uploads && uploads.length ? uploadedReels(uploads) : initialReels()), [uploadKey]);
+  const [measured, setMeasured] = useState<Record<string, number>>({});
   const requestedId = new URLSearchParams(window.location.search).get('video') || window.location.hash.replace(/^#video-/, '');
   const requested = Math.max(0, reels.findIndex(reel => reel.id === requestedId));
   const [carouselRef, carousel] = useEmblaCarousel({ loop: true, align: 'center', startIndex: requested });
@@ -94,10 +105,11 @@ export default function HomeReelStrip({ actionsLayout }: { /** Opt-in compact on
   useEffect(() => {
     if (!carousel || !visible || !playing || sound || reducedMotion) return;
     // Give each newly supplied film its full running time before moving on.
-    const duration = reels[active]?.duration ?? 8000;
+    const r = reels[active];
+    const duration = (r && measured[r.id]) || r?.duration || 8000;
     const timer = window.setInterval(() => carousel.scrollNext(), duration);
     return () => window.clearInterval(timer);
-  }, [carousel, visible, playing, sound, reducedMotion, active]);
+  }, [carousel, visible, playing, sound, reducedMotion, active, reels, measured]);
 
   const playFromTap = () => {
     setPlaying(true);
@@ -119,7 +131,8 @@ export default function HomeReelStrip({ actionsLayout }: { /** Opt-in compact on
                 muted
                 loop
                 playsInline
-                preload="none"
+                preload={reel.uploaded ? 'metadata' : 'none'}
+                onLoadedMetadata={(e) => { const d = e.currentTarget.duration; if (reel.uploaded && Number.isFinite(d) && d > 0) setMeasured((m) => (m[reel.id] ? m : { ...m, [reel.id]: Math.round(d * 1000) })); }}
                 className="h-auto max-h-[80vh] w-full object-contain bg-ink-900"
                 aria-label={reel.title}
                 onError={() => { if (active === index) setFailed(true); }}

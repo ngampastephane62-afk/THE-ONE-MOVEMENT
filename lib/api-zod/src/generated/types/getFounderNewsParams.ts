@@ -5,10 +5,12 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+import type { GetFounderNewsCategory } from './getFounderNewsCategory';
 
 export type GetFounderNewsParams = {
 /**
  * @minimum 1
  */
 page?: number;
+category?: GetFounderNewsCategory;
 };

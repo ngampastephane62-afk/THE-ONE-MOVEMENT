@@ -69,6 +69,11 @@ export default function HomeMediaSlot({ def, value, previewSrc, onChange, onBusy
           </div>
           {value && (
             <>
+              {value.kind === 'video' && /^reel-\d+$/.test(def.key) && (
+                <label className="text-xs font-semibold text-ink-800">Titre du reel <span className="font-normal text-ink-700">(affiche et utilise pour le partage)</span>
+                  <input className={`${field} mt-1`} value={value.alt} maxLength={240} onChange={(e) => set({ alt: e.target.value })} placeholder="Ex. Fashion Week Goma, defile de cloture" data-testid={`input-reel-title-${def.key}`} />
+                </label>
+              )}
               {value.kind === 'image' && (
                 <label className="text-xs font-semibold text-ink-800">Texte alternatif <span className="font-normal text-ink-700">(obligatoire pour publier)</span>
                   <input className={`${field} mt-1`} value={value.alt} maxLength={240} onChange={(e) => set({ alt: e.target.value })} placeholder="Decrivez ce que montre l'image" />

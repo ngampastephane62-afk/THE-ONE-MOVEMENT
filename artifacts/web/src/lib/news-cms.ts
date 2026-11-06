@@ -1,6 +1,7 @@
 import type { NewsBlock, NewsFounderArticle, NewsSnapshot, NewsSnapshotCategory } from '@workspace/api-client-react';
 import type { QueryClient } from '@tanstack/react-query';
 import { basePath } from '@/lib/clerk';
+import { UPLOAD_LIMITS } from '@workspace/shared';
 
 export const NEWS_CATEGORIES: { value: NewsSnapshotCategory; label: string }[] = [
   { value: 'news', label: 'News' },
@@ -12,17 +13,19 @@ export const NEWS_CATEGORIES: { value: NewsSnapshotCategory; label: string }[] =
   { value: 'event-announcement', label: 'Event announcement' },
   { value: 'humanitarian-update', label: 'Humanitarian update' },
   { value: 'ecosystem-update', label: 'Ecosystem update' },
+  { value: 'tropik-article', label: 'Tropik article' },
 ];
 export const categoryLabel = (c: string) => NEWS_CATEGORIES.find((x) => x.value === c)?.label ?? c;
 
 export const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'] as const;
 export const VIDEO_TYPES = ['video/mp4', 'video/webm', 'video/quicktime'] as const;
-export const IMAGE_MAX = 20 * 1024 * 1024;
-export const VIDEO_MAX = 100 * 1024 * 1024;
+export const IMAGE_MAX = UPLOAD_LIMITS.fileBytes;
+export const VIDEO_MAX = UPLOAD_LIMITS.videoBytes;
+export const TROPIK_CATEGORY = 'tropik-article' as const satisfies NewsSnapshotCategory;
 
-export function emptySnapshot(): NewsSnapshot {
+export function emptySnapshot(category: NewsSnapshotCategory = 'news'): NewsSnapshot {
   return {
-    schemaVersion: 1, title: '', subtitle: null, category: 'news', cover: null, video: null, body: [],
+    schemaVersion: 1, title: '', subtitle: null, category, cover: null, video: null, body: [],
     additionalImages: [], author: null, publicationDate: null, relatedPartnerKey: null, relatedProgrammeSlug: null,
     seoTitle: null, seoDescription: null, mediaRightsConfirmed: false,
   };

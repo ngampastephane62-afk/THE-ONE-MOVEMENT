@@ -1,6 +1,6 @@
 import { and, eq, sql } from "drizzle-orm";
 import { db, mediaItemsTable } from "@workspace/db";
-import { defaultHomeEditorial, type HomeEditorial, type HomeMedia } from "@workspace/shared";
+import { defaultHomeEditorial, maxUploadBytes, type HomeEditorial, type HomeMedia } from "@workspace/shared";
 import { SaveHomeEditorialBody } from "@workspace/api-zod";
 import { NetworkError } from "./networkAuth";
 import { ownedMedia } from "./networkFiles";
@@ -106,8 +106,8 @@ export async function saveHome(raw: unknown, ownerId: number) {
     const files = added.length ? await ownedMedia(ownerId, added) : [];
     for (const f of files) {
       if (next.get(f.id) === "image" ? (!MEDIA_IMAGE_TYPES.has(f.contentType) || f.size > MEDIA_IMAGE_MAX)
-        : (!["video/mp4", "video/webm", "video/quicktime"].includes(f.contentType) || f.size > 100 * 1024 * 1024)) {
-        throw new NetworkError(400, "Use approved images up to 5 MB or videos up to 100 MB.");
+        : (!["video/mp4", "video/webm", "video/quicktime"].includes(f.contentType) || f.size > maxUploadBytes(f.contentType))) {
+        throw new NetworkError(400, "Use approved images up to 20 MiB or videos up to 500 MiB.");
       }
     }
     // Never trust a client-supplied revision embedded in the content.

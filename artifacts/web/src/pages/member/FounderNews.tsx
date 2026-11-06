@@ -3,13 +3,13 @@ import { Helmet } from 'react-helmet-async';
 import { Link, Redirect } from 'wouter';
 import { useAuth } from '@clerk/react';
 import { useQueryClient } from '@tanstack/react-query';
-import { ArrowLeft, ChevronLeft, ChevronRight, Plus, RotateCw } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight, ExternalLink, Plus, RotateCw } from 'lucide-react';
 import {
   useGetFounderNews, getGetFounderNewsQueryKey, useGetFounderNewsOptions, getGetFounderNewsOptionsQueryKey,
   useGetFounderNewsArticle, getGetFounderNewsArticleQueryKey, type NewsFounderArticle,
 } from '@workspace/api-client-react';
 import { useMe } from './ctx';
-import { articleTitle, categoryLabel, errMsg, formatDate, hasUnpublishedDraft } from '@/lib/news-cms';
+import { TROPIK_CATEGORY, articleTitle, categoryLabel, errMsg, formatDate, hasUnpublishedDraft } from '@/lib/news-cms';
 import ArticleEditor from '@/components/news-cms/ArticleEditor';
 
 type Sel = { kind: 'none' } | { kind: 'new'; n: number } | { kind: 'id'; id: number };
@@ -37,7 +37,9 @@ function Detail({ id, options, onCommitted, onDirty, onBusy }: { id: number; opt
   </>;
 }
 
-export default function FounderNews() {
+/** Shared News publishing. collection='tropik' scopes the list to Tropik articles and prefills the category. */
+export default function FounderNews({ collection }: { collection?: 'tropik' } = {}) {
+  const tropik = collection === 'tropik';
   const { me } = useMe();
   const { userId } = useAuth();
   const [page, setPage] = useState(1);
@@ -50,7 +52,8 @@ export default function FounderNews() {
   const onBusy = useCallback((b: boolean) => { busyRef.current = b; setBusy(b); }, []);
   const qc = useQueryClient();
   const enabled = !!me?.founder;
-  const list = useGetFounderNews({ page }, { query: { enabled, queryKey: getGetFounderNewsQueryKey({ page }) } });
+  const listParams = tropik ? { page, category: TROPIK_CATEGORY } : { page };
+  const list = useGetFounderNews(listParams, { query: { enabled, queryKey: getGetFounderNewsQueryKey(listParams) } });
   const opts = useGetFounderNewsOptions({ query: { enabled, queryKey: getGetFounderNewsOptionsQueryKey(), staleTime: 300000 } });
 
   // Clear private editor state when the signed-in account changes.
@@ -98,15 +101,16 @@ export default function FounderNews() {
 
   return (
     <div className="flex min-w-0 flex-col gap-4 px-3 pt-4 [overflow-wrap:anywhere] md:px-0 md:pt-0" data-testid="page-founder-news">
-      <Helmet><title>News editor — Founder Workspace</title><meta name="robots" content="noindex, nofollow" /></Helmet>
+      <Helmet><title>{tropik ? 'Tropik articles' : 'News editor'} — Founder Workspace</title><meta name="robots" content="noindex, nofollow" /></Helmet>
       <style>{`.founder-fade{animation:founderIn .24s ease-out}@keyframes founderIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}@media (prefers-reduced-motion:reduce){.founder-fade{animation:none}}`}</style>
       <header className="flex flex-wrap items-end justify-between gap-3 rounded-3xl bg-lagoon-900 p-5 text-ivory-100 sm:p-6">
         <div>
           <Link href="/member/founder" className="inline-flex items-center gap-1 text-xs text-ivory-300 hover:text-gold-400" data-testid="link-back-workspace"><ArrowLeft className="h-3.5 w-3.5" />Founder Workspace</Link>
-          <h1 className="mt-2 font-display text-2xl tracking-[0.03em] text-ivory-50">News editor</h1>
-          <p className="mt-1 max-w-xl text-xs leading-relaxed text-ivory-200">Drafts stay private. Only an explicit publish puts a saved draft on the public News page.</p>
+          <h1 className="mt-2 font-display text-2xl tracking-[0.03em] text-ivory-50">{tropik ? 'Tropik articles' : 'News editor'}</h1>
+          <p className="mt-1 max-w-xl text-xs leading-relaxed text-ivory-200">{tropik ? 'Same News publishing, preview and history. Articles in the Tropik category appear on the Tropik Magazine page and open at their News address once published.' : 'Drafts stay private. Only an explicit publish puts a saved draft on the public News page.'}</p>
+          {tropik && <Link href="~/tropik-magazine#tropik-articles" target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex min-h-11 items-center gap-1.5 text-xs font-semibold text-gold-400 underline underline-offset-4" data-testid="link-tropik-public"><ExternalLink className="h-3.5 w-3.5" />View Tropik Magazine</Link>}
         </div>
-        <button type="button" onClick={() => choose({ kind: 'new', n: Date.now() })} disabled={busy} className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-gold-500 px-4 text-xs font-semibold text-ink-900 hover:bg-gold-400 disabled:opacity-50" data-testid="button-new-article"><Plus className="h-4 w-4" />New article</button>
+        <button type="button" onClick={() => choose({ kind: 'new', n: Date.now() })} disabled={busy} className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-gold-500 px-4 text-xs font-semibold text-ink-900 hover:bg-gold-400 disabled:opacity-50" data-testid="button-new-article"><Plus className="h-4 w-4" />{tropik ? 'Add Tropik article' : 'New article'}</button>
       </header>
 
       <div className="flex flex-col gap-4 lg:flex-row">
@@ -116,7 +120,7 @@ export default function FounderNews() {
               : list.isError ? (
                 <div role="alert" className="p-3 text-sm text-ink-800">{errMsg(list.error, 'Articles could not be loaded.')}<button type="button" onClick={() => list.refetch()} className="mt-2 flex items-center gap-1 text-xs font-semibold text-gold-700" data-testid="button-retry-list"><RotateCw className="h-3.5 w-3.5" />Retry</button></div>
               ) : items.length === 0 ? (
-                <div className="p-5 text-center" data-testid="text-list-empty"><p className="font-display text-base text-ink-900">{page > 1 ? 'No more articles' : 'No articles yet'}</p><p className="mt-1 text-xs text-ink-700">Write the first announcement for the Movement.</p></div>
+                <div className="p-5 text-center" data-testid="text-list-empty"><p className="font-display text-base text-ink-900">{page > 1 ? 'No more articles' : tropik ? 'No Tropik articles yet' : 'No articles yet'}</p><p className="mt-1 text-xs text-ink-700">{tropik ? 'Add the first Tropik article for the magazine page.' : 'Write the first announcement for the Movement.'}</p></div>
               ) : (
                 <ul className="flex flex-col gap-1">
                   {items.map((a) => {
@@ -149,7 +153,7 @@ export default function FounderNews() {
               <p className="mt-1 max-w-sm text-sm text-ink-700">Select one from the list to edit, preview or inspect its history, or start a new article.</p>
             </div>
           )}
-          {sel.kind === 'new' && <ArticleEditor key={`new-${sel.n}`} article={null} options={opts.data} onDirtyChange={onDirty} onBusyChange={onBusy} onCommitted={(a) => { onDirty(false); setSel({ kind: 'id', id: a.id }); }} />}
+          {sel.kind === 'new' && <ArticleEditor key={`new-${sel.n}`} article={null} defaultCategory={tropik ? TROPIK_CATEGORY : undefined} options={opts.data} onDirtyChange={onDirty} onBusyChange={onBusy} onCommitted={(a) => { onDirty(false); setSel({ kind: 'id', id: a.id }); }} />}
           {sel.kind === 'id' && <Detail id={sel.id} options={opts.data} onDirty={onDirty} onBusy={onBusy} onCommitted={() => undefined} />}
           {opts.isError && <p role="alert" className="mt-3 text-xs text-crimson-700">Partner and programme lists could not be loaded. <button type="button" className="font-semibold underline" onClick={() => opts.refetch()}>Retry</button></p>}
         </div>

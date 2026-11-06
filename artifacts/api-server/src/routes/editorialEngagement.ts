@@ -26,6 +26,12 @@ export const EDITORIAL_VIDEO_IDS = new Set([
 async function videoId(value: unknown) {
   const id = String(value);
   if (EDITORIAL_VIDEO_IDS.has(id)) return id;
+  const home = /^home-upload--([0-9a-f-]{36})$/i.exec(id);
+  if (home) {
+    const { homeDocument, homeUploads } = await import("../services/homeEditorial");
+    const doc = await homeDocument();
+    if (doc.status === "published" && homeUploads(doc, true).get(home[1]) === "video") return id;
+  }
   const uploaded = /^program-([a-z-]+)--([0-9a-f-]{36})$/i.exec(id);
   if (uploaded) {
     const { programSlug, programDocument } = await import("../services/programEditorial");

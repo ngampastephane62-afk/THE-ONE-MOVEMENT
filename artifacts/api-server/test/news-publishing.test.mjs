@@ -276,7 +276,8 @@ test("upload requests reject active SVG, arbitrary fields and oversized media", 
   assert.throws(() => validation.parseNewsUpload({ ...input, objectPath: "/private/other" }), /allowed image/);
   assert.throws(() => validation.parseNewsUpload({ ...input, contentType: "image/svg+xml" }), /allowed image/);
   assert.throws(() => validation.parseNewsUpload({ ...input, size: 21 * 1024 * 1024 }), /20 MiB/);
-  assert.throws(() => validation.parseNewsUpload({ ...input, contentType: "video/mp4", size: 101 * 1024 * 1024 }), /allowed image/);
+  assert.equal(validation.parseNewsUpload({ ...input, contentType: "video/mp4", size: 500 * 1024 * 1024 }).size, 500 * 1024 * 1024);
+  assert.throws(() => validation.parseNewsUpload({ ...input, contentType: "video/mp4", size: 500 * 1024 * 1024 + 1 }), /allowed image/);
   assert.throws(() => validation.validateNewsSnapshot({ ...snapshot(), publicationDate: "2026-02-30T12:00:00Z" }), /calendar/);
 });
 

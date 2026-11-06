@@ -7,7 +7,9 @@ import { publishableKeyFromHost } from '@clerk/react/internal';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Route, Switch, Router as WouterRouter, useLocation, Redirect } from 'wouter';
-import { basePath, stripBase, clerkAppearance, clerkLocalization } from '@/lib/clerk';
+import { basePath, stripBase, clerkAppearance } from '@/lib/clerk';
+import { useLocale } from '@/lib/locale';
+import { localizedClerk } from '@/lib/clerk-language';
 import Layout from '@/components/Layout';
 import NavigationScroll from '@/components/NavigationScroll';
 import Home from '@/pages/home';
@@ -159,6 +161,7 @@ function Shell() {
 
 function ClerkProviderWithRoutes() {
   const [, setLocation] = useLocation();
+  const { language, dictionary } = useLocale();
 
   return (
     <ClerkProvider
@@ -172,7 +175,7 @@ function ClerkProviderWithRoutes() {
       signInForceRedirectUrl={`${basePath}/member`}
       signUpForceRedirectUrl={`${basePath}/member`}
       afterSignOutUrl={basePath || '/'}
-      localization={clerkLocalization}
+      localization={localizedClerk(language, dictionary)}
       routerPush={(to) => setLocation(stripBase(to))}
       routerReplace={(to) => setLocation(stripBase(to), { replace: true })}
     >

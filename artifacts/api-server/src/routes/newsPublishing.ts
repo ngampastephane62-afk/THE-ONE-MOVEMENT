@@ -1,5 +1,5 @@
 import { Router, type Request, type Response, type NextFunction } from "express";
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, exists, sql } from "drizzle-orm";
 import { db, newsArticles as articles, newsArticleRevisions as revisions, networkUploads as uploads } from "@workspace/db";
 import { PARTNER_INTRODUCTION_TARGETS, PROGRAM_SLUGS } from "@workspace/shared";
 import { actor, networkAuth, networkWrite, requireFounder } from "../services/networkAuth";
@@ -28,9 +28,11 @@ router.use("/founder/news", networkAuth, (_req, res, next) => {
 
 router.get("/news/articles", async (req, res) => {
   const page = pageNumber(req.query.page);
+  if (req.query.category !== undefined && req.query.category !== "tropik-article") throw new NewsError(400, "Invalid article collection.");
   const rows = await db.select({ article: articles, snapshot: revisions.snapshot }).from(articles)
     .innerJoin(revisions, and(eq(articles.id, revisions.articleId), eq(articles.publishedRevisionId, revisions.id)))
-    .where(eq(articles.status, "published")).orderBy(desc(articles.publishedAt), desc(articles.id))
+    .where(and(eq(articles.status, "published"), req.query.category === "tropik-article"
+      ? sql`${revisions.snapshot}->>'category' = 'tropik-article'` : undefined)).orderBy(desc(articles.publishedAt), desc(articles.id))
     .limit(NEWS_PAGE_SIZE + 1).offset((page - 1) * NEWS_PAGE_SIZE);
   res.json({ items: rows.slice(0, NEWS_PAGE_SIZE).map(row => publicNewsDto(row.article, row.snapshot)), page, hasMore: rows.length > NEWS_PAGE_SIZE });
 });
@@ -40,7 +42,12 @@ router.get("/news/articles/:slug", async (req, res) => {
 });
 router.get("/founder/news", async (req, res) => {
   const page = pageNumber(req.query.page);
-  const rows = await db.select().from(articles).orderBy(desc(articles.updatedAt), desc(articles.id))
+  if (req.query.category !== undefined && req.query.category !== "tropik-article") throw new NewsError(400, "Invalid article collection.");
+  const rows = await db.select().from(articles).where(req.query.category === "tropik-article" ? exists(
+    db.select({ id: revisions.id }).from(revisions).where(and(eq(revisions.articleId, articles.id),
+      eq(revisions.id, sql`coalesce(${articles.draftRevisionId}, ${articles.publishedRevisionId})`),
+      sql`${revisions.snapshot}->>'category' = 'tropik-article'`)),
+  ) : undefined).orderBy(desc(articles.updatedAt), desc(articles.id))
     .limit(NEWS_PAGE_SIZE + 1).offset((page - 1) * NEWS_PAGE_SIZE);
   res.json({ items: await Promise.all(rows.slice(0, NEWS_PAGE_SIZE).map(row => founderNewsDto(db, row))), page, hasMore: rows.length > NEWS_PAGE_SIZE });
 });

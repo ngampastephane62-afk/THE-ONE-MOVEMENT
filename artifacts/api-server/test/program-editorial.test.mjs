@@ -24,6 +24,7 @@ const module = { exports: {} };
 runInNewContext(bundled, { module, exports: module.exports, require, URL, Date });
 const schemas = module.exports;
 const shared = evaluate("../../../lib/shared/src/ambassadorCatalogue.ts", {});
+Object.assign(shared, { maxUploadBytes: type => type.startsWith("video/") ? 500 * 1024 * 1024 : 20 * 1024 * 1024 });
 class NetworkError extends Error { constructor(status, message) { super(message); this.status = status; } }
 const own = "aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa";
 const other = "bbbbbbbb-bbbb-4bbb-bbbb-bbbbbbbbbbbb";
@@ -71,6 +72,7 @@ function fixture() {
     express: { Router: () => router }, "drizzle-orm": drizzle,
     "@workspace/db": { db, networkUploads: files }, "../services/networkAuth": auth,
     "../services/networkFiles": storage, "../services/programEditorial": store,
+    "../services/editorialStream": { streamEditorialUpload: (_req, res) => res.send(Buffer.from("video")) },
   });
   return { store, rows,
     async request(method, path, options = {}) {

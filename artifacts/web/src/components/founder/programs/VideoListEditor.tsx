@@ -1,13 +1,13 @@
 import { Plus } from 'lucide-react';
 import type { ProgramVideo } from '@workspace/api-client-react';
 import { btnGhost } from '@/components/network/kit';
-import { OrderControls, Text, Toggle, UploadButton, move, newId } from './fields';
+import { OrderControls, Text, Toggle, UploadButton, VIDEO_MB, move, newId } from './fields';
 
 /** Independently ordered approved videos (for a person or for the programme). */
-export default function VideoListEditor({ videos, onChange, onBusy, scope }: { videos: ProgramVideo[]; onChange: (v: ProgramVideo[]) => void; onBusy: (b: boolean) => void; scope: string }) {
+export default function VideoListEditor({ videos, onChange, onBusy, scope, addLabel = 'Add video', newTitle = 'Untitled video' }: { videos: ProgramVideo[]; onChange: (v: ProgramVideo[]) => void; onBusy: (b: boolean) => void; scope: string; addLabel?: string; newTitle?: string }) {
   const list = [...videos].sort((a, b) => a.order - b.order);
   const set = (i: number, patch: Partial<ProgramVideo>) => onChange(list.map((v, k) => (k === i ? { ...v, ...patch } : v)));
-  const add = () => onChange([...list, { id: newId('video'), title: 'Untitled video', description: '', credit: '', uploadId: null, assetKey: null, url: null, published: false, rightsConfirmed: false, order: list.length }]);
+  const add = () => onChange([...list, { id: newId('video'), title: newTitle, description: '', credit: '', uploadId: null, assetKey: null, url: null, published: false, rightsConfirmed: false, order: list.length }]);
   return (
     <div className="flex flex-col gap-3">
       {list.length === 0 && <p className="text-xs text-ink-700">No videos yet.</p>}
@@ -24,7 +24,7 @@ export default function VideoListEditor({ videos, onChange, onBusy, scope }: { v
           </div>
           <div className="mt-3 flex flex-wrap items-start gap-4">
             {v.url && <video src={v.url} controls preload="none" playsInline className="h-40 max-w-[16rem] bg-ink-900 object-contain" aria-label={`Preview ${v.title}`} />}
-            <UploadButton kind="video" label={v.url || v.uploadId ? 'Replace video file' : 'Upload video (100 MB max)'} onUploaded={(id) => set(i, { uploadId: id, assetKey: null, url: null, rightsConfirmed: false, published: false })} onBusy={onBusy} testId={`upload-video-${scope}-${v.id}`} />
+            <UploadButton kind="video" label={v.url || v.uploadId ? 'Replace video file' : `Upload video (${VIDEO_MB} MB max)`} onUploaded={(id) => set(i, { uploadId: id, assetKey: null, url: null, rightsConfirmed: false, published: false })} onBusy={onBusy} testId={`upload-video-${scope}-${v.id}`} />
             <div className="flex flex-col">
               <Toggle label="Rights confirmed" checked={v.rightsConfirmed} onChange={(b) => set(i, { rightsConfirmed: b })} testId={`toggle-video-rights-${v.id}`} />
               <Toggle label="Published" checked={v.published} onChange={(b) => set(i, { published: b })} testId={`toggle-video-published-${v.id}`} />
@@ -34,7 +34,7 @@ export default function VideoListEditor({ videos, onChange, onBusy, scope }: { v
           {!v.url && !v.uploadId && !v.assetKey && <p className="mt-2 text-xs text-ink-700">No file yet. It will not appear publicly until a file is uploaded.</p>}
         </div>
       ))}
-      <button type="button" className={`${btnGhost} self-start`} onClick={add} disabled={list.length >= 20} data-testid={`button-add-video-${scope}`}><Plus className="h-3.5 w-3.5" />Add video</button>
+      <button type="button" className={`${btnGhost} self-start`} onClick={add} disabled={list.length >= 20} data-testid={`button-add-video-${scope}`}><Plus className="h-3.5 w-3.5" />{addLabel}</button>
     </div>
   );
 }

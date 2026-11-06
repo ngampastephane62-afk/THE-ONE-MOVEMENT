@@ -19,6 +19,12 @@ export const HOME_LINK_TARGETS = [
 ] as const;
 const SAFE_HREFS = new Set<string>(HOME_LINK_TARGETS.map((l) => l.href));
 
+/** Story in Motion upload slots (origin section). Order on the page follows the slot number. */
+export const REEL_MAX = 12;
+export const REEL_KEYS = Array.from({ length: REEL_MAX }, (_, i) => `reel-${i + 1}`);
+export const isReelKey = (k: string) => /^reel-(\d{1,2})$/.test(k);
+export const reelIndex = (k: string) => Number(k.slice(5));
+
 export type FieldKind = 'line' | 'text' | 'link';
 export interface FieldDef { key: string; label: string; kind: FieldKind; def: string; max: number; auto?: boolean }
 export type Presentation = { layout: HomeSection['layout'][]; theme: HomeSection['theme'][]; alignment: HomeSection['alignment'][]; spacing: HomeSection['spacing'][] };
@@ -87,7 +93,10 @@ export const HOME_REGISTRY: Record<HomeSectionKey, SectionDef> = {
       T('body', 'Texte', 'Fashion carried a message of peace from Bukavu to Goma and Kinshasa. Five editions are complete. The sixth, the first in Dubai, takes place on 22 December 2026.'),
       L('ctaLabel', 'Bouton, libelle', 'DISCOVER THE STORY', 50), H('ctaHref', 'Bouton, destination', '/programs/fashion-week'),
     ],
-    media: [{ key: 'feature', label: 'Media principal', kinds: ['image', 'video'], note: 'Remplace la bande de reels.' }],
+    media: [
+      { key: 'feature', label: 'Media principal', kinds: ['image', 'video'], note: 'Remplace toute la bande de reels par un seul media.' },
+      ...REEL_KEYS.map((key, i) => ({ key, label: `Reel ${i + 1}`, kinds: ['video'] as ('image' | 'video')[], note: 'Story in Motion : film vertical, fichier original conserve.' })),
+    ],
   },
   archive: {
     type: 'archive', label: 'Archive du Fondateur', note: 'Connexions a travers les mondes.',

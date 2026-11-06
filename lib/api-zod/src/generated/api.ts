@@ -8,6 +8,124 @@
 import * as zod from 'zod';
 
 
+export const GetSitePageParams = zod.object({
+  "pageKey": zod.coerce.string()
+})
+
+export const getSitePageResponsePageKeyMax = 100;
+
+export const getSitePageResponseCopiesItemEntriesItemSourceMax = 6000;
+
+export const getSitePageResponseCopiesItemEntriesItemValueMax = 6000;
+
+export const getSitePageResponseCopiesItemEntriesMax = 1000;
+
+export const getSitePageResponseCopiesMax = 7;
+
+
+
+export const GetSitePageResponse = zod.object({
+  "pageKey": zod.string().min(1).max(getSitePageResponsePageKeyMax),
+  "updatedAt": zod.string().nullable(),
+  "status": zod.enum(['draft', 'published']),
+  "copies": zod.array(zod.object({
+  "language": zod.enum(['en', 'fr', 'ar', 'es', 'pt', 'sw', 'zh']),
+  "entries": zod.array(zod.object({
+  "source": zod.string().min(1).max(getSitePageResponseCopiesItemEntriesItemSourceMax),
+  "value": zod.string().max(getSitePageResponseCopiesItemEntriesItemValueMax)
+})).max(getSitePageResponseCopiesItemEntriesMax)
+})).max(getSitePageResponseCopiesMax)
+})
+
+
+export const GetFounderSitePageParams = zod.object({
+  "pageKey": zod.coerce.string()
+})
+
+export const getFounderSitePageResponsePageKeyMax = 100;
+
+export const getFounderSitePageResponseCopiesItemEntriesItemSourceMax = 6000;
+
+export const getFounderSitePageResponseCopiesItemEntriesItemValueMax = 6000;
+
+export const getFounderSitePageResponseCopiesItemEntriesMax = 1000;
+
+export const getFounderSitePageResponseCopiesMax = 7;
+
+
+
+export const GetFounderSitePageResponse = zod.object({
+  "pageKey": zod.string().min(1).max(getFounderSitePageResponsePageKeyMax),
+  "updatedAt": zod.string().nullable(),
+  "status": zod.enum(['draft', 'published']),
+  "copies": zod.array(zod.object({
+  "language": zod.enum(['en', 'fr', 'ar', 'es', 'pt', 'sw', 'zh']),
+  "entries": zod.array(zod.object({
+  "source": zod.string().min(1).max(getFounderSitePageResponseCopiesItemEntriesItemSourceMax),
+  "value": zod.string().max(getFounderSitePageResponseCopiesItemEntriesItemValueMax)
+})).max(getFounderSitePageResponseCopiesItemEntriesMax)
+})).max(getFounderSitePageResponseCopiesMax)
+})
+
+
+export const SaveSitePageParams = zod.object({
+  "pageKey": zod.coerce.string()
+})
+
+export const saveSitePageBodyContentPageKeyMax = 100;
+
+export const saveSitePageBodyContentCopiesItemEntriesItemSourceMax = 6000;
+
+export const saveSitePageBodyContentCopiesItemEntriesItemValueMax = 6000;
+
+export const saveSitePageBodyContentCopiesItemEntriesMax = 1000;
+
+export const saveSitePageBodyContentCopiesMax = 7;
+
+
+
+export const SaveSitePageBody = zod.object({
+  "expectedUpdatedAt": zod.string().nullable(),
+  "content": zod.object({
+  "pageKey": zod.string().min(1).max(saveSitePageBodyContentPageKeyMax),
+  "updatedAt": zod.string().nullable(),
+  "status": zod.enum(['draft', 'published']),
+  "copies": zod.array(zod.object({
+  "language": zod.enum(['en', 'fr', 'ar', 'es', 'pt', 'sw', 'zh']),
+  "entries": zod.array(zod.object({
+  "source": zod.string().min(1).max(saveSitePageBodyContentCopiesItemEntriesItemSourceMax),
+  "value": zod.string().max(saveSitePageBodyContentCopiesItemEntriesItemValueMax)
+})).max(saveSitePageBodyContentCopiesItemEntriesMax)
+})).max(saveSitePageBodyContentCopiesMax)
+})
+})
+
+export const saveSitePageResponsePageKeyMax = 100;
+
+export const saveSitePageResponseCopiesItemEntriesItemSourceMax = 6000;
+
+export const saveSitePageResponseCopiesItemEntriesItemValueMax = 6000;
+
+export const saveSitePageResponseCopiesItemEntriesMax = 1000;
+
+export const saveSitePageResponseCopiesMax = 7;
+
+
+
+export const SaveSitePageResponse = zod.object({
+  "pageKey": zod.string().min(1).max(saveSitePageResponsePageKeyMax),
+  "updatedAt": zod.string().nullable(),
+  "status": zod.enum(['draft', 'published']),
+  "copies": zod.array(zod.object({
+  "language": zod.enum(['en', 'fr', 'ar', 'es', 'pt', 'sw', 'zh']),
+  "entries": zod.array(zod.object({
+  "source": zod.string().min(1).max(saveSitePageResponseCopiesItemEntriesItemSourceMax),
+  "value": zod.string().max(saveSitePageResponseCopiesItemEntriesItemValueMax)
+})).max(saveSitePageResponseCopiesItemEntriesMax)
+})).max(saveSitePageResponseCopiesMax)
+})
+
+
 export const GetFounderCommandCenterResponse = zod.object({
   "environment": zod.enum(['development', 'production']),
   "refreshedAt": zod.string(),
@@ -2104,7 +2222,7 @@ export const RunGratitudeActionResponse = zod.object({
 
 export const requestGratitudeUploadBodyFilenameMax = 200;
 
-export const requestGratitudeUploadBodySizeMax = 104857600;
+export const requestGratitudeUploadBodySizeMax = 524288000;
 
 export const requestGratitudeUploadBodyAltTextMax = 500;
 
@@ -2147,7 +2265,8 @@ export const getPublishedNewsArticlesQueryPageDefault = 1;
 
 
 export const GetPublishedNewsArticlesQueryParams = zod.object({
-  "page": zod.coerce.number().int().min(1).default(getPublishedNewsArticlesQueryPageDefault)
+  "page": zod.coerce.number().int().min(1).default(getPublishedNewsArticlesQueryPageDefault),
+  "category": zod.enum(['tropik-article']).optional()
 })
 
 export const getPublishedNewsArticlesResponseItemsItemSnapshotTitleMax = 200;
@@ -2217,7 +2336,7 @@ export const GetPublishedNewsArticlesResponse = zod.object({
   "schemaVersion": zod.literal(1),
   "title": zod.string().max(getPublishedNewsArticlesResponseItemsItemSnapshotTitleMax),
   "subtitle": zod.string().max(getPublishedNewsArticlesResponseItemsItemSnapshotSubtitleMax).nullable(),
-  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update']),
+  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update', 'tropik-article']),
   "cover": zod.union([zod.object({
   "uploadId": zod.string().min(1).max(getPublishedNewsArticlesResponseItemsItemSnapshotCoverOneUploadIdMax),
   "alt": zod.string().max(getPublishedNewsArticlesResponseItemsItemSnapshotCoverOneAltMax),
@@ -2342,7 +2461,7 @@ export const GetPublishedNewsArticleResponse = zod.object({
   "schemaVersion": zod.literal(1),
   "title": zod.string().max(getPublishedNewsArticleResponseSnapshotTitleMax),
   "subtitle": zod.string().max(getPublishedNewsArticleResponseSnapshotSubtitleMax).nullable(),
-  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update']),
+  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update', 'tropik-article']),
   "cover": zod.union([zod.object({
   "uploadId": zod.string().min(1).max(getPublishedNewsArticleResponseSnapshotCoverOneUploadIdMax),
   "alt": zod.string().max(getPublishedNewsArticleResponseSnapshotCoverOneAltMax),
@@ -2399,7 +2518,8 @@ export const getFounderNewsQueryPageDefault = 1;
 
 
 export const GetFounderNewsQueryParams = zod.object({
-  "page": zod.coerce.number().int().min(1).default(getFounderNewsQueryPageDefault)
+  "page": zod.coerce.number().int().min(1).default(getFounderNewsQueryPageDefault),
+  "category": zod.enum(['tropik-article']).optional()
 })
 
 export const getFounderNewsResponseItemsItemDraftOneTitleMax = 200;
@@ -2586,7 +2706,7 @@ export const GetFounderNewsResponse = zod.object({
   "schemaVersion": zod.literal(1),
   "title": zod.string().max(getFounderNewsResponseItemsItemDraftOneTitleMax),
   "subtitle": zod.string().max(getFounderNewsResponseItemsItemDraftOneSubtitleMax).nullable(),
-  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update']),
+  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update', 'tropik-article']),
   "cover": zod.union([zod.object({
   "uploadId": zod.string().min(1).max(getFounderNewsResponseItemsItemDraftOneCoverOneUploadIdMax),
   "alt": zod.string().max(getFounderNewsResponseItemsItemDraftOneCoverOneAltMax),
@@ -2639,7 +2759,7 @@ export const GetFounderNewsResponse = zod.object({
   "schemaVersion": zod.literal(1),
   "title": zod.string().max(getFounderNewsResponseItemsItemPublishedOneTitleMax),
   "subtitle": zod.string().max(getFounderNewsResponseItemsItemPublishedOneSubtitleMax).nullable(),
-  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update']),
+  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update', 'tropik-article']),
   "cover": zod.union([zod.object({
   "uploadId": zod.string().min(1).max(getFounderNewsResponseItemsItemPublishedOneCoverOneUploadIdMax),
   "alt": zod.string().max(getFounderNewsResponseItemsItemPublishedOneCoverOneAltMax),
@@ -2696,7 +2816,7 @@ export const GetFounderNewsResponse = zod.object({
   "schemaVersion": zod.literal(1),
   "title": zod.string().max(getFounderNewsResponseItemsItemHistoryItemSnapshotTitleMax),
   "subtitle": zod.string().max(getFounderNewsResponseItemsItemHistoryItemSnapshotSubtitleMax).nullable(),
-  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update']),
+  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update', 'tropik-article']),
   "cover": zod.union([zod.object({
   "uploadId": zod.string().min(1).max(getFounderNewsResponseItemsItemHistoryItemSnapshotCoverOneUploadIdMax),
   "alt": zod.string().max(getFounderNewsResponseItemsItemHistoryItemSnapshotCoverOneAltMax),
@@ -2960,7 +3080,7 @@ export const GetFounderNewsArticleResponse = zod.object({
   "schemaVersion": zod.literal(1),
   "title": zod.string().max(getFounderNewsArticleResponseDraftOneTitleMax),
   "subtitle": zod.string().max(getFounderNewsArticleResponseDraftOneSubtitleMax).nullable(),
-  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update']),
+  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update', 'tropik-article']),
   "cover": zod.union([zod.object({
   "uploadId": zod.string().min(1).max(getFounderNewsArticleResponseDraftOneCoverOneUploadIdMax),
   "alt": zod.string().max(getFounderNewsArticleResponseDraftOneCoverOneAltMax),
@@ -3013,7 +3133,7 @@ export const GetFounderNewsArticleResponse = zod.object({
   "schemaVersion": zod.literal(1),
   "title": zod.string().max(getFounderNewsArticleResponsePublishedOneTitleMax),
   "subtitle": zod.string().max(getFounderNewsArticleResponsePublishedOneSubtitleMax).nullable(),
-  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update']),
+  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update', 'tropik-article']),
   "cover": zod.union([zod.object({
   "uploadId": zod.string().min(1).max(getFounderNewsArticleResponsePublishedOneCoverOneUploadIdMax),
   "alt": zod.string().max(getFounderNewsArticleResponsePublishedOneCoverOneAltMax),
@@ -3070,7 +3190,7 @@ export const GetFounderNewsArticleResponse = zod.object({
   "schemaVersion": zod.literal(1),
   "title": zod.string().max(getFounderNewsArticleResponseHistoryItemSnapshotTitleMax),
   "subtitle": zod.string().max(getFounderNewsArticleResponseHistoryItemSnapshotSubtitleMax).nullable(),
-  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update']),
+  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update', 'tropik-article']),
   "cover": zod.union([zod.object({
   "uploadId": zod.string().min(1).max(getFounderNewsArticleResponseHistoryItemSnapshotCoverOneUploadIdMax),
   "alt": zod.string().max(getFounderNewsArticleResponseHistoryItemSnapshotCoverOneAltMax),
@@ -3199,7 +3319,7 @@ export const RunFounderNewsActionBody = zod.object({
   "schemaVersion": zod.literal(1),
   "title": zod.string().max(runFounderNewsActionBodySnapshotOneTitleMax),
   "subtitle": zod.string().max(runFounderNewsActionBodySnapshotOneSubtitleMax).nullable(),
-  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update']),
+  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update', 'tropik-article']),
   "cover": zod.union([zod.object({
   "uploadId": zod.string().min(1).max(runFounderNewsActionBodySnapshotOneCoverOneUploadIdMax),
   "alt": zod.string().max(runFounderNewsActionBodySnapshotOneCoverOneAltMax),
@@ -3434,7 +3554,7 @@ export const RunFounderNewsActionResponse = zod.object({
   "schemaVersion": zod.literal(1),
   "title": zod.string().max(runFounderNewsActionResponseDraftOneTitleMax),
   "subtitle": zod.string().max(runFounderNewsActionResponseDraftOneSubtitleMax).nullable(),
-  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update']),
+  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update', 'tropik-article']),
   "cover": zod.union([zod.object({
   "uploadId": zod.string().min(1).max(runFounderNewsActionResponseDraftOneCoverOneUploadIdMax),
   "alt": zod.string().max(runFounderNewsActionResponseDraftOneCoverOneAltMax),
@@ -3487,7 +3607,7 @@ export const RunFounderNewsActionResponse = zod.object({
   "schemaVersion": zod.literal(1),
   "title": zod.string().max(runFounderNewsActionResponsePublishedOneTitleMax),
   "subtitle": zod.string().max(runFounderNewsActionResponsePublishedOneSubtitleMax).nullable(),
-  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update']),
+  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update', 'tropik-article']),
   "cover": zod.union([zod.object({
   "uploadId": zod.string().min(1).max(runFounderNewsActionResponsePublishedOneCoverOneUploadIdMax),
   "alt": zod.string().max(runFounderNewsActionResponsePublishedOneCoverOneAltMax),
@@ -3544,7 +3664,7 @@ export const RunFounderNewsActionResponse = zod.object({
   "schemaVersion": zod.literal(1),
   "title": zod.string().max(runFounderNewsActionResponseHistoryItemSnapshotTitleMax),
   "subtitle": zod.string().max(runFounderNewsActionResponseHistoryItemSnapshotSubtitleMax).nullable(),
-  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update']),
+  "category": zod.enum(['news', 'video-news', 'partnership-announcement', 'official-announcement', 'opportunity', 'press-release', 'event-announcement', 'humanitarian-update', 'ecosystem-update', 'tropik-article']),
   "cover": zod.union([zod.object({
   "uploadId": zod.string().min(1).max(runFounderNewsActionResponseHistoryItemSnapshotCoverOneUploadIdMax),
   "alt": zod.string().max(runFounderNewsActionResponseHistoryItemSnapshotCoverOneAltMax),
@@ -3600,7 +3720,7 @@ export const RunFounderNewsActionResponse = zod.object({
 
 export const requestFounderNewsUploadBodyFilenameMax = 200;
 
-export const requestFounderNewsUploadBodySizeMax = 104857600;
+export const requestFounderNewsUploadBodySizeMax = 524288000;
 
 
 
@@ -5441,7 +5561,7 @@ export const NetworkActionResponse = zod.object({
 
 export const requestNetworkUploadBodyFilenameMax = 200;
 
-export const requestNetworkUploadBodySizeMax = 104857600;
+export const requestNetworkUploadBodySizeMax = 524288000;
 
 
 

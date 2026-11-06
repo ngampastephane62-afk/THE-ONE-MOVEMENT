@@ -18,7 +18,7 @@ interface Props {
 function Figure({ img, mediaUrl, caption, testId }: { img: NewsImage; mediaUrl: Props['mediaUrl']; caption?: string | null; testId?: string }) {
   return (
     <figure className="my-8" data-testid={testId}>
-      <img src={mediaUrl(img.uploadId)} alt={img.alt} loading="lazy" className="w-full rounded-sm bg-ivory-200 object-cover" />
+      <img src={mediaUrl(img.uploadId)} alt={img.alt} loading="lazy" className="block h-auto w-full rounded-sm bg-ivory-200 object-contain" />
       {(caption || img.credit) && (
         <figcaption className="mt-2 flex flex-wrap justify-between gap-2 text-sm text-lagoon-700">
           {caption && <span className="italic">{caption}</span>}

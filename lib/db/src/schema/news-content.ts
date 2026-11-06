@@ -2,7 +2,7 @@
 export type NewsCategory =
   | "news" | "video-news" | "partnership-announcement"
   | "official-announcement" | "opportunity" | "press-release"
-  | "event-announcement" | "humanitarian-update" | "ecosystem-update";
+  | "event-announcement" | "humanitarian-update" | "ecosystem-update" | "tropik-article";
 
 export type NewsImageReference = {
   uploadId: string;

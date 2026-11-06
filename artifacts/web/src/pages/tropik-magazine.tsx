@@ -9,10 +9,11 @@ import { Articles, CoverWall } from '@/components/magazine/ArticleReader';
 import MagazineLibrary from '@/components/magazine/MagazineLibrary';
 import MagazineStats from '@/components/magazine/MagazineStats';
 import MediaKit, { KitDownload } from '@/components/magazine/MediaKit';
+import TropikArticles from '@/components/magazine/TropikArticles';
 
 // The former 10 USD / 25 USD storefront (OrderForm, MyOrders, FounderOrders, CheckoutReturn) is retired
 // from this route. Components remain in the repo for audit.
-const SECTIONS = [['Open the magazine', '#reader'], ['Read in full', '#reading-room'], ['In print', '#print'], ['Visibility', '#visibility'], ['Media kit', '#media-kit']] as const;
+const SECTIONS = [['Open the magazine', '#reader'], ['Read in full', '#reading-room'], ['Articles', '#tropik-articles'], ['In print', '#print'], ['Visibility', '#visibility'], ['Media kit', '#media-kit']] as const;
 
 export default function TropikMagazine() {
   const params = new URLSearchParams(useSearch());
@@ -107,6 +108,8 @@ export default function TropikMagazine() {
         </div>
         <Articles />
       </section>
+
+      <TropikArticles />
 
       <PrintHeritage />
       <EditorialOffer />

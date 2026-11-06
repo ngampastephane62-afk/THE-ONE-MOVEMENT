@@ -19,4 +19,5 @@ export const NewsSnapshotCategory = {
   'event-announcement': 'event-announcement',
   'humanitarian-update': 'humanitarian-update',
   'ecosystem-update': 'ecosystem-update',
+  'tropik-article': 'tropik-article',
 } as const;

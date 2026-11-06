@@ -4,6 +4,7 @@ import { db, networkUploads as uploads } from "@workspace/db";
 import { eq, and, inArray, gte } from "drizzle-orm";
 import { NetworkError } from "./networkAuth";
 import { isCampaignPath, isReservedMediaPath } from "./mediaIsolation";
+import { maxUploadBytes, UPLOAD_LIMITS } from "@workspace/shared";
 
 export const storage = new Storage({
   projectId: "",
@@ -21,11 +22,11 @@ export function objectFile(path: string) {
   return storage.bucket(bucket).file(parts.join("/"));
 }
 export async function requestUpload(ownerId: number, input: { filename: string; contentType: string; size: number }, scope: "network" | "news" | "gratitude" = "network") {
-  const max = input.contentType.startsWith("video/") ? 100 * 1024 * 1024 : 20 * 1024 * 1024;
+  const max = maxUploadBytes(input.contentType);
   if (!types.has(input.contentType) || input.size < 1 || input.size > max) throw new NetworkError(400, "Use an allowed image, video, audio or PDF within the displayed size limit.");
   const recent = await db.select({ size: uploads.size, ready: uploads.ready }).from(uploads)
     .where(and(eq(uploads.ownerId, ownerId), gte(uploads.createdAt, new Date(Date.now() - 24 * 60 * 60_000))));
-  if (recent.filter(u => !u.ready).length >= 10 || recent.reduce((sum, u) => sum + u.size, input.size) > 500 * 1024 * 1024) {
+  if (recent.filter(u => !u.ready).length >= UPLOAD_LIMITS.unfinishedUploads || recent.reduce((sum, u) => sum + u.size, input.size) > UPLOAD_LIMITS.dailyBytes) {
     throw new NetworkError(429, "Your daily upload allowance is reached or too many uploads are unfinished. Please try again later.");
   }
   const privateDir = process.env.PRIVATE_OBJECT_DIR;
@@ -37,7 +38,7 @@ export async function requestUpload(ownerId: number, input: { filename: string; 
     method: "POST", headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       bucket_name: file.bucket.name, object_name: file.name, method: "PUT",
-      expires_at: new Date(Date.now() + 10 * 60_000).toISOString(),
+      expires_at: new Date(Date.now() + 60 * 60_000).toISOString(),
     }),
     signal: AbortSignal.timeout(10_000),
   });

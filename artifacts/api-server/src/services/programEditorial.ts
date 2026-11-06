@@ -1,6 +1,6 @@
 import { and, eq, sql } from "drizzle-orm";
 import { db, mediaItemsTable } from "@workspace/db";
-import { AMBASSADOR_NOMINEES } from "@workspace/shared";
+import { AMBASSADOR_NOMINEES, maxUploadBytes } from "@workspace/shared";
 import { SaveProgramEditorialBody, type ProgramEditorial, type ProgramPerson, type ProgramVideo } from "@workspace/api-zod";
 import { NetworkError } from "./networkAuth";
 import { ownedMedia } from "./networkFiles";
@@ -166,8 +166,8 @@ export async function saveProgram(raw: unknown, slug: string, ownerId: number) {
     const files = changed.length ? await ownedMedia(ownerId, changed) : [];
     for (const f of files) {
       if (next.get(f.id) === "image" ? (!MEDIA_IMAGE_TYPES.has(f.contentType) || f.size > MEDIA_IMAGE_MAX)
-        : (!["video/mp4", "video/webm", "video/quicktime"].includes(f.contentType) || f.size > 100 * 1024 * 1024)) {
-        throw new NetworkError(400, "Use approved images up to 5 MB and videos up to 100 MB.");
+        : (!["video/mp4", "video/webm", "video/quicktime"].includes(f.contentType) || f.size > maxUploadBytes(f.contentType))) {
+        throw new NetworkError(400, "Use approved images up to 20 MiB and videos up to 500 MiB.");
       }
     }
     // A retained upload cannot change from an image into a video or vice versa.

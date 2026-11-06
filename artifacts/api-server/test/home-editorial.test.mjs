@@ -72,6 +72,7 @@ function fixture() {
   evaluate("../src/routes/homeEditorial.ts", {
     express: { Router: () => router }, "drizzle-orm": drizzle, "@workspace/db": { db, networkUploads: files },
     "../services/networkAuth": auth, "../services/networkFiles": storage, "../services/homeEditorial": store,
+    "../services/editorialStream": { streamEditorialUpload: (_req, res) => res.send(Buffer.from("image")) },
   });
   return { store, rows, uploads, async request(method, path, options = {}) {
     const req = { body: {}, headers: {}, params: {}, ...options };

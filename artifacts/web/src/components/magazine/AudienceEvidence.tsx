@@ -71,7 +71,7 @@ function Reel({ r, i }: { r: (typeof REELS)[number]; i: number }) {
     <motion.li initial={reduce ? false : { opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-10%' }} transition={{ duration: 0.8, delay: i * 0.08, ease: [0.2, 0.7, 0.2, 1] }}
       className={`group relative w-[44vw] shrink-0 snap-start sm:w-auto ${i < 3 ? '' : 'sm:mt-10'}`}>
       <figure className="relative aspect-[9/16] overflow-hidden bg-ink-800">
-        {ok && <img src={r.src} alt={r.alt} loading="lazy" onError={() => setOk(false)} className="h-full w-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.04]" />}
+        {ok && <img src={r.src} alt={r.alt} loading="lazy" onError={() => setOk(false)} className="h-full w-full object-contain transition-transform duration-[1.2s] group-hover:scale-[1.04]" />}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink-900/90 to-transparent" aria-hidden="true" />
         <figcaption className="absolute inset-x-0 bottom-0 p-4 text-ivory-50">
           <span className="block font-display text-[clamp(1.4rem,2.4vw,2rem)] leading-none tabular-nums" translate="no">{fmt(r.views)}</span>

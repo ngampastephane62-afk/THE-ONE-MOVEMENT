@@ -3,7 +3,7 @@ import { NetworkError } from "./networkAuth";
 
 export const MEDIA_CENTER_TYPE = "media-center-publication-v1";
 export const MEDIA_IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
-export const MEDIA_IMAGE_MAX = 5 * 1024 * 1024;
+export const MEDIA_IMAGE_MAX = 20 * 1024 * 1024;
 
 export function validPublicationDate(value: string) {
   return /^\d{4}-\d{2}-\d{2}$/.test(value) &&

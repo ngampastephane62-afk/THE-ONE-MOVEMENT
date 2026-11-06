@@ -11,6 +11,44 @@ tags:
   - name: health
     description: Health operations
 paths:
+  /site-pages/{pageKey}:
+    get:
+      operationId: getSitePage
+      parameters:
+        - {name: pageKey, in: path, required: true, schema: {type: string}}
+      responses:
+        '200':
+          description: Published public page copy only; no drafts or private member content.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/SitePageDocument'}
+  /founder/site-pages/{pageKey}:
+    get:
+      operationId: getFounderSitePage
+      parameters:
+        - {name: pageKey, in: path, required: true, schema: {type: string}}
+      responses:
+        '200':
+          description: Founder editorial draft, falling back to published copy.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/SitePageDocument'}
+    put:
+      operationId: saveSitePage
+      parameters:
+        - {name: pageKey, in: path, required: true, schema: {type: string}}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/SitePageInput'}
+      responses:
+        '200':
+          description: Saved with optimistic concurrency and an administrative audit record.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/SitePageDocument'}
+        '409': {description: Another editor saved a newer version.}
   /founder/command-center:
     get:
       operationId: getFounderCommandCenter
@@ -539,6 +577,7 @@ paths:
       operationId: getPublishedNewsArticles
       parameters:
         - {name: page, in: query, schema: {type: integer, minimum: 1, default: 1}}
+        - {name: category, in: query, schema: {type: string, enum: [tropik-article]}}
       responses:
         "200":
           description: Published editorial articles
@@ -562,6 +601,7 @@ paths:
       operationId: getFounderNews
       parameters:
         - {name: page, in: query, schema: {type: integer, minimum: 1, default: 1}}
+        - {name: category, in: query, schema: {type: string, enum: [tropik-article]}}
       responses:
         "200":
           description: Private management list
@@ -1540,6 +1580,36 @@ paths:
                 $ref: "#/components/schemas/DetailedHealthStatus"
 components:
   schemas:
+    SiteCopyEntry:
+      type: object
+      additionalProperties: false
+      required: [source, value]
+      properties:
+        source: {type: string, minLength: 1, maxLength: 6000}
+        value: {type: string, maxLength: 6000}
+    SiteLanguageCopy:
+      type: object
+      additionalProperties: false
+      required: [language, entries]
+      properties:
+        language: {type: string, enum: [en, fr, ar, es, pt, sw, zh]}
+        entries: {type: array, maxItems: 1000, items: {$ref: '#/components/schemas/SiteCopyEntry'}}
+    SitePageDocument:
+      type: object
+      additionalProperties: false
+      required: [pageKey, updatedAt, status, copies]
+      properties:
+        pageKey: {type: string, minLength: 1, maxLength: 100}
+        updatedAt: {type: [string, 'null']}
+        status: {type: string, enum: [draft, published]}
+        copies: {type: array, maxItems: 7, items: {$ref: '#/components/schemas/SiteLanguageCopy'}}
+    SitePageInput:
+      type: object
+      additionalProperties: false
+      required: [expectedUpdatedAt, content]
+      properties:
+        expectedUpdatedAt: {type: [string, 'null']}
+        content: {$ref: '#/components/schemas/SitePageDocument'}
     FounderPreferenceInput:
       type: object
       properties:
@@ -2060,7 +2130,7 @@ components:
         version: {type: integer}
         filename: {type: string, maxLength: 200}
         contentType: {type: string, enum: [image/jpeg, image/png, image/webp, video/mp4, video/webm, video/quicktime]}
-        size: {type: integer, minimum: 1, maximum: 104857600}
+        size: {type: integer, minimum: 1, maximum: 524288000}
         altText: {type: string, maxLength: 500}
     GratitudeCampaign:
       type: object
@@ -2273,7 +2343,7 @@ components:
         schemaVersion: {type: integer, enum: [1]}
         title: {type: string, maxLength: 200}
         subtitle: {type: [string, "null"], maxLength: 300}
-        category: {type: string, enum: [news, video-news, partnership-announcement, official-announcement, opportunity, press-release, event-announcement, humanitarian-update, ecosystem-update]}
+        category: {type: string, enum: [news, video-news, partnership-announcement, official-announcement, opportunity, press-release, event-announcement, humanitarian-update, ecosystem-update, tropik-article]}
         cover: {anyOf: [{$ref: "#/components/schemas/NewsImage"}, {type: "null"}]}
         video: {anyOf: [{$ref: "#/components/schemas/NewsVideo"}, {type: "null"}]}
         body: {type: array, maxItems: 150, items: {$ref: "#/components/schemas/NewsBlock"}}
@@ -2303,7 +2373,7 @@ components:
       properties:
         filename: {type: string, minLength: 1, maxLength: 200}
         contentType: {type: string, enum: [image/jpeg, image/png, image/webp, image/gif, video/mp4, video/webm, video/quicktime]}
-        size: {type: integer, minimum: 1, maximum: 104857600}
+        size: {type: integer, minimum: 1, maximum: 524288000}
     NewsRevision:
       type: object
       required: [id, revisionNo, createdAt, snapshot]
@@ -2768,7 +2838,7 @@ components:
       properties:
         filename: {type: string, maxLength: 200}
         contentType: {type: string}
-        size: {type: integer, minimum: 1, maximum: 104857600}
+        size: {type: integer, minimum: 1, maximum: 524288000}
     NetworkUploadTicket:
       type: object
       required: [id, uploadUrl]
