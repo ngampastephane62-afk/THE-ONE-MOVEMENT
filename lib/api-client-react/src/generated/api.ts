@@ -32,6 +32,11 @@ import type {
   CreatePartnerIntroduction201,
   CreateProfessionalIntroduction201,
   DetailedHealthStatus,
+  DirectCall,
+  DirectCallCredential,
+  DirectCallDecision,
+  DirectCallInvitation,
+  DirectCallState,
   DonationCampaign,
   FounderActionResult,
   FounderAdminMember,
@@ -10226,4 +10231,332 @@ export function useGetHealth<TData = Awaited<ReturnType<typeof getHealth>>, TErr
 
 
 
+
+export const getGetDirectCallsUrl = () => {
+
+
+
+
+  return `/api/network/calls`
+}
+
+export const getDirectCalls = async ( options?: Parameters<typeof customFetch>[1]): Promise<DirectCallState> => {
+
+  return customFetch<DirectCallState>(getGetDirectCallsUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetDirectCallsQueryKey = () => {
+    return [
+    `/api/network/calls`
+    ] as const;
+    }
+
+
+export const getGetDirectCallsQueryOptions = <TData = Awaited<ReturnType<typeof getDirectCalls>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDirectCalls>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetDirectCallsQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getDirectCalls>>> = ({ signal }) => getDirectCalls({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getDirectCalls>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetDirectCallsQueryResult = NonNullable<Awaited<ReturnType<typeof getDirectCalls>>>
+export type GetDirectCallsQueryError = ErrorType<unknown>
+
+
+export function useGetDirectCalls<TData = Awaited<ReturnType<typeof getDirectCalls>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDirectCalls>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getDirectCalls>>,
+          TError,
+          Awaited<ReturnType<typeof getDirectCalls>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetDirectCalls<TData = Awaited<ReturnType<typeof getDirectCalls>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDirectCalls>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getDirectCalls>>,
+          TError,
+          Awaited<ReturnType<typeof getDirectCalls>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetDirectCalls<TData = Awaited<ReturnType<typeof getDirectCalls>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDirectCalls>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetDirectCalls<TData = Awaited<ReturnType<typeof getDirectCalls>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDirectCalls>>, TError, TData>>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetDirectCallsQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getInviteDirectCallUrl = () => {
+
+
+
+
+  return `/api/network/calls`
+}
+
+export const inviteDirectCall = async (directCallInvitation: DirectCallInvitation, options?: Parameters<typeof customFetch>[1]): Promise<DirectCall> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<DirectCall>(getInviteDirectCallUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(directCallInvitation)
+  }
+);}
+
+
+
+
+
+export const getInviteDirectCallMutationKey = () => ['inviteDirectCall'] as const;
+
+export const getInviteDirectCallMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof inviteDirectCall>>, TError,InviteDirectCallMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof inviteDirectCall>>, TError,InviteDirectCallMutationVariables, TContext> => {
+
+const mutationKey = getInviteDirectCallMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof inviteDirectCall>>, InviteDirectCallMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  inviteDirectCall(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type InviteDirectCallMutationResult = NonNullable<Awaited<ReturnType<typeof inviteDirectCall>>>
+    export type InviteDirectCallMutationBody = BodyType<DirectCallInvitation>
+    export type InviteDirectCallMutationError = ErrorType<unknown>
+    export type InviteDirectCallMutationVariables = {data: BodyType<DirectCallInvitation>}
+
+    export const useInviteDirectCall = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof inviteDirectCall>>, TError,InviteDirectCallMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof inviteDirectCall>>,
+        TError,
+        InviteDirectCallMutationVariables,
+        TContext
+      > => {
+      return useMutation(getInviteDirectCallMutationOptions(options), queryClient);
+    }
+
+export const getDecideDirectCallUrl = (callId: string,) => {
+
+
+
+
+  return `/api/network/calls/${callId}/action`
+}
+
+export const decideDirectCall = async (callId: string,
+    directCallDecision: DirectCallDecision, options?: Parameters<typeof customFetch>[1]): Promise<DirectCall> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<DirectCall>(getDecideDirectCallUrl(callId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(directCallDecision)
+  }
+);}
+
+
+
+
+
+export const getDecideDirectCallMutationKey = () => ['decideDirectCall'] as const;
+
+export const getDecideDirectCallMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof decideDirectCall>>, TError,DecideDirectCallMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof decideDirectCall>>, TError,DecideDirectCallMutationVariables, TContext> => {
+
+const mutationKey = getDecideDirectCallMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof decideDirectCall>>, DecideDirectCallMutationVariables> = (props) => {
+          const {callId,data} = props ?? {};
+
+          return  decideDirectCall(callId,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type DecideDirectCallMutationResult = NonNullable<Awaited<ReturnType<typeof decideDirectCall>>>
+    export type DecideDirectCallMutationBody = BodyType<DirectCallDecision>
+    export type DecideDirectCallMutationError = ErrorType<unknown>
+    export type DecideDirectCallMutationVariables = {callId: string;data: BodyType<DirectCallDecision>}
+
+    export const useDecideDirectCall = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof decideDirectCall>>, TError,DecideDirectCallMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof decideDirectCall>>,
+        TError,
+        DecideDirectCallMutationVariables,
+        TContext
+      > => {
+      return useMutation(getDecideDirectCallMutationOptions(options), queryClient);
+    }
+
+export const getJoinDirectCallUrl = (callId: string,) => {
+
+
+
+
+  return `/api/network/calls/${callId}/join`
+}
+
+export const joinDirectCall = async (callId: string, options?: Parameters<typeof customFetch>[1]): Promise<DirectCallCredential> => {
+
+  return customFetch<DirectCallCredential>(getJoinDirectCallUrl(callId),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+
+
+
+
+export const getJoinDirectCallMutationKey = () => ['joinDirectCall'] as const;
+
+export const getJoinDirectCallMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof joinDirectCall>>, TError,JoinDirectCallMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof joinDirectCall>>, TError,JoinDirectCallMutationVariables, TContext> => {
+
+const mutationKey = getJoinDirectCallMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof joinDirectCall>>, JoinDirectCallMutationVariables> = (props) => {
+          const {callId} = props ?? {};
+
+          return  joinDirectCall(callId,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type JoinDirectCallMutationResult = NonNullable<Awaited<ReturnType<typeof joinDirectCall>>>
+
+    export type JoinDirectCallMutationError = ErrorType<unknown>
+    export type JoinDirectCallMutationVariables = {callId: string}
+
+    export const useJoinDirectCall = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof joinDirectCall>>, TError,JoinDirectCallMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof joinDirectCall>>,
+        TError,
+        JoinDirectCallMutationVariables,
+        TContext
+      > => {
+      return useMutation(getJoinDirectCallMutationOptions(options), queryClient);
+    }
 

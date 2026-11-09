@@ -9,6 +9,7 @@ import { useMe } from './ctx';
 import { errMsg } from './proHooks';
 import Chapter from '@/components/editorial/Chapter';
 import AdministrativeServiceInbox from '@/components/network/AdministrativeServiceInbox';
+import { CallLaunch, CallNotice } from '@/components/network/DirectCalls';
 
 export default function Messages() {
   const { id } = useParams<{ id?: string }>();
@@ -141,6 +142,7 @@ export default function Messages() {
                 }
               }} className="rounded-full p-2 text-sand-400 hover:text-crimson-700 disabled:opacity-50" aria-label="Block member" data-testid="button-block-thread"><Ban className="h-4 w-4" /></button>
             </header>
+            {t.accepted && !t.declined && <CallNotice />}
             <div ref={scrollRef} onScroll={(e) => {
               const el = e.currentTarget;
               wasNearBottom.current = el.scrollHeight - el.scrollTop - el.clientHeight < 120;

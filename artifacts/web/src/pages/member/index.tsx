@@ -45,6 +45,7 @@ import Membership from './Membership';
 import MemberEcosystem from './Ecosystem';
 import Business, { BusinessDetail } from './Business';
 import { LanguageSwitcher } from '@/lib/locale';
+import { DirectCallProvider } from '@/components/network/DirectCalls';
 import { getPendingSector, clearPendingSector } from '@/lib/network-invitations';
 import { SECTORS } from '@/lib/sectors-data';
 
@@ -253,6 +254,7 @@ function NetworkGate() {
   const me = state.me;
   return (
     <MeCtx.Provider value={{ me, base: state }}>
+      <DirectCallProvider>
       <AppShell me={me} base={state}>
         <Switch>
           <Route path="/member" component={Feed} />
@@ -288,6 +290,7 @@ function NetworkGate() {
           <Route><Redirect to="/member" replace /></Route>
         </Switch>
       </AppShell>
+      </DirectCallProvider>
     </MeCtx.Provider>
   );
 }

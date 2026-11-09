@@ -11,6 +11,7 @@ import { actor, NetworkError, requireFounder } from "./networkAuth";
 import { ownedMedia, completeUpload } from "./networkFiles";
 import { visibleMember, visiblePost, ownThread, ROLES, PROGRAMS, isBlocked } from "./networkState";
 import { startOrdinaryThread, sendOrdinaryMessage, decideOrdinaryThread } from "./ordinaryMessaging";
+import { stopCallsBetween } from "./directCalls";
 import { checkout, PACKAGE_DEFINITIONS, customPackages } from "./networkPayments";
 
 const ACTIVE_SECTORS = new Set([
@@ -169,6 +170,7 @@ export async function networkAction(req: Request, res: Response) {
           await tx.insert(blocks).values({ blockerId: self, blockedId: other }).onConflictDoNothing();
           await tx.delete(follows).where(or(and(eq(follows.followerId, self), eq(follows.followingId, other)), and(eq(follows.followerId, other), eq(follows.followingId, self))));
         });
+        await stopCallsBetween(self, other);
       } else await db.delete(blocks).where(and(eq(blocks.blockerId, self), eq(blocks.blockedId, other)));
       break;
     }

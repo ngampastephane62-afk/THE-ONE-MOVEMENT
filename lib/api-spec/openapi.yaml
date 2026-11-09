@@ -1580,8 +1580,116 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DetailedHealthStatus"
+  /network/calls:
+    get:
+      operationId: getDirectCalls
+      responses:
+        "200":
+          description: Participant-only invitations and recent calls. Budget is Founder-only.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/DirectCallState" }
+    post:
+      operationId: inviteDirectCall
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/DirectCallInvitation" }
+      responses:
+        "200":
+          description: Private call invitation
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/DirectCall" }
+  /network/calls/{callId}/action:
+    post:
+      operationId: decideDirectCall
+      parameters:
+        - { name: callId, in: path, required: true, schema: { type: string, format: uuid } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/DirectCallDecision" }
+      responses:
+        "200":
+          description: Updated call
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/DirectCall" }
+  /network/calls/{callId}/join:
+    post:
+      operationId: joinDirectCall
+      parameters:
+        - { name: callId, in: path, required: true, schema: { type: string, format: uuid } }
+      responses:
+        "200":
+          description: Short-lived credential for this participant only. Never cache.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/DirectCallCredential" }
 components:
   schemas:
+    DirectCallInvitation:
+      type: object
+      additionalProperties: false
+      required: [threadId, mode, clientRequestId]
+      properties:
+        threadId: { type: integer, minimum: 1 }
+        mode: { type: string, enum: [audio, video] }
+        clientRequestId: { type: string, format: uuid }
+    DirectCallDecision:
+      type: object
+      additionalProperties: false
+      required: [action]
+      properties:
+        action: { type: string, enum: [accept, decline, cancel, end] }
+    DirectCall:
+      type: object
+      required: [id, threadId, initiatorId, recipientId, initiatorName, recipientName, mode, status, ringExpiresAt, expiresAt, createdAt]
+      properties:
+        id: { type: string, format: uuid }
+        threadId: { type: integer }
+        initiatorId: { type: integer }
+        recipientId: { type: integer }
+        initiatorName: { type: string }
+        recipientName: { type: string }
+        mode: { type: string, enum: [audio, video] }
+        status: { type: string, enum: [ringing, provisioning, active, declined, missed, cancelled, ended, failed, uncertain] }
+        ringExpiresAt: { type: string }
+        expiresAt: { type: string }
+        createdAt: { type: string }
+    DirectCallBudget:
+      type: object
+      required: [month, limitUsd, admissionLimitUsd, reservedUsd, committedUsd, remainingEstimatedUsd, paused]
+      properties:
+        month: { type: string }
+        limitUsd: { type: number }
+        admissionLimitUsd: { type: number }
+        reservedUsd: { type: number }
+        committedUsd: { type: number }
+        remainingEstimatedUsd: { type: number }
+        paused: { type: boolean }
+    DirectCallState:
+      type: object
+      required: [enabled, reason, calls, budget]
+      properties:
+        enabled: { type: boolean }
+        reason: { type: [string, "null"] }
+        calls: { type: array, items: { $ref: "#/components/schemas/DirectCall" } }
+        budget:
+          oneOf:
+            - { $ref: "#/components/schemas/DirectCallBudget" }
+            - { type: "null" }
+    DirectCallCredential:
+      type: object
+      required: [url, token, expiresAt, mode]
+      properties:
+        url: { type: string }
+        token: { type: string }
+        expiresAt: { type: string }
+        mode: { type: string, enum: [audio, video] }
     SiteCopyEntry:
       type: object
       additionalProperties: false

@@ -5,6 +5,105 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+export type DirectCallInvitationMode = typeof DirectCallInvitationMode[keyof typeof DirectCallInvitationMode];
+
+
+export const DirectCallInvitationMode = {
+  audio: 'audio',
+  video: 'video',
+} as const;
+
+export interface DirectCallInvitation {
+  /** @minimum 1 */
+  threadId: number;
+  mode: DirectCallInvitationMode;
+  clientRequestId: string;
+}
+
+export type DirectCallDecisionAction = typeof DirectCallDecisionAction[keyof typeof DirectCallDecisionAction];
+
+
+export const DirectCallDecisionAction = {
+  accept: 'accept',
+  decline: 'decline',
+  cancel: 'cancel',
+  end: 'end',
+} as const;
+
+export interface DirectCallDecision {
+  action: DirectCallDecisionAction;
+}
+
+export type DirectCallMode = typeof DirectCallMode[keyof typeof DirectCallMode];
+
+
+export const DirectCallMode = {
+  audio: 'audio',
+  video: 'video',
+} as const;
+
+export type DirectCallStatus = typeof DirectCallStatus[keyof typeof DirectCallStatus];
+
+
+export const DirectCallStatus = {
+  ringing: 'ringing',
+  provisioning: 'provisioning',
+  active: 'active',
+  declined: 'declined',
+  missed: 'missed',
+  cancelled: 'cancelled',
+  ended: 'ended',
+  failed: 'failed',
+  uncertain: 'uncertain',
+} as const;
+
+export interface DirectCall {
+  id: string;
+  threadId: number;
+  initiatorId: number;
+  recipientId: number;
+  initiatorName: string;
+  recipientName: string;
+  mode: DirectCallMode;
+  status: DirectCallStatus;
+  ringExpiresAt: string;
+  expiresAt: string;
+  createdAt: string;
+}
+
+export interface DirectCallBudget {
+  month: string;
+  limitUsd: number;
+  admissionLimitUsd: number;
+  reservedUsd: number;
+  committedUsd: number;
+  remainingEstimatedUsd: number;
+  paused: boolean;
+}
+
+export interface DirectCallState {
+  enabled: boolean;
+  /** @nullable */
+  reason: string | null;
+  calls: DirectCall[];
+  budget: DirectCallBudget | null;
+}
+
+export type DirectCallCredentialMode = typeof DirectCallCredentialMode[keyof typeof DirectCallCredentialMode];
+
+
+export const DirectCallCredentialMode = {
+  audio: 'audio',
+  video: 'video',
+} as const;
+
+export interface DirectCallCredential {
+  url: string;
+  token: string;
+  expiresAt: string;
+  mode: DirectCallCredentialMode;
+}
+
 export interface SiteCopyEntry {
   /**
      * @minLength 1

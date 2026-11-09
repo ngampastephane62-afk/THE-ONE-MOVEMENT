@@ -26,3 +26,5 @@ export * from "./memberProfileReminders";
 export * from "./founderControl";
 // Community email schema is a held proposal, not part of the active schema.
 export * from "./connect";
+export * from "./connectCallBudgets";
+export * from "./connectCallSessions";

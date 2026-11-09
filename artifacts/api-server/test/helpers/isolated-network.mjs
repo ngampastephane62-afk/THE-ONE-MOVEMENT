@@ -17,6 +17,7 @@ function table(name) {
   return new Proxy({ table: name }, { get: (obj, key) =>
     key === "table" ? name : { table: name, key } });
 }
+export const connectCallBudgets = table("callBudgets"), connectCallSessions = table("callSessions");
 export const ecosystemMembersTable = table("members"), networkProfiles = table("profiles"),
   networkPosts = table("posts"), networkFollows = table("follows"),
   networkBlocks = table("blocks"), networkUploads = table("uploads"),

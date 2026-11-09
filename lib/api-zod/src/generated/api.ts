@@ -6000,3 +6000,90 @@ export const GetHealthResponse = zod.object({
 })
 
 
+export const GetDirectCallsResponse = zod.object({
+  "enabled": zod.boolean(),
+  "reason": zod.string().nullable(),
+  "calls": zod.array(zod.object({
+  "id": zod.string().uuid(),
+  "threadId": zod.number().int(),
+  "initiatorId": zod.number().int(),
+  "recipientId": zod.number().int(),
+  "initiatorName": zod.string(),
+  "recipientName": zod.string(),
+  "mode": zod.enum(['audio', 'video']),
+  "status": zod.enum(['ringing', 'provisioning', 'active', 'declined', 'missed', 'cancelled', 'ended', 'failed', 'uncertain']),
+  "ringExpiresAt": zod.string(),
+  "expiresAt": zod.string(),
+  "createdAt": zod.string()
+})),
+  "budget": zod.union([zod.object({
+  "month": zod.string(),
+  "limitUsd": zod.number(),
+  "admissionLimitUsd": zod.number(),
+  "reservedUsd": zod.number(),
+  "committedUsd": zod.number(),
+  "remainingEstimatedUsd": zod.number(),
+  "paused": zod.boolean()
+}),zod.null()])
+})
+
+
+
+
+
+export const InviteDirectCallBody = zod.object({
+  "threadId": zod.number().int().min(1),
+  "mode": zod.enum(['audio', 'video']),
+  "clientRequestId": zod.string().uuid()
+})
+
+export const InviteDirectCallResponse = zod.object({
+  "id": zod.string().uuid(),
+  "threadId": zod.number().int(),
+  "initiatorId": zod.number().int(),
+  "recipientId": zod.number().int(),
+  "initiatorName": zod.string(),
+  "recipientName": zod.string(),
+  "mode": zod.enum(['audio', 'video']),
+  "status": zod.enum(['ringing', 'provisioning', 'active', 'declined', 'missed', 'cancelled', 'ended', 'failed', 'uncertain']),
+  "ringExpiresAt": zod.string(),
+  "expiresAt": zod.string(),
+  "createdAt": zod.string()
+})
+
+
+export const DecideDirectCallParams = zod.object({
+  "callId": zod.coerce.string().uuid()
+})
+
+export const DecideDirectCallBody = zod.object({
+  "action": zod.enum(['accept', 'decline', 'cancel', 'end'])
+})
+
+export const DecideDirectCallResponse = zod.object({
+  "id": zod.string().uuid(),
+  "threadId": zod.number().int(),
+  "initiatorId": zod.number().int(),
+  "recipientId": zod.number().int(),
+  "initiatorName": zod.string(),
+  "recipientName": zod.string(),
+  "mode": zod.enum(['audio', 'video']),
+  "status": zod.enum(['ringing', 'provisioning', 'active', 'declined', 'missed', 'cancelled', 'ended', 'failed', 'uncertain']),
+  "ringExpiresAt": zod.string(),
+  "expiresAt": zod.string(),
+  "createdAt": zod.string()
+})
+
+
+export const JoinDirectCallParams = zod.object({
+  "callId": zod.coerce.string().uuid()
+})
+
+export const JoinDirectCallResponse = zod.object({
+  "url": zod.string(),
+  "token": zod.string(),
+  "expiresAt": zod.string(),
+  "mode": zod.enum(['audio', 'video'])
+})
+
+
