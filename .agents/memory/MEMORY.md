@@ -35,3 +35,4 @@
 - [Founder editorial authoring](editorial-authoring-rules.md) — multilingual public text control, Tropik articles, reels, past Fashion Week videos, original image ratios and 500 MiB videos.
 - [Community communications](community-communications-rules.md) — opt-in digests, first-issue approval, no duplicate welcome or historical floods; incomplete profiles can access the community.
 - [The One Connect](the-one-connect-scope.md) — expand existing messaging in approved phases; preserve history, private chats and consent; approve calling costs separately.
+- [Message preview consistency](message-preview-consistency.md) — cross-check inbox previews with the thread's actual latest message; ORM projection returned unrelated text in a real two-account test.

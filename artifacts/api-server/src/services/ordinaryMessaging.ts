@@ -1,8 +1,9 @@
 import { db, networkProfiles as profiles, networkThreads as threads, networkMessages as messages } from "@workspace/db";
 import { and, eq, sql } from "drizzle-orm";
 import { NetworkError } from "./networkAuth";
+import { ownThread } from "./networkState";
 
-/** First contacts only. Accepted messages never enter this quota path. */
+/** Free first contact: no daily or pending-conversation product quotas. */
 export async function startOrdinaryThread(self: number, other: number, initialNote: () => string) {
   return db.transaction(async tx => {
     // Existing PostgreSQL rows provide cross-process serialization, not an
@@ -23,32 +24,6 @@ export async function startOrdinaryThread(self: number, other: number, initialNo
       return existing;
     }
     const note = initialNote();
-    // The lowest message ID is the initial note, inserted atomically with its
-    // thread. Read timestamps only; never retrieve private message contents.
-    // Validate all surviving outgoing history and fail closed on inconsistencies.
-    const usage = await tx.execute<{ recent: number; pending: number; invalid: number }>(sql`
-      SELECT
-        count(*) FILTER (WHERE initial.created_at > statement_timestamp() - interval '24 hours')::integer AS recent,
-        count(*) FILTER (WHERE NOT ${threads.accepted} AND NOT ${threads.declined})::integer AS pending,
-        count(*) FILTER (WHERE initial.sender_id IS NULL
-          OR initial.sender_id <> ${threads.requestedBy}
-          OR initial.created_at IS NULL
-          OR initial.created_at > statement_timestamp())::integer AS invalid
-      FROM ${threads}
-      LEFT JOIN LATERAL (
-        SELECT ${messages.senderId} AS sender_id, ${messages.createdAt} AS created_at
-        FROM ${messages} WHERE ${messages.threadId} = ${threads.id}
-        ORDER BY ${messages.id} ASC LIMIT 1
-      ) AS initial ON TRUE
-      WHERE ${threads.requestedBy} = ${self}
-    `);
-    const counts = usage.rows[0];
-    if (!counts || ![counts.recent, counts.pending, counts.invalid].every(n => Number.isSafeInteger(n) && n >= 0) || counts.invalid) {
-      throw new NetworkError(409, "New conversation requests are temporarily unavailable because their history could not be verified.");
-    }
-    if (counts.recent >= 5) throw new NetworkError(429, "You can create up to 5 new conversation requests in a rolling 24-hour period. Existing conversations remain available.");
-    if (counts.pending >= 10) throw new NetworkError(429, "You already have 10 pending outgoing requests. Wait for a response before contacting someone new.");
-
     const [created] = await tx.insert(threads).values({ memberA, memberB, requestedBy: self })
       .onConflictDoNothing().returning();
     if (!created) {
@@ -59,11 +34,48 @@ export async function startOrdinaryThread(self: number, other: number, initialNo
       if (!thread || thread.declined) throw new NetworkError(409, "This conversation request is unavailable.");
       return thread;
     }
-    // DEFAULT now() would use transaction start, possibly before waiting for a
-    // lock. Database wall-clock insertion time keeps the rolling window exact.
+    // Use the actual insertion time after waiting for concurrent writers.
     await tx.insert(messages).values({
       threadId: created.id, senderId: self, text: note, createdAt: sql`clock_timestamp()`,
     });
     return created;
   }, { isolationLevel: "read committed" });
+}
+
+/** Serialize recipient decisions and replies on the same existing thread row. */
+async function withOrdinaryThread<T>(
+  self: number,
+  threadId: number,
+  change: (tx: Parameters<Parameters<typeof db.transaction>[0]>[0], thread: Awaited<ReturnType<typeof ownThread>>) => Promise<T>,
+) {
+  // Do not lock or reveal threads the actor does not participate in.
+  await ownThread(threadId, self);
+  return db.transaction(async tx => {
+    await tx.execute(sql`SELECT ${threads.id} FROM ${threads} WHERE ${threads.id} = ${threadId} FOR UPDATE`);
+    // Recheck membership, blocks and the latest consent after acquiring the lock.
+    const thread = await ownThread(threadId, self);
+    return change(tx, thread);
+  }, { isolationLevel: "read committed" });
+}
+
+export async function decideOrdinaryThread(self: number, threadId: number, accept: boolean) {
+  return withOrdinaryThread(self, threadId, async (tx, thread) => {
+    if (thread.requestedBy === self) throw new NetworkError(403, "Only the recipient can accept or decline a request.");
+    await tx.update(threads).set({
+      accepted: accept, declined: !accept, updatedAt: new Date(),
+    }).where(eq(threads.id, thread.id));
+  });
+}
+
+export async function sendOrdinaryMessage(self: number, threadId: number, content: string) {
+  return withOrdinaryThread(self, threadId, async (tx, thread) => {
+    if (thread.declined) throw new NetworkError(403, "This discussion request was declined.");
+    if (!thread.accepted && thread.requestedBy === self) {
+      throw new NetworkError(403, "Your first message has been delivered. Wait for a reply or acceptance before sending more.");
+    }
+    // A recipient's reply is explicit consent. Insertion and acceptance commit
+    // together: a failed send must never silently open a conversation.
+    await tx.insert(messages).values({ threadId: thread.id, senderId: self, text: content });
+    await tx.update(threads).set({ accepted: true, declined: false, updatedAt: new Date() }).where(eq(threads.id, thread.id));
+  });
 }

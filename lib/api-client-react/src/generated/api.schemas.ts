@@ -2581,6 +2581,10 @@ export interface NetworkState {
   person: NetworkMember | null;
   threads: NetworkThread[];
   messages: NetworkMessage[];
+  /** @nullable */
+  nextThreadCursor?: number | null;
+  /** @nullable */
+  nextMessageCursor?: number | null;
   certifications: NetworkCertification[];
   reports: NetworkReport[];
   packages: NetworkPackage[];
@@ -3201,6 +3205,16 @@ feed?: GetNetworkStateFeed;
 person?: number;
 connections?: GetNetworkStateConnections;
 thread?: number;
+/**
+ * Previous inbox page cursor
+ * @minimum 1
+ */
+threadBefore?: number;
+/**
+ * Load older messages in the selected conversation
+ * @minimum 1
+ */
+messageBefore?: number;
 before?: number;
 };
 

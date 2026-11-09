@@ -33,10 +33,26 @@ export const ne = (a, b) => c => value(a, c) !== value(b, c);
 export const lt = (a, b) => c => value(a, c) < value(b, c);
 export const inArray = (a, list) => c => list.includes(value(a, c));
 export const isNull = a => c => value(a, c) == null;
-export const and = (...args) => c => args.filter(Boolean).every(p => p(c));
-export const or = (...args) => c => args.filter(Boolean).some(p => p(c));
+function matches(predicate, context) {
+  if (typeof predicate === "function") return predicate(context);
+  if (predicate?.strings?.includes("cursor.updated_at")) {
+    const [before, self] = predicate.values.filter(v => typeof v === "number");
+    const cursor = state.threads.find(t => t.id === before && (t.memberA === self || t.memberB === self));
+    const t = context.threads;
+    return !!cursor && (t.updatedAt < cursor.updatedAt || (+t.updatedAt === +cursor.updatedAt && t.id < cursor.id));
+  }
+  if (predicate?.strings?.trim() === "false") return false;
+  throw Error("Unsupported isolated SQL predicate");
+}
+export const and = (...args) => c => args.filter(Boolean).every(p => matches(p, c));
+export const or = (...args) => c => args.filter(Boolean).some(p => matches(p, c));
 export const sql = (strings, ...values) => ({ count: true, strings: strings.join(" "), values });
-export const desc = column => column;
+sql.join = (chunks, separator) => ({
+  count: true,
+  strings: chunks.map(chunk => chunk.strings).join(separator.strings),
+  values: chunks.flatMap(chunk => chunk.values),
+});
+export const desc = column => ({ descending: column });
 const rowLocks = new Map();
 function mutation(execute) {
   let result;
@@ -47,6 +63,16 @@ function mutation(execute) {
   };
 }
 export const db = {
+  execute: async query => {
+    if (!query.strings.includes("LEFT JOIN LATERAL")) throw Error("Unexpected SQL in isolated fixture");
+    const flatten = part => part.values.flatMap(v => Array.isArray(v?.values) ? flatten(v) : v);
+    const [self, ...ids] = flatten(query).filter(v => typeof v === "number");
+    return { rows: state.threads.filter(t => ids.includes(t.id)).map(t => {
+      const messages = state.messages.filter(m => m.threadId === t.id);
+      return { thread_id: t.id, last_message: [...messages].sort((a, b) => b.id - a.id)[0]?.text ?? null,
+        unread: messages.filter(m => m.senderId !== self && !m.read).length };
+    }) };
+  },
   select: projection => ({ from: table => {
     let contexts = state[table.table].map(row => ({ [table.table]: row }));
     let limit = Infinity;
@@ -57,12 +83,30 @@ export const db = {
         return query;
       },
       where(condition) { if (condition) contexts = contexts.filter(condition); return query; },
-      orderBy() { return query; },
+      orderBy(...orders) {
+        contexts.sort((a, b) => {
+          for (const order of orders) {
+            const x = value(order.descending ?? order, a), y = value(order.descending ?? order, b);
+            if (x < y) return order.descending ? 1 : -1;
+            if (x > y) return order.descending ? -1 : 1;
+          }
+          return 0;
+        });
+        return query;
+      },
       limit(n) { limit = n; return query; },
       then(resolve, reject) {
         const rows = projection?.value?.count ? [{ value: contexts.length }]
           : contexts.slice(0, limit).map(c => projection
-            ? Object.fromEntries(Object.entries(projection).map(([k, v]) => [k, value(v, c)]))
+            ? Object.fromEntries(Object.entries(projection).map(([k, v]) => {
+              if (v?.count && (k === "lastMessage" || k === "unread")) {
+                const rows = state.messages.filter(m => m.threadId === c.threads.id);
+                const self = v.values.filter(v => typeof v === "number").at(-1);
+                return [k, k === "lastMessage" ? rows.sort((a, b) => b.id - a.id)[0]?.text ?? null
+                  : rows.filter(m => m.senderId !== self && !m.read).length];
+              }
+              return [k, value(v, c)];
+            }))
             : c[table.table]);
         return Promise.resolve(rows).then(resolve, reject);
       },
@@ -108,14 +152,17 @@ export const db = {
     const tx = { ...db, undo, execute: async query => {
       const ids = query.values.filter(value => typeof value === "number");
       if (query.strings.includes("FOR UPDATE")) {
+        const threadLock = query.values.some(v => v?.table === "threads");
         for (const id of [...new Set(ids)].sort((a, b) => a - b)) {
-          const previous = rowLocks.get(id) ?? Promise.resolve();
+          const key = (threadLock ? "thread:" : "profile:") + id;
+          const previous = rowLocks.get(key) ?? Promise.resolve();
           let release;
           const current = new Promise(resolve => { release = resolve; });
-          rowLocks.set(id, current);
+          rowLocks.set(key, current);
           await previous;
-          releases.push(() => { release(); if (rowLocks.get(id) === current) rowLocks.delete(id); });
+          releases.push(() => { release(); if (rowLocks.get(key) === current) rowLocks.delete(key); });
         }
+        if (threadLock) return { rows: state.threads.filter(t => ids.includes(t.id)).map(t => ({ id: t.id })) };
         return { rows: state.profiles.filter(p => ids.includes(p.memberId)).map(p => ({ member_id: p.memberId })) };
       }
       if (!query.strings.includes("LEFT JOIN LATERAL")) throw Error("Unexpected SQL in isolated fixture");

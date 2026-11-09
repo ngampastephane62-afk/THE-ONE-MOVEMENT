@@ -87,8 +87,41 @@ export async function networkState(context: NetworkActor, query: Record<string, 
   if (!self) return empty;
   const myActiveSectors = (self.activeSectors ?? [])
     .filter((sector): sector is AllowedActiveSector => ACTIVE_SECTORS.has(sector as AllowedActiveSector));
+  const selectedThread = Number(query.thread) || null;
+  const threadBefore = Number(query.threadBefore) || null;
+  const messageBefore = Number(query.messageBefore) || null;
+  for (const cursor of [selectedThread, threadBefore, messageBefore]) {
+    if (cursor !== null && (!Number.isSafeInteger(cursor) || cursor < 1)) throw new NetworkError(400, "Invalid conversation cursor.");
+  }
+  const threadFilter = or(eq(threads.memberA, self.id), eq(threads.memberB, self.id))!;
+  const inboxRows = await db.select().from(threads).where(and(
+    threadFilter,
+    // Compare PostgreSQL timestamps in PostgreSQL: JS ISO serialization can lose
+    // microseconds. The cursor subquery is participant-scoped as well.
+    threadBefore ? sql`(${threads.updatedAt}, ${threads.id}) < (
+      SELECT cursor.updated_at, cursor.id FROM network_threads AS cursor
+      WHERE cursor.id = ${threadBefore} AND (cursor.member_a = ${self.id} OR cursor.member_b = ${self.id})
+    )` : undefined,
+  )).orderBy(desc(threads.updatedAt), desc(threads.id)).limit(101);
+  const ownThreads = inboxRows.slice(0, 100);
+  const nextThreadCursor = inboxRows.length > 100 ? ownThreads.at(-1)!.id : null;
+  // Direct links and profile actions must remain usable beyond the first inbox
+  // page. Authorization is identical to other direct-message operations.
+  if (selectedThread && !ownThreads.some(t => t.id === selectedThread)) {
+    ownThreads.push(await ownThread(selectedThread, self.id));
+  }
+  const person = Number(query.person) || null;
+  if (person && person !== self.id) {
+    const [existing] = await db.select().from(threads).where(and(threadFilter,
+      or(eq(threads.memberA, person), eq(threads.memberB, person)))).limit(1);
+    if (existing && !ownThreads.some(t => t.id === existing.id)) ownThreads.push(existing);
+  }
   const rows = await db.select({ member: members, profile: profiles }).from(members)
     .innerJoin(profiles, eq(members.id, profiles.memberId)).limit(2000);
+  const missingIds = [...new Set([self.id, ...ownThreads.flatMap(t => [t.memberA, t.memberB])])]
+    .filter(id => !rows.some(r => r.member.id === id));
+  if (missingIds.length) rows.push(...await db.select({ member: members, profile: profiles }).from(members)
+    .innerJoin(profiles, eq(members.id, profiles.memberId)).where(inArray(members.id, missingIds)));
   const blockedRows = await db.select().from(blocks).where(or(eq(blocks.blockerId, self.id), eq(blocks.blockedId, self.id)));
   const blockedIds = new Set(blockedRows.map(b => b.blockerId === self.id ? b.blockedId : b.blockerId));
   const myBlocks = new Set(blockedRows.filter(b => b.blockerId === self.id).map(b => b.blockedId));
@@ -220,15 +253,36 @@ export async function networkState(context: NetworkActor, query: Record<string, 
       }),
     }];
   });
-  const ownThreads = await db.select().from(threads).where(or(eq(threads.memberA, self.id), eq(threads.memberB, self.id))).orderBy(desc(threads.updatedAt)).limit(100);
   const allowedThreads = ownThreads.filter(t => {
     const other = t.memberA === self.id ? t.memberB : t.memberA;
     return dto.has(other) && !blockedIds.has(other) && dto.get(other)?.enabled;
   });
   const threadIds = allowedThreads.map(t => t.id);
-  const threadMessages = threadIds.length ? await db.select().from(messages).where(inArray(messages.threadId, threadIds)).orderBy(desc(messages.id)).limit(5000) : [];
-  const selectedThread = Number(query.thread) || null;
   if (selectedThread && !allowedThreads.some(t => t.id === selectedThread)) throw new NetworkError(404, "Conversation not found.");
+  // Derive each preview from the actual latest message in its own thread.
+  // The raw, row-shaped lateral query also avoids ambiguous mapped SQL fields:
+  // the earlier projection could show an unrelated preview despite correct
+  // thread history. Every ID is taken from the authorized page above.
+  const summaries = threadIds.length ? (await db.execute<{
+    thread_id: number; last_message: string | null; unread: number;
+  }>(sql`
+    SELECT t.id AS thread_id, recent.text AS last_message, counts.unread
+    FROM ${threads} AS t
+    LEFT JOIN LATERAL (
+      SELECT m.text FROM ${messages} AS m
+      WHERE m.thread_id = t.id ORDER BY m.id DESC LIMIT 1
+    ) AS recent ON TRUE
+    LEFT JOIN LATERAL (
+      SELECT count(*)::integer AS unread FROM ${messages} AS m
+      WHERE m.thread_id = t.id AND m.sender_id <> ${self.id} AND NOT m.read
+    ) AS counts ON TRUE
+    WHERE t.id IN (${sql.join(threadIds.map(id => sql`${id}`), sql`, `)})
+  `)).rows : [];
+  const summaryById = new Map(summaries.map(s => [s.thread_id, s]));
+  const selectedMessages = selectedThread ? await db.select().from(messages).where(and(
+    eq(messages.threadId, selectedThread), messageBefore ? lt(messages.id, messageBefore) : undefined,
+  )).orderBy(desc(messages.id)).limit(101) : [];
+  const messagePage = selectedMessages.slice(0, 100);
   const canInvestor = context.founder || certs.some(c => c.memberId === self.id && c.role === "investor" && activeBadge(c));
   const reportRows = context.founder ? await db.select().from(reports).orderBy(desc(reports.id)).limit(100) : [];
   return {
@@ -238,13 +292,14 @@ export async function networkState(context: NetworkActor, query: Record<string, 
     members: memberList.slice(0, 200), person: targetId && !blockedIds.has(targetId) ? dto.get(targetId) ?? null :
       targetId && myBlocks.has(targetId) ? dto.get(targetId) ?? null : null,
     posts: postDtos, nextCursor: postRows.length > 30 ? page.at(-1)!.id : null,
+    nextThreadCursor, nextMessageCursor: selectedMessages.length > 100 ? messagePage.at(-1)!.id : null,
     threads: allowedThreads.map(t => ({
       id: t.id, other: dto.get(t.memberA === self.id ? t.memberB : t.memberA)!,
       accepted: t.accepted, declined: t.declined, requestedByMe: t.requestedBy === self.id, updatedAt: t.updatedAt.toISOString(),
-      lastMessage: threadMessages.find(m => m.threadId === t.id)?.text.slice(0, 200) ?? "",
-      unread: threadMessages.filter(m => m.threadId === t.id && m.senderId !== self.id && !m.read).length,
+      lastMessage: summaryById.get(t.id)?.last_message?.slice(0, 200) ?? "",
+      unread: summaryById.get(t.id)?.unread ?? 0,
     })),
-    messages: selectedThread ? threadMessages.filter(m => m.threadId === selectedThread).slice(0, 100).reverse().map(m => ({
+    messages: selectedThread ? messagePage.reverse().map(m => ({
       id: m.id, senderId: m.senderId, text: m.text, read: m.read, createdAt: m.createdAt.toISOString(),
     })) : [],
     certifications: certs.filter(c => (context.founder || c.memberId === self.id) && dto.has(c.memberId)).map(c => ({

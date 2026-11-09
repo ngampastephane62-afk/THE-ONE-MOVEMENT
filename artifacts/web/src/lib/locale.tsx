@@ -3,6 +3,7 @@ import { socialProfileCopy } from './locales/social-profile-copy';
 import { documentaryPartnersCopy } from './locales/documentary-partners-copy';
 import { magazineCopy } from './locales/magazine-copy';
 import { partnersCopy } from './locales/partners-copy';
+import { messagingCopy } from './locales/messaging-copy';
 import { EDITORIAL_MEDIA_COPY } from './editorial-media-copy';
 import { useBrowserLocation } from 'wouter/use-browser-location';
 import { getSitePage, type SitePageDocument } from '@workspace/api-client-react';
@@ -74,7 +75,7 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
       if (!load) { setError(true); setLoading(false); return; }
       const extras = Object.entries(expansionLoaders).filter(([path]) => new RegExp(`/editorial/${language}(?:-\\d+)?\\.json$`).test(path)).map(([, loader]) => loader());
       Promise.all([load(), Promise.all(extras).then(parts => Object.assign({}, ...parts) as Dictionary)]).then(([value, expansion]) => {
-        if (active) { loadedLanguage.current = language; setDictionary({ ...value, ...socialProfileCopy[language], ...documentaryPartnersCopy[language], ...magazineCopy[language], ...partnersCopy[language], ...EDITORIAL_MEDIA_COPY[language], ...expansion }); setLoading(false); }
+        if (active) { loadedLanguage.current = language; setDictionary({ ...value, ...socialProfileCopy[language], ...documentaryPartnersCopy[language], ...magazineCopy[language], ...partnersCopy[language], ...messagingCopy[language], ...EDITORIAL_MEDIA_COPY[language], ...expansion }); setLoading(false); }
       }).catch(() => { if (active) { setError(true); setLoading(false); } });
     }
     return () => { active = false; };

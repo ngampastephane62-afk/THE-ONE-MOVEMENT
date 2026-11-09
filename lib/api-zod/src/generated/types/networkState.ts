@@ -28,6 +28,10 @@ export interface NetworkState {
   person: NetworkMember | null;
   threads: NetworkThread[];
   messages: NetworkMessage[];
+  /** @nullable */
+  nextThreadCursor?: number | null;
+  /** @nullable */
+  nextMessageCursor?: number | null;
   certifications: NetworkCertification[];
   reports: NetworkReport[];
   packages: NetworkPackage[];

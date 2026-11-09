@@ -4984,6 +4984,8 @@ export const getNetworkStateQueryQMax = 100;
 
 
 
+
+
 export const GetNetworkStateQueryParams = zod.object({
   "q": zod.coerce.string().max(getNetworkStateQueryQMax).optional(),
   "sector": zod.coerce.string().optional(),
@@ -4991,6 +4993,8 @@ export const GetNetworkStateQueryParams = zod.object({
   "person": zod.coerce.number().int().optional(),
   "connections": zod.enum(['followers', 'following']).optional(),
   "thread": zod.coerce.number().int().optional(),
+  "threadBefore": zod.coerce.number().int().min(1).optional().describe('Previous inbox page cursor'),
+  "messageBefore": zod.coerce.number().int().min(1).optional().describe('Load older messages in the selected conversation'),
   "before": zod.coerce.number().int().optional()
 })
 
@@ -5442,6 +5446,8 @@ export const GetNetworkStateResponse = zod.object({
   "read": zod.boolean(),
   "createdAt": zod.string()
 })),
+  "nextThreadCursor": zod.number().int().nullish(),
+  "nextMessageCursor": zod.number().int().nullish(),
   "certifications": zod.array(zod.object({
   "id": zod.number().int(),
   "member": zod.object({

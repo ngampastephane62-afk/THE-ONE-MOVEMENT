@@ -10,7 +10,7 @@ import type { Request, Response } from "express";
 import { actor, NetworkError, requireFounder } from "./networkAuth";
 import { ownedMedia, completeUpload } from "./networkFiles";
 import { visibleMember, visiblePost, ownThread, ROLES, PROGRAMS, isBlocked } from "./networkState";
-import { startOrdinaryThread } from "./ordinaryMessaging";
+import { startOrdinaryThread, sendOrdinaryMessage, decideOrdinaryThread } from "./ordinaryMessaging";
 import { checkout, PACKAGE_DEFINITIONS, customPackages } from "./networkPayments";
 
 const ACTIVE_SECTORS = new Set([
@@ -182,20 +182,11 @@ export async function networkAction(req: Request, res: Response) {
     }
     case "thread.accept":
     case "thread.decline": {
-      const thread = await ownThread(id(), self);
-      if (thread.requestedBy === self) throw new NetworkError(403, "Only the recipient can accept or decline a request.");
-      await db.update(threads).set({
-        accepted: input.action === "thread.accept", declined: input.action === "thread.decline", updatedAt: new Date(),
-      }).where(eq(threads.id, thread.id));
+      await decideOrdinaryThread(self, id(), input.action === "thread.accept");
       break;
     }
     case "message.send": {
-      const thread = await ownThread(id(), self);
-      if (!thread.accepted || thread.declined) throw new NetworkError(403, "The recipient must accept the discussion request first.");
-      await db.transaction(async tx => {
-        await tx.insert(messages).values({ threadId: thread.id, senderId: self, text: text(input.text, 3000) });
-        await tx.update(threads).set({ updatedAt: new Date() }).where(eq(threads.id, thread.id));
-      });
+      await sendOrdinaryMessage(self, id(), text(input.text, 3000));
       break;
     }
     case "message.read": {

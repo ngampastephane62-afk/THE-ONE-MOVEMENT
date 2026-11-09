@@ -34,7 +34,9 @@ export default function ProfilePage() {
   const p = q.data?.person;
   if (!p) return <div className="p-3 md:p-0"><Empty title="Profile unavailable" body="This member may have left the network, been suspended, or blocked contact."><Link href="/member/people" className={btnGhost}>Back to people</Link></Empty></div>;
   const mine = p.id === me.id;
-  const thread = base.threads.find((t) => t.other.id === p.id);
+  // The profile-scoped response includes this member's conversation even when
+  // it predates the first inbox page; don't send a second "first message".
+  const thread = q.data?.threads.find((t) => t.other.id === p.id) ?? base.threads.find((t) => t.other.id === p.id);
   const posts = (q.data?.posts ?? []).filter((x) => x.author.id === p.id);
   const opened = openPost != null ? posts.find((x) => x.id === openPost) : undefined;
   const sectors = SECTORS.filter((s) => (p.sectors as string[]).includes(s.slug));
@@ -49,8 +51,8 @@ export default function ProfilePage() {
     <button className={ghost} disabled={pending} onClick={() => doAct(run({ action: 'block', targetId: p.id, accepted: false }))} data-testid="button-unblock">Unblock</button>
   ) : (<>
     <button className={p.followed ? ghost : primary} disabled={pending} onClick={() => doAct(run({ action: 'follow', targetId: p.id, accepted: !p.followed }))} data-testid="button-follow">{p.followed ? 'Following' : 'Follow'}</button>
-    {thread ? <Link href={`/member/messages/${thread.id}`} className={ghost} data-testid="link-thread"><MessageSquare className="h-3.5 w-3.5" />{thread.accepted ? 'Message' : thread.declined && thread.requestedByMe ? 'Request declined' : thread.requestedByMe ? 'Request pending' : 'Respond to request'}</Link>
-      : <button className={ghost} onClick={() => setAsking(true)} data-testid="button-request-message"><MessageSquare className="h-3.5 w-3.5" />Request to message</button>}
+    {thread ? <Link href={`/member/messages/${thread.id}`} className={ghost} data-testid="link-thread"><MessageSquare className="h-3.5 w-3.5" />{thread.accepted ? 'Message' : thread.declined && thread.requestedByMe ? 'Request declined' : thread.requestedByMe ? 'First message sent' : 'Reply to message'}</Link>
+      : <button className={ghost} onClick={() => setAsking(true)} data-testid="button-request-message"><MessageSquare className="h-3.5 w-3.5" />Send a message</button>}
   </>);
   const stats = <>
     <Link href={`/member/profile/${p.id}/followers`} className={statCls} data-testid="link-followers"><b className={dark ? '' : 'text-ink-900'}>{p.followers}</b> followers</Link>
@@ -65,7 +67,7 @@ export default function ProfilePage() {
       <section className={`${card} mx-3 p-5 sm:p-6 md:mx-0`}>
           <section aria-label="Member description">
             <h2 className="text-eyebrow text-gold-700">ABOUT</h2>
-            <p className="mt-2 whitespace-pre-wrap break-words text-[15px] leading-relaxed text-ink-800" data-testid="text-profile-bio">{p.bio || (mine ? 'Add a short description so other members can learn about your work and connect with you.' : 'This member has not added a description yet.')}</p>
+            <p className="mt-2 whitespace-pre-wrap break-words text-[15px] leading-relaxed text-ink-800" data-testid="text-profile-bio"><span data-no-translate={p.bio ? true : undefined}>{p.bio || (mine ? 'Add a short description so other members can learn about your work and connect with you.' : 'This member has not added a description yet.')}</span></p>
             {mine && !p.bio && <Link href="/member/settings" className="mt-2 inline-flex text-sm font-semibold text-lagoon-700 hover:underline">Add my description</Link>}
           </section>
           {(p.offering || p.lookingFor) && (
@@ -94,9 +96,9 @@ export default function ProfilePage() {
           run({ action: 'thread.start', targetId: p.id, text: intro.trim() }).then((r) => nav(r.id ? `/member/messages/${r.id}` : '/member/messages')).catch((error) => setErr(errMsg(error, 'The request could not be sent. Your note is kept.')));
         }}>
           <label htmlFor="intro" className="text-sm font-semibold text-ink-900">Introduce yourself to {p.fullName.split(' ')[0]} — initial note required</label>
-          <p className="text-xs text-ink-700" data-testid="text-request-safety">Ordinary conversations are free. They must accept before you can send more than this initial note. To prevent spam: up to 5 new requests per rolling 24 hours and 10 pending outgoing requests. Accepted conversations have no daily message quota. TOMI-organized professional introductions remain a separate service.</p>
-          <textarea id="intro" required className={`${field} mt-2 min-h-24`} maxLength={1000} value={intro} onChange={(e) => setIntro(e.target.value)} placeholder="Why you would like to connect" data-testid="input-intro" />
-          <div className="mt-3 flex gap-2"><button className={btn} disabled={pending || !intro.trim()} data-testid="button-send-request">Send request</button><button type="button" className={btnGhost} onClick={() => setAsking(false)}>Cancel</button></div>
+          <p className="text-xs text-ink-700" data-testid="text-request-safety">Ordinary messaging is free across all 17 sectors. There is no daily contact quota or pending-request limit. Your first message is delivered immediately; a reply or acceptance opens the conversation. Recipients can decline, block or report. Short-term security protections still apply.</p>
+          <textarea id="intro" required className={`${field} mt-2 min-h-24`} maxLength={3000} value={intro} onChange={(e) => setIntro(e.target.value)} placeholder="Write your first message" data-testid="input-intro" />
+          <div className="mt-3 flex gap-2"><button className={btn} disabled={pending || !intro.trim()} data-testid="button-send-request">Send first message</button><button type="button" className={btnGhost} onClick={() => setAsking(false)}>Cancel</button></div>
         </form>
       )}
 

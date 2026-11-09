@@ -18,5 +18,15 @@ feed?: GetNetworkStateFeed;
 person?: number;
 connections?: GetNetworkStateConnections;
 thread?: number;
+/**
+ * Previous inbox page cursor
+ * @minimum 1
+ */
+threadBefore?: number;
+/**
+ * Load older messages in the selected conversation
+ * @minimum 1
+ */
+messageBefore?: number;
 before?: number;
 };

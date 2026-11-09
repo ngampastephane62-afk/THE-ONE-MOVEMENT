@@ -85,21 +85,20 @@ test('both directions of blocking stop new requests and messages', async () => {
   assert.equal(state.threads.length, 0);
 });
 
-test('accepted and declined requests both count within the rolling 24 hours', async () => {
+test('five recent contacts, including accepted and declined contacts, do not prevent a sixth', async () => {
   const sender = member();
   for (let i = 0; i < 5; i++) history(sender, i + 1, { accepted: i % 2 === 0, declined: i % 2 !== 0 });
   const result = await request(sender, start(member()));
-  assert.equal(result.statusCode, 429);
-  assert.match(result.payload.error, /rolling 24-hour/);
-  assert.equal(state.threads.length, 5);
+  assert.equal(result.statusCode, 200);
+  assert.equal(state.threads.length, 6);
 });
 
-test('rolling cutoff expires old requests exactly at 24 hours, not at midnight', async () => {
+test('no daily or rolling-window product quota is applied', async () => {
   const sender = member();
   for (let i = 0; i < 4; i++) history(sender, 23.99, { accepted: true });
   history(sender, 24, { accepted: true });
   assert.equal((await request(sender, start(member()))).statusCode, 200);
-  assert.equal((await request(sender, start(member()))).statusCode, 429);
+  assert.equal((await request(sender, start(member()))).statusCode, 200);
 });
 
 test('later messages and thread.updatedAt do not change initial request age', async () => {
@@ -115,21 +114,20 @@ test('later messages and thread.updatedAt do not change initial request age', as
   assert.equal((await request(sender, start(member()))).statusCode, 200);
 });
 
-test('ten pending outgoing requests block another first contact even if all are old', async () => {
+test('ten pending outgoing requests do not block another first contact', async () => {
   const sender = member();
   for (let i = 0; i < 10; i++) history(sender, 48);
   const result = await request(sender, start(member()));
-  assert.equal(result.statusCode, 429);
-  assert.match(result.payload.error, /10 pending outgoing/);
-  assert.equal(state.threads.length, 10);
+  assert.equal(result.statusCode, 200);
+  assert.equal(state.threads.length, 11);
 });
 
-test('nine pending requests permit exactly one more; declined requests are not pending', async () => {
+test('pending and declined contact counts do not cap new conversations', async () => {
   const sender = member();
   for (let i = 0; i < 9; i++) history(sender, 48);
   history(sender, 48, { declined: true });
   assert.equal((await request(sender, start(member()))).statusCode, 200);
-  assert.equal((await request(sender, start(member()))).statusCode, 429);
+  assert.equal((await request(sender, start(member()))).statusCode, 200);
 });
 
 test('incoming requests, acceptance and replies do not consume outgoing quotas', async () => {
@@ -138,7 +136,7 @@ test('incoming requests, acceptance and replies do not consume outgoing quotas',
   assert.equal((await request(recipient, { action: 'thread.accept', id: created.payload.id })).statusCode, 200);
   assert.equal((await request(recipient, { action: 'message.send', id: created.payload.id, text: 'Reply' })).statusCode, 200);
   for (let i = 0; i < 5; i++) assert.equal((await request(recipient, start(member()))).statusCode, 200);
-  assert.equal((await request(recipient, start(member()))).statusCode, 429);
+  assert.equal((await request(recipient, start(member()))).statusCode, 200);
 });
 
 test('opening or repeating an existing thread does not require another note or count', async () => {
@@ -152,24 +150,23 @@ test('opening or repeating an existing thread does not require another note or c
   assert.equal(state.messages.length, 5);
 });
 
-test('concurrent first-contact attempts cannot exceed five; locking is transactional', async () => {
+test('twelve concurrent first contacts succeed without daily quotas', async () => {
   const sender = member();
   const targets = Array.from({ length: 12 }, () => member());
   const results = await Promise.all(targets.map(target => request(sender, start(target))));
-  assert.equal(results.filter(r => r.statusCode === 200).length, 5);
-  assert.equal(results.filter(r => r.statusCode === 429).length, 7);
-  assert.equal(state.threads.length, 5);
-  assert.equal(state.messages.length, 5);
+  assert.equal(results.filter(r => r.statusCode === 200).length, 12);
+  assert.equal(state.threads.length, 12);
+  assert.equal(state.messages.length, 12);
   assert.ok(state.transactionCalls.every(options => options?.isolationLevel === 'read committed'));
 });
 
-test('concurrent requests cannot exceed ten pending outgoing contacts', async () => {
+test('concurrent requests can exceed ten pending outgoing contacts', async () => {
   const sender = member();
   for (let i = 0; i < 9; i++) history(sender, 48);
   const targets = Array.from({ length: 6 }, () => member());
   const results = await Promise.all(targets.map(target => request(sender, start(target))));
-  assert.equal(results.filter(r => r.statusCode === 200).length, 1);
-  assert.equal(state.threads.length, 10);
+  assert.equal(results.filter(r => r.statusCode === 200).length, 6);
+  assert.equal(state.threads.length, 15);
 });
 
 test('concurrent duplicates and opposite-direction starts create one thread and one note', async () => {
@@ -185,7 +182,7 @@ test('concurrent duplicates and opposite-direction starts create one thread and 
   assert.equal(state.threads[0].accepted, false, 'Reciprocal first contact is not acceptance');
 });
 
-test('missing, misattributed or future-dated historical initial notes fail closed', async () => {
+test('new contact no longer depends on quota reconstruction of unrelated historical notes', async () => {
   for (const kind of ['missing', 'sender', 'future']) {
     const sender = member();
     const old = history(sender);
@@ -194,9 +191,8 @@ test('missing, misattributed or future-dated historical initial notes fail close
     if (kind === 'future') old.note.createdAt = new Date(state.clock.get('now') + hour);
     const before = state.threads.length;
     const result = await request(sender, start(member()));
-    assert.equal(result.statusCode, 409);
-    assert.match(result.payload.error, /history could not be verified/);
-    assert.equal(state.threads.length, before);
+    assert.equal(result.statusCode, 200);
+    assert.equal(state.threads.length, before + 1);
   }
 });
 
@@ -210,19 +206,66 @@ test('a failed initial-note insert rolls the new thread back and releases locks'
   assert.equal((await request(sender, start(target))).statusCode, 200);
 });
 
-test('consent is required; only recipient can accept; decline restrictions persist', async () => {
+test('first note is immediate; only the recipient can open the conversation by replying', async () => {
   const sender = member(), recipient = member(), outsider = member();
   const created = await request(sender, start(recipient));
   const id = created.payload.id;
   assert.equal((await request(sender, { action: 'message.send', id, text: 'Too soon' })).statusCode, 403);
-  assert.equal((await request(recipient, { action: 'message.send', id, text: 'Too soon' })).statusCode, 403);
   assert.equal((await request(sender, { action: 'thread.accept', id })).statusCode, 403);
   assert.equal((await request(outsider, { action: 'thread.accept', id })).statusCode, 404);
+  assert.equal((await request(outsider, { action: 'message.send', id, text: 'Not a participant' })).statusCode, 404);
+  assert.equal((await request(recipient, { action: 'message.send', id, text: 'Reply opens the conversation' })).statusCode, 200);
+  assert.equal(state.threads[0].accepted, true);
+  assert.equal(state.messages.length, 2);
+  assert.equal((await request(sender, { action: 'message.send', id, text: 'Now open' })).statusCode, 200);
+});
+
+test('decline restrictions persist until the recipient explicitly accepts again', async () => {
+  const sender = member(), recipient = member();
+  const created = await request(sender, start(recipient));
+  const id = created.payload.id;
   assert.equal((await request(recipient, { action: 'thread.decline', id })).statusCode, 200);
   assert.equal((await request(sender, start(recipient))).statusCode, 403);
   assert.equal((await request(sender, { action: 'message.send', id, text: 'Declined' })).statusCode, 403);
+  assert.equal((await request(recipient, { action: 'message.send', id, text: 'Cannot implicitly undo decline' })).statusCode, 403);
   assert.equal((await request(recipient, { action: 'thread.accept', id })).statusCode, 200);
   assert.equal((await request(sender, { action: 'message.send', id, text: 'Now accepted' })).statusCode, 200);
+});
+
+test('a failed reply does not accept the request or alter existing history', async () => {
+  const sender = member(), recipient = member();
+  const created = await request(sender, start(recipient));
+  state.failures.add('messages.insert');
+  await assert.rejects(request(recipient, { action: 'message.send', id: created.payload.id, text: 'Reply' }), /Isolated insert failure/);
+  assert.equal(state.threads[0].accepted, false);
+  assert.equal(state.messages.length, 1);
+  state.failures.clear();
+  assert.equal((await request(recipient, { action: 'message.send', id: created.payload.id, text: 'Retry' })).statusCode, 200);
+  assert.equal(state.threads[0].accepted, true);
+});
+
+test('a concurrent decline cannot be overwritten by a stale recipient reply', async () => {
+  const sender = member(), recipient = member();
+  const created = await request(sender, start(recipient));
+  const id = created.payload.id;
+  const outcomes = await Promise.all([
+    request(recipient, { action: 'thread.decline', id }),
+    request(recipient, { action: 'message.send', id, text: 'Racing reply' }),
+  ]);
+  assert.equal(outcomes[0].statusCode, 200);
+  assert.equal(outcomes[1].statusCode, 403);
+  assert.equal(state.threads[0].declined, true);
+  assert.equal(state.messages.length, 1);
+});
+
+test('ordinary members can communicate across sectors without a subscription or Founder privilege', async () => {
+  const sender = member(), recipient = member();
+  sender.row.activeSectors = ['fashion'];
+  recipient.row.activeSectors = ['humanitarian-action'];
+  const created = await request(sender, start(recipient));
+  assert.equal(created.statusCode, 200);
+  assert.equal((await request(recipient, { action: 'message.send', id: created.payload.id, text: 'Across sectors' })).statusCode, 200);
+  assert.deepEqual(state.paidCalls, []);
 });
 
 test('accepted text conversations are unpaid and have no daily quota; technical limiter remains', async () => {
@@ -267,7 +310,7 @@ test('non-participant administrators receive no private messages or thread acces
   await assert.rejects(network.networkState(context, { thread: created.payload.id }), /Conversation not found/);
 });
 
-test('Business and Reels retain their subscription gate; ordinary messaging makes no billing calls', async () => {
+test('ordinary messaging makes no billing calls and does not change the existing publication policy', async () => {
   const sender = member(), target = member();
   assert.equal((await request(sender, start(target))).statusCode, 200);
   assert.deepEqual(state.paidCalls, []);
@@ -276,23 +319,69 @@ test('Business and Reels retain their subscription gate; ordinary messaging make
     state.follows.push({ followerId: follower.id, followingId: sender.id });
   }
   for (const kind of ['business', 'reel']) {
-    assert.equal((await request(sender, { action: 'post.create', kind, text: 'Commercial post' })).statusCode, 402);
+    // The existing posting-trials policy permits ordinary business publications.
+    // Reels still need an actual video; this test does not touch storage.
+    assert.equal((await request(sender, { action: 'post.create', kind, text: 'Commercial post' })).statusCode, kind === 'reel' ? 400 : 200);
   }
-  assert.deepEqual(state.paidCalls, [sender.id, sender.id]);
+  assert.deepEqual(state.paidCalls, []);
 });
 
-test('professional introductions remain on their separate paid handler; quota SQL is creation-based', () => {
+test('all inbox pages and old conversation direct links remain available beyond one hundred threads', async () => {
+  const sender = member();
+  for (let i = 0; i < 105; i++) history(sender, 48);
+  const context = { member: sender.row, clerkId: sender.identity, founder: false };
+  const first = await network.networkState(context, {});
+  assert.equal(first.threads.length, 100);
+  assert.equal(first.nextThreadCursor, 6);
+  const next = await network.networkState(context, { threadBefore: first.nextThreadCursor });
+  assert.equal(next.threads.length, 5);
+  assert.equal(next.nextThreadCursor, null);
+  assert.equal(new Set([...first.threads, ...next.threads].map(t => t.id)).size, 105);
+  const selected = await network.networkState(context, { thread: 1 });
+  assert.ok(selected.threads.some(t => t.id === 1));
+  assert.equal(selected.messages.length, 1);
+  assert.equal(selected.messages[0].threadId, undefined, 'Only the existing response projection is exposed');
+});
+
+test('message pagination and unread counts do not truncate at the historical 5000-message window', async () => {
+  const sender = member();
+  const { thread, other } = history(sender, 48, { accepted: true });
+  for (let i = 0; i < 5100; i++) state.messages.push({
+    id: state.messages.length + 1, threadId: thread.id, senderId: other.id,
+    text: 'Unread history', read: false, createdAt: new Date(),
+  });
+  const context = { member: sender.row, clerkId: sender.identity, founder: false };
+  const first = await network.networkState(context, { thread: thread.id });
+  assert.equal(first.messages.length, 100);
+  assert.equal(first.messages.at(-1).id, 5101);
+  assert.equal(first.nextMessageCursor, 5002);
+  assert.equal(first.threads[0].unread, 5100);
+  assert.equal(first.threads[0].lastMessage, 'Unread history');
+  const older = await network.networkState(context, { thread: thread.id, messageBefore: first.nextMessageCursor });
+  assert.equal(older.messages.at(-1).id, 5001);
+  assert.equal(older.messages[0].id, 4902);
+});
+
+test('private inbox cursors do not reveal another member’s conversations', async () => {
+  const sender = member(), outsider = member();
+  const { thread } = history(sender);
+  const context = { member: outsider.row, clerkId: outsider.identity, founder: true };
+  const result = await network.networkState(context, { threadBefore: thread.id });
+  assert.deepEqual(result.threads, []);
+  await assert.rejects(network.networkState(context, { thread: thread.id }), /Conversation not found/);
+});
+
+test('professional introductions stay separate; ordinary messaging has no product quota query', () => {
   const professional = readFileSync(new URL('../src/routes/professional.ts', import.meta.url), 'utf8');
   const introduction = professional.slice(professional.indexOf('router.post("/professional/introductions"'));
   assert.ok(introduction.length > 0);
   assert.match(introduction.slice(0, introduction.indexOf('const parsed')), /if \(!who\.founder\) await requireMonthly/);
-  const quota = readFileSync(new URL('../src/services/ordinaryMessaging.ts', import.meta.url), 'utf8');
-  assert.match(quota, /ORDER BY \$\{messages\.id\} ASC LIMIT 1/);
-  assert.match(quota, /clock_timestamp\(\)/);
-  assert.doesNotMatch(quota, /threads\.updatedAt|requireMonthly|stripe|messages\.text/);
+  const ordinary = readFileSync(new URL('../src/services/ordinaryMessaging.ts', import.meta.url), 'utf8');
+  assert.match(ordinary, /clock_timestamp\(\)/);
+  assert.doesNotMatch(ordinary, /LEFT JOIN LATERAL|recent >=|pending >=|requireMonthly|stripe|rolling 24-hour|10 pending/);
 });
 
-test('real Drizzle schemas compile lock and quota SQL with bound IDs and no message contents', async () => {
+test('real Drizzle schemas compile the concurrency lock with bound IDs and no quota query', async () => {
   // Build SQL with the actual table definitions, but never import the DB pool,
   // database package entrypoint, auth service or application server.
   const schema = fileURLToPath(new URL('../../../lib/db/src/schema/network.ts', import.meta.url));
@@ -308,10 +397,12 @@ test('real Drizzle schemas compile lock and quota SQL with bound IDs and no mess
       setup(b) {
         b.onResolve({ filter: /^@workspace\/db$/ }, () => ({ path: 'db', namespace: 'sql-test' }));
         b.onResolve({ filter: /networkAuth$/ }, () => ({ path: 'errors', namespace: 'sql-test' }));
+        b.onResolve({ filter: /networkState$/ }, () => ({ path: 'state', namespace: 'sql-test' }));
         b.onLoad({ filter: /.*/, namespace: 'sql-test' }, ({ path }) => ({
           loader: 'ts', resolveDir: services,
           contents: path === 'errors'
             ? 'export class NetworkError extends Error { constructor(public status: number, message: string) { super(message); } }'
+            : path === 'state' ? 'export const ownThread = () => { throw Error("Not used by creation SQL test"); };'
             : `import { PgDialect } from "drizzle-orm/pg-core";
               export { networkProfiles, networkThreads, networkMessages } from ${JSON.stringify(schema)};
               export const calls = [];
@@ -334,12 +425,9 @@ test('real Drizzle schemas compile lock and quota SQL with bound IDs and no mess
     }],
   });
   const mod = await import(`data:text/javascript;base64,${Buffer.from(output.outputFiles[0].text).toString('base64')}`);
-  await assert.rejects(mod.startOrdinaryThread(1, 2, () => 'Initial note'), e => e.status === 429);
+  await assert.rejects(mod.startOrdinaryThread(1, 2, () => 'Initial note'), /Insert forbidden/);
   assert.equal(mod.calls[0].isolationLevel, 'read committed');
   assert.deepEqual(mod.calls[1].params, [1, 2]);
   assert.match(mod.calls[1].sql, /ORDER BY "network_profiles"\."member_id" FOR UPDATE/);
-  assert.deepEqual(mod.calls[2].params, [1]);
-  assert.match(mod.calls[2].sql, /LEFT JOIN LATERAL/);
-  assert.match(mod.calls[2].sql, /"network_messages"\."thread_id" = "network_threads"\."id"/);
-  assert.doesNotMatch(mod.calls[2].sql, /"text"|"updated_at"/);
+  assert.equal(mod.calls.length, 2, 'Only the profile concurrency lock is queried');
 });

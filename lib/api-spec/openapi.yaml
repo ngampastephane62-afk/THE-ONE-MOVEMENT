@@ -1412,6 +1412,8 @@ paths:
         - {name: person, in: query, schema: {type: integer}}
         - {name: connections, in: query, schema: {type: string, enum: [followers, following]}}
         - {name: thread, in: query, schema: {type: integer}}
+        - {name: threadBefore, in: query, schema: {type: integer, minimum: 1}, description: Previous inbox page cursor}
+        - {name: messageBefore, in: query, schema: {type: integer, minimum: 1}, description: Load older messages in the selected conversation}
         - {name: before, in: query, schema: {type: integer}}
       responses:
         "200":
@@ -3016,6 +3018,8 @@ components:
         person: {anyOf: [{$ref: "#/components/schemas/NetworkMember"}, {type: "null"}]}
         threads: {type: array, items: {$ref: "#/components/schemas/NetworkThread"}}
         messages: {type: array, items: {$ref: "#/components/schemas/NetworkMessage"}}
+        nextThreadCursor: {type: [integer, "null"]}
+        nextMessageCursor: {type: [integer, "null"]}
         certifications: {type: array, items: {$ref: "#/components/schemas/NetworkCertification"}}
         reports: {type: array, items: {$ref: "#/components/schemas/NetworkReport"}}
         packages: {type: array, items: {$ref: "#/components/schemas/NetworkPackage"}}

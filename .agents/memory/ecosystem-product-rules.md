@@ -21,11 +21,11 @@ Each event has its own income-generating professional participation services; pa
 
 **How to apply:** Keep programme-specific services separate from annual sponsorship, monthly subscriptions and capital investment. Existing sponsors should have their written inclusions checked before an additional fee is proposed. Do not invent role prices, promise editorial coverage or assume all sponsor levels guarantee a speaking slot.
 
-Ordinary member-to-member messaging must be free. Accepted conversations must not have daily message quotas; anti-spam limits target genuinely new unsolicited requests. The Founder approved five new requests per rolling 24 hours and ten pending outgoing requests. Opening existing threads, replying and accepting requests do not consume these quotas. TOMI-organized professional introductions remain separate.
+Ordinary member-to-member messaging must be free across all 17 sectors, without five-new-contacts-per-day or ten-pending-request product quotas. A first message may be delivered immediately into the recipient's requests; only the recipient can reply or accept to open further exchange. TOMI-organized professional introductions remain separate.
 
-**Why:** The Founder authorized limited free-messaging implementation with these exact first-contact protections, without migrations or new persistent infrastructure.
+**Why:** The Founder explicitly reversed the earlier five/ten product limits and requested immediate first-message delivery, while retaining recipient consent and protections against automated spam.
 
-**How to apply:** Preserve authentication, verification, conversation consent, blocking, moderation and account restrictions. Free feed access does not authorize expanding access to private conversations. Specialized commercial gates remain separate. If reliable counting and concurrent-creation protection cannot be preserved, stop rather than opening unprotected first contact. Source implementation approval does not authorize deployment.
+**How to apply:** Preserve authentication, verification, short-term security controls, conversation consent, blocking, moderation and account restrictions. A sender cannot follow up repeatedly while a first message awaits acceptance. Free feed access does not authorize viewing other people's private conversations. Specialized commercial gates remain separate. Code approval does not authorize deployment.
 
 Nationality must be supplied explicitly by the member, never inferred from IP address, device location, residence, language, name or ethnicity. Nationality and residence need distinct meanings and clear visibility controls; private account contact details must never be published automatically.
 
