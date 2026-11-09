@@ -32,6 +32,21 @@ The project stakeholder requires sole control and validation of work, including 
 
 **How to apply:** Deliver changes in preview for approval before publication. Obtain explicit approval before changing connected financial accounts, access, ownership, or billing settings. Do not infer account ownership, founder privileges, or who pays for usage from the display name of a chat participant; verify the actual workspace and account configuration.
 
+Application-level Founder privileges do not establish Replit project ownership
+or permission to edit platform Secrets and integrations. When those permissions
+are disputed, verify the account/workspace and app access roles through the
+platform, not through application roles or chat names. Do not modify or redeploy
+the live website until the ownership and permissions issue is resolved.
+
+**Why:** The stakeholder reported being unable to save a provider key because
+Replit denied editing Secrets, and explicitly required ownership and permission
+verification before continuing. Built-in project transfers can themselves
+trigger a redeployment; do not use them as a supposedly read-only remedy.
+
+**How to apply:** Use read-only platform metadata or user-supplied Access-panel
+evidence, never retrieve secret values to bypass permission checks. Keep any
+copy/import isolated from the live domain and connected production resources.
+
 The stakeholder identifies Tropik Agency as the creator and copyright holder of The One Movement ecosystem, with rights covering its creation, development, and organization.
 
 **Why:** This is the stakeholder's explicit declaration of the business relationship and intended rights holder, not independently verified legal evidence or a transfer of technical account ownership.
