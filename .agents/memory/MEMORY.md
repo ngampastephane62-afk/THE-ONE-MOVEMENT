@@ -34,3 +34,4 @@
 - [Founder membership dashboard](founder-membership-dashboard.md) — central My Space counts, complete/incomplete profiles, email follow-up and clear ecosystem entry guidance.
 - [Founder editorial authoring](editorial-authoring-rules.md) — multilingual public text control, Tropik articles, reels, past Fashion Week videos, original image ratios and 500 MiB videos.
 - [Community communications](community-communications-rules.md) — opt-in digests, first-issue approval, no duplicate welcome or historical floods; incomplete profiles can access the community.
+- [The One Connect](the-one-connect-scope.md) — expand existing messaging in approved phases; preserve history, private chats and consent; approve calling costs separately.
