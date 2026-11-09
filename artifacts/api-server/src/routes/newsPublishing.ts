@@ -78,7 +78,7 @@ router.post("/founder/news/uploads/:uploadId/complete", networkWrite, async (req
     }
     const pendingSuffix = `/news-pending/${ownerId}/${id}`;
     if (!row.objectPath.endsWith(pendingSuffix)) throw new NewsError(400, "Only editorial uploads can be finalized here.");
-    await completeUpload(ownerId, id, tx);
+    await completeUpload(ownerId, id, tx, "news");
     const finalPath = row.objectPath.slice(0, -pendingSuffix.length) + `/news/${ownerId}/${id}`;
     // The temporary signed PUT can never overwrite the final publication object.
     await objectFile(row.objectPath).copy(objectFile(finalPath));

@@ -51,10 +51,15 @@ export async function requestUpload(ownerId: number, input: { filename: string; 
   });
   return { id, uploadUrl: signed.signed_url };
 }
-export async function completeUpload(ownerId: number, id: string, executor: Pick<typeof db, "select" | "update"> = db, campaign = false) {
+export async function completeUpload(ownerId: number, id: string, executor: Pick<typeof db, "select" | "update"> = db, reviewScope: false | "gratitude" | "news" = false) {
   const [row] = await executor.select().from(uploads).where(and(eq(uploads.id, id), eq(uploads.ownerId, ownerId)));
   if (!row) throw new NetworkError(404, "Upload not found.");
-  if (!campaign && isReservedMediaPath(row.objectPath)) throw new NetworkError(400, "Finalize this file through its dedicated review workflow.");
+  // Only a dedicated, authorized route may validate its own pending namespace.
+  // Ordinary member uploads must not finalize News or gratitude review files.
+  const authorizedPending = reviewScope === "news"
+    ? row.objectPath.endsWith(`/news-pending/${ownerId}/${id}`)
+    : reviewScope === "gratitude" && row.objectPath.endsWith(`/gratitude-pending/${ownerId}/${id}`);
+  if (isReservedMediaPath(row.objectPath) && !authorizedPending) throw new NetworkError(400, "Finalize this file through its dedicated review workflow.");
   const file = objectFile(row.objectPath);
   const [metadata] = await file.getMetadata();
   if (Number(metadata.size) !== row.size || metadata.contentType?.split(";")[0] !== row.contentType) {

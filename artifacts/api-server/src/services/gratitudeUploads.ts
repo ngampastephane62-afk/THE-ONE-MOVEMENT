@@ -70,7 +70,7 @@ export async function finishGratitudeUpload(owner: number, uploadId: string) {
       // Freeze bytes outside the signed PUT target before validating or reading.
       await objectFile(original.objectPath).copy(objectFile(finalPath));
       await tx.update(uploads).set({ objectPath: finalPath, ready: false }).where(eq(uploads.id, uploadId));
-      await completeUpload(owner, uploadId, tx, true);
+      await completeUpload(owner, uploadId, tx, "gratitude");
       await tx.update(media).set({ processingStatus: "processing", failureCode: null, updatedAt: new Date() }).where(eq(media.id, attachment.id));
       await processGratitudeFile(async destination => {
         await objectFile(finalPath).download({ destination });
