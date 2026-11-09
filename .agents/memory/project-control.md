@@ -47,6 +47,11 @@ trigger a redeployment; do not use them as a supposedly read-only remedy.
 evidence, never retrieve secret values to bypass permission checks. Keep any
 copy/import isolated from the live domain and connected production resources.
 
+On 2026-11-10 the stakeholder explicitly confirmed that their Replit **Owner**
+access was established. Treat this as user-confirmed app access, not an
+independent audit of the billing account or a completed workspace transfer.
+No permission to publish or migrate production was given by that confirmation.
+
 The stakeholder identifies Tropik Agency as the creator and copyright holder of The One Movement ecosystem, with rights covering its creation, development, and organization.
 
 **Why:** This is the stakeholder's explicit declaration of the business relationship and intended rights holder, not independently verified legal evidence or a transfer of technical account ownership.
