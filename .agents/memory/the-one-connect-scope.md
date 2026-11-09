@@ -18,6 +18,18 @@ private messages, calls or chat attachments. Themes are personal; presence
 needs privacy controls, recording is off by default, and no E2EE/background-call
 claim is permitted without implementation and real verification.
 
+Daily is the Founder's selected direction for calls, with an application-level
+usage ceiling. This selection is not approval of a subscription or spending:
+obtain the monthly budget before activating a billable service.
+
+**Why:** The Founder selected Daily after being told that the selection alone
+would trigger no subscription or billing and that budget approval would follow.
+Daily's free allowance must not be described as a guaranteed billing cap.
+
+**How to apply:** Design server-side usage controls before activation, explain
+that a software ceiling is not a provider-enforced hard cap, and get explicit
+approval for the remaining cost exposure.
+
 Keep unrelated deferred migrations out of a newly authorized feature's apply
 step. In particular, approval of Connect does not authorize the held newsletter
 schema or enable its emails.
