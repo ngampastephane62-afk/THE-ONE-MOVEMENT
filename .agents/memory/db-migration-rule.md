@@ -5,17 +5,26 @@ description: Mandatory generate→review→migrate workflow for all schema chang
 
 ## Rule
 
-No production or shared-database schema change may be performed using `drizzle-kit push --force`. All schema changes must be made via:
+Never use `drizzle-kit push --force`. For authorized development schema changes use:
 
 ```
 drizzle-kit generate → review SQL for destructive statements → drizzle-kit migrate
 ```
 
-This applies to every Agent task, without exception.
+Generate and review may be authorized separately from application: do not
+interpret approval to prepare SQL as permission to migrate.
+
+For Replit-managed production PostgreSQL, schema changes must instead use
+the Publish flow and its schema-diff review. Never run a custom production
+migrator or startup/build DDL. For an external production database, confirm
+the target and its documented migration process before any authorized write.
 
 **Why:** The platform stores personal data under UAE PDPL and GDPR obligations. An auditable migration trail in `lib/db/drizzle/` is mandatory. Push bypasses migration files entirely.
 
-**How to apply:** Any time a schema change is needed (new column, new table, constraint, index), follow the procedure documented in `lib/db/README.md`. Never call `push` or `push-force` scripts against a shared database.
+**How to apply:** Read the current database skill before schema work; it
+overrides older repository migration guidance for managed production.
+Follow the development generate/review/apply process only within the
+user-authorized environment. Never call `push` or `push-force`.
 
 ## Workflow scripts (lib/db/package.json)
 
@@ -45,6 +54,6 @@ This applies to every Agent task, without exception.
 
 1. Edit schema file in `lib/db/src/schema/`
 2. `db:generate` — inspect generated SQL for DROP/TRUNCATE/RENAME; stop if found
-3. `db:migrate` — apply to live DB
+3. `db:migrate` — apply to development only after explicit approval
 4. Rebuild `lib/db`: `cd lib/db && npx tsc -p tsconfig.json`
 5. Restart API server workflow

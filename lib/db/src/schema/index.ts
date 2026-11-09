@@ -24,3 +24,8 @@ export * from "./gratitude";
 export * from "./siteVisitSessions";
 export * from "./memberProfileReminders";
 export * from "./founderControl";
+export * from "./communityCommunicationPreferences";
+export * from "./communityActivityEvents";
+export * from "./communityEmailSettings";
+export * from "./communityEmailRuns";
+export * from "./communityEmailDeliveries";

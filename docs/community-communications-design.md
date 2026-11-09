@@ -1,7 +1,13 @@
 # Community communications — proposition soumise à approbation
 
-Statut : conception uniquement. Aucun SQL généré/appliqué, aucun abonnement
-automatique, aucun email ni job programmé activé.
+Statut : schéma approuvé et SQL généré/revu, mais NON appliqué.
+Migration préparée : `lib/db/drizzle/0021_community_communications.sql`.
+Aucun abonnement automatique, aucun email ni job programmé activé.
+La migration crée uniquement les cinq tables ci-dessous, leurs contraintes
+et index ; aucune table existante modifiée, aucune donnée insérée.
+La référence entre livraisons et éditions interdit la suppression d’une
+édition encore référencée. Les contrôles SQL imposent aussi une trace de
+consentement pour les préférences email et une approbation avant activation.
 
 ## Réutilisation et périmètre
 

@@ -148,6 +148,13 @@
       "when": 1793756766100,
       "tag": "0020_lowly_king_cobra",
       "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1794215578273,
+      "tag": "0021_community_communications",
+      "breakpoints": true
     }
   ]
 }
