@@ -25,3 +25,16 @@ private identities or requiring completion as an entry barrier.
 
 **How to apply:** Treat onboarding reminders as encouragement, not an implicit
 access gate. Do not expose private email/contact information in announcements.
+
+The Founder wants notifications for new community members and incoming private
+messages, with email fallback when a message recipient is absent. These
+transactional alerts are distinct from the optional editorial newsletter.
+
+**Why:** The Founder reported that the existing messaging screen gives no usable
+notification of incoming activity and explicitly requested offline email alerts.
+
+**How to apply:** Notify only authorized recipients of private messages and
+mentions; never broadcast their content to the community. Community welcome
+alerts must retain discovery/privacy restrictions. Avoid historical notification
+floods and repeated emails for the same unread activity; provide notification
+controls and verify the sender connection before enabling delivery.
