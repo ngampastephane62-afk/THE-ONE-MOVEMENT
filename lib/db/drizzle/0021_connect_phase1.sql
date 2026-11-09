@@ -56,6 +56,7 @@ CREATE TABLE "connect_messages" (
 	"edited_at" timestamp with time zone,
 	"deleted_at" timestamp with time zone,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	CONSTRAINT "connect_messages_identity_scope" UNIQUE("id","conversation_id"),
 	CONSTRAINT "connect_messages_kind" CHECK ("connect_messages"."kind" IN ('text', 'attachment', 'voice')),
 	CONSTRAINT "connect_messages_version" CHECK ("connect_messages"."version" > 0),
 	CONSTRAINT "connect_messages_source" CHECK (("connect_messages"."legacy_message_id" IS NOT NULL AND "connect_messages"."text" IS NULL) OR ("connect_messages"."legacy_message_id" IS NULL AND "connect_messages"."text" IS NOT NULL)),
@@ -146,7 +147,6 @@ CREATE INDEX "connect_attachments_expiry" ON "connect_attachments" USING btree (
 CREATE UNIQUE INDEX "connect_conversations_legacy_thread" ON "connect_conversations" USING btree ("legacy_thread_id");--> statement-breakpoint
 CREATE INDEX "connect_events_cursor" ON "connect_events" USING btree ("conversation_id","created_at","id");--> statement-breakpoint
 CREATE UNIQUE INDEX "connect_messages_legacy" ON "connect_messages" USING btree ("legacy_message_id");--> statement-breakpoint
-CREATE UNIQUE INDEX "connect_messages_identity_scope" ON "connect_messages" USING btree ("id","conversation_id");--> statement-breakpoint
 CREATE UNIQUE INDEX "connect_messages_nonce" ON "connect_messages" USING btree ("conversation_id","sender_id","client_nonce");--> statement-breakpoint
 CREATE INDEX "connect_messages_page" ON "connect_messages" USING btree ("conversation_id","created_at","id");--> statement-breakpoint
 CREATE INDEX "connect_participants_inbox" ON "connect_participants" USING btree ("member_id","status","archived");

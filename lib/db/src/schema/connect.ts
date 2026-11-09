@@ -1,7 +1,7 @@
 import { sql } from "drizzle-orm";
 import {
   pgTable, uuid, integer, text, boolean, timestamp, index, uniqueIndex,
-  primaryKey, check, foreignKey, type AnyPgColumn,
+  primaryKey, check, foreignKey, unique, type AnyPgColumn,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod/v4";
@@ -81,7 +81,9 @@ export const connectMessages = pgTable("connect_messages", {
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 }, t => [
   uniqueIndex("connect_messages_legacy").on(t.legacyMessageId),
-  uniqueIndex("connect_messages_identity_scope").on(t.id, t.conversationId),
+  // A table-level unique constraint is created before dependent foreign keys.
+  // drizzle-kit emits unique indexes after foreign keys in a fresh migration.
+  unique("connect_messages_identity_scope").on(t.id, t.conversationId),
   uniqueIndex("connect_messages_nonce").on(t.conversationId, t.senderId, t.clientNonce),
   index("connect_messages_page").on(t.conversationId, t.createdAt, t.id),
   check("connect_messages_kind", sql`${t.kind} IN ('text', 'attachment', 'voice')`),

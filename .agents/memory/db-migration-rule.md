@@ -37,6 +37,13 @@ user-authorized environment. Never call `push` or `push-force`.
 
 ## drizzle-kit 0.31.10 quirks
 
+- A composite foreign key referencing a freshly created table needs its
+  referenced uniqueness declared with table-level `unique(...)`, not only
+  `uniqueIndex(...)`. **Why:** generate emits foreign keys before unique
+  indexes, so the fresh PostgreSQL migration otherwise fails with 42830.
+  **How to apply:** inspect statement order for new composite relationships;
+  create the referenced unique constraint in CREATE TABLE before adding FKs.
+
 - `drizzle-kit status` command does NOT exist — returns "Unknown command". Use `db:status` script instead.
 - `out` path in `drizzle.config.ts` must be a **relative path** (`"./drizzle"`), not `path.join(__dirname, "./drizzle")`. The absolute path causes a double-slash bug on the second `generate` call (reads `'.//home/runner/...`' and throws ENOENT on existing snapshots).
 - `drizzle-kit generate` run from `lib/db/` directory with `--config ./drizzle.config.ts`.

@@ -1,5 +1,5 @@
 {
-  "id": "20055d29-badb-4cd9-8330-5ba1179c44b2",
+  "id": "97098f92-88a6-45c1-babd-21367cf08d16",
   "prevId": "3d048424-7a40-4e30-b537-b566077be8d5",
   "version": "7",
   "dialect": "postgresql",
@@ -5886,81 +5886,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.community_communication_preferences": {
-      "name": "community_communication_preferences",
-      "schema": "",
-      "columns": {
-        "clerk_id": {
-          "name": "clerk_id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "frequency": {
-          "name": "frequency",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'in_app'"
-        },
-        "welcome_allowed": {
-          "name": "welcome_allowed",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true,
-          "default": false
-        },
-        "consented_at": {
-          "name": "consented_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "consent_version": {
-          "name": "consent_version",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "suppressed_at": {
-          "name": "suppressed_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "suppression_reason": {
-          "name": "suppression_reason",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {
-        "community_preferences_frequency": {
-          "name": "community_preferences_frequency",
-          "value": "\"community_communication_preferences\".\"frequency\" IN ('daily', 'weekly', 'in_app', 'off')"
-        },
-        "community_preferences_email_consent": {
-          "name": "community_preferences_email_consent",
-          "value": "(\"community_communication_preferences\".\"frequency\" NOT IN ('daily', 'weekly') AND NOT \"community_communication_preferences\".\"welcome_allowed\") OR (\"community_communication_preferences\".\"consented_at\" IS NOT NULL AND \"community_communication_preferences\".\"consent_version\" IS NOT NULL)"
-        }
-      },
-      "isRLSEnabled": false
-    },
-    "public.community_activity_events": {
-      "name": "community_activity_events",
+    "public.connect_attachments": {
+      "name": "connect_attachments",
       "schema": "",
       "columns": {
         "id": {
@@ -5970,175 +5897,45 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "event_key": {
-          "name": "event_key",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "kind": {
-          "name": "kind",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "subject_clerk_id": {
-          "name": "subject_clerk_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "occurred_at": {
-          "name": "occurred_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "community_activity_event_key": {
-          "name": "community_activity_event_key",
-          "columns": [
-            {
-              "expression": "event_key",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.community_email_settings": {
-      "name": "community_email_settings",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "integer",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "paused": {
-          "name": "paused",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true,
-          "default": true
-        },
-        "timezone": {
-          "name": "timezone",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "send_hour": {
-          "name": "send_hour",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "weekly_day": {
-          "name": "weekly_day",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "introduction": {
-          "name": "introduction",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "''"
-        },
-        "first_approved_at": {
-          "name": "first_approved_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "approved_by_clerk_id": {
-          "name": "approved_by_clerk_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "baseline_at": {
-          "name": "baseline_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {
-        "community_email_settings_singleton": {
-          "name": "community_email_settings_singleton",
-          "value": "\"community_email_settings\".\"id\" = 1"
-        },
-        "community_email_settings_hour": {
-          "name": "community_email_settings_hour",
-          "value": "\"community_email_settings\".\"send_hour\" BETWEEN 0 AND 23"
-        },
-        "community_email_settings_day": {
-          "name": "community_email_settings_day",
-          "value": "\"community_email_settings\".\"weekly_day\" BETWEEN 0 AND 6"
-        },
-        "community_email_settings_approval": {
-          "name": "community_email_settings_approval",
-          "value": "\"community_email_settings\".\"paused\" OR (\"community_email_settings\".\"first_approved_at\" IS NOT NULL AND \"community_email_settings\".\"approved_by_clerk_id\" IS NOT NULL)"
-        }
-      },
-      "isRLSEnabled": false
-    },
-    "public.community_email_runs": {
-      "name": "community_email_runs",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
+        "conversation_id": {
+          "name": "conversation_id",
           "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
+          "primaryKey": false,
+          "notNull": true
         },
-        "kind": {
-          "name": "kind",
+        "message_id": {
+          "name": "message_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "owner_id": {
+          "name": "owner_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "object_path": {
+          "name": "object_path",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "period_key": {
-          "name": "period_key",
+        "filename": {
+          "name": "filename",
           "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "content_type": {
+          "name": "content_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "size": {
+          "name": "size",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -6147,190 +5944,19 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "'draft'"
+          "default": "'pending'"
         },
-        "period_start": {
-          "name": "period_start",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "period_end": {
-          "name": "period_end",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "featured_article_ids": {
-          "name": "featured_article_ids",
-          "type": "integer[]",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'{}'"
-        },
-        "approved_content_hash": {
-          "name": "approved_content_hash",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "approved_at": {
-          "name": "approved_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "community_email_runs_period": {
-          "name": "community_email_runs_period",
-          "columns": [
-            {
-              "expression": "kind",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "period_key",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {
-        "community_email_runs_kind": {
-          "name": "community_email_runs_kind",
-          "value": "\"community_email_runs\".\"kind\" IN ('daily', 'weekly')"
-        },
-        "community_email_runs_status": {
-          "name": "community_email_runs_status",
-          "value": "\"community_email_runs\".\"status\" IN ('draft', 'approved', 'running', 'completed', 'paused')"
-        },
-        "community_email_runs_range": {
-          "name": "community_email_runs_range",
-          "value": "\"community_email_runs\".\"period_end\" > \"community_email_runs\".\"period_start\""
-        },
-        "community_email_runs_approval": {
-          "name": "community_email_runs_approval",
-          "value": "\"community_email_runs\".\"status\" NOT IN ('approved', 'running', 'completed') OR (\"community_email_runs\".\"approved_content_hash\" IS NOT NULL AND \"community_email_runs\".\"approved_at\" IS NOT NULL)"
-        }
-      },
-      "isRLSEnabled": false
-    },
-    "public.community_email_deliveries": {
-      "name": "community_email_deliveries",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "run_id": {
-          "name": "run_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "clerk_id": {
-          "name": "clerk_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "kind": {
-          "name": "kind",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "dedupe_key": {
-          "name": "dedupe_key",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "idempotency_key": {
-          "name": "idempotency_key",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "status": {
-          "name": "status",
+        "scan_status": {
+          "name": "scan_status",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "'queued'"
+          "default": "'not_supported'"
         },
-        "provider_id": {
-          "name": "provider_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "attempts": {
-          "name": "attempts",
+        "duration_ms": {
+          "name": "duration_ms",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true,
-          "default": 0
-        },
-        "claim_expires_at": {
-          "name": "claim_expires_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "next_attempt_at": {
-          "name": "next_attempt_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "last_error_code": {
-          "name": "last_error_code",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "provider_event_at": {
-          "name": "provider_event_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "provider_event_id": {
-          "name": "provider_event_id",
-          "type": "text",
-          "primaryKey": false,
           "notNull": false
         },
         "created_at": {
@@ -6340,20 +5966,19 @@
           "notNull": true,
           "default": "now()"
         },
-        "updated_at": {
-          "name": "updated_at",
+        "expires_at": {
+          "name": "expires_at",
           "type": "timestamp with time zone",
           "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
+          "notNull": true
         }
       },
       "indexes": {
-        "community_email_deliveries_dedupe": {
-          "name": "community_email_deliveries_dedupe",
+        "connect_attachments_object": {
+          "name": "connect_attachments_object",
           "columns": [
             {
-              "expression": "dedupe_key",
+              "expression": "object_path",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -6364,47 +5989,11 @@
           "method": "btree",
           "with": {}
         },
-        "community_email_deliveries_idempotency": {
-          "name": "community_email_deliveries_idempotency",
+        "connect_attachments_message": {
+          "name": "connect_attachments_message",
           "columns": [
             {
-              "expression": "idempotency_key",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "community_email_deliveries_provider": {
-          "name": "community_email_deliveries_provider",
-          "columns": [
-            {
-              "expression": "provider_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "community_email_deliveries_work": {
-          "name": "community_email_deliveries_work",
-          "columns": [
-            {
-              "expression": "status",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "next_attempt_at",
+              "expression": "message_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -6415,11 +6004,11 @@
           "method": "btree",
           "with": {}
         },
-        "community_email_deliveries_member_date": {
-          "name": "community_email_deliveries_member_date",
+        "connect_attachments_owner_date": {
+          "name": "connect_attachments_owner_date",
           "columns": [
             {
-              "expression": "clerk_id",
+              "expression": "owner_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -6435,18 +6024,67 @@
           "concurrently": false,
           "method": "btree",
           "with": {}
+        },
+        "connect_attachments_expiry": {
+          "name": "connect_attachments_expiry",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "expires_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
         }
       },
       "foreignKeys": {
-        "community_email_deliveries_run_id_community_email_runs_id_fk": {
-          "name": "community_email_deliveries_run_id_community_email_runs_id_fk",
-          "tableFrom": "community_email_deliveries",
-          "tableTo": "community_email_runs",
+        "connect_attachments_conversation_id_connect_conversations_id_fk": {
+          "name": "connect_attachments_conversation_id_connect_conversations_id_fk",
+          "tableFrom": "connect_attachments",
+          "tableTo": "connect_conversations",
           "columnsFrom": [
-            "run_id"
+            "conversation_id"
           ],
           "columnsTo": [
             "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "connect_attachments_owner_id_ecosystem_members_id_fk": {
+          "name": "connect_attachments_owner_id_ecosystem_members_id_fk",
+          "tableFrom": "connect_attachments",
+          "tableTo": "ecosystem_members",
+          "columnsFrom": [
+            "owner_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "connect_attachments_message_scope": {
+          "name": "connect_attachments_message_scope",
+          "tableFrom": "connect_attachments",
+          "tableTo": "connect_messages",
+          "columnsFrom": [
+            "message_id",
+            "conversation_id"
+          ],
+          "columnsTo": [
+            "id",
+            "conversation_id"
           ],
           "onDelete": "restrict",
           "onUpdate": "no action"
@@ -6456,23 +6094,997 @@
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {
-        "community_email_deliveries_kind": {
-          "name": "community_email_deliveries_kind",
-          "value": "\"community_email_deliveries\".\"kind\" IN ('welcome', 'daily', 'weekly')"
+        "connect_attachments_status": {
+          "name": "connect_attachments_status",
+          "value": "\"connect_attachments\".\"status\" IN ('pending', 'uploaded', 'ready', 'rejected')"
         },
-        "community_email_deliveries_status": {
-          "name": "community_email_deliveries_status",
-          "value": "\"community_email_deliveries\".\"status\" IN ('queued', 'claimed', 'accepted', 'delivered', 'bounced', 'complained', 'suppressed', 'failed', 'unknown')"
+        "connect_attachments_scan": {
+          "name": "connect_attachments_scan",
+          "value": "\"connect_attachments\".\"scan_status\" IN ('not_supported', 'pending', 'clean', 'infected', 'failed')"
         },
-        "community_email_deliveries_attempts": {
-          "name": "community_email_deliveries_attempts",
-          "value": "\"community_email_deliveries\".\"attempts\" >= 0"
+        "connect_attachments_size": {
+          "name": "connect_attachments_size",
+          "value": "\"connect_attachments\".\"size\" > 0 AND \"connect_attachments\".\"size\" <= CASE WHEN \"connect_attachments\".\"content_type\" LIKE 'video/%' THEN 524288000 ELSE 20971520 END"
         },
-        "community_email_deliveries_run": {
-          "name": "community_email_deliveries_run",
-          "value": "(\"community_email_deliveries\".\"kind\" = 'welcome' AND \"community_email_deliveries\".\"run_id\" IS NULL) OR (\"community_email_deliveries\".\"kind\" IN ('daily', 'weekly') AND \"community_email_deliveries\".\"run_id\" IS NOT NULL)"
+        "connect_attachments_duration": {
+          "name": "connect_attachments_duration",
+          "value": "\"connect_attachments\".\"duration_ms\" IS NULL OR \"connect_attachments\".\"duration_ms\" > 0"
+        },
+        "connect_attachments_bound": {
+          "name": "connect_attachments_bound",
+          "value": "\"connect_attachments\".\"message_id\" IS NULL OR \"connect_attachments\".\"status\" = 'ready'"
+        },
+        "connect_attachments_scan_ready": {
+          "name": "connect_attachments_scan_ready",
+          "value": "\"connect_attachments\".\"status\" <> 'ready' OR \"connect_attachments\".\"scan_status\" IN ('not_supported', 'clean')"
         }
       },
+      "isRLSEnabled": false
+    },
+    "public.connect_conversations": {
+      "name": "connect_conversations",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "kind": {
+          "name": "kind",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "legacy_thread_id": {
+          "name": "legacy_thread_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
+        },
+        "created_by": {
+          "name": "created_by",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "connect_conversations_legacy_thread": {
+          "name": "connect_conversations_legacy_thread",
+          "columns": [
+            {
+              "expression": "legacy_thread_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "connect_conversations_legacy_thread_id_network_threads_id_fk": {
+          "name": "connect_conversations_legacy_thread_id_network_threads_id_fk",
+          "tableFrom": "connect_conversations",
+          "tableTo": "network_threads",
+          "columnsFrom": [
+            "legacy_thread_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "connect_conversations_created_by_ecosystem_members_id_fk": {
+          "name": "connect_conversations_created_by_ecosystem_members_id_fk",
+          "tableFrom": "connect_conversations",
+          "tableTo": "ecosystem_members",
+          "columnsFrom": [
+            "created_by"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "connect_conversations_kind": {
+          "name": "connect_conversations_kind",
+          "value": "\"connect_conversations\".\"kind\" IN ('direct', 'group')"
+        },
+        "connect_conversations_legacy_kind": {
+          "name": "connect_conversations_legacy_kind",
+          "value": "(\"connect_conversations\".\"kind\" = 'direct' AND \"connect_conversations\".\"legacy_thread_id\" IS NOT NULL) OR (\"connect_conversations\".\"kind\" = 'group' AND \"connect_conversations\".\"legacy_thread_id\" IS NULL)"
+        },
+        "connect_conversations_title": {
+          "name": "connect_conversations_title",
+          "value": "char_length(\"connect_conversations\".\"title\") <= 160 AND (\"connect_conversations\".\"kind\" <> 'group' OR char_length(btrim(\"connect_conversations\".\"title\")) > 0)"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.connect_events": {
+      "name": "connect_events",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "conversation_id": {
+          "name": "conversation_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "kind": {
+          "name": "kind",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "subject_member_id": {
+          "name": "subject_member_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "message_id": {
+          "name": "message_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "connect_events_cursor": {
+          "name": "connect_events_cursor",
+          "columns": [
+            {
+              "expression": "conversation_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "connect_events_conversation_id_connect_conversations_id_fk": {
+          "name": "connect_events_conversation_id_connect_conversations_id_fk",
+          "tableFrom": "connect_events",
+          "tableTo": "connect_conversations",
+          "columnsFrom": [
+            "conversation_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "connect_events_subject_member_id_ecosystem_members_id_fk": {
+          "name": "connect_events_subject_member_id_ecosystem_members_id_fk",
+          "tableFrom": "connect_events",
+          "tableTo": "ecosystem_members",
+          "columnsFrom": [
+            "subject_member_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "connect_events_message_scope": {
+          "name": "connect_events_message_scope",
+          "tableFrom": "connect_events",
+          "tableTo": "connect_messages",
+          "columnsFrom": [
+            "message_id",
+            "conversation_id"
+          ],
+          "columnsTo": [
+            "id",
+            "conversation_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "connect_events_kind": {
+          "name": "connect_events_kind",
+          "value": "\"connect_events\".\"kind\" IN ('message', 'edit', 'delete', 'reaction', 'pin', 'invitation', 'membership', 'read')"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.connect_messages": {
+      "name": "connect_messages",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "conversation_id": {
+          "name": "conversation_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sender_id": {
+          "name": "sender_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "legacy_message_id": {
+          "name": "legacy_message_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "text": {
+          "name": "text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "kind": {
+          "name": "kind",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'text'"
+        },
+        "reply_to_id": {
+          "name": "reply_to_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "client_nonce": {
+          "name": "client_nonce",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "version": {
+          "name": "version",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        },
+        "edited_at": {
+          "name": "edited_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "connect_messages_legacy": {
+          "name": "connect_messages_legacy",
+          "columns": [
+            {
+              "expression": "legacy_message_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "connect_messages_nonce": {
+          "name": "connect_messages_nonce",
+          "columns": [
+            {
+              "expression": "conversation_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "sender_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "client_nonce",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "connect_messages_page": {
+          "name": "connect_messages_page",
+          "columns": [
+            {
+              "expression": "conversation_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "connect_messages_conversation_id_connect_conversations_id_fk": {
+          "name": "connect_messages_conversation_id_connect_conversations_id_fk",
+          "tableFrom": "connect_messages",
+          "tableTo": "connect_conversations",
+          "columnsFrom": [
+            "conversation_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "connect_messages_sender_id_ecosystem_members_id_fk": {
+          "name": "connect_messages_sender_id_ecosystem_members_id_fk",
+          "tableFrom": "connect_messages",
+          "tableTo": "ecosystem_members",
+          "columnsFrom": [
+            "sender_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "connect_messages_legacy_message_id_network_messages_id_fk": {
+          "name": "connect_messages_legacy_message_id_network_messages_id_fk",
+          "tableFrom": "connect_messages",
+          "tableTo": "network_messages",
+          "columnsFrom": [
+            "legacy_message_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "connect_messages_reply_to_id_connect_messages_id_fk": {
+          "name": "connect_messages_reply_to_id_connect_messages_id_fk",
+          "tableFrom": "connect_messages",
+          "tableTo": "connect_messages",
+          "columnsFrom": [
+            "reply_to_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "connect_messages_identity_scope": {
+          "name": "connect_messages_identity_scope",
+          "nullsNotDistinct": false,
+          "columns": [
+            "id",
+            "conversation_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "connect_messages_kind": {
+          "name": "connect_messages_kind",
+          "value": "\"connect_messages\".\"kind\" IN ('text', 'attachment', 'voice')"
+        },
+        "connect_messages_version": {
+          "name": "connect_messages_version",
+          "value": "\"connect_messages\".\"version\" > 0"
+        },
+        "connect_messages_source": {
+          "name": "connect_messages_source",
+          "value": "(\"connect_messages\".\"legacy_message_id\" IS NOT NULL AND \"connect_messages\".\"text\" IS NULL) OR (\"connect_messages\".\"legacy_message_id\" IS NULL AND \"connect_messages\".\"text\" IS NOT NULL)"
+        },
+        "connect_messages_text": {
+          "name": "connect_messages_text",
+          "value": "\"connect_messages\".\"text\" IS NULL OR (char_length(\"connect_messages\".\"text\") <= 3000 AND (\"connect_messages\".\"kind\" <> 'text' OR char_length(btrim(\"connect_messages\".\"text\")) > 0))"
+        },
+        "connect_messages_reply": {
+          "name": "connect_messages_reply",
+          "value": "\"connect_messages\".\"reply_to_id\" IS NULL OR \"connect_messages\".\"reply_to_id\" <> \"connect_messages\".\"id\""
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.connect_participants": {
+      "name": "connect_participants",
+      "schema": "",
+      "columns": {
+        "conversation_id": {
+          "name": "conversation_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "member_id": {
+          "name": "member_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "role": {
+          "name": "role",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'member'"
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'invited'"
+        },
+        "invited_by": {
+          "name": "invited_by",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "invited_at": {
+          "name": "invited_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "joined_at": {
+          "name": "joined_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "history_from": {
+          "name": "history_from",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_read_at": {
+          "name": "last_read_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_read_message_id": {
+          "name": "last_read_message_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "muted": {
+          "name": "muted",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "archived": {
+          "name": "archived",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "left_at": {
+          "name": "left_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "connect_participants_inbox": {
+          "name": "connect_participants_inbox",
+          "columns": [
+            {
+              "expression": "member_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "archived",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "connect_participants_conversation_id_connect_conversations_id_fk": {
+          "name": "connect_participants_conversation_id_connect_conversations_id_fk",
+          "tableFrom": "connect_participants",
+          "tableTo": "connect_conversations",
+          "columnsFrom": [
+            "conversation_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "connect_participants_member_id_ecosystem_members_id_fk": {
+          "name": "connect_participants_member_id_ecosystem_members_id_fk",
+          "tableFrom": "connect_participants",
+          "tableTo": "ecosystem_members",
+          "columnsFrom": [
+            "member_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "connect_participants_invited_by_ecosystem_members_id_fk": {
+          "name": "connect_participants_invited_by_ecosystem_members_id_fk",
+          "tableFrom": "connect_participants",
+          "tableTo": "ecosystem_members",
+          "columnsFrom": [
+            "invited_by"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "connect_participants_read_message_scope": {
+          "name": "connect_participants_read_message_scope",
+          "tableFrom": "connect_participants",
+          "tableTo": "connect_messages",
+          "columnsFrom": [
+            "last_read_message_id",
+            "conversation_id"
+          ],
+          "columnsTo": [
+            "id",
+            "conversation_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "connect_participants_conversation_id_member_id_pk": {
+          "name": "connect_participants_conversation_id_member_id_pk",
+          "columns": [
+            "conversation_id",
+            "member_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "connect_participants_role": {
+          "name": "connect_participants_role",
+          "value": "\"connect_participants\".\"role\" IN ('owner', 'admin', 'member')"
+        },
+        "connect_participants_status": {
+          "name": "connect_participants_status",
+          "value": "\"connect_participants\".\"status\" IN ('invited', 'active', 'declined', 'left', 'removed')"
+        },
+        "connect_participants_active": {
+          "name": "connect_participants_active",
+          "value": "\"connect_participants\".\"status\" <> 'active' OR (\"connect_participants\".\"joined_at\" IS NOT NULL AND \"connect_participants\".\"history_from\" IS NOT NULL AND \"connect_participants\".\"left_at\" IS NULL)"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.connect_pins": {
+      "name": "connect_pins",
+      "schema": "",
+      "columns": {
+        "message_id": {
+          "name": "message_id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "pinned_by": {
+          "name": "pinned_by",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "connect_pins_message_id_connect_messages_id_fk": {
+          "name": "connect_pins_message_id_connect_messages_id_fk",
+          "tableFrom": "connect_pins",
+          "tableTo": "connect_messages",
+          "columnsFrom": [
+            "message_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "connect_pins_pinned_by_ecosystem_members_id_fk": {
+          "name": "connect_pins_pinned_by_ecosystem_members_id_fk",
+          "tableFrom": "connect_pins",
+          "tableTo": "ecosystem_members",
+          "columnsFrom": [
+            "pinned_by"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.connect_preferences": {
+      "name": "connect_preferences",
+      "schema": "",
+      "columns": {
+        "member_id": {
+          "name": "member_id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "theme": {
+          "name": "theme",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'original'"
+        },
+        "show_presence": {
+          "name": "show_presence",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "notification_previews": {
+          "name": "notification_previews",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "in_app_notifications": {
+          "name": "in_app_notifications",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "connect_preferences_member_id_ecosystem_members_id_fk": {
+          "name": "connect_preferences_member_id_ecosystem_members_id_fk",
+          "tableFrom": "connect_preferences",
+          "tableTo": "ecosystem_members",
+          "columnsFrom": [
+            "member_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "connect_preferences_theme": {
+          "name": "connect_preferences_theme",
+          "value": "\"connect_preferences\".\"theme\" IN ('emerald-gold', 'midnight', 'ivory', 'dark-professional', 'original')"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.connect_reactions": {
+      "name": "connect_reactions",
+      "schema": "",
+      "columns": {
+        "message_id": {
+          "name": "message_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "member_id": {
+          "name": "member_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "emoji": {
+          "name": "emoji",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "connect_reactions_message_id_connect_messages_id_fk": {
+          "name": "connect_reactions_message_id_connect_messages_id_fk",
+          "tableFrom": "connect_reactions",
+          "tableTo": "connect_messages",
+          "columnsFrom": [
+            "message_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "connect_reactions_member_id_ecosystem_members_id_fk": {
+          "name": "connect_reactions_member_id_ecosystem_members_id_fk",
+          "tableFrom": "connect_reactions",
+          "tableTo": "ecosystem_members",
+          "columnsFrom": [
+            "member_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "connect_reactions_message_id_member_id_emoji_pk": {
+          "name": "connect_reactions_message_id_member_id_emoji_pk",
+          "columns": [
+            "message_id",
+            "member_id",
+            "emoji"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "connect_reactions_emoji": {
+          "name": "connect_reactions_emoji",
+          "value": "char_length(\"connect_reactions\".\"emoji\") BETWEEN 1 AND 32"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.connect_signals": {
+      "name": "connect_signals",
+      "schema": "",
+      "columns": {
+        "conversation_id": {
+          "name": "conversation_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "member_id": {
+          "name": "member_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "typing_until": {
+          "name": "typing_until",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "online_until": {
+          "name": "online_until",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "connect_signals_conversation_id_connect_conversations_id_fk": {
+          "name": "connect_signals_conversation_id_connect_conversations_id_fk",
+          "tableFrom": "connect_signals",
+          "tableTo": "connect_conversations",
+          "columnsFrom": [
+            "conversation_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "connect_signals_member_id_ecosystem_members_id_fk": {
+          "name": "connect_signals_member_id_ecosystem_members_id_fk",
+          "tableFrom": "connect_signals",
+          "tableTo": "ecosystem_members",
+          "columnsFrom": [
+            "member_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "connect_signals_conversation_id_member_id_pk": {
+          "name": "connect_signals_conversation_id_member_id_pk",
+          "columns": [
+            "conversation_id",
+            "member_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
       "isRLSEnabled": false
     }
   },

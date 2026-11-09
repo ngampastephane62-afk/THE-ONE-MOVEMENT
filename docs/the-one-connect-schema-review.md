@@ -1,12 +1,14 @@
 # The One Connect — schéma de phase 1 en revue
 
-Statut : SQL généré et contrôlé, **aucune application ni activation**.
+Statut : SQL généré, contrôlé et **appliqué en développement après autorisation**.
+Aucune activation de nouvelle interface, aucun appel ou déploiement.
 
 Proposition :
-`lib/db/drafts/connect/review/0001_connect_phase1_review.sql`.
-La référence `0000_reference_only_never_apply.sql` n’est pas une migration
-à exécuter : elle sert uniquement à produire et vérifier la différence.
-Ce dossier n’est utilisé par aucun script de migration actif.
+`lib/db/drizzle/0021_connect_phase1.sql`.
+Le brouillon isolé a été intégré au journal principal après vérification des
+hashs appliqués. Les fichiers de référence temporaires ont été retirés.
+Une unicité composite a été déclarée comme contrainte de table pour qu’elle
+existe avant les clés étrangères dans le SQL généré.
 
 ## Neuf tables additives
 
@@ -31,7 +33,7 @@ Ce dossier n’est utilisé par aucun script de migration actif.
 ## Compatibilité et confidentialité
 
 Les tables historiques, leurs colonnes et leurs index restent identiques.
-Les nouveaux modèles ne sont pas exportés dans le schéma d’exécution :
+Les nouveaux modèles sont exportés dans le schéma, sans nouvelles routes :
 l’application continue à utiliser sa messagerie actuelle.
 L’intégration directe doit maintenir les écritures texte historiques et le
 booléen de lecture dans une transaction avec les métadonnées nouvelles.
@@ -61,29 +63,23 @@ explicite ; aucune purge des messages historiques n’est prévue ou autorisée.
 
 ## Isolation vis-à-vis de la newsletter
 
-Le journal actif contient déjà une proposition newsletter non appliquée.
-Il reste inchangé. Le SQL Connect est préparé dans un dossier séparé et ne
-crée aucune table newsletter. Ne pas lancer toutes les migrations en attente.
-
-Avant une application en développement, vérifier par hash et journal que la
-proposition newsletter est bien non appliquée dans cet environnement.
-Préparer ensuite une réorganisation uniquement des propositions non appliquées :
-Connect dans la prochaine position exécutable, newsletter conservée hors de
-la file active comme proposition différée, snapshots régénérés cohérents.
-Ne jamais modifier une migration appliquée, ni avancer artificiellement le
-curseur Drizzle au-delà d’une migration antérieure en attente.
-Demander l’accord sur cette intégration sélective avant application.
+La proposition newsletter a été confirmée non appliquée par le journal et
+l’absence de ses tables. Son entrée non appliquée a été retirée du journal ;
+son SQL reste conservé et ses modèles ne sont plus dans le schéma actif.
+Connect occupe la prochaine position, avec un snapshot régénéré depuis la
+dernière migration réellement appliquée. Aucune migration appliquée modifiée,
+aucun saut artificiel du curseur. Voir `lib/db/drizzle/DEFERRED.md`.
 
 ## Vérification de cette préparation
 
-- Génération Drizzle sans connexion à une base.
+- Génération et revue d’un SQL purement additif de neuf tables.
 - Compilation TypeScript du package DB.
 - Tests statiques : neuf tables seulement, aucune modification des modèles
   existants, isolation du journal, contraintes de portée, confidentialité par
   défaut, index de pagination et déduplication.
-- Pas de test d’exécution SQL PostgreSQL ni de parcours utilisateur à ce stade.
+- Application effective par le migrateur Drizzle sur PostgreSQL de développement.
+- Pas de parcours utilisateur des nouvelles fonctions à ce stade.
 - Aucun appel, abonnement, email, redémarrage ou déploiement.
 
-Prochaine étape : autoriser l’intégration sélective et l’application en
-développement de Connect, en maintenant la newsletter différée ; ensuite
-implémenter les contrats API, contrôles serveur et interfaces de phase 1.
+Prochaine étape : implémenter les contrats API, contrôles serveur et interfaces
+de phase 1, en maintenant la newsletter différée.
