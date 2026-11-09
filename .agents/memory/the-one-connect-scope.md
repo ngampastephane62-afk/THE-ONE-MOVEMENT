@@ -17,3 +17,15 @@ commercial boundaries. Founder can organize cross-sector meetings across all
 private messages, calls or chat attachments. Themes are personal; presence
 needs privacy controls, recording is off by default, and no E2EE/background-call
 claim is permitted without implementation and real verification.
+
+Keep unrelated deferred migrations out of a newly authorized feature's apply
+step. In particular, approval of Connect does not authorize the held newsletter
+schema or enable its emails.
+
+**Why:** The user chose to keep the newsletter SQL prepared without applying it,
+then separately approved Connect phase 1 and SQL preparation only.
+
+**How to apply:** Check applied hashes and pending order before applying
+anything. Never run the whole pending queue, silently mark an earlier migration
+applied, or advance Drizzle's high-water mark past a held migration. Review
+and obtain approval for a coherent, selective integration of unapplied drafts.

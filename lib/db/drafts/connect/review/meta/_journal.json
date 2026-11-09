@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1794221067410,
+      "tag": "0000_reference_only_never_apply",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794221174061,
+      "tag": "0001_connect_phase1_review",
+      "breakpoints": true
+    }
+  ]
+}
