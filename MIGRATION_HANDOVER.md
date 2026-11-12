@@ -1,6 +1,6 @@
 # TOMI — Dossier de transfert GitHub
 
-## État : conservation approuvée, prêt pour envoi sécurisé
+## État : audit de synchronisation GitHub (snapshot avant le commit de ce dossier)
 
 Ce document est un inventaire de transfert, pas une autorisation de déploiement.
 L’application originale, ses données, son DNS et ses comptes externes restent inchangés.
@@ -11,16 +11,24 @@ L’application originale, ses données, son DNS et ses comptes externes restent
 - Remote de cet environnement : `https://github.replit.internal/ngampastephane62-afk/THE-ONE-MOVEMENT`.
   Utiliser l’URL GitHub publique ci-dessus pour importer depuis le compte destinataire.
 - Branche : `main`.
-- HEAD local inspecté : `957c8bb7b8019ac1f8ca97e119fd2600897ed290`.
-- HEAD distant inspecté : `de93ae293a7c3e8e18bf5efa4ee635e79c7aec2a`.
-- Synchronisation inspectée : 6 commits locaux d’avance, aucun commit distant supplémentaire.
-- Arbre de travail propre avant création de ce dossier ; aucun fichier source non suivi détecté.
-- Lecture distante et simulation de push réussies. Une simulation ne garantit pas
-  l’acceptation effective des hooks, du transfert LFS ou des protections GitHub.
-- **Commit final de transfert et résultat effectif du push : voir le rapport
-  de livraison et la branche distante après l’envoi.**
-  Le SHA définitif sera fourni dans le rapport après commit et vérification distante.
-  Un document ne peut pas contenir littéralement le SHA du commit qui le crée.
+- HEAD local de code avant cette mise à jour : `958146256ddfdd30dadf53383753905d35454deb`.
+- HEAD de `origin/main` après `git fetch origin main` : `871ebf115319449f18f94260bfedd69e3767a379`.
+- À ce relevé, `main` local avait 16 commits d’avance et aucun retard (`0 16`,
+  comparaison `origin/main...HEAD`) ; le commit distant était l’ancêtre direct,
+  sans divergence.
+- L’arbre de travail était propre avant la modification de ce dossier.
+- `git diff --check` n’a relevé aucun problème d’espacement dans les changements.
+- La revue des 16 commits n’a trouvé aucun fichier `.env`, export de base,
+  clé privée ou chemin de fichier indiquant un export de données de membres ajouté.
+  Un motif de clé dans
+  `direct-call-policy.test.mjs` correspond à une valeur de test vide, pas à un
+  secret. Cette revue ne certifie pas le contenu des anciens fichiers binaires.
+- Les six chemins LFS suivis dans `HEAD` passent `git lfs fsck --objects`.
+  `git lfs push --dry-run origin main` n’a signalé aucun objet à envoyer.
+  Cela vérifie l’état LFS observé, pas l’import dans un autre compte.
+- Le commit documentaire créé pour cette synchronisation et l’issue effective
+  du push sont indiqués dans le rapport de livraison. Le SHA du commit qui
+  contient ce document est communiqué après sa création.
 
 ## Décision de conservation et fichiers volumineux
 
@@ -39,18 +47,21 @@ documents. Aucun contenu de ces documents n’a été reproduit ici.
 Ne pas effacer ou réécrire l’historique sans autorisation explicite.
 Un retrait d’un futur commit ne retire pas les anciennes versions de l’historique.
 
-Un contrôle par motifs des fichiers texte suivis de moins de 8 Mio n’a trouvé
-aucune clé privée, clé Resend, clé secrète Stripe/Clerk, jeton GitHub ou URL de
-base avec mot de passe selon les motifs recherchés. Ce contrôle limité n’est
-pas un audit exhaustif : historique, documents binaires, images et archives
-nécessitent une revue séparée avant certification exhaustive du transfert.
-Un contrôle supplémentaire des 224 blobs texte nouveaux dans les commits
-locaux à envoyer n’a détecté aucun de ces motifs ; aucun blob nouveau n’a
-été écarté de ce contrôle pour taille ou format binaire.
+Les changements des 16 commits sont du code, des tests, des migrations SQL,
+des schémas générés et de la documentation. Le scan ciblé des changements
+n’a trouvé aucune valeur réelle de clé ou de jeton selon les motifs contrôlés.
+Les fichiers commerciaux
+et l’archive cités ci-dessus existaient déjà à la base distante avant ces
+commits ; ils n’ont pas été modifiés ni inclus comme nouveaux objets dans ce
+push. Le contenu de l’archive et des anciens documents binaires n’a pas été
+audité : ne pas certifier leur confidentialité sur la seule base de ce scan.
 
-Six chemins sont actuellement suivis par LFS, avec des fichiers locaux de
-54 Mio à 1,52 Gio. Vérifier les objets LFS distants et les droits/quotas du compte
-destinataire ; un clone des seuls pointeurs ne fournit pas les médias.
+Six chemins sont suivis par LFS, de 54 Mio à environ 1,52 Gio ; plusieurs chemins
+peuvent référencer le même objet LFS. Les objets référencés par `HEAD` sont
+présents et passent le contrôle d’intégrité local. Le dry-run du push n’a pas
+signalé d’objet manquant à envoyer à `origin`. Le compte destinataire devra
+néanmoins avoir accès au dépôt et à LFS ; un clone de pointeurs seuls ne fournit
+pas les médias.
 
 ## Architecture et exigences d’exécution
 
@@ -61,6 +72,11 @@ Monorepo pnpm/TypeScript :
   Entrées : `src/main.tsx` et `src/App.tsx`.
 - `artifacts/api-server` : Express 5, Clerk, services et routes sous `src/`,
   entrée `src/index.ts`, build esbuild `build.mjs`, sortie `dist/index.mjs`.
+- `artifacts/api-server` et `artifacts/web` incluent le pilote d’appels privés
+  Daily (API et interface membre). La migration de budget/session d’appel a été
+  appliquée en développement lors d’une opération antérieure autorisée ; les
+  appels réels entre deux comptes n’ont pas été vérifiés. Ne pas déclarer ce
+  pilote prêt pour la production.
 - `lib/db` : PostgreSQL, Drizzle, schémas dans `src/schema/`.
 - `lib/shared` : contrats et règles partagés.
 - `lib/api-spec/openapi.yaml`, `lib/api-zod`, `lib/api-client-react` :
@@ -80,15 +96,17 @@ Ne pas exécuter de seed ou de migration automatiquement à l’import.
 ## Base : schémas, migrations et transfert des données
 
 - Schémas : `lib/db/src/schema/`.
-- Migrations versionnées : `lib/db/drizzle/`, 21 fichiers SQL de
-  `0000_classy_blade.sql` à `0020_lowly_king_cobra.sql`, avec métadonnées
-  `meta/`. Inclut les extensions profils et confidentialité.
+- Migrations du journal Drizzle : 23 entrées de
+  `0000_classy_blade.sql` à `0022_amazing_rachel_grey.sql`, avec métadonnées `meta/`.
+  Le dépôt contient aussi `0021_community_communications.sql`, qui n’est pas une
+  entrée du journal courant ; vérifier son statut avant toute utilisation.
+  Inclut les extensions profils/confidentialité, Connect et le pilote d’appels.
 - Revues préparatoires : `lib/db/review/` et `lib/db/migration-reviews/`.
 - Configuration : `lib/db/drizzle.config.ts`.
 - Commandes déclarées : `pnpm --filter @workspace/db db:generate`,
   `db:status`, `db:migrate`.
 
-Les SQL ne contiennent pas les membres, profils, publications, messages,
+Les fichiers SQL ne contiennent pas les membres, profils, publications, messages,
 statistiques, brouillons ni autres enregistrements de production.
 Préparer une sauvegarde chiffrée et un transfert séparé avec un responsable
 autorisé ; ne jamais placer un dump dans GitHub.
@@ -104,6 +122,8 @@ Noms détectés dans les sources et besoins connus :
 - `CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`, `VITE_CLERK_PUBLISHABLE_KEY`,
   `VITE_CLERK_PROXY_URL`
 - `SESSION_SECRET`, `TOMI_FOUNDER_EMAIL`
+- `DAILY_API_KEY` (Secret du fournisseur d’appels ; ne jamais copier sa valeur
+  dans GitHub). `TOMI_DAILY_PILOT` est un indicateur de développement, pas un Secret.
 - `DEFAULT_OBJECT_STORAGE_BUCKET_ID`, `PRIVATE_OBJECT_DIR`,
   `PUBLIC_OBJECT_SEARCH_PATHS`
 - `TOMI_PROFILE_REMINDER_FROM`, `TOMI_PUBLIC_SITE_URL`
@@ -135,6 +155,10 @@ Ne pas modifier les rôles ou recréer les membres pendant le transfert de code.
 - Resend : reconnecter via l’intégration, vérifier le domaine expéditeur,
   `TOMI_PROFILE_REMINDER_FROM` et l’URL officielle. Ne pas envoyer de rappels
   pendant les essais de transfert.
+- Daily : le pilote dépend de `DAILY_API_KEY`, à configurer séparément pour
+  chaque environnement par l’Owner. Ne jamais recopier la valeur du Secret
+  depuis le projet source ; aucune activation ni validation de production n’est
+  couverte par cette synchronisation Git.
 - Clerk : tenant, clés et domaines comme indiqué ci-dessus.
 - App Storage : autorisations et stockage séparés du code.
 
