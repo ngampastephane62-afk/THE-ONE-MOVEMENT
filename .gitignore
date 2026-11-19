@@ -12,6 +12,20 @@ out-tsc
 # dependencies
 node_modules
 
+# Local configuration, credentials and private data (examples contain names only).
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.dump
+*.sql.gz
+/backups/
+/.tomi-dev/
+
 # IDEs and editors
 /.idea
 .project

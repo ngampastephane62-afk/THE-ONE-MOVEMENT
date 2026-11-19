@@ -1,0 +1,45 @@
+name: TOMI checks
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tomi-checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Typecheck, offline tests and builds
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PORT: "22333"
+      BASE_PATH: "/"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.26.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Install media regression prerequisites
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg
+      - run: pnpm typecheck
+      - run: pnpm test
+      - name: Build application even when regression tests fail
+        if: ${{ !cancelled() }}
+        run: pnpm build:app
+      - name: State deployment boundary
+        run: echo "Checks only. This workflow does not publish to Replit or access production."
