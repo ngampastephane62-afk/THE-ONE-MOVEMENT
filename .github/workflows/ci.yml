@@ -34,6 +34,12 @@ jobs:
           node-version: "24"
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm verify
+      - name: Install media regression prerequisites
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg
+      - run: pnpm typecheck
+      - run: pnpm test
+      - name: Build application even when regression tests fail
+        if: ${{ !cancelled() }}
+        run: pnpm build:app
       - name: State deployment boundary
         run: echo "Checks only. This workflow does not publish to Replit or access production."
