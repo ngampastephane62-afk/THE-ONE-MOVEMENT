@@ -1,7 +1,9 @@
 # Fly.io configuration. Nothing here is used by Replit.
-# Create the app first (`fly apps create <name>`) and set `app` to that name.
+# App created 2026-11-28 in the "yuston nessy" organisation.
 app = "the-one-movement"
-primary_region = "cdg"
+# Frankfurt: Fly Managed Postgres is not offered in Paris (cdg); keep the app
+# and database in the same region.
+primary_region = "fra"
 
 [build]
   # Pass the public Clerk key at deploy time:
