@@ -83,3 +83,8 @@ Thumbs.db
 /attached_assets/2e9fff2e8bd14d228be23241c6996760_1792675995834.mp4
 # Generated prelaunch verification captures, not runtime assets.
 /screenshots/prelaunch-*.jpg
+
+# Local secrets (Clerk, Stripe, database). Never commit.
+.env
+.env.*
+!.env.example
