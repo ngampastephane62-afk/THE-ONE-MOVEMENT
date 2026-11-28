@@ -10,11 +10,11 @@ if (!bucket || !folder) throw new Error("Public cover and private magazine stora
 try {
   const pdf = await readFile(fileURLToPath(new URL("../../../../attached_assets/Tropik_Magazine_1792157776832.pdf", import.meta.url)));
   await objectFile(`${folder.replace(/\/$/, "")}/magazines/tropik-2026.pdf`).save(pdf, {
-    resumable: false, metadata: { contentType: "application/pdf", cacheControl: "private,no-store" },
+    contentType: "application/pdf", cacheControl: "private,no-store",
   });
   const cover = await readFile(fileURLToPath(new URL("../../../../generated-artifacts/tropik-magazine/cover.webp", import.meta.url)));
   await objectFile(`/${bucket}/public/magazine/tropik-2026-cover.webp`).save(cover, {
-    resumable: false, metadata: { contentType: "image/webp", cacheControl: "public,max-age=86400" },
+    contentType: "image/webp", cacheControl: "public,max-age=86400",
   });
   logger.info("Stored the presentation kit and its cover; the free-kit route controls public download access");
 } finally {

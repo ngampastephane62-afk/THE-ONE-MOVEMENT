@@ -8,6 +8,7 @@ import { memberAccountSnapshot, accountTotals, trafficSummary, reminderConfigura
 import { previewReminder, sendReminder, optOutSignature, safeEqual } from "../services/profileReminders";
 import { recordVisit, pruneVisits } from "../services/siteVisits";
 import { getClerkProxyHost } from "../middlewares/clerkProxyMiddleware";
+import { isProductionDeployment } from "../lib/deployment";
 
 const router = Router();
 router.get("/founder/membership-dashboard", networkAuth, async (req, res) => {
@@ -28,7 +29,7 @@ router.get("/founder/membership-dashboard", networkAuth, async (req, res) => {
     const currentPage = Math.min(page, pages);
     const config = reminderConfiguration();
     res.json({
-      refreshedAt: snapshot.refreshedAt, environment: process.env.REPLIT_DEPLOYMENT === "1" ? "production" : "development",
+      refreshedAt: snapshot.refreshedAt, environment: isProductionDeployment() ? "production" : "development",
       totals: accountTotals(snapshot.accounts), accounts: filtered.slice((currentPage - 1) * 25, currentPage * 25),
       page: currentPage, pages, filteredCount: filtered.length, traffic,
       emailSetup: { configured: config.configured, message: config.message },

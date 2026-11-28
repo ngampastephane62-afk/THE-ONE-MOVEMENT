@@ -1,26 +1,15 @@
-import { Storage } from "@google-cloud/storage";
 import { randomUUID } from "node:crypto";
 import { db, networkUploads as uploads } from "@workspace/db";
 import { eq, and, inArray, gte } from "drizzle-orm";
 import { NetworkError } from "./networkAuth";
 import { isCampaignPath, isReservedMediaPath } from "./mediaIsolation";
 import { maxUploadBytes, UPLOAD_LIMITS } from "@workspace/shared";
+import { objectFile, replitStorage } from "./objectStorage";
 
-export const storage = new Storage({
-  projectId: "",
-  credentials: {
-    audience: "replit", subject_token_type: "access_token",
-    token_url: "http://127.0.0.1:1106/token", type: "external_account",
-    credential_source: { url: "http://127.0.0.1:1106/credential", format: { type: "json", subject_token_field_name: "access_token" } },
-    universe_domain: "googleapis.com",
-  },
-});
 const types = new Set(["image/jpeg", "image/png", "image/webp", "image/gif", "video/mp4", "video/webm", "video/quicktime", "audio/mpeg", "audio/wav", "audio/ogg", "application/pdf"]);
-export function objectFile(path: string) {
-  const [bucket, ...parts] = path.replace(/^\/+/, "").split("/");
-  if (!bucket || !parts.length) throw new Error("Invalid storage configuration");
-  return storage.bucket(bucket).file(parts.join("/"));
-}
+export { objectFile };
+/** Replit-only seeding scripts upload directly; the API uses objectFile. */
+export const storage = { bucket: (name: string) => replitStorage().bucket(name) };
 export async function requestUpload(ownerId: number, input: { filename: string; contentType: string; size: number }, scope: "network" | "news" | "gratitude" = "network") {
   const max = maxUploadBytes(input.contentType);
   if (!types.has(input.contentType) || input.size < 1 || input.size > max) throw new NetworkError(400, "Use an allowed image, video, audio or PDF within the displayed size limit.");
@@ -34,22 +23,14 @@ export async function requestUpload(ownerId: number, input: { filename: string; 
   const id = randomUUID();
   const objectPath = `${privateDir.replace(/\/$/, "")}/${scope === "gratitude" ? "gratitude-pending" : scope === "news" ? "news-pending" : "network"}/${ownerId}/${id}`;
   const file = objectFile(objectPath);
-  const reply = await fetch("http://127.0.0.1:1106/object-storage/signed-object-url", {
-    method: "POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      bucket_name: file.bucket.name, object_name: file.name, method: "PUT",
-      expires_at: new Date(Date.now() + 60 * 60_000).toISOString(),
-    }),
-    signal: AbortSignal.timeout(10_000),
-  });
-  if (!reply.ok) throw new NetworkError(503, "The upload service is unavailable. Please retry.");
-  const signed = await reply.json() as { signed_url: string };
-  if (!signed.signed_url) throw new NetworkError(503, "No upload URL was issued.");
+  let uploadUrl: string;
+  try { uploadUrl = await file.signedUploadUrl(input.contentType, 60 * 60_000); }
+  catch { throw new NetworkError(503, "The upload service is unavailable. Please retry."); }
   await db.insert(uploads).values({
     id, ownerId, objectPath, filename: input.filename.replace(/[^\p{L}\p{N} ._()-]/gu, "_").slice(0, 200),
     contentType: input.contentType, size: input.size,
   });
-  return { id, uploadUrl: signed.signed_url };
+  return { id, uploadUrl };
 }
 export async function completeUpload(ownerId: number, id: string, executor: Pick<typeof db, "select" | "update"> = db, reviewScope: false | "gratitude" | "news" = false) {
   const [row] = await executor.select().from(uploads).where(and(eq(uploads.id, id), eq(uploads.ownerId, ownerId)));

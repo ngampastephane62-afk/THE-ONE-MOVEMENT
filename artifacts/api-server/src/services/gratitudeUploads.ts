@@ -42,7 +42,7 @@ async function derivative(tx: GratitudeTx, owner: number, sourcePath: string, fi
   const objectPath = `${root}/gratitude-private/${owner}/${id}`;
   const file = objectFile(objectPath);
   const size = (await stat(sourcePath)).size;
-  await file.bucket.upload(sourcePath, { destination: file.name, resumable: false, metadata: { contentType: type, cacheControl: "private, no-store" } });
+  await file.uploadFrom(sourcePath, { contentType: type, cacheControl: "private, no-store" });
   await tx.insert(uploads).values({ id, ownerId: owner, objectPath, filename, contentType: type, size, ready: true });
   return id;
 }

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { storage } from "../services/networkFiles";
+import { objectFile } from "../services/networkFiles";
 
 const router = Router();
 const allowed = new Set(Array.from({ length: 10 }, (_, index) => `${String(index + 1).padStart(2, "0")}.webp`));
@@ -13,7 +13,7 @@ router.get("/official-meetings/photos/:filename", async (req, res) => {
   try {
     let download = cache.get(filename);
     if (!download) {
-      download = storage.bucket(bucket).file(`public/official-meetings/${filename}`).download()
+      download = objectFile(`/${bucket}/public/official-meetings/${filename}`).download()
         .then(([bytes]) => bytes).catch(error => { cache.delete(filename); throw error; });
       cache.set(filename, download);
     }

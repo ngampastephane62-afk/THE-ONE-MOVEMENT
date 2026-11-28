@@ -12,7 +12,7 @@ try {
   for (const filename of filenames) {
     await objectFile(`/${bucket}/public/magazine/editorial/${filename}`).save(
       await readFile(fileURLToPath(new URL(filename, folder))),
-      { resumable: false, metadata: { contentType: "image/webp", cacheControl: "public,max-age=86400" } },
+      { contentType: "image/webp", cacheControl: "public,max-age=86400" },
     );
     console.log(`Stored magazine artwork: ${filename}`);
   }

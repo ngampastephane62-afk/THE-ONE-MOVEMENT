@@ -5,25 +5,13 @@ import { MEDIA_OUTLETS } from "@workspace/shared";
 import { CreateMediaRequestBody, UpdateMediaRequestBody } from "@workspace/api-zod";
 import { actor, networkAuth, networkWrite, requireFounder, NetworkError } from "../services/networkAuth";
 import { createRateLimiter } from "../lib/inMemoryRateLimiter";
-import { Storage } from "@google-cloud/storage";
+import { objectFile } from "../services/networkFiles";
 
 const router = Router();
 // A dedicated discriminator avoids mixing media enquiries with partnership requests.
 const VERSION = "tropik-media-request-v1";
 const MARKER = "TROPIK_MEDIA_REQUEST";
 const limiter = createRateLimiter();
-const storage = new Storage({
-  projectId: "",
-  credentials: {
-    audience: "replit", subject_token_type: "access_token",
-    token_url: "http://127.0.0.1:1106/token", type: "external_account",
-    credential_source: {
-      url: "http://127.0.0.1:1106/credential",
-      format: { type: "json", subject_token_field_name: "access_token" },
-    },
-    universe_domain: "googleapis.com",
-  },
-});
 const assets = new Map<string, Promise<Buffer>>();
 const allowedAssets = new Set([
   "tropik-media-coverage.pdf",
@@ -38,7 +26,7 @@ router.get("/media-catalogue/assets/:filename", async (req, res) => {
   try {
     let download = assets.get(filename);
     if (!download) {
-      download = storage.bucket(bucket).file(`public/media-catalogue/${filename}`).download()
+      download = objectFile(`/${bucket}/public/media-catalogue/${filename}`).download()
         .then(([bytes]) => bytes).catch(error => { assets.delete(filename); throw error; });
       assets.set(filename, download);
     }

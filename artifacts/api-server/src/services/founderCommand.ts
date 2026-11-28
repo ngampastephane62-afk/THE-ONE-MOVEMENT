@@ -12,6 +12,7 @@ import { NetworkError } from "./networkAuth";
 import { isBlocked } from "./networkState";
 import { ADMIN_SECTORS, commandTotals, publishedPostCount, FOUNDER_NOTIFICATION_KINDS } from "./founderControlPolicy";
 import { reconcileFounderEvents } from "./founderReconciliation";
+import { isProductionDeployment } from "../lib/deployment";
 
 export const serviceMessageDto = (r: typeof messages.$inferSelect): FounderServiceMessage => ({
   id: r.id, text: r.text, fromAdministration: r.fromAdministration, createdAt: r.createdAt.toISOString(), readAt: r.readAt?.toISOString() ?? null,
@@ -57,7 +58,7 @@ export async function founderOverview(clerkId: string): Promise<FounderCommandOv
   ]);
   const shown = events.filter(e => prefs.enabledKinds.includes(e.kind));
   return {
-    environment: process.env.REPLIT_DEPLOYMENT === "1" ? "production" : "development", refreshedAt: data.snapshot.refreshedAt,
+    environment: isProductionDeployment() ? "production" : "development", refreshedAt: data.snapshot.refreshedAt,
     initializedAt: baseline[0]!.createdAt.toISOString(),
     totals: { ...commandTotals(data.snapshot.accounts), posts: publishedPostCount(data.allPosts),
       pendingCertifications: data.allCerts.filter(c => c.status === "pending").length,

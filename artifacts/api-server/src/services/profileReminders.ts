@@ -9,6 +9,15 @@ import { invalidateMemberDashboard, reminderConfiguration } from "./membershipDa
 
 export const REMINDER_INTERVAL = 7 * 24 * 60 * 60 * 1000;
 const connectors = new ReplitConnectors();
+/** Resend through a plain RESEND_API_KEY when one is set (e.g. on Fly), else the Replit connector. */
+type ResendRequest = { method: "GET" | "POST"; headers?: Record<string, string>; body?: string };
+function resend(path: string, init: ResendRequest) {
+  const key = process.env.RESEND_API_KEY?.trim();
+  if (!key) return connectors.proxy("resend", path, init);
+  const headers = new Headers(init.headers);
+  headers.set("Authorization", `Bearer ${key}`);
+  return fetch(`https://api.resend.com${path}`, { ...init, headers, signal: AbortSignal.timeout(15_000) });
+}
 const digest = (value: string) => {
   if (!process.env.SESSION_SECRET) throw new NetworkError(503, "La configuration sécurisée des relances est indisponible.");
   return createHmac("sha256", process.env.SESSION_SECRET).update(value).digest("hex");
@@ -63,7 +72,7 @@ async function providerReady(): Promise<ProviderReadiness> {
   const config = reminderConfiguration();
   if (!config.configured) return { available: false, mode: "unavailable", reason: config.message };
   try {
-    const response = await connectors.proxy("resend", "/domains", { method: "GET" });
+    const response = await resend("/domains", { method: "GET" });
     if (!response.ok) {
       let providerMessage = "";
       try {
@@ -144,7 +153,7 @@ export async function sendReminder(clerkId: string, requestedBy: string, preview
   };
   let response: Response;
   try {
-    response = await connectors.proxy("resend", "/emails", {
+    response = await resend("/emails", {
       method: "POST",
       headers: { "Content-Type": "application/json", "Idempotency-Key": `profile-reminder/${reserved.attemptId}` },
       body: JSON.stringify({ from: `The One Movement <${config.from}>`, to: [who.email], ...content }),

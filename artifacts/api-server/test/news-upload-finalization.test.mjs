@@ -34,6 +34,7 @@ function fixture(scope = "news-pending", kind = "image/png") {
   class Storage { bucket() { return { file: () => cloudFile }; } }
   const mockRequire = name => {
     if (name === "@google-cloud/storage") return { Storage };
+    if (name === "./objectStorage") return { objectFile: () => cloudFile, replitStorage: () => new Storage() };
     if (name === "@workspace/db") return { db, networkUploads: { id: "id", ownerId: "ownerId" } };
     if (name === "./networkAuth") return { NetworkError };
     if (name === "./mediaIsolation") return isolationModule.exports;

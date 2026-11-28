@@ -1,3 +1,4 @@
+import path from "node:path";
 import express, {
   type Express,
   type NextFunction,
@@ -114,6 +115,28 @@ app.use("/api/founder/home-editorial", express.json({ limit: "768kb" }));
 app.use(express.json({ limit: "32kb" }));
 app.use(express.urlencoded({ extended: false, limit: "16kb" }));
 
+/**
+ * Single-app hosts (e.g. Fly) serve the built website from this process.
+ * Replit serves it separately, so this stays off unless WEB_DIST_DIR is set.
+ * Mounted before Clerk: static pages need no session, and /api is excluded.
+ */
+const webDist = process.env.WEB_DIST_DIR?.trim();
+if (webDist) {
+  const root = path.resolve(webDist);
+  app.use(express.static(root, {
+    index: false, redirect: false,
+    setHeaders(res, file) {
+      // Vite fingerprints everything under /assets; other files may change.
+      res.setHeader("Cache-Control", file.includes(`${path.sep}assets${path.sep}`) ? "public,max-age=31536000,immutable" : "public,max-age=300");
+    },
+  }));
+  // SPA fallback for page routes only; unknown /api paths keep their 404.
+  app.get(/^(?!\/api(?:\/|$)).*/, (_req, res) => {
+    res.setHeader("Cache-Control", "no-cache");
+    res.sendFile(path.join(root, "index.html"));
+  });
+}
+
 app.use(
   clerkMiddleware((req) => ({
     publishableKey: publishableKeyFromHost(
@@ -124,6 +147,7 @@ app.use(
 );
 app.use("/api", router);
 app.use(networkErrors);
+
 
 // Generic error handler: never leak raw database/internal errors to the client.
 app.use(

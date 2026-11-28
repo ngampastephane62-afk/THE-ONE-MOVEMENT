@@ -1,0 +1,40 @@
+# Fly.io configuration. Nothing here is used by Replit.
+# Create the app first (`fly apps create <name>`) and set `app` to that name.
+app = "the-one-movement"
+primary_region = "cdg"
+
+[build]
+  # Pass the public Clerk key at deploy time:
+  #   fly deploy --build-arg VITE_CLERK_PUBLISHABLE_KEY=pk_...
+  dockerfile = "Dockerfile"
+
+[env]
+  NODE_ENV = "production"
+  PORT = "8080"
+  OBJECT_STORAGE_BACKEND = "s3"
+  # Set APP_ENV = "production" only on the real production app, not staging.
+  # Secrets go in `fly secrets set`, never here: DATABASE_URL, CLERK_SECRET_KEY,
+  # CLERK_PUBLISHABLE_KEY, SESSION_SECRET, STRIPE_SECRET_KEY, RESEND_API_KEY,
+  # DAILY_API_KEY, TOMI_FOUNDER_EMAIL. `fly storage create` sets the AWS_* values.
+  # Also set DEFAULT_OBJECT_STORAGE_BUCKET_ID, PRIVATE_OBJECT_DIR,
+  # TOMI_PUBLIC_SITE_URL and TOMI_PROFILE_REMINDER_FROM for this environment.
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  # Background jobs (visit retention, Founder observer) need a running machine.
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+
+  [[http_service.checks]]
+    method = "GET"
+    path = "/api/healthz"
+    interval = "15s"
+    timeout = "5s"
+    grace_period = "30s"
+
+[[vm]]
+  memory = "1gb"
+  cpu_kind = "shared"
+  cpus = 1

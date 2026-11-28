@@ -4,6 +4,7 @@ import { and, eq, sql } from "drizzle-orm";
 import { getStripeSync, getUncachableStripeClient } from "../stripeClient";
 import { NetworkError, type NetworkActor } from "./networkAuth";
 import type Stripe from "stripe";
+import { publicWebhookHost } from "../lib/deployment";
 
 export let stripeReady = false;
 import { DOCUMENTS, PACKAGE_DEFINITIONS, customPackages } from "@workspace/shared";
@@ -12,7 +13,7 @@ export async function initializeStripe() {
   if (!process.env.DATABASE_URL) throw new Error("Database is required");
   await runMigrations({ databaseUrl: process.env.DATABASE_URL });
   const sync = await getStripeSync();
-  const domain = process.env.REPLIT_DOMAINS?.split(",")[0];
+  const domain = publicWebhookHost();
   if (domain) await sync.findOrCreateManagedWebhook(`https://${domain}/api/stripe/webhook`);
   // Seed the connected environment, not only the development Stripe account.
   // Existing lookup keys are retained, and no payment is created by this step.
