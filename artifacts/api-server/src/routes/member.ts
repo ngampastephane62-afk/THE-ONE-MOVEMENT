@@ -7,6 +7,7 @@ import { getClerkProxyHost } from "../middlewares/clerkProxyMiddleware";
 import { SOCIAL_PROFILES, normalizeSocialProfile, activeSectorIssue } from "@workspace/shared";
 import { projectOwnerProfile, projectPublicProfile } from "../services/profileProjection";
 import { invalidateMemberDashboard } from "../services/membershipDashboard";
+import { requireVerifiedIdentity } from "../services/networkAuth";
 
 const router = Router();
 const savedIds = new Set([
@@ -78,7 +79,7 @@ router.get("/member/profile", memberAuth, async (req, res) => {
   res.json({ profile: row ? projectOwnerProfile(row) : null });
 });
 
-router.put("/member/profile", memberAuth, memberWrite, async (req, res) => {
+router.put("/member/profile", memberAuth, memberWrite, requireVerifiedIdentity, async (req, res) => {
   const parsed = SaveMemberProfileBody.strict().safeParse(req.body);
   if (!parsed.success) {
     res.status(400).json({ error: "Check your profile fields. Choose up to three active sectors and up to eight interests." });
@@ -140,7 +141,7 @@ router.put("/member/profile", memberAuth, memberWrite, async (req, res) => {
   res.json({ profile: projectOwnerProfile(row!) });
 });
 
-router.post("/member/saved", memberAuth, memberWrite, async (req, res) => {
+router.post("/member/saved", memberAuth, memberWrite, requireVerifiedIdentity, async (req, res) => {
   const parsed = ToggleMemberSavedItemBody.strict().safeParse(req.body);
   if (!parsed.success || !savedIds.has(parsed.data.itemId)) {
     res.status(400).json({ error: "Choose an existing programme or official resource." });

@@ -42,7 +42,7 @@ const output = await build({
     setup(b) {
       b.onResolve({ filter: /^@workspace\/db$/ }, () => ({ path: "db", namespace: "fixture" }));
       b.onResolve({ filter: /(^|\/)networkAuth$/ }, () => ({ path: "auth", namespace: "fixture" }));
-      b.onResolve({ filter: /services\/networkFiles$/ }, () => ({ path: "files", namespace: "fixture" }));
+      b.onResolve({ filter: /(^|\/)networkFiles$/ }, () => ({ path: "files", namespace: "fixture" }));
       b.onResolve({ filter: /(^|\/)networkPayments$/ }, () => ({ path: "ready", namespace: "fixture" }));
       b.onResolve({ filter: /stripeClient$/ }, () => ({ path: "stripe", namespace: "fixture" }));
       b.onResolve({ filter: /middlewares\/clerkProxyMiddleware$/ }, () => ({ path: "host", namespace: "fixture" }));
@@ -62,7 +62,12 @@ const output = await build({
             export function networkWrite(req,res,next){next();}
             export function requireFounder(res){if(!res.locals.actor?.founder)throw new NetworkError(403,'Founder only');}
           `,
-          files: `export function objectFile(){return {download:async()=>[Buffer.alloc(10000,42)]}};`,
+          files: `import {Readable} from 'node:stream';
+            export function objectFile(){return {
+              getMetadata:async()=>[{size:10000}],
+              createReadStream:({start,end})=>{const s=Readable.from([Buffer.alloc(end-start+1,42)]);process.nextTick(()=>s.emit('response'));return s;},
+              download:()=>{throw Error('Full-buffer downloads are prohibited');},
+            }};`,
           ready: `export const stripeReady=true;`,
           stripe: `export async function getUncachableStripeClient(){return globalThis.stripe;}`,
           host: `export function getClerkProxyHost(){return 'fixture.invalid';}`,

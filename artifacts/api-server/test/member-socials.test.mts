@@ -17,10 +17,13 @@ const bundled = await build({
     setup(b) {
       b.onResolve({ filter: /^@clerk\/express$/ }, () => ({ path: "identity", namespace: "fixture" }));
       b.onResolve({ filter: /clerkProxyMiddleware$/ }, () => ({ path: "origin", namespace: "fixture" }));
+      b.onResolve({ filter: /services\/networkAuth$/ }, () => ({ path: "verified", namespace: "fixture" }));
       b.onLoad({ filter: /.*/, namespace: "fixture" }, a => ({
         contents: a.path === "identity"
           ? "export const getAuth = req => ({userId:req.headers['x-fixture-identity'] ?? null});"
-          : "export const getClerkProxyHost = req => req.get('host');",
+          : a.path === "verified"
+            ? "export const requireVerifiedIdentity = (_req, _res, next) => next();"
+            : "export const getClerkProxyHost = req => req.get('host');",
       }));
       b.onResolve({ filter: /^(express|drizzle-orm|@workspace\/db|@workspace\/api-zod|@workspace\/shared)$/ }, a => ({ path: pathToFileURL(require.resolve(a.path)).href, external: true }));
     },

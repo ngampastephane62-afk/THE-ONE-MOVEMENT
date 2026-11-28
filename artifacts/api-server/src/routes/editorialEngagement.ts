@@ -5,8 +5,7 @@ import { and, desc, eq, sql } from "drizzle-orm";
 import { UpdateVideoEngagementBody } from "@workspace/api-zod";
 import { actor, networkAuth, networkWrite, requireFounder, NetworkError } from "../services/networkAuth";
 import { editorialPhotoId } from "../services/editorialMedia";
-import { objectFile } from "../services/networkFiles";
-import { sendBufferedVideo } from "../services/bufferedVideo";
+import { streamStoredObject } from "../services/storedObjectStream";
 const router = Router();
 // Stable editorial IDs; no unbounded arbitrary-comment namespaces.
 export const EDITORIAL_VIDEO_IDS = new Set([
@@ -85,18 +84,11 @@ router.post(["/editorial/videos/:videoId/engagement", "/editorial/media/engageme
   }
   res.json(await engagement(id, who.member.id, who.founder));
 });
-const campaignAssets = new Map<string, Promise<Buffer>>();
 router.get("/editorial/assets/:filename", async (req, res) => {
   const filename = String(req.params.filename);
   if (!/^pink-october-burj-khalifa\.(mp4|webp)$/.test(filename)) return void res.sendStatus(404);
   const bucket = process.env.DEFAULT_OBJECT_STORAGE_BUCKET_ID;
   if (!bucket) throw new NetworkError(503, "Editorial media is unavailable.");
-  let pending = campaignAssets.get(filename);
-  if (!pending) {
-    pending = objectFile(`/${bucket}/public/editorial/assets/${filename}`).download()
-      .then(([bytes]) => bytes).catch(error => { campaignAssets.delete(filename); throw error; });
-    campaignAssets.set(filename, pending);
-  }
-  sendBufferedVideo(req, res, await pending, filename.endsWith(".mp4") ? "video/mp4" : "image/webp");
+  await streamStoredObject(req, res, `/${bucket}/public/editorial/assets/${filename}`, filename.endsWith(".mp4") ? "video/mp4" : "image/webp");
 });
 export default router;

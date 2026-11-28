@@ -94,7 +94,7 @@ export function profileRoutes(memberRows, profileRows = [], uploadRows = []) {
     '@workspace/shared': { SOCIAL_PROFILES: [], normalizeSocialProfile: forbid, ...policy },
     '../middlewares/clerkProxyMiddleware': { getClerkProxyHost: () => 'fixture.invalid' },
     '../services/profileProjection': projection,
-    '../services/networkAuth': { NetworkError, networkAuth: noop, networkEnabled: noop, networkWrite: noop, actor: forbid },
+    '../services/networkAuth': { NetworkError, networkAuth: noop, networkEnabled: noop, networkWrite: noop, actor: forbid, requireVerifiedIdentity: (_req, _res, next) => next() },
     '../services/networkActions': { networkAction: forbid },
     '../services/networkState': { activeBadge: () => false, networkState: forbid, visibleMember: forbid },
     '../services/networkFiles': { requestUpload: forbid, objectFile: forbid },

@@ -351,7 +351,13 @@ export default function ProfileForm({ initial, defaultName, onDone, onCancel, ap
 
       {save.isError && (
         <div className="flex flex-wrap items-center gap-3 border border-crimson-700/30 bg-crimson-700/5 p-4" role="alert">
-          <p className="text-sm text-crimson-700">Your profile could not be saved. Check your connection and try again.</p>
+          <p className="text-sm text-crimson-700">{(() => {
+            // A 403 carries the server's reason (e.g. unverified email); anything else stays generic.
+            const reason = (save.error as { status?: number; data?: { error?: unknown } } | null);
+            return reason?.status === 403 && typeof reason.data?.error === 'string'
+              ? reason.data.error
+              : 'Your profile could not be saved. Check your connection and try again.';
+          })()}</p>
           <button type="submit" className="text-xs font-semibold uppercase tracking-wider text-crimson-700 underline" data-testid="button-retry-save">Retry</button>
         </div>
       )}

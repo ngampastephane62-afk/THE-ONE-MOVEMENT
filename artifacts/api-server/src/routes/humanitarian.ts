@@ -8,8 +8,7 @@ import { humanitarianConfiguration, validateSupportAmount, COLLECTION_CONSENT, c
 import { getUncachableStripeClient } from "../stripeClient";
 import { getClerkProxyHost } from "../middlewares/clerkProxyMiddleware";
 import { createRateLimiter } from "../lib/inMemoryRateLimiter";
-import { objectFile } from "../services/networkFiles";
-import { sendBufferedVideo } from "../services/bufferedVideo";
+import { streamStoredObject } from "../services/storedObjectStream";
 
 const router = Router();
 const limiter = createRateLimiter();
@@ -135,19 +134,10 @@ router.patch("/humanitarian/offers/admin/:id", networkAuth, networkWrite, async 
 router.get("/documentary/access", async (_req, res) => {
   res.set("Cache-Control", "no-store").json({ hasAccess: true, streamUrl: "/api/documentary/goma/stream" });
 });
-const buffers = new Map<string, Promise<Buffer>>();
-async function video(path: string) {
-  let pending = buffers.get(path);
-  if (!pending) {
-    pending = objectFile(path).download().then(([bytes]) => bytes).catch(error => { buffers.delete(path); throw error; });
-    buffers.set(path, pending);
-  }
-  return pending;
-}
 router.get("/documentary/goma/stream", async (req, res) => {
   const folder = process.env.PRIVATE_OBJECT_DIR;
   if (!folder) throw new NetworkError(503, "Archive storage is unavailable.");
-  sendBufferedVideo(req, res, await video(`${folder.replace(/\/$/, "")}/documentary/goma-full.mp4`), "video/mp4");
+  await streamStoredObject(req, res, `${folder.replace(/\/$/, "")}/documentary/goma-full.mp4`, "video/mp4");
 });
 router.get("/documentary/media/:filename", async (req, res) => {
   const name = String(req.params.filename);
@@ -158,6 +148,6 @@ router.get("/documentary/media/:filename", async (req, res) => {
   const bucket = process.env.DEFAULT_OBJECT_STORAGE_BUCKET_ID;
   if (!bucket) throw new NetworkError(503, "Media storage is unavailable.");
   const contentType = name.endsWith(".webp") ? "image/webp" : name.endsWith(".png") ? "image/png" : name.endsWith(".svg") ? "image/svg+xml" : "video/mp4";
-  sendBufferedVideo(req, res, await video(`/${bucket}/public/documentary/${name}`), contentType);
+  await streamStoredObject(req, res, `/${bucket}/public/documentary/${name}`, contentType);
 });
 export default router;

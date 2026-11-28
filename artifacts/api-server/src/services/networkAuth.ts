@@ -14,12 +14,11 @@ export type NetworkActor = {
   accountCreatedAt: number;
   founder: boolean;
 };
-const identities = new Map<string, { email: string; fullName: string; verified: boolean; restricted: boolean; accountCreatedAt: number; expires: number }>();
+type Identity = { email: string; fullName: string; verified: boolean; restricted: boolean; accountCreatedAt: number; expires: number };
+const identities = new Map<string, Identity>();
 export function invalidateNetworkIdentity(clerkId: string) { identities.delete(clerkId); }
-export async function networkAuth(req: Request, res: Response, next: NextFunction) {
-  res.set("Cache-Control", "no-store");
-  const clerkId = getAuth(req).userId;
-  if (!clerkId) return void res.status(401).json({ error: "Sign in to access the member network." });
+/** Clerk identity for a validated session, cached for one minute. Returns null when Clerk cannot be reached. */
+async function loadIdentity(clerkId: string): Promise<Identity | null> {
   let identity = identities.get(clerkId);
   if (!identity || identity.expires < Date.now()) {
     try {
@@ -36,9 +35,31 @@ export async function networkAuth(req: Request, res: Response, next: NextFunctio
       if (identities.size > 2000) identities.clear();
       identities.set(clerkId, identity);
     } catch {
-      return void res.status(503).json({ error: "Your verified identity could not be checked. Please try again." });
+      return null;
     }
   }
+  return identity;
+}
+/**
+ * Profile edits can publish to the public directory, so they need the same
+ * verified, unrestricted Clerk identity as the member network. Unlike
+ * networkAuth, this creates no member or network rows.
+ */
+export async function requireVerifiedIdentity(req: Request, res: Response, next: NextFunction) {
+  const clerkId = getAuth(req).userId;
+  if (!clerkId) return void res.status(401).json({ error: "Sign in to access your member space." });
+  const identity = await loadIdentity(clerkId);
+  if (!identity) return void res.status(503).json({ error: "Your verified identity could not be checked. Please try again." });
+  if (!identity.verified) return void res.status(403).json({ error: "Verify your primary email before editing your profile." });
+  if (identity.restricted) return void res.status(403).json({ error: "This account is restricted by the authentication service." });
+  next();
+}
+export async function networkAuth(req: Request, res: Response, next: NextFunction) {
+  res.set("Cache-Control", "no-store");
+  const clerkId = getAuth(req).userId;
+  if (!clerkId) return void res.status(401).json({ error: "Sign in to access the member network." });
+  const identity = await loadIdentity(clerkId);
+  if (!identity) return void res.status(503).json({ error: "Your verified identity could not be checked. Please try again." });
   if (!identity.verified) return void res.status(403).json({ error: "Verify your primary email before joining the network." });
   if (identity.restricted) return void res.status(403).json({ error: "This account is restricted by the authentication service." });
   const founder = !!process.env.TOMI_FOUNDER_EMAIL &&
